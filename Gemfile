@@ -20,10 +20,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'sqlite3'
-end
-
-group :development do
   gem 'pg'
   gem 'rails_12factor'
 end
