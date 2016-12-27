@@ -9,6 +9,12 @@
 	],
 "creatorBuild": "25479",
 "files": {
+	"\/.bundle\/config": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/.bundle\/config",
+		"oF": 0
+		},
 	"\/.gitignore": {
 		"ft": 8192,
 		"oA": 2,
@@ -756,6 +762,12 @@
 		"ft": 65536,
 		"oA": 1,
 		"oAP": "\/build\/tmp\/cache",
+		"oF": 0
+		},
+	"\/tmp\/pids\/server.pid": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/tmp\/pids\/server.pid",
 		"oF": 0
 		},
 	"\/tmp\/restart.txt": {
