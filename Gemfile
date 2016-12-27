@@ -1,6 +1,14 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+group :production do
+  gem 'pg'
+end
+
+group :development do
+  gem 'sqlite3'
+end
+
 gem 'sqlite3'
 gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
