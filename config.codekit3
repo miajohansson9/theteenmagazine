@@ -54,6 +54,16 @@
 		"oAP": "\/app\/assets\/javascripts\/channels\/.keep",
 		"oF": 0
 		},
+	"\/app\/assets\/javascripts\/posts.coffee": {
+		"ft": 32,
+		"ma": 0,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/app\/assets\/javascripts\/posts.js",
+		"oF": 0,
+		"oS": 0,
+		"sC": 1
+		},
 	"\/app\/assets\/stylesheets\/application.css": {
 		"aP": 0,
 		"bl": 0,
@@ -63,6 +73,19 @@
 		"oAP": "\/app\/assets\/stylesheets\/application-min.css",
 		"oF": 0,
 		"oS": 0
+		},
+	"\/app\/assets\/stylesheets\/posts.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/app\/assets\/stylesheets\/posts.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
 		},
 	"\/app\/channels\/application_cable\/channel.rb": {
 		"ft": 8192,
@@ -88,10 +111,22 @@
 		"oAP": "\/app\/controllers\/concerns\/.keep",
 		"oF": 0
 		},
+	"\/app\/controllers\/posts_controller.rb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/app\/controllers\/posts_controller.rb",
+		"oF": 0
+		},
 	"\/app\/helpers\/application_helper.rb": {
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/app\/helpers\/application_helper.rb",
+		"oF": 0
+		},
+	"\/app\/helpers\/posts_helper.rb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/app\/helpers\/posts_helper.rb",
 		"oF": 0
 		},
 	"\/app\/jobs\/application_job.rb": {
@@ -118,6 +153,12 @@
 		"oAP": "\/app\/models\/concerns\/.keep",
 		"oF": 0
 		},
+	"\/app\/models\/post.rb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/app\/models\/post.rb",
+		"oF": 0
+		},
 	"\/app\/views\/layouts\/application.html.erb": {
 		"ft": 8192,
 		"oA": 2,
@@ -134,6 +175,36 @@
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/app\/views\/layouts\/mailer.text.erb",
+		"oF": 0
+		},
+	"\/app\/views\/posts\/_form.html.erb": {
+		"ft": 8192,
+		"oA": 1,
+		"oAP": "\/app\/views\/posts\/_form.html.erb",
+		"oF": 0
+		},
+	"\/app\/views\/posts\/edit.html.erb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/app\/views\/posts\/edit.html.erb",
+		"oF": 0
+		},
+	"\/app\/views\/posts\/index.html.erb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/app\/views\/posts\/index.html.erb",
+		"oF": 0
+		},
+	"\/app\/views\/posts\/new.html.erb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/app\/views\/posts\/new.html.erb",
+		"oF": 0
+		},
+	"\/app\/views\/posts\/show.html.erb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/app\/views\/posts\/show.html.erb",
 		"oF": 0
 		},
 	"\/article_show.html": {
@@ -334,6 +405,24 @@
 		"oAP": "\/contact.html",
 		"oF": 0
 		},
+	"\/db\/development.sqlite3": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/db\/development.sqlite3",
+		"oF": 0
+		},
+	"\/db\/migrate\/20161227073217_create_posts.rb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/db\/migrate\/20161227073217_create_posts.rb",
+		"oF": 0
+		},
+	"\/db\/schema.rb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/db\/schema.rb",
+		"oF": 0
+		},
 	"\/db\/seeds.rb": {
 		"ft": 8192,
 		"oA": 2,
@@ -514,6 +603,12 @@
 		"oAP": "\/test\/controllers\/.keep",
 		"oF": 0
 		},
+	"\/test\/controllers\/posts_controller_test.rb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/test\/controllers\/posts_controller_test.rb",
+		"oF": 0
+		},
 	"\/test\/fixtures\/.keep": {
 		"ft": 8192,
 		"oA": 2,
@@ -524,6 +619,12 @@
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/test\/fixtures\/files\/.keep",
+		"oF": 0
+		},
+	"\/test\/fixtures\/posts.yml": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/test\/fixtures\/posts.yml",
 		"oF": 0
 		},
 	"\/test\/helpers\/.keep": {
@@ -550,6 +651,12 @@
 		"oAP": "\/test\/models\/.keep",
 		"oF": 0
 		},
+	"\/test\/models\/post_test.rb": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/test\/models\/post_test.rb",
+		"oF": 0
+		},
 	"\/test\/test_helper.rb": {
 		"ft": 8192,
 		"oA": 2,
@@ -566,6 +673,18 @@
 		"ft": 65536,
 		"oA": 1,
 		"oAP": "\/build\/tmp\/cache",
+		"oF": 0
+		},
+	"\/tmp\/pids\/server.pid": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/tmp\/pids\/server.pid",
+		"oF": 0
+		},
+	"\/tmp\/restart.txt": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/tmp\/restart.txt",
 		"oF": 0
 		},
 	"\/vendor\/assets\/javascripts\/.keep": {
