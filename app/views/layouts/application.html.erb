@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blog</title>
+    <title>Mia Johansson - Student &amp; Developer</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <header id="main_navigation" class="clearfix">
+      <a href="index.html" class="name">Mia Johansson</a>
+      <nav>
+
+        <%= link_to "Articles", posts_path %>
+        <a id="hover_nav_2" href="#">Projects</a>
+        <a id="hover_nav_3" href="contact.html">Contact</a>
+      </nav>
+    </header>
     <%= yield %>
   </body>
 </html>
