@@ -39,6 +39,18 @@ body {
   clear: both;
 }
 
+.project_button {
+  background: $highlight;
+  color: $white;
+  text-decoration: none;
+  padding: 1em 2em;
+}
+
+.button_wrapper {
+  text-align: center;
+  margin-top: 2em;
+}
+
 
 
 h1, h2, h3, h4, h5, h6, p, ul, li {
