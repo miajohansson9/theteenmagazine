@@ -19,6 +19,13 @@
         <a id="hover_nav_3" href="contact.html">Contact</a>
       </nav>
     </header>
+
+    <% if notice %>
+      <p class="notice"><%= notice %></p>
+      <% elsif alert %>
+      <p class="alert"><%= alert %></p>
+    <% end %>
+
     <%= yield %>
 
     <footer id="main_footer">
