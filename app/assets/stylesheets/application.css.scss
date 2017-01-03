@@ -14,6 +14,12 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+.colorful_divider {
+  background-image: url(colorful.png);
+  height: 20px;
+  width: 100%;
+}
+
 .notice, .alert {
   text-align: center;
   padding: 1em 0;
@@ -127,7 +133,7 @@ hr {
     float: right;
     padding-top: 1.5rem;
     .clicked {
-      color: $highlight;
+      color: white;
     }
     a {
       color: $dark;

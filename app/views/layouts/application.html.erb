@@ -10,10 +10,11 @@
   </head>
 
   <body>
+    <div class="colorful_divider">
+    </div>
     <header id="main_navigation" class="clearfix">
       <%= link_to "Mia Johansson", root_path, class: "name" %>
       <nav>
-
         <%= link_to "Articles", posts_path %>
         <%= link_to "Projects", projects_path %>
         <%= link_to "Contact", new_contact_path %>
@@ -23,6 +24,9 @@
       </nav>
     </header>
 
+
+
+
     <% if notice %>
       <p class="notice"><%= notice %></p>
       <% elsif alert %>
@@ -30,6 +34,7 @@
     <% end %>
 
     <%= yield %>
+
 
     <footer id="main_footer">
       <p class="copyright">&copy; 2016 Mia Johansson</p>
