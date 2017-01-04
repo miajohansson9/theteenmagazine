@@ -2,7 +2,7 @@
 
 $dark: #424653;
 $light: #9a9da4;
-$highlight: #8bc6db;
+$highlight: #e0528d;
 $border: #E9E9E9;
 $white: #FFFFFF;
 
@@ -65,6 +65,19 @@ body {
 
 .hidden {
   display: none;
+}
+
+.profilepic {
+  background-image: url(myprofilepic.jpg);
+  height: 130px;
+  width: 130px;
+  background-size: contain;
+  float: left;
+  border: $highlight solid 5px;
+  border-radius: 5%;
+  background-repeat: no-repeat;
+  margin-right: 20px;
+  margin-bottom: 10px;
 }
 
 
@@ -146,6 +159,10 @@ hr {
       }
     }
   }
+}
+
+#About {
+  float: left;
 }
 
 #hover_nav_1:hover {
