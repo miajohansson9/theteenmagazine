@@ -1,3 +1,13 @@
+  <div class="col-2 homepage_content">
+  <% @posts.each do |post| %>
+    <div class="thumbnail">
+      <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+    <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+    <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
+    </div>
+  <% end %>
+</div>
+
 <div class="wrapper wrapper_padding clearfix">
   <div class="col-1 about homepage_content">
     <h2 class="About">About Me</h2>
@@ -17,14 +27,7 @@
     <p>You can contact me on Twitter at <a href="https://twitter.com/johanssonmia09"><i>@johanssonmia9</i></a> or Instagram at <a href="https://www.instagram.com/miajohansson9/"><i>@miajohansson9</i></a>.
       Or feel free to email me at <a href="mailto:johansson.mia09@gmail.com" target="_top">@johansson.mia09@gmail.com</a></p>
   </div>
-  <div class="col-2 homepage_content">
-    <h2>My Blog Posts</h2>
-    <hr>
-    <% @posts.each do |post| %>
-      <h3><a href="#"><%= link_to post.title, post %></a></h3>
-      <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
-    <% end %>
-  </div>
+
   <div class="col-3 homepage_content">
     <h2>My Projects</h2>
     <hr>

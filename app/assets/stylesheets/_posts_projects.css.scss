@@ -1,3 +1,11 @@
+.post_image {
+  width: 100px;
+  margin-top: 8px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
 #posts_wrapper {
   padding: 3em 0;
   .post {

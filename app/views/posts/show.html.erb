@@ -1,7 +1,9 @@
 <div class="skinny_wrapper wrapper_padding" id="post_show_content">
   <header>
     <p class="date"><%= @post.created_at.strftime('%A, %B %d')%></p>
+    <img src="<%= @post.image %>" class="post_image"/>
     <h1><%= @post.title %></h1>
+
     <hr>
   </header>
 

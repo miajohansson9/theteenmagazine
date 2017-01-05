@@ -26,7 +26,7 @@ body {
 }
 
 .wrapper_padding {
-  padding: 4rem 0;
+  padding: 0;
 }
 
 .clearfix:before,
@@ -39,7 +39,11 @@ body {
   clear: both;
 }
 
-
+.thumbnail {
+  .style_image {
+    width: 200px;
+  }
+}
 
 h1, h2, h3, h4, h5, h6, p, ul, li {
   color: $dark;
