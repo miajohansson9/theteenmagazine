@@ -1,39 +1,79 @@
-<div class="col-2 homepage_content">
-  <% @posts.each do |post| %>
-    <div class="thumbnail">
-      <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-    <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-    <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
-    </div>
-  <% end %>
-</div>
-
-<div class="wrapper wrapper_padding clearfix">
-  <div class="col-1 about homepage_content">
-    <h2 class="About">About Me</h2>
-    <hr class="About">
-    <div class="profilepic">
-    </div>
-
-    <p>Hi! My name is Mia. I'm a 16 year-old high school student &amp; aspiring developer
-      living in Santa Rosa, California.</p>
-    <p>I spend a lot of my time studying, programming, and learning
-      to program.</p>
-      <p>I have an app on the app store called <a href="#">Times Table Math</a>.
-      It won the Congressional App Challenge in 2016 and has been written about in the
-      <a href="http://www.pressdemocrat.com/news/6411472-181/santa-rosa-teen-named-winner?artslide=0">Press Democrat</a>.</p>
-      <p>Since then, I have built <a href="#">this blog</a> to learn Ruby on Rails,
-      but I plan to use it to document my journey of programming and creating future projects.</p>
-    <p>You can contact me on Twitter at <a href="https://twitter.com/johanssonmia09"><i>@johanssonmia9</i></a> or Instagram at <a href="https://www.instagram.com/miajohansson9/"><i>@miajohansson9</i></a>.
-      Or feel free to email me at <a href="mailto:johansson.mia09@gmail.com" target="_top">@johansson.mia09@gmail.com</a></p>
-  </div>
-
-  <div class="col-3 homepage_content">
-    <h2>My Projects</h2>
-    <hr>
+<div class="homepage_content wrapper wrapper-padding">
+  <h2 class="projects--title">What I'm working on</h2>
+  <hr style="margin-top: 30px; margin-bottom: 10px;">
+  <div class="projects">
     <% @projects.each do |project| %>
-      <h3><a href="#"><%= link_to project.title, project %></a></h3>
-      <p class="date"><%= project.created_at.strftime("%A, %b %d")%></p>
+    <%= link_to project do %>
+      <div class="each--project">
+          <h3><%= project.title %></h3>
+          <p class="date"><%= project.created_at.strftime("%A, %b %d")%></p>
+          <p class="content"><%= project.description %></p>
+      </div>
+    <% end %>
     <% end %>
   </div>
 </div>
+
+<div class="gray--background">
+  <div class="home--main">
+    <img src="https://static.pexels.com/photos/6249/hands-woman-legs-laptop.jpg" class="home--image" />
+
+    <div class="flexbox">
+      <div class="social--media">
+        <a class="twitter-timeline" data-width="500" data-height="300" href="https://twitter.com/JohanssonMia09">Tweets by JohanssonMia09</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe src="//lightwidget.com/widgets/bbc240f4af3552f29132e6bdbe4eb51a.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 500px; border: 0; overflow: hidden;"></iframe>
+        <style>.ig-b- { display: inline-block; }
+    .ig-b- img { visibility: hidden; }
+    .ig-b-:hover { background-position: 0 -60px; } .ig-b-:active { background-position: 0 -120px; }
+    .ig-b-v-24 { width: 137px; margin-top: 5px; float: right; margin-bottom: 10px; height: 24px; background: url(//badges.instagram.com/static/images/ig-badge-view-sprite-24.png) no-repeat 0 0; }
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    .ig-b-v-24 { background-image: url(//badges.instagram.com/static/images/ig-badge-view-sprite-24@2x.png); background-size: 160px 178px; } }</style>
+    <a href="https://www.instagram.com/miajohanssonblog/?ref=badge" class="ig-b- ig-b-v-24"><img src="//badges.instagram.com/static/images/ig-badge-view-24.png" alt="Instagram" /></a>
+      </div>
+      <div class="container">
+        <div class="exclusive-offer">
+            <h5 class="exclusive-title" id="exclusive-title--id">Sign up now to become a VIP subscriber & get exclusive offers</h5>
+            <p class="exclusive-title">(Limited time only!)</p>
+        </div>
+      <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+      <div>
+        <div class="clearfix">
+          <div id="mc_embed_signup" class="home--signup">
+          <form action="//herokuapp.us14.list-manage.com/subscribe/post?u=5c2a24e15a906f29e2c6a9b72&amp;id=3081d2e76a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+              <div id="mc_embed_signup_scroll">
+          	<h2 style="color: #696969;">Become a VIP subscriber:</h2>
+          <div class="mc-field-group">
+          	<label for="mce-EMAIL">Email Address </label>
+          	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" style="width: 300px;">
+          </div>
+
+          	<div id="mce-responses" class="clear">
+          		<div class="response" id="mce-error-response" style="display:none"></div>
+          		<div class="response" id="mce-success-response" style="display:none"></div>
+          	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+              <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5c2a24e15a906f29e2c6a9b72_3081d2e76a" tabindex="-1" value=""></div>
+              <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+              </div>
+          </form>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-2 homepage_content">
+    <% @posts.each do |post| %>
+      <div class="thumbnail">
+        <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+        <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+        <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
+      </div>
+    <% end %>
+</div>
+
+
+
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>

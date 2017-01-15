@@ -10,10 +10,9 @@
   </head>
 
   <body>
-    <div class="colorful_divider">
-    </div>
+
     <header id="main_navigation" class="clearfix">
-      <%= link_to "Mia Johansson", root_path, class: "name" %>
+      <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/name_zps6gj1gsjw.png", :class => "name"), root_path )%>
       <nav>
         <%= link_to "Articles", posts_path %>
         <%= link_to "Projects", projects_path %>
@@ -23,6 +22,8 @@
         <% end %>
       </nav>
     </header>
+    <div class="colorful_divider">
+    </div>
 
     <% if notice %>
       <p class="notice"><%= notice %></p>
