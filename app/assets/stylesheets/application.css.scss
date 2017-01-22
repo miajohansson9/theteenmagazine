@@ -62,6 +62,14 @@ body {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  .home--image {
+    background: url("https://static.pexels.com/photos/6249/hands-woman-legs-laptop.jpg") no-repeat center;
+    width: 350px;
+    height: 525px;
+    background-size: cover;
+    float: left;
+    margin-left: -25px;
+  }
 }
 
 .gray--background {
@@ -113,11 +121,7 @@ body {
   display: none;
 }
 
-.home--image {
-  width: 350px;
-  float: left;
-  margin-left: -25px;
-}
+
 
 .container {
   display: flex;
@@ -127,6 +131,7 @@ body {
 .flexbox {
   display: flex;
   border-bottom:1px solid  #E9E9E9;
+
   height: 525px;
   background-color: #efeff2;
   .social--media {
@@ -310,6 +315,36 @@ hr {
   border: 0;
   border-top: 2px solid $highlight;
   margin: 2rem 0;
+}
+
+@media (max-width: 1200px) {
+  .home--main {
+    .home--image {
+      width: 300px;
+      height: 525px;
+      background-size: cover;
+      float: left;
+      margin-left: -25px;
+    }
+    .social--media {
+      width: 500px;
+      .lightwidget-widget {
+        display: none;
+      }
+      .ig-b- {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+
+}
+
+
+@media (max-width: 479px) {
+
 }
 
 
