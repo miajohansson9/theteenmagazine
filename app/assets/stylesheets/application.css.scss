@@ -14,6 +14,12 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+.body {
+  width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .showContent {
   visibility:visible;
 }
@@ -59,23 +65,73 @@ body {
 ///////////////////////////////////////////////////////////////////////////
 
 .home--main {
-  max-width: 1200px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
-  .home--image {
-    background: url("https://static.pexels.com/photos/6249/hands-woman-legs-laptop.jpg") no-repeat center;
-    width: 350px;
-    height: 525px;
-    background-size: cover;
-    float: left;
-    margin-left: -25px;
-  }
 }
 
 .gray--background {
-  border-bottom: 1px solid #E9E9E9;
+  border-top:  1px solid #E9E9E9;
+  border-bottom:  1px solid #E9E9E9;
+  width: 100%;
 }
 
+.featured {
+  margin-top: 20px;
+    .image_thumbnail {
+      width: 350px;
+    }
+    .article_title {
+      margin: 0;
+      margin-top: 10px;
+      width: 300px;
+      word-wrap: break-word;
+      a {
+        text-decoration: none;
+        color: black;
+        font-size: 40px;
+      }
+    }
+}
+
+.articles2-6 {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-top: 40px;
+  width: 40%;
+  .thumbnail {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 2px;
+    .thumbnail--container {
+      margin-left: 10px;
+      .article_title {
+        font-size: 20px;
+        margin: 0;
+        a {
+          text-decoration: none;
+          color: black;
+        }
+      }
+      .date {
+        font-size: 15px;
+      }
+    }
+
+  }
+  .image_thumbnail {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+  }
+}
+
+.flexbox--posts {
+  display: flex;
+  flex-direction: row;
+}
 
 .notice, .alert {
   text-align: center;
@@ -121,8 +177,6 @@ body {
   display: none;
 }
 
-
-
 .container {
   display: flex;
   flex-direction: column;
@@ -130,14 +184,9 @@ body {
 
 .flexbox {
   display: flex;
+  justify-content: center;
   border-bottom:1px solid  #E9E9E9;
-
   height: 525px;
-  background-color: #efeff2;
-  .social--media {
-    margin-top: 20px;
-    margin-left: 20px;
-  }
 }
 
 .exclusive-offer {
@@ -146,7 +195,7 @@ body {
   background-image: url("http://i1074.photobucket.com/albums/w412/mjohansson9/backgroundimage_zps8rmwfdj1.png");      //#ff7a8f;
   background-size: 100% 100%;
   margin-left: 15px;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: -10px;
   #exclusive-title--id {
     margin-top: 50px;
@@ -159,15 +208,6 @@ body {
     margin-right: 10px;
   }
 }
-
-.instagram-media {
-  width: 200px;
-}
-
-.lightwidget-widget {
-  margin-top: 24px;
-}
-
 
 #main_navigation {
   background-color: #2a2a2a;
@@ -196,10 +236,6 @@ body {
   }
 }
 
-#About {
-  float: left;
-}
-
 #page_title {
   text-align: center;
   border-bottom: 1px solid $border;
@@ -211,7 +247,6 @@ body {
 #mc_embed_signup {
   float:left;
   font:14px Helvetica,Arial,sans-serif;
-  width: 400px;
   color: #939393;
   margin-bottom: 50px;
   margin-left: 20px;
@@ -317,29 +352,10 @@ hr {
   margin: 2rem 0;
 }
 
-@media (max-width: 1200px) {
-  .home--main {
-    .home--image {
-      width: 300px;
-      height: 525px;
-      background-size: cover;
-      float: left;
-      margin-left: -25px;
-    }
-    .social--media {
-      width: 500px;
-      .lightwidget-widget {
-        display: none;
-      }
-      .ig-b- {
-        display: none;
-      }
-    }
+@media (max-width: 1400px) {
+  .body {
+    width: 100%;
   }
-}
-
-@media (max-width: 767px) {
-
 }
 
 
