@@ -209,6 +209,36 @@ body {
   }
 }
 
+body {
+  form {
+    padding: 0;
+  }
+  #mc_embed_signup {
+    margin-left: 0;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding-right: 10px;
+  }
+}
+
+#mc-embedded-subscribe-form{
+  padding: 0;
+  #mc_embed_signup_scroll{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    h2 {
+      width: 300px;
+      margin: 0;
+    }
+    #mc_embed_signup, .mc-field-group {
+      width: 100%;
+      padding-bottom: 10px;
+    }
+  }
+}
+
 #main_navigation {
   background-color: #2a2a2a;
   margin-bottom: 2px;
