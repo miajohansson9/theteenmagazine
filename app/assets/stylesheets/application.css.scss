@@ -38,14 +38,18 @@ body {
 
 /////////////////Projects///////////////////////////////////////////////////
 
+button {
+  display: none;
+}
+
 .projects {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   a {
-    width: 33%;
     height: 270px;
     position: relative;
-    padding: 13px;
+    width: 32.5%;
     &:hover {
       h3, .content, .date {
         color: $highlight;
@@ -63,6 +67,7 @@ body {
 }
 
 ///////////////////////////////////////////////////////////////////////////
+
 
 .home--main {
   width: 100%;
@@ -382,6 +387,12 @@ hr {
   margin: 2rem 0;
 }
 
+.full {
+  width: 33%;
+  display: block;
+}
+
+
 @media (max-width: 1400px) {
   .body {
     width: 100%;
@@ -433,6 +444,47 @@ hr {
 }
 
 @media (max-width: 954px) {
+  body {
+    .projects {
+      a {
+        margin: 5px;
+        margin-top: 10px;
+        margin-bottom: -20px;
+      }
+      button {
+        display: block;
+        background-image: url("http://i1074.photobucket.com/albums/w412/mjohansson9/arrow_zpsr7sagjy6.png");
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 30px;
+        margin: 10px;
+        margin-top: 100px;
+        background-size: contain;
+        background-color: transparent;
+        border: none;
+        outline: none;
+      }
+      .back {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+      }
+
+    }
+  }
+
+  .projects {
+    a {
+      width: 100%;
+    }
+    #a-2, #a-3 {
+      display: none;
+    }
+  }
+
   .featured {
     width: 350px;
     margin-left: 10px;
@@ -456,6 +508,14 @@ hr {
 }
 
 @media (max-width: 730px) {
+  body {
+    .projects {
+      a {
+
+      }
+    }
+  }
+
   .featured {
     width: 94%;
     margin-left: 3%;
