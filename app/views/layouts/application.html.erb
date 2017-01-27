@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mia Johansson♡</title>
+    <title>19 ❤ Campus</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link rel="icon" href="http://i1074.photobucket.com/albums/w412/mjohansson9/19_zpsfuv3ct9v.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="https://fonts.googleapis.com/css?family=Kameron:700|Vollkorn:700" rel="stylesheet">
+
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -14,17 +17,22 @@
   <body onresize="resize()">
 
     <header id="main_navigation" class="clearfix">
-      <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/name_zps6gj1gsjw.png", :class => "name"), root_path )%>
-      <nav>
-        <%= link_to "Articles", posts_path %>
-        <%= link_to "Projects", projects_path %>
-        <%= link_to "Contact", new_contact_path %>
-        <% if user_signed_in? %>
-          <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-        <% end %>
-      </nav>
+      <div class="border">
+        <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/19campus3_zpsih4jkpjq.png", :class => "name"), root_path )%>
+        <nav>
+          <%= link_to "Home", root_path %>
+          <%= link_to "Articles", posts_path %>
+          <%= link_to "Projects", projects_path %>
+          <%= link_to "Contact", new_contact_path %>
+          <% if user_signed_in? %>
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+          <% end %>
+          <a href="https://twitter.com/johanssonmia09" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+          <a href="https://www.instagram.com/miajohansson9" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+        </nav>
+      </div>
     </header>
-    <div class="colorful_divider">
+    <!-- <div class="colorful_divider"> -->
     </div>
 
     <% if notice %>
