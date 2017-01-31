@@ -28,6 +28,7 @@ $gray:  #2a2a2a;
   .thumbnail {
     overflow: hidden;
     width: 30%;
+    margin-bottom: -20px;
     margin: 5px;
     &:hover {
       .article_title {
