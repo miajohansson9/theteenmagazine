@@ -3,7 +3,6 @@
     <div class="home--main">
       <div class="flexbox">
         <div class="featured">
-
           <% if @posts_featured %>
             <div class="featured">
               <%=link_to(image_tag(@posts_featured.image, :class => "image_thumbnail"), @posts_featured )%>
@@ -37,7 +36,7 @@
             	<h2 style="color: #696969;">Become a VIP subscriber:</h2>
             <div class="mc-field-group">
             	<label for="mce-EMAIL">Email Address </label>
-            	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" style="width: 300px;">
+            	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
             </div>
 
             	<div id="mce-responses" class="clear">
@@ -56,16 +55,16 @@
     </div>
   </div>
 
-  <div class="flexbox--posts">
-    <div class="col-2 homepage_content">
-        <% @posts[5..13].each do |post| %>
-          <div class="thumbnail">
-            <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-            <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-            <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
-          </div>
-        <% end %>
-    </div>
+  <h1 class="section--title">Older Posts: </h1>
+
+  <div class="col-2 homepage_content">
+      <% @posts[5..13].each do |post| %>
+        <div class="thumbnail">
+          <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+          <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+          <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
+        </div>
+      <% end %>
   </div>
 
 </div>

@@ -18,7 +18,11 @@
 
     <header id="main_navigation" class="clearfix">
       <div class="border">
-        <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/theteenmagazine_zpspsnrohxc.png", :class => "name"), root_path )%>
+        <div class="logo--flex">
+          <a href="#"><img src="http://i1074.photobucket.com/albums/w412/mjohansson9/nav_zps9nmcfxyw.png" alt="" class="nav-image"></a>
+          <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/imageedit_1_5659273426_zpswrtm8qvc.png", :class => "name"), root_path )%>
+        </div>
+
         <nav>
           <%= link_to "Home", root_path %>
           <%= link_to "Articles", posts_path %>

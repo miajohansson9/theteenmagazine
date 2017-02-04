@@ -1,4 +1,5 @@
 @import 'normalize';
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700');
 
 $dark: #424653;
 $light: #9a9da4;
@@ -24,19 +25,12 @@ body {
   visibility:visible;
 }
 
-.colorful_divider {
-  background-image: url("colorful.png");
-  height: 20px;
-  background-size: cover;
-  border-bottom: 1px solid $border;
-  margin-bottom: 30px;
-}
-
 .logo {
   width: 700px;
 }
 
 /////////////////Projects///////////////////////////////////////////////////
+
 
 button {
   display: none;
@@ -81,19 +75,21 @@ footer {
 }
 
 .featured {
-  margin-top: 20px;
+  margin-top: 10px;
     .image_thumbnail {
       width: 350px;
+      margin-bottom: 10px;
     }
     .article_title {
       margin: 0;
       margin-top: 10px;
-      width: 300px;
+      width: 350px;
       word-wrap: break-word;
       a {
         text-decoration: none;
-        color: black;
-        font-size: 40px;
+        color: #2b2b2b;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 30px;
       }
     }
 }
@@ -102,7 +98,7 @@ footer {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-  margin-top: 40px;
+  margin-top: 18px;
   width: 40%;
   .thumbnail {
     display: flex;
@@ -114,9 +110,12 @@ footer {
       .article_title {
         font-size: 20px;
         margin: 0;
+
         a {
           text-decoration: none;
-          color: black;
+          font-family: 'Roboto Condensed', sans-serif;
+          font-weight:bolder;
+          color: #2b2b2b;
         }
       }
       .date {
@@ -135,12 +134,25 @@ footer {
 .flexbox--posts {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .notice, .alert {
   text-align: center;
   padding: 1em 0;
   border-bottom: 1px solid #E9E9E9;
+}
+
+.section--title {
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-bottom: 5px solid #2b2b2b;
+  color: #00b5f9;
+  font-size: 2em;
+  font-family: 'Vollkorn', serif;
+  padding-bottom: 15px;
 }
 
 .skinny_wrapper {
@@ -211,7 +223,7 @@ footer {
 .flexbox {
   display: flex;
   justify-content: center;
-  height: 525px;
+  height: 490px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -242,21 +254,31 @@ body {
 }
 
 #main_navigation {
-  background-color: black;
   margin-bottom: 10px;
   width: 100%;
-  .name {
-    display: block;
-    max-width: 800px;
-    width: 90%;
-    margin-top: 55px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
+
+  .logo--flex {
+    .nav-image {
+      width: 35px;
+      height: 25px;
+      margin-top: 40px;
+      margin-left: 40px;
+      position: absolute;
+    }
+
+    .name {
+      display: block;
+      max-width: 700px;
+      width: 70%;
+      margin-top: 30px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
+
   nav {
-    margin-top: 10px;
-    border: 1px solid $border;
+    border: 2px solid $border;
+    margin-top: 0px;
     background-color: white;
     position: relative;
     display: block;
@@ -264,22 +286,20 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 50px;
+    height: 60px;
     a {
       padding-top: 15px;
-      color: #2a2a2a;
+      color: #2b2b2b;
       text-decoration: none;
       margin: 0 1.3rem;
-      font-size: 1rem;
-      font-family: 'Vollkorn', serif;
+      font-size: 1.3rem;
+      font-family: 'Roboto Condensed', sans-serif;
       &:hover {
         color: $highlight;
       }
     }
   }
 }
-
-
 
 #page_title {
   text-align: center;
@@ -301,7 +321,6 @@ body {
 
 #mce-EMAIL {
   margin-bottom: 0px;
-  width: 100%;
   margin-right: 0;
 }
 
@@ -416,6 +435,9 @@ hr {
         width: 300px;
         float: right;
       }
+      .article_title {
+        width: 300px;
+      }
   }
 
 }
@@ -427,7 +449,7 @@ hr {
   .featured {
     width: 430px;
     float: right;
-      .image_thumbnail {
+      .image_thumbnail, .article_title {
         width: 430px;
       }
   }
@@ -531,10 +553,31 @@ hr {
     }
   }
 
+  #main_navigation {
+    .logo--flex {
+      border-bottom: 3px solid $border;
+      .nav-image {
+        display: inline-block;
+        margin-top: 15px;
+        margin-left: 6%;
+        width: 20px;
+        height: 20px;
+      }
+      .name {
+        margin-top: 10px;
+        width: 300px;
+      }
+    }
+    nav {
+      display: none;
+    }
+  }
+
   .featured {
     width: 94%;
     margin-left: 3%;
     margin-right: 3%;
+    margin-top: 5px;
       .image_thumbnail {
         width: 100%;
       }
