@@ -29,6 +29,63 @@ body {
   width: 700px;
 }
 
+.toggle_menu {
+  padding: 15px 20px 15px 20px;
+  margin-top: 30px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.sidebar_menu {
+  background-color: #2b2b2b;
+  margin-left: 0;
+  overflow: hidden;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  z-index: 10000000;
+  transition: all 0.3s ease-in-out;
+}
+
+.fa-times {
+  right: 10px;
+  top: 10px;
+  opacity: 0.7;
+  cursor: pointer;
+  position: absolute;
+  color: white;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.hide_menu {
+  margin-left: -250px;
+}
+
+.hidden {
+  overflow: hidden;
+  .bodywrapper {
+    position: relative;
+  }
+}
+
+.overflow {
+  overflow: hidden;
+}
+
+.push {
+  transform: translate(250px);
+  transition: all 0.3s ease-in-out;
+}
+
+.pushback {
+  transition: all 0.3s ease-in-out;
+}
+
+
+
 /////////////////Projects///////////////////////////////////////////////////
 
 
@@ -277,7 +334,8 @@ body {
   }
 
   nav {
-    border: 2px solid $border;
+    border-top: 2px solid $border;
+    border-bottom: 2px solid $border;
     margin-top: 0px;
     background-color: white;
     position: relative;
@@ -287,6 +345,9 @@ body {
     flex-direction: row;
     justify-content: center;
     height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+
     a {
       padding-top: 15px;
       color: #2b2b2b;

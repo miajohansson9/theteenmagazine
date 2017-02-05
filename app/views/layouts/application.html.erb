@@ -15,149 +15,72 @@
   </head>
 
   <body onresize="resize()">
+    <i class="fa fa-bars toggle_menu"></i>
+    <div class="sidebar_menu hide_menu">
+      <i class="fa fa-times"></i>
+    </div>
+    <div class="overflow">
+      <div class="bodywrapper">
+      <header id="main_navigation" class="clearfix">
+        <div class="border">
+          <div class="logo--flex">
+            <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/imageedit_1_5659273426_zpswrtm8qvc.png", :class => "name"), root_path )%>
+          </div>
 
-    <header id="main_navigation" class="clearfix">
-      <div class="border">
-        <div class="logo--flex">
-          <a href="#"><img src="http://i1074.photobucket.com/albums/w412/mjohansson9/nav_zps9nmcfxyw.png" alt="" class="nav-image"></a>
-          <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/imageedit_1_5659273426_zpswrtm8qvc.png", :class => "name"), root_path )%>
+          <nav>
+            <%= link_to "Home", root_path %>
+            <%= link_to "Articles", posts_path %>
+            <%= link_to "Projects", projects_path %>
+            <%= link_to "Contact", new_contact_path %>
+            <% if user_signed_in? %>
+              <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+            <% end %>
+            <a href="https://twitter.com/johanssonmia09" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+            <a href="https://www.instagram.com/miajohansson9" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+          </nav>
         </div>
+      </header>
 
+      <% if notice %>
+        <p class="notice"><%= notice %></p>
+        <% elsif alert %>
+        <p class="alert"><%= alert %></p>
+      <% end %>
+
+      <%= yield %>
+
+
+      <footer id="main_footer">
+        <div class="homepage_content wrapper wrapper-padding">
+          <h2 class="projects--title">What I'm working on</h2>
+          <hr style="margin-top: 30px; margin-bottom: 10px;">
+          <div class="projects" onunload="myfunction()">
+            <button type="button" class="back button" onclick="back()"></button>
+            <% number = 1 %>
+            <% @projects.each do |project| %>
+            <%= link_to project, id: "a-#{number}" do %>
+            <div class="flex">
+                <div class="each--project" id="project-<%= number %>">
+                    <h3><%= project.title %></h3>
+                    <p class="date"><%= project.created_at.strftime("%A, %b %d")%></p>
+                    <p class="content"><%= project.description %></p>
+                </div>
+            </div>
+            <% number = number + 1 %>
+            <% end %>
+            <% end %>
+            <button type="button" id: "next" name="button" onclick="myfunction()"></button>
+          </div>
+        </div>
+        <p class="copyright">&copy; 2016 Mia Johansson</p>
         <nav>
-          <%= link_to "Home", root_path %>
-          <%= link_to "Articles", posts_path %>
-          <%= link_to "Projects", projects_path %>
-          <%= link_to "Contact", new_contact_path %>
-          <% if user_signed_in? %>
-            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-          <% end %>
           <a href="https://twitter.com/johanssonmia09" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
           <a href="https://www.instagram.com/miajohansson9" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
         </nav>
+      </footer>
       </div>
-    </header>
-    <!-- <div class="colorful_divider"> -->
     </div>
 
-    <% if notice %>
-      <p class="notice"><%= notice %></p>
-      <% elsif alert %>
-      <p class="alert"><%= alert %></p>
-    <% end %>
-
-    <%= yield %>
-
-
-    <footer id="main_footer">
-      <div class="homepage_content wrapper wrapper-padding">
-        <h2 class="projects--title">What I'm working on</h2>
-        <hr style="margin-top: 30px; margin-bottom: 10px;">
-        <div class="projects" onunload="myfunction()">
-          <button type="button" class="back button" onclick="back()"></button>
-          <% number = 1 %>
-          <% @projects.each do |project| %>
-          <%= link_to project, id: "a-#{number}" do %>
-          <div class="flex">
-              <div class="each--project" id="project-<%= number %>">
-                  <h3><%= project.title %></h3>
-                  <p class="date"><%= project.created_at.strftime("%A, %b %d")%></p>
-                  <p class="content"><%= project.description %></p>
-              </div>
-          </div>
-          <% number = number + 1 %>
-          <% end %>
-          <% end %>
-          <button type="button" id: "next" name="button" onclick="myfunction()"></button>
-
-          <script type="text/javascript">
-            var num = 1;
-            function back() {
-              if (num == 1) {
-                $("#project-1").hide();
-                $("#project-3").show();
-                $("#project-2").hide();
-                $("#a-1").hide();
-                $("#a-3").show();
-                $("#a-2").hide();
-                num = 3;
-              } else if (num == 2) {
-                $("#project-3").hide();
-                $("#project-1").show();
-                $("#project-2").hide();
-                $("#a-1").show();
-                $("#a-2").hide();
-                $("#a-3").hide();
-                num--;
-              } else if (num == 3) {
-                $("#project-1").hide();
-                $("#project-3").hide();
-                $("#project-2").show();
-                $("#a-3").hide();
-                $("#a-2").show();
-                $("#a-1").hide();
-                num--;
-              }
-            }
-            function resize() {
-              if ( $(window).width() > 955) {
-                console.log("called");
-                $("#a-1").show();
-                $("#a-2").show();
-                $("#a-3").show();
-                $("#project-1").show();
-                $("#project-3").show();
-                $("#project-2").show();
-              } else {
-                $("#a-1").show();
-                $("#a-2").hide();
-                $("#a-3").hide();
-                $("#project-1").show();
-                $("#project-3").hide();
-                $("#project-2").hide();
-              }
-            }
-            if ( $(window).width() > 955) {
-              console.log("called");
-
-            }
-            function myfunction() {
-              console.log(num);
-              if (num == 1) {
-                $("#project-1").hide();
-                $("#project-3").hide();
-                $("#project-2").show();
-                $("#a-1").hide();
-                $("#a-3").hide();
-                $("#a-2").show();
-                num++;
-              } else if (num == 2) {
-                $("#project-3").show();
-                $("#project-1").hide();
-                $("#project-2").hide();
-                $("#a-1").hide();
-                $("#a-2").hide();
-                $("#a-3").show();
-                num++;
-              } else if (num == 3) {
-                $("#project-1").show();
-                $("#project-3").hide();
-                $("#project-2").hide();
-                $("#a-3").hide();
-                $("#a-2").hide();
-                $("#a-1").show();
-                num = 1;
-              }
-            }
-          </script>
-
-        </div>
-      </div>
-      <p class="copyright">&copy; 2016 Mia Johansson</p>
-      <nav>
-        <a href="https://twitter.com/johanssonmia09" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-        <a href="https://www.instagram.com/miajohansson9" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-      </nav>
-    </footer>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -166,5 +89,103 @@
       ga('create', 'UA-89987071-1', 'auto');
       ga('send', 'pageview');
     </script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $(".fa-times").click(function() {
+          $(".sidebar_menu").addClass("hide_menu");
+          $(".sidebar_menu").addClass("opacity_one");
+          $(".bodywrapper").removeClass("push");
+          $(".bodywrapper").addClass("pushback");
+        });
+
+        $(".toggle_menu").click(function() {
+          $(".sidebar_menu").removeClass("hide_menu");
+          $(".sidebar_menu").removeClass("opacity_one");
+          $(".bodywrapper").addClass("push");
+          $(".bodywrapper").removeClass("pushback");
+        });
+      });
+    </script>
+    <script type="text/javascript">
+      var num = 1;
+      function back() {
+        if (num == 1) {
+          $("#project-1").hide();
+          $("#project-3").show();
+          $("#project-2").hide();
+          $("#a-1").hide();
+          $("#a-3").show();
+          $("#a-2").hide();
+          num = 3;
+        } else if (num == 2) {
+          $("#project-3").hide();
+          $("#project-1").show();
+          $("#project-2").hide();
+          $("#a-1").show();
+          $("#a-2").hide();
+          $("#a-3").hide();
+          num--;
+        } else if (num == 3) {
+          $("#project-1").hide();
+          $("#project-3").hide();
+          $("#project-2").show();
+          $("#a-3").hide();
+          $("#a-2").show();
+          $("#a-1").hide();
+          num--;
+        }
+      }
+      function resize() {
+        if ( $(window).width() > 955) {
+          console.log("called");
+          $("#a-1").show();
+          $("#a-2").show();
+          $("#a-3").show();
+          $("#project-1").show();
+          $("#project-3").show();
+          $("#project-2").show();
+        } else {
+          $("#a-1").show();
+          $("#a-2").hide();
+          $("#a-3").hide();
+          $("#project-1").show();
+          $("#project-3").hide();
+          $("#project-2").hide();
+        }
+      }
+      if ( $(window).width() > 955) {
+        console.log("called");
+
+      }
+      function myfunction() {
+        console.log(num);
+        if (num == 1) {
+          $("#project-1").hide();
+          $("#project-3").hide();
+          $("#project-2").show();
+          $("#a-1").hide();
+          $("#a-3").hide();
+          $("#a-2").show();
+          num++;
+        } else if (num == 2) {
+          $("#project-3").show();
+          $("#project-1").hide();
+          $("#project-2").hide();
+          $("#a-1").hide();
+          $("#a-2").hide();
+          $("#a-3").show();
+          num++;
+        } else if (num == 3) {
+          $("#project-1").show();
+          $("#project-3").hide();
+          $("#project-2").hide();
+          $("#a-3").hide();
+          $("#a-2").hide();
+          $("#a-1").show();
+          num = 1;
+        }
+      }
+    </script>
+
   </body>
 </html>
