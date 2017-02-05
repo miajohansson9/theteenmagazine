@@ -1,4 +1,9 @@
 class ContactsController < ApplicationController
+
+  def show
+    set_meta_tags title: 'Contact Us'
+  end
+
   def new
     @contact = Contact.new
   end

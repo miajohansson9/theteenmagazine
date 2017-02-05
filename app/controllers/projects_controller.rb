@@ -20,6 +20,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    set_meta_tags title: 'The Teen Magazine | Projects',
   end
 
   def edit

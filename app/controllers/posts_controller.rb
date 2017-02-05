@@ -20,6 +20,9 @@ class PostsController < ApplicationController
   end
 
   def show
+    set_meta_tags title: @post.title,
+                  description: @post.meta_description,
+                  keywords: @post.keywords
   end
 
   def edit
@@ -42,7 +45,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :content, :image, :slug)
+    params.require(:post).permit(:title, :content, :image, :category, :meta_title, :meta_description, :keywords, :slug)
   end
 
   def find_post
