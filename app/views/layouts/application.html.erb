@@ -15,7 +15,7 @@
   </head>
 
   <body onresize="resize()">
-    <i class="fa fa-bars toggle_menu"></i>
+
     <div class="sidebar_menu hide_menu">
       <i class="fa fa-times"></i>
     </div>
@@ -24,6 +24,7 @@
       <header id="main_navigation" class="clearfix">
         <div class="border">
           <div class="logo--flex">
+            <i class="fa fa-bars toggle_menu"></i>
             <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/imageedit_1_5659273426_zpswrtm8qvc.png", :class => "name"), root_path )%>
           </div>
 
@@ -55,7 +56,7 @@
           <h2 class="projects--title">What I'm working on</h2>
           <hr style="margin-top: 30px; margin-bottom: 10px;">
           <div class="projects" onunload="myfunction()">
-            <button type="button" class="back button" onclick="back()"></button>
+            <button type="button" class="back button"></button>
             <% number = 1 %>
             <% @projects.each do |project| %>
             <%= link_to project, id: "a-#{number}" do %>
@@ -69,7 +70,7 @@
             <% number = number + 1 %>
             <% end %>
             <% end %>
-            <button type="button" id: "next" name="button" onclick="myfunction()"></button>
+            <button type="button" id = "next" name="button"></button>
           </div>
         </div>
         <p class="copyright">&copy; 2016 Mia Johansson</p>
@@ -89,6 +90,7 @@
       ga('create', 'UA-89987071-1', 'auto');
       ga('send', 'pageview');
     </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
         $(".fa-times").click(function() {
@@ -104,40 +106,67 @@
           $(".bodywrapper").addClass("push");
           $(".bodywrapper").removeClass("pushback");
         });
+
+        var num = 1;
+          $(".back").click(function() {
+          if (num == 1) {
+            $("#project-1").hide();
+            $("#project-3").show();
+            $("#project-2").hide();
+            $("#a-1").hide();
+            $("#a-3").show();
+            $("#a-2").hide();
+            num = 3;
+          } else if (num == 2) {
+            $("#project-3").hide();
+            $("#project-1").show();
+            $("#project-2").hide();
+            $("#a-1").show();
+            $("#a-2").hide();
+            $("#a-3").hide();
+            num--;
+          } else if (num == 3) {
+            $("#project-1").hide();
+            $("#project-3").hide();
+            $("#project-2").show();
+            $("#a-3").hide();
+            $("#a-2").show();
+            $("#a-1").hide();
+            num--;
+          }
+        });
+
+        $("#next").click(function() {
+          if (num == 1) {
+            $("#project-1").hide();
+            $("#project-3").hide();
+            $("#project-2").show();
+            $("#a-1").hide();
+            $("#a-3").hide();
+            $("#a-2").show();
+            num++;
+          } else if (num == 2) {
+            $("#project-3").show();
+            $("#project-1").hide();
+            $("#project-2").hide();
+            $("#a-1").hide();
+            $("#a-2").hide();
+            $("#a-3").show();
+            num++;
+          } else if (num == 3) {
+            $("#project-1").show();
+            $("#project-3").hide();
+            $("#project-2").hide();
+            $("#a-3").hide();
+            $("#a-2").hide();
+            $("#a-1").show();
+            num = 1;
+          }
+        });
       });
-    </script>
-    <script type="text/javascript">
-      var num = 1;
-      function back() {
-        if (num == 1) {
-          $("#project-1").hide();
-          $("#project-3").show();
-          $("#project-2").hide();
-          $("#a-1").hide();
-          $("#a-3").show();
-          $("#a-2").hide();
-          num = 3;
-        } else if (num == 2) {
-          $("#project-3").hide();
-          $("#project-1").show();
-          $("#project-2").hide();
-          $("#a-1").show();
-          $("#a-2").hide();
-          $("#a-3").hide();
-          num--;
-        } else if (num == 3) {
-          $("#project-1").hide();
-          $("#project-3").hide();
-          $("#project-2").show();
-          $("#a-3").hide();
-          $("#a-2").show();
-          $("#a-1").hide();
-          num--;
-        }
-      }
+
       function resize() {
         if ( $(window).width() > 955) {
-          console.log("called");
           $("#a-1").show();
           $("#a-2").show();
           $("#a-3").show();
@@ -151,38 +180,6 @@
           $("#project-1").show();
           $("#project-3").hide();
           $("#project-2").hide();
-        }
-      }
-      if ( $(window).width() > 955) {
-        console.log("called");
-
-      }
-      function myfunction() {
-        console.log(num);
-        if (num == 1) {
-          $("#project-1").hide();
-          $("#project-3").hide();
-          $("#project-2").show();
-          $("#a-1").hide();
-          $("#a-3").hide();
-          $("#a-2").show();
-          num++;
-        } else if (num == 2) {
-          $("#project-3").show();
-          $("#project-1").hide();
-          $("#project-2").hide();
-          $("#a-1").hide();
-          $("#a-2").hide();
-          $("#a-3").show();
-          num++;
-        } else if (num == 3) {
-          $("#project-1").show();
-          $("#project-3").hide();
-          $("#project-2").hide();
-          $("#a-3").hide();
-          $("#a-2").hide();
-          $("#a-1").show();
-          num = 1;
         }
       }
     </script>
