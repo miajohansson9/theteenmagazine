@@ -1,24 +1,55 @@
 <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style>
+ .div {
+   height: 300px;
+   width: 100%;
+   margin-top: -10px;
+   z-index: 0;
+   position: absolute;
+   overflow: hidden;
+}
+
+.post_image {
+   background-image: url(<%= @post.image %>);
+   height: 320px;
+   width: 105%;
+   margin-left: -10px;
+   margin-top: -10px;
+   z-index: 0;
+   background-size: cover;
+   position: absolute;
+   -webkit-filter: blur(5px);
+   -moz-filter: blur(5px);
+   -o-filter: blur(5px);
+   -ms-filter: blur(5px);
+   filter: blur(5px);
+}
+</style>
+
+<div class="div">
+  <div class="post_image">
+  </div>
+</div>
+
+<div class="flex--container--post--title">
+  <header>
+    <h1><%= @post.title %></h1>
+    <p class="date"><%= @post.created_at.strftime('%A, %B %d')%></p>
+  </header>
+</div>
+
+<hr class="posts_hr">
 
 <div class="skinny_wrapper wrapper_padding" id="post_show_content">
 
-  <header>
-    <br>
-    <p class="date"><%= @post.created_at.strftime('%A, %B %d')%></p>
-    <img src="<%= @post.image %>" class="post_image"/>
-    <h1><%= @post.title %></h1>
-
-  </header>
-
-  <div id="mc_embed_signup" style="width: 100%;">
-  <form action="//herokuapp.us14.list-manage.com/subscribe/post?u=5c2a24e15a906f29e2c6a9b72&amp;id=3081d2e76a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+  <div id="mc_embed_signup" style="width: 100%; margin-top: 20px; margin-left: 0px;">
+  <form action="//herokuapp.us14.list-manage.com/subscribe/post?u=5c2a24e15a906f29e2c6a9b72&amp;id=3081d2e76a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" style="padding-left: 0;" novalidate>
       <div id="mc_embed_signup_scroll">
     <h2>Is this your first time here?</h2>
   <div class="mc-field-group">
     <label for="mce-EMAIL">Email Address </label>
     <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
   </div>
-
     <div id="mce-responses" class="clear">
       <div class="response" id="mce-error-response" style="display:none"></div>
       <div class="response" id="mce-success-response" style="display:none"></div>
@@ -28,7 +59,6 @@
       </div>
   </form>
   </div>
-  <hr>
   <div id="content">
     <%= markdown @post.content %>
   <hr>
