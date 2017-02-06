@@ -18,6 +18,15 @@
 
     <div class="sidebar_menu hide_menu">
       <i class="fa fa-times"></i>
+      <h1>The Teen Magazine</h1>
+      <hr>
+      <%= link_to "Home", root_path %>
+      <%= link_to "Articles", posts_path %>
+      <%= link_to "Projects", projects_path %>
+      <%= link_to "Contact", new_contact_path %>
+      <% if user_signed_in? %>
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+      <% end %>
     </div>
     <div class="overflow">
       <div class="bodywrapper">
@@ -54,7 +63,7 @@
       <footer id="main_footer">
         <div class="homepage_content wrapper wrapper-padding">
           <h2 class="projects--title">What I'm working on</h2>
-          <hr style="margin-top: 30px; margin-bottom: 10px;">
+          <hr style="margin-top: 30px; margin-bottom: 10px; margin-left: 0;">
           <div class="projects" onunload="myfunction()">
             <button type="button" class="back button"></button>
             <% number = 1 %>

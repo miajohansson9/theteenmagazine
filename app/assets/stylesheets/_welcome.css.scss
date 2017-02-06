@@ -15,21 +15,18 @@ $gray:  #2a2a2a;
 }
 
 .col-2 {
-  width: 100%;
-  max-width: 100%;
+  width: 95%;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  padding-top: 10px;
+  justify-content: space-between;
   padding-bottom: 5px;
 
   .thumbnail {
     overflow: hidden;
-    width: 30%;
-    margin-bottom: -20px;
-    margin: 5px;
+    width: 32.9%;
     &:hover {
       .article_title {
         background-color: transparentize($gray, 0.2);

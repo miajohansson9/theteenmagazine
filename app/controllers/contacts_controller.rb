@@ -1,7 +1,8 @@
 class ContactsController < ApplicationController
+  before_action :show
 
   def show
-    set_meta_tags title: 'Contact Us'
+    set_meta_tags title: 'The Teen Magazine | Contact Us'
   end
 
   def new
