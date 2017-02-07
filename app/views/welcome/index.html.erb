@@ -6,7 +6,9 @@
           <div class="featured divfeatured">
             <% if @posts_featured %>
               <div class="featured individual">
-                <%=link_to(image_tag(@posts_featured.image, :class => "image_thumbnail"), @posts_featured )%>
+                <div class="featured_img">
+                  <%=link_to(image_tag(@posts_featured.image, :class => "image_thumbnail"), @posts_featured )%>
+                </div>
                 <h3 class="article_title"><a href="#"><%= link_to @posts_featured.title, @posts_featured %></a></h3>
                 <p class="date"><%= @posts_featured.created_at.strftime("%A, %b %d")%></p>
               </div>
