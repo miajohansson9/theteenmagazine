@@ -1,6 +1,15 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_any!, except: [:index, :show]
+
+  def authenticate_any!
+    if admin_signed_in?
+        authenticate_admin!
+    else
+        authenticate_user!
+    end
+  end
+
   def index
     @posts = Post.all.order("created_at desc").paginate(page: params[:page], per_page: 7)
   end
@@ -45,7 +54,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :content, :image, :category, :meta_title, :meta_description, :keywords, :slug)
+    params.require(:post).permit(:title, :content, :image, :category, :meta_title, :meta_description, :keywords, :user_id, :slug)
   end
 
   def find_post
