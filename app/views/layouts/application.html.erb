@@ -29,6 +29,8 @@
       <% if user_signed_in? %>
          <%= link_to "Dashboard", user_path(current_user) %>
          <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+     <% else %>
+         <%= link_to "Apply", new_apply_path %>
       <% end %>
     </div>
     <div class="overflow">
