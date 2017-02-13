@@ -1,0 +1,21 @@
+<h1 id="page_title">Apply to Become a Writer for the Teen Magazine!</h1>
+<div class="skinny_wrapper wrapper_padding">
+  <%= form_for @apply do |f| %>
+    <%= f.label :first %> <br />
+    <%= f.text_field :first, required: true %>
+    <br />
+    <%= f.label :last %> <br />
+    <%= f.text_field :last, required: true %>
+    <br />
+    <%= f.label :email %> <br />
+    <%= f.email_field :email, required: true %>
+    <br />
+
+    <div class="hidden">
+      <%= f.label :nickname %> <br />
+      <%= f.text_field :nickname %>
+    </div>
+
+    <%= f.submit 'Apply!', class: 'button' %>
+  <% end %>
+</div>
