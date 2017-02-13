@@ -29,10 +29,8 @@
 <br><%= f.label :keywords %><br>
 <%= f.text_field :keywords %>
 
-<% if user_signed_in? %>
-  <%= f.hidden_field :user_id, :value => current_user.id %>
-<% else %>
-  <%= f.hidden_field :admin_id, :value => current_admin.id %>
+<% if :user_id == nil %>
+<%= f.hidden_field :user_id, :value => current_user.id %>
 <% end %>
 
 <br><%= f.submit %>
