@@ -22,8 +22,13 @@
       <hr>
       <%= link_to "Home", root_path %>
       <%= link_to "Articles", posts_path %>
-      <%= link_to "Projects", projects_path %>
       <%= link_to "Contact", new_contact_path %>
+      <% if admin_signed_in? %>
+        <%= link_to "Users", users_path %>
+      <% end %>
+      <% if user_signed_in? %>
+         <%= link_to "Dashboard", user_path(current_user) %>
+      <% end %>
       <% if user_signed_in? || admin_signed_in? %>
         <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
       <% end %>
@@ -40,8 +45,13 @@
           <nav>
             <%= link_to "Home", root_path %>
             <%= link_to "Articles", posts_path %>
-            <%= link_to "Projects", projects_path %>
             <%= link_to "Contact", new_contact_path %>
+            <% if admin_signed_in? %>
+              <%= link_to "Users", users_path %>
+            <% end %>
+            <% if user_signed_in? %>
+               <%= link_to "Dashboard", user_path(current_user) %>
+            <% end %>
             <% if user_signed_in? || admin_signed_in? %>
               <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
             <% end %>
@@ -61,27 +71,6 @@
 
 
       <footer id="main_footer">
-        <div class="homepage_content wrapper wrapper-padding">
-          <h2 class="projects--title">What I'm working on</h2>
-          <hr style="margin-top: 30px; margin-bottom: 10px; margin-left: 0;">
-          <div class="projects" onunload="myfunction()">
-            <button type="button" class="back button"></button>
-            <% number = 1 %>
-            <% @projects.each do |project| %>
-            <%= link_to project, id: "a-#{number}" do %>
-            <div class="flex">
-                <div class="each--project" id="project-<%= number %>">
-                    <h3><%= project.title %></h3>
-                    <p class="date"><%= project.created_at.strftime("%A, %b %d")%></p>
-                    <p class="content"><%= project.description %></p>
-                </div>
-            </div>
-            <% number = number + 1 %>
-            <% end %>
-            <% end %>
-            <button type="button" id = "next" name="button"></button>
-          </div>
-        </div>
         <p class="copyright">&copy; 2016 Mia Johansson</p>
         <nav>
           <a href="https://twitter.com/johanssonmia09" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
@@ -115,82 +104,7 @@
           $(".bodywrapper").addClass("push");
           $(".bodywrapper").removeClass("pushback");
         });
-
-        var num = 1;
-          $(".back").click(function() {
-          if (num == 1) {
-            $("#project-1").hide();
-            $("#project-3").show();
-            $("#project-2").hide();
-            $("#a-1").hide();
-            $("#a-3").show();
-            $("#a-2").hide();
-            num = 3;
-          } else if (num == 2) {
-            $("#project-3").hide();
-            $("#project-1").show();
-            $("#project-2").hide();
-            $("#a-1").show();
-            $("#a-2").hide();
-            $("#a-3").hide();
-            num--;
-          } else if (num == 3) {
-            $("#project-1").hide();
-            $("#project-3").hide();
-            $("#project-2").show();
-            $("#a-3").hide();
-            $("#a-2").show();
-            $("#a-1").hide();
-            num--;
-          }
-        });
-
-        $("#next").click(function() {
-          if (num == 1) {
-            $("#project-1").hide();
-            $("#project-3").hide();
-            $("#project-2").show();
-            $("#a-1").hide();
-            $("#a-3").hide();
-            $("#a-2").show();
-            num++;
-          } else if (num == 2) {
-            $("#project-3").show();
-            $("#project-1").hide();
-            $("#project-2").hide();
-            $("#a-1").hide();
-            $("#a-2").hide();
-            $("#a-3").show();
-            num++;
-          } else if (num == 3) {
-            $("#project-1").show();
-            $("#project-3").hide();
-            $("#project-2").hide();
-            $("#a-3").hide();
-            $("#a-2").hide();
-            $("#a-1").show();
-            num = 1;
-          }
-        });
       });
-
-      function resize() {
-        if ( $(window).width() > 955) {
-          $("#a-1").show();
-          $("#a-2").show();
-          $("#a-3").show();
-          $("#project-1").show();
-          $("#project-3").show();
-          $("#project-2").show();
-        } else {
-          $("#a-1").show();
-          $("#a-2").hide();
-          $("#a-3").hide();
-          $("#project-1").show();
-          $("#project-3").hide();
-          $("#project-2").hide();
-        }
-      }
     </script>
 
   </body>

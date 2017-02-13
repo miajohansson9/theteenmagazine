@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212054125) do
+ActiveRecord::Schema.define(version: 20170212190514) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20170212054125) do
     t.text     "keywords"
     t.string   "category"
     t.integer  "user_id"
+    t.integer  "admin_id"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
@@ -80,6 +81,17 @@ ActiveRecord::Schema.define(version: 20170212054125) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.text     "image"
+    t.text     "description"
+    t.text     "first_name"
+    t.text     "last_name"
+    t.text     "website"
+    t.text     "insta"
+    t.text     "twitter"
+    t.text     "facebook"
+    t.text     "pintrest"
+    t.text     "youtube"
+    t.text     "snap"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

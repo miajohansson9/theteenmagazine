@@ -1,0 +1,10 @@
+<h1 id="page_title">Users</h1>
+
+<div id="posts_wrapper" class="skinny_wrapper">
+  <% @users.each do |user| %>
+      <div class="post">
+        <h3><a href="#"><%= link_to user.email, user%></a></h2>
+        <hr>
+      </div>
+  <% end %>
+</div>

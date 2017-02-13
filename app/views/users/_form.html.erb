@@ -1,0 +1,43 @@
+<%= form_for @user do |f| %>
+
+<%= f.label "First Name" %>
+<%= f.text_field :first_name %>
+
+<%= f.label "Last Name" %>
+<%= f.text_field :last_name %>
+
+<%= f.label "Image LINK (working on uploading image capabilities)" %><br>
+<%= f.text_field :image %>
+
+<%= f.label "Description (in third person)" %>
+<%= f.text_area :description %>
+
+<%= f.label "Email (Will not be published)" %><br>
+<%= f.text_field :email %>
+
+<h3>Links (Optional)</h3>
+
+<%= f.label "Website (available for seniority writers only)" %>
+<%= f.text_field :website %>
+
+<%= f.label "Instagram" %>
+<%= f.text_field :insta %>
+
+<%= f.label "Twitter" %>
+<%= f.text_field :twitter %>
+
+<%= f.label "Facebook" %>
+<%= f.text_field :facebook %>
+
+<%= f.label "Pinterest" %>
+<%= f.text_field :pintrest %>
+
+<%= f.label "Youtube" %>
+<%= f.text_field :youtube %>
+
+<%= f.label "Snapchat" %>
+<%= f.text_field :snap %>
+
+<br><%= f.submit %>
+
+<% end %>

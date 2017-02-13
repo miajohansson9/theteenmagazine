@@ -1,6 +1,13 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_any!, except: [:index, :show]
+  before_action :load_user,  only: [:show]
+
+  def load_user
+    if @post.user != nil
+      @user = @post.user
+    end
+  end
 
   def authenticate_any!
     if admin_signed_in?
@@ -15,11 +22,21 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = Post.new
+    if user_signed_in?
+      @post = current_user.posts.build
+    else
+      @post = Post.new
+    end
   end
 
   def create
-    @post = Post.new post_params
+
+    if user_signed_in?
+      @post = current_user.posts.build(post_params)
+    else
+      @post = Post.new(post_params)
+    end
+
 
     if @post.save
       redirect_to @post, notice: "Congrats! Your post was successfully published on The Teen Magazine!"
@@ -50,11 +67,10 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
-
   private
 
   def post_params
-    params.require(:post).permit(:title, :content, :image, :category, :meta_title, :meta_description, :keywords, :user_id, :slug)
+    params.require(:post).permit(:title, :content, :image, :category, :meta_title, :meta_description, :keywords, :user_id, :admin_id, :slug)
   end
 
   def find_post

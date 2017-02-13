@@ -1,0 +1,47 @@
+<div id= "background">
+  <div class="flex--profile">
+    <% if (@user.image != "" && @user.image != nil) %>
+      <%= image_tag(@user.image, :class => "profile_img") %>
+    <% else %>
+      <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+    <% end %>
+    <div class="info">
+    <h2>
+    <% if (@user.first_name != "" && @user.first_name !=nil) %>
+      <%= @user.first_name %>
+    <% end %>
+    <% if (@user.last_name != "" && @user.last_name!= nil) %>
+      <%= @user.last_name %>
+    <% end %>
+    </h2>
+
+    <% if (@user.description != "" && @user.description != nil) %>
+      <p><%= @user.description %></p>
+    <% end %>
+
+      <p class="website">
+        <% if (@user.website != "" && @user.website !=  nil) %>
+           Website: <a href="<%= @user.website %>" target="_blank"><%= @user.website %></a>
+        <% end %>
+        <% if (@user.twitter != "" && @user.twitter !=  nil) %>
+           <a href="<%= @user.twitter %>" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+        <% end %>
+        <% if (@user.insta != "" && @user.insta != nil) %>
+           <a href="<%= @user.insta %>" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+        <% end %>
+        <% if (@user.facebook != "" && @user.facebook !=  nil) %>
+           <a href="<%= @user.facebook %>" target="_blank"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+        <% end %>
+        <% if (@user.youtube != "" && @user.youtube != nil) %>
+           <a href="<%= @user.youtube %>" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+        <% end %>
+        <% if (@user.pintrest != "" && @user.pintrest != nil) %>
+           <a href="<%= @user.pintrest %>" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+        <% end %>
+        <% if (@user.snap != "" && @user.snap != nil) %>
+           <a href="<%= @user.snap %>" target="_blank"><i class="fa fa-snapchat" aria-hidden="true"></i></a>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>
