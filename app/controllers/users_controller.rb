@@ -1,15 +1,8 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_admin!, only: [:index]
-  before_action :authenticate_any!, only: [:show]
-
-  def authenticate_any!
-    if admin_signed_in?
-        authenticate_admin!
-    else
-        authenticate_user!
-    end
-  end
+  before_action :authenticate_user!, only: [:show]
+  before_action :is_admin?, only: [:index]
+  load_and_authorize_resource
 
   def show
     @user = User.find(params[:id])
@@ -17,7 +10,6 @@ class UsersController < ApplicationController
   end
 
   def index
-
     @users = User.all.order("created_at desc")
   end
 
@@ -52,10 +44,14 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
+  def is_admin?
+    redirect_to root_path unless (current_user && current_user.admin?)
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:email, :first_name, :last_name, :image, :description, :website, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
+    params.require(:user).permit(:email, :admin, :first_name, :last_name, :image, :description, :website, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
   end
 
   def find_user

@@ -23,14 +23,12 @@
       <%= link_to "Home", root_path %>
       <%= link_to "Articles", posts_path %>
       <%= link_to "Contact", new_contact_path %>
-      <% if admin_signed_in? %>
+      <% if current_user && current_user.admin? %>
         <%= link_to "Users", users_path %>
       <% end %>
       <% if user_signed_in? %>
          <%= link_to "Dashboard", user_path(current_user) %>
-      <% end %>
-      <% if user_signed_in? || admin_signed_in? %>
-        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+         <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
       <% end %>
     </div>
     <div class="overflow">
@@ -41,19 +39,16 @@
             <i class="fa fa-bars toggle_menu"></i>
             <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/imageedit_1_5659273426_zpswrtm8qvc.png", :class => "name"), root_path )%>
           </div>
-
           <nav>
             <%= link_to "Home", root_path %>
             <%= link_to "Articles", posts_path %>
             <%= link_to "Contact", new_contact_path %>
-            <% if admin_signed_in? %>
+            <% if current_user && current_user.admin? %>
               <%= link_to "Users", users_path %>
             <% end %>
             <% if user_signed_in? %>
                <%= link_to "Dashboard", user_path(current_user) %>
-            <% end %>
-            <% if user_signed_in? || admin_signed_in? %>
-              <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+               <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
             <% end %>
             <a href="https://twitter.com/johanssonmia09" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
             <a href="https://www.instagram.com/miajohansson9" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>

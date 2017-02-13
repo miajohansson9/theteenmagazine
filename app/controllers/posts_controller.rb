@@ -1,19 +1,12 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_any!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :load_user,  only: [:show]
+  load_and_authorize_resource
 
   def load_user
     if @post.user != nil
       @user = @post.user
-    end
-  end
-
-  def authenticate_any!
-    if admin_signed_in?
-        authenticate_admin!
-    else
-        authenticate_user!
     end
   end
 
