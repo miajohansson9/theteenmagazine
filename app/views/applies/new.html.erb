@@ -11,6 +11,16 @@
     <%= f.email_field :email, required: true %>
     <br />
 
+    <%= f.label "Primary Category" %><br /><br />
+    <%= f.select :category, ['Lifestyle', 'Fashion', 'Beauty', 'Health & Fitness', 'Food', "DIY", 'High School', 'Academics', 'Tips & Hacks', 'Advice', 'Travel', 'Love & Relationships', 'Enreprenuership', 'Humor']%><br />
+
+    <br />
+    <br />
+    <%= f.label "Write one or two sentences about yourself: " %><br />
+    <%= f.text_area :description, required: true %>
+
+    <br />
+
     <div class="hidden">
       <%= f.label :nickname %> <br />
       <%= f.text_field :nickname %>
