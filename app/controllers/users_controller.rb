@@ -17,7 +17,8 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    @user = User.new(:email => 'test@example.com', :password => 'password', :password_confirmation => 'password')
+    @user.save
   end
 
   def create

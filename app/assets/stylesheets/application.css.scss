@@ -15,6 +15,17 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+html, body {
+  height: 100%;
+    width: 100%;
+    margin: 0;
+    display: table;
+}
+
+.bodywrapper {
+  min-height: 100%;
+}
+
 .showContent {
   visibility:visible;
 }
@@ -139,11 +150,19 @@ button {
 }
 
 footer {
-  margin-top: 20px;
+  display: table-row;
+  height: 5em;
   background-color: #2b2b2b;
   color: white;
-  a {
-    color: white;
+
+  nav {
+    padding: 20px;
+    i {
+      color: white;
+    }
+  }
+  p {
+    padding: 20px;
   }
 }
 
@@ -297,6 +316,12 @@ footer {
   width: 80%;
   max-width: 760px;
   margin: 0 auto;
+  h1 {
+    text-align: center;
+  }
+  p {
+    text-align: center;
+  }
 }
 
 .wrapper {

@@ -49,6 +49,8 @@
             <% if user_signed_in? %>
                <%= link_to "Dashboard", user_path(current_user) %>
                <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+            <% else %>
+               <%= link_to "Apply", new_apply_path %>
             <% end %>
             <a href="https://twitter.com/johanssonmia09" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
             <a href="https://www.instagram.com/miajohansson9" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
@@ -63,17 +65,16 @@
       <% end %>
 
       <%= yield %>
-
-
-      <footer id="main_footer">
-        <p class="copyright">&copy; 2016 Mia Johansson</p>
-        <nav>
-          <a href="https://twitter.com/johanssonmia09" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-          <a href="https://www.instagram.com/miajohansson9" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-        </nav>
-      </footer>
       </div>
     </div>
+
+    <footer id="main_footer">
+      <p class="copyright">&copy; 2016 Mia Johansson</p>
+      <nav>
+        <a href="https://twitter.com/johanssonmia09" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+        <a href="https://www.instagram.com/miajohansson9" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+      </nav>
+    </footer>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
