@@ -64,6 +64,10 @@
   }
 }
 
+.edit_user {
+  margin-bottom: 30px;
+}
+
 .flex--p {
   display: flex;
   flex-direction: row;
@@ -137,6 +141,17 @@
   width: 200px;
   text-align: center;
   color: white;
+}
+
+.delete {
+  text-decoration: none;
+  color: black;
+  margin-top: 30px;
+  float: right;
+  margin-bottom: 20px;
+  &:hover{
+    color: red;
+  }
 }
 
 

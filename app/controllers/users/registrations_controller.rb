@@ -1,6 +1,25 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-# before_action :configure_sign_up_params, only: [:create]
-# before_action :configure_account_update_params, only: [:update]
+
+  skip_before_filter :require_no_authentication, only: [:new, :create]
+  after_action :change_notice, only: [:create]
+
+  def new
+    super
+  end
+
+  protected
+
+  def sign_up(resource_name, resource)
+    true
+  end
+
+  def after_sign_up_path_for(resource)
+    users_path
+  end
+
+  def change_notice
+    flash[:notice] = "Yay!! A new user was created!"
+  end
 
   # GET /resource/sign_up
   # def new

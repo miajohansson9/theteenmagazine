@@ -1,11 +1,23 @@
-<h2 id="page_title">Sign up</h2>
-<div class="skinny_wrapper wrapper_padding">
+
+<h1 id="page_title">Add User</h1>
+<% if current_user && current_user.admin? %>
+<div id="posts_wrapper" class="skinny_wrapper">
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+    <%= f.label "First Name" %>
+    <%= f.text_field :first_name %>
+
+    <%= f.label "Last Name" %>
+    <%= f.text_field :last_name %>
+
+    <%= f.label "Email" %><br>
+    <%= f.text_field :email %>
+
+    <%= f.label "Description" %>
+    <%= f.text_area :description %>
+
   </div>
 
   <div class="field">
@@ -25,7 +37,12 @@
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
-
-<%= render "devise/shared/links" %>
-
 </div>
+<% else %>
+<div id="posts_wrapper" class="skinny_wrapper">
+  <p>
+    Oh no! You don't have permission to access this page! <%= link_to "Apply", new_apply_path %>
+  </p>
+</div>
+
+<% end %>

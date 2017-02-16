@@ -3,4 +3,8 @@
 <div class="skinny_wrapper wrapper_padding">
 
 <%= render 'form' %>
+
+<% if current_user && current_user.admin? %>
+<%= link_to "Delete Account", user_path(@user), method: :delete, data: {confirm: "Are you sure you want to delete this user?"},  class: "delete" %>
+<% end %>
 </div>
