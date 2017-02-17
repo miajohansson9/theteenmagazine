@@ -16,10 +16,8 @@ body {
 }
 
 html, body {
-  height: 100%;
+   height: 100%;
     width: 100%;
-    margin: 0;
-    display: table;
 }
 
 .bodywrapper {
@@ -150,7 +148,6 @@ button {
 }
 
 footer {
-  display: table-row;
   height: 5em;
   background-color: #2b2b2b;
   color: white;
@@ -206,16 +203,38 @@ footer {
   width: 70%;
 }
 
+.visible {
+  visibility: visible !important;
+}
+
 .featured {
   margin-top: 10px;
+  visibility: hidden;
+
     .featured_img {
-      width: 100%;
       margin-bottom: 10px;
       position:relative;
+      max-height: 600px;
+      width: 100%;
       overflow:hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    }
+
+    .big {
+      max-height: 500px;
+      object-fit: cover;
+      margin-bottom: -25%;
+      margin-top: -25%;
+      visibility: visible !important;
+    }
+
+    .medium {
+      margin-bottom: -15%;
+      margin-top: -10%;
+      visibility: visible !important;
+    }
+
+    .small {
+      visibility: visible !important;
     }
 
     .article_title {
@@ -491,8 +510,10 @@ body {
 }
 
 #main_footer {
-  padding: 2.5em 5%;
   border-top: 1px solid $border;
+  p, nav {
+    padding-top: 25px;
+  }
   .copyright {
     float: left;
     font-size: .9em;
