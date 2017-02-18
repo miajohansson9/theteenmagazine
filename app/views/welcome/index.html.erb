@@ -55,10 +55,9 @@
     var img = document.getElementById('image_thumbnail');
     var height = img.clientHeight;
     if (height >= 450) {
-      console.log("more than 500");
       $('#image_thumbnail').addClass('big');
       $('.featured').addClass('visible');
-    } else if (height >= 100) {
+    } else if (height >= 350) {
       $('#image_thumbnail').addClass('medium');
       $('#image_thumbnail').removeClass('big');
       $('.featured').addClass('visible');
