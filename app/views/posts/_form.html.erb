@@ -29,10 +29,28 @@
 <br><%= f.label :keywords %><br>
 <%= f.text_field :keywords %>
 
+<% if @post.approved == true %>
+  <% if @post.after_approved == nil %>
+    <%= f.hidden_field :created_at, :value => Time.now %>
+    <%= f.hidden_field :after_approved, :value => true %>
+    <br><%= f.submit "Publish My Article" %>
+  <% else %>
+    <br><%= f.submit "Publish Changes" %>
+  <% end %>
+<% else %>
+  <br><%= f.label "Submit My Article For Approval" %>
+  <%= f.check_box :waiting_for_approval %><br>
+  <%= f.hidden_field :approved, :value => false %><br>
+  <br><%= f.submit "Save & Preview" %><br><br>
+<% end %>
+
 <% if :user_id == nil %>
 <%= f.hidden_field :user_id, :value => current_user.id %>
 <% end %>
 
-<br><%= f.submit %>
+<% if (current_user && current_user.admin?) %>
+<br><%= f.label "Approve" %>
+<%= f.check_box :approved %><br />
+<% end %>
 
 <% end %>

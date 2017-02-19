@@ -1,4 +1,15 @@
-<h1 id="page_title" style="margin-bottom: -50px;">Users</h1>
+
+<h1 id="page_title" style="border-bottom: none; margin-bottom: -50px;">Waiting For Approval</h1>
+<div id="posts_wrapper" class="skinny_wrapper">
+  <% @posts_waiting.each do |post| %>
+  <div class="flex--postlist--item">
+      <h6 id="post_title"><a href="#"><%= link_to post.title, post%></a></h6>
+      <h6 id="date"><%= post.created_at.strftime('%A, %B %d') %></h6>
+  </div>
+  <% end %>
+</div>
+
+<h1 id="page_title" style="margin-bottom: -80px; margin-top:-50px; border-bottom: none;">Users</h1>
 
 <div id="posts_wrapper" class="skinny_wrapper">
   <% @users.each do |user| %>

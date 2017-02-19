@@ -98,6 +98,18 @@
   margin-bottom: 20px;
   padding-bottom: 20px;
 
+  .inside--item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    a {
+      vertical-align: middle;
+      line-height: 30px;
+      margin-left: 10px;
+    }
+  }
+
+
   #post_title {
     margin: 0;
     a {

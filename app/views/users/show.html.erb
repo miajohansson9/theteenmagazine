@@ -8,12 +8,23 @@
   <p class="editlink--profile"><%= link_to "Edit Profile", edit_user_path(@user) %></p>
 </div>
 
-  <h1 id="page_title">Published Posts</h1>
+  <h1 id="page_title">Your Articles</h1>
 
     <% @user_posts.each do |post| %>
     <div class="flex--postlist--item">
-        <h6 id="post_title"><a href="#"><%= link_to post.title, post%></a></h6>
-        <h6 id="date"><%= post.created_at.strftime('%A, %B %d') %></h6>
+      <div class="inside--item">
+        <% if post.approved && post.after_approved == true %>
+        <%= image_tag "published.png", class: "icon" %>
+        <% elsif post.waiting_for_approval && (post.approved == nil || post.approved == false) %>
+        <%= image_tag "waiting.png", class: "icon" %>
+        <% elsif post.approved && post.after_approved == nil %>
+        <%= image_tag "approved.png", class: "icon" %>
+        <% else %>
+        <%= image_tag "saved.png", class: "icon" %>
+        <% end %>
+          <h6 id="post_title"><a href="#"><%= link_to post.title, post%></a></h6>
+      </div>
+      <h6 id="date"><%= post.created_at.strftime('%A, %B %d') %></h6>
     </div>
     <% end %>
 

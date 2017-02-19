@@ -11,6 +11,10 @@ $white: #FFFFFF;
   box-sizing: border-box;
 }
 
+#new_user {
+  margin-bottom: 150px;
+}
+
 body {
   font-family: 'Raleway', sans-serif;
 }
@@ -30,6 +34,11 @@ html, body {
 
 .logo {
   width: 700px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
 }
 
 .sidebar_menu {
@@ -228,7 +237,7 @@ footer {
     }
 
     .medium {
-      margin-bottom: -15%;
+      margin-bottom: -10%;
       margin-top: -10%;
       visibility: visible !important;
     }
@@ -417,6 +426,10 @@ body {
     padding: 0;
     width: 100%;
   }
+}
+
+.fb-comments, .fb-comments iframe[style], .fb-comments span {
+   width: 100% !important;
 }
 
 #mc-embedded-subscribe-form{

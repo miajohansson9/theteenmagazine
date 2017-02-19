@@ -30,6 +30,7 @@ gem 'aws-sdk', '~> 2.3'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'meta-tags', '~> 2.1'
 gem 'cancancan'
+gem 'jquery-turbolinks', '~> 2.1'
 
 group :development, :test do
 
