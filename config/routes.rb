@@ -8,5 +8,12 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'welcome#index'
 
+  get 'criteria' => 'pages#criteria'
+  get 'choosing-a-topic' => 'pages#topics'
+  get 'writing-the-perfect-article' => 'pages#writing'
+  get 'finding-images' => 'pages#images'
+  get 'how-to-style-your-articles' => 'pages#styling'
+
+
   get '*path' => redirect('/')
 end

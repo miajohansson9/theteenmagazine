@@ -39,6 +39,10 @@ html, body {
 .icon {
   width: 30px;
   height: 30px;
+  min-width: 30px;
+  max-height: 30px;
+  min-height: 30px;
+  max-width: 30px;
 }
 
 .sidebar_menu {
@@ -523,7 +527,6 @@ body {
 }
 
 #main_footer {
-  border-top: 1px solid $border;
   p, nav {
     padding-top: 25px;
   }
@@ -844,5 +847,6 @@ hr {
 }
 
 @import "userprofile";
+@import "pages";
 @import "posts_projects";
 @import "welcome";

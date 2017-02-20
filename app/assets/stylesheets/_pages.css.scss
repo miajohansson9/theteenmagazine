@@ -1,0 +1,106 @@
+.criteria {
+  background-color: white;
+  span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    p {
+      margin: 0;
+      margin-left: 20px;
+    }
+  }
+
+  .question {
+    margin: 0;
+    font-weight: 800;
+    color: $highlight;
+    font-size: 25px;
+  }
+  a {
+    color: black;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+.topics {
+  .categories {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    p {
+      margin: 0;
+      width: 33%;
+      color: $highlight;
+      display: inline-block;
+    }
+  }
+  ol {
+    p {
+      margin: 0;
+      font-size: 18px;
+    }
+    .blank {
+      color: #D3D3D3;
+      display: inline-block;
+    }
+  }
+  a {
+    color: black;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+
+.writing {
+  .yellow {
+    background-color: yellow;
+    color: black;
+  }
+  b {
+    color: $highlight;
+  }
+  img {
+    width: 100%;
+  }
+  li {
+    p {
+      margin: 0;
+    }
+    xmp {
+      margin: 0;
+    }
+  }
+  .writing--images {
+    p {
+      margin-top: 10px;
+    }
+  }
+  a {
+    color: black;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+.theimages {
+  a {
+    color: black;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+  img {
+    width: 70%;
+    display: block;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

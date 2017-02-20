@@ -1,0 +1,111 @@
+<div class="skinny_wrapper writing">
+  <h1 id="page_title" style="margin-top: -10px;">Writing The Perfect Article</h1>
+  <p>
+    <b class="yellow">Please read this entire tutorial before you write your first article.</b>
+  </p>
+  <p>Articles should be formatted so that they can be skimmmed over and be understandable. This means that your article should follow these basic requirements:</p>
+  <ol>
+    <li>No paragraphs should be more than four lines on desktop. </li>
+    <li>Articles should have at least one image, preferably more.</li>
+    <li>Articles should be split up into multple sections with headers. Avoid one worded headers if you can. Be creative!</li>
+  </ol>
+
+  <p>Additionally, articles should be at minimum 300 words. Shorter articles should also have lots of images.</p>
+
+  <h3>Articles Should Follow This Structure:</h3>
+  <p>
+    - <b>Title:</b> Titles should be at least six words long. They should reflect keywords that people are searching for and be unique.
+  </p>
+  <p>
+    - <b>Introductory Paragraph:</b> The first few sentences are the most important for SEO (Search Engin Optimization) and therefore should be descriptive and include words that describe what the article is going to be about.
+  </p>
+  <%= image_tag("1.png")%>
+  <p>
+    - <b>Headers:</b> Your Article needs to be split up with descriptive headers. To make it easier to include headers, make your title something like: 7 steps to having healthy hair or 10 best places in the world to travel for your senior trip.
+  </p>
+  <p>
+    - <b>Images:</b> You don't need to have an image for every point you make, but a good idea is to have an image for every other point that you make. At minimum, there should be at least one image in your article, preferably more. You cannot use just any picture you find on the web. To read about where you can find images, read <a href="/finding-images">Finding Images</a>.
+  </p>
+  <%= image_tag("2.png")%>
+  <p>
+    - <b>Paragraphs:</b> Paragraphs should never be more than four lines, and should be split up wherever possible. A concluding paragraph is not necessary.
+  </p>
+  <%= image_tag("3.png")%>
+
+  <h1>Formatting Your Articles</h1>
+  <p>Copy and paste this into the top of your article:  </p>
+
+  <xmp>
+  <style scoped>
+    .image {
+          width: 70%;
+          margin-left: auto;
+          margin-right: auto;
+          display: block;
+      }
+    .link {
+     text-decoration: none;
+     color: #e0528d;
+    }
+    .link:hover {
+     opacity: 0.5;  //transparent by 50% when someone hovers over link
+    }
+    @media (max-width: 600px) {  //style when screen is smaller
+     .image {
+         width: 100%;
+     }
+    }
+  </style>
+  </xmp>
+  <p>  Example:  </p>
+  <%= image_tag("4.png")%>
+  <p>This is called CSS and is important for styling your article. It is not important to know exactly what it means, but if you're curious about it, you can search for CSS basics online.</p>
+
+  <h3>Text, Bold Font, Italic Font, & Headers</h3>
+  <ul>
+    <li><p>Regular text can be written as is.</p></li>
+    <li><p style="display: inline-block;">Bold text is wrapped in <xmp style="display:inline-block;"> <b></b></xmp> example: <xmp style="display: inline-block;"><b></xmp><p style="display: inline-block;">This will be bold</p><xmp style="display: inline-block;"></b></xmp></p></li>
+    <li><p style="display: inline-block;">Italic text is wrapped in <xmp style="display:inline-block;"> <i></i></xmp> example: <xmp style="display: inline-block;"><i></xmp><p style="display: inline-block;">This will be italic</p><xmp style="display: inline-block;"></i></xmp></p></li>
+    <li><p>#Big Header</p></li>
+    <li><p>##Medium Header</p></li>
+    <li><p>###Small Header</p></li>
+  </ul>
+
+  <div class="writing--images">
+    <h3>Images</h3>
+    <p>Copy and paste this exact code into your article where you want your image:</p>
+    <xmp>
+    <img src="https://www.google.com/" class="image"/>
+    </xmp>
+    <p>Replace https://www.google.com/ with your link. Before using images, read about which images you're allowed to use <a href="/finding-images">here</a>.</p>
+    <p>IMPORTANT: Taking the url link from Pintrest or Instagram does not work. Instead, follow these directions:</p>
+    <h3>Pintrest</h3>
+    <p>Right click on the image, and select "copy image address"</p>
+    <%= image_tag("5.png")%>
+    <p>Alternatively, you can search for the image on google by saving the image from pintrest onto your desktop, and then dragging it into google's image search. You can then use the direct link from google. For more information go <a href="https://support.google.com/websearch/answer/1325808?hl=en">here</a>.</p>
+    <h3>Instagram</h3>
+    <p>Select the image you want to use and click on the [...] in the bottom right corner.</p>
+    <%= image_tag("6.png")%>
+    <p>Select embed and copy the code.</p>
+    <%= image_tag("7.png")%>
+    <%= image_tag("8.png")%>
+    <p>Paste this into your article.</p>
+
+    <%= image_tag("9.png")%>
+    <%= image_tag("10.png")%>
+  </div>
+
+  <h3>Links</h3>
+  <p>Copy and paste this exact code into your article where you want your link. Replace https://www.google.com/ with your link.</p>
+  <xmp>
+  <a href="https://www.google.com/" target="_blank" class="link">TEXT</a>
+  </xmp>
+  <hr />
+
+  <p>
+    If you're confused about any of this styling, you can take a look at this example <a target="_blank" href="https://docs.google.com/document/d/1dahvvmBCLPcZzbsHuwuOWnptJ1en10-68Jv5wQC0qOM/edit?usp=sharing">article</a>.
+    If you want to something specific with styling, it is most likely possible. Just email Mia at johansson.mia09@gmail.com with what you want to do, and she will explain how to do it.</a>.
+  </p>
+
+  <p>Read "<a href="/finding-images">Finding Images</a>" Next →</p>
+</div>
