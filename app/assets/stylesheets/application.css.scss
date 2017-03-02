@@ -570,6 +570,7 @@ input[type="submit"] {
   color: $dark;
   text-decoration: none;
   padding: 1em 2em;
+  margin-bottom: 2em;
   &:hover {
     border: 2px solid $highlight;
     color: $highlight;
@@ -771,6 +772,7 @@ hr {
       }
       .fa-bars {
         padding: 20px;
+        margin-top: -5px;
       }
       .name {
         margin-top: 10px;
@@ -841,6 +843,36 @@ hr {
             }
           }
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 386px) {
+
+  #main_navigation {
+    .logo--flex {
+      .name {
+        width: 200px;
+      }
+      .fa-bars {
+        padding: 10px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 285px) {
+
+  #main_navigation {
+    .logo--flex {
+      .name {
+        width: 180px;
+      }
+      .fa-bars {
+        padding: 10px;
+        margin-left: 10px;
       }
     }
   }
