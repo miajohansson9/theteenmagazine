@@ -7,7 +7,7 @@
             <% if @posts_featured %>
               <div class="featured individual">
                 <div class="featured_img">
-                  <%=link_to(image_tag(@posts_featured.image, :id => "image_thumbnail", :class => "big"), @posts_featured )%>
+                  <%=link_to(image_tag(@posts_featured.image, :id => "image_thumbnail"), @posts_featured )%>
                 </div>
                 <h3 class="article_title"><a href="#"><%= link_to @posts_featured.title, @posts_featured %></a></h3>
                 <p class="date"><%= @posts_featured.created_at.strftime("%A, %b %d")%></p>
@@ -40,7 +40,7 @@
 
   <div class="col-2 homepage_content">
     <% if @posts_approved %>
-      <% @posts_approved[5..13].each do |post| %>
+      <% @posts_approved[5..16].each do |post| %>
         <div class="thumbnail">
           <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
           <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
@@ -51,24 +51,5 @@
   </div>
 
 </div>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    var img = document.getElementById('image_thumbnail');
-    var height = img.clientHeight;
-    if (height >= 450) {
-      $('#image_thumbnail').addClass('big');
-      $('.featured').addClass('visible');
-    } else if (height >= 300) {
-      $('#image_thumbnail').addClass('medium');
-      $('#image_thumbnail').removeClass('big');
-      $('.featured').addClass('visible');
-    } else {
-      $('#image_thumbnail').addClass('small');
-      $('#image_thumbnail').removeClass('big');
-      $('.featured').addClass('visible');
-    }
-  });
-</script>
 
 <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
