@@ -222,7 +222,6 @@ footer {
 
 .featured {
   margin-top: 10px;
-  visibility: hidden;
 
     .featured_img {
       margin-bottom: 10px;
@@ -230,24 +229,6 @@ footer {
       max-height: 600px;
       width: 100%;
       overflow:hidden;
-    }
-
-    .big {
-      max-height: 500px;
-      object-fit: cover;
-      margin-bottom: -25%;
-      margin-top: -25%;
-      visibility: visible !important;
-    }
-
-    .medium {
-      margin-bottom: -10%;
-      margin-top: -10%;
-      visibility: visible !important;
-    }
-
-    .small {
-      visibility: visible !important;
     }
 
     .article_title {
