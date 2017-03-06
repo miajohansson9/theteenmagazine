@@ -40,7 +40,7 @@
 
   <div class="col-2 homepage_content">
     <% if @posts_approved %>
-      <% @posts_approved[5..16].each do |post| %>
+      <% @posts_approved[5..19].each do |post| %>
         <div class="thumbnail">
           <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
           <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
