@@ -26,7 +26,7 @@ class CategoriesController < ApplicationController
 
   def show
     set_meta_tags title: @category.name
-    @category_posts = @category.posts.all.order("created_at desc")
+    @category_posts = @category.posts.approved.all.order("created_at desc")
   end
 
   def create
