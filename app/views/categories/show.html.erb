@@ -1,0 +1,40 @@
+<div class="category">
+    <div class="category_image">
+      <div id="background">
+        <h1><%= @category.name %></h1>
+      </div>
+    </div>
+
+   <div class="category--show">
+     <div class="other--articles">
+       <div class="flex">
+         <div class="container">
+           <% @category_posts.each do |post| %>
+             <div class="thumbnail">
+               <div class="container--image">
+                 <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+               </div>
+               <div class="thumbnail--container">
+                 <p class="date"><%= post.meta_title%></p>
+                 <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+                 <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
+               </div>
+             </div>
+           <% end %>
+         </div>
+         <a class="apply" href="/applies/new" target="blank">
+         </a>
+       </div>
+     </div>
+   </div>
+
+    <% if current_user && current_user.admin? %>
+      <div id="admin_links">
+        <%= link_to "Edit Category", edit_category_path(@category) %>
+        <%= link_to "Delete",category_path(@category), method: :delete, data: {confirm: "Are you sure you want to delete this category?"} %>
+        <% if current_user && current_user.admin? %>
+          <%= @category.id %>
+        <% end %>
+      </div>
+    <% end %>
+</div>

@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.approved.all.order("created_at desc").paginate(page: params[:page], per_page: 7)
+    @posts = Post.approved.all.order("created_at desc").paginate(page: params[:page], per_page: 15)
   end
 
   def new
@@ -70,7 +70,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :content, :image, :category, :meta_title, :meta_description, :keywords, :user_id, :admin_id, :waiting_for_approval, :approved, :after_approved, :created_at, :slug)
+    params.require(:post).permit(:title, :content, :image, :category, :category_id, :meta_title, :meta_description, :keywords, :user_id, :admin_id, :waiting_for_approval, :approved, :after_approved, :created_at, :slug)
   end
 
   def find_post

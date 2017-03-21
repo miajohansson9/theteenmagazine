@@ -36,20 +36,150 @@
     </div>
   </div>
 
-  <h1 class="section--title">Older Posts: </h1>
-
-  <div class="col-2 homepage_content">
-    <% if @posts_approved %>
-      <% @posts_approved[5..19].each do |post| %>
-        <div class="thumbnail">
-          <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-          <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+  <% if @posts_approved_fashion %>
+  <h1 class="section--title"><%= link_to @category_fashion.name, @category_fashion %></h1>
+  <div class="container--category">
+    <% @posts_approved_fashion[0..0].each do |post| %>
+      <div class="thumbnail newest">
+        <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+        <div class="container">
+          <h3 class="article_title"><%= link_to post.title, post %></h3>
           <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
         </div>
-      <% end %>
-      <% end %>
+      </div>
+    <% end %>
+    <div class="container">
+      <div class="col-2 homepage_content">
+        <% @posts_approved_fashion[1..7].each do |post| %>
+          <div class="thumbnail older">
+            <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+            <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+            <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
+          </div>
+        <% end %>
+        </div>
+    </div>
+    <div class="hide">
+      <div class="parentflex">
+        <div class="articles2-6">
+            <% @posts_approved_fashion[1..4].each do |post| %>
+              <div class="thumbnail">
+                <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+                <div class="thumbnail--container">
+                  <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+                  <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
+                </div>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+    <% end %>
   </div>
 
+  <% if @posts_approved_beauty %>
+  <h1 class="section--title"><%= link_to @category_beauty.name, @category_beauty %></h1>
+  <div class="container--category">
+    <% @posts_approved_beauty[0..0].each do |post| %>
+      <div class="thumbnail newest">
+        <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+        <div class="container">
+          <h3 class="article_title"><%= link_to post.title, post %></h3>
+          <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
+        </div>
+      </div>
+    <% end %>
+    <div class="container">
+      <div class="col-2 homepage_content">
+        <% @posts_approved_beauty[1..7].each do |post| %>
+          <div class="thumbnail older">
+            <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+            <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+            <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
+          </div>
+        <% end %>
+        </div>
+    </div>
+    <div class="hide">
+      <div class="parentflex">
+        <div class="articles2-6">
+            <% @posts_approved_beauty[1..4].each do |post| %>
+              <div class="thumbnail">
+                <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+                <div class="thumbnail--container">
+                  <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+                  <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
+                </div>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+
+  <% if @posts_approved_entertainment %>
+  <h1 class="section--title"><%= link_to @category_entertainment.name, @category_entertainment %></h1>
+  <div class="container--category">
+    <% @posts_approved_entertainment[0..0].each do |post| %>
+      <div class="thumbnail newest">
+        <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+        <div class="container">
+          <h3 class="article_title"><%= link_to post.title, post %></h3>
+          <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
+        </div>
+      </div>
+    <% end %>
+    <div class="container">
+      <div class="col-2 homepage_content">
+        <% @posts_approved_entertainment[1..7].each do |post| %>
+          <div class="thumbnail older">
+            <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+            <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+            <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
+          </div>
+        <% end %>
+        </div>
+    </div>
+    <div class="hide">
+      <div class="parentflex">
+        <div class="articles2-6">
+            <% @posts_approved_entertainment[1..4].each do |post| %>
+              <div class="thumbnail">
+                <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+                <div class="thumbnail--container">
+                  <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+                  <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
+                </div>
+              </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+
+  <h1 class="section--title"><%= link_to "Recent Articles", posts_path %></h1>
+  <div class="other--articles">
+    <div class="flex">
+      <div class="container">
+        <% @posts_approved_others.each do |post| %>
+          <div class="thumbnail">
+            <div class="container--image">
+              <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+            </div>
+            <div class="thumbnail--container">
+              <p class="date"><%= post.meta_title%></p>
+              <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+              <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <a class="apply" href="/applies/new" target="blank">
+      </a>
+    </div>
+  </div>
 </div>
 
 <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>

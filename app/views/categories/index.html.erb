@@ -1,0 +1,13 @@
+<div class="category_image">
+  <div id="background">
+    <h1>Categories</h1>
+  </div>
+</div>
+
+<% @categories.each do |category| %>
+  <%= link_to category.name, category %>
+  <% if current_user && current_user.admin? %>
+    <%= category.id %>
+  <% end %>
+  <br />
+<% end %>

@@ -1,6 +1,11 @@
 @import 'normalize';
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700');
 
+@font-face {
+  font-family: justwaitandsee;
+  src: url("MORVA.otf");
+}
+
 $dark: #424653;
 $light: #9a9da4;
 $highlight: #e0528d;
@@ -17,6 +22,7 @@ $white: #FFFFFF;
 
 body {
   font-family: 'Raleway', sans-serif;
+  min-width: 310px;
 }
 
 html, body {
@@ -46,7 +52,7 @@ html, body {
 }
 
 .sidebar_menu {
-  background-color: #2b2b2b;
+  background-color: $highlight;
   margin-left: 0;
   overflow: hidden;
   width: 250px;
@@ -58,6 +64,9 @@ html, body {
   flex-direction: column;
   text-align: center;
   h1 {
+    margin-bottom: 10px;
+  }
+  h1 a {
     color: white;
     margin-top: 20px;
     font-size: 23px;
@@ -65,20 +74,26 @@ html, body {
     margin-right: auto;
     padding: 20px;
     padding-bottom: 0;
-    font-family: 'Pacifico', serif;
+    font-family: 'justwaitandsee', serif;
+    &:hover {
+      color: white;
+    }
   }
   hr {
     margin-top: 30px;
     margin-bottom: 20px;
+    border-color: white;
+    display: none;
   }
   a {
     text-decoration: none;
     color: white;
     font-size: 20px;
+    font-family: 'Roboto Condensed';
     display: inline-block;
     margin-top: 20px;
     &:hover {
-      color: $highlight;
+      color: #191919;
     }
   }
 }
@@ -162,7 +177,7 @@ button {
 
 footer {
   height: 5em;
-  background-color: #2b2b2b;
+  background-color: #191919;
   color: white;
 
   nav {
@@ -235,15 +250,16 @@ footer {
       margin: 0;
       width: 100%;
       word-wrap: break-word;
+      font-family: "Roboto Condensed";
       a {
         text-decoration: none;
-        color: #2b2b2b;
-        font-family: 'Roboto Condensed', sans-serif;
+        color: #191919;
         font-size: 30px;
       }
     }
     .date {
-      font-size: 15px;
+      color: #bdbdbd;
+      font-size: 12px;
       margin-top: 3px;
     }
 }
@@ -274,22 +290,23 @@ footer {
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-top: 2px;
+    height: 120px;
+
     .thumbnail--container {
       margin-left: 10px;
       .article_title {
-        font-size: 20px;
+        font-family: "Roboto Condensed";
         margin: 0;
-
+        line-height: 70%;
         a {
           text-decoration: none;
-          font-family: 'Roboto Condensed', sans-serif;
-          font-weight:bolder;
-          color: #2b2b2b;
+          color: #191919;
+          font-size: 20px;
         }
       }
       .date {
-        font-size: 15px;
+        font-size: 12px;
+        color: #bdbdbd;
       }
     }
 
@@ -313,6 +330,19 @@ footer {
   border-bottom: 1px solid #E9E9E9;
 }
 
+#main_title {
+  font-family: "justwaitandsee";
+  font-size: 80px;
+  text-align: center;
+  margin-bottom: -2px;
+  max-height: 120px;
+  a {
+    text-decoration: none;
+    color: white;
+    text-shadow: 1px 1px black;
+  }
+}
+
 .section--title {
   width: 95%;
   max-width: 1200px;
@@ -320,14 +350,24 @@ footer {
   margin-top: 0;
   margin-left: auto;
   margin-right: auto;
-  color: #00b5f9;
   font-size: 2em;
   font-family: 'Vollkorn', serif;
+  a {
+    color: $highlight;
+    text-shadow: 1px 1px #191919;
+    text-decoration: none;
+  }
 }
 
 .skinny_wrapper {
   width: 80%;
-  max-width: 760px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form_wrapper {
+  width: 80%;
+  max-width: 750px;
   margin: 0 auto;
 }
 
@@ -377,10 +417,10 @@ footer {
       background-image: url("http://i1074.photobucket.com/albums/w412/mjohansson9/backgroundimage_zps8rmwfdj1.png");      //#ff7a8f;
       background-position: center;
       margin-bottom: -10px;
-      margin-top: 18px;
+      margin-top: 10px;
       #exclusive-title--id {
-        margin-top: 40px;
-        margin-bottom: 5px;
+        margin-top: 45px;
+        padding: 10px;
       }
       .exclusive-title {
         color: white;
@@ -402,7 +442,6 @@ footer {
     display: inline-flex;
     width: 76%;
     justify-content: center;
-    height: 455px;
   }
 }
 
@@ -438,47 +477,55 @@ body {
 #main_navigation {
   margin-bottom: 10px;
   width: 100%;
+  background-image: url("jeans.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
 
   .logo--flex {
-
     .fa-bars {
       transform: scale(1.5,1);
       padding: 30px;
       position: absolute;
       cursor: pointer;
       z-index: 10000000;
+      color: white;
     }
 
     .name {
       display: block;
-      max-width: 600px;
-      width: 70%;
-      margin-top: 30px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-top: 100px;
+    }
+  }
+
+  .nav-title {
+    font-family: 'justwaitandsee';
+    margin-top: 2px;
+    &:hover {
+      color: white;
     }
   }
 
   nav {
-    border-top: 1px solid $border;
-    border-bottom: 1px solid $border;
     margin-top: 10px;
-    background-color: white;
+    background-color: #191919;
     position: relative;
     display: block;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 40px;
+    height: 54px;
     margin-left: auto;
     margin-right: auto;
 
+
     a {
-      padding-top: 8px;
-      color: #2b2b2b;
+      padding-top: 15px;
+      color: white;
       text-decoration: none;
-      margin: 0 1.3rem;
+      margin: 0 1rem;
       font-size: 1.3rem;
       font-family: 'Roboto Condensed', sans-serif;
       &:hover {
@@ -611,7 +658,7 @@ hr {
       .container {
         width: 100%;
         flex-direction: row;
-        height: 130px;
+        height: 120px;
         margin-bottom: 20px;
         background-color: #ff7a8f;
         .exclusive-offer {
@@ -621,7 +668,6 @@ hr {
           width: 90%;
           margin-top: 10px;
         }
-
         .mccontainer {
           margin-top: 28px;
           margin-right: 10px;
@@ -678,7 +724,8 @@ hr {
       }
 
       .article_title {
-        width: 100%;
+        width: 95%;
+        margin: 0 auto;
       }
     }
   }
@@ -689,6 +736,10 @@ hr {
 }
 
 @media (max-width: 954px) {
+  .social {
+    display: none;
+  }
+
   body {
     .projects {
       a {
@@ -732,18 +783,28 @@ hr {
   }
 }
 
-@media (max-width: 730px) {
+@media (max-width: 770px) {
   body {
+    #mc_embed_signup {
+      margin-top: -5px !important;
+    }
     .col-2 {
       .thumbnail {
         width: 49.5%;
+        .article_title {
+          padding: 0 !important;
+        }
       }
     }
   }
 
   #main_navigation {
+    background-image: none;
+    margin: 0;
+
     .logo--flex {
       border-bottom: 3px solid $border;
+
       .nav-image {
         display: inline-block;
         margin-top: 15px;
@@ -754,10 +815,11 @@ hr {
       .fa-bars {
         padding: 20px;
         margin-top: -5px;
+        margin-left: 0px;
+        padding-top: 23px;
       }
       .name {
-        margin-top: 10px;
-        width: 300px;
+        margin-top: 20px;
       }
     }
     nav {
@@ -768,7 +830,7 @@ hr {
   .featured {
     display: block;
     width: 100%;
-    margin-top: 5px;
+    margin-top: 15px;
     .featured_img {
       max-height: 100%;
       .image_thumbnail {
@@ -783,6 +845,11 @@ hr {
     margin-bottom: 10px;
     margin-top: 0px;
     display: block;
+    .thumbnail {
+      .article_title {
+        padding: 0 !important;
+      }
+    }
   }
 
   body {
@@ -807,7 +874,10 @@ hr {
           height: auto;
 
           .exclusive-offer {
-            height: auto;
+            height: 40px;
+            .exclusive-title {
+              margin-top: -5px !important;
+            }
           }
           p {
             display: none;
@@ -827,20 +897,37 @@ hr {
       }
     }
   }
+  #main_title {
+    font-size: 35px;
+    min-height: 50px;
+  }
 }
 
 @media (max-width: 386px) {
-
   #main_navigation {
     .logo--flex {
-      .name {
-        width: 200px;
-      }
       .fa-bars {
-        padding: 10px;
-        margin-left: 10px;
+        margin-left: 0px;
+        padding-top: 23px;
       }
     }
+  }
+  .mccontainer {
+    margin-top: 50px !important;
+    margin-left: 10px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+  }
+  #mce-EMAIL, .email {
+    min-width: 68% !important;
+    max-width: 68% !important;
+  }
+  .mc-field-group {
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
+  .flex--email {
+    width: 100% !important;
   }
 }
 
@@ -851,10 +938,6 @@ hr {
       .name {
         width: 180px;
       }
-      .fa-bars {
-        padding: 10px;
-        margin-left: 10px;
-      }
     }
   }
 }
@@ -863,3 +946,4 @@ hr {
 @import "pages";
 @import "posts_projects";
 @import "welcome";
+@import "category";

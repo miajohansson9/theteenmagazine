@@ -3,10 +3,14 @@ Rails.application.routes.draw do
   resources :posts
   resources :contacts, only: [:new, :create]
   resources :users
+  resources :categories, only: [:new, :edit, :show]
   resources :applies, only: [:new, :create]
 
   get 'welcome/index'
   root 'welcome#index'
+
+  get 'beauty' => 'categories#beauty'
+
 
   get 'criteria' => 'pages#criteria'
   get 'choosing-a-topic' => 'pages#topics'

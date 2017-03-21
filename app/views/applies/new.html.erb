@@ -1,5 +1,5 @@
 <h1 id="page_title">Apply to Become a Writer for the Teen Magazine!</h1>
-<div class="skinny_wrapper wrapper_padding">
+<div class="form_wrapper wrapper_padding">
   <%= form_for @apply do |f| %>
     <%= f.label :first %> <br />
     <%= f.text_field :first, required: true %>
@@ -12,7 +12,7 @@
     <br />
 
     <%= f.label "Primary Category" %><br /><br />
-    <%= f.select :category, ['Lifestyle', 'Fashion', 'Beauty', 'Health & Fitness', 'Food', "DIY", 'High School', 'Academics', 'Tips & Hacks', 'Advice', 'Travel', 'Love & Relationships', 'Enreprenuership', 'Humor']%><br />
+    <%= f.select :category, ['Beauty', 'Fashion', 'Health & Fitness', 'Lifestyle', 'Trends', 'Entertainment', 'Academics', 'Tips & Hacks', 'DIY', 'Travel', 'Love & Relationships']%><br />
 
     <br />
     <br />

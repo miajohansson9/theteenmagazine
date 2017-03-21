@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218213548) do
+ActiveRecord::Schema.define(version: 20170311224145) do
+
+  create_table "categories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.string   "slug"
+    t.index ["slug"], name: "index_categories_on_slug", unique: true
+  end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -41,6 +49,7 @@ ActiveRecord::Schema.define(version: 20170218213548) do
     t.boolean  "approved"
     t.boolean  "waiting_for_approval"
     t.boolean  "after_approved"
+    t.string   "category_id"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 

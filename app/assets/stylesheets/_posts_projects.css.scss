@@ -29,6 +29,10 @@
   }
 }
 
+.div {
+  margin-top: -10px;
+}
+
 .flex--container--post--title {
   display: flex;
   flex-direction: column;
@@ -154,8 +158,6 @@ hr {
     }
   }
 }
-
-
 
 @media (max-width: 386px) {
   .flex--container--post--title {
