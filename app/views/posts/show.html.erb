@@ -60,7 +60,9 @@
   </form>
   </div>
   <div id="content">
-    <%= markdown @post.content %>
+    <div class="post_content">
+        <%= markdown @post.content %>
+    </div>
   <hr>
 
   <% if current_user && (current_user.id == @post.user_id || current_user.admin?) %>
