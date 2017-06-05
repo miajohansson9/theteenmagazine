@@ -3,7 +3,7 @@ class Ckeditor::AttachmentFile < Ckeditor::Asset
                     :url => "/ckeditor_assets/attachments/:id/:filename",
                     :path => "/ckeditor_assets/attachments/:id/:filename",
                     :storage => :s3,
-                    :s3_credentials => "#{Rails.root}/config/environments/development.rb",
+                    :s3_credentials => "#{Rails.root}/config/aws.yml",
                     :bucket => 'theteenmagazine'
 
   validates_attachment_presence :data
