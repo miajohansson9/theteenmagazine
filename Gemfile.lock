@@ -41,14 +41,11 @@ GEM
     arel (7.1.4)
     autoprefixer-rails (6.7.0)
       execjs
-    aws-sdk (2.6.44)
-      aws-sdk-resources (= 2.6.44)
-    aws-sdk-core (2.6.44)
-      aws-sigv4 (~> 1.0)
-      jmespath (~> 1.0)
-    aws-sdk-resources (2.6.44)
-      aws-sdk-core (= 2.6.44)
-    aws-sigv4 (1.0.0)
+    aws-sdk (1.67.0)
+      aws-sdk-v1 (= 1.67.0)
+    aws-sdk-v1 (1.67.0)
+      json (~> 1.4)
+      nokogiri (~> 1)
     bcrypt (3.1.11)
     bootstrap (4.0.0.alpha6)
       autoprefixer-rails (>= 6.0.3)
@@ -81,6 +78,8 @@ GEM
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.14)
+    figaro (1.1.1)
+      thor (~> 0.14)
     friendly_id (5.2.0)
       activerecord (>= 4.0.0)
     globalid (0.3.7)
@@ -89,7 +88,6 @@ GEM
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
-    jmespath (1.3.1)
     jquery-rails (4.2.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -97,6 +95,7 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
+    json (1.8.6)
     kramdown (1.13.1)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -219,13 +218,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk (~> 2.3)
+  aws-sdk (< 2.0)
   bootstrap (~> 4.0.0.alpha3)
   byebug
   cancancan
   ckeditor
   coffee-rails (~> 4.2)
   devise (~> 4.2)
+  figaro
   friendly_id (~> 5.1)
   jbuilder (~> 2.5)
   jquery-rails

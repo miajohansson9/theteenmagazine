@@ -25,8 +25,6 @@ gem 'will_paginate', '~> 3.1', '>= 3.1.5'
 gem 'mail_form', '~> 1.5', '>= 1.5.1'
 gem 'devise', '~> 4.2'
 gem 'kramdown', '~> 1.9'
-gem 'paperclip'
-gem 'aws-sdk', '~> 2.3'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'meta-tags', '~> 2.1'
 gem 'cancancan'
@@ -34,7 +32,9 @@ gem 'jquery-turbolinks', '~> 2.1'
 gem 'ckeditor'
 
 group :development, :test do
-
+  gem 'paperclip'
+  gem 'aws-sdk', '< 2.0'
+  gem 'figaro'
   gem 'byebug', platform: :mri
 end
 
