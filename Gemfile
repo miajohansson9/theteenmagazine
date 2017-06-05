@@ -30,11 +30,11 @@ gem 'meta-tags', '~> 2.1'
 gem 'cancancan'
 gem 'jquery-turbolinks', '~> 2.1'
 gem 'ckeditor'
+gem 'paperclip'
+gem 'aws-sdk', '< 2.0'
+gem 'figaro'
 
 group :development, :test do
-  gem 'paperclip'
-  gem 'aws-sdk', '< 2.0'
-  gem 'figaro'
   gem 'byebug', platform: :mri
 end
 
