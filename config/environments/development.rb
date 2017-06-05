@@ -52,4 +52,11 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  config.paperclip_defaults = {
+    storage: :s3,
+    s3_region: 'us-east-1',
+    bucket:'theteenmagazine',
+    s3_credentials: "#{Rails.root}/config/aws.yml"
+  }
+
 end
