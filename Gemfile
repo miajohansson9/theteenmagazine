@@ -32,7 +32,6 @@ gem 'jquery-turbolinks', '~> 2.1'
 gem 'ckeditor'
 gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
-gem 'figaro'
 
 group :development, :test do
   gem 'byebug', platform: :mri
