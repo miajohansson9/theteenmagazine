@@ -68,6 +68,43 @@
 
 // --------------- Posts Show
 
+#cke_1_contents {
+  min-height: 500px !important;
+}
+
+#content {
+   .post_content {
+     img {
+       width: 55% !important;
+       height: auto !important;
+       margin-left: auto !important;
+       margin-right: auto !important;
+       display: block;
+     }
+     iframe {
+        margin: 0 auto !important;
+    }
+    html {
+       margin-left: auto;
+       margin-right: auto;
+     }
+      #twitter-widget-0, #twitter-widget-1 {
+       margin: 0 auto !important;
+     }
+     a {
+       color: #e0528d;
+     }
+     a:hover {
+      opacity: 0.5;
+     }
+     @media (max-width: 600px) {
+      img {
+          width: 100% !important;
+      }
+     }
+   }
+ }
+
 hr {
   margin: 3em auto;
   margin-left: auto;
