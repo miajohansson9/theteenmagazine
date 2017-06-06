@@ -144,17 +144,6 @@ $gray:  #2a2a2a;
   margin-left: auto;
   margin-right: auto;
 
-  .apply {
-    width: 20%;
-    background-image: url("applypic.jpg");
-    height: 300px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    &:hover {
-      opacity: .85;
-    }
-  }
-
   .container {
     width: 80%;
   }
@@ -209,10 +198,16 @@ $gray:  #2a2a2a;
   }
 }
 
+@media (max-width: 1025px) {
+   .post_apply, .apply_link {
+     display: none;
+   }
+}
+
 @media (max-width: 970px) {
-  .apply {
-    display: none;
-  }
+   .apply {
+     display: none;
+   }
   .other--articles {
     .container {
       width: 100%;

@@ -207,7 +207,8 @@
               <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
               <% else %>
               <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-              <% end %>            </div>
+              <% end %>
+            </div>
             <div class="thumbnail--container">
               <p class="date"><%= post.meta_title%></p>
               <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>

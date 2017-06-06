@@ -5,9 +5,13 @@ class PostsController < ApplicationController
   before_action :create,  only: [:unapprove]
   load_and_authorize_resource
 
+  layout "category"
+
   def load_user
     if @post.user != nil
       @user = @post.user
+      @user_posts = @user.posts.all.order("created_at desc")
+      @posts = Post.approved.all.order("created_at desc").paginate(page: params[:page], per_page: 15)
     end
   end
 

@@ -51,6 +51,12 @@ html, body {
   max-width: 30px;
 }
 
+.fixed {
+  position: fixed;
+  top: 0;
+  margin-right: 40px;
+}
+
 .sidebar_menu {
   background-color: $highlight;
   margin-left: 0;
@@ -166,6 +172,17 @@ html, body {
     margin-left: 30px;
     padding-top: 0;
     margin-bottom: 0;
+  }
+}
+
+.apply {
+  width: 20%;
+  background-image: url("applypic.jpg");
+  height: 300px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  &:hover {
+    opacity: .85;
   }
 }
 
@@ -357,12 +374,6 @@ footer {
     text-shadow: 1px 1px #191919;
     text-decoration: none;
   }
-}
-
-.skinny_wrapper {
-  width: 80%;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .form_wrapper {

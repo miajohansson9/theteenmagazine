@@ -22,7 +22,7 @@
         <% else %>
         <%= image_tag "saved.png", class: "icon" %>
         <% end %>
-          <h6 id="post_title"><a href="#"><%= link_to post.title, post%></a></h6>
+          <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
       </div>
       <h6 id="date"><%= post.created_at.strftime('%A, %B %d') %></h6>
     </div>

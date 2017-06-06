@@ -2,10 +2,8 @@
 
 <style>
  .div {
-   height: 300px;
+   height: 200px;
    width: 100%;
-   z-index: 0;
-   position: absolute;
    overflow: hidden;
 }
 
@@ -16,18 +14,11 @@
      <% else %>
       <%= @post.thumbnail %>
      <% end %>);
-   height: 320px;
+   height: 220px;
    width: 105%;
    margin-left: -10px;
    margin-top: -10px;
-   z-index: 0;
    background-size: cover;
-   position: absolute;
-   -webkit-filter: blur(5px);
-   -moz-filter: blur(5px);
-   -o-filter: blur(5px);
-   -ms-filter: blur(5px);
-   filter: blur(5px);
 }
 </style>
 
@@ -36,16 +27,18 @@
   </div>
 </div>
 
-<div class="flex--container--post--title">
-  <header>
+<div class="flex_wrapper_posts">
+<div class="skinny wrapper_padding" id="post_show_content">
+
+  <header id="post_title_show">
     <h1><%= @post.title %></h1>
     <p class="date"><%= @post.created_at.strftime('%A, %B %d')%></p>
   </header>
-</div>
-
-<hr class="posts_hr">
-
-<div class="skinny_wrapper wrapper_padding" id="post_show_content">
+  <div id="content">
+    <div class="post_content">
+      <%= markdown @post.content %>
+    </div>
+  <hr>
 
   <div id="mc_embed_signup" style="width: 100%; margin-top: 20px; margin-left: 0px;">
   <form action="//herokuapp.us14.list-manage.com/subscribe/post?u=5c2a24e15a906f29e2c6a9b72&amp;id=3081d2e76a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" style="padding-left: 0;" novalidate>
@@ -64,11 +57,6 @@
       </div>
   </form>
   </div>
-  <div id="content">
-    <div class="post_content">
-      <%= markdown @post.content %>
-    </div>
-  <hr>
 
   <% if current_user && (current_user.id == @post.user_id || current_user.admin?) %>
     <div id="admin_links">
@@ -76,6 +64,7 @@
       <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete this post?"} %>
     </div>
   <% end %>
+
 
   <div id="share_box">
     <p>Share "<%= @post.title %>"</p>
@@ -98,6 +87,7 @@
 
   <br>
   <br>
+</div>
 
   <div id="disqus_thread"></div>
   <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
@@ -112,4 +102,62 @@
     })();
     (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);
 </script>
+
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+<div class="post_apply">
+  <div class="sticky">
+    <a href="/applies/new"><img id="apply_image" src="http://i.imgur.com/3M0jhbo.jpg" /></a>
+    <div class="articles">
+      <div class="flex_other_articles">
+      <% if @user_posts.count > 1 %>
+      <h3 class="title">Other Articles by <%= @post.user.first_name %> <%= @post.user.last_name %></h3>
+      <% @user_posts[1..5].each do |post| %>
+        <% if post.title != @post.title %>
+          <div class="one_article">
+              <% if post.image != "" && post.image != nil %>
+               <%= link_to(image_tag(post.image), post) %>
+              <% else %>
+               <%= link_to(image_tag(post.thumbnail.url(:square)), post) %>
+              <% end %>
+              <p><%= link_to(post.title, post) %></p>
+          </div>
+        <% end %>
+        <% end %>
+      <% else %>
+      <% @num = 1 %>
+      <h3 class="title">More in <%= @post.meta_title %></h3>
+        <% @posts.each do |post| %>
+          <% if (post.meta_title == @post.meta_title) && (post.title != @post.title) && (@num <= 4) %>
+          <div class="one_article">
+            <% if post.image != "" && post.image != nil %>
+             <%= link_to(image_tag(post.image), post) %>
+            <% else %>
+             <%= link_to(image_tag(post.thumbnail.url(:square)), post) %>
+            <% end %>
+            <p><%= link_to(post.title, post) %></p>
+          </div>
+          <% @num = @num + 1 %>
+        <% end %>
+      <% end %>
+    <% end %>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+jQuery(document).ready(function(){
+  var navOffset = jQuery(".sticky").offset().top;
+  jQuery(window).scroll(function() {
+    var scrollPos = jQuery(window).scrollTop();
+    if (scrollPos >= navOffset) {
+      jQuery(".sticky").addClass("fixed");
+      jQuery(".articles").addClass("margin");
+    } else {
+      jQuery(".articles").removeClass("margin");
+      jQuery(".sticky").removeClass("fixed");
+    }
+  });
+});
+</script>
