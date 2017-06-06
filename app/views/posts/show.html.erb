@@ -112,8 +112,8 @@
       <div class="flex_other_articles">
       <% if @user_posts_approved.count > 1 %>
       <h3 class="title">More by <%= @post.user.first_name %> <%= @post.user.last_name %></h3>
-      <% @user_posts_approved[1..5].each do |post| %>
-        <% if post.link != @post.link %>
+      <% @user_posts_approved.each do |post| %>
+        <% if post.title != @post.title %>
           <div class="one_article">
               <% if post.image != "" && post.image != nil %>
                <%= link_to(image_tag(post.image), post) %>
@@ -128,16 +128,16 @@
       <% @num = 1 %>
       <h3 class="title">More in <%= @post.meta_title %></h3>
         <% @posts.each do |post| %>
-          <% if (post.meta_title == @post.meta_title) && (post.link != @post.link) && (@num <= 4) %>
-          <div class="one_article">
-            <% if post.image != "" && post.image != nil %>
-             <%= link_to(image_tag(post.image), post) %>
-            <% else %>
-             <%= link_to(image_tag(post.thumbnail.url(:square)), post) %>
-            <% end %>
-            <p><%= link_to(post.title, post) %></p>
-          </div>
-          <% @num = @num + 1 %>
+          <% if (post.meta_title == @post.meta_title) && (post.title != @post.title) && (@num <= 4) %>
+            <div class="one_article">
+              <% if post.image != "" && post.image != nil %>
+               <%= link_to(image_tag(post.image), post) %>
+              <% else %>
+               <%= link_to(image_tag(post.thumbnail.url(:square)), post) %>
+              <% end %>
+              <p><%= link_to(post.title, post) %></p>
+            </div>
+            <% @num = @num + 1 %>
         <% end %>
       <% end %>
     <% end %>
