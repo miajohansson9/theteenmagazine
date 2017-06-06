@@ -10,7 +10,12 @@
 }
 
 .post_image {
-   background-image: url(<%= @post.image %>);
+   background-image: url(
+     <% if @post.image != "" && @post.image != nil %>
+      <%= @post.image %>
+     <% else %>
+      <%= @post.thumbnail %>
+     <% end %>);
    height: 320px;
    width: 105%;
    margin-left: -10px;

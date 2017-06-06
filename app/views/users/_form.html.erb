@@ -6,10 +6,10 @@
 <%= f.label "Last Name" %>
 <%= f.text_field :last_name %>
 
-<%= f.label "Image LINK" %><br>
-<%= f.text_field :image %>
+<%= f.label "Upload profile picture" %><br><br />
+<%= f.file_field :profile %><br/><br/>
 
-<%= f.label "Description (in third person)" %>
+<%= f.label "Description" %>
 <%= f.text_area :description %>
 
 <%= f.label "Email (Will not be published)" %><br>

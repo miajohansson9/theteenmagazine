@@ -32,6 +32,7 @@ gem 'meta-tags', '~> 2.1'
 gem 'cancancan'
 gem 'jquery-turbolinks', '~> 2.1'
 gem 'ckeditor'
+gem 'figaro'
 
 group :development, :test do
 

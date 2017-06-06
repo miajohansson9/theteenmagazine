@@ -81,6 +81,8 @@ GEM
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.14)
+    figaro (1.1.1)
+      thor (~> 0.14)
     friendly_id (5.2.0)
       activerecord (>= 4.0.0)
     globalid (0.3.7)
@@ -226,6 +228,7 @@ DEPENDENCIES
   ckeditor
   coffee-rails (~> 4.2)
   devise (~> 4.2)
+  figaro
   friendly_id (~> 5.1)
   jbuilder (~> 2.5)
   jquery-rails

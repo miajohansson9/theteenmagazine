@@ -21,9 +21,10 @@
 <br>
 
 <%= f.label :content, "Write your article here" %><br><br />
-<%= f.cktext_area :content %>
+<%= f.cktext_area :content %><br /><br />
 
-<br><%= f.label :image, "Image URL" %><br>
+<%= f.label "Upload thumbnail or use URL" %><br><br />
+<%= f.file_field :thumbnail %><br/>
 <%= f.text_field :image %>
 
 <br><%= f.label "Category" %>
