@@ -4,6 +4,9 @@
 }
 
 .articles {
+  max-height: 490px;
+  overflow: hidden;
+
   .title {
     color: $highlight;
     margin-bottom:  10px;
