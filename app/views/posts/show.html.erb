@@ -110,9 +110,9 @@
     <a href="/applies/new"><img id="apply_image" src="http://i.imgur.com/3M0jhbo.jpg" /></a>
     <div class="articles">
       <div class="flex_other_articles">
-      <% if @user_posts.count > 1 %>
+      <% if @user_posts_approved.count > 1 %>
       <h3 class="title">Other Articles by <%= @post.user.first_name %> <%= @post.user.last_name %></h3>
-      <% @user_posts[1..5].each do |post| %>
+      <% @user_posts_approved[1..5].each do |post| %>
         <% if post.title != @post.title %>
           <div class="one_article">
               <% if post.image != "" && post.image != nil %>
