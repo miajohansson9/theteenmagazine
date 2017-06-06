@@ -3,10 +3,12 @@
   margin-right: 40px;
 }
 
-.articles {
-  max-height: 490px;
+.contain_articles {
+  max-height: 385px;
   overflow: hidden;
+}
 
+.articles {
   .title {
     color: $highlight;
     margin-bottom:  10px;
@@ -33,8 +35,12 @@
         transition: all 0.3s;
         background-size: cover;
       }
+      .paragraph {
+        height: 73px;
+        overflow:hidden;
+      }
       p {
-        font-size: 1em;
+        font-size: .85em;
         margin: 0;
         margin-left: 10px;
         line-height: 18px;

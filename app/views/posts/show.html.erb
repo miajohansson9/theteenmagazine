@@ -112,21 +112,26 @@
       <div class="flex_other_articles">
       <% if @user_posts_approved.count > 1 %>
       <h3 class="title">More by <%= @post.user.first_name %> <%= @post.user.last_name %></h3>
-      <% @user_posts_approved.each do |post| %>
-        <% if post.title != @post.title %>
-          <div class="one_article">
-              <% if post.image != "" && post.image != nil %>
-               <%= link_to(image_tag(post.image), post) %>
-              <% else %>
-               <%= link_to(image_tag(post.thumbnail.url(:square)), post) %>
-              <% end %>
-              <p><%= link_to(post.title, post) %></p>
-          </div>
-        <% end %>
-        <% end %>
+      <div class="contain_articles">
+        <% @user_posts_approved.each do |post| %>
+          <% if post.title != @post.title %>
+            <div class="one_article">
+                <% if post.image != "" && post.image != nil %>
+                 <%= link_to(image_tag(post.image), post) %>
+                <% else %>
+                 <%= link_to(image_tag(post.thumbnail.url(:square)), post) %>
+                <% end %>
+                <div class="paragraph">
+                  <p><%= link_to(post.title, post) %></p>
+                </div>
+             </div>
+          <% end %>
+          <% end %>
+      </div>
       <% else %>
       <% @num = 1 %>
       <h3 class="title">More in <%= @post.meta_title %></h3>
+      <div class="contain_articles">
         <% @posts.each do |post| %>
           <% if (post.meta_title == @post.meta_title) && (post.title != @post.title) && (@num <= 4) %>
             <div class="one_article">
@@ -135,11 +140,14 @@
               <% else %>
                <%= link_to(image_tag(post.thumbnail.url(:square)), post) %>
               <% end %>
-              <p><%= link_to(post.title, post) %></p>
+              <div class="paragraph">
+                <p><%= link_to(post.title, post) %></p>
+              </div>
             </div>
             <% @num = @num + 1 %>
         <% end %>
       <% end %>
+      </div>
     <% end %>
     </div>
     </div>
