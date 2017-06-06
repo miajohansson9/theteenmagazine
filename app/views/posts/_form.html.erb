@@ -28,7 +28,7 @@
 <%= f.text_field :image %>
 
 <br><%= f.label "Category" %>
-<%= f.select :meta_title, ['Beauty', 'Fashion', 'Health & Fitness', 'Lifestyle', 'Trends', 'Entertainment', 'Academics', 'Tips & Hacks', 'DIY', 'Travel', 'Love & Relationships'] %>
+<%= f.select :meta_title, ['Beauty', 'Fashion', 'Health & Fitness', 'Lifestyle', 'Trends', 'Entertainment', 'Academics', 'Tips & Hacks', 'DIY', 'Travel', 'Love & Relationships'] %><br />
 
 <% if (current_user && current_user.admin?) %>
 <br><br /><%= f.label "Admin: Category ID" %>
