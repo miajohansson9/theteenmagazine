@@ -56,7 +56,7 @@ Rails.application.configure do
     storage: :s3,
     s3_region: 'us-east-1',
     bucket:'theteenmagazine',
-    s3_credentials: "#{Rails.root}/config/aws.yml"
+    s3_credentials: "#{Rails.root}/config/s3.yml"
   }
 
 end
