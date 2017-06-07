@@ -202,6 +202,15 @@ $gray:  #2a2a2a;
    .post_apply, .apply_link {
      display: none;
    }
+   .skinny {
+     margin-left: 20px;
+     margin-right: 20px;
+     #post_title_show {
+       h1 {
+         font-size: 45px;
+       }
+     }
+   }
 }
 
 @media (max-width: 970px) {
@@ -216,6 +225,7 @@ $gray:  #2a2a2a;
 }
 
 @media (max-width: 640px) {
+
   .button {
     height: 30px !important;
     padding: 0 !important;
