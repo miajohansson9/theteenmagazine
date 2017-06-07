@@ -1,7 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
-.margin {
-  margin-right: 40px;
-}
 
 .contain_articles {
   max-height: 385px;
@@ -9,6 +6,8 @@
 }
 
 .articles {
+  max-width: 250px;
+  min-width: 250px;
   .title {
     color: $highlight;
     margin-bottom:  10px;
@@ -55,13 +54,15 @@
 }
 
 .post_apply {
-  min-width: 250px;
-  max-width: 250px;
-  margin-right: 40px;
+  background-color: white;
+  padding: 15px;
+  min-width: 310px;
+  max-width: 310px;
+  margin-right: 20px;
+  margin-top: 140px;
   height: 333.33px;
   position: relative;
   z-index: 0;
-  margin-top: -60px;
 
   img {
     width: 100%;
@@ -69,8 +70,8 @@
 }
 
 #apply_image {
-  min-width: 250px;
-  max-width: 250px;
+  min-width: 280px;
+  max-width: 280px;
   margin-right: 40px;
   margin-top: 10px;
 }
@@ -88,8 +89,8 @@
 }
 
 .skinny {
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-left: 60px;
+  margin-right: 60px;
   flex-grow: 1;
 }
 
@@ -138,12 +139,12 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -100px;
+  margin-top: 100px;
   margin-bottom: 30px;
   display: block;
   position: relative;
   z-index: 0;
-  padding: 1px 80px;
+  padding: 10px 40px;
 
   .date {
     font-size: 1.2em;
@@ -168,7 +169,7 @@
 }
 
 #content {
-  padding: 0 80px;
+  padding: 0 40px;
    .post_content {
      img {
        width: 55% !important;

@@ -5,6 +5,8 @@
    height: 200px;
    width: 100%;
    overflow: hidden;
+   z-index: 0;
+   position: absolute;
 }
 
 .post_image {
@@ -15,10 +17,19 @@
       <%= @post.thumbnail %>
      <% end %>);
    height: 220px;
+    position: absolute;
+   background-position: center;
    width: 105%;
    margin-left: -10px;
    margin-top: -10px;
    background-size: cover;
+   position: absolute;
+   -webkit-filter: blur(2px);
+   z-index: 0;
+   -moz-filter: blur(2px);
+   -o-filter: blur(2px);
+   -ms-filter: blur(2px);
+   filter: blur(2px);
 }
 </style>
 
@@ -76,7 +87,7 @@
       '_blank', 'width=800, height=500, top=200, left=300');void(0)">
       <i class="fa fa-facebook"></i></i>
     </a>
-    <a onclick="javascript:window.open('http://plus.google.com/share?url=<%= url_for([@post, {only_path:false}]) %> &amp;text=Read this! <%= @post.title %> by Mia Johansson - <%= request.original_url %>',
+    <a onclick="javascript:window.open('http://plus.google.com/share?url=<%= url_for([@post, {only_path:false}]) %> &amp;text=Read this! <%= @post.title %> by <% @post.user.first_name %> <% @post.user.last_name %> on The Teen Magazine - <%= request.original_url %>',
       '_blank', 'width=800, height=500, top=200, left=300');void(0)">
       <i class="fa fa-google-plus"></i></i>
     </a>
@@ -91,19 +102,17 @@
 
   <div id="disqus_thread"></div>
   <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-<script>
-    (function() {  // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
+  <script>
 
-        s.src = '//mia-johansson.disqus.com/embed.js';
+  (function() { // DON'T EDIT BELOW THIS LINE
+  var d = document, s = d.createElement('script');
+  s.src = 'https://the-teen-magazine.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-    (function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);
-</script>
-
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 </div>
 <div class="post_apply">
   <div class="sticky">
@@ -161,9 +170,7 @@ jQuery(document).ready(function(){
     var scrollPos = jQuery(window).scrollTop();
     if (scrollPos >= navOffset) {
       jQuery(".sticky").addClass("fixed");
-      jQuery(".articles").addClass("margin");
     } else {
-      jQuery(".articles").removeClass("margin");
       jQuery(".sticky").removeClass("fixed");
     }
   });
