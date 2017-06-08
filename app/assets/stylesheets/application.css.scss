@@ -496,7 +496,6 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 
-
   .logo--flex {
     .fa-bars {
       transform: scale(1.5,1);
@@ -534,14 +533,16 @@ body {
     margin-left: auto;
     margin-right: auto;
 
-
     a {
-      padding-top: 15px;
+      font-family: 'Univers-CnUlt', Arial, Sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.05rem;
+      line-height: 1;
+      font-size: 1rem;
+      margin: 0 1rem;
+      padding-top: 20px;
       color: white;
       text-decoration: none;
-      margin: 0 1rem;
-      font-size: 1.3rem;
-      font-family: 'Roboto Condensed', sans-serif;
       &:hover {
         color: $highlight;
       }

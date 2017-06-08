@@ -33,7 +33,7 @@ $gray:  #2a2a2a;
       margin-right: 2px;
       margin-left: 2px;
       width: 150px;
-      height: 240px;
+      height: 230px;
       overflow: hidden;
     }
       .image_thumbnail {
@@ -56,6 +56,13 @@ $gray:  #2a2a2a;
         overflow: hidden;
         a {
           color: #191919;
+          font-family: 'Univers-CnUlt', Arial, Sans-serif;
+          letter-spacing: 0.05rem;
+          line-height: 1;
+          font-size: 0.9rem;
+          text-decoration: none;
+          font-weight: 600;
+          font-style: italic;
         }
       }
   }
@@ -297,6 +304,7 @@ $gray:  #2a2a2a;
           white-space: nowrap;
           color: white;
           text-overflow: ellipsis;
+
           a {
             width: 50px;
           }
