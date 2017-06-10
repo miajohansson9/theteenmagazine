@@ -432,6 +432,7 @@ footer {
       background-position: center;
       margin-bottom: -10px;
       margin-top: 10px;
+
       #exclusive-title--id {
         margin-top: 45px;
         padding: 10px;
@@ -681,8 +682,9 @@ hr {
           background-image: url();
         }
         #exclusive-title--id, .exclusive-title {
-          width: 90%;
-          margin-top: 10px;
+          width: 80%;
+          margin: 0 auto;
+          margin-top: 20px;
         }
         .mccontainer {
           margin-top: 28px;
@@ -814,6 +816,12 @@ hr {
     }
   }
 
+  #exclusive-title--id, .exclusive-title {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 8px !important;
+  }
+
 
   #main_navigation {
     background-image: none;
@@ -917,6 +925,15 @@ hr {
   #main_title {
     font-size: 35px;
     min-height: 50px;
+  }
+}
+
+@media (max-width: 762px) {
+  #exclusive-title--id, .exclusive-title {
+    margin-top: -10px !important;
+  }
+  .exclusive-offer {
+    margin-top: 15px !important;
   }
 }
 

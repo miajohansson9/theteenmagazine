@@ -173,7 +173,7 @@
   padding: 0 40px;
    .post_content {
      img {
-       width: 55% !important;
+       width: 70% !important;
        height: auto !important;
        margin-left: auto !important;
        margin-right: auto !important;
@@ -310,9 +310,9 @@ hr {
     }
 }
 
-@media (max-width: 370px) {
+@media (max-width: 448px) {
     .skinny {
-      max-width: 300px;
+      max-width: 90%;
       margin: 0 auto !important;
       #post_title_show {
         padding: 0px 15px;
