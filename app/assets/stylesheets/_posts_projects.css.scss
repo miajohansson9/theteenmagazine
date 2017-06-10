@@ -195,6 +195,38 @@
      a:hover {
       opacity: 0.5;
      }
+     span {
+       font-family: 'Raleway', sans-serif !important;
+       font-size: 1.1rem !important;
+     }
+     h1 span {
+       font-size: 2.5rem !important;
+     }
+
+     h2 span {
+       font-size: 2rem !important;
+     }
+
+     h3 span {
+       font-size: 1.75rem !important;
+     }
+
+     h4 span {
+       font-size: 1.375rem !important;
+     } span
+
+     h5 span {
+       font-size: 1.25rem !important;
+     }
+
+     h6 span {
+       font-size: 1rem !important;
+     }
+     p span {
+       font-family: 'Raleway', sans-serif !important;
+       font-size: 1.1rem !important;
+       line-height: 1.75 !important;
+     }
      @media (max-width: 600px) {
       img {
           width: 100% !important;
