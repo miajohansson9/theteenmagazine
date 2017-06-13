@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'writing-the-perfect-article' => 'pages#writing'
   get 'finding-images' => 'pages#images'
   get 'how-to-style-your-articles' => 'pages#styling'
+  get 'ranking' => 'pages#ranking'
 
 
   get '*path' => redirect('/')

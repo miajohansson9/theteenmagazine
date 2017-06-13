@@ -385,6 +385,36 @@ footer {
   margin: 0 auto;
 }
 
+.ranking {
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 50px;
+  .flex-ranking {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    p {
+      min-width: 20px;
+    }
+    form {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: row;
+      margin-left: 10px;
+      height: 50px;
+      input {
+        height: 100%;
+        margin: 0;
+        margin-left: 10px;
+        padding: 5px 10px 5px 10px;
+      }
+      #submit {
+        width: 50px;
+      }
+    }
+  }
+}
+
 .wrapper {
   width: 90%;
   max-width: 1200px;
@@ -925,6 +955,14 @@ hr {
   #main_title {
     font-size: 35px;
     min-height: 50px;
+  }
+}
+
+@media (max-width: 990px) {
+  #main_navigation {
+    .social, .nav--apply {
+      display: none;
+    }
   }
 }
 

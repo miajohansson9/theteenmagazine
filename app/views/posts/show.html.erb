@@ -45,6 +45,16 @@
     <h1><%= @post.title %></h1>
     <p class="date"><%= @post.created_at.strftime('%A, %B %d')%></p>
   </header>
+  <% if current_user && current_user.admin? %>
+    <div id="admin_links">
+      <p style="margin-bottom: 5px;">
+        <%= @post.post_impressions %> views
+        <% if @post.ranking != nil%>
+          -- rank <%= @post.ranking %>
+        <% end %>
+      </p>
+    </div>
+  <% end %>
   <div id="content">
     <div class="post_content">
       <%= markdown @post.content %>
@@ -163,6 +173,7 @@
   </div>
 </div>
 </div>
+
 <script>
 jQuery(document).ready(function(){
   var navOffset = jQuery(".sticky").offset().top;

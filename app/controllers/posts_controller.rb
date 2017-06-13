@@ -3,6 +3,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_user,  only: [:show]
   before_action :create,  only: [:unapprove]
+  before_filter :log_impression, :only=> [:show]
   load_and_authorize_resource
 
   layout "category"
@@ -15,6 +16,18 @@ class PostsController < ApplicationController
       @posts = Post.approved.all.order("created_at desc")
     end
   end
+
+  def log_impression
+    if @post.approved && @post.after_approved
+      if @post.post_impressions == nil
+        @post.post_impressions = 1
+        @post.save
+      else
+        @post.increment(:post_impressions, by = 1)
+        @post.save
+      end
+    end
+   end
 
   def index
     @posts = Post.approved.all.order("created_at desc").paginate(page: params[:page], per_page: 15)
@@ -75,7 +88,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :thumbnail, :content, :image, :category, :category_id, :meta_title, :meta_description, :keywords, :user_id, :admin_id, :waiting_for_approval, :approved, :after_approved, :created_at, :slug)
+    params.require(:post).permit(:title, :thumbnail, :ranking, :content, :image, :category, :category_id, :post_impressions, :meta_title, :meta_description, :keywords, :user_id, :admin_id, :waiting_for_approval, :approved, :after_approved, :created_at, :slug)
   end
 
   def find_post

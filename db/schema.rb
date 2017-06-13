@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606014117) do
+ActiveRecord::Schema.define(version: 20170613162924) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -62,6 +62,12 @@ ActiveRecord::Schema.define(version: 20170606014117) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "impressions", force: :cascade do |t|
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "Impression_count"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
@@ -84,6 +90,8 @@ ActiveRecord::Schema.define(version: 20170606014117) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
+    t.integer  "post_impressions"
+    t.integer  "ranking"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 

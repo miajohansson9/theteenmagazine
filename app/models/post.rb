@@ -1,6 +1,7 @@
 class Post < ApplicationRecord
   belongs_to :user
   belongs_to :category
+  has_many :impressions
 
   validates :title, :presence => true
   validates :content, :presence => true
@@ -40,6 +41,37 @@ class Post < ApplicationRecord
   }
   scope :other, -> {
   where(approved: true, after_approved: true, :meta_title => ['Health & Fitness', 'Lifestyle', 'Trends', 'Academics', 'Tips & Hacks', 'DIY', 'Travel', 'Love & Relationships'] )
+  }
+
+  scope :first_rank, -> {
+  where(:ranking => 1)
+  }
+  scope :second_rank, -> {
+  where(:ranking => 2)
+  }
+  scope :third_rank, -> {
+  where(:ranking => 3)
+  }
+  scope :fourth_rank, -> {
+  where(:ranking => 4)
+  }
+  scope :fifth_rank, -> {
+  where(:ranking => 5)
+  }
+  scope :sixth_rank, -> {
+  where(:ranking => 6)
+  }
+  scope :seventh_rank, -> {
+  where(:ranking => 7)
+  }
+  scope :eighth_rank, -> {
+  where(:ranking => 8)
+  }
+  scope :nineth_rank, -> {
+  where(:ranking => 9)
+  }
+  scope :tenth_rank, -> {
+  where(:ranking => 10)
   }
 
   has_attached_file :thumbnail, styles: {

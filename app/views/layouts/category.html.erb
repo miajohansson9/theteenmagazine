@@ -57,7 +57,7 @@
             <%= link_to "Articles", posts_path %>
             <% if user_signed_in? %>
             <% else %>
-               <%= link_to "Apply", new_apply_path %>
+               <%= link_to "Apply", new_apply_path, class: "nav--apply" %>
             <% end %>
             <a class="social" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
             <a class="social" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
