@@ -1,7 +1,6 @@
 <div class="ranking">
     <% if current_user && current_user.admin? %>
     <h3>Most Read:</h3>
-
       <% @posts.each do |post| %>
         <% if post.post_impressions != nil %>
         <div class="flex-ranking">

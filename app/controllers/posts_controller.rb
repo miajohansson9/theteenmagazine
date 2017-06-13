@@ -19,12 +19,15 @@ class PostsController < ApplicationController
 
   def log_impression
     if @post.approved && @post.after_approved
-      if @post.post_impressions == nil
-        @post.post_impressions = 1
-        @post.save
+      if user_signed_in? && ((@post.user.id == current_user.id) || (current_user.admin == true))
       else
-        @post.increment(:post_impressions, by = 1)
-        @post.save
+        if @post.post_impressions == nil
+          @post.post_impressions = 1
+          @post.save
+        else
+          @post.increment(:post_impressions, by = 1)
+          @post.save
+        end
       end
     end
    end
