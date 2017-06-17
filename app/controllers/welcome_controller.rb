@@ -5,17 +5,21 @@ class WelcomeController < ApplicationController
     @posts = Post.all.order("created_at desc")
     @posts_featured = Post.approved.all.order("created_at desc").first
     @posts_approved = Post.approved.all.order("created_at desc")
-    @posts_approved_fashion = Post.fashion.all.order("created_at desc")
     @posts_approved_beauty = Post.beauty.all.order("created_at desc")
-    @posts_approved_fitness = Post.fitness.all.order("created_at desc")
-    @posts_approved_tips = Post.tips.all.order("created_at desc")
-    @posts_approved_academics = Post.academics.all.order("created_at desc")
     @posts_approved_entertainment = Post.entertainment.all.order("created_at desc")
-    @posts_approved_trends = Post.trends.all.order("created_at desc")
-    @posts_approved_others = Post.other.all.order("created_at desc")
     @category_fashion = Category.first
     @category_beauty = Category.second
     @category_entertainment = Category.third
+    @first_post = Post.first_rank.all
+    @second_post = Post.second_rank.all
+    @third_post = Post.third_rank.all
+    @fourth_post = Post.fourth_rank.all
+    @fifth_post = Post.fifth_rank.all
+    @sixth_post = Post.sixth_rank.all
+    @seventh_post = Post.seventh_rank.all
+    @eighth_post = Post.eighth_rank.all
+    @nineth_post = Post.nineth_rank.all
+    @tenth_post = Post.tenth_rank.all
   end
 
   def show

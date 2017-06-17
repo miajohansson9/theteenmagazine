@@ -1,3 +1,4 @@
+<div class="wrapper_home">
 <div class="body">
   <div class="gray--background">
     <div class="home--main">
@@ -37,200 +38,228 @@
         <div class="signupdiv">
           <%= render 'signup' %>
         </div>
-
       </div>
-
     </div>
   </div>
 
-  <% if @posts_approved_beauty %>
-  <h1 class="section--title"><%= link_to @category_beauty.name, @category_beauty %></h1>
-  <div class="container--category">
-    <% @posts_approved_beauty[0..0].each do |post| %>
-      <div class="thumbnail newest">
-        <% if (post.image != "" && post.image != nil) %>
-        <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-        <% else %>
-        <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-        <% end %>        <div class="container">
-          <h3 class="article_title"><%= link_to post.title, post %></h3>
-          <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
-        </div>
-      </div>
-    <% end %>
-    <div class="container">
-      <div class="col-2 homepage_content">
-        <% @posts_approved_beauty[1..7].each do |post| %>
-          <div class="thumbnail older">
-            <% if (post.image != "" && post.image != nil) %>
-            <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-            <% else %>
-            <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-            <% end %>            <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-            <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
+  <h1 class="section--title">Beauty</h1>
+  <div class="flex--welcome">
+    <div class="flex-1">
+      <div class="beauty--section">
+        <% @number = 0 %>
+        <% @posts_approved_beauty.each do |post_beauty| %>
+          <% if ((@posts_approved[0..4].include? post_beauty) == false) && @number < 3 %>
+          <div class="one_beauty_article">
+            <%=link_to(image_tag(post_beauty.thumbnail.url(:large2)), post_beauty )%>
+            <h1><%= link_to post_beauty.title, post_beauty %></h1>
+            <p><%= post_beauty.created_at.strftime("%A, %b %d")%></p>
+            <p class="meta"><%= post_beauty.meta_description %></p>
           </div>
+          <% @number += 1 %>
+          <% end %>
         <% end %>
-        </div>
-    </div>
-    <div class="hide">
-      <div class="parentflex">
-        <div class="articles2-6">
-            <% @posts_approved_beauty[1..4].each do |post| %>
-              <div class="thumbnail">
-                <% if (post.image != "" && post.image != nil) %>
-                <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-                <% else %>
-                <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-                <% end %>                <div class="thumbnail--container">
-                  <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-                  <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
-                </div>
+      </div>
+      <div class="entertainment--section">
+        <h1 class="section--title">Entertainment</h1>
+        <div class="entertainment">
+          <% @number = 0 %>
+          <% @posts_approved_entertainment.each do |post_entertainment| %>
+            <% if ((@posts_approved[0..4].include? post_entertainment) == false) && @number < 2 %>
+              <div class="entertainment_article">
+                <%=link_to(image_tag(post_entertainment.thumbnail.url(:medium)), post_entertainment )%>
+                <h1><%= link_to post_entertainment.title, post_entertainment %></h1>
+                <p><%= post_entertainment.created_at.strftime("%A, %b %d")%></p>
+                <p class="meta"><%= post_entertainment.meta_description %></p>
               </div>
+              <% @number += 1 %>
             <% end %>
+          <% end %>
         </div>
       </div>
-    </div>
-    <% end %>
-  </div>
-
-  <% if @posts_approved_fashion %>
-  <h1 class="section--title"><%= link_to @category_fashion.name, @category_fashion %></h1>
-  <div class="container--category">
-    <% @posts_approved_fashion[0..0].each do |post| %>
-      <div class="thumbnail newest">
-        <% if (post.image != "" && post.image != nil) %>
-        <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-        <% else %>
-        <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-        <% end %>
-        <div class="container">
-          <h3 class="article_title"><%= link_to post.title, post %></h3>
-          <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
-        </div>
-      </div>
-    <% end %>
-    <div class="container">
-      <div class="col-2 homepage_content">
-        <% @posts_approved_fashion[1..7].each do |post| %>
-          <div class="thumbnail older">
-            <% if (post.image != "" && post.image != nil) %>
-            <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-            <% else %>
-            <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-            <% end %>            <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-            <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
-          </div>
-        <% end %>
-        </div>
-    </div>
-    <div class="hide">
-      <div class="parentflex">
-        <div class="articles2-6">
-            <% @posts_approved_fashion[1..4].each do |post| %>
-              <div class="thumbnail">
-                <% if (post.image != "" && post.image != nil) %>
-                <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-                <% else %>
-                <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-                <% end %>
-                <div class="thumbnail--container">
-                  <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-                  <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
-                </div>
-              </div>
-            <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-    <% end %>
-
-  <% if @posts_approved_entertainment %>
-  <h1 class="section--title"><%= link_to @category_entertainment.name, @category_entertainment %></h1>
-  <div class="container--category">
-    <% @posts_approved_entertainment[0..0].each do |post| %>
-      <div class="thumbnail newest">
-        <% if (post.image != "" && post.image != nil) %>
-        <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-        <% else %>
-        <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-        <% end %>        <div class="container">
-          <h3 class="article_title"><%= link_to post.title, post %></h3>
-          <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
-        </div>
-      </div>
-    <% end %>
-    <div class="container">
-      <div class="col-2 homepage_content">
-        <% @posts_approved_entertainment[1..7].each do |post| %>
-          <div class="thumbnail older">
-            <% if (post.image != "" && post.image != nil) %>
-            <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-            <% else %>
-            <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-            <% end %>            <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-            <span class="date"><%= post.created_at.strftime("%A, %b %d")%></span>
-          </div>
-        <% end %>
-        </div>
-    </div>
-    <div class="hide">
-      <div class="parentflex">
-        <div class="articles2-6">
-            <% @posts_approved_entertainment[1..4].each do |post| %>
-              <div class="thumbnail">
-                <% if (post.image != "" && post.image != nil) %>
-                <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-                <% else %>
-                <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-                <% end %>                <div class="thumbnail--container">
-                  <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-                  <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
-                </div>
-              </div>
-            <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-    <% end %>
-
-  <h1 class="section--title"><%= link_to "Recent Articles", posts_path %></h1>
-  <div class="other--articles">
-    <div class="flex">
-      <div class="container">
-        <% @posts_approved_others.each do |post| %>
-          <div class="thumbnail">
-            <div class="container--image">
-              <% if (post.image != "" && post.image != nil) %>
-              <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
+      <div class="flex_entertainment_wrapper">
+        <a class="applies" href="/applies/new"><img src="http://i.imgur.com/3M0jhbo.jpg" /></a>
+        <div class="entertainment_grid_container">
+          <% @number2 = 0 %>
+          <% @posts_approved_entertainment.each do |post_entertainment| %>
+            <% if ((@posts_approved[0..4].include? post_entertainment) == false) && @number < 6 && @number > 1 %>
+              <% if  @number2 < 2 %>
+                <% @number2 += 1 %>
               <% else %>
-              <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
+              <div class="entertainment_article_grid">
+                <%=link_to(image_tag(post_entertainment.thumbnail.url(:medium)), post_entertainment )%>
+                <h1><%= link_to post_entertainment.title, post_entertainment %></h1>
+                <p><%= post_entertainment.created_at.strftime("%A, %b %d")%></p>
+                <p class="meta"><%= post_entertainment.meta_description %></p>
+              </div>
+              <% @number += 1 %>
               <% end %>
-            </div>
-            <div class="thumbnail--container">
-              <p class="date"><%= post.meta_title%></p>
-              <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-              <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
-            </div>
-          </div>
-        <% end %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
-      <div class="ads">
-        <a href="/applies/new" target="blank"><img class="apply" src="http://i.imgur.com/UpKRjGe.jpg" /></a>
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- Responsive 1 -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-4986861624955300"
-             data-ad-slot="2060918070"
-             data-ad-format="auto"></ins>
-        <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+    </div>
+    <div class="most_read">
+      <h1 class="section--title">Most Read</h1>
+      <div class="one_article">
+        <%=link_to(image_tag(@first_post.first.thumbnail), @first_post.first )%>
+        <p class="paragraph">
+          <%= @first_post.first.title %>
+        </p>
+      </div>
+      <div class="one_article">
+        <%=link_to(image_tag(@second_post.first.thumbnail), @second_post.first )%>
+        <p class="paragraph">
+          <%= @second_post.first.title %>
+        </p>
+      </div>
+      <div class="one_article">
+        <%=link_to(image_tag(@third_post.first.thumbnail), @third_post.first )%>
+        <p class="paragraph">
+          <%= @third_post.first.title %>
+        </p>
+      </div>
+      <div class="one_article">
+        <%=link_to(image_tag(@fourth_post.first.thumbnail), @fourth_post.first )%>
+        <p class="paragraph">
+          <%= @fourth_post.first.title %>
+        </p>
+      </div>
+      <div class="one_article">
+        <%=link_to(image_tag(@fifth_post.first.thumbnail), @fifth_post.first )%>
+        <p class="paragraph">
+          <%= @fifth_post.first.title %>
+        </p>
+      </div>
+      <div class="one_article">
+        <%=link_to(image_tag(@sixth_post.first.thumbnail), @sixth_post.first )%>
+        <p class="paragraph">
+          <%= @sixth_post.first.title %>
+        </p>
+      </div>
+      <div class="one_article">
+        <%=link_to(image_tag(@seventh_post.first.thumbnail), @seventh_post.first )%>
+        <p class="paragraph">
+          <%= @seventh_post.first.title %>
+        </p>
+      </div>
+      <div class="one_article">
+        <%=link_to(image_tag(@eighth_post.first.thumbnail), @eighth_post.first )%>
+        <p class="paragraph">
+          <%= @eighth_post.first.title %>
+        </p>
+      </div>
+      <div class="one_article">
+        <%=link_to(image_tag(@nineth_post.first.thumbnail), @nineth_post.first )%>
+        <p class="paragraph">
+          <%= @nineth_post.first.title %>
+        </p>
+      </div>
+      <div class="one_article">
+        <%=link_to(image_tag(@tenth_post.first.thumbnail), @tenth_post.first )%>
+        <p class="paragraph">
+          <%= @tenth_post.first.title %>
+        </p>
       </div>
     </div>
   </div>
+
+    <% @num_of_beauty = 2 %>
+    <% @posts_approved_beauty.each do |post_beauty| %>
+      <% if ((@posts_approved[0..4].include? post_beauty) == true) %>
+      <% @num_of_beauty += 1 %>
+      <% end %>
+    <% end %>
+
+    <% @num_of_entertainment = 5 %>
+    <% @posts_approved_entertainment.each do |post_entertainment| %>
+      <% if ((@posts_approved[0..4].include? post_entertainment) == true) %>
+      <% @num_of_entertainment += 1 %>
+      <% end %>
+    <% end %>
+
+    <h1 style="margin-top: 0;" class="section--title">Recent Articles</h1>
+    <div class="three--section">
+      <% @number = 0 %>
+      <% @posts_approved.each do |post| %>
+        <% if ((@posts_approved_beauty[0..@num_of_beauty].include? post) == false) && ((@posts_approved_entertainment[0..@num_of_entertainment].include? post) == false) && ((@posts_approved[0..4].include? post) == false) %>
+        <% if @number < 3 %>
+        <div class="one_article desktop">
+          <%=link_to(image_tag(post.thumbnail.url(:medium)), post )%>
+          <h1><%= link_to post.title, post %></h1>
+          <p><%= post.created_at.strftime("%A, %b %d")%></p>
+          <p class="meta"><%= post.meta_description %></p>
+        </div>
+        <% if @number == 0 %>
+        <div class="list--articles mobile removed" style="border: none; margin-top: -20px;">
+          <%=link_to(image_tag(post.thumbnail.url(:large)), post )%>
+          <div class="article--description">
+            <h1><%= link_to post.title, post %></h1>
+            <p class="category"><%= post.meta_title %></p>
+            <p><%= post.created_at.strftime("%A, %b %d")%></p>
+            <p class="meta"><%= post.meta_description %></p>
+          </div>
+        </div>
+        <% else %>
+        <div class="list--articles mobile removed">
+          <%=link_to(image_tag(post.thumbnail.url(:large)), post )%>
+          <div class="article--description">
+            <h1><%= link_to post.title, post %></h1>
+            <p class="category"><%= post.meta_title %></p>
+            <p><%= post.created_at.strftime("%A, %b %d")%></p>
+            <p class="meta"><%= post.meta_description %></p>
+          </div>
+        </div>
+        <% end %>
+        <% @number += 1 %>
+        <% else %>
+        <div class="list--articles desktop">
+          <div class="article--description">
+            <h1><%= link_to post.title, post %></h1>
+            <p class="category"><%= post.meta_title %></p>
+            <p><%= post.created_at.strftime("%A, %b %d")%></p>
+            <p class="meta"><%= post.meta_description %></p>
+          </div>
+          <%=link_to(image_tag(post.thumbnail.url(:large)), post )%>
+        </div>
+        <div class="list--articles mobile removed">
+          <%=link_to(image_tag(post.thumbnail.url(:large)), post )%>
+          <div class="article--description">
+            <h1><%= link_to post.title, post %></h1>
+            <p class="category"><%= post.meta_title %></p>
+            <p><%= post.created_at.strftime("%A, %b %d")%></p>
+            <p class="meta"><%= post.meta_description %></p>
+          </div>
+        </div>
+        <% end %>
+        <% end %>
+      <% end %>
+    </div>
 </div>
+
+<script>
+$(document).ready(function() {
+  var w = window.innerWidth;
+  if (w<= 640) {
+    $(".desktop").addClass("removed");
+    $(".mobile").removeClass("removed");
+  } else {
+    $(".desktop").removeClass("removed");
+    $(".mobile").addClass("removed");
+  }
+});
+document.getElementsByTagName("BODY")[0].onresize = function() {myFunction()};
+var x = 0;
+function myFunction() {
+  var w = window.innerWidth;
+  if (w<= 640) {
+    $(".desktop").addClass("removed");
+    $(".mobile").removeClass("removed");
+  } else {
+    $(".desktop").removeClass("removed");
+    $(".mobile").addClass("removed");
+  }
+}
+</script>
+
 
 <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>

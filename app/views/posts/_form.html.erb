@@ -22,9 +22,8 @@
 <%= f.label :content, "Write your article here" %><br><br />
 <%= f.cktext_area :content %><br /><br />
 
-<%= f.label "Upload thumbnail or use URL" %><br><br />
-<%= f.file_field :thumbnail %><br/>
-<%= f.text_field :image %>
+<%= f.label "Upload thumbnail image" %><br/><br />
+<%= f.file_field :thumbnail %><br /><br />
 
 <br><%= f.label "Category" %>
 <%= f.select :meta_title, ['Beauty', 'Fashion', 'Health & Fitness', 'Lifestyle', 'Trends', 'Entertainment', 'Academics', 'Tips & Hacks', 'DIY', 'Travel', 'Love & Relationships'] %><br />

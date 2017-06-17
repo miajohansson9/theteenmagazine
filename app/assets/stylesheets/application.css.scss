@@ -256,7 +256,6 @@ footer {
 
 .featured {
   margin-top: 10px;
-
     .featured_img {
       margin-bottom: 10px;
       position:relative;
@@ -269,11 +268,12 @@ footer {
       margin: 0;
       width: 100%;
       word-wrap: break-word;
-      font-family: "Roboto Condensed";
+      font-family: "Lusitana";
       a {
         text-decoration: none;
         color: #191919;
-        font-size: 30px;
+        font-size: 34px;
+        font-weight: 400;
       }
     }
     .date {
@@ -315,8 +315,9 @@ footer {
     .thumbnail--container {
       margin-left: 10px;
       .article_title {
-        font-family: "Roboto Condensed";
+        font-family: "Lusitana";
         margin: 0;
+        font-weight: 400;
         line-height: 70%;
         a {
           text-decoration: none;
@@ -364,8 +365,6 @@ footer {
 }
 
 .section--title {
-  width: 95%;
-  max-width: 1200px;
   margin-bottom: 10px;
   margin-top: 0;
   margin-left: auto;
@@ -449,7 +448,8 @@ footer {
 }
 
 .signupdiv {
-  width: 23%;
+  width: 270px;
+  margin-left: 20px;
   float: right;
   .container {
     display: flex;
@@ -478,14 +478,13 @@ footer {
 }
 
 .parentflex {
-  width: 95%;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-
+  display: flex;
+  flex-direction: row;
   .flexbox {
     display: inline-flex;
-    width: 76%;
+    max-width: 900px;
+    flex-shrink: 2;
+    flex-grow: 2;
     justify-content: center;
   }
 }
@@ -701,6 +700,7 @@ hr {
       width: 100%;
     }
     .signupdiv {
+      margin-left: 0;
       width: 100%;
       .container {
         width: 100%;
@@ -772,7 +772,6 @@ hr {
       }
 
       .article_title {
-        width: 95%;
         margin: 0 auto;
       }
     }
@@ -914,20 +913,13 @@ hr {
           display: block;
           height: auto;
         }
-
-        .flexbox {
-          flex-direction: column;
-        }
-
         .signup {
             width: 100%;
             display: block;
         }
-
         .container {
           flex-direction: column;
           height: auto;
-
           .exclusive-offer {
             height: 40px;
             .exclusive-title {
@@ -937,7 +929,6 @@ hr {
           p {
             display: none;
           }
-
           .mccontainer {
             margin-top: 30px;
             margin-bottom: 10px;
@@ -969,6 +960,7 @@ hr {
 @media (max-width: 762px) {
   #exclusive-title--id, .exclusive-title {
     margin-top: -10px !important;
+    width: 90% !important;
   }
   .exclusive-offer {
     margin-top: 15px !important;
@@ -1020,3 +1012,4 @@ hr {
 @import "posts_projects";
 @import "welcome";
 @import "category";
+@import "newlayout";
