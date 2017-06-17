@@ -12,11 +12,7 @@
            <% @category_posts.each do |post| %>
              <div class="thumbnail">
                <div class="container--image">
-                 <% if (post.image != "" && post.image != nil) %>
-                 <%=link_to(image_tag(post.image, :class => "image_thumbnail"), post )%>
-                 <% else %>
-                 <%=link_to(image_tag(post.thumbnail.url, :class => "image_thumbnail"), post )%>
-                 <% end %>
+                 <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
                </div>
                <div class="thumbnail--container">
                  <p class="date"><%= post.meta_title%></p>
