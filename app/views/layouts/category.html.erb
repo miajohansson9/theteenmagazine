@@ -31,7 +31,7 @@
         <a href="/categories/entertainment">Entertainment</a>
         <%= link_to "All Articles", posts_path %>
         <%= link_to "Contact", new_contact_path %>
-        <% if current_user && current_user.admin? %>
+        <% if current_user && (current_user.admin? || current_user.editor?) %>
           <%= link_to "Users", users_path %>
         <% end %>
         <% if user_signed_in? %>

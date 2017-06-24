@@ -38,6 +38,11 @@
 <%= f.label "Snapchat" %>
 <%= f.text_field :snap %>
 
+<% if current_user && current_user.admin? %>
+<%= f.label "Editor" %>
+<%= f.check_box :editor %><br />
+<% end %>
+
 <br><%= f.submit %>
 
 <% end %>

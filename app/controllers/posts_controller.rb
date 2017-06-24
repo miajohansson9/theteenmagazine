@@ -19,7 +19,7 @@ class PostsController < ApplicationController
 
   def log_impression
     if @post.approved && @post.after_approved
-      if user_signed_in? && ((@post.user.id == current_user.id) || (current_user.admin == true))
+      if user_signed_in? && ((@post.user.id == current_user.id) || (current_user.admin == true) || (current_user.editor == true))
       else
         if @post.post_impressions == nil
           @post.post_impressions = 1

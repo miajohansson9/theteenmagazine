@@ -17,5 +17,7 @@
       </div>
   <% end %>
   <%= link_to "New User", new_user_registration_path, :class => "link--edit" %>
+  <% if current_user && current_user.admin? %>
   <br /><a class="link--edit" href="/ranking">Ranking</a>
+  <% end %>
 </div>

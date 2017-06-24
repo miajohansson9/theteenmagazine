@@ -47,13 +47,13 @@ class UsersController < ApplicationController
   end
 
   def is_admin?
-    redirect_to root_path unless (current_user && current_user.admin?)
+    redirect_to root_path unless (current_user && (current_user.admin? || current_user.editor?))
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :admin, :first_name, :last_name, :image, :description, :website, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
+    params.require(:user).permit(:email, :editor, :admin, :first_name, :last_name, :image, :description, :website, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
   end
 
   def find_user

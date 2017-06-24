@@ -79,10 +79,12 @@
   </form>
   </div>
 
-  <% if current_user && (current_user.id == @post.user_id || current_user.admin?) %>
+  <% if current_user && (current_user.id == @post.user_id || current_user.admin? || current_user.editor?) %>
     <div id="admin_links">
       <%= link_to "Edit Article", edit_post_path(@post) %>
+      <% if current_user && (current_user.id == @post.user_id || current_user.admin) %>
       <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete this post?"} %>
+      <% end %>
     </div>
   <% end %>
 
