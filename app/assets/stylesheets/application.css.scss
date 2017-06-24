@@ -16,10 +16,6 @@ $white: #FFFFFF;
   box-sizing: border-box;
 }
 
-#new_user {
-  margin-bottom: 150px;
-}
-
 body {
   font-family: 'Raleway', sans-serif;
   min-width: 310px;
@@ -303,7 +299,7 @@ footer {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-  margin-left: 18px;
+  margin-left: 1px;
   width: 100%;
   .thumbnail {
     flex-grow: 1;
@@ -708,7 +704,7 @@ hr {
         width: 100%;
         flex-direction: row;
         height: 120px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         background-color: #ff7a8f;
         .exclusive-offer {
           background-image: url();

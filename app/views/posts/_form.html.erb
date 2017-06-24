@@ -28,11 +28,6 @@
 <br><%= f.label "Category" %>
 <%= f.select :meta_title, ['Beauty', 'Fashion', 'Health & Fitness', 'Lifestyle', 'Trends', 'Entertainment', 'Academics', 'Tips & Hacks', 'DIY', 'Travel', 'Love & Relationships'] %><br />
 
-<% if (current_user && current_user.admin?) %>
-<br><br /><%= f.label "Admin: Category ID" %>
-<%= f.text_field :category_id %><br />
-<% end %>
-
 <br><%= f.label :meta_description %><br>
 <%= f.text_field :meta_description %>
 
@@ -51,16 +46,23 @@
   <br><%= f.label "Submit My Article For Approval" %>
   <%= f.check_box :waiting_for_approval %><br>
   <%= f.hidden_field :approved, :value => false %><br>
-  <br><%= f.submit "Save & Preview" %><br><br>
+  <br><%= f.submit "Save & Preview" %>
 <% end %>
 
 <% if :user_id == nil %>
 <%= f.hidden_field :user_id, :value => current_user.id %>
 <% end %>
 
-<% if (current_user && current_user.admin?) %>
-<br><%= f.label "Approve" %>
-<%= f.check_box :approved %><br />
+<% if @post.meta_title == "Fashion" %>
+<%= f.hidden_field :category_id, :value => 1 %>
+<% elsif @post.meta_title == "Beauty" %>
+<%= f.hidden_field :category_id, :value => 2 %>
+<% elsif @post.meta_title == "Entertainment" %>
+<%= f.hidden_field :category_id, :value => 3 %>
+<% end %>
+
+<% if (current_user && (current_user.admin? || current_user.editor?)) %>
+<%= f.check_box :approved %><br /><br />
 <% end %>
 
 <% end %>

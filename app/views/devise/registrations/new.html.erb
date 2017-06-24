@@ -1,6 +1,5 @@
 
 <h1 id="page_title">Add User</h1>
-<% if current_user && current_user.admin? %>
 <div id="posts_wrapper" class="skinny_wrapper">
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
@@ -36,13 +35,5 @@
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
-<% end %>
 </div>
-<% else %>
-<div id="posts_wrapper" class="skinny_wrapper">
-  <p>
-    Oh no! You don't have permission to access this page! <%= link_to "Apply", new_apply_path %>
-  </p>
-</div>
-
 <% end %>
