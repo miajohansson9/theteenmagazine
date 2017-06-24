@@ -62,6 +62,7 @@
 <% end %>
 
 <% if (current_user && (current_user.admin? || current_user.editor?)) %>
+<br><%= f.label "Approve" %>
 <%= f.check_box :approved %><br /><br />
 <% end %>
 
