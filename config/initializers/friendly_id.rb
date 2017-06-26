@@ -38,26 +38,26 @@ FriendlyId.defaults do |config|
   # performance because it will avoid Rails-internal code that makes runtime
   # calls to `Module.extend`.
   #
-  # config.use :finders
+  config.use :finders
   #
   # ## Slugs
   #
   # Most applications will use the :slugged module everywhere. If you wish
   # to do so, uncomment the following line.
   #
-  # config.use :slugged
+  config.use :slugged
   #
   # By default, FriendlyId's :slugged addon expects the slug column to be named
   # 'slug', but you can change it if you wish.
   #
-  # config.slug_column = 'slug'
+  config.slug_column = 'slug'
   #
   # When FriendlyId can not generate a unique ID from your base method, it appends
   # a UUID, separated by a single dash. You can configure the character used as the
   # separator. If you're upgrading from FriendlyId 4, you may wish to replace this
   # with two dashes.
   #
-  # config.sequence_separator = '-'
+  config.sequence_separator = '-'
   #
   # Note that you must use the :slugged addon **prior** to the line which
   # configures the sequence separator, or else FriendlyId will raise an undefined
@@ -73,11 +73,12 @@ FriendlyId.defaults do |config|
   # FriendlyId adds to your model. The change below makes FriendlyId 5.0 behave
   # more like 4.0.
   #
-  # config.use Module.new {
-  #   def should_generate_new_friendly_id?
-  #     slug.blank? || <your_column_name_here>_changed?
-  #   end
-  # }
+  config.use Module.new {
+     def should_generate_new_friendly_id?
+       slug.blank? || title_changed?
+     end
+  }
+
   #
   # FriendlyId uses Rails's `parameterize` method to generate slugs, but for
   # languages that don't use the Roman alphabet, that's not usually sufficient.
