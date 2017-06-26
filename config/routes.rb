@@ -22,4 +22,9 @@ Rails.application.routes.draw do
 
 
   get '*path' => redirect('/')
+
+  get '/:friendly_id', to: 'posts#show' 
+
+  resources :posts, path: ""
+
 end

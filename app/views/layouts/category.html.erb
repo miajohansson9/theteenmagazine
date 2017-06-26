@@ -29,7 +29,6 @@
         <a href="/categories/beauty">Beauty</a>
         <a href="/categories/fashion">Fashion</a>
         <a href="/categories/entertainment">Entertainment</a>
-        <%= link_to "All Articles", posts_path %>
         <%= link_to "Contact", new_contact_path %>
         <% if current_user && (current_user.admin? || current_user.editor?) %>
           <%= link_to "Users", users_path %>
@@ -54,10 +53,10 @@
             <a href="/categories/beauty">Beauty</a>
             <a href="/categories/fashion">Fashion</a>
             <a href="/categories/entertainment">Entertainment</a>
-            <%= link_to "Articles", posts_path %>
+            <%= link_to "Contact", new_contact_path, class: "nav--apply" %>
             <% if user_signed_in? %>
             <% else %>
-               <%= link_to "Apply", new_apply_path, class: "nav--apply" %>
+               <%= link_to "Apply", new_apply_path %>
             <% end %>
             <a class="social" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
             <a class="social" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>

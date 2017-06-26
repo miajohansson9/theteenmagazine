@@ -173,6 +173,10 @@
   .info {
     margin-left: 20px;
 
+    .description_user {
+      margin-top: 10px;
+    }
+
     h2 {
       margin: 0;
       font-size: 30px;
@@ -182,15 +186,19 @@
 
     p {
       font-size: 13px;
-      margin-bottom: 10px;
     }
 
     .website {
       margin-bottom: 0;
-      a {
-        margin-top: 20px;
+      .website_link {
+        display: inline-block;
+      }
+      a, p {
         color: $highlight;
-        text-decoration: none;
+        margin: 0 !important;
+        span {
+          color: black;
+        }
       }
     }
   }
@@ -318,14 +326,30 @@
   .flex--profile {
     flex-direction: column;
     text-align: center;
+    padding: 20px;
     .info {
       margin-left: 0;
+      p {
+        font-size: 13px !important;
+      }
     }
     .profile_img  {
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 10px;
     }
+  }
+
+  .website_link  {
+    font-size: 13px;
+    margin: 0 auto;
+    max-width: 210px;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+  }
+  .website_link span {
+    display: none;
   }
   .guidelines {
     .thelink {
