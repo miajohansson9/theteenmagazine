@@ -14,4 +14,11 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  extend FriendlyId
+  friendly_id :full_name, use: :slugged
+
+  def should_generate_new_friendly_id?
+    slug.blank? || full_name_changed?
+  end
 end
