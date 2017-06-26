@@ -1,6 +1,8 @@
 class AppliesController < ApplicationController
   before_action :show
 
+  layout "category"
+
   def show
     set_meta_tags title: 'The Teen Magazine | Apply'
   end

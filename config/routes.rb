@@ -1,17 +1,16 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: {:registrations => "users/registrations"}
-  resources :posts
-  resources :contacts, only: [:new, :create]
   resources :users
+  resources :contacts, path: "", only: [:new, :create]
   resources :categories, only: [:new, :edit, :show]
-  resources :applies, only: [:new, :create]
+  resources :applies, path: "", only: [:new, :create]
 
   get 'welcome/index'
   root 'welcome#index'
 
-  get 'beauty' => 'categories#beauty'
-
+  get 'contact-us' => 'contacts#new'
+  get 'apply' => 'applies#new'
 
   get 'criteria' => 'pages#criteria'
   get 'choosing-a-topic' => 'pages#topics'
@@ -20,11 +19,9 @@ Rails.application.routes.draw do
   get 'how-to-style-your-articles' => 'pages#styling'
   get 'ranking' => 'pages#ranking'
 
+  resources :posts, only: [:new, :create]
+  resources :posts, path: "", except: [:new, :create]
 
   get '*path' => redirect('/')
-
-  get '/:friendly_id', to: 'posts#show' 
-
-  resources :posts, path: ""
 
 end
