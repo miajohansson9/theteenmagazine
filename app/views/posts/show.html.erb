@@ -11,7 +11,7 @@
 
 .post_image {
    background-image: url(
-      <%= @post.thumbnail %>
+      <%= @post.thumbnail %>);
    height: 220px;
     position: absolute;
    background-position: center;
@@ -133,7 +133,7 @@
         <% @user_posts_approved.each do |post| %>
           <% if post.title != @post.title %>
             <div class="one_article">
-                 <%= link_to(image_tag(post.thumbnail.url(:square)), post) %>
+                 <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
                 <div class="paragraph">
                   <p><%= link_to(post.title, post) %></p>
                 </div>
@@ -148,7 +148,7 @@
         <% @posts.each do |post| %>
           <% if (post.meta_title == @post.meta_title) && (post.title != @post.title) && (@num <= 4) %>
             <div class="one_article">
-               <%= link_to(image_tag(post.thumbnail.url(:square)), post) %>
+               <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
               <div class="paragraph">
                 <p><%= link_to(post.title, post) %></p>
               </div>
