@@ -191,18 +191,33 @@ button {
 }
 
 footer {
-  height: 5em;
+  height: 7em;
   background-color: #191919;
   color: white;
 
+  .container--footer {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .flex--column--footer {
+    display: inline-flex;
+    flex-direction: column;
+    padding-top: 25px;
+
+    a {
+      padding-top: 10px;
+      padding-bottom: 5px;
+      font-size: .9em;
+    }
+  }
+
   nav {
     padding: 20px;
+    padding-right: 0;
     i {
       color: white;
     }
-  }
-  p {
-    padding: 20px;
   }
 }
 
@@ -613,19 +628,22 @@ body {
 }
 
 #main_footer {
-  p, nav {
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  nav {
     padding-top: 25px;
   }
-  .copyright {
-    float: left;
-    font-size: .9em;
-    margin: 0;
+
+  a:hover {
+    color: $dark;
   }
   nav {
     float: right;
     i {
       margin-left: 1em;
-      padding-top: .2em;
+      padding-top: 1.6em;
       &:hover {
         color: $dark;
       }

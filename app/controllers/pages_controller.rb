@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :privacy
+
   def criteria
   end
 
@@ -13,6 +14,9 @@ class PagesController < ApplicationController
   end
 
   def styling
+  end
+
+  def privacy
   end
 
   def ranking

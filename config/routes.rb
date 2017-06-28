@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'finding-images' => 'pages#images'
   get 'how-to-style-your-articles' => 'pages#styling'
   get 'ranking' => 'pages#ranking'
+  get 'privacy-policy' => 'pages#privacy'
 
   resources :posts, only: [:new, :create]
   resources :posts, path: "", except: [:new, :create]
