@@ -16,6 +16,11 @@ $white: #FFFFFF;
   box-sizing: border-box;
 }
 
+.mce_inline_error {
+  margin-bottom: 0 !important;
+  padding-left: 0 !important;
+}
+
 body {
   font-family: 'Raleway', sans-serif;
   min-width: 310px;
