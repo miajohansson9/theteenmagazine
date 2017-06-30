@@ -131,6 +131,8 @@
   }
 }
 
+
+
 .div {
   margin-top: -10px;
 }
@@ -142,25 +144,28 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 100px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   display: block;
   position: relative;
   z-index: 0;
   padding: 10px 40px;
 
-  .date {
-    font-size: 1.2em;
-    color: $light;
-    margin-bottom: 0;
-    font-family: 'Roboto Condensed', sans-serif;
-  }
   h1 {
     margin-top: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: $highlight;
     text-shadow: 1px 1px #191919;
     font-size: 50px;
     font-family: 'Roboto Condensed', sans-serif;
+  }
+  h3 {
+    color: #333;
+    padding: 0 10px;
+    font-family: 'Kristi';
+    font-size: 15px;
+    margin: 0;
+    margin-top: 23px;
+    text-transform: uppercase;
   }
 }
 

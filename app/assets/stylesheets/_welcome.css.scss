@@ -199,7 +199,7 @@ $gray:  #2a2a2a;
   }
 }
 
-@media (max-width: 1025px) {
+@media (max-width: 1075px) {
    .post_apply, .apply_link {
      display: none;
    }
@@ -226,6 +226,20 @@ $gray:  #2a2a2a;
 }
 
 @media (max-width: 640px) {
+  .post_info {
+    flex-direction: column !important;
+    .social_icons {
+      margin-bottom: 15px;
+      justify-content: space-between;
+      a {
+        width: 24%;
+        margin-left: 0px;
+        div {
+          width: 100%;
+        }
+      }
+    }
+  }
   .button {
     height: 30px !important;
     padding: 0 !important;
@@ -300,6 +314,19 @@ $gray:  #2a2a2a;
           display: none;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 435px) {
+  .post_info {
+    p {
+      font-size: 14px !important;
+    }
+    font-size: 14px !important;
+
+    img {
+      display: none;
     }
   }
 }

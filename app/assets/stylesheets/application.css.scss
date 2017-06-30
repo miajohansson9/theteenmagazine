@@ -6,6 +6,11 @@
   src: url("MORVA.otf");
 }
 
+@font-face {
+  font-family: "Kristi";
+  src: url("Hidden meanings.ttf");
+}
+
 $dark: #424653;
 $light: #9a9da4;
 $highlight: #e0528d;
@@ -552,6 +557,74 @@ body {
     border: 0 none;
     color: white;
     font-size: 15px;
+  }
+}
+
+.post_info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 1px dotted #333;
+  border-bottom: 1px dotted #333;
+
+  .left_side_flex {
+    display: flex;
+    flex-direction: row;
+    margin: .4em 0 .4em 0;
+    p {
+      margin: 0;
+      margin-top: 8px;
+      color: #333;
+    }
+  }
+
+  img {
+    padding: 2px;
+    margin-right: 5px;
+    min-width: 42px !important;
+    max-width: 42px !important;
+    max-height: 42px !important;
+  }
+
+  .fa-clock-o {
+    margin-right: 3px;
+    margin-top: 13px;
+    color: #333 !important;
+  }
+
+  .social_icons {
+    margin: .5em 0 .3em 0;
+    display: flex;
+    flex-direction: row;
+  }
+
+  a {
+    margin-left: 0.5em;
+    text-align: center;
+    text-decoration: none;
+
+    div {
+      height: 40px;
+      width: 40px;
+      background-color: #3b5998;
+    }
+  }
+
+  i {
+    color: white;
+    margin-top: 12px;
+  }
+
+  .date {
+    font-size: 1rem;
+    font-family: "Lusitana";
+  }
+  .author {
+    text-transform: uppercase;
+    font-style: italic;
+    font-family: "Lusitana";
+    font-weight: 400;
+    font-size: 1rem;
   }
 }
 

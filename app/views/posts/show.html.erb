@@ -39,7 +39,46 @@
 
   <header id="post_title_show">
     <h1><%= @post.title %></h1>
-    <p class="date"><%= @post.created_at.strftime('%A, %B %d')%></p>
+    <h3><%= @post.meta_title %></h3>
+    <div class="post_info">
+      <div class="left_side_flex">
+        <% if (@post.user.image != "" && @post.user.image != nil) %>
+          <%= image_tag(@post.user.image, :class => "profile_img") %>
+        <% elsif @post.user.profile.exists? %>
+          <%= image_tag(@post.user.profile.url(:square), :class => "profile_img") %>
+        <% else %>
+          <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+        <% end %>
+        <p class="author" style="margin-right: 10px;">By <%= @post.user.full_name %></p>
+        <i class="fa fa-clock-o" style="margin-right: 3px;" aria-hidden="true"></i>
+        <p class="date"><%= @post.created_at.strftime('%A, %B %d')%></p>
+      </div>
+      <div class="social_icons">
+        <a class="fb-share" href="//www.facebook.com/v2.3/dialog/feed?app_id=1190455601051741
+        &name=<%= @post.title %>
+        &description=<%= @post.meta_description %>
+        &link=http://www.theteenmagazine.com/<%= @post.slug %>">
+          <div>
+            <i aria-hidden="true" class="fa fa-facebook"></i>
+          </div>
+       </a>
+      <a class="js-share-twitter-link" href="//www.twitter.com/share?url=http://www.theteenmagazine.com/<%= @post.slug %>&text=<%= @post.title %> &via=theteenmagazin_" >
+        <div style="background-color: #55ACEE">
+          <i aria-hidden="true" class="fa fa-twitter"></i>
+        </div>
+     </a>
+     <a class="js-share-pinterest-link" href="//pinterest.com/pin/create/button/?url=http://www.theteenmagazine.com/<%=@post.slug%>&media=<%= @post.thumbnail.url(:large)%>&description=<%= @post.title %>  - TheTeenMagazine.com">
+       <div style="background-color: #cb2027">
+         <i aria-hidden="true" class="fa fa-pinterest"></i>
+       </div>
+    </a>
+     <a title="Email" href="mailto:?subject=<%= @post.title %>&body=http://www.theteenmagazine.com/<%= @post.slug %>" target="_top">
+       <div  style="background-color: #333">
+         <i aria-hidden="true" class="fa fa-envelope-o"></i>
+       </div>
+     </a>
+    </div>
+    </div>
   </header>
   <% if current_user && current_user.admin? %>
     <div id="admin_links">
@@ -55,9 +94,8 @@
     <div class="post_content">
       <%= markdown @post.content %>
     </div>
-  <hr>
 
-  <div id="mc_embed_signup" style="width: 100%; margin-top: 20px; margin-left: 0px;">
+  <div id="mc_embed_signup" style="width: 100%; margin: 20px 0; margin-left: 0px;">
   <form action="//herokuapp.us14.list-manage.com/subscribe/post?u=5c2a24e15a906f29e2c6a9b72&amp;id=3081d2e76a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" style="padding-left: 0;" novalidate>
       <div id="mc_embed_signup_scroll">
     <h2>Is this your first time here?</h2>
@@ -84,23 +122,6 @@
     </div>
   <% end %>
 
-
-  <div id="share_box">
-    <p>Share "<%= @post.title %>"</p>
-    <a onclick="javascript:window.open('http://twitter.com/share?text= Read this! <%= @post.title %> by @johanssonmia09 - &amp;<%= url_for([@post, {only_path:false}]) %>',
-      '_blank', 'width=800, height=500, top=200, left=300');void(0)">
-      <i class="fa fa-twitter"></i></i>
-    </a>
-    <a onclick="javascript:window.open('http://facebook.com/sharer/sharer.php?u=',
-      '_blank', 'width=800, height=500, top=200, left=300');void(0)">
-      <i class="fa fa-facebook"></i></i>
-    </a>
-    <a onclick="javascript:window.open('http://plus.google.com/share?url=<%= url_for([@post, {only_path:false}]) %> &amp;text=Read this! <%= @post.title %> by <% @post.user.first_name %> <% @post.user.last_name %> on The Teen Magazine - <%= request.original_url %>',
-      '_blank', 'width=800, height=500, top=200, left=300');void(0)">
-      <i class="fa fa-google-plus"></i></i>
-    </a>
-  </div>
-  <hr>
 
   <%= render :partial => 'users/profile' %>
 
@@ -175,5 +196,23 @@ jQuery(document).ready(function(){
       jQuery(".sticky").removeClass("fixed");
     }
   });
+});
+
+$(document).ready(function() {
+    $('.fb-share').click(function(e) {
+        e.preventDefault();
+        window.open($(this).attr('href'), 'fbShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+        return false;
+    });
+    $('.js-share-twitter-link').click(function(e) {
+    e.preventDefault();
+    var href = $(this).attr('href');
+    window.open(href, "Twitter", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+  });
+  $('.js-share-pinterest-link').click(function(e) {
+  e.preventDefault();
+  var href = $(this).attr('href');
+  window.open(href, "Pinterest", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+});
 });
 </script>

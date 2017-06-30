@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   before_filter :log_impression, :only=> [:show]
   load_and_authorize_resource
 
-  layout "category"
+  layout "article"
 
   def load_user
     if @post.user != nil
