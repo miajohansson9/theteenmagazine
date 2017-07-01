@@ -85,7 +85,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to posts_path
+    redirect_to welcome_index_path
   end
 
   private
