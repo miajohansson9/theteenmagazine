@@ -17,7 +17,7 @@
     <meta name="twitter:site" content="@theteenmagazin_">
     <meta name="twitter:title" content="<%= @post.title %>">
     <meta name="twitter:description" content="<%= @post.meta_description %>">
-    <meta name="twitter:creator" content="<%= @user.full_name %>">
+    <meta name="twitter:creator" content="<%= @post.user.full_name %>">
     <meta name="twitter:image" content="http:<%= @post.thumbnail.url(:large) %>">
     <meta name="twitter:domain" content="http://www.theteenmagazine.com/">
     <link href="https://fonts.googleapis.com/css?family=Kameron:700|Vollkorn:700" rel="stylesheet">
