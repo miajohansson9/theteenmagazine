@@ -42,9 +42,7 @@
     <h3><%= @post.meta_title %></h3>
     <div class="post_info">
       <div class="left_side_flex">
-        <% if (@post.user.image != "" && @post.user.image != nil) %>
-          <%= image_tag(@post.user.image, :class => "profile_img") %>
-        <% elsif @post.user.profile.exists? %>
+        <% if @post.user.profile.exists? %>
           <%= image_tag(@post.user.profile.url(:square), :class => "profile_img") %>
         <% else %>
           <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
