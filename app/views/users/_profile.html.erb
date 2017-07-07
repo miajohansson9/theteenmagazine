@@ -1,8 +1,6 @@
 <div id= "background">
   <div class="flex--profile">
-    <% if (@user.image != "" && @user.image != nil) %>
-      <%= image_tag(@user.image, :class => "profile_img") %>
-    <% elsif @user.profile.exists? %>
+    <% if @user.profile.exists? %>
       <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
     <% else %>
       <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
