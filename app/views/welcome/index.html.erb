@@ -58,7 +58,7 @@
           <% @posts_approved_entertainment.each do |post_entertainment| %>
             <% if ((@posts_approved[0..4].include? post_entertainment) == false) && @number < 2 %>
               <div class="entertainment_article">
-                <%=link_to(image_tag(post_entertainment.thumbnail.url(:medium)), post_entertainment )%>
+                <%=link_to(image_tag(post_entertainment.thumbnail.url(:large2)), post_entertainment )%>
                 <h1><%= link_to post_entertainment.title, post_entertainment %></h1>
                 <p><%= post_entertainment.created_at.strftime("%A, %b %d")%></p>
                 <p class="meta"><%= post_entertainment.meta_description %></p>
