@@ -37,7 +37,7 @@
            <%= link_to "Dashboard", user_path(current_user) %>
            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
        <% else %>
-           <a href="/apply">Apply</a>
+           <a href="/applies/new">Apply</a>
         <% end %>
       </div>
     <div class="overflow">
@@ -56,7 +56,7 @@
             <a class="nav--apply" href="/contact-us">Contact</a>
             <% if user_signed_in? %>
             <% else %>
-                <a href="/apply">Apply</a>
+                <a href="/applies/new">Apply</a>
             <% end %>
             <a class="social" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
             <a class="social" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
