@@ -29,7 +29,7 @@
         <a href="/categories/beauty">Beauty</a>
         <a href="/categories/fashion">Fashion</a>
         <a href="/categories/entertainment">Entertainment</a>
-        <a href="/contact-us">Contact</a>
+        <a href="/contacts/new">Contact</a>
         <% if current_user && (current_user.admin? || current_user.editor?) %>
           <%= link_to "Users", users_path %>
         <% end %>
@@ -53,7 +53,7 @@
             <a href="/categories/beauty">Beauty</a>
             <a href="/categories/fashion">Fashion</a>
             <a href="/categories/entertainment">Entertainment</a>
-            <a class="nav--apply" href="/contact-us">Contact</a>
+            <a class="nav--apply" href="/contacts/new">Contact</a>
             <% if user_signed_in? %>
             <% else %>
                 <a href="/applies/new">Apply</a>
