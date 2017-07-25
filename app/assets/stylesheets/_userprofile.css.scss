@@ -12,6 +12,15 @@
   -webkit-transition:0.5s;
 }
 
+.editor_status {
+  color: #333;
+  font-family: 'Kristi';
+  font-size: 18px !important;
+  margin: 0;
+  margin-top: 5xwpx;
+  text-transform: uppercase;
+}
+
 .thelink {
   margin-right: 2px;
   margin-left: 2px;
@@ -174,7 +183,8 @@
     margin-left: 20px;
 
     .description_user {
-      margin-top: 10px;
+      margin-top: 0px;
+      margin-bottom: 10px;
     }
 
     h2 {
