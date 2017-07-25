@@ -15,9 +15,9 @@
     <% end %>
     </h2>
     <% if @user.editor? %>
-      <p class="editor_status">
+      <span class="editor_status">
         Editor
-      </p>
+      </span>
     <% end %>
     <% if (@user.description != "" && @user.description != nil) %>
       <p class="description_user"><%= @user.description %></p>
