@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
 
-    if user.admin? || user.editor?
+    if (user.admin? || user.editor?)
       can :manage, :all
     else
       can :update, Post do |post|

@@ -61,7 +61,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    redirect_to root_path unless (@post.approved || (current_user && (@post.user_id == current_user.id || current_user.admin?)))
+    redirect_to root_path unless (@post.approved || (current_user && (@post.user_id == current_user.id || current_user.admin? || current_user.editor?)))
     set_meta_tags title: @post.title,
                   description: @post.meta_description,
                   keywords: @post.keywords
