@@ -7,7 +7,7 @@
             <% if @posts_featured %>
               <div class="featured individual">
                 <div class="featured_img">
-                  <%=link_to(image_tag(@posts_featured.thumbnail.url(:large2), :id => "image_thumbnail"), @posts_featured )%>
+                  <%=link_to(image_tag(@posts_featured.thumbnail.url(:large2), alt: @posts_featured.title, :id => "image_thumbnail"), @posts_featured )%>
                 </div>
                 <h3 class="article_title"><a href="#"><%= link_to @posts_featured.title, @posts_featured %></a></h3>
                 <p class="date"><%= @posts_featured.created_at.strftime("%A, %b %d")%></p>
@@ -42,7 +42,7 @@
         <% @posts_approved_beauty.each do |post_beauty| %>
           <% if ((@posts_approved[0..4].include? post_beauty) == false) && @number < 3 %>
           <div class="one_beauty_article">
-            <%=link_to(image_tag(post_beauty.thumbnail.url(:large2)), post_beauty )%>
+            <%=link_to(image_tag(post_beauty.thumbnail.url(:large2), alt: post_beauty.title), post_beauty )%>
             <h1><%= link_to post_beauty.title, post_beauty %></h1>
             <p><%= post_beauty.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post_beauty.meta_description %></p>
@@ -58,7 +58,7 @@
           <% @posts_approved_entertainment.each do |post_entertainment| %>
             <% if ((@posts_approved[0..4].include? post_entertainment) == false) && @number < 2 %>
               <div class="entertainment_article">
-                <%=link_to(image_tag(post_entertainment.thumbnail.url(:large2)), post_entertainment )%>
+                <%=link_to(image_tag(post_entertainment.thumbnail.url(:large2), alt: post_entertainment.title), post_entertainment )%>
                 <h1><%= link_to post_entertainment.title, post_entertainment %></h1>
                 <p><%= post_entertainment.created_at.strftime("%A, %b %d")%></p>
                 <p class="meta"><%= post_entertainment.meta_description %></p>
@@ -78,7 +78,7 @@
                 <% @number2 += 1 %>
               <% else %>
               <div class="entertainment_article_grid">
-                <%=link_to(image_tag(post_entertainment.thumbnail.url(:medium)), post_entertainment )%>
+                <%=link_to(image_tag(post_entertainment.thumbnail.url(:medium), alt: post_entertainment.title), post_entertainment )%>
                 <h1><%= link_to post_entertainment.title, post_entertainment %></h1>
                 <p><%= post_entertainment.created_at.strftime("%A, %b %d")%></p>
                 <p class="meta"><%= post_entertainment.meta_description %></p>
@@ -93,61 +93,61 @@
     <div class="most_read">
       <h1 class="section--title">Most Read</h1>
       <div class="one_article">
-        <%=link_to(image_tag(@first_post.first.thumbnail), @first_post.first )%>
+        <%=link_to(image_tag(@first_post.first.thumbnail, alt: @first_post.first.title), @first_post.first )%>
         <p class="paragraph">
           <%= @first_post.first.title %>
         </p>
       </div>
       <div class="one_article">
-        <%=link_to(image_tag(@second_post.first.thumbnail), @second_post.first )%>
+        <%=link_to(image_tag(@second_post.first.thumbnail, alt: @second_post.first.title), @second_post.first )%>
         <p class="paragraph">
           <%= @second_post.first.title %>
         </p>
       </div>
       <div class="one_article">
-        <%=link_to(image_tag(@third_post.first.thumbnail), @third_post.first )%>
+        <%=link_to(image_tag(@third_post.first.thumbnail, alt: @third_post.first.title), @third_post.first )%>
         <p class="paragraph">
           <%= @third_post.first.title %>
         </p>
       </div>
       <div class="one_article">
-        <%=link_to(image_tag(@fourth_post.first.thumbnail), @fourth_post.first )%>
+        <%=link_to(image_tag(@fourth_post.first.thumbnail, alt: @fourth_post.first.title), @fourth_post.first )%>
         <p class="paragraph">
           <%= @fourth_post.first.title %>
         </p>
       </div>
       <div class="one_article">
-        <%=link_to(image_tag(@fifth_post.first.thumbnail), @fifth_post.first )%>
+        <%=link_to(image_tag(@fifth_post.first.thumbnail, alt: @fifth_post.first.title), @fifth_post.first )%>
         <p class="paragraph">
           <%= @fifth_post.first.title %>
         </p>
       </div>
       <div class="one_article">
-        <%=link_to(image_tag(@sixth_post.first.thumbnail), @sixth_post.first )%>
+        <%=link_to(image_tag(@sixth_post.first.thumbnail, alt: @sixth_post.first.title), @sixth_post.first )%>
         <p class="paragraph">
           <%= @sixth_post.first.title %>
         </p>
       </div>
       <div class="one_article">
-        <%=link_to(image_tag(@seventh_post.first.thumbnail), @seventh_post.first )%>
+        <%=link_to(image_tag(@seventh_post.first.thumbnail, alt: @seventh_post.first.title), @seventh_post.first )%>
         <p class="paragraph">
           <%= @seventh_post.first.title %>
         </p>
       </div>
       <div class="one_article">
-        <%=link_to(image_tag(@eighth_post.first.thumbnail), @eighth_post.first )%>
+        <%=link_to(image_tag(@eighth_post.first.thumbnail, alt: @eighth_post.first.title), @eighth_post.first )%>
         <p class="paragraph">
           <%= @eighth_post.first.title %>
         </p>
       </div>
       <div class="one_article">
-        <%=link_to(image_tag(@nineth_post.first.thumbnail), @nineth_post.first )%>
+        <%=link_to(image_tag(@nineth_post.first.thumbnail, alt: @nineth_post.first.title), @nineth_post.first )%>
         <p class="paragraph">
           <%= @nineth_post.first.title %>
         </p>
       </div>
       <div class="one_article">
-        <%=link_to(image_tag(@tenth_post.first.thumbnail), @tenth_post.first )%>
+        <%=link_to(image_tag(@tenth_post.first.thumbnail, alt: @tenth_post.first.title), @tenth_post.first )%>
         <p class="paragraph">
           <%= @tenth_post.first.title %>
         </p>
