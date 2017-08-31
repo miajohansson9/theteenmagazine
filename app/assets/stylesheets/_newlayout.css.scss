@@ -239,11 +239,12 @@
     a {
       width: 50%;
       flex-grow: 1;
+      padding: 20px;
+      padding-right: 0px;
+      padding-left: 40px;
       img {
         width: 100%;
-        padding: 20px;
-        padding-right: 0px;
-        padding-left: 40px;
+
       }
     }
     h1 {
