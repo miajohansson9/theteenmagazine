@@ -17,7 +17,7 @@
           <div class="articles2-6">
               <% @posts_approved[1..4].each do |post| %>
                 <div class="thumbnail">
-                  <%=link_to(image_tag(post.thumbnail.url(:medium), :class => "image_thumbnail"), post )%>
+                  <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title, :class => "image_thumbnail"), post )%>
                   <div class="thumbnail--container">
                     <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
                     <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
@@ -176,14 +176,14 @@
         <% if ((@posts_approved_beauty[0..@num_of_beauty].include? post) == false) && ((@posts_approved_entertainment[0..@num_of_entertainment].include? post) == false) && ((@posts_approved[0..4].include? post) == false) %>
         <% if @number < 3 %>
         <div class="one_article desktop">
-          <%=link_to(image_tag(post.thumbnail.url(:medium)), post )%>
+          <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
           <h1><%= link_to post.title, post %></h1>
           <p><%= post.created_at.strftime("%A, %b %d")%></p>
           <p class="meta"><%= post.meta_description %></p>
         </div>
         <% if @number == 0 %>
         <div class="list--articles mobile removed" style="border: none; margin-top: -20px;">
-          <%=link_to(image_tag(post.thumbnail.url(:large)), post )%>
+          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
             <p class="category"><%= post.meta_title %></p>
@@ -193,7 +193,7 @@
         </div>
         <% else %>
         <div class="list--articles mobile removed">
-          <%=link_to(image_tag(post.thumbnail.url(:large)), post )%>
+          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
             <p class="category"><%= post.meta_title %></p>
@@ -211,10 +211,10 @@
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
           </div>
-          <%=link_to(image_tag(post.thumbnail.url(:large)), post )%>
+          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
         </div>
         <div class="list--articles mobile removed">
-          <%=link_to(image_tag(post.thumbnail.url(:large)), post )%>
+          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
             <p class="category"><%= post.meta_title %></p>
