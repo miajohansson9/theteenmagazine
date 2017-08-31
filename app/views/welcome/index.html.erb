@@ -211,10 +211,10 @@
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
           </div>
-          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
+          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
         </div>
         <div class="list--articles mobile removed">
-          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
+          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
             <p class="category"><%= post.meta_title %></p>
