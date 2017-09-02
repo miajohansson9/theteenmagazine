@@ -24,8 +24,8 @@ class Post < ApplicationRecord
   scope :beauty, -> {
   where(approved: true, after_approved: true, :meta_title => "Beauty")
   }
-  scope :fitness, -> {
-  where(approved: true, after_approved: true, :meta_title => "Fitness")
+  scope :health, -> {
+  where(approved: true, after_approved: true, :meta_title => "Health & Fitness")
   }
   scope :tips, -> {
   where(approved: true, after_approved: true, :meta_title => "Tips & Hacks")
@@ -90,5 +90,5 @@ class Post < ApplicationRecord
   def should_generate_new_friendly_id?
     slug.blank? || title_changed?
   end
-  
+
 end

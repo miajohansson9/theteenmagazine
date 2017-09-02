@@ -52,16 +52,16 @@
         <% end %>
       </div>
       <div class="entertainment--section">
-        <h1 class="section--title"><a href="/categories/entertainment">Entertainment</a></h1>
+        <h1 class="section--title"><a href="/categories/health-fitness">Health & Fitness</a></h1>
         <div class="entertainment">
           <% @number = 0 %>
-          <% @posts_approved_entertainment.each do |post_entertainment| %>
-            <% if ((@posts_approved[0..4].include? post_entertainment) == false) && @number < 2 %>
+          <% @posts_approved_health.each do |post_health| %>
+            <% if ((@posts_approved[0..4].include? post_health) == false) && @number < 2 %>
               <div class="entertainment_article">
-                <%=link_to(image_tag(post_entertainment.thumbnail.url(:large2), alt: post_entertainment.title), post_entertainment )%>
-                <h1><%= link_to post_entertainment.title, post_entertainment %></h1>
-                <p><%= post_entertainment.created_at.strftime("%A, %b %d")%></p>
-                <p class="meta"><%= post_entertainment.meta_description %></p>
+                <%=link_to(image_tag(post_health.thumbnail.url(:large2), alt: post_health.title), post_health )%>
+                <h1><%= link_to post_health.title, post_health %></h1>
+                <p><%= post_health.created_at.strftime("%A, %b %d")%></p>
+                <p class="meta"><%= post_health.meta_description %></p>
               </div>
               <% @number += 1 %>
             <% end %>
@@ -72,16 +72,16 @@
         <a class="applies" href="/applies/new"><img src="http://i.imgur.com/3M0jhbo.jpg" /></a>
         <div class="entertainment_grid_container">
           <% @number2 = 0 %>
-          <% @posts_approved_entertainment.each do |post_entertainment| %>
-            <% if ((@posts_approved[0..4].include? post_entertainment) == false) && @number < 6 && @number > 1 %>
+          <% @posts_approved_health.each do |post_health| %>
+            <% if ((@posts_approved[0..4].include? post_health) == false) && @number < 6 && @number > 1 %>
               <% if  @number2 < 2 %>
                 <% @number2 += 1 %>
               <% else %>
               <div class="entertainment_article_grid">
-                <%=link_to(image_tag(post_entertainment.thumbnail.url(:medium), alt: post_entertainment.title), post_entertainment )%>
-                <h1><%= link_to post_entertainment.title, post_entertainment %></h1>
-                <p><%= post_entertainment.created_at.strftime("%A, %b %d")%></p>
-                <p class="meta"><%= post_entertainment.meta_description %></p>
+                <%=link_to(image_tag(post_health.thumbnail.url(:medium), alt: post_health.title), post_health )%>
+                <h1><%= link_to post_health.title, post_health %></h1>
+                <p><%= post_health.created_at.strftime("%A, %b %d")%></p>
+                <p class="meta"><%= post_health.meta_description %></p>
               </div>
               <% @number += 1 %>
               <% end %>
@@ -162,10 +162,10 @@
       <% end %>
     <% end %>
 
-    <% @num_of_entertainment = 5 %>
-    <% @posts_approved_entertainment.each do |post_entertainment| %>
-      <% if ((@posts_approved[0..4].include? post_entertainment) == true) %>
-      <% @num_of_entertainment += 1 %>
+    <% @num_of_health = 5 %>
+    <% @posts_approved_health.each do |post_health| %>
+      <% if ((@posts_approved[0..4].include? post_health) == true) %>
+      <% @num_of_health += 1 %>
       <% end %>
     <% end %>
 
@@ -173,7 +173,7 @@
     <div class="three--section">
       <% @number = 0 %>
       <% @posts_approved.each do |post| %>
-        <% if ((@posts_approved_academics[0..@num_of_academics].include? post) == false) && ((@posts_approved_entertainment[0..@num_of_entertainment].include? post) == false) && ((@posts_approved[0..4].include? post) == false) %>
+        <% if ((@posts_approved_academics[0..@num_of_academics].include? post) == false) && ((@posts_approved_health[0..@num_of_health].include? post) == false) && ((@posts_approved[0..4].include? post) == false) %>
         <% if @number < 3 %>
         <div class="one_article desktop">
           <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
