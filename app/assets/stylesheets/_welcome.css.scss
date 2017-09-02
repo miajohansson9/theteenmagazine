@@ -1,5 +1,30 @@
 $gray:  #2a2a2a;
 
+.welcome {
+  img {
+    opacity: 1;
+    transition: opacity 0.8s;
+    -webkit-transition: opacity 0.8s;
+  }
+  img:hover {
+    opacity: 0.7;
+  }
+  a {
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
+  }
+  a:hover {
+    color: #979797 !important;
+  }
+  .section--title, .paragraph
+    a:hover {
+    color: #333 !important;
+  }
+}
+
 .col-1, .col-3 {
   float: left;
 }

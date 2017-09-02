@@ -681,13 +681,18 @@ body {
     a {
       font-family: 'Univers-CnUlt', Arial, Sans-serif;
       text-transform: uppercase;
-      letter-spacing: 0.05rem;
+      letter-spacing: 0.01rem;
       line-height: 1;
-      font-size: 1rem;
-      margin: 0 1rem;
+      font-size: 0.9rem;
+      margin: 0 0.5rem;
       padding-top: 20px;
       color: white;
       text-decoration: none;
+      color: 1;
+      -webkit-transition: color 0.4s ease-out;
+      -moz-transition: color 0.4s ease-out;
+      -o-transition: color .4s ease-out;
+      transition: color .4s ease-out;
       &:hover {
         color: $highlight;
       }
