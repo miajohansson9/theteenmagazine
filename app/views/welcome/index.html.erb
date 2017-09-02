@@ -34,18 +34,18 @@
   </div>
 
   <div class="wrapper_home">
-  <h1 class="section--title"><a href="/categories/beauty">Beauty</a></h1>
+  <h1 class="section--title"><a href="/categories/academics">Academics</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
       <div class="beauty--section">
         <% @number = 0 %>
-        <% @posts_approved_beauty.each do |post_beauty| %>
-          <% if ((@posts_approved[0..4].include? post_beauty) == false) && @number < 3 %>
+        <% @posts_approved_academics.each do |post_academics| %>
+          <% if ((@posts_approved[0..4].include? post_academics) == false) && @number < 3 %>
           <div class="one_beauty_article">
-            <%=link_to(image_tag(post_beauty.thumbnail.url(:large2), alt: post_beauty.title), post_beauty )%>
-            <h1><%= link_to post_beauty.title, post_beauty %></h1>
-            <p><%= post_beauty.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post_beauty.meta_description %></p>
+            <%=link_to(image_tag(post_academics.thumbnail.url(:large2), alt: post_academics.title), post_academics )%>
+            <h1><%= link_to post_academics.title, post_academics %></h1>
+            <p><%= post_academics.created_at.strftime("%A, %b %d")%></p>
+            <p class="meta"><%= post_academics.meta_description %></p>
           </div>
           <% @number += 1 %>
           <% end %>
@@ -155,10 +155,10 @@
     </div>
   </div>
 
-    <% @num_of_beauty = 2 %>
-    <% @posts_approved_beauty.each do |post_beauty| %>
-      <% if ((@posts_approved[0..4].include? post_beauty) == true) %>
-      <% @num_of_beauty += 1 %>
+    <% @num_of_academics = 2 %>
+    <% @posts_approved_academics.each do |post_academics| %>
+      <% if ((@posts_approved[0..4].include? post_academics) == true) %>
+      <% @num_of_academics += 1 %>
       <% end %>
     <% end %>
 
@@ -173,7 +173,7 @@
     <div class="three--section">
       <% @number = 0 %>
       <% @posts_approved.each do |post| %>
-        <% if ((@posts_approved_beauty[0..@num_of_beauty].include? post) == false) && ((@posts_approved_entertainment[0..@num_of_entertainment].include? post) == false) && ((@posts_approved[0..4].include? post) == false) %>
+        <% if ((@posts_approved_academics[0..@num_of_academics].include? post) == false) && ((@posts_approved_entertainment[0..@num_of_entertainment].include? post) == false) && ((@posts_approved[0..4].include? post) == false) %>
         <% if @number < 3 %>
         <div class="one_article desktop">
           <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
