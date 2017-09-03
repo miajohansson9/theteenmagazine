@@ -312,7 +312,8 @@
       h1 {
         font-size: 34px;
       }
-      img {
+      img, a {
+        width: 100% !important;
         padding: 0 !important;
       }
     }
