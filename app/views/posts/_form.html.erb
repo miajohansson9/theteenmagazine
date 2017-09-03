@@ -26,7 +26,7 @@
 <%= f.file_field :thumbnail %><br /><br />
 
 <br><%= f.label "Category" %>
-<%= f.select :meta_title, ['Academics', 'Get Involved', 'Health & Fitness', 'Lifestyle', 'Entertainment', 'Tips & Hacks', 'DIY', 'Beauty', 'Fashion', 'Travel', 'Love & Relationships'] %><br />
+<%= f.select :meta_title, ['Academics', 'Get Involved', 'Health & Fitness', 'Lifestyle', 'Entertainment', 'Tips & Hacks', 'DIY', 'Beauty', 'Fashion', 'Travel'] %><br />
 
 <br><%= f.label :meta_description %><br>
 <%= f.text_field :meta_description %>
@@ -59,6 +59,20 @@
 <%= f.hidden_field :category_id, :value => 2 %>
 <% elsif @post.meta_title == "Entertainment" %>
 <%= f.hidden_field :category_id, :value => 3 %>
+<% elsif @post.meta_title == "Academics" %>
+<%= f.hidden_field :category_id, :value => 7 %>
+<% elsif @post.meta_title == "Get Involved" %>
+<%= f.hidden_field :category_id, :value => 12 %>
+<% elsif @post.meta_title == "Health & Fitness" %>
+<%= f.hidden_field :category_id, :value => 4 %>
+<% elsif @post.meta_title == "Lifestyle" %>
+<%= f.hidden_field :category_id, :value => 5 %>
+<% elsif @post.meta_title == "DIY" %>
+<%= f.hidden_field :category_id, :value => 9 %>
+<% elsif @post.meta_title == "Travel" %>
+<%= f.hidden_field :category_id, :value => 10 %>
+<% elsif @post.meta_title == "Lifestyle" %>
+<%= f.hidden_field :category_id, :value => 5 %>
 <% end %>
 
 <% if (current_user && (current_user.admin? || current_user.editor?)) %>
