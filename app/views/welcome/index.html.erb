@@ -188,7 +188,9 @@
           <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
-            <p class="category"><%= post.meta_title %></p>
+            <% if post.category_id != nil %>
+            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
+            <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
           </div>
@@ -198,7 +200,9 @@
           <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
-            <p class="category"><%= post.meta_title %></p>
+            <% if post.category_id != nil %>
+            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
+            <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
           </div>
@@ -209,7 +213,9 @@
         <div class="list--articles desktop">
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
-            <p class="category"><%= post.meta_title %></p>
+            <% if post.category_id != nil %>
+            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
+            <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
           </div>
@@ -219,7 +225,9 @@
           <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
-            <p class="category"><%= post.meta_title %></p>
+            <% if post.category_id != nil %>
+            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
+            <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
           </div>
