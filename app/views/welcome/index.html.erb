@@ -189,7 +189,7 @@
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
             <% if post.category_id != nil %>
-            <p class="category"><%= link_to(post.meta_title, Category.find(2)) %></p>
+            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
@@ -201,7 +201,7 @@
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
             <% if post.category_id != nil %>
-            <p class="category"><%= link_to(post.meta_title, Category.find(2)) %></p>
+            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
@@ -214,7 +214,7 @@
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
             <% if post.category_id != nil %>
-            <p class="category"><%= link_to(post.meta_title, Category.find(2)) %></p>
+            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
@@ -226,7 +226,7 @@
           <div class="article--description">
             <h1><%= link_to post.title, post %></h1>
             <% if post.category_id != nil %>
-            <p class="category"><%= link_to(post.meta_title, Category.find(2)) %></p>
+            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description %></p>
