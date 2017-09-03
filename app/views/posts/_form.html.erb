@@ -71,8 +71,8 @@
 <%= f.hidden_field :category_id, :value => 9 %>
 <% elsif @post.meta_title == "Travel" %>
 <%= f.hidden_field :category_id, :value => 10 %>
-<% elsif @post.meta_title == "Lifestyle" %>
-<%= f.hidden_field :category_id, :value => 5 %>
+<% elsif @post.meta_title == "Tips & Hacks" %>
+<%= f.hidden_field :category_id, :value => 8 %>
 <% end %>
 
 <% if (current_user && (current_user.admin? || current_user.editor?)) %>
