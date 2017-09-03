@@ -15,15 +15,17 @@
             <% end %>
           </div>
           <div class="articles2-6">
-              <% @posts_approved[1..4].each do |post| %>
-                <div class="thumbnail">
-                  <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title, :class => "image_thumbnail"), post )%>
-                  <div class="thumbnail--container">
-                    <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-                    <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
-                  </div>
+            <% if @posts_approved %>
+            <% @posts_approved[1..4].each do |post| %>
+              <div class="thumbnail">
+                <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title, :class => "image_thumbnail"), post )%>
+                <div class="thumbnail--container">
+                  <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+                  <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
                 </div>
-              <% end %>
+              </div>
+            <% end %>
+            <% end %>
           </div>
         </div>
         <div class="signupdiv">
