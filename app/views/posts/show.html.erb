@@ -39,7 +39,11 @@
 
   <header id="post_title_show">
     <h1 class="title_article_show"><%= @post.title %></h1>
-    <h3><%= link_to(@post.meta_title, Category.find(@post.category_id)) %></h3>
+    <% if @post.category_id != nil %>
+      <h3><%= link_to(@post.meta_title, Category.find(@post.category_id)) %></h3>
+    <% else %>
+      <h3><%= @post.meta_title %></h3>
+    <% end %>
     <div class="post_info">
       <div class="left_side_flex">
         <% if @post.user.profile.exists? %>
