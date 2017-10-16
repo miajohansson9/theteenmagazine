@@ -60,7 +60,7 @@
             <% @users.each do |user| %>
               <% if user.full_name == @post.collaboration %>
                 <% if user.profile.exists? %>
-                  <%= image_tag(@post.user.profile.url(:square), :class => "profile_img") %>
+                  <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
                 <% else %>
                   <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
                 <% end %>
