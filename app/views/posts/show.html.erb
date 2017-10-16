@@ -46,12 +46,30 @@
     <% end %>
     <div class="post_info">
       <div class="left_side_flex">
-        <% if @post.user.profile.exists? %>
-          <%= image_tag(@post.user.profile.url(:square), :class => "profile_img") %>
-        <% else %>
-          <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
-        <% end %>
-        <p class="author" style="margin-right: 10px;">By <%= @post.user.full_name %></p>
+        <div class="authors">
+          <div class="one_author">
+            <% if @post.user.profile.exists? %>
+              <%= image_tag(@post.user.profile.url(:square), :class => "profile_img") %>
+            <% else %>
+              <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+            <% end %>
+            <p class="author" style="margin-right: 10px;">By <%= @post.user.full_name %></p>
+          </div>
+          <div class="one_author second_author">
+            <% if @post.collaboration != nil || @post.collaboration != "" %>
+            <% @users.each do |user| %>
+              <% if user.full_name == @post.collaboration %>
+                <% if user.profile.exists? %>
+                  <%= image_tag(@post.user.profile.url(:square), :class => "profile_img") %>
+                <% else %>
+                  <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <p class="author" style="margin-right: 10px;"><%= @post.collaboration %></p>
+            <% end %>
+          </div>
+        </div>
         <i class="fa fa-clock-o" style="margin-right: 3px;" aria-hidden="true"></i>
         <p class="date"><%= @post.created_at.strftime('%A, %B %d')%></p>
       </div>

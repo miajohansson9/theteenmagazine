@@ -31,8 +31,8 @@
 <br><%= f.label :meta_description %><br>
 <%= f.text_field :meta_description %>
 
-<br><%= f.label :keywords %><br>
-<%= f.text_field :keywords %>
+<br><%= f.label "Collaboration" %><br>
+<%= f.text_field :collaboration %>
 
 <% if @post.approved == true %>
   <% if @post.after_approved == nil %>

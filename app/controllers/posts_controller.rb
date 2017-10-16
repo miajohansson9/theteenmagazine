@@ -61,7 +61,8 @@ class PostsController < ApplicationController
   end
 
   def show
-    redirect_to root_path unless (@post.approved || (current_user && (@post.user_id == current_user.id || current_user.admin? || current_user.editor?)))
+    redirect_to root_path unless (@post.approved || (current_user && (@post.user_id == current_user.id || @post.collaboration == current_user.full_name || current_user.admin? || current_user.editor?)))
+    @users = User.all.order("created_at desc")
     set_meta_tags title: @post.title,
                   description: @post.meta_description,
                   keywords: @post.keywords
@@ -91,7 +92,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :thumbnail, :ranking, :content, :image, :category, :category_id, :post_impressions, :meta_title, :meta_description, :keywords, :user_id, :admin_id, :waiting_for_approval, :approved, :after_approved, :created_at, :slug)
+    params.require(:post).permit(:title, :thumbnail, :ranking, :content, :image, :category, :category_id, :post_impressions, :meta_title, :meta_description, :keywords, :user_id, :admin_id, :waiting_for_approval, :approved, :collaboration, :after_approved, :created_at, :slug)
   end
 
   def find_post

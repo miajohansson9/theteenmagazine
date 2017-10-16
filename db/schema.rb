@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626025410) do
+ActiveRecord::Schema.define(version: 20171016222525) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 20170626025410) do
     t.text     "meta_title"
     t.text     "meta_description"
     t.text     "keywords"
-    t.string   "category"
     t.integer  "user_id"
     t.integer  "admin_id"
     t.boolean  "approved"
@@ -92,6 +91,7 @@ ActiveRecord::Schema.define(version: 20170626025410) do
     t.datetime "thumbnail_updated_at"
     t.integer  "post_impressions"
     t.integer  "ranking"
+    t.string   "collaboration"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
