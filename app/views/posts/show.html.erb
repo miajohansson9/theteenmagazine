@@ -143,7 +143,7 @@
   <%= render :partial => 'users/profile' %>
   <% @users.each do |user| %>
     <% if user.full_name == @post.collaboration %>
-      <div class="flex--profile">
+      <div class="flex--profile" style="margin-top: -40px">
         <% if user.profile.exists? %>
           <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
         <% else %>
