@@ -1128,53 +1128,6 @@ hr {
   }
 }
 
-@media (min-width: 770px) {
-  #main_title {
-    font-size: 50px;
-    margin-bottom: -2px;
-    font-weight: 400;
-    a {
-      color: black;
-      text-shadow: none;
-    }
-  }
-
-  #main_navigation {
-    background-image: none;
-    .logo--flex {
-      .fa-bars {
-        transform: scale(1.5,1);
-        padding: 20px 30px 30px;
-        position: absolute;
-        cursor: pointer;
-        z-index: 10000000;
-        color: black;
-      }
-
-      .name {
-        margin-top: 20px;
-      }
-    }
-    .nav-title {
-      font-family: 'justwaitandsee';
-      font-size: 1.4rem;
-      font-style: italic;
-      &:hover {
-        color: white;
-      }
-    }
-    nav {
-      background-color: #fefaf7;
-      margin-top: 10px;
-      border-top: 1px solid lightgray;
-      border-bottom: 1px solid lightgray;
-      a {
-        color: black;
-      }
-    }
-  }
-}
-
 @media (max-width: 285px) {
 
   #main_navigation {
