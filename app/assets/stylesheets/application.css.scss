@@ -378,8 +378,9 @@ footer {
 #main_title {
   font-family: "justwaitandsee";
   font-size: 80px;
-  text-align: center;
+  text-align: left;
   margin-bottom: -2px;
+  margin-left: 80px;
   max-height: 120px;
   a {
     text-decoration: none;
@@ -638,7 +639,7 @@ body {
 #main_navigation {
   margin-bottom: 10px;
   width: 100%;
-  background-image: url("jeans.jpg");
+  background-color: black;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1015,6 +1016,9 @@ hr {
     }
     nav {
       display: none;
+    }
+    .nav_article {
+      display: flex;
     }
   }
 

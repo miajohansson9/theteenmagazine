@@ -91,6 +91,70 @@ $gray:  #2a2a2a;
   }
 }
 
+.banner_fundraiser {
+  height: 180px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url("https://i.imgur.com/M9lmjEM.jpg");
+  background-position: center;
+
+  .container_fundraiser {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    max-height: 180px;
+    justify-content: space-between;
+    .background_stats {
+      background-color: rgba(57,61,72,0.6);
+      background: transparent;
+      max-width: 470px;
+      margin-top: 55px;
+      .stats {
+        margin-left: 30px;
+        p {
+          font-size: 21px;
+          line-height: 1.2em;
+          color: white;
+          text-shadow: 1px 1px black;
+          font-weight: 600;
+          font-family: "Lusitana";
+          margin: 0;
+        }
+      }
+    }
+    .nbfr_donate_container {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 20px;
+      margin-top: 30px;
+      margin-right: 20px;
+      div {
+        margin-top: 83px;
+        h1 {
+          font-family: "Lusitana";
+          margin: 0;
+          color: white;
+          text-shadow: 2px 2px black;
+        }
+      }
+      .green_button {
+        margin-top: 75px;
+        background-color: white;
+        padding: 10px;
+        border-radius: 20px;
+        h1 {
+          color: black;
+          text-shadow: none;
+          margin-top: 3px;
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}
+
 .newest {
   margin-left: auto;
   margin-right: auto;
@@ -337,6 +401,52 @@ $gray:  #2a2a2a;
 
         .date {
           display: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 880px) {
+  .banner_fundraiser {
+    .container_fundraiser {
+      justify-content: center;
+      .background_stats {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 770px) {
+  .link {
+    display: none;
+  }
+  .banner_fundraiser {
+    height: 80px;
+
+    .container_fundraiser {
+      max-height: 80px;
+      .nbfr_donate_container {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        div {
+          margin-top: 40px;
+          h1 {
+            font-family: "Lusitana";
+            font-size: 20px;
+            margin: 0;
+            color: white;
+            text-shadow: 2px 2px black;
+          }
+        }
+        .green_button {
+          margin-top: 30px;
+          padding: 10px;
+          h1 {
+            font-size: 17px;
+          }
         }
       }
     }

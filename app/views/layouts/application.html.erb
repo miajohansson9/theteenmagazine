@@ -49,32 +49,49 @@
     </div>
     <div class="overflow">
       <div class="bodywrapper">
-      <header id="main_navigation" class="clearfix">
-        <div class="border">
-          <div class="logo--flex">
-            <i class="fa fa-bars toggle_menu"></i>
-            <h1 id="main_title" class="name"><%= link_to "The Teen Magazine", root_path %></h1>
-            <!-- <%=link_to(image_tag("http://i1074.photobucket.com/albums/w412/mjohansson9/imageedit_1_5659273426_zpswrtm8qvc.png", :class => "name"), root_path )%> -->
+        <header id="main_navigation" class="clearfix">
+          <a target="_blank" style="text-decoration: none;" href="https://www.rcucommunityfund.org/theteenmagazine">
+            <div class="banner_fundraiser">
+              <div class="container_fundraiser">
+                <div class="background_stats">
+                  <div class="stats">
+                    <p>• 41 dead</p>
+                    <p>• 90,000 evacuated</p>
+                    <p>• 5,700 buildings destroyed</p>
+                    <p>• 245,000 acres burned</p>
+                  </div>
+                </div>
+                <div class="nbfr_donate_container">
+                  <div style="margin-right: 30px; font-style: italic;">
+                    <h1>North Bay Fire Relief</h1>
+                  </div>
+                  <div class="green_button">
+                    <h1>DONATE</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <div class="border">
+            <div class="logo--flex" style="margin-top: 0;">
+              <i class="fa fa-bars toggle_menu" style="color: white; padding-top: 20px;"></i>
+            </div>
+            <nav style="background-color: black; border: none; margin-top: 0 !important;" class="nav_article">
+              <%= link_to "The Teen Magazine", root_path, class: "nav-title", style: "color: white !important;" %>
+              <a class="link" href="/categories/beauty">Beauty</a>
+              <a class="link" href="/categories/fashion">Fashion</a>
+              <a class="link" href="/categories/entertainment">Entertainment</a>
+              <a class="link" class="nav--apply" href="/contacts/new">Contact</a>
+              <% if user_signed_in? %>
+              <% else %>
+                  <a class="link" href="/applies/new">Apply</a>
+              <% end %>
+              <a class="link" class="social" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+              <a class="link" class="social" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+            </nav>
           </div>
-          <nav>
-            <a href="/categories/beauty">Beauty</a>
-            <a href="/categories/fashion">Fashion</a>
-            <a href="/categories/entertainment">Entertainment</a>
-            <a href="/contacts/new">Contact</a>
-            <% if current_user && (current_user.admin? || current_user.editor?) %>
-              <%= link_to "Users", users_path %>
-            <% end %>
-            <% if user_signed_in? %>
-               <%= link_to "Dashboard", user_path(current_user) %>
-               <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-            <% else %>
-            <a href="/applies/new">Apply</a>
-            <% end %>
-            <a href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-            <a href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-          </nav>
-        </div>
-      </header>
+        </header>
 
       <% if notice %>
         <p class="notice"><%= notice %></p>
