@@ -417,6 +417,18 @@ hr {
     }
 }
 
+@media(max-width: 770px) {
+  #nav_article2 {
+    display: none !important;
+  }
+  .main_title2 {
+    margin-left: 0 !important;
+    h1 a:hover {
+      color: white !important;
+    }
+  }
+}
+
 @media (max-width: 386px) {
   .flex--container--post--title {
     header {

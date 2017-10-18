@@ -33,6 +33,9 @@
     <div class="sidebar_menu hide_menu">
       <i class="fa fa-times"></i>
       <h1><%= link_to "The Teen Magazine", root_path %></h1>
+      <a href="/categories/get-involved">Get Involved</a>
+      <a href="/categories/academics">Academics</a>
+      <a href="/categories/health">Health</a>
       <a href="/categories/beauty">Beauty</a>
       <a href="/categories/fashion">Fashion</a>
       <a href="/categories/entertainment">Entertainment</a>
@@ -79,16 +82,16 @@
             </div>
             <nav style="background-color: black; border: none; margin-top: 0 !important;" class="nav_article">
               <%= link_to "The Teen Magazine", root_path, class: "nav-title", style: "color: white !important;" %>
-              <a class="link" href="/categories/beauty">Beauty</a>
-              <a class="link" href="/categories/fashion">Fashion</a>
-              <a class="link" href="/categories/entertainment">Entertainment</a>
+              <a class="link" href="/categories/get-involved">Get Involved</a>
+              <a class="link" href="/categories/academics">Academics</a>
+              <a class="link" href="/categories/health">Health</a>
               <a class="link" class="nav--apply" href="/contacts/new">Contact</a>
               <% if current_user && (current_user.admin? || current_user.editor?) %>
-                <%= link_to "Users", users_path %>
+                <%= link_to "Users", users_path, class: "link" %>
               <% end %>
               <% if user_signed_in? %>
-                <%= link_to "Dashboard", user_path(current_user) %>
-                <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+                <%= link_to "Dashboard", user_path(current_user), class: "link" %>
+                <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
               <% else %>
                   <a class="link" href="/applies/new">Apply</a>
               <% end %>
