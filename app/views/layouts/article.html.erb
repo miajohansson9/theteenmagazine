@@ -62,16 +62,25 @@
            <a href="/applies/new">Apply</a>
         <% end %>
       </div>
+
+    <style>
+    .nav_article a {
+      color: white !important;
+    }
+    a:hover {
+      color: #e0528d !important;
+    }
+    </style>
     <div class="overflow">
       <div class="bodywrapper">
       <header id="main_navigation" class="clearfix">
         <div class="border">
           <div class="logo--flex">
-            <i class="fa fa-bars toggle_menu"></i>
+            <i class="fa fa-bars toggle_menu" style="color: white;"></i>
             <h1 id="main_title" class="name"><%= link_to "The Teen Magazine", root_path %></h1>
           </div>
-          <nav>
-            <%= link_to "The Teen Magazine", root_path, class: "nav-title" %>
+          <nav style="background-color: black; border: none;" class="nav_article">
+            <%= link_to "The Teen Magazine", root_path, class: "nav-title", style: "color: white !important;" %>
             <a href="/categories/beauty">Beauty</a>
             <a href="/categories/fashion">Fashion</a>
             <a href="/categories/entertainment">Entertainment</a>

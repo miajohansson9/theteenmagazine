@@ -10,8 +10,7 @@
 }
 
 .post_image {
-   background-image: url(
-      <%= @post.thumbnail %>);
+   background-image: url(<%= @post.thumbnail %>);
    height: 220px;
     position: absolute;
    background-position: center;
@@ -57,15 +56,15 @@
           </div>
           <div class="one_author second_author">
             <% if @post.collaboration != nil || @post.collaboration != "" %>
-            <% @users.each do |user| %>
-              <% if user.full_name == @post.collaboration %>
-                <% if user.profile.exists? %>
-                  <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
-                <% else %>
-                  <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+              <% @users.each do |user| %>
+                <% if user.full_name == @post.collaboration %>
+                  <% if user.profile.exists? %>
+                    <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+                  <% else %>
+                    <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+                  <% end %>
                 <% end %>
               <% end %>
-            <% end %>
             <p class="author" style="margin-right: 10px;"><%= @post.collaboration %></p>
             <% end %>
           </div>
