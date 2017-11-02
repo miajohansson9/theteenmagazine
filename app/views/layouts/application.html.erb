@@ -35,7 +35,7 @@
       <h1><%= link_to "The Teen Magazine", root_path %></h1>
       <a href="/categories/get-involved">Get Involved</a>
       <a href="/categories/academics">Academics</a>
-      <a href="/categories/health">Health</a>
+      <a href="/categories/health-fitness">Health</a>
       <a href="/categories/beauty">Beauty</a>
       <a href="/categories/fashion">Fashion</a>
       <a href="/categories/entertainment">Entertainment</a>
@@ -84,7 +84,7 @@
               <%= link_to "The Teen Magazine", root_path, class: "nav-title", style: "color: white !important;" %>
               <a class="link" href="/categories/get-involved">Get Involved</a>
               <a class="link" href="/categories/academics">Academics</a>
-              <a class="link" href="/categories/health">Health</a>
+              <a class="link" href="/categories/health-fitness">Health</a>
               <% if current_user && (current_user.admin? || current_user.editor?) %>
                 <%= link_to "Users", users_path, class: "link" %>
               <% end %>
