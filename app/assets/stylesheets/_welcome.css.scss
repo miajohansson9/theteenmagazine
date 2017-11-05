@@ -96,7 +96,7 @@ $gray:  #2a2a2a;
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
-  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),url("https://i.imgur.com/M9lmjEM.jpg");
+  background: url("https://i.imgur.com/M9lmjEM.jpg");
   background-position: center;
 
   .container_fundraiser {
@@ -107,7 +107,7 @@ $gray:  #2a2a2a;
     max-height: 180px;
     justify-content: space-between;
     .background_stats {
-      background-color: rgba(57,61,72,0.6);
+      background-color: white;
       background: transparent;
       max-width: 470px;
       margin-top: 55px;
@@ -418,7 +418,7 @@ $gray:  #2a2a2a;
   }
 }
 
-@media (max-width: 770px) {
+@media (max-width: 800px) {
   .link {
     display: none;
   }

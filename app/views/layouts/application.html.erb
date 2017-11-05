@@ -58,10 +58,10 @@
               <div class="container_fundraiser">
                 <div class="background_stats">
                   <div class="stats">
-                    <p>• 41 dead</p>
-                    <p>• 90,000 evacuated</p>
-                    <p>• 5,700 buildings destroyed</p>
+                    <p>• 42 dead</p>
+                    <p>• 7,000 buildings destroyed</p>
                     <p>• 245,000 acres burned</p>
+                    <p>• $1 Billion in damages</p>
                   </div>
                 </div>
                 <div class="nbfr_donate_container">
@@ -92,6 +92,7 @@
                 <%= link_to "Dashboard", user_path(current_user), class: "link" %>
                 <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
               <% else %>
+                  <a class="link" href="/contacts/new">Contact</a>
                   <a class="link" href="/applies/new">Apply</a>
               <% end %>
               <a class="link" class="social" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
