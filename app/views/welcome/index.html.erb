@@ -14,7 +14,7 @@
             <% end %>
               <div class="featured individual">
                 <div class="featured_img">
-                  <%=link_to(image_tag(filteredPosts.first.thumbnail.url(:large2), alt: filteredPosts.first.title, :id => "image_thumbnail"), @posts_featured )%>
+                  <%=link_to(image_tag(filteredPosts.first.thumbnail.url(:large2), alt: filteredPosts.first.title, :id => "image_thumbnail"), filteredPosts.first )%>
                 </div>
                 <h3 class="article_title"><a href="#"><%= link_to filteredPosts.first.title, filteredPosts.first %></a></h3>
                 <p class="date"><%= filteredPosts.first.created_at.strftime("%A, %b %d")%></p>
