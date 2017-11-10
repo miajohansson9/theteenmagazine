@@ -55,11 +55,11 @@
             <i class="fa fa-bars toggle_menu"></i>
             <h1 id="main_title" class="name"><%= link_to "The Teen Magazine", root_path %></h1>
           </div>
-          <nav>
-            <%= link_to "The Teen Magazine", root_path, class: "nav-title" %>
-            <a href="/categories/beauty">Beauty</a>
-            <a href="/categories/fashion">Fashion</a>
-            <a href="/categories/entertainment">Entertainment</a>
+          <nav style="background-color: black; border: none;" class="nav_article" id="nav_article2">
+            <%= link_to "The Teen Magazine", root_path, class: "nav-title", style: "color: white !important;" %>
+            <a href="/categories/get-involved">Get Involved</a>
+            <a href="/categories/academics">Academics</a>
+            <a href="/categories/health-fitness">Health</a>
             <a class="nav--apply" href="/contacts/new">Contact</a>
             <% if user_signed_in? %>
             <% else %>
