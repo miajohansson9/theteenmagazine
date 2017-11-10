@@ -4,19 +4,26 @@
       <div class="parentflex">
         <div class="flexbox">
           <div class="featured divfeatured">
-            <% if @posts_featured %>
+            <% filteredPosts = [] %>
+
+            <% if @posts_approved %>
+            <% @posts_approved.each do |post| %>
+              <% if post.meta_title != "Personal Stories"%>
+                <% filteredPosts.push post %>
+              <% end %>
+            <% end %>
               <div class="featured individual">
                 <div class="featured_img">
-                  <%=link_to(image_tag(@posts_featured.thumbnail.url(:large2), alt: @posts_featured.title, :id => "image_thumbnail"), @posts_featured )%>
+                  <%=link_to(image_tag(filteredPosts.first.thumbnail.url(:large2), alt: filteredPosts.first.title, :id => "image_thumbnail"), @posts_featured )%>
                 </div>
-                <h3 class="article_title"><a href="#"><%= link_to @posts_featured.title, @posts_featured %></a></h3>
-                <p class="date"><%= @posts_featured.created_at.strftime("%A, %b %d")%></p>
+                <h3 class="article_title"><a href="#"><%= link_to filteredPosts.first.title, filteredPosts.first %></a></h3>
+                <p class="date"><%= filteredPosts.first.created_at.strftime("%A, %b %d")%></p>
               </div>
             <% end %>
           </div>
           <div class="articles2-6">
-            <% if @posts_approved %>
-            <% @posts_approved[1..4].each do |post| %>
+            <% if filteredPosts %>
+            <% filteredPosts[1..4].each do |post| %>
               <div class="thumbnail">
                 <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title, :class => "image_thumbnail"), post )%>
                 <div class="thumbnail--container">
@@ -42,7 +49,7 @@
       <div class="beauty--section">
         <% @number = 0 %>
         <% @posts_approved_academics.each do |post_academics| %>
-          <% if ((@posts_approved[0..4].include? post_academics) == false) && @number < 3 %>
+          <% if ((filteredPosts[0..4].include? post_academics) == false) && @number < 3 %>
           <div class="one_beauty_article">
             <%=link_to(image_tag(post_academics.thumbnail.url(:large2), alt: post_academics.title), post_academics )%>
             <h1><%= link_to post_academics.title, post_academics %></h1>
@@ -58,7 +65,7 @@
         <div class="entertainment">
           <% @number = 0 %>
           <% @posts_approved_health.each do |post_health| %>
-            <% if ((@posts_approved[0..4].include? post_health) == false) && @number < 2 %>
+            <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 2 %>
               <div class="entertainment_article">
                 <%=link_to(image_tag(post_health.thumbnail.url(:large2), alt: post_health.title), post_health )%>
                 <h1><%= link_to post_health.title, post_health %></h1>
@@ -75,7 +82,7 @@
         <div class="entertainment_grid_container">
           <% @number2 = 0 %>
           <% @posts_approved_health.each do |post_health| %>
-            <% if ((@posts_approved[0..4].include? post_health) == false) && @number < 6 && @number > 1 %>
+            <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 6 && @number > 1 %>
               <% if  @number2 < 2 %>
                 <% @number2 += 1 %>
               <% else %>
@@ -159,14 +166,14 @@
 
     <% @num_of_academics = 2 %>
     <% @posts_approved_academics.each do |post_academics| %>
-      <% if ((@posts_approved[0..4].include? post_academics) == true) %>
+      <% if ((filteredPosts[0..4].include? post_academics) == true) %>
       <% @num_of_academics += 1 %>
       <% end %>
     <% end %>
 
     <% @num_of_health = 5 %>
     <% @posts_approved_health.each do |post_health| %>
-      <% if ((@posts_approved[0..4].include? post_health) == true) %>
+      <% if ((filteredPosts[0..4].include? post_health) == true) %>
       <% @num_of_health += 1 %>
       <% end %>
     <% end %>
@@ -175,7 +182,7 @@
     <div class="three--section">
       <% @number = 0 %>
       <% @posts_approved.each do |post| %>
-        <% if ((@posts_approved_academics[0..@num_of_academics].include? post) == false) && ((@posts_approved_health[0..@num_of_health].include? post) == false) && ((@posts_approved[0..4].include? post) == false) %>
+        <% if ((@posts_approved_academics[0..@num_of_academics].include? post) == false) && ((@posts_approved_health[0..@num_of_health].include? post) == false) && ((filteredPosts[0..4].include? post) == false) %>
         <% if @number < 3 %>
         <div class="one_article desktop">
           <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
