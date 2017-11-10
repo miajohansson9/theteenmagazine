@@ -13,7 +13,7 @@
 
 $dark: #424653;
 $light: #9a9da4;
-$highlight: #e0528d;
+$highlight: #ef2673;
 $border: #E9E9E9;
 $white: #FFFFFF;
 
@@ -68,28 +68,23 @@ html, body {
   margin-left: 0;
   overflow: hidden;
   width: 250px;
-  height: 100vh;
+  height: 2000px;
   position: fixed;
-  z-index: 90000000;
   transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
   text-align: center;
   h1 {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   h1 a {
     color: white;
-    margin-top: 20px;
     font-size: 23px;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
+    padding: 15px;
     padding-bottom: 0;
     font-family: 'justwaitandsee', serif;
-    &:hover {
-      color: white;
-    }
   }
   hr {
     margin-top: 30px;
@@ -103,10 +98,7 @@ html, body {
     font-size: 20px;
     font-family: 'Roboto Condensed';
     display: inline-block;
-    margin-top: 20px;
-    &:hover {
-      color: #191919;
-    }
+    margin-top: 15px;
   }
 }
 

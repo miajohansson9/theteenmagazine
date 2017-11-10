@@ -24,13 +24,14 @@
     <script type="text/javascript" data-cfasync="false" src="//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js" data-shr-siteid="c9da6ae24795a7bfd3892b5ea7e9c54b" async="async"></script>
   </head>
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <body onresize="myFunction()">
+  <body>
     <style>
     .ng-hide {
       display: none !important;
     }
     </style>
-    <div class="sidebar_menu hide_menu">
+
+    <div class="sidebar_menu hide_menu" style="background-color: #ef2673;">
       <i class="fa fa-times"></i>
       <h1><%= link_to "The Teen Magazine", root_path %></h1>
       <a href="/categories/get-involved">Get Involved</a>
@@ -39,6 +40,7 @@
       <a href="/categories/beauty">Beauty</a>
       <a href="/categories/fashion">Fashion</a>
       <a href="/categories/entertainment">Entertainment</a>
+      <a href="/categories/personal-stories">Personal Stories</a>
       <a href="/contacts/new">Contact</a>
       <% if current_user && (current_user.admin? || current_user.editor?) %>
         <%= link_to "Users", users_path %>
@@ -49,7 +51,10 @@
      <% else %>
          <a href="/applies/new">Apply</a>
       <% end %>
+      <div style="height: 2000px; background-color: #ef2673;">  
+      </div>
     </div>
+
     <div class="overflow">
       <div class="bodywrapper">
         <header id="main_navigation" class="clearfix">
@@ -135,14 +140,12 @@
       $(document).ready(function() {
         $(".fa-times").click(function() {
           $(".sidebar_menu").addClass("hide_menu");
-          $(".sidebar_menu").addClass("opacity_one");
           $(".bodywrapper").removeClass("push");
           $(".bodywrapper").addClass("pushback");
         });
 
         $(".toggle_menu").click(function() {
           $(".sidebar_menu").removeClass("hide_menu");
-          $(".sidebar_menu").removeClass("opacity_one");
           $(".bodywrapper").addClass("push");
           $(".bodywrapper").removeClass("pushback");
         });

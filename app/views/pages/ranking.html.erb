@@ -5,7 +5,7 @@
         <% if post.post_impressions != nil %>
         <div class="flex-ranking">
           <p style="width: 300px; margin-right: 10px;"> <%= post.title %> </p>
-          <p style="color: black; background-color: #e0528d; padding: 10px 15px; width: 60px; height: 50px; margin-bottom: 0;"> <%= post.post_impressions %> </p>
+          <p style="color: black; background-color: #ef2673; padding: 10px 15px; width: 60px; height: 50px; margin-bottom: 0;"> <%= post.post_impressions %> </p>
               <%= form_for post do |f| %>
                  <span id="#ranking_text_field"><%= f.text_field :ranking %></span>
                  <span id="#submit"><%= f.submit "Submit" %></span>
