@@ -26,7 +26,7 @@
 <%= f.file_field :thumbnail %><br /><br />
 
 <br><%= f.label "Category" %>
-<%= f.select :meta_title, ['Academics', 'Get Involved', 'Health & Fitness', 'Lifestyle', 'Entertainment', 'Tips & Hacks', 'DIY', 'Beauty', 'Fashion', 'Travel', 'Personal Stories'] %><br />
+<%= f.select :meta_title, ['Academics', 'Get Involved', 'Health & Fitness', 'News', 'Lifestyle', 'Entertainment', 'Tips & Hacks', 'DIY', 'Beauty', 'Fashion', 'Travel', 'Personal Stories'] %><br />
 
 <br><%= f.label :meta_description %><br>
 <%= f.text_field :meta_description %>
@@ -75,6 +75,8 @@
 <%= f.hidden_field :category_id, :value => 8 %>
 <% elsif @post.meta_title == "Personal Stories" %>
 <%= f.hidden_field :category_id, :value => 13 %>
+<% elsif @post.meta_title == "News" %>
+<%= f.hidden_field :category_id, :value => 14 %>
 <% end %>
 
 <% if (current_user && (current_user.admin? || current_user.editor?)) %>
