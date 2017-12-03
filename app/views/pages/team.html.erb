@@ -1,0 +1,10 @@
+<div class="skinny_wrapper criteria">
+  <h1 id="page_title">The Teen Magazine Team</h1>
+  <h3>Editors</h3>
+  <% @users.each do |user| %>
+      <div class="user">
+        <h3><a href="#"><%= link_to user.email, user%></a></h3>
+      </div>
+  <% end %>
+  <h3>Featured Writers</h3>
+</div>

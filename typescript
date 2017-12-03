@@ -1,0 +1,10 @@
+Script started on Sat Dec  2 21:07:23 2017
+[?1034hbash-3.2$ User.last
+bash: User.last: command not found
+bash-3.2$ User.first
+bash: User.first: command not found
+bash-3.2$ user
+bash: user: command not found
+bash-3.2$ quit
+bash: quit: command not found
+bash-3.2$ 

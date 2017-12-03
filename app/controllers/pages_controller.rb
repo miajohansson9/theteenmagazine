@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: :privacy
+  before_action :authenticate_user!, except: [:privacy, :team]
 
   def criteria
   end
@@ -17,6 +17,10 @@ class PagesController < ApplicationController
   end
 
   def privacy
+  end
+
+  def team
+    @users = User.order("posts_count DESC")
   end
 
   def ranking

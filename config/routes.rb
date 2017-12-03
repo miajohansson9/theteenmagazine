@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get 'criteria' => 'pages#criteria'
+  get 'writer-team' => 'pages#team'
   get 'choosing-a-topic' => 'pages#topics'
   get 'writing-the-perfect-article' => 'pages#writing'
   get 'finding-images' => 'pages#images'
