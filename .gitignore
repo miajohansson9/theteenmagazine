@@ -20,4 +20,5 @@
 # Ignore Byebug command history file.
 .byebug_history
 
+# Ignore s3.yml file
 /config/s3.yml
