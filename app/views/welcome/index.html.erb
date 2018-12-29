@@ -43,6 +43,26 @@
   </div>
 
   <div class="wrapper_home">
+    <h1 class="section--title"><a href="/categories/academics">Get Involved</a></h1>
+    <div class="flex--welcome">
+      <div class="flex-1">
+        <div class="beauty--section">
+          <% @number = 0 %>
+          <% @posts_approved_getinvolved.each do |post_getinvolved| %>
+            <% if ((filteredPosts[0..5].include? post_getinvolved) == false) && @number < 4 %>
+            <div class="one_beauty_article">
+              <%=link_to(image_tag(post_getinvolved.thumbnail.url(:large2), alt: post_getinvolved.title), post_getinvolved )%>
+              <h1><%= link_to post_getinvolved.title, post_getinvolved %></h1>
+              <p><%= post_getinvolved.created_at.strftime("%A, %b %d")%></p>
+              <p class="meta"><%= post_getinvolved.meta_description %></p>
+            </div>
+            <% @number += 1 %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+  </div>
+
   <h1 class="section--title"><a href="/categories/academics">Academics</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">

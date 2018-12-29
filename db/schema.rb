@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171203050230) do
+ActiveRecord::Schema.define(version: 20181229001922) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -30,10 +30,14 @@ ActiveRecord::Schema.define(version: 20171203050230) do
   end
 
   create_table "categories", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.string   "name"
     t.string   "slug"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
@@ -79,6 +83,7 @@ ActiveRecord::Schema.define(version: 20171203050230) do
     t.text     "meta_title"
     t.text     "meta_description"
     t.text     "keywords"
+    t.string   "category"
     t.integer  "user_id"
     t.integer  "admin_id"
     t.boolean  "approved"

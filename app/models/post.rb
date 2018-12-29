@@ -36,6 +36,9 @@ class Post < ApplicationRecord
   scope :entertainment, -> {
   where(approved: true, after_approved: true, :meta_title => "Entertainment")
   }
+  scope :get_involved, -> {
+  where(approved: true, after_approved: true, :meta_title => "Get Involved")
+  }
   scope :trends, -> {
   where(approved: true, after_approved: true, :meta_title => "Trends")
   }
