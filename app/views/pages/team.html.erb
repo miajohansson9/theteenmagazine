@@ -12,33 +12,33 @@
   </div>
   <h1 id="page_title">Meet The Teen Magazine Team</h1>
   <h3>Editors</h3>
-  <% @users.each do |user| %>
-     <% if user.editor == true %>
-       <div class="flex--profile">
-         <div class="featured">
-           <% if user.profile.exists? %>
-             <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
-           <% else %>
-             <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
-           <% end %>
-           <h6><%= user.full_name %></h6>
-         </div>
-       </div>
-     <% end %>
-  <% end %>
+  <div class="flex--profile">
+    <% @users.each do |user| %>
+       <% if user.editor == true %>
+           <div class="featured">
+             <% if user.profile.exists? %>
+               <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+             <% else %>
+               <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+             <% end %>
+             <h6><%= user.full_name %></h6>
+           </div>
+       <% end %>
+    <% end %>
+  </div>
   <h3>Featured Writers</h3>
-  <% @users.each do |user| %>
-     <% if Post.where(user_id: user.id).exists? %>
-        <div class="flex--profile">
-          <div class="featured">
-            <% if user.profile.exists? %>
-              <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
-            <% else %>
-              <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
-            <% end %>
-            <h6><%= user.full_name %></h6>
-          </div>
-        </div>
-     <% end %>
-  <% end %>
+  <div class="flex--profile">
+    <% @users.each do |user| %>
+       <% if Post.where(user_id: user.id).exists? %>
+            <div class="featured">
+              <% if user.profile.exists? %>
+                <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+              <% else %>
+                <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+              <% end %>
+              <h6><%= user.full_name %></h6>
+            </div>
+       <% end %>
+    <% end %>
+  </div>
 </div>
