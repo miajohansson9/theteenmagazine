@@ -317,14 +317,17 @@
 
 .team {
   .about {
+    max-width: 1100px;
+    margin: 0 auto;
+    min-height: 350px;
     p {
       padding: 30px;
     }
     #main {
-      width: 40%;
+      width: 260px;
       height: auto;
       float: left;
-      margin-right: 30px;
+      margin: 30px;
     }
   }
   h3 {
