@@ -1,10 +1,44 @@
-<div class="skinny_wrapper criteria">
-  <h1 id="page_title">The Teen Magazine Team</h1>
+<div class="skinny_wrapper team">
+  <h1 id="page_title">About Us</h1>
+  <div class="about">
+    <img id="main" src="https://pbs.twimg.com/media/DM7BlLDVAAA5AKb.jpg" />
+    <p>
+      Founded in 2016 by Mia Johansson, The Teen Magazine started as a blog with a few writers. Since then, it has grown into an international online magazine
+      with over 150 writers from around the world. I made the website with the initial purpose of this website was to learn Ruby on Rails and Git for one of my computer science internships.
+      I never thought theteenmagazine.com would be anything more than a hobby, but I had fun adding complexity to the site, and my website has since grown into so much more.
+      Through my website, I have been able to communicate with people from all over the world, give aspiring journalists a platform to publish, and, after the fires
+      in my hometown of Santa Rosa, make a difference in my community by fundraising for fire victims.
+    </p>
+  </div>
+  <h1 id="page_title">Meet The Teen Magazine Team</h1>
   <h3>Editors</h3>
   <% @users.each do |user| %>
-      <div class="user">
-        <h3><a href="#"><%= link_to user.email, user%></a></h3>
-      </div>
+     <% if user.editor == true %>
+       <div class="flex--profile">
+         <div class="featured">
+           <% if user.profile.exists? %>
+             <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+           <% else %>
+             <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+           <% end %>
+           <h6><%= user.full_name %></h6>
+         </div>
+       </div>
+     <% end %>
   <% end %>
   <h3>Featured Writers</h3>
+  <% @users.each do |user| %>
+     <% if Post.where(user_id: user.id).exists? %>
+        <div class="flex--profile">
+          <div class="featured">
+            <% if user.profile.exists? %>
+              <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+            <% else %>
+              <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+            <% end %>
+            <h6><%= user.full_name %></h6>
+          </div>
+        </div>
+     <% end %>
+  <% end %>
 </div>

@@ -19,6 +19,9 @@ class PagesController < ApplicationController
   def privacy
   end
 
+  def about
+  end
+
   def team
     @users = User.order("posts_count DESC")
   end
