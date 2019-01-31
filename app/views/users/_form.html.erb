@@ -48,6 +48,11 @@
 <%= f.check_box :editor %><br />
 <% end %>
 
+<% if current_user && current_user.admin? %>
+<%= f.label "Admin" %>
+<%= f.check_box :admin %><br />
+<% end %>
+
 <br><%= f.submit %>
 
 <% end %>

@@ -9,7 +9,7 @@ class Apply < MailForm::Base
   def headers
   {
     :subject => "Apply",
-    :to => "johansson.mia09@gmail.com",
+    :to => "theteenmagazineeditors@gmail.com",
     :from => %("#{first} #{last}" <#{email}>)
   }
  end
