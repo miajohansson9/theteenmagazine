@@ -27,7 +27,7 @@ $white: #FFFFFF;
 }
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   min-width: 310px;
 }
 
@@ -285,7 +285,7 @@ footer {
       margin: 0;
       width: 100%;
       word-wrap: break-word;
-      font-family: "Lusitana";
+      font-family: "Playfair Display";
       a {
         text-decoration: none;
         color: #191919;
@@ -331,7 +331,7 @@ footer {
     .thumbnail--container {
       margin-left: 10px;
       .article_title {
-        font-family: "Lusitana";
+        font-family: "Playfair Display";
         margin: 0;
         font-weight: 400;
         line-height: 70%;
@@ -482,7 +482,7 @@ footer {
       #exclusive-title--id {
         margin-top: 45px;
         padding: 10px;
-        font-family: "Lusitana";
+        font-family: "Playfair Display";
         font-weight: 400;
         font-size: 20px;
       }
@@ -617,12 +617,12 @@ body {
 
   .date {
     font-size: 1rem;
-    font-family: "Lusitana";
+    font-family: "Playfair Display";
   }
   .author {
     text-transform: uppercase;
     font-style: italic;
-    font-family: "Lusitana";
+    font-family: "Playfair Display";
     font-weight: 400;
     font-size: 1rem;
   }
@@ -638,7 +638,7 @@ body {
   #banner {
     display: flex;
     flex-direction: row;
-    
+
     #name {
       max-width: 260px;
     }
