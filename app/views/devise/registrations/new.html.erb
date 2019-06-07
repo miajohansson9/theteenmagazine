@@ -1,39 +1,37 @@
+<h1 id="page_title">Apply to Become a Writer for the Teen Magazine!</h1>
+<div class="form_wrapper wrapper_padding">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
+    <span>First Name</span>
+    <%= f.text_field :first_name, required: true %>
+    <br />
+    <span>Last Name</span>
+    <%= f.text_field :last_name, required: true %>
+    <br />
+    <span>Email</span>
+    <%= f.email_field :email, required: true %>
+    <br />
+    <span>Primary Category</span><br /><br />
+    <%= f.select :category, ['Academics', 'Get Involved', 'Health & Fitness', 'News', 'Lifestyle', 'Beauty', 'Fashion', 'Entertainment', 'Tips & Hacks', 'DIY']%><br />
+    <br />
+    <br />
+    <span>Please write a short cover letter introducing yourself and explaining why you would like to write for The Teen Magazine. Give an example of an article idea you would pitch to our editors, if accepted.</span>
+    <%= f.text_area :description, required: true %>
+    <br />
+    <div class="hidden">
+      <%= f.label :nickname %> <br />
+      <%= f.text_field :nickname %>
+    </div>
 
-<h1 id="page_title">Add User</h1>
-<div id="posts_wrapper" class="skinny_wrapper">
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+    <div class="field">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "off" %>
+    </div>
 
-  <div class="field">
-    <%= f.label "First Name" %>
-    <%= f.text_field :first_name %>
-
-    <%= f.label "Last Name" %>
-    <%= f.text_field :last_name %>
-
-    <%= f.label "Email" %><br>
-    <%= f.text_field :email %>
-
-    <%= f.label "Description" %>
-    <%= f.text_area :description %>
-
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
+    <span>Applications are competitive and are accepted on a rolling basis. If accepted, you will recieve an email from our team of editors within three business days.</span>
+    <br /><br />
+    <%= f.submit 'Submit Application', class: 'button' %>
+  <% end %>
+  <br>
+  <br>
 </div>
-<% end %>

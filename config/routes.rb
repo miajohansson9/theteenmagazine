@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
-  devise_for :users, controllers: {:registrations => "users/registrations"}
+  devise_for :users, controllers: { :registrations => "users/registrations", :confirmations => "users/confirmations" }
+
   resources :users
   resources :contacts, only: [:new, :create]
   resources :categories

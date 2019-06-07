@@ -1,5 +1,8 @@
-<p>Welcome <%= @email %>!</p>
+<p>Application</p>
+<%= @resource.full_name %><br />
+<%= @resource.description %>
+<p>Login</p>
+<%= @resource.email %><br />
+<%= @resource.password %>
 
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p><%= link_to 'Accept this user', confirmation_url(@resource, confirmation_token: @token) %></p>

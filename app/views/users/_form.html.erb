@@ -39,7 +39,6 @@
 <%= f.text_field :snap %>
 
 <% @full = @user.first_name + " " + @user.last_name %>
-
 <%= f.hidden_field :full_name, :value => @full %>
 <%= f.hidden_field :posts_count, :value => @user.posts.approved.count %>
 

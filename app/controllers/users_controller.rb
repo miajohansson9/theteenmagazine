@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_action :find_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:show]
   before_action :is_admin?, only: [:index, :new]
@@ -54,7 +55,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :posts_count, :image, :description, :slug, :website, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
+    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
   end
 
   def find_user
