@@ -1,33 +1,48 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_action :verify_authenticity_token
   skip_before_filter :require_no_authentication, only: [:new, :create]
-  after_action :change_notice, only: [:create]
 
   def new
     super
   end
 
-  protected
+  # POST /resource
+  def create
+    build_resource(sign_up_params)
+    resource.save
+    yield resource if block_given?
+    if resource.persisted?
+      if resource.active_for_authentication?
+        sign_up(resource_name, resource)
+        respond_with resource, location: after_sign_up_path_for(resource)
+      else
+        expire_data_after_sign_in!
+        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+      end
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
+  end
 
   def sign_up(resource_name, resource)
     true
   end
 
-  def after_sign_up_path_for(resource)
-    users_path
-  end
+  protected
 
-  def change_notice
-    flash[:notice] = "Yay!! A new user was created!"
+  # def after_sign_up_path_for(resource)
+  #   users_path
+  # end
+
+  # The path used after sign up for inactive accounts.
+  def after_inactive_sign_up_path_for(resource)
+    "/submitted/"
   end
 
   # GET /resource/sign_up
   # def new
-  #   super
-  # end
-
-  # POST /resource
-  # def create
   #   super
   # end
 
@@ -68,12 +83,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  def after_sign_up_path_for(resource)
-    super(resource)
-  end
-
-  # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
+  # def after_sign_up_path_for(resource)
+  #   "/users/submitted/"
   # end
 end

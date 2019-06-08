@@ -23,10 +23,7 @@
       <%= f.text_field :nickname %>
     </div>
 
-    <div class="field">
-      <%= f.label :password %>
-      <%= f.password_field :password, autocomplete: "off" %>
-    </div>
+    <%= f.hidden_field :password, value: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join %>
 
     <span>Applications are competitive and are accepted on a rolling basis. If accepted, you will recieve an email from our team of editors within three business days.</span>
     <br /><br />

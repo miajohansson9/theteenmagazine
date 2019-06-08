@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:privacy, :team]
+  before_action :authenticate_user!, except: [:privacy, :team, :submitted]
 
   def criteria
   end
@@ -20,6 +20,9 @@ class PagesController < ApplicationController
   end
 
   def about
+  end
+
+  def submitted
   end
 
   def team

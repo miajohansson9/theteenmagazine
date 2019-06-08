@@ -19,11 +19,6 @@ class UsersController < ApplicationController
   def edit
   end
 
-  def new
-    @user = User.new(:email => 'test@example.com', :password => 'password', :password_confirmation => 'password')
-    @user.save
-  end
-
   def create
     @user = User.new(user_params)
     @user.save

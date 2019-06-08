@@ -52,7 +52,7 @@
            <%= link_to "Dashboard", user_path(current_user) %>
            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
        <% else %>
-           <a href="/applies/new">Apply</a>
+           <a href="/apply">Apply</a>
         <% end %>
         <div style="height: 2000px; background-color: #65B19D;">
         </div>
@@ -95,7 +95,7 @@
                   <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
                 <% else %>
                     <a class="link" href="/contacts/new">Contact</a>
-                    <a class="link" href="/applies/new">Apply</a>
+                    <a class="link" href="/apply">Apply</a>
                 <% end %>
               </nav>
             </div>
