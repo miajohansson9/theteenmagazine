@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :contacts, only: [:new, :create]
+  resources :applies, only: [:new, :create]
   resources :categories
 
   get 'welcome/index'
