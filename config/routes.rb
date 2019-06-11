@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'privacy-policy' => 'pages#privacy'
   get "/login" => "users/sessions#new" # custom path to login/sign_in
   get "/apply" => "applies#new"
+  get "/submitted" => "applies#create"
 
   resources :posts, only: [:new, :create]
   resources :posts, path: "", except: [:new, :create]
