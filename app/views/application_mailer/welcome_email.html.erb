@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+    <p>Congratulations!</p>
+    <p>We were impressed with your application and are happy to welcome you to our team of international journalists!
+      My name is Mia, and I work at The Teen Magazine with our writer.</p>
+    <p>Being a writer for The Teen Magazine offers the experience and mentorship necessary to launch your journalism career.
+      Our writers have interviewed celebrities, reported on important world affairs, worked with businesses, and have had their
+      articles read by thousands of readers. We are so excited to welcome you to our talented team of journalists, and we can't wait
+      to work with you to create your first article!</p>
+    <p>Keeping your position as a journalist for The Teen Magazine requires at least one submitted article per month.
+      You will receive mentorship, build your journalism resume, and network with our amazing community
+      of journalists.</p>
+    <p>To start your first article, go to the “Dashboard” page after you sign in and click on “New Post.” Before submitting
+      an article for approval, please read the instructions on “writing the perfect article” found on your dashboard.</p>
+    <p>Your login is <bold style="color: blue;"><%= @user.email %></bold> and your password is <bold style="color: blue;"><%= @user.password %></bold>. 
+      You can change your password at <%= link_to "https://www.theteenmagazine.com/users/edit", "https://www.theteenmagazine.com/users/edit" %> 
+      and you can login into your account at <%= link_to "https://www.theteenmagazine.com/login", "https://www.theteenmagazine.com/login" %>.</p>
+    <p>Best Regards,<br/>Mia Johansson</p>
+  </body>
+</html>

@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: {:registrations => "users/registrations"}
 
+  devise_scope :user do
+    get "/login" => "users/sessions#new"
+  end
+
   resources :users
   resources :contacts, only: [:new, :create]
   resources :applies
@@ -18,7 +22,6 @@ Rails.application.routes.draw do
   get 'how-to-style-your-articles' => 'pages#styling'
   get 'ranking' => 'pages#ranking'
   get 'privacy-policy' => 'pages#privacy'
-  get "/login" => "users/sessions#new" # custom path to login/sign_in
   get "/apply" => "applies#new"
   get "/submitted" => "applies#create"
 
