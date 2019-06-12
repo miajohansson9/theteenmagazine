@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
-  devise_for :users, controllers: { :registrations => "users/registrations", :confirmations => "users/confirmations" }
+  devise_for :users, controllers: {:registrations => "users/registrations"}
 
   resources :users
   resources :contacts, only: [:new, :create]
-  resources :applies, only: [:new, :create]
+  resources :applies
   resources :categories
 
   get 'welcome/index'

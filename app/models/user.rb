@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   friendly_id :set_full_name, use: :slugged
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable
 
   def set_full_name
     self.full_name = "#{self.first_name} #{self.last_name}"

@@ -1,0 +1,22 @@
+<h1 id="page_title">Writer Application <%= @application.id %></h1>
+<div class="form_wrapper wrapper_padding">
+  <%= form_for @user do |f| %>
+    <span>First Name</span>
+    <%= f.text_field :first_name, required: true, value: @application.first_name %>
+    <br />
+    <span>Last Name</span>
+    <%= f.text_field :last_name, required: true, value: @application.last_name %>
+    <br />
+    <span>Email</span>
+    <%= f.email_field :email, required: true, value: @application.email %>
+    <br />
+    <span>Cover Letter:</span>
+    <%= f.text_area :description, required: true, value: @application.description %>
+    <br />
+
+    <%= f.hidden_field :password, value: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join %>
+    <%= f.submit 'Accept Application', class: 'button' %>
+  <% end %>
+  <br>
+  <br>
+</div>

@@ -1,6 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_action :verify_authenticity_token
-  skip_before_filter :require_no_authentication, only: [:new, :create]
+  skip_before_action :require_no_authentication, only: [:new, :create]
 
   def new
     super

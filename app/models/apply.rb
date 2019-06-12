@@ -1,4 +1,6 @@
-class Apply < MailForm::Base
+class Apply < ActiveRecord::Base
+  include MailForm::Delivery
+
   attributes :first_name,  :validate => true
   attributes :last_name,  :validate => true
   attributes :email, :validate => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
@@ -8,7 +10,7 @@ class Apply < MailForm::Base
 
   def headers
   {
-    :subject => "Application",
+    :subject => "Writer Application ##{id}: theteenmagazine.com/applies/#{id}",
     :to => "theteenmagazineeditors@gmail.com",
     :from => %("#{first_name} #{last_name}" <#{email}>)
   }

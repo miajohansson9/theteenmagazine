@@ -11,17 +11,9 @@
     <span>Email</span>
     <%= f.email_field :email, required: true %>
     <br />
-    <span>Primary Category</span><br /><br />
-    <%= f.select :category, ['Academics', 'Get Involved', 'Health & Fitness', 'News', 'Lifestyle', 'Beauty', 'Fashion', 'Entertainment', 'Tips & Hacks', 'DIY']%><br />
+    <span>Cover Letter:</span>
+    <%= f.text_area :description, required: true, value: "hi" %>
     <br />
-    <br />
-    <span>Please write a short cover letter introducing yourself and explaining why you would like to write for The Teen Magazine. Give an example of an article idea you would pitch to our editors, if accepted.</span>
-    <%= f.text_area :description, required: true %>
-    <br />
-    <div class="hidden">
-      <%= f.label :nickname %> <br />
-      <%= f.text_field :nickname %>
-    </div>
 
     <%= f.hidden_field :password, value: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join %>
 
