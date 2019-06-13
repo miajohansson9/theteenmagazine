@@ -28,6 +28,13 @@ class PostsController < ApplicationController
           @post.increment(:post_impressions, by = 1)
           @post.save
         end
+        if @post.user.monthly_views == nil
+          @post.user.monthly_views = 1
+          @post.user.save
+        else
+          @post.user.increment(:monthly_views, by = 1)
+          @post.user.save
+        end
       end
     end
    end

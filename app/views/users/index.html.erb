@@ -1,4 +1,3 @@
-
 <h1 id="page_title" style="border-bottom: none; margin-bottom: -50px;">Waiting For Approval</h1>
 <div id="posts_wrapper" class="skinny_wrapper index_users">
   <% @posts_waiting.each do |post| %>
@@ -12,6 +11,10 @@
 
 <div id="posts_wrapper" class="skinny_wrapper">
   <% @users.each do |user| %>
+      <% if user.monthly_views == nil %>
+        <% user.monthly_views = 0 %>
+        <% user.save %>
+      <% end %>
       <div class="user">
         <h3><%= user.posts_count %> <a href="#"><%= link_to user.email, user%></a></h3>
       </div>

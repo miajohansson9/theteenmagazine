@@ -136,6 +136,11 @@
   }
 }
 
+.impressions {
+  text-align: center;
+
+}
+
 .profile_img {
   min-width: 80px;
   width: 80px;
@@ -277,6 +282,34 @@
     font-family: "pacifico";
     color: #545454;
     margin: 0;
+  }
+}
+
+.flex {
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+  border-bottom: 1px solid #E9E9E9;
+  margin-bottom: 10px;
+  #page_title {
+    width: 30%;
+    padding: 36px 0px 0px 0px;
+    margin-top: 0px;
+    text-align: left;
+    border-bottom: none;
+    font-size: 18px;
+  }
+  div {
+    width: 70%;
+    p {
+      padding-top: 30px;
+      text-align: right;
+    }
+    #page_title  {
+      text-align: right !important;
+      width: 100%;
+      margin-bottom: 20px;
+    }
   }
 }
 

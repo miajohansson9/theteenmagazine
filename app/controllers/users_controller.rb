@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user_posts = @user.posts.all.order("created_at desc")
     @posts = Post.all.order("created_at desc")
+    @rankings = User.all.order("monthly_views desc").pluck(:id)
   end
 
   def index
@@ -54,7 +55,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
+    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
   end
 
   def find_user
