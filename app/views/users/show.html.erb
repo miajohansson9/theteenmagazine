@@ -11,7 +11,7 @@
 <% @rank = @rankings.index(@user.id) + 1 %>
 <div id="posts_wrapper" class="skinny_wrapper" style="padding-top: 0px;">
 <% if @user.monthly_views != 0 %>
-<div class ="flex">
+<div class ="flex--ranking">
 <h1 id="page_title">Your Rank: <%= @rank %></h1>
   <% if @rank != 1 %>
     <% @impressions_to_get = 0 %>
