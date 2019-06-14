@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'theteenmagazineeditors@gmail.com'
+  default from: 'mia@theteenmagazine.com'
 
   def welcome_email(user)
     @user = user
