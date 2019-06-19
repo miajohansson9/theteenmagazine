@@ -3,7 +3,7 @@ class WelcomeController < ApplicationController
 
   def index
     @posts = Post.all.order("created_at desc")
-    @postsranking = Post.approved.all.order("post_impressions")
+    @postsranking = Post.approved.all.order("post_impressions desc")
     @posts_featured = Post.approved.all.order("created_at desc").first
     @posts_approved = Post.approved.all.order("created_at desc")
     @posts_approved_academics = Post.academics.all.order("created_at desc")
