@@ -12,6 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = resource
     resource.save
     ApplicationMailer.welcome_email(resource).deliver
+    ApplicationMailer.welcome_email_copy(resource).deliver
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
