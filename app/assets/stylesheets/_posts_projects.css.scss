@@ -139,7 +139,7 @@
   }
 }
 
-
+iframe { margin: 0px auto;  display: block; }
 
 .div {
   margin-top: -10px;
@@ -371,6 +371,7 @@ hr {
 
 @media (max-width: 800px) {
     .skinny {
+      iframe { width: 100% !important }
       #post_title_show {
         padding: 1px 20px;
         margin-bottom: 10px;
