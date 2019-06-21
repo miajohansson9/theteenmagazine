@@ -103,6 +103,10 @@ class PostsController < ApplicationController
   end
 
   def find_post
-    @post = Post.friendly.find(params[:id])
+    begin
+      @post = Post.friendly.find(params[:id])
+    rescue
+      redirect_to root_path
+    end
   end
 end
