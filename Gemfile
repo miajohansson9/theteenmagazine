@@ -8,7 +8,7 @@ group :production do
 end
 
 group :development do
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.6'
 end
 
 gem 'puma', '~> 3.0'
@@ -25,17 +25,16 @@ gem 'will_paginate', '~> 3.1', '>= 3.1.5'
 gem 'mail_form', '~> 1.5', '>= 1.5.1'
 gem 'devise', '~> 4.2'
 gem 'kramdown', '~> 1.9'
-gem 'paperclip'
-gem 'aws-sdk', '~> 2.6', '>= 2.6.6'
+gem "paperclip", "5.1.0"
+gem 'aws-sdk', '~> 2.6.44'
+gem 'ckeditor', '~> 4.2.3'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'meta-tags', '~> 2.1'
 gem 'cancancan'
 gem 'jquery-turbolinks', '~> 2.1'
-gem 'ckeditor'
 gem 'figaro'
 
 group :development, :test do
-
   gem 'byebug', platform: :mri
 end
 
