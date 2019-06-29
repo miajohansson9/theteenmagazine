@@ -24,6 +24,9 @@
     text-shadow: 0.5px 0.5px #191919;
     font-family: 'Roboto Condensed', sans-serif;
   }
+  figure {
+    margin: 0 !important;
+  }
   .flex_other_articles {
     display: flex;
     flex-direction: column;
