@@ -73,7 +73,7 @@
     <% @userHasCollaboration = false %>
 
     <% @posts.each do |post| %>
-      <% if post.collaboration == @user.username %>
+      <% if post.collaboration == @user.email %>
         <% if @userHasCollaboration == false %>
           <h1 id="page_title">Your Collaborations</h1>
           <% @userHasCollaboration = true %>
