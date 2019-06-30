@@ -57,12 +57,14 @@
           <div class="one_author second_author">
             <% if @post.collaboration != nil || @post.collaboration != "" %>
               <% @collab = User.where(email:  @post.collaboration).first %>
+                <% if  @collab != nil %>
                   <% if @collab.profile.exists? %>
                     <%= image_tag(@collab.profile.url(:square), :class => "profile_img") %>
                   <% else %>
                     <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
                   <% end %>
-            <p class="author" style="margin-right: 10px;">By <%= @collab.full_name %></p>
+                  <p class="author" style="margin-right: 10px;">By <%= @collab.full_name %></p>
+              <% end %>
             <% end %>
           </div>
         </div>
