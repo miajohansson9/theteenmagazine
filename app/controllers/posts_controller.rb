@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  before_action :find_post, only: [:show, :edit, :update, :destroy]
+  before_action :find_post_history, only: [:show]
+  before_action :find_post, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_user,  only: [:show]
   before_action :create,  only: [:unapprove]
@@ -102,9 +103,20 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :thumbnail, :ranking, :content, :image, :category, :category_id, :post_impressions, :meta_title, :meta_description, :keywords, :user_id, :admin_id, :waiting_for_approval, :approved, :collaboration, :after_approved, :created_at, :slug)
   end
 
+  def find_post_history
+    begin
+      @post = Post.friendly.find params[:id]
+      if request.path != post_path(@post)
+        return redirect_to @post, :status => :moved_permanently
+      end
+    rescue
+      redirect_to root_path
+    end
+  end
+
   def find_post
     begin
-      @post = Post.friendly.find(params[:id])
+      @post = Post.friendly.find params[:id]
     rescue
       redirect_to root_path
     end
