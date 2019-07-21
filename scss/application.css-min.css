@@ -49,9 +49,6 @@ p, li {
   font-size: 1.1rem;
   line-height: 1.75; }
 
-p, ul, ol {
-  margin: 0 0 1.6em 0; }
-
 hr {
   width: 3em;
   display: block;
