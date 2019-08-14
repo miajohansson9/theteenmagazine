@@ -216,9 +216,9 @@
     <a href="/apply"><img id="apply_image" src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
     <div class="articles">
       <div class="flex_other_articles">
-      <h3 class="title">More in <%= link_to(@post.meta_title, Category.find(@post.category_id)) %></h3>
+      <h3 class="title">Most Read in <%= link_to(@post.meta_title, Category.find(@post.category_id)) %></h3>
       <div class="contain_articles">
-        <% Post.approved.where(meta_title: @post.meta_title)[0..9].each do |post| %>
+        <% Post.approved.order("post_impressions desc").where(meta_title: @post.meta_title)[0..9].each do |post| %>
           <div class="one_article">
              <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
             <div class="paragraph">
