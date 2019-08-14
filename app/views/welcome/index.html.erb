@@ -54,7 +54,7 @@
               <%=link_to(image_tag(post_getinvolved.thumbnail.url(:large2), alt: post_getinvolved.title), post_getinvolved )%>
               <h1><%= link_to post_getinvolved.title, post_getinvolved %></h1>
               <p><%= post_getinvolved.created_at.strftime("%A, %b %d")%></p>
-              <p class="meta"><%= post_getinvolved.meta_description[0, 130] %></p>
+              <p class="meta"><%= post_getinvolved.meta_description.truncate_words(20) %>...</p>
             </div>
             <% @number += 1 %>
             <% end %>
@@ -74,7 +74,7 @@
             <%=link_to(image_tag(post_academics.thumbnail.url(:large2), alt: post_academics.title), post_academics )%>
             <h1><%= link_to post_academics.title, post_academics %></h1>
             <p><%= post_academics.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post_academics.meta_description[0, 130] %>...</p>
+            <p class="meta"><%= post_academics.meta_description.truncate_words(15) %></p>
           </div>
           <% @number += 1 %>
           <% end %>
@@ -90,7 +90,7 @@
                 <%=link_to(image_tag(post_health.thumbnail.url(:large2), alt: post_health.title), post_health )%>
                 <h1><%= link_to post_health.title, post_health %></h1>
                 <p><%= post_health.created_at.strftime("%A, %b %d")%></p>
-                <p class="meta"><%= post_health.meta_description[0, 130] %>...</p>
+                <p class="meta"><%= post_health.meta_description.truncate_words(15) %></p>
               </div>
               <% @number += 1 %>
             <% end %>
@@ -110,7 +110,7 @@
                 <%=link_to(image_tag(post_health.thumbnail.url(:medium), alt: post_health.title), post_health )%>
                 <h1><%= link_to post_health.title, post_health %></h1>
                 <p><%= post_health.created_at.strftime("%A, %b %d")%></p>
-                <p class="meta"><%= post_health.meta_description[0, 130] %>...</p>
+                <p class="meta"><%= post_health.meta_description.truncate_words(15) %></p>
               </div>
               <% @number += 1 %>
               <% end %>
@@ -156,7 +156,7 @@
           <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
           <h1><%= link_to post.title, post %></h1>
           <p><%= post.created_at.strftime("%A, %b %d")%></p>
-          <p class="meta"><%= post.meta_description[0, 200] %>...</p>
+          <p class="meta"><%= postmeta_description.truncate_words(20) %></p>
         </div>
         <% if @number == 0 %>
         <div class="list--articles mobile removed" style="border: none; margin-top: -20px;">
@@ -167,7 +167,7 @@
             <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description[0, 90] %>...</p>
+            <p class="meta"><%= post.meta_description.truncate_words(10) %></p>
           </div>
         </div>
         <% else %>
@@ -179,7 +179,7 @@
             <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description[0, 90] %>...</p>
+            <p class="meta"><%= post.meta_description.truncate_words(10) %></p>
           </div>
         </div>
         <% end %>
@@ -192,7 +192,7 @@
             <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description[0, 95] %>...</p>
+            <p class="meta"><%= post.meta_description.truncate_words(10) %></p>
           </div>
           <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
         </div>
@@ -204,7 +204,7 @@
             <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description[0, 90] %>...</p>
+            <p class="meta"><%= post.meta_description.truncate_words(10) %></p>
           </div>
         </div>
         <% end %>

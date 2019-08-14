@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 
-.contain_articles {
-  max-height: 375px;
-  overflow: hidden;
-}
-
 .fundraiser_banner_article {
   width: 100%;
   img {
@@ -14,8 +9,6 @@
 }
 
 .articles {
-  max-width: 250px;
-  min-width: 250px;
   .title {
     color: $highlight;
     margin-bottom:  10px;

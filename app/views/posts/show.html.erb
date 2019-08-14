@@ -214,37 +214,34 @@
 
 </div>
 <div class="post_apply">
-  <div class="sticky">
     <a href="/apply"><img id="apply_image" src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
     <div class="articles">
       <div class="flex_other_articles">
       <% if @user_posts_approved.count > 1 %>
       <h3 class="title">More by <%= @post.user.first_name %> <%= @post.user.last_name %></h3>
       <div class="contain_articles">
-        <% @user_posts_approved.each do |post| %>
+        <% @user_posts_approved[0..9].each do |post| %>
           <% if post.title != @post.title %>
             <div class="one_article">
                  <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
                 <div class="paragraph">
-                  <p><%= link_to(post.title, post) %></p>
+                  <p><%= link_to(post.title.truncate_words(10), post) %></p>
                 </div>
              </div>
           <% end %>
           <% end %>
       </div>
       <% else %>
-      <% @num = 1 %>
       <h3 class="title">More in <%= @post.meta_title %></h3>
       <div class="contain_articles">
-        <% @posts.each do |post| %>
-          <% if (post.meta_title == @post.meta_title) && (post.title != @post.title) && (@num <= 4) %>
+        <% @posts[0..9].each do |post| %>
+          <% if (post.meta_title == @post.meta_title) && (post.title != @post.title) %>
             <div class="one_article">
                <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
               <div class="paragraph">
-                <p><%= link_to(post.title, post) %></p>
+                <p><%= link_to(post.title.truncate_words(10), post) %></p>
               </div>
             </div>
-            <% @num = @num + 1 %>
         <% end %>
       <% end %>
       </div>
@@ -252,7 +249,6 @@
     </div>
     </div>
   </div>
-</div>
 </div>
 
 <script>
