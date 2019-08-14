@@ -167,7 +167,7 @@
             <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(10) %></p>
+            <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
           </div>
         </div>
         <% else %>
@@ -179,7 +179,7 @@
             <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(10) %></p>
+            <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
           </div>
         </div>
         <% end %>
@@ -192,7 +192,7 @@
             <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(10) %></p>
+            <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
           </div>
           <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
         </div>
@@ -204,7 +204,7 @@
             <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
             <% end %>
             <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(10) %></p>
+            <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
           </div>
         </div>
         <% end %>
