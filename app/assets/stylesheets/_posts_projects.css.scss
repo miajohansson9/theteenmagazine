@@ -10,12 +10,15 @@
 
 .articles {
   .title {
+    border-bottom: 1px dotted $light;
+  }
+  .title, .title a {
     color: $highlight;
     margin-bottom:  10px;
     padding-bottom: 10px;
-    border-bottom: 1px dotted $light;
     text-shadow: 0.5px 0.5px #191919;
     font-family: 'Roboto Condensed', sans-serif;
+    text-decoration: none;
   }
   figure {
     margin: 0 !important;
