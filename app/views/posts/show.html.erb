@@ -202,7 +202,7 @@
           <div class="flex_other_articles">
             <h3 class="title">Most Read in <%= link_to(@post.meta_title, Category.where(name: @post.meta_title).first) %></h3>
             <div class="contain_articles">
-              <% Post.approved.order("post_impressions desc").where(meta_title: @post.meta_title)[0..9].each do |post| %>
+              <% Post.approved.order("post_impressions desc").where(meta_title: @post.meta_title)[0..6].each do |post| %>
                 <div class="one_article">
                    <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
                   <div class="paragraph">
