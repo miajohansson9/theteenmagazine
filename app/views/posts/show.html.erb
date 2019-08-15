@@ -99,168 +99,154 @@
     </div>
     </div>
   </header>
+
   <div id="content">
-    <div class="post_content">
-      <%= markdown @post.content %>
-    </div>
-
-  <div id="mc_embed_signup" style="width: 100%; margin: 20px 0; margin-left: 0px;">
-  <form action="//herokuapp.us14.list-manage.com/subscribe/post?u=5c2a24e15a906f29e2c6a9b72&amp;id=3081d2e76a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" style="padding-left: 0;" novalidate>
-      <div id="mc_embed_signup_scroll">
-    <h2>Is this your first time here?</h2>
-  <div class="mc-field-group">
-    <label for="mce-EMAIL">Email Address </label>
-    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-  </div>
-    <div id="mce-responses" class="clear">
-      <div class="response" id="mce-error-response" style="display:none"></div>
-      <div class="response" id="mce-success-response" style="display:none"></div>
-    </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-      <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5c2a24e15a906f29e2c6a9b72_3081d2e76a" tabindex="-1" value=""></div>
-      <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    <div class="flex_wrapper_content">
+      <div>
+        <div class="post_content">
+          <%= markdown @post.content %>
+        </div>
+        <% if current_user && (current_user.id == @post.user_id || @post.collaboration == current_user.email || current_user.admin? || current_user.editor?) %>
+          <div id="admin_links">
+            <%= link_to "Edit Article", edit_post_path(@post) %>
+            <% if current_user && (current_user.id == @post.user_id || current_user.admin) %>
+            <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete this post?"} %>
+            <% end %>
+            <% if current_user && current_user.admin? %>
+                  <span style="color: #9a9da4;"><span style="padding-right: .5em;"> | </span> <%= @post.post_impressions %> views
+                  <% if @post.ranking != nil%>
+                    -- rank <%= @post.ranking %>
+                  <% end %></span>
+                  <%= @post.category_id %>
+            <% end %>
+          </div>
+        <% end %>
+        <div id= "background">
+         <%= render :partial => 'users/profile' %>
+         <% @users.each do |user| %>
+           <% if user.email == @post.collaboration %>
+             <div class="flex--profile" style="margin-top: -40px">
+               <% if user.profile.exists? %>
+                 <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+               <% else %>
+                 <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+               <% end %>
+               <div class="info">
+               <h2 style="margin-bottom: 5px;">
+               <% if (user.first_name != "" && user.first_name !=nil) %>
+                 <%= user.first_name %>
+               <% end %>
+               <% if (user.last_name != "" && user.last_name!= nil) %>
+                 <%= user.last_name %>
+               <% end %>
+               </h2>
+               <% if user.editor? %>
+                 <span class="editor_status">
+                   Editor
+                 </span>
+               <% end %>
+               <% if (user.description != "" && user.description != nil) %>
+                 <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
+               <% end %>
+                 <div class="website">
+                   <% if (user.website != "" && user.website !=  nil) %>
+                      <p class="website_link"><span>Website: </span><a href="<%= user.website %>" target="_blank"><%= user.website %></a></p>
+                   <% end %>
+                   <% if (user.twitter != "" && user.twitter !=  nil) %>
+                      <p class="website_link"><a href="<%= user.twitter %>" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a></p>
+                   <% end %>
+                   <% if (user.insta != "" && user.insta != nil) %>
+                      <p class="website_link"><a href="<%= user.insta %>" target="_blank" style="padding-right: 4px;"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+                   <% end %>
+                   <% if (user.facebook != "" && user.facebook !=  nil) %>
+                      <p class="website_link"><a href="<%= user.facebook %>" target="_blank" style="padding-left: 5px;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></p>
+                   <% end %>
+                   <% if (user.youtube != "" && user.youtube != nil) %>
+                      <p class="website_link"><a href="<%= user.youtube %>" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></p>
+                   <% end %>
+                   <% if (user.pintrest != "" && user.pintrest != nil) %>
+                      <p class="website_link"><a href="<%= user.pintrest %>" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a></p>
+                   <% end %>
+                   <% if (user.snap != "" && user.snap != nil) %>
+                      <p class="website_link"><a href="<%= user.snap %>" target="_blank"><i class="fa fa-snapchat" aria-hidden="true"></i></a></p>
+                   <% end %>
+                 </div>
+               </div>
+             </div>
+           <% end %>
+         <% end %>
+        </div>
+        <br />
+        <div id="mc_embed_signup" style="width: 100%; margin: 20px 0; margin-left: 0px;">
+          <form action="//herokuapp.us14.list-manage.com/subscribe/post?u=5c2a24e15a906f29e2c6a9b72&amp;id=3081d2e76a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" style="padding-left: 0;" novalidate>
+            <div id="mc_embed_signup_scroll">
+              <h2>Loving The Teen Magazine? Subscribe!</h2>
+              <div class="mc-field-group">
+                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+              </div>
+              <div id="mce-responses" class="clear">
+                <div class="response" id="mce-error-response" style="display:none"></div>
+                <div class="response" id="mce-success-response" style="display:none"></div>
+              </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5c2a24e15a906f29e2c6a9b72_3081d2e76a" tabindex="-1" value=""></div>
+                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                </div>
+          </form>
+        </div>
       </div>
-  </form>
-  </div>
-
-  <% if current_user && (current_user.id == @post.user_id || @post.collaboration == current_user.email || current_user.admin? || current_user.editor?) %>
-    <div id="admin_links">
-      <%= link_to "Edit Article", edit_post_path(@post) %>
-      <% if current_user && (current_user.id == @post.user_id || current_user.admin) %>
-      <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete this post?"} %>
-      <% end %>
-      <% if current_user && current_user.admin? %>
-            <span style="color: #9a9da4;"><span style="padding-right: .5em;"> | </span> <%= @post.post_impressions %> views
-            <% if @post.ranking != nil%>
-              -- rank <%= @post.ranking %>
-            <% end %></span>
-            <%= @post.category_id %>
-      <% end %>
-    </div>
-  <% end %>
-
-<div id= "background">
-  <%= render :partial => 'users/profile' %>
-  <% @users.each do |user| %>
-    <% if user.email == @post.collaboration %>
-      <div class="flex--profile" style="margin-top: -40px">
-        <% if user.profile.exists? %>
-          <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
-        <% else %>
-          <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
-        <% end %>
-        <div class="info">
-        <h2 style="margin-bottom: 5px;">
-        <% if (user.first_name != "" && user.first_name !=nil) %>
-          <%= user.first_name %>
-        <% end %>
-        <% if (user.last_name != "" && user.last_name!= nil) %>
-          <%= user.last_name %>
-        <% end %>
-        </h2>
-        <% if user.editor? %>
-          <span class="editor_status">
-            Editor
-          </span>
-        <% end %>
-        <% if (user.description != "" && user.description != nil) %>
-          <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
-        <% end %>
-          <div class="website">
-            <% if (user.website != "" && user.website !=  nil) %>
-               <p class="website_link"><span>Website: </span><a href="<%= user.website %>" target="_blank"><%= user.website %></a></p>
+      <div class="post_apply">
+        <div id="apply_link">
+          <a href="/apply"><img id="apply_image" src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
+        </div>
+        <div class="articles">
+          <div class="flex_other_articles">
+            <h3 class="title">Most Read in <%= link_to(@post.meta_title, Category.where(name: @post.meta_title).first) %></h3>
+            <div class="contain_articles">
+              <% Post.approved.order("post_impressions desc").where(meta_title: @post.meta_title)[0..9].each do |post| %>
+                <div class="one_article">
+                   <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
+                  <div class="paragraph">
+                    <p><%= link_to(post.title.truncate_words(20), post) %></p>
+                  </div>
+                </div>
             <% end %>
-            <% if (user.twitter != "" && user.twitter !=  nil) %>
-               <p class="website_link"><a href="<%= user.twitter %>" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a></p>
-            <% end %>
-            <% if (user.insta != "" && user.insta != nil) %>
-               <p class="website_link"><a href="<%= user.insta %>" target="_blank" style="padding-right: 4px;"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-            <% end %>
-            <% if (user.facebook != "" && user.facebook !=  nil) %>
-               <p class="website_link"><a href="<%= user.facebook %>" target="_blank" style="padding-left: 5px;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></p>
-            <% end %>
-            <% if (user.youtube != "" && user.youtube != nil) %>
-               <p class="website_link"><a href="<%= user.youtube %>" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></p>
-            <% end %>
-            <% if (user.pintrest != "" && user.pintrest != nil) %>
-               <p class="website_link"><a href="<%= user.pintrest %>" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a></p>
-            <% end %>
-            <% if (user.snap != "" && user.snap != nil) %>
-               <p class="website_link"><a href="<%= user.snap %>" target="_blank"><i class="fa fa-snapchat" aria-hidden="true"></i></a></p>
-            <% end %>
+            </div>
           </div>
         </div>
       </div>
-    <% end %>
-  <% end %>
-</div>
-
-  <br>
-  <br>
-</div>
-
-  <div id="disqus_thread"></div>
-  <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-  <script>
-
-  (function() { // DON'T EDIT BELOW THIS LINE
-  var d = document, s = d.createElement('script');
-  s.src = 'https://the-teen-magazine.disqus.com/embed.js';
-  s.setAttribute('data-timestamp', +new Date());
-  (d.head || d.body).appendChild(s);
-  })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-</div>
-<div class="post_apply">
-    <a href="/apply"><img id="apply_image" src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
-    <div class="articles">
-      <div class="flex_other_articles">
-      <h3 class="title">Most Read in <%= link_to(@post.meta_title, Category.where(name: @post.meta_title).first) %></h3>
-      <div class="contain_articles">
-        <% Post.approved.order("post_impressions desc").where(meta_title: @post.meta_title)[0..9].each do |post| %>
-          <div class="one_article">
-             <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
-            <div class="paragraph">
-              <p><%= link_to(post.title.truncate_words(20), post) %></p>
-            </div>
-          </div>
-      <% end %>
-      </div>
-    </div>
     </div>
   </div>
+  <br />
+ <div id="disqus_thread"></div>
+ <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+ <script>
+ (function() { // DON'T EDIT BELOW THIS LINE
+ var d = document, s = d.createElement('script');
+ s.src = 'https://the-teen-magazine.disqus.com/embed.js';
+ s.setAttribute('data-timestamp', +new Date());
+ (d.head || d.body).appendChild(s);
+ })();
+ </script>
+ <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
 </div>
 
 <script>
-jQuery(document).ready(function(){
-  var navOffset = jQuery(".sticky").offset().top;
-
-  jQuery(window).scroll(function() {
-    var scrollPos = jQuery(window).scrollTop();
-    if (scrollPos >= navOffset) {
-      jQuery(".sticky").addClass("fixed");
-    } else {
-      jQuery(".sticky").removeClass("fixed");
-    }
-  });
-});
-
 $(document).ready(function() {
-    $('.fb-share').click(function(e) {
-        e.preventDefault();
-        window.open($(this).attr('href'), 'fbShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-        return false;
-    });
-    $('.js-share-twitter-link').click(function(e) {
-    e.preventDefault();
-    var href = $(this).attr('href');
-    window.open(href, "Twitter", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-  });
-  $('.js-share-pinterest-link').click(function(e) {
-  e.preventDefault();
-  var href = $(this).attr('href');
-  window.open(href, "Pinterest", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-});
+   $('.fb-share').click(function(e) {
+       e.preventDefault();
+       window.open($(this).attr('href'), 'fbShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+       return false;
+   });
+   $('.js-share-twitter-link').click(function(e) {
+       e.preventDefault();
+       var href = $(this).attr('href');
+       window.open(href, "Twitter", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+   });
+   $('.js-share-pinterest-link').click(function(e) {
+       e.preventDefault();
+       var href = $(this).attr('href');
+       window.open(href, "Pinterest", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+   });
 });
 </script>

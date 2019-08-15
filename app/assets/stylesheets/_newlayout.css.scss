@@ -153,15 +153,11 @@
     .one_article {
       display: flex;
       flex-direction: row;
-      margin-top: 10px;
+      margin: 0 10px;
       img {
         width: 130px;
         height: 80px;
         object-fit: cover;
-      }
-      .paragraph {
-        height: 73px;
-        overflow:hidden;
       }
       p {
         font-size: .9em;

@@ -54,7 +54,7 @@
               <%=link_to(image_tag(post_getinvolved.thumbnail.url(:large2), alt: post_getinvolved.title), post_getinvolved )%>
               <h1><%= link_to post_getinvolved.title, post_getinvolved %></h1>
               <p><%= post_getinvolved.created_at.strftime("%A, %b %d")%></p>
-              <p class="meta"><%= post_getinvolved.meta_description.truncate_words(20) %>...</p>
+              <p class="meta"><%= post_getinvolved.meta_description.truncate_words(20) %></p>
             </div>
             <% @number += 1 %>
             <% end %>

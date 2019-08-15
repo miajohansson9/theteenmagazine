@@ -530,8 +530,6 @@ body {
   padding: 0;
   #mc_embed_signup_scroll{
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
     padding: 0;
     h2 {
       font-size: 1.4em;
@@ -1057,9 +1055,6 @@ hr {
     .parentflex {
       width: 100%;
     }
-    #mc_embed_signup {
-      margin-top: -5px !important;
-    }
     .col-2 {
       .thumbnail {
         width: 49.5%;
@@ -1165,14 +1160,7 @@ hr {
             display: none;
           }
           .mccontainer {
-            margin-top: 30px !important;
-            margin-bottom: 10px !important;
-            width: 350px;
-            margin-left: auto !important;
-            margin-right: auto !important;
-            .flex--email {
-              width: 350px;
-            }
+            margin: 30px 10px 10px 10px !important;
           }
       }
     }
