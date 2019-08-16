@@ -4,12 +4,10 @@
     <iframe style="width: 100%; max-width: 560px; margin: 0 auto; display: block;" height="310" src="https://www.youtube.com/embed/6rsRDe4vy1w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
     </iframe>
     <br />
-    <p>We are an online magazine written for teens by teens! Founded in 2017, The Teen Magazine started as a blog with a few writers. Since then, it has grown into an international online magazine with over 150 writers from around the world.
-      Today The Teen Magazine gives aspiring journalists a platform to publish and covers topics such as social issues, news, entertainment, fashion, advice, and more!</p>
       <div class="signupdiv signup_full">
         <div class="container">
           <div class="exclusive-offer">
-            <h5 class="exclusive-title" id="exclusive-title--id">Show your support for our writers by subscribing to our email list!</h5>
+            <h5 class="exclusive-title" id="exclusive-title--id">Stay up-to-date with The Teen Magazine by subscribing to our online magazine!</h5>
           </div>
         <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
         <div class="signup">
@@ -30,7 +28,7 @@
                <div class="flex--email">
                  <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" style="min-width:70% !important;">
                  <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5c2a24e15a906f29e2c6a9b72_3081d2e76a" tabindex="-1" value=""></div>
-                 <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                 <div class="clear"><input type="submit" value="Subscribe!" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
                </div>
             </div>
               </div>
@@ -41,12 +39,32 @@
         </div>
       </div>
     <br />
-    <p>Stick around to read about social issues, news, fashion, and so much more! Go to <%= link_to("The Teen Magazine", root_path) %></p>
+    <p>We are an online magazine written for teens by teens! We started in 2017 as a small blog with only a few writers, but since then, The Teen Magazine has grown into an international online magazine with over 150 writers from around the world!
+      Today The Teen Magazine gives aspiring journalists a platform to publish and covers topics such as social issues, news, entertainment, fashion, advice, and more.</p>
     <div class="social-media-subscribe">
       <a href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
       <a href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
       <a href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
       <a href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+    </div>
+    <br />
+    <div class="flex--welcome">
+      <div class="flex-1">
+        <div class="beauty--section">
+          <% Post.approved[1..3].each do |post_academics| %>
+            <div class="one_beauty_article">
+              <%=link_to(image_tag(post_academics.thumbnail.url(:large2), alt: post_academics.title), post_academics )%>
+              <h1><%= link_to post_academics.title, post_academics %></h1>
+              <p><%= post_academics.created_at.strftime("%A, %b %d")%></p>
+              <p class="meta"><%= post_academics.meta_description.truncate_words(15) %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="read_more_button">
+      <a href="/">Read More</a>
     </div>
     <br />
   </div>

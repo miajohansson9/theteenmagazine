@@ -192,8 +192,17 @@ html, body {
 
 /////////////////Projects///////////////////////////////////////////////////
 
-button {
-  display: none;
+.read_more_button {
+  text-align: center;
+  width: fit-content;
+  margin: 0 auto 20px auto;
+  padding: 20px 30px;
+  border-radius: 10px;
+  background-color: #191919;
+  a {
+    color: white;
+    text-decoration: none;
+  }
 }
 
 footer {
