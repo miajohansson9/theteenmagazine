@@ -26,6 +26,7 @@ class PagesController < ApplicationController
   end
 
   def subscribe
+    @posts_approved = Post.approved.all.order("created_at desc")
   end
 
   def team
