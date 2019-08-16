@@ -197,7 +197,7 @@ button {
 }
 
 footer {
-  height: 9em;
+  height: 11em;
   background-color: #191919;
   color: white;
 
@@ -759,7 +759,7 @@ body {
     text-decoration: none;
   }
   nav {
-    padding-top: 35px;
+    padding-top: 5px;
   }
 
   a:hover {
@@ -850,6 +850,31 @@ hr {
 }
 
 .submitted {
+  .social-media-subscribe {
+    font-size: 30px !important;
+    width: fit-content;
+    margin: 0 auto;
+    .fa {
+      margin: 0 20px 20px 0;
+    }
+  }
+
+  .fa-twitter {
+    color: #00aced;
+  }
+  .fa-instagram {
+    color: #3f729b;
+  }
+  .fa-pinterest {
+    color: #cb2027;
+  }
+  .fa-facebook-official {
+    color: #3b5998;
+  }
+  p a {
+    color: #65B19D;
+    text-decoration: none;
+  }
   .signupdiv {
     display: block;
     margin-left: 0;

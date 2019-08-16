@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get 'how-to-style-your-articles' => 'pages#styling'
   get 'ranking' => 'pages#ranking'
   get 'privacy-policy' => 'pages#privacy'
+  get 'subscribe' => 'pages#subscribe'
   get "/apply" => "applies#new"
   get "/submitted" => "applies#create"
 
