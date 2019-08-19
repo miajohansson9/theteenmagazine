@@ -4,14 +4,8 @@
       <div class="parentflex">
         <div class="flexbox">
           <div class="featured divfeatured">
-            <% filteredPosts = [] %>
-
             <% if @posts_approved %>
-            <% @posts_approved.each do |post| %>
-              <% if post.meta_title != "Personal Stories"%>
-                <% filteredPosts.push post %>
-              <% end %>
-            <% end %>
+            <% filteredPosts = @posts_approved %>
               <div class="featured individual">
                 <div class="featured_img">
                   <%=link_to(image_tag(filteredPosts.first.thumbnail.url(:large2), alt: filteredPosts.first.title, :id => "image_thumbnail"), filteredPosts.first )%>
