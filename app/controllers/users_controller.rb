@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :find_user, only: [:show, :edit, :update, :destroy]
-  # before_action :authenticate_user!, only: [:show]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :is_admin?, only: [:index, :new]
-  # load_and_authorize_resource
 
   def show
     @user = User.find(params[:id])
