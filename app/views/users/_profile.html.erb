@@ -11,7 +11,7 @@
         @user.first_name
       end
       if (@user.last_name != "" && @user.last_name!= nil)
-        @user.last_name
+        @name = @name + " " + @user.last_name
       end %>
     <%= link_to(@name, @user) %>
   </h2>
