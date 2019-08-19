@@ -1,14 +1,24 @@
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :find_user, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:show]
+  # before_action :authenticate_user!, only: [:show]
   before_action :is_admin?, only: [:index, :new]
-  load_and_authorize_resource
+  # load_and_authorize_resource
 
   def show
     @user = User.find(params[:id])
     @user_posts = @user.posts.all.order("created_at desc")
-    @posts = Post.all.order("created_at desc")
+    @user_posts_approved = @user.posts.all.approved.order("created_at desc")
+    @posts = Post.all.order("created_at desc");
+    if @user_posts_approved.length <= 3
+      begin
+        if (current_user.id != @user.id && !current_user.admin?)
+          redirect_to root_path, notice: "This writer does not have a public profile yet."
+        end
+      rescue
+        redirect_to root_path, notice: "This writer does not have a public profile yet."
+      end
+    end
     @rankings = User.all.order("monthly_views desc").pluck(:id)
   end
 

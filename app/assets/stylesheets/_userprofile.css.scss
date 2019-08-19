@@ -191,9 +191,10 @@
       margin-bottom: 10px;
     }
 
-    h2 {
+    h2, a {
       margin: 0;
       font-size: 30px;
+      text-decoration: none;
       color: $highlight;
       font-family: 'Vollkorn', serif;
     }

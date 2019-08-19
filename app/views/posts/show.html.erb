@@ -54,7 +54,8 @@
             <% else %>
               <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
             <% end %>
-            <p class="author" style="margin-right: 10px;">By <%= @post.user.full_name %></p>
+            <p class="author" style="margin-right: 10px;">
+                By <%= link_to(@post.user.full_name, @user) %>
           </div>
           <div class="one_author second_author">
             <% if @post.collaboration != nil || @post.collaboration != "" %>
@@ -64,7 +65,8 @@
                   <% else %>
                     <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
                   <% end %>
-                  <p class="author" style="margin-right: 10px;">By <%= @collab.full_name %></p>
+                  <p class="author" style="margin-right: 10px;">
+                    By <%= link_to(@collab.full_name, @collab) %></p>
               <% end %>
             <% end %>
           </div>
