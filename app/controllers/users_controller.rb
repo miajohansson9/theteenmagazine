@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user_posts = @user.posts.all.order("created_at desc")
     @user_posts_approved = @user.posts.all.approved.order("created_at desc")
     @posts = Post.all.order("created_at desc");
-    if @user_posts_approved.length <= 3
+    if @user_posts_approved.length < 3
       begin
         if (current_user.id != @user.id && !current_user.admin?)
           redirect_to root_path, notice: "This writer does not have a public profile yet."
