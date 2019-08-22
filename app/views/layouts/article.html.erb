@@ -11,10 +11,9 @@
     <meta property="og:type"               content="article" />
     <meta property="og:title"              content="<%= @post.title %>" />
     <meta property="og:description"        content="<%= @post.meta_description %>" />
-    <meta property="og:image"              content="https:<%= @post.thumbnail.url %>" />
-    <meta property="og:image:url"          content="https:<%= @post.thumbnail.url %>" />
-    <meta property="og:image:width" content="450"/>
-    <meta property="og:image:height" content="298"/>
+    <meta property="og:image"              content="https:<%= @post.thumbnail.url(:large2) %>" />
+    <meta property="og:image:secure_url"   content="https:<%= @post.thumbnail.url(:large2) %>" />
+    <meta property="og:image:alt"          content="<%= @post.title %>" />
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@theteenmagazin_">
     <meta name="twitter:title" content="<%= @post.title %>">
