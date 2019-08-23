@@ -1,0 +1,76 @@
+@import "common";
+@import 'normalize';
+@import 'welcome';
+@import "category";
+@import "userprofile";
+
+img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.onboarding_button {
+  color: white;
+  background-color: #2a2a2a;
+  border: 1px solid #2a2a2a;
+  width: 150px;
+  text-align: center;
+  text-decoration: none;
+  float: right;
+  line-height: 40px;
+  margin: 10px 0;
+}
+
+.stair_step {
+  text-align: center;
+  .progress, .progress p {
+    color: #65B19D !important;
+    border-top-color: #65B19D !important;
+  }
+  span {
+    display: inline-flex;
+    flex-direction: column;
+    margin: 0 4px;
+    color: #DCDCDC;
+    font-size: 25px;
+    width: 75px;
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #3B464F;
+      font-weight: bold;
+    }
+  }
+  .hr {
+    display: inline-block;
+    position: absolute;
+    line-height: 28px;
+    left:0;
+    right:0;
+    margin-left:20px;
+    margin-right:20px;
+    hr {
+      vertical-align: middle;
+      display: inline-flex;
+      border-top-color: #DCDCDC;
+      font-size: 24px;
+      margin: 0 5px;
+    }
+  }
+}
+
+.onboarding_page_container {
+  margin: 30px auto;
+  max-width: 800px;
+  #onboarding_page {
+    padding: 30px;
+    background-color: WhiteSmoke;
+  }
+}
+
+@media (max-width: 600px) {
+  .skinny_wrapper {
+    width: 90%;
+  }
+}

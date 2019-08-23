@@ -3,9 +3,9 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :is_admin?, only: [:index, :new]
+  layout "minimal", only: [:onboarding]
 
   def show
-    @user = User.find(params[:id])
     @user_posts = @user.posts.all.order("created_at desc")
     @user_posts_approved = @user.posts.all.approved.order("created_at desc")
     @posts = Post.all.order("created_at desc");
@@ -13,12 +13,20 @@ class UsersController < ApplicationController
       begin
         if (current_user.id != @user.id && !current_user.admin?)
           redirect_to root_path, notice: "This writer does not have a public profile yet."
+        elsif (current_user.submitted_profile == nil)
+          redirect_to "/onboarding"
         end
       rescue
         redirect_to root_path, notice: "This writer does not have a public profile yet."
       end
     end
     @rankings = User.all.order("monthly_views desc").pluck(:id)
+  end
+
+  def onboarding
+    @user = current_user
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+    @page = "welcome"
   end
 
   def index
@@ -64,7 +72,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
+    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
   end
 
   def find_user

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get "/login" => "users/sessions#new"
+    get "/onboarding" => "users#onboarding"
   end
 
   resources :users
@@ -30,5 +31,4 @@ Rails.application.routes.draw do
   resources :posts, path: "", except: [:new, :create]
 
   get '*path' => redirect('/')
-
 end
