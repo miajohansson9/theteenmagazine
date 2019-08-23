@@ -69,7 +69,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    redirect_to root_path unless (@post.approved || (current_user && (@post.user_id == current_user.id || @post.collaboration == current_user.full_name || current_user.admin? || current_user.editor?)))
+    redirect_to root_path unless (@post.approved || (current_user && (@post.user_id == current_user.id || @post.collaboration == current_user.email || current_user.admin? || current_user.editor?)))
     @users = User.all.order("created_at desc")
     set_meta_tags title: @post.title,
                   description: @post.meta_description,
