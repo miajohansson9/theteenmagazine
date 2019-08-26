@@ -1,13 +1,6 @@
-<img src="https://i.imgur.com/ZCngN89.jpg" />
+<img id="banner" src="https://i.imgur.com/ZCngN89.jpg" />
 <div class="skinny_wrapper onboarding">
   <h1>Welcome to The Teen Magazine Writer Team!</h1>
   <p>Please complete the onboarding process.</p>
       <%= render "users/partials/#{@partial}" %>
-    </div>
-    <% if @page != "done" %>
-      <%= link_to "Next", onboarding_path(page: @page), :class => "onboarding_button" %>
-    <% elsif @page == "done" %>
-      <%= link_to "Go to Dashboard", user_path(current_user.id), :class => "onboarding_button" %>
-    <% end %>
-  </div>
 </div>

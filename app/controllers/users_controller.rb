@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :is_admin?, only: [:index, :new]
-  layout "minimal", only: [:onboarding]
+  layout "minimal"
 
   def show
     @user_posts = @user.posts.all.order("created_at desc")
@@ -26,7 +26,6 @@ class UsersController < ApplicationController
   def onboarding
     @user = current_user
     @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
-    @page = "welcome"
   end
 
   def index
@@ -54,7 +53,9 @@ class UsersController < ApplicationController
 
   def update
     if @user.update user_params
-      redirect_to @user, notice: "Your changes were saved!"
+      if params[:redirect] != nil
+        redirect_to onboarding_path(page: params[:redirect])
+      end
     else
       render 'edit'
     end

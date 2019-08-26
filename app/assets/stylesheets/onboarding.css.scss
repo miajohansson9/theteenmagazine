@@ -4,13 +4,71 @@
 @import "category";
 @import "userprofile";
 
-img {
+#banner {
   width: 100%;
   max-height: 200px;
   object-fit: cover;
 }
 
-.onboarding_button {
+.welcome_hero {
+  width: 100%;
+}
+
+.img_profile_example {
+  max-width: 600px;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.number_wrapper {
+  height: 30px;
+  margin-bottom: 8px;
+  .img_number {
+    height: 100%;
+    padding: 2px 5px 2px 0px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.social {
+  input {
+    padding-left: 25px;
+  }
+}
+
+.add_link {
+  display: flex;
+  flex-direction: row;
+  input {
+    margin: 10px 0px 10px 5px;
+  }
+  span {
+    position: absolute;
+    color: #b0b0b0;
+    margin-top: 24px;
+    margin-left: 15px;
+  }
+}
+
+.add_margin_left {
+  margin-left: 31px;
+}
+
+a {
+  color: #65B19D;
+}
+
+h5, h3 {
+  margin: 20px 0;
+}
+
+.node {
+  text-decoration: none;
+}
+
+#onboarding_button {
   color: white;
   background-color: #2a2a2a;
   border: 1px solid #2a2a2a;
@@ -19,7 +77,13 @@ img {
   text-decoration: none;
   float: right;
   line-height: 40px;
-  margin: 10px 0;
+  margin: 20px 0;
+  padding: 1px 7px 2px !important;
+  cursor:pointer;
+}
+
+#edit_profile {
+  color: black;
 }
 
 .stair_step {
@@ -43,6 +107,7 @@ img {
     }
   }
   .hr {
+    pointer-events: none;
     display: inline-block;
     position: absolute;
     line-height: 28px;
