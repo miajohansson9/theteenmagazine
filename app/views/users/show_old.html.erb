@@ -1,0 +1,162 @@
+<% if current_user && (current_user.id == @user.id || current_user.admin) %>
+  <% @pageviews = 0 %>
+  <% @user_posts.each do | post | %>
+    <% if post.post_impressions != nil %>
+      <% @pageviews = @pageviews + post.post_impressions %>
+    <% end %>
+  <% end %>
+  <% if @user.monthly_views == nil %>
+    <% @user.monthly_views = 0 %>
+    <% @user.save %>
+  <% end %>
+  <% @rank = @rankings.index(@user.id) + 1 %>
+  <div id="posts_wrapper" class="skinny_wrapper" style="padding-top: 0px;">
+  <% if @user.monthly_views != 0 %>
+  <div class ="flex--ranking">
+  <h1 id="page_title">Your Rank: <%= @rank %></h1>
+    <% if @rank != 1 %>
+      <% @impressions_to_get = 0 %>
+      <% @compare_user %>
+      <% @counter = @rank - 1 %>
+      <% while @impressions_to_get = 0 %>
+        <% @compare_user = User.find(@rankings[@counter]) %>
+        <% @impressions_to_get = @compare_user.monthly_views - @user.monthly_views %>
+        <% @counter = @counter - 1 %>
+        <% if @impressions_to_get != 0 %>
+          <div><p style="font-weight: 300; font-size: 18px;"><span style="font-weight: 400;"><%= @impressions_to_get + 1 %></span> more page views to reach rank <%= @rankings.index(@compare_user.id) + 1 %></p>
+          <% break %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <div><p style="font-weight: 300; font-size: 18px;">Congratulations! You are ranked first out of <%=User.count%> writers.</p>
+    <% end %>
+    <h1 id="page_title" style="margin-top: -20px; padding-top: 0; font-size: 11px;"><span style="font-weight: 400;">Lifetime Views:
+      <%= @pageviews %></span> | Monthly Views: <%= @user.monthly_views %></h1></div>
+  </div>
+  <% else %>
+  <h1 id="page_title" style="margin-top: -20px; border-bottom: none;">
+  <span style="font-weight: 400;">Lifetime Views: <%= @pageviews %></span> | Monthly Views: <%= @user.monthly_views %></h1>
+  <p style="text-align: center; margin-top: -50px; font-size: 15px;">In order to see your rank for this month, your monthly views cannot be 0.</p><% end %>
+
+<% else %>
+<br />
+<% end %>
+  <div id="background">
+    <%= render 'profile' %>
+  </div>
+
+<% if current_user && (current_user.id == @user.id || current_user.admin) %>
+
+<div class="flex--p">
+  <p>You're signed in as <%= @user.email %></p>
+  <p class="editlink--profile"><%= link_to "Edit Profile", edit_user_path(@user) %></p>
+</div>
+    <h1 id="page_title">Your Articles</h1>
+
+      <% @user_posts.each do |post| %>
+      <div class="flex--postlist--item">
+        <div class="inside--item">
+          <% if post.approved && post.after_approved == true %>
+          <%= image_tag "published.png", class: "icon" %>
+          <% elsif post.waiting_for_approval && (post.approved == nil || post.approved == false) %>
+          <%= image_tag "waiting.png", class: "icon" %>
+          <% elsif post.approved && post.after_approved == nil %>
+          <%= image_tag "approved.png", class: "icon" %>
+          <% else %>
+          <%= image_tag "saved.png", class: "icon" %>
+          <% end %>
+            <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
+        </div>
+        <h6 id="date"><%= post.created_at.strftime('%A, %B %d') %></h6>
+      </div>
+      <% end %>
+
+      <p>
+        <%= link_to "New Post", new_post_path(@post), :class => "newpost--profile" %>
+      </p>
+
+      <% @userHasCollaboration = false %>
+
+      <% @posts.each do |post| %>
+        <% if post.collaboration == @user.email %>
+          <% if @userHasCollaboration == false %>
+            <h1 id="page_title">Your Collaborations</h1>
+            <% @userHasCollaboration = true %>
+          <% end %>
+
+          <div class="flex--postlist--item">
+            <div class="inside--item">
+              <% if post.approved && post.after_approved == true %>
+              <%= image_tag "published.png", class: "icon" %>
+              <% elsif post.waiting_for_approval && (post.approved == nil || post.approved == false) %>
+              <%= image_tag "waiting.png", class: "icon" %>
+              <% elsif post.approved && post.after_approved == nil %>
+              <%= image_tag "approved.png", class: "icon" %>
+              <% else %>
+              <%= image_tag "saved.png", class: "icon" %>
+              <% end %>
+                <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
+            </div>
+            <h6 id="date"><%= post.created_at.strftime('%A, %B %d') %></h6>
+          </div>
+        <% end %>
+      <% end %>
+
+  </div>
+
+  <div class="guidelines">
+    <div class="thelink">
+      <a href="/criteria">
+      <div class="box foo G1 ">
+        <p>Criteria & FAQ</p>
+      </div>
+      </a>
+    </div>
+    <div class="thelink">
+      <a href="/choosing-a-topic">
+        <div class="G2 box foo">
+          <p>Choosing A Topic</p>
+        </div>
+      </a>
+    </div>
+    <div class="thelink">
+      <a href="/writing-the-perfect-article">
+        <div class="G3 box foo">
+          <p>Writing The Perfect Article</p>
+        </div>
+      </a>
+    </div>
+    <div class="thelink">
+      <a href="/finding-images">
+        <div class="G5 box foo">
+          <p>Finding Images</p>
+        </div>
+      </a>
+    </div>
+  </div>
+<% else %>
+<div class="category">
+   <div class="category--show">
+     <div class="other--articles">
+       <div class="flex">
+         <div class="container">
+           <% @user_posts_approved.each do |post| %>
+             <div class="thumbnail">
+               <div class="container--image">
+                 <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
+               </div>
+               <div class="thumbnail--container">
+                 <p class="date"><%= post.meta_title%></p>
+                 <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
+                 <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
+               </div>
+             </div>
+           <% end %>
+         </div>
+         <a class="apply" href="/apply" target="blank">
+         </a>
+       </div>
+     </div>
+   </div>
+</div>
+<% end %>
