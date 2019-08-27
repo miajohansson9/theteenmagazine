@@ -261,7 +261,7 @@
       .flex--profile {
         pointer-events: none;
         z-index:1;
-        opacity: 0.9;
+        opacity: 0.4;
         background-color: transparent;
       }
       .overlay {
@@ -275,7 +275,7 @@
         bottom: -2%;
         left: -8px;
         background-color: white;
-        border: 1px solid #C5B7B850;
+        border: 1px solid #C5B7B820;
         .icon, h5 {
           margin: 0;
           font-weight: 400;
