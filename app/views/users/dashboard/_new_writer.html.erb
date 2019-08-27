@@ -1,12 +1,25 @@
 <div class="new--writer--wrapper">
   <div class="skinny_wrapper">
     <div id="waiting--for--approval">
-      <div class="flex--item">
-        <div class="overlay">
-          <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
-          <h5>Your profile is waiting for review</h5>
+      <div style="padding-top: 30px;">
+        <div class="flex--item">
+          <div class="overlay">
+            <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
+            <h5>Your profile is waiting for review</h5>
+          </div>
+          <%= render 'profile' %>
         </div>
-        <%= render 'profile' %>
+        <div class="initial--training--wrapper">
+          <div>
+            <h3>Submitting an article topic</h3>
+          </div>
+          <div>
+            <h3>Writing your first article</h3>
+          </div>
+          <div>
+            <h3>Getting published</h3>
+          </div>
+        </div>
       </div>
       <div class="new--writer--flex--two">
         <div class="links">
@@ -16,22 +29,9 @@
           </div>
           <%= link_to("Sign Out", destroy_user_session_path) %>
         </div>
-
         <br />
-        <h5>This is a new writer account. Your full writer account will be activated
-            once you finish the initial training.</h5>
-      </div>
-    </div>
-
-    <div class="initial--training--wrapper">
-      <div>
-        <h3>Submitting an article topic</h3>
-      </div>
-      <div>
-        <h3>Writing your first article</h3>
-      </div>
-      <div>
-        <h3>Getting published</h3>
+        <p>This is a new writer account. Your full writer account will be activated
+            once you finish the initial training.</p>
       </div>
     </div>
   </div>
