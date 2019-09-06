@@ -13,7 +13,7 @@
     <span>Cover Letter:</span>
       <p style="margin: 10px 0;"><%= @application.description %></p>
     <br />
-
+    <%= f.hidden_field :monthly_views, value: 0 %>
     <%= f.hidden_field :password, value: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join %>
     <%= f.submit 'Accept Application', class: 'button' %>
   <% end %>
