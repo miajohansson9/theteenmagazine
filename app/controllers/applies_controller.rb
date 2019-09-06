@@ -1,5 +1,5 @@
 class AppliesController < ApplicationController
-  before_action :is_admin?, only: [:show]
+  before_action :is_admin?, only: [:show, :index]
 
   def new
     @application = Apply.new
@@ -28,6 +28,10 @@ class AppliesController < ApplicationController
   def show
     @application = Apply.find(params[:id])
     @user = User.new
+  end
+
+  def index
+    @applies = Apply.all.order("created_at desc")
   end
 
   private

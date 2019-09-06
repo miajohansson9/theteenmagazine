@@ -1,0 +1,68 @@
+<div class="new--writer--wrapper">
+  <div class="skinny_wrapper">
+    <div id="waiting--for--approval">
+      <div style="padding-top: 30px; width: 100%;">
+        <div class="flex--item">
+          <div class="overlay">
+            <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
+            <h5>Your profile is waiting to be reviewed</h5>
+          </div>
+          <%= render 'profile' %>
+        </div>
+        <div class="initial--training--wrapper">
+          <div>
+            <h3>Submitting an article topic</h3>
+          </div>
+          <div>
+            <h3>Writing your first article</h3>
+          </div>
+          <div>
+            <h3>Getting published</h3>
+          </div>
+        </div>
+      </div>
+      <div class="new--writer--flex--two">
+        <div class="links">
+          <div>
+            <%= link_to("Edit Profile", onboarding_path(:page => "your_profile")) %>
+            <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
+          </div>
+          <%= link_to("Sign Out", destroy_user_session_path) %>
+        </div>
+        <br />
+        <p>This is a new writer account. Your full writer account will be activated
+            once you finish the initial training.</p>
+      </div>
+    </div>
+  </div>
+  <div class="guidelines">
+    <div class="thelink">
+      <a href="/criteria">
+      <div class="box foo G1 ">
+        <p>Criteria & FAQ</p>
+      </div>
+      </a>
+    </div>
+    <div class="thelink">
+      <a href="/choosing-a-topic">
+        <div class="G2 box foo">
+          <p>Choosing A Topic</p>
+        </div>
+      </a>
+    </div>
+    <div class="thelink">
+      <a href="/writing-the-perfect-article">
+        <div class="G3 box foo">
+          <p>Writing The Perfect Article</p>
+        </div>
+      </a>
+    </div>
+    <div class="thelink">
+      <a href="/finding-images">
+        <div class="G5 box foo">
+          <p>Finding Images</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
