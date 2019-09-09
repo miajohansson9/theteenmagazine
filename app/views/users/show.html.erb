@@ -45,7 +45,7 @@
     <%= render 'profile' %>
   </div>
 
-<% if current_user && (current_user.id == @user.id || current_user.admin) %>
+<% if current_user && (current_user.id == @user.id || current_user.admin || current_user.editor) %>
 
 <div class="flex--p">
   <p>You're signed in as <%= @user.email %></p>
