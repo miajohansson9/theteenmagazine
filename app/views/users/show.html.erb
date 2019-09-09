@@ -10,34 +10,35 @@
     <% @user.save %>
   <% end %>
   <% @rank = @rankings.index(@user.id) + 1 %>
-  <div id="posts_wrapper" class="skinny_wrapper" style="padding-top: 0px;">
   <% if @user.monthly_views != 0 %>
-  <div class ="flex--ranking">
-  <h1 id="page_title">Your Rank: <%= @rank %></h1>
-    <% if @rank != 1 %>
-      <% @impressions_to_get = 0 %>
-      <% @compare_user %>
-      <% @counter = @rank - 1 %>
-      <% while @impressions_to_get = 0 %>
-        <% @compare_user = User.find(@rankings[@counter]) %>
-        <% @impressions_to_get = @compare_user.monthly_views - @user.monthly_views %>
-        <% @counter = @counter - 1 %>
-        <% if @impressions_to_get != 0 %>
-          <div><p style="font-weight: 300; font-size: 18px;"><span style="font-weight: 400;"><%= @impressions_to_get + 1 %></span> more page views to reach rank <%= @rankings.index(@compare_user.id) + 1 %></p>
-          <% break %>
+  <div style="max-width: 840px; padding: 0 20px; margin: 0 auto;">
+    <div class ="flex--ranking">
+    <h1 id="page_title">Your Rank: <%= @rank %></h1>
+      <% if @rank != 1 %>
+        <% @impressions_to_get = 0 %>
+        <% @compare_user %>
+        <% @counter = @rank - 1 %>
+        <% while @impressions_to_get = 0 %>
+          <% @compare_user = User.find(@rankings[@counter]) %>
+          <% @impressions_to_get = @compare_user.monthly_views - @user.monthly_views %>
+          <% @counter = @counter - 1 %>
+          <% if @impressions_to_get != 0 %>
+            <div><p style="font-weight: 300; font-size: 18px;"><span style="font-weight: 400;"><%= @impressions_to_get + 1 %></span> more page views to reach rank <%= @rankings.index(@compare_user.id) + 1 %></p>
+            <% break %>
+          <% end %>
         <% end %>
+      <% else %>
+        <div><p style="font-weight: 300; font-size: 18px;">Congratulations! You are ranked first out of <%=User.count%> writers.</p>
       <% end %>
+      <h1 id="page_title" style="margin-top: -20px; padding-top: 0; font-size: 11px;"><span style="font-weight: 400;">Lifetime Views:
+        <%= @pageviews %></span> | Monthly Views: <%= @user.monthly_views %></h1></div>
+    </div>
     <% else %>
-      <div><p style="font-weight: 300; font-size: 18px;">Congratulations! You are ranked first out of <%=User.count%> writers.</p>
-    <% end %>
-    <h1 id="page_title" style="margin-top: -20px; padding-top: 0; font-size: 11px;"><span style="font-weight: 400;">Lifetime Views:
-      <%= @pageviews %></span> | Monthly Views: <%= @user.monthly_views %></h1></div>
+    <h1 id="page_title" style="margin-top: -20px; border-bottom: none;">
+    <span style="font-weight: 400;">Lifetime Views: <%= @pageviews %></span> | Monthly Views: <%= @user.monthly_views %></h1>
+    <p style="text-align: center; margin-top: -50px; font-size: 15px;">In order to see your rank for this month, your monthly views cannot be 0.</p><% end %>
+    </div>
   </div>
-  <% else %>
-  <h1 id="page_title" style="margin-top: -20px; border-bottom: none;">
-  <span style="font-weight: 400;">Lifetime Views: <%= @pageviews %></span> | Monthly Views: <%= @user.monthly_views %></h1>
-  <p style="text-align: center; margin-top: -50px; font-size: 15px;">In order to see your rank for this month, your monthly views cannot be 0.</p><% end %>
-
 <% else %>
 <br />
 <% end %>
@@ -46,6 +47,7 @@
   </div>
 
 <% if current_user && (current_user.id == @user.id || current_user.admin || current_user.editor) %>
+<div id="posts_wrapper" class="skinny_wrapper" style="padding-top: 0px;">
 
 <div class="flex--p">
   <p>You're signed in as <%= @user.email %></p>
@@ -101,7 +103,6 @@
           </div>
         <% end %>
       <% end %>
-
   </div>
 
   <div class="guidelines">
