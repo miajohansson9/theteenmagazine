@@ -68,6 +68,13 @@ h5, h3 {
   text-decoration: none;
 }
 
+.new--writer--wrapper {
+  #page_title {
+    text-align: left;
+    padding: 30px 0;
+  }
+}
+
 #onboarding_button {
   color: white;
   background-color: #2a2a2a;
@@ -131,6 +138,40 @@ h5, h3 {
   #onboarding_page {
     padding: 30px;
     background-color: WhiteSmoke;
+  }
+}
+
+.initial--training--wrapper {
+  margin-top: 20px;
+  .tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #E5E5E5;
+    margin: 2px 0 0 0;
+    background-color: #f9f9f9;
+    span {
+      font-weight: 600;
+      color: black;
+    }
+    p {
+      margin: 10px;
+      font-size: 15px;
+    }
+    img {
+      width: 25px;
+      margin-right: 5px;
+      object-fit: contain;
+    }
+  }
+  .drop--down {
+    border: 1px solid #E5E5E5;
+    border-top: none;
+    p {
+      margin: 0;
+      padding: 10px;
+      font-size: 15px;
+    }
   }
 }
 

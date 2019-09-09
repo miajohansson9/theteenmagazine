@@ -10,14 +10,48 @@
           <%= render 'profile' %>
         </div>
         <div class="initial--training--wrapper">
-          <div>
-            <h3>Submitting an article topic</h3>
+          <h1 id="page_title">Training modules</h1>
+          <div class="tab" id="tab1">
+            <p><span>Module 1:</span> Search Analysis</p>
+            <%= image_tag "downarrow.png" %>
           </div>
-          <div>
-            <h3>Writing your first article</h3>
+          <div class="drop--down tab1--drop--down hidden">
+            <p>For years, people have been talking about “Keyword Research”.  That made sense in the days where using certain words in your headlines and in your posts would help you rank for searches including those words.  But that’s not how search works anymore, which is why “Keyword Research” is now a thing of the past.</p>
           </div>
-          <div>
-            <h3>Getting published</h3>
+          <div class="tab" id="tab2">
+            <p><span>Module 2:</span> Pitching an Article Topic</p>
+            <%= image_tag "downarrow.png" %>
+          </div>
+          <div class="drop--down tab2--drop--down hidden">
+            <p>For years, people have been talking about “Keyword Research”.  That made sense in the days where using certain words in your headlines and in your posts would help you rank for searches including those words.  But that’s not how search works anymore, which is why “Keyword Research” is now a thing of the past.</p>
+          </div>
+          <div class="tab" id="tab3">
+            <p><span>Module 3:</span> Formatting</p>
+            <%= image_tag "downarrow.png" %>
+          </div>
+          <div class="drop--down tab3--drop--down hidden">
+            <p>For years, people have been talking about “Keyword Research”.  That made sense in the days where using certain words in your headlines and in your posts would help you rank for searches including those words.  But that’s not how search works anymore, which is why “Keyword Research” is now a thing of the past.</p>
+          </div>
+          <div class="tab" id="tab4">
+            <p><span>Module 4:</span> Writing Your First Article</p>
+            <%= image_tag "downarrow.png" %>
+          </div>
+          <div class="drop--down tab4--drop--down hidden">
+            <p>For years, people have been talking about “Keyword Research”.  That made sense in the days where using certain words in your headlines and in your posts would help you rank for searches including those words.  But that’s not how search works anymore, which is why “Keyword Research” is now a thing of the past.</p>
+          </div>
+          <div class="tab" id="tab5">
+            <p><span>Module 5:</span> Copyright and Finding Images</p>
+            <%= image_tag "downarrow.png" %>
+          </div>
+          <div class="drop--down tab5--drop--down hidden">
+            <p>For years, people have been talking about “Keyword Research”.  That made sense in the days where using certain words in your headlines and in your posts would help you rank for searches including those words.  But that’s not how search works anymore, which is why “Keyword Research” is now a thing of the past.</p>
+          </div>
+          <div class="tab" id="tab6">
+            <p><span>Module 6:</span> What Our Editors Look For</p>
+            <%= image_tag "downarrow.png" %>
+          </div>
+          <div class="drop--down tab6--drop--down hidden">
+            <p>For years, people have been talking about “Keyword Research”.  That made sense in the days where using certain words in your headlines and in your posts would help you rank for searches including those words.  But that’s not how search works anymore, which is why “Keyword Research” is now a thing of the past.</p>
           </div>
         </div>
       </div>
@@ -31,7 +65,7 @@
         </div>
         <br />
         <p>This is a new writer account. Your full writer account will be activated
-            once you finish the initial training.</p>
+            once you finish the training modules.</p>
       </div>
     </div>
   </div>
@@ -66,3 +100,78 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  var tab1 = document.getElementById('tab1');
+  var tab2 = document.getElementById('tab2');
+  var tab3 = document.getElementById('tab3');
+  var tab4 = document.getElementById('tab4');
+  var tab5 = document.getElementById('tab5');
+  var tab6 = document.getElementById('tab6');
+  var isOneOpen = false;
+  var isTwoOpen = false;
+  var isThreeOpen = false;
+  var isFourOpen = false;
+  var isFiveOpen = false;
+  var isSixOpen = false;
+  tab1.style.cursor = 'pointer';
+  tab2.style.cursor = 'pointer';
+  tab3.style.cursor = 'pointer';
+  tab4.style.cursor = 'pointer';
+  tab5.style.cursor = 'pointer';
+  tab6.style.cursor = 'pointer';
+  tab1.onclick = function() {
+    if (isOneOpen) {
+      $(".tab1--drop--down").addClass("hidden");
+      isOneOpen = false;
+    } else {
+      $(".tab1--drop--down").removeClass("hidden");
+      isOneOpen = true;
+    }
+  };
+  tab2.onclick = function() {
+    if (isTwoOpen) {
+      $(".tab2--drop--down").addClass("hidden");
+      isTwoOpen = false;
+    } else {
+      $(".tab2--drop--down").removeClass("hidden");
+      isTwoOpen = true;
+    }
+  };
+  tab3.onclick = function() {
+    if (isThreeOpen) {
+      $(".tab3--drop--down").addClass("hidden");
+      isThreeOpen = false;
+    } else {
+      $(".tab3--drop--down").removeClass("hidden");
+      isThreeOpen = true;
+    }
+  };
+  tab4.onclick = function() {
+    if (isFourOpen) {
+      $(".tab4--drop--down").addClass("hidden");
+      isFourOpen = false;
+    } else {
+      $(".tab4--drop--down").removeClass("hidden");
+      isFourOpen = true;
+    }
+  };
+  tab5.onclick = function() {
+    if (isFiveOpen) {
+      $(".tab5--drop--down").addClass("hidden");
+      isFiveOpen = false;
+    } else {
+      $(".tab5--drop--down").removeClass("hidden");
+      isFiveOpen = true;
+    }
+  };
+  tab6.onclick = function() {
+    if (isSixOpen) {
+      $(".tab6--drop--down").addClass("hidden");
+      isSixOpen = false;
+    } else {
+      $(".tab6--drop--down").removeClass("hidden");
+      isSixOpen = true;
+    }
+  };
+</script>
