@@ -13,6 +13,10 @@
   <div class="skinny_wrapper">
     <% @users.each do | user | %>
         <% if user != nil %>
+          <% if user.monthly_views == nil %>
+            <% user.monthly_views = 0 %>
+            <% user.save %>
+          <% end %>
           <div class="flex--profile">
             <% if user.profile.exists? %>
               <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
