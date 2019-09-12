@@ -116,13 +116,14 @@
       </div>
     </div>
 
-    <div class="most_read">
+
+   <div class="most_read">
       <h1 class="section--title">Most Read</h1>
       <% @postsranking[0..9].each do |post| %>
       <div class="one_article">
         <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
         <p class="paragraph">
-          <%=link_to(post.title, post )%>
+          <%=link_to(post.title.truncate_words(20), post )%>
         </p>
       </div>
       <% end %>
