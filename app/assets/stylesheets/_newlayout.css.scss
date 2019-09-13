@@ -287,10 +287,10 @@
   .section--title {
     margin-bottom: 20px;
   }
-  .beauty--section {
+  .beauty--section, .entertainment {
     margin-bottom: -30px !important;
     flex-direction: column !important;
-    .one_beauty_article {
+    .one_beauty_article, .entertainment_article {
       width: 100% !important;
       margin-bottom: 30px;
       h1 {
@@ -321,13 +321,6 @@
     margin-top: 10px !important;
   }
   .flex--welcome .flex-1 {
-    .entertainment {
-      .entertainment_article {
-        h1 {
-          font-size: 20px !important;
-        }
-      }
-    }
     .flex_entertainment_wrapper {
       flex-direction: column !important;
       .applies {
