@@ -99,7 +99,7 @@
           <% @number2 = 0 %>
           <% @posts_approved_health.each do |post_health| %>
             <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 6 && @number > 1 %>
-              <% if  @number2 < 2 %>
+              <% if  @number2 < 3 %>
                 <% @number2 += 1 %>
               <% else %>
               <div class="entertainment_article_grid">
