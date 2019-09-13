@@ -13,6 +13,7 @@ class CategoriesController < ApplicationController
     @posts_approved_entertainment = Post.entertainment.all.order("created_at desc")
     @posts_approved_trends = Post.trends.all.order("created_at desc")
     @posts_approved_others = Post.other.all.order("created_at desc")
+    @posts_approved_getinvolved = Post.getinvolved.all.order("created_at desc")
     @category_fashion = Category.first
     @category_beauty = Category.second
     @category_entertainment = Category.third

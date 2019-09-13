@@ -165,7 +165,6 @@ ActiveRecord::Schema.define(version: 20190613183621) do
     t.string   "unconfirmed_email"
     t.string   "category"
     t.string   "nickname"
-    t.         "send_email"
     t.integer  "monthly_views"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
