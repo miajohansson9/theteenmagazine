@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @posts = Post.all.order("created_at desc");
     if @user_posts_approved.length < 3
       begin
-        if (current_user.id != @user.id && !current_user.admin?)
+        if (current_user.id != @user.id && (!current_user.admin?) && (!current_user.editor?))
           redirect_to root_path, notice: "This writer does not have a public profile yet."
         elsif (current_user.submitted_profile == nil)
           redirect_to "/onboarding"

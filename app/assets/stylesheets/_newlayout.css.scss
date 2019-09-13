@@ -81,14 +81,14 @@
     }
 
     .entertainment_article {
-      width: 48%;
+      width: 31%;
       img {
         width: 100%;
       }
       h1 {
         margin: 0;
         margin-top: 10px;
-        font-size: 34px;
+        font-size: 22px;
         font-family: 'Lucitana';
         font-weight: 400;
         a {
@@ -140,8 +140,8 @@
     margin-left: 40px;
     flex-grow: 1;
     flex-shrink: 1;
-    width: 270px;
-    height: 1000px;
+    width: 340px;
+    height: 1100px;
     padding-left: 20px;
     h1 {
       margin-left: 0;
@@ -153,11 +153,12 @@
     .one_article {
       display: flex;
       flex-direction: row;
-      margin: 0 10px;
+      //margin: 0 10px;
       img {
-        width: 130px;
-        height: 80px;
+        width: 150px;
+        height: 100px;
         object-fit: cover;
+        padding-bottom: 5px;
       }
       p {
         font-size: .9em;
@@ -283,6 +284,13 @@
 
 
 @media (max-width: 640px) {
+  .entertainment {
+    flex-direction: column !important;
+    .entertainment_article {
+      width: 100% !important;
+      margin-bottom: 10px;
+    }
+  }
   .section--title {
     margin-bottom: 20px;
   }

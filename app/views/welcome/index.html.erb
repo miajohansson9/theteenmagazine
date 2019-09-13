@@ -37,18 +37,19 @@
   </div>
 
   <div class="wrapper_home">
-    <h1 class="section--title"><a href="/categories/get-involved">Get Involved</a></h1>
+    <h1 class="section--title"><a href="/categories/entertainment">Entertainment</a></h1>
     <div class="flex--welcome">
       <div class="flex-1">
         <div class="beauty--section">
           <% @number = 0 %>
-          <% @posts_approved_getinvolved.each do |post_getinvolved| %>
-            <% if ((filteredPosts[0..5].include? post_getinvolved) == false) && @number < 4 %>
+          <!-- @posts not working / method 'each' not defined error -->
+          <% Post.entertainment.all.order("created_at desc").each do |post_entertainment| %>
+            <% if ((filteredPosts[0..5].include? post_entertainment) == false) && @number < 4 %>
             <div class="one_beauty_article"  style="width: 23%;">
-              <%=link_to(image_tag(post_getinvolved.thumbnail.url(:large2), alt: post_getinvolved.title), post_getinvolved )%>
-              <h1><%= link_to post_getinvolved.title, post_getinvolved %></h1>
-              <p><%= post_getinvolved.created_at.strftime("%A, %b %d")%></p>
-              <p class="meta"><%= post_getinvolved.meta_description.truncate_words(20) %></p>
+              <%=link_to(image_tag(post_entertainment.thumbnail.url(:large2), alt: post_entertainment.title), post_entertainment )%>
+              <h1><%= link_to post_entertainment.title, post_entertainment %></h1>
+              <p><%= post_entertainment.created_at.strftime("%A, %b %d")%></p>
+              <p class="meta"><%= post_entertainment.meta_description.truncate_words(20) %></p>
             </div>
             <% @number += 1 %>
             <% end %>
@@ -79,7 +80,7 @@
         <div class="entertainment">
           <% @number = 0 %>
           <% @posts_approved_health.each do |post_health| %>
-            <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 2 %>
+            <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 3 %>
               <div class="entertainment_article">
                 <%=link_to(image_tag(post_health.thumbnail.url(:large2), alt: post_health.title), post_health )%>
                 <h1><%= link_to post_health.title, post_health %></h1>
@@ -91,13 +92,14 @@
           <% end %>
         </div>
       </div>
+
       <div class="flex_entertainment_wrapper">
         <a class="applies" href="/apply"><img src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
         <div class="entertainment_grid_container">
           <% @number2 = 0 %>
           <% @posts_approved_health.each do |post_health| %>
-            <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 6 && @number > 1 %>
-              <% if  @number2 < 2 %>
+            <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 7 && @number > 1 %>
+              <% if  @number2 < 3 %>
                 <% @number2 += 1 %>
               <% else %>
               <div class="entertainment_article_grid">
@@ -113,18 +115,21 @@
         </div>
       </div>
     </div>
-    <div class="most_read">
+
+
+   <div class="most_read">
       <h1 class="section--title">Most Read</h1>
       <% @postsranking[0..9].each do |post| %>
       <div class="one_article">
         <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
         <p class="paragraph">
-          <%=link_to(post.title, post )%>
+          <%=link_to(post.title.truncate_words(20), post )%>
         </p>
       </div>
       <% end %>
     </div>
   </div>
+
 
     <% @num_of_academics = 2 %>
     <% @posts_approved_academics.each do |post_academics| %>
