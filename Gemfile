@@ -33,8 +33,6 @@ gem 'meta-tags', '~> 2.1'
 gem 'cancancan'
 gem 'jquery-turbolinks', '~> 2.1'
 gem 'figaro'
-gem 'sqlite3', '~> 1.3.6'
-
 
 group :development, :test do
   gem 'byebug', platform: :mri
