@@ -104,17 +104,22 @@
     justify-content: space-between;
     margin-top: 20px;
     .applies {
-      width: 48%;
+      width: 33%;
+      margin-right: 0;
       img {
         width: 100%;
       }
     }
     .entertainment_grid_container {
-      width: 48%;
+      width: 65%; //set to 65% to align with applies
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       flex-wrap: wrap;
       justify-content: space-between;
+      .articles2-6 {
+        margin-top: 0;
+        margin-left: 0;
+      }
       .entertainment_article_grid {
         width: 47.5%;
         margin-bottom: 20px;
@@ -162,7 +167,7 @@
       }
       p {
         font-size: .9em;
-        margin: 0;
+         margin: 0;
         margin-left: 10px;
         line-height: 18px;
         font-family: 'Roboto Condensed', sans-serif;
@@ -287,10 +292,10 @@
   .section--title {
     margin-bottom: 20px;
   }
-  .beauty--section {
+  .beauty--section, .entertainment {
     margin-bottom: -30px !important;
     flex-direction: column !important;
-    .one_beauty_article {
+    .one_beauty_article, .entertainment_article {
       width: 100% !important;
       margin-bottom: 30px;
       h1 {

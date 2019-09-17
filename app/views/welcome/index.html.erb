@@ -76,16 +76,16 @@
         <% end %>
       </div>
       <div class="entertainment--section">
-        <h1 class="section--title"><a href="/categories/health-fitness">Health & Fitness</a></h1>
+        <h1 class="section--title"><a href="/categories/get-involved">Get Involved</a></h1>
         <div class="entertainment">
           <% @number = 0 %>
-          <% @posts_approved_health.each do |post_health| %>
-            <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 3 %>
+          <% @posts_approved_getinvolved.each do |posts_getinvolved| %>
+            <% if ((filteredPosts[0..4].include? posts_getinvolved) == false) && @number < 3 %>
               <div class="entertainment_article">
-                <%=link_to(image_tag(post_health.thumbnail.url(:large2), alt: post_health.title), post_health )%>
-                <h1><%= link_to post_health.title, post_health %></h1>
-                <p><%= post_health.created_at.strftime("%A, %b %d")%></p>
-                <p class="meta"><%= post_health.meta_description.truncate_words(15) %></p>
+                <%=link_to(image_tag(posts_getinvolved.thumbnail.url(:large2), alt: posts_getinvolved.title), posts_getinvolved )%>
+                <h1><%= link_to posts_getinvolved.title, posts_getinvolved %></h1>
+                <p><%= posts_getinvolved.created_at.strftime("%A, %b %d")%></p>
+                <p class="meta"><%= posts_getinvolved.meta_description.truncate_words(15) %></p>
               </div>
               <% @number += 1 %>
             <% end %>
@@ -96,22 +96,22 @@
       <div class="flex_entertainment_wrapper">
         <a class="applies" href="/apply"><img src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
         <div class="entertainment_grid_container">
-          <% @number2 = 0 %>
-          <% @posts_approved_health.each do |post_health| %>
-            <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 6 && @number > 1 %>
-              <% if  @number2 < 2 %>
-                <% @number2 += 1 %>
-              <% else %>
-              <div class="entertainment_article_grid">
-                <%=link_to(image_tag(post_health.thumbnail.url(:medium), alt: post_health.title), post_health )%>
-                <h1><%= link_to post_health.title, post_health %></h1>
-                <p><%= post_health.created_at.strftime("%A, %b %d")%></p>
-                <p class="meta"><%= post_health.meta_description.truncate_words(15) %></p>
-              </div>
-              <% @number += 1 %>
-              <% end %>
-            <% end %>
-          <% end %>
+          <div class="articles2-6">
+            <% @posts_approved_health.each do |post_health| %>
+              <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 4 && @number > 1 %>
+             <div class="thumbnail">
+               <%=link_to(image_tag(post_health.thumbnail.url(:medium), alt: post_health.title, :class => "image_thumbnail"), post_health )%>
+               <div class="thumbnail--container">
+                 <h3 class="article_title"><a href="#"><%= link_to post_health.title, post_health %></a></h3>
+                 <p class="date"><%= post_health.created_at.strftime("%A, %b %d")%></p>
+               </div>
+             </div>
+           <% end %>
+           <% end %>
+
+
+         </div>
+
         </div>
       </div>
     </div>
