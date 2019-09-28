@@ -97,13 +97,13 @@
         <a class="applies" href="/apply"><img src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
         <div class="entertainment_grid_container">
           <div class="articles2-6">
-            <% @posts_approved_health.each do |post_health| %>
-              <% if ((filteredPosts[0..4].include? post_health) == false) && @number < 4 && @number > 1 %>
+            <% @posts_approved_getinvolved.each do |posts_getinvolved| %>
+              <% if ((filteredPosts[0..4].include? posts_getinvolved) == false) && @number < 4 && @number > 1 %>
              <div class="thumbnail">
-               <%=link_to(image_tag(post_health.thumbnail.url(:medium), alt: post_health.title, :class => "image_thumbnail"), post_health )%>
+               <%=link_to(image_tag(posts_getinvolved.thumbnail.url(:medium), alt: posts_getinvolved.title, :class => "image_thumbnail"), posts_getinvolved )%>
                <div class="thumbnail--container">
-                 <h3 class="article_title"><a href="#"><%= link_to post_health.title, post_health %></a></h3>
-                 <p class="date"><%= post_health.created_at.strftime("%A, %b %d")%></p>
+                 <h3 class="article_title"><a href="#"><%= link_to posts_getinvolved.title, posts_getinvolved %></a></h3>
+                 <p class="date"><%= posts_getinvolved.created_at.strftime("%A, %b %d")%></p>
                </div>
              </div>
            <% end %>
