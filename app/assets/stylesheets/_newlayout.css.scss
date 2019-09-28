@@ -106,6 +106,7 @@
     .applies {
       width: 31%;
       margin-right: 0;
+
       img {
         width: 100%;
       }
@@ -335,10 +336,10 @@
       }
     }
     .flex_entertainment_wrapper {
-      flex-direction: column !important;
+      flex-direction: column-reverse !important;
       .applies {
         margin: 0 auto;
-        width: 31%;
+        width: 100%;
         margin-bottom: 20px;
       }
       }
