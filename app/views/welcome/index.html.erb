@@ -35,7 +35,6 @@
       </div>
     </div>
   </div>
-
   <div class="wrapper_home">
     <h1 class="section--title"><a href="/categories/entertainment">Entertainment</a></h1>
     <div class="flex--welcome">
@@ -43,7 +42,7 @@
         <div class="beauty--section">
           <% @number = 0 %>
           <!-- @posts not working / method 'each' not defined error -->
-          <% Post.entertainment.all.order("created_at desc").each do |post_entertainment| %>
+          <% @posts_approved_entertainment.each do |post_entertainment| %>
             <% if ((filteredPosts[0..5].include? post_entertainment) == false) && @number < 4 %>
             <div class="one_beauty_article"  style="width: 23%;">
               <%=link_to(image_tag(post_entertainment.thumbnail.url(:large2), alt: post_entertainment.title), post_entertainment )%>
@@ -57,7 +56,6 @@
         </div>
       </div>
   </div>
-
   <h1 class="section--title"><a href="/categories/academics">Academics</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
@@ -92,7 +90,6 @@
           <% end %>
         </div>
       </div>
-
       <div class="flex_entertainment_wrapper">
         <a class="applies" href="/apply"><img src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
         <div class="entertainment_grid_container">
@@ -115,8 +112,6 @@
         </div>
       </div>
     </div>
-
-
    <div class="most_read">
       <h1 class="section--title">Most Read</h1>
       <% @postsranking[0..9].each do |post| %>
@@ -129,87 +124,83 @@
       <% end %>
     </div>
   </div>
-
-
-    <% @num_of_academics = 2 %>
-    <% @posts_approved_academics.each do |post_academics| %>
-      <% if ((filteredPosts[0..4].include? post_academics) == true) %>
-      <% @num_of_academics += 1 %>
-      <% end %>
+  <% @num_of_academics = 2 %>
+  <% @posts_approved_academics.each do |post_academics| %>
+    <% if ((filteredPosts[0..4].include? post_academics) == true) %>
+    <% @num_of_academics += 1 %>
     <% end %>
-
-    <% @num_of_health = 5 %>
-    <% @posts_approved_health.each do |post_health| %>
-      <% if ((filteredPosts[0..4].include? post_health) == true) %>
-      <% @num_of_health += 1 %>
-      <% end %>
+  <% end %>
+  <% @num_of_health = 5 %>
+  <% @posts_approved_health.each do |post_health| %>
+    <% if ((filteredPosts[0..4].include? post_health) == true) %>
+    <% @num_of_health += 1 %>
     <% end %>
-
-    <h1 style="margin-top: 0;" class="section--title">Recent Articles</h1>
-    <div class="three--section">
-      <% @number = 0 %>
-      <% @posts_approved.each do |post| %>
-        <% if ((@posts_approved_academics[0..@num_of_academics].include? post) == false) && ((@posts_approved_health[0..@num_of_health].include? post) == false) && ((filteredPosts[0..4].include? post) == false) %>
-        <% if @number < 3 %>
-        <div class="one_article desktop">
-          <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
+  <% end %>
+  <h1 style="margin-top: 0;" class="section--title">Recent Articles</h1>
+  <div class="three--section">
+    <% @number = 0 %>
+    <% @posts_approved.each do |post| %>
+      <% if ((@posts_approved_academics[0..@num_of_academics].include? post) == false) && ((@posts_approved_health[0..@num_of_health].include? post) == false) && ((filteredPosts[0..4].include? post) == false) %>
+      <% if @number < 3 %>
+      <div class="one_article desktop">
+        <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
+        <h1><%= link_to post.title, post %></h1>
+        <p><%= post.created_at.strftime("%A, %b %d")%></p>
+        <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
+      </div>
+      <% if @number == 0 %>
+      <div class="list--articles mobile removed" style="border: none; margin-top: -20px;">
+        <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
+        <div class="article--description">
           <h1><%= link_to post.title, post %></h1>
+          <% if post.category_id != nil %>
+          <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
+          <% end %>
           <p><%= post.created_at.strftime("%A, %b %d")%></p>
           <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
         </div>
-        <% if @number == 0 %>
-        <div class="list--articles mobile removed" style="border: none; margin-top: -20px;">
-          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
-          <div class="article--description">
-            <h1><%= link_to post.title, post %></h1>
-            <% if post.category_id != nil %>
-            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
-            <% end %>
-            <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
-          </div>
+      </div>
+      <% else %>
+      <div class="list--articles mobile removed">
+        <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
+        <div class="article--description">
+          <h1><%= link_to post.title, post %></h1>
+          <% if post.category_id != nil %>
+          <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
+          <% end %>
+          <p><%= post.created_at.strftime("%A, %b %d")%></p>
+          <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
         </div>
-        <% else %>
-        <div class="list--articles mobile removed">
-          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
-          <div class="article--description">
-            <h1><%= link_to post.title, post %></h1>
-            <% if post.category_id != nil %>
-            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
-            <% end %>
-            <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
-          </div>
-        </div>
-        <% end %>
-        <% @number += 1 %>
-        <% else %>
-        <div class="list--articles desktop">
-          <div class="article--description">
-            <h1><%= link_to post.title, post %></h1>
-            <% if post.category_id != nil %>
-            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
-            <% end %>
-            <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
-          </div>
-          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
-        </div>
-        <div class="list--articles mobile removed">
-          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
-          <div class="article--description">
-            <h1><%= link_to post.title, post %></h1>
-            <% if post.category_id != nil %>
-            <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
-            <% end %>
-            <p><%= post.created_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
-          </div>
-        </div>
-        <% end %>
-        <% end %>
+      </div>
       <% end %>
-    </div>
+      <% @number += 1 %>
+      <% else %>
+      <div class="list--articles desktop">
+        <div class="article--description">
+          <h1><%= link_to post.title, post %></h1>
+          <% if post.category_id != nil %>
+          <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
+          <% end %>
+          <p><%= post.created_at.strftime("%A, %b %d")%></p>
+          <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
+        </div>
+        <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
+      </div>
+      <div class="list--articles mobile removed">
+        <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
+        <div class="article--description">
+          <h1><%= link_to post.title, post %></h1>
+          <% if post.category_id != nil %>
+          <p class="category"><%= link_to(post.meta_title, Category.find(post.category_id)) %></p>
+          <% end %>
+          <p><%= post.created_at.strftime("%A, %b %d")%></p>
+          <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
+        </div>
+      </div>
+      <% end %>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
 <script>
@@ -236,6 +227,5 @@ function myFunction() {
   }
 }
 </script>
-
 
 <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>

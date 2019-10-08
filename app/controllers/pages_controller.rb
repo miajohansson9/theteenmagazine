@@ -1,6 +1,18 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:privacy, :team, :submitted, :subscribe]
 
+  def subscribe
+    @posts_approved = Post.approved.all.order("created_at desc")
+  end
+
+  def team
+    @users = User.order("posts_count DESC")
+  end
+
+  def ranking
+    @posts = Post.all.order("created_at desc")
+  end
+
   def criteria
   end
 
@@ -25,15 +37,4 @@ class PagesController < ApplicationController
   def submitted
   end
 
-  def subscribe
-    @posts_approved = Post.approved.all.order("created_at desc")
-  end
-
-  def team
-    @users = User.order("posts_count DESC")
-  end
-
-  def ranking
-    @posts = Post.all.order("created_at desc")
-  end
 end
