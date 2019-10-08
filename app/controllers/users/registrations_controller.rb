@@ -2,6 +2,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_action :verify_authenticity_token
   skip_before_action :require_no_authentication, only: [:new, :create]
 
+  # All users should first have an application
   def new
     redirect_to "/apply"
   end
@@ -9,23 +10,26 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     build_resource(sign_up_params)
+    # create a new user with sign up params
     @user = resource
     resource.save
+    # send welcome email
     ApplicationMailer.welcome_email(resource).deliver
-    ApplicationMailer.welcome_email_copy(resource).deliver
+    # from devise code
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
         sign_up(resource_name, resource)
-        redirect_to "/users/#{@user.slug}", notice: 'Application successfully accepted.'
       else
         expire_data_after_sign_in!
-        redirect_to "/users/#{@user.slug}", notice: 'Application successfully accepted.'
       end
+      # if user was saved, then redirect to user path
+      redirect_to "/users/#{@user.slug}", notice: 'Application successfully accepted.'
     else
+      # user model did not persist
       clean_up_passwords resource
       set_minimum_password_length
-      redirect_to "/users/#{@user.slug}", notice: 'Application successfully accepted.'
+      redirect_to "/users/", notice: 'Something went wrong.'
     end
   end
 
@@ -40,9 +44,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up for inactive accounts.
-  def after_inactive_sign_up_path_for(resource)
-    "/submitted/"
-  end
+  # def after_inactive_sign_up_path_for(resource)
+  #   "/submitted/"
+  # end
 
   # GET /resource/sign_up
   # def new
