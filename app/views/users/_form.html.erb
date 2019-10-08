@@ -1,56 +1,50 @@
 <%= form_for @user do |f| %>
 
-<%= f.label "First Name" %>
-<%= f.text_field :first_name %>
+  <%= f.label "First Name" %>
+  <%= f.text_field :first_name %>
 
-<%= f.label "Last Name" %>
-<%= f.text_field :last_name %>
+  <%= f.label "Last Name" %>
+  <%= f.text_field :last_name %>
 
-<%= f.label "Upload profile picture" %><br><br />
-<%= f.file_field :profile %><br/><br/>
+  <%= f.label "Upload profile picture" %><br><br />
+  <%= f.file_field :profile %><br/><br/>
 
-<%= f.label "Description" %>
-<%= f.text_area :description %>
+  <%= f.label "Description" %>
+  <%= f.text_area :description %>
 
-<%= f.label "Email (Will not be published)" %><br>
-<%= f.text_field :email %>
+  <%= f.label "Email (Will not be published)" %><br>
+  <%= f.text_field :email %>
 
-<h3>Links (Optional)</h3>
+  <h3>Links (Optional)</h3>
 
-<%= f.label "Website" %>
-<%= f.text_field :website %>
+  <%= f.label "Website" %>
+  <%= f.text_field :website %>
 
-<%= f.label "Instagram" %>
-<%= f.text_field :insta %>
+  <%= f.label "Instagram" %>
+  <%= f.text_field :insta %>
 
-<%= f.label "Twitter" %>
-<%= f.text_field :twitter %>
+  <%= f.label "Twitter" %>
+  <%= f.text_field :twitter %>
 
-<%= f.label "Facebook" %>
-<%= f.text_field :facebook %>
+  <%= f.label "Facebook" %>
+  <%= f.text_field :facebook %>
 
-<%= f.label "Pinterest" %>
-<%= f.text_field :pintrest %>
+  <%= f.label "Pinterest" %>
+  <%= f.text_field :pintrest %>
 
-<%= f.label "Youtube" %>
-<%= f.text_field :youtube %>
+  <% @full = @user.first_name + " " + @user.last_name %>
+  <%= f.hidden_field :full_name, :value => @full %>
+  <%= f.hidden_field :posts_count, :value => @user.posts.approved.count %>
 
-<%= f.label "Snapchat" %>
-<%= f.text_field :snap %>
+  <% if current_user && current_user.admin? %>
+  <%= f.label "Editor" %>
+  <%= f.check_box :editor %><br />
+  <% end %>
 
-<% @full = @user.first_name + " " + @user.last_name %>
-<%= f.hidden_field :full_name, :value => @full %>
-<%= f.hidden_field :posts_count, :value => @user.posts.approved.count %>
-
-<% if current_user && current_user.admin? %>
-<%= f.label "Editor" %>
-<%= f.check_box :editor %><br />
-<% end %>
-
-<% if current_user && current_user.admin? %>
-<%= f.label "Admin" %>
-<%= f.check_box :admin %><br />
-<% end %>
+  <% if current_user && current_user.admin? %>
+  <%= f.label "Admin" %>
+  <%= f.check_box :admin %><br />
+  <% end %>
 
 <br><%= f.submit %>
 

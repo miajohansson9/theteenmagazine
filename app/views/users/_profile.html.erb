@@ -5,25 +5,24 @@
     <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
   <% end %>
   <div class="info">
-  <h2 style="margin-bottom: 5px;">
-    <% @name =
-      if (@user.first_name != "" && @user.first_name !=nil)
-        @user.first_name
-      end
-      if (@user.last_name != "" && @user.last_name!= nil)
-        @name = @name + " " + @user.last_name
-      end %>
-    <%= link_to(@name, @user) %>
-  </h2>
-  <% if @user.editor? %>
-    <span class="editor_status">
-      Editor
-    </span>
-  <% end %>
-  <% if (@user.description != "" && @user.description != nil) %>
-    <p class="description_user" style="margin-top: 5px;"><%= @user.description %></p>
-  <% end %>
-
+    <h2 style="margin-bottom: 5px;">
+      <% @name =
+        if (@user.first_name != "" && @user.first_name !=nil)
+          @user.first_name
+        end
+        if (@user.last_name != "" && @user.last_name!= nil)
+          @name = @name + " " + @user.last_name
+        end %>
+      <%= link_to(@name, @user) %>
+    </h2>
+    <% if @user.editor? %>
+      <span class="editor_status">
+        Editor
+      </span>
+    <% end %>
+    <% if (@user.description != "" && @user.description != nil) %>
+      <p class="description_user" style="margin-top: 5px;"><%= @user.description %></p>
+    <% end %>
     <div class="website">
       <% if (@user.website != "" && @user.website !=  nil) %>
          <p class="website_link"><span>Website: </span><a href="<%= @user.website %>" target="_blank"><%= @user.website %></a></p>

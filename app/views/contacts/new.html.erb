@@ -1,5 +1,4 @@
 <h1 id="page_title">Contact Us!</h1>
-
 <div class="form_wrapper wrapper_padding">
   <%= form_for @contact do |f| %>
     <%= f.label :name %> <br />
@@ -10,12 +9,10 @@
     <br />
     <%= f.label :message %> <br />
     <%= f.text_area :message, as: :text %>
-
     <div class="hidden">
       <%= f.label :nickname %> <br />
       <%= f.text_field :nickname, hint: 'leave this field blank' %>
     </div>
-
     <%= f.submit 'Send Message', class: 'button' %>
   <% end %>
 </div>
