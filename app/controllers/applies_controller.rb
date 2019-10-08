@@ -32,6 +32,8 @@ class AppliesController < ApplicationController
   #form for creating a new user already filled out
   def show
     @application = Apply.find(params[:id])
+    # form for new user
+    # when submit form, goes to registrations_controller
     @user = User.new
   end
 
