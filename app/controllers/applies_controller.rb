@@ -1,5 +1,10 @@
 class AppliesController < ApplicationController
-  before_action :is_admin?, only: [:show]
+  before_action :is_admin?, only: [:show, :index]
+
+  #show all applications
+  def index
+    @applies = Apply.all.order("created_at desc")
+  end
 
   #create a new application
   def new

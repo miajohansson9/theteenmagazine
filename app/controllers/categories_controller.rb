@@ -14,20 +14,6 @@ class CategoriesController < ApplicationController
     @category_posts = Post.where(meta_title: @category.name).approved.all.order("created_at desc")
   end
 
-  def create
-    if (user_signed_in? && current_user.admin?)
-      @category = Category.new(category_params)
-    end
-
-    if @category.save
-      redirect_to @category, notice: "The category was successfully added to The Teen Magazine!"
-    elsif @category.save
-      redirect_to @category, notice: "Changes to category were successfully saved!"
-    else
-      render 'new', notice: "Oh no! Your category was not saved!"
-    end
-  end
-
   def edit
   end
 
@@ -42,6 +28,20 @@ class CategoriesController < ApplicationController
   def destroy
     @category.destroy
     redirect_to categories_path
+  end
+
+  def create
+    if (user_signed_in? && current_user.admin?)
+      @category = Category.new(category_params)
+    end
+
+    if @category.save
+      redirect_to @category, notice: "The category was successfully added to The Teen Magazine!"
+    elsif @category.save
+      redirect_to @category, notice: "Changes to category were successfully saved!"
+    else
+      render 'new', notice: "Oh no! Your category was not saved!"
+    end
   end
 
   private
