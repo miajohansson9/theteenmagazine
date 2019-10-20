@@ -122,13 +122,6 @@ html, body {
   margin-left: -250px;
 }
 
-.hidden {
-  overflow: hidden;
-  .bodywrapper {
-    position: relative;
-  }
-}
-
 .overflow {
   overflow: hidden;
 }
@@ -468,7 +461,7 @@ footer {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .signupdiv {

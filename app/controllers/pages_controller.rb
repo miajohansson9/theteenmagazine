@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:privacy, :team, :submitted, :subscribe]
+  layout "minimal"
 
   def criteria
   end
@@ -8,6 +9,7 @@ class PagesController < ApplicationController
   end
 
   def writing
+    @post = current_user.posts.build
   end
 
   def images
@@ -23,6 +25,12 @@ class PagesController < ApplicationController
   end
 
   def submitted
+  end
+
+  def formatting
+  end
+
+  def checklist
   end
 
   def subscribe

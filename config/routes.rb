@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get 'writing-the-perfect-article' => 'pages#writing'
   get 'finding-images' => 'pages#images'
   get 'how-to-style-your-articles' => 'pages#styling'
+  get 'formatting' => 'pages#formatting'
+  get 'checklist' => 'pages#checklist'
   get 'ranking' => 'pages#ranking'
   get 'privacy-policy' => 'pages#privacy'
   get 'subscribe' => 'pages#subscribe'

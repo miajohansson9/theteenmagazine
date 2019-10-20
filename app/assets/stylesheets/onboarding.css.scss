@@ -145,6 +145,7 @@ h5, h3 {
   margin-top: 20px;
   .tab {
     display: flex;
+    width: 100%;
     flex-direction: row;
     justify-content: space-between;
     border: 1px solid #E5E5E5;
@@ -167,12 +168,32 @@ h5, h3 {
   .drop--down {
     border: 1px solid #E5E5E5;
     border-top: none;
+    display: flex;
+    flex-direction: column;
     p {
       margin: 0;
       padding: 10px;
       font-size: 15px;
     }
+    .flex--start {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+      p {
+        font-weight: bold;
+        color: $highlight;
+      }
+    }
   }
+}
+
+.button_style {
+  padding: 8px 30px;
+  text-decoration: none;
+  margin: 0px 10px;
+  color: white;
+  background-color: black;
 }
 
 @media (max-width: 600px) {
