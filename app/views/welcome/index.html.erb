@@ -45,7 +45,7 @@
           <!-- @posts not working / method 'each' not defined error -->
           <% Post.entertainment.all.order("created_at desc").each do |post_entertainment| %>
             <% if ((filteredPosts[0..5].include? post_entertainment) == false) && @number < 4 %>
-            <div class="one_beauty_article"  style="width: 23%;">
+            <div class="one_beauty_article">
               <%=link_to(image_tag(post_entertainment.thumbnail.url(:large2), alt: post_entertainment.title), post_entertainment )%>
               <h1><%= link_to post_entertainment.title, post_entertainment %></h1>
               <p><%= post_entertainment.created_at.strftime("%A, %b %d")%></p>

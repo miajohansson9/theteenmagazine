@@ -112,7 +112,7 @@
       }
     }
     .entertainment_grid_container {
-      width: 65%; //set to 65% to align with applies
+      width: 65.5%; //set to 65% to align with applies
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
@@ -259,6 +259,39 @@
   }
 }
 
+//get involved--tablet
+@media (max-width: 1096px) {
+  .most_read {
+    margin-bottom: 60px;
+    height: auto !important;
+    width: 340px;
+    .one_article{
+      display: flex;
+      flex-direction: row;
+      height: 10%;
+      img {
+        width: 155px !important;
+        height: 95% !important;
+      }
+    }
+  }
+  .flex_entertainment_wrapper {
+    flex-direction: column-reverse !important;
+    .entertainment_grid_container{
+      width: 100% !important;
+      .articles2-6{
+        width: 100%;
+      }
+
+    }
+    .applies {
+      margin: 0 auto;
+      width: 100% !important;
+      margin-bottom: 20px;
+    }
+    }
+}
+
 @media (min-width: 640px) and (max-width: 800px) {
   .featured {
     margin-top: 0px !important;
@@ -289,7 +322,20 @@
   }
 }
 
+@media (max-width: 739px) {
+  .beauty--section, .entertainment {
+    margin-bottom: -30px !important;
+    flex-direction: column !important;
+    .one_beauty_article, .entertainment_article {
+      width: 100% !important;
+      margin-bottom: 30px;
+      h1 {
+        font-size: 30px !important;
+      }
+    }
 
+  }
+}
 @media (max-width: 640px) {
   .section--title {
     margin-bottom: 20px;
