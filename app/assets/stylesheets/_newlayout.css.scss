@@ -144,7 +144,7 @@
   }
 
   .most_read {
-    margin-left: 40px;
+    margin-left: 30px;
     flex-grow: 1;
     flex-shrink: 1;
     width: 340px;
@@ -260,21 +260,21 @@
 }
 
 //get involved--tablet
-@media (max-width: 1096px) {
-  .most_read {
-    margin-bottom: 60px;
-    height: auto !important;
-    width: 340px;
-    .one_article{
-      display: flex;
-      flex-direction: row;
-      height: 10%;
-      img {
-        width: 155px !important;
-        height: 95% !important;
-      }
-    }
-  }
+@media (max-width: 2000px) {
+  // .most_read {
+  //   margin-bottom: 60px;
+  //   height: auto !important;
+  //   width: 340px;
+  //   .one_article{
+  //     display: flex;
+  //     flex-direction: row;
+  //     height: 10%;
+  //     img {
+  //       width: 155px !important;
+  //       height: 95% !important;
+  //     }
+  //   }
+  // }
   .flex_entertainment_wrapper {
     flex-direction: column-reverse !important;
     .entertainment_grid_container{
