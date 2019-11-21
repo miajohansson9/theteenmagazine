@@ -284,6 +284,13 @@
 
 
 @media (max-width: 640px) {
+  .entertainment {
+    flex-direction: column !important;
+    .entertainment_article {
+      width: 100% !important;
+      margin-bottom: 10px;
+    }
+  }
   .section--title {
     margin-bottom: 20px;
   }

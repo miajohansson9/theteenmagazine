@@ -1,57 +1,73 @@
 <%= form_for @user do |f| %>
 
-<%= f.label "First Name" %>
-<%= f.text_field :first_name %>
+  <%= render 'profile' %>
 
-<%= f.label "Last Name" %>
-<%= f.text_field :last_name %>
+  <% if current_user.admin? || current_user.editor? %>
+    <%= f.label "Approve profile" %>
+    <%= f.check_box :approved_profile, value: @user.approved_profile %><br /><br />
+    <%= f.hidden_field :submitted_profile, value: false %><br />
+  <% end %>
 
-<%= f.label "Upload profile picture" %><br><br />
-<%= f.file_field :profile %><br/><br/>
+  <%= f.label "First Name" %>
+  <%= f.text_field :first_name %>
 
-<%= f.label "Description" %>
-<%= f.text_area :description %>
+  <%= f.label "Last Name" %>
+  <%= f.text_field :last_name %>
 
-<%= f.label "Email (Will not be published)" %><br>
-<%= f.text_field :email %>
+  <%= f.label "Upload profile picture" %><br><br />
+  <%= f.file_field :profile %><br/><br/>
 
-<h3>Links (Optional)</h3>
+  <%= f.label "Description" %>
+  <%= f.text_area :description %><br><br />
 
-<%= f.label "Website" %>
-<%= f.text_field :website %>
+  <%= f.label "Email (Will not be published)" %><br>
+  <%= f.text_field :email %>
 
-<%= f.label "Instagram" %>
-<%= f.text_field :insta %>
+  <div id="edit--profile">
+    <%= f.label "Website" %>
+    <div class="add_link">
+      <span>www.</span>
+      <%= f.text_field :website, :style => "padding-left: 50px;" %>
+    </div>
 
-<%= f.label "Twitter" %>
-<%= f.text_field :twitter %>
+    <%= f.label "Youtube" %>
+    <div class="add_link">
+      <span>youtube.com/</span>
+      <%= f.text_field :youtube, :style => "padding-left: 106px;" %>
+    </div>
 
-<%= f.label "Facebook" %>
-<%= f.text_field :facebook %>
+    <%= f.label "Instagram" %>
+    <div class="add_link social">
+      <span>@</span>
+      <%= f.text_field :insta %>
+    </div>
 
-<%= f.label "Pinterest" %>
-<%= f.text_field :pintrest %>
+    <%= f.label "Twitter" %>
+    <div class="add_link social">
+      <span>@</span>
+      <%= f.text_field :twitter %>
+    </div>
 
-<%= f.label "Youtube" %>
-<%= f.text_field :youtube %>
+    <%= f.label "Facebook" %>
+    <div class="add_link social">
+      <span>@</span>
+      <%= f.text_field :facebook %>
+    </div>
+  </div>
 
-<%= f.label "Snapchat" %>
-<%= f.text_field :snap %>
+  <% @full = @user.first_name + " " + @user.last_name %>
+  <%= f.hidden_field :full_name, :value => @full %>
+  <%= f.hidden_field :posts_count, :value => @user.posts.approved.count %>
 
-<% @full = @user.first_name + " " + @user.last_name %>
-<%= f.hidden_field :full_name, :value => @full %>
-<%= f.hidden_field :posts_count, :value => @user.posts.approved.count %>
+  <% if current_user && current_user.admin? %>
+  <%= f.label "Editor" %>
+  <%= f.check_box :editor %><br />
+  <% end %>
 
-<% if current_user && current_user.admin? %>
-<%= f.label "Editor" %>
-<%= f.check_box :editor %><br />
-<% end %>
-
-<% if current_user && current_user.admin? %>
-<%= f.label "Admin" %>
-<%= f.check_box :admin %><br />
-<% end %>
-
-<br><%= f.submit %>
+  <% if current_user && current_user.admin? %>
+  <%= f.label "Admin" %>
+  <%= f.check_box :admin %><br />
+  <% end %>
+<%= f.submit %>
 
 <% end %>

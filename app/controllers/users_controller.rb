@@ -3,16 +3,18 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :is_admin?, only: [:index, :new]
+  layout "minimal"
 
   def show
-    @user = User.find(params[:id])
     @user_posts = @user.posts.all.order("created_at desc")
     @user_posts_approved = @user.posts.all.approved.order("created_at desc")
     @posts = Post.all.order("created_at desc");
-    if @user_posts_approved.length < 3
+    if @user_posts_approved.length < 1
       begin
         if (current_user.id != @user.id && (!current_user.admin?) && (!current_user.editor?))
           redirect_to root_path, notice: "This writer does not have a public profile yet."
+        elsif (current_user.submitted_profile == nil)
+          redirect_to "/onboarding"
         end
       rescue
         redirect_to root_path, notice: "This writer does not have a public profile yet."
@@ -21,9 +23,15 @@ class UsersController < ApplicationController
     @rankings = User.all.order("monthly_views desc").pluck(:id)
   end
 
+  def onboarding
+    @user = current_user
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+  end
+
   def index
     @users = User.all.order("created_at desc")
     @posts_waiting = Post.all.waiting_for_approval
+    @users_waiting = User.all.review_profile
   end
 
   def edit
@@ -36,7 +44,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.save
-
     if @user.save
       redirect_to @user, notice: "Your changes were successfully saved!"
     else
@@ -45,8 +52,15 @@ class UsersController < ApplicationController
   end
 
   def update
+    if @user.approved_profile == false && user_params[:approved_profile] == "1"
+      ApplicationMailer.profile_approved(@user).deliver
+    end
     if @user.update user_params
-      redirect_to @user, notice: "Your changes were saved!"
+      if params[:redirect] != nil
+        redirect_to onboarding_path(page: params[:redirect])
+      else
+        redirect_to @user
+      end
     else
       render 'edit'
     end
@@ -64,7 +78,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
+    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
   end
 
   def find_user

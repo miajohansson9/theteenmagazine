@@ -3,35 +3,74 @@
     <div id="waiting--for--approval">
       <div style="padding-top: 30px; width: 100%;">
         <div class="flex--item">
-          <div class="overlay">
-            <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
-            <h5>Your profile is waiting to be reviewed</h5>
-          </div>
+          <% if @user.submitted_profile == true && @user.approved_profile == false %>
+              <div class="overlay">
+                <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
+                <h5>Your profile is waiting to be reviewed</h5>
+              </div>
+          <% elsif @user.submitted_profile == false && @user.approved_profile == false %>
+              <div class="overlay">
+                <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
+                <h5>Your profile was rejected. Please make changes and submit again.</h5>
+              </div>
+          <% else %>
+              <style>
+                .flex--profile {
+                  opacity: 1 !important;
+                }
+              </style>
+          <% end %>
           <%= render 'profile' %>
         </div>
         <div class="initial--training--wrapper">
-          <div>
-            <h3>Submitting an article topic</h3>
+          <h1 id="page_title">Welcome to The Teen Magazine!</h1>
+          <p>When you publish your first article, you will become an official writer for The Teen Magazine and will receive your own
+          author page.</p>
+          <p>To Become an Official Writer:</p>
+          <ol>
+            <li>Introduce yourself to the <a target="_blank" href="https://www.facebook.com/groups/615063885673363/">Facebook group</a></li>
+            <li>Read through the resources found at the bottom of your dashboard</li>
+            <li>Pick a topic to write about from the <a target="_blank" href="https://docs.google.com/spreadsheets/d/1I-za5WKWPTQWiC2sAGBHZbjsOjb74EUZgvCAfQ4dU9I/edit?fbclid=IwAR2FYXYop0qny_8h6EqejNLLOEcnPai2q-X-L5ik3REak8SizW6-K18jyY4#gid=0">Google Sheets</a> or choose your own. If you are unsure what to write about, you can always ask for advice/ideas from other writers in the Facebook group. </li>
+            <li><a href="/posts/new">Write your first article</a> and submit it for review. Our amazing editors will look it over and give you
+            feedback.</li>
+          </ol>
+          <p>When you've completed steps 1 - 3, you can start writing your first article. </p>
+          <% if @user_posts.count == 0 %>
+            <h1 id="page_title">Your saved/submitted articles will show up here</h1>
+          <% else %>
+            <h1 id="page_title">Your saved/submitted articles</h1>
+          <% end %>
+          <% @user_posts.each do |post| %>
+          <div class="flex--postlist--item">
+            <div class="inside--item">
+              <% if post.approved && post.after_approved == true %>
+              <%= image_tag "published.png", class: "icon" %>
+              <% elsif post.waiting_for_approval && (post.approved == nil || post.approved == false) %>
+              <%= image_tag "waiting.png", class: "icon" %>
+              <% elsif post.approved && post.after_approved == nil %>
+              <%= image_tag "approved.png", class: "icon" %>
+              <% else %>
+              <%= image_tag "saved.png", class: "icon" %>
+              <% end %>
+                <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
+            </div>
           </div>
-          <div>
-            <h3>Writing your first article</h3>
-          </div>
-          <div>
-            <h3>Getting published</h3>
-          </div>
+          <% end %>
+          <br />
+          <%= link_to "New Article", new_post_path(@post), class: "newpost--new--profile" %>
         </div>
       </div>
       <div class="new--writer--flex--two">
         <div class="links">
           <div>
-            <%= link_to("Edit Profile", onboarding_path(:page => "your_profile")) %>
+            <a href="/users/<%= @user.slug %>/edit">Edit Profile</a>
+            <%= link_to("Change Password", edit_user_registration_path) %>
             <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
           </div>
-          <%= link_to("Sign Out", destroy_user_session_path) %>
         </div>
         <br />
         <p>This is a new writer account. Your full writer account will be activated
-            once you finish the initial training.</p>
+            once you publish your first article.</p>
       </div>
     </div>
   </div>
@@ -66,3 +105,78 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  var tab1 = document.getElementById('tab1');
+  var tab2 = document.getElementById('tab2');
+  var tab3 = document.getElementById('tab3');
+  var tab4 = document.getElementById('tab4');
+  var tab5 = document.getElementById('tab5');
+  var tab6 = document.getElementById('tab6');
+  var isOneOpen = false;
+  var isTwoOpen = false;
+  var isThreeOpen = false;
+  var isFourOpen = false;
+  var isFiveOpen = false;
+  var isSixOpen = false;
+  tab1.style.cursor = 'pointer';
+  tab2.style.cursor = 'pointer';
+  tab3.style.cursor = 'pointer';
+  tab4.style.cursor = 'pointer';
+  tab5.style.cursor = 'pointer';
+  tab6.style.cursor = 'pointer';
+  tab1.onclick = function() {
+    if (isOneOpen) {
+      $(".tab1--drop--down").addClass("hidden");
+      isOneOpen = false;
+    } else {
+      $(".tab1--drop--down").removeClass("hidden");
+      isOneOpen = true;
+    }
+  };
+  tab2.onclick = function() {
+    if (isTwoOpen) {
+      $(".tab2--drop--down").addClass("hidden");
+      isTwoOpen = false;
+    } else {
+      $(".tab2--drop--down").removeClass("hidden");
+      isTwoOpen = true;
+    }
+  };
+  tab3.onclick = function() {
+    if (isThreeOpen) {
+      $(".tab3--drop--down").addClass("hidden");
+      isThreeOpen = false;
+    } else {
+      $(".tab3--drop--down").removeClass("hidden");
+      isThreeOpen = true;
+    }
+  };
+  tab4.onclick = function() {
+    if (isFourOpen) {
+      $(".tab4--drop--down").addClass("hidden");
+      isFourOpen = false;
+    } else {
+      $(".tab4--drop--down").removeClass("hidden");
+      isFourOpen = true;
+    }
+  };
+  tab5.onclick = function() {
+    if (isFiveOpen) {
+      $(".tab5--drop--down").addClass("hidden");
+      isFiveOpen = false;
+    } else {
+      $(".tab5--drop--down").removeClass("hidden");
+      isFiveOpen = true;
+    }
+  };
+  tab6.onclick = function() {
+    if (isSixOpen) {
+      $(".tab6--drop--down").addClass("hidden");
+      isSixOpen = false;
+    } else {
+      $(".tab6--drop--down").removeClass("hidden");
+      isSixOpen = true;
+    }
+  };
+</script>

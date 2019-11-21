@@ -1,0 +1,92 @@
+<div class="stair_step">
+  <a href="/onboarding?page=welcome" class="node">
+    <span class="progress">
+      &#x25cf;
+      <p>Welcome</p>
+    </span>
+  </a>
+  <span class="progress">◦<p>Your Profile</p></span>
+  <span>◦<p>Next Steps</p></span>
+  <div class="hr">
+    <hr />
+    <hr />
+  </div>
+</div>
+<div class="onboarding_page_container">
+  <%= form_for(@user, url: user_path(@user, redirect: "profile_preview")) do |f| %>
+  <div id="onboarding_page">
+    <h5>Submit Your Profile for Approval</h5>
+    <p style="margin-bottom: 0px;">Your first step as a new writer for The Teen Magazine is to create your profile!</p>
+    <%= image_tag "profile_example.png", :class => "img_profile_example" %>
+    <p>
+      *For your profile to be approved it must:
+      <ul>
+        <li>
+          Have a professional picture that is good quality and is not a selfie. This should be a picture that
+          would be appropriate to show potential employers.
+        </li>
+        <li>
+          Have a one to three sentence description written in third person about yourself and your interests.
+          Do not include emojis or smiley faces.
+        </li>
+      </ul>
+    </p>
+    <div class="number_wrapper">
+      <img class="img_number" src="https://i.imgur.com/8MzzFbT.png" /><%= f.label "Upload a profile picture" %><br><br />
+    </div>
+    <%= f.file_field :profile, :class => "add_margin_left" %><br/><br/>
+
+    <div class="number_wrapper">
+      <img class="img_number" src="https://i.imgur.com/oimxncT.png" /><%= f.label "Description" %><br><br />
+    </div>
+    <div class="add_margin_left">
+      <%= f.text_area :description %><br /><br />
+    </div>
+
+    <div class="number_wrapper">
+      <%= image_tag "3-num.png", :class => "img_number" %><%= f.label "Add Social Media (Optional)" %>
+    </div>
+
+    <div class="add_margin_left">
+      <%= f.label "Website" %>
+      <div class="add_link">
+        <span>www.</span>
+        <%= f.text_field :website, :style => "padding-left: 50px;" %>
+      </div>
+
+      <%= f.label "Youtube" %>
+      <div class="add_link">
+        <span>youtube.com/</span>
+        <%= f.text_field :youtube, :style => "padding-left: 103px;" %>
+      </div>
+
+      <%= f.label "Instagram" %>
+      <div class="add_link social">
+        <span>@</span>
+        <%= f.text_field :insta %>
+      </div>
+
+      <%= f.label "Twitter" %>
+      <div class="add_link social">
+        <span>@</span>
+        <%= f.text_field :twitter %>
+      </div>
+
+      <%= f.label "Facebook" %>
+      <div class="add_link social">
+        <span>@</span>
+        <%= f.text_field :facebook %>
+      </div>
+
+    </div>
+
+    <p>You may opt out of a profile picture if you do not upload an image.
+      *Note: this is not recommended</p>
+
+    <% @full = @user.first_name + " " + @user.last_name %>
+    <%= f.hidden_field :full_name, :value => @full %>
+    <%= f.hidden_field :posts_count, :value => @user.posts.approved.count %>
+  </div>
+  <%= f.submit "Preview Profile", :id => "onboarding_button" %>
+  <% end %>
+</div>

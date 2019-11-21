@@ -11,43 +11,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'onboarding', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-4566416931763342",
-        enable_page_level_ads: true
-      });
-    </script>
-    <!-- Facebook Pixel Code -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '2099586743677741');
-      fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=2099586743677741&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Facebook Pixel Code -->
   </head>
   <body>
-    <style>
-    .ng-hide {
-      display: none !important;
-    }
-    </style>
-    <amp-auto-ads type="adsense"
-        data-ad-client="ca-pub-4986861624955300">
-    </amp-auto-ads>
-
     <div class="sidebar_menu hide_menu" style="background-color: #65B19D;">
       <i class="fa fa-times"></i>
       <h1><%= link_to "The Teen Magazine", root_path %></h1>
@@ -80,7 +47,7 @@
               <i class="fa fa-bars toggle_menu" style="color: black;"></i>
             </div>
             <div class="banner_item" style="text-align: center;">
-              <a href="/"><img id="name" src="https://i.ibb.co/jJcQ2zh/teenmag2.png"/></a>
+              <a href="/users/<%= current_user.slug %>"><img id="name" src="https://i.ibb.co/jJcQ2zh/teenmag2.png"/></a>
             </div>
             <div class="banner_item" style="text-align: right;">
               <div class="social-media">
@@ -91,23 +58,22 @@
               </div>
             </div>
           </div>
-
-          <div class="border">
-            <nav style="border-bottom: 1px solid rgba(0,0,0,0.1); border-top: 1px solid rgba(0,0,0,0.1); margin-top: 0 !important;" class="nav_article">
-              <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
-              <a class="link" href="/categories/news">News</a>
-              <a class="link" href="/categories/get-involved">Get Involved</a>
-              <a class="link" href="/categories/academics">Academics</a>
-              <a class="link" href="/categories/health-fitness">Health</a>
-              <a class="link" href="/categories/entertainment">Entertainment</a>
-              <a class="link" href="/categories/fashion">Fashion</a>
-              <% if user_signed_in? %>
-                <%= link_to "Dashboard", user_path(current_user), class: "link" %>
-              <% else %>
-                  <a class="link" href="/contacts/new">Contact</a>
-                  <a class="link" href="/apply">Apply</a>
-              <% end %>
-            </nav>
+          <div class="border" style="border-bottom: 1px solid rgba(0,0,0,0.1); border-top: 1px solid rgba(0,0,0,0.1); margin-top: 0 !important;">
+            <div class="skinny_wrapper">
+              <nav class="nav_article">
+                <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
+                <% if current_user && (current_user.admin? || current_user.editor?) %>
+                  <%= link_to "Users", users_path, class: "link" %>
+                <% end %>
+                <% if user_signed_in? %>
+                  <%= link_to "Dashboard", user_path(current_user), class: "link" %>
+                  <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
+                <% else %>
+                    <a class="link" href="/contacts/new">Contact</a>
+                    <a class="link" href="/apply">Apply</a>
+                <% end %>
+              </nav>
+            </div>
           </div>
         </header>
 

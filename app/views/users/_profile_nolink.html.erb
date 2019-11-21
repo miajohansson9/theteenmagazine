@@ -13,7 +13,7 @@
       if (@user.last_name != "" && @user.last_name!= nil)
         @name = @name + " " + @user.last_name
       end %>
-    <%= link_to(@name, @user) %>
+    <%= @name %>
   </h2>
   <% if @user.editor? %>
     <span class="editor_status">
@@ -26,19 +26,19 @@
 
     <div class="website">
       <% if (@user.website != "" && @user.website !=  nil) %>
-         <p class="website_link"><span>Website: </span><a href="https://www.<%= @user.website %>" target="_blank"><%= @user.website %></a></p>
+         <p class="website_link"><span>Website: </span><a href="<%= @user.website %>" target="_blank"><%= @user.website %></a></p>
       <% end %>
       <% if (@user.twitter != "" && @user.twitter !=  nil) %>
          <p class="website_link"><a href="<%= @user.twitter %>" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a></p>
       <% end %>
       <% if (@user.insta != "" && @user.insta != nil) %>
-         <p class="website_link"><a href="https://www.instagram.com/<%= @user.insta %>" target="_blank" style="padding-right: 4px;"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+         <p class="website_link"><a href="<%= @user.insta %>" target="_blank" style="padding-right: 4px;"><i class="fa fa-instagram" aria-hidden="false"></i></a>
       <% end %>
       <% if (@user.facebook != "" && @user.facebook !=  nil) %>
-         <p class="website_link"><a href="https://www.facebook.com/<%= @user.facebook %>" target="_blank" style="padding-left: 5px;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></p>
+         <p class="website_link"><a href="<%= @user.facebook %>" target="_blank" style="padding-left: 5px;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></p>
       <% end %>
       <% if (@user.youtube != "" && @user.youtube != nil) %>
-         <p class="website_link"><a href="https://www.youtube.com/<%= @user.youtube %>" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></p>
+         <p class="website_link"><a href="<%= @user.youtube %>" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></p>
       <% end %>
       <% if (@user.pintrest != "" && @user.pintrest != nil) %>
          <p class="website_link"><a href="<%= @user.pintrest %>" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a></p>
