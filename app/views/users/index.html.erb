@@ -9,18 +9,6 @@
     <% end %>
   </div>
 </div>
-<<<<<<< HEAD
-<h1 id="page_title" style="margin-bottom: -80px; margin-top:-50px; border-bottom: none;">Users</h1>
-<div id="posts_wrapper" class="skinny_wrapper">
-  <div class="skinny_wrapper">
-    <% @users.each do | user | %>
-        <% if user != nil %>
-          <% if user.monthly_views == nil %>
-            <% user.monthly_views = 0 %>
-            <% user.save %>
-          <% end %>
-          <div class="flex--profile">
-=======
 <h1 id="page_title" style="border-bottom: none; margin-bottom: -20px; margin-top: 0px;">Submitted Profiles</h1>
 <div id="posts_wrapper" class="index_users">
   <div class="skinny_wrapper profiles--flex">
@@ -28,7 +16,6 @@
       <div class="flex--profile">
         <div class="profiles">
           <a href= "/users/<%= user.slug %>/edit">
->>>>>>> bfac10661317f30dfb9bb8f5ce9bde92f37625af
             <% if user.profile.exists? %>
               <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
             <% else %>

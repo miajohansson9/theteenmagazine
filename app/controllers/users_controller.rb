@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :is_admin?, only: [:index, :new]
-  layout "minimal"
+  layout :set_layout
 
   def show
     @user_posts = @user.posts.all.order("created_at desc")
@@ -73,6 +73,10 @@ class UsersController < ApplicationController
 
   def is_admin?
     redirect_to root_path unless (current_user && (current_user.admin? || current_user.editor?))
+  end
+
+  def set_layout
+    current_user ? "minimal" : "application"
   end
 
   private
