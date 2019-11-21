@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:privacy, :team, :submitted, :subscribe]
+  layout "minimal"
 
   def subscribe
     @posts_approved = Post.approved.all.order("created_at desc")
@@ -20,6 +21,7 @@ class PagesController < ApplicationController
   end
 
   def writing
+    @post = current_user.posts.build
   end
 
   def images

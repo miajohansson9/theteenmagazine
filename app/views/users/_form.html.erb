@@ -1,5 +1,16 @@
 <%= form_for @user do |f| %>
 
+<<<<<<< HEAD
+=======
+  <%= render 'profile' %>
+
+  <% if current_user.admin? || current_user.editor? %>
+    <%= f.label "Approve profile" %>
+    <%= f.check_box :approved_profile, value: @user.approved_profile %><br /><br />
+    <%= f.hidden_field :submitted_profile, value: false %><br />
+  <% end %>
+
+>>>>>>> bfac10661317f30dfb9bb8f5ce9bde92f37625af
   <%= f.label "First Name" %>
   <%= f.text_field :first_name %>
 
@@ -10,11 +21,16 @@
   <%= f.file_field :profile %><br/><br/>
 
   <%= f.label "Description" %>
+<<<<<<< HEAD
   <%= f.text_area :description %>
+=======
+  <%= f.text_area :description %><br><br />
+>>>>>>> bfac10661317f30dfb9bb8f5ce9bde92f37625af
 
   <%= f.label "Email (Will not be published)" %><br>
   <%= f.text_field :email %>
 
+<<<<<<< HEAD
   <h3>Links (Optional)</h3>
 
   <%= f.label "Website" %>
@@ -31,6 +47,39 @@
 
   <%= f.label "Pinterest" %>
   <%= f.text_field :pintrest %>
+=======
+  <div id="edit--profile">
+    <%= f.label "Website" %>
+    <div class="add_link">
+      <span>www.</span>
+      <%= f.text_field :website, :style => "padding-left: 50px;" %>
+    </div>
+
+    <%= f.label "Youtube" %>
+    <div class="add_link">
+      <span>youtube.com/</span>
+      <%= f.text_field :youtube, :style => "padding-left: 106px;" %>
+    </div>
+
+    <%= f.label "Instagram" %>
+    <div class="add_link social">
+      <span>@</span>
+      <%= f.text_field :insta %>
+    </div>
+
+    <%= f.label "Twitter" %>
+    <div class="add_link social">
+      <span>@</span>
+      <%= f.text_field :twitter %>
+    </div>
+
+    <%= f.label "Facebook" %>
+    <div class="add_link social">
+      <span>@</span>
+      <%= f.text_field :facebook %>
+    </div>
+  </div>
+>>>>>>> bfac10661317f30dfb9bb8f5ce9bde92f37625af
 
   <% @full = @user.first_name + " " + @user.last_name %>
   <%= f.hidden_field :full_name, :value => @full %>
@@ -45,7 +94,11 @@
   <%= f.label "Admin" %>
   <%= f.check_box :admin %><br />
   <% end %>
+<<<<<<< HEAD
 
 <br><%= f.submit %>
+=======
+<%= f.submit %>
+>>>>>>> bfac10661317f30dfb9bb8f5ce9bde92f37625af
 
 <% end %>

@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
       medium: '300x300>'
     }
 
+  scope :review_profile, -> {
+    where(submitted_profile: true, approved_profile: false)
+  }
+
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :profile, :content_type => /\Aimage\/.*\Z/
 

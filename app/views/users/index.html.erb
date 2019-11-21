@@ -1,12 +1,15 @@
-<h1 id="page_title" style="border-bottom: none; margin-bottom: -50px;">Waiting For Approval</h1>
-<div id="posts_wrapper" class="skinny_wrapper index_users">
-  <% @posts_waiting.each do |post| %>
-  <div class="flex--postlist--item">
-      <h6 id="post_title"><a href="#"><%= link_to post.title, post%></a></h6>
-      <h6 id="date"><%= post.created_at.strftime('%A, %B %d') %></h6>
+<h1 id="page_title" style="border-bottom: none; margin-bottom: -20px;">Submitted Articles</h1>
+<div id="posts_wrapper" class="index_users">
+  <div class="skinny_wrapper submitted--articles">
+    <% @posts_waiting.each do |post| %>
+    <div class="flex--postlist--item">
+        <h6 id="post_title"><a href="#"><%= link_to post.title, post%></a></h6>
+        <h6 id="date"><%= post.created_at.strftime('%A, %B %d') %></h6>
+    </div>
+    <% end %>
   </div>
-  <% end %>
 </div>
+<<<<<<< HEAD
 <h1 id="page_title" style="margin-bottom: -80px; margin-top:-50px; border-bottom: none;">Users</h1>
 <div id="posts_wrapper" class="skinny_wrapper">
   <div class="skinny_wrapper">
@@ -17,32 +20,70 @@
             <% user.save %>
           <% end %>
           <div class="flex--profile">
+=======
+<h1 id="page_title" style="border-bottom: none; margin-bottom: -20px; margin-top: 0px;">Submitted Profiles</h1>
+<div id="posts_wrapper" class="index_users">
+  <div class="skinny_wrapper profiles--flex">
+    <% @users_waiting.each do |user| %>
+      <div class="flex--profile">
+        <div class="profiles">
+          <a href= "/users/<%= user.slug %>/edit">
+>>>>>>> bfac10661317f30dfb9bb8f5ce9bde92f37625af
             <% if user.profile.exists? %>
               <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
             <% else %>
-              <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+              <%= image_tag("profile.jpg", :class => "profile_img") %>
             <% end %>
-            <div class="info">
-            <h2 style="margin-bottom: 5px;">
-              <% @name =
-                if (user.first_name != "" && user.first_name !=nil)
-                  user.first_name
-                end
-                if (user.last_name != "" && user.last_name!= nil)
-                  @name = @name + " " + user.last_name
-                end %>
-              <%= link_to(@name, user) %>
-            </h2>
-            <% if user.editor? %>
-              <span class="editor_status">
-                Editor
-              </span>
-            <% end %>
-              <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
-              <h6 style="margin: 0;"><%= user.email %></h6>
-            </div>
-          </div>
-        <% end %>
+          </a>
+          <h6 style="margin-bottom: 5px;">
+            <% @name =
+              if (user.first_name != "" && user.first_name !=nil)
+                user.first_name
+              end
+              if (user.last_name != "" && user.last_name!= nil)
+                @name = @name + " " + user.last_name
+              end %>
+            <a href= "/users/<%= user.slug %>/edit"><%= @name %></a>
+          </h6>
+        </div>
+      </div>
     <% end %>
   </div>
+</div>
+<h1 id="page_title" style="margin-bottom: -20px; border-bottom: none;">Writers</h1>
+<div id="posts_wrapper" class="skinny_wrapper">
+  <% @users.each do | user | %>
+      <% if user != nil %>
+        <% if user.monthly_views == nil %>
+          <% user.monthly_views = 0 %>
+          <% user.save %>
+        <% end %>
+        <div class="flex--profile">
+          <% if user.profile.exists? %>
+            <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+          <% else %>
+            <%= image_tag("profile.jpg", :class => "profile_img") %>
+          <% end %>
+          <div class="info">
+          <h2 style="margin-bottom: 5px;">
+            <% @name =
+              if (user.first_name != "" && user.first_name !=nil)
+                user.first_name
+              end
+              if (user.last_name != "" && user.last_name!= nil)
+                @name = @name + " " + user.last_name
+              end %>
+            <%= link_to(@name, user) %>
+          </h2>
+          <% if user.editor? %>
+            <span class="editor_status">
+              Editor
+            </span>
+          <% end %>
+            <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
+            <h6 style="margin: 0;"><%= user.email %></h6>
+          </div>
+        </div>
+      <% end %>
+  <% end %>
 </div>

@@ -8,7 +8,7 @@ class Ability
       can :manage, :all
     else
       can :update, Post do |post|
-        post.user == user
+        post.user == user || post.collaboration == user.email
       end
       can :destroy, Post do |post|
         post.user == user

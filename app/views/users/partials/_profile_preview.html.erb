@@ -1,0 +1,45 @@
+<% @page = "next_steps" %>
+<div class="stair_step">
+  <a href="/onboarding?page=welcome" class="node">
+    <span class="progress">
+      &#x25cf;
+      <p>Welcome</p>
+    </span>
+  </a>
+  <a href="/onboarding?page=your_profile" class="node">
+    <span class="progress">
+      &#x25cf;
+      <p>Your Profile</p>
+    </span>
+  </a>
+  <span>◦<p>Next Steps</p></span>
+  <div class="hr">
+    <hr />
+    <hr />
+  </div>
+</div>
+<div class="onboarding_page_container">
+  <div id="onboarding_page">
+    <h5>Profile Preview</h5>
+    <%= render "profile_nolink" %>
+    <p style="margin: 15px 0;">Does your profile meet these requirements?</p>
+    <ul>
+      <li>
+        Have a professional picture that is good quality and is not a selfie. This should be a picture that
+        would be appropriate to show potential employers.
+      </li>
+      <li>
+        Have a one to three sentence description written in third person about yourself and your interests.
+        Do not include emojis or smiley faces.
+      </li>
+    </ul>
+    <%= link_to "Edit Profile", onboarding_path(page: "your_profile"), :id => "edit_profile" %>
+  </div>
+  <%= form_for(@user, url: user_path(@user, redirect: "next_steps")) do |f| %>
+    <%= f.hidden_field :submitted_profile, :value => true %>
+    <% if @user.approved_profile == nil %>
+      <%= f.hidden_field :approved_profile, :value => false %>
+    <% end %>
+    <%= f.submit "Submit & Continue", :id => "onboarding_button" %>
+  <% end %>
+</div>

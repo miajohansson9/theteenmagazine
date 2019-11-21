@@ -1,7 +1,6 @@
 <!-- shows all accepted applications -->
 
 <div class="skinny_wrapper">
-  <div class="skinny_wrapper">
     <h1 id="page_title">Accepted Writer Applications</h1>
     <% @applies.each do | application | %>
       <% @user = User.where(email: application.email).first %>
