@@ -11,6 +11,9 @@
 .flex_wrapper_content {
   display: flex;
   flex-direction: row;
+  .post_wrapper {
+    flex-grow: 5;
+  }
 }
 
 .articles {
@@ -91,11 +94,6 @@
   margin-right: 100px;
   flex-grow: 1;
   max-width: 100%;
-}
-
-.flex--p {
-  max-width: 800px;
-  margin: 0 auto;
 }
 
 #posts_wrapper {

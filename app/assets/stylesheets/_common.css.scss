@@ -705,7 +705,6 @@ body {
   }
 
   nav {
-    margin-top: 10px;
     position: relative;
     display: block;
     width: 100%;
@@ -717,7 +716,7 @@ body {
     margin-right: auto;
 
     .link {
-      margin-top: 2px;
+      margin: 2px 0 0 1.2rem;
     }
 
     a {
@@ -726,7 +725,6 @@ body {
       letter-spacing: 0.01rem;
       line-height: 1;
       font-size: 0.8rem;
-      margin: 0 0.9rem;
       font-weight: bolder;
       padding-top: 20px;
       color: black;

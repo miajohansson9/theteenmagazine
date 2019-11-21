@@ -37,7 +37,9 @@
   </div>
   <%= form_for(@user, url: user_path(@user, redirect: "next_steps")) do |f| %>
     <%= f.hidden_field :submitted_profile, :value => true %>
-    <%= f.hidden_field :approved_profile, :value => false %>
+    <% if @user.approved_profile == nil %>
+      <%= f.hidden_field :approved_profile, :value => false %>
+    <% end %>
     <%= f.submit "Submit & Continue", :id => "onboarding_button" %>
   <% end %>
 </div>

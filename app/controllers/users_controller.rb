@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user_posts = @user.posts.all.order("created_at desc")
     @user_posts_approved = @user.posts.all.approved.order("created_at desc")
     @posts = Post.all.order("created_at desc");
-    if @user_posts_approved.length < 3
+    if @user_posts_approved.length < 1
       begin
         if (current_user.id != @user.id && (!current_user.admin?) && (!current_user.editor?))
           redirect_to root_path, notice: "This writer does not have a public profile yet."
@@ -31,6 +31,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all.order("created_at desc")
     @posts_waiting = Post.all.waiting_for_approval
+    @users_waiting = User.all.review_profile
   end
 
   def edit
@@ -43,7 +44,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.save
-
     if @user.save
       redirect_to @user, notice: "Your changes were successfully saved!"
     else
@@ -52,9 +52,14 @@ class UsersController < ApplicationController
   end
 
   def update
+    if @user.approved_profile == false && user_params[:approved_profile] == "1"
+      ApplicationMailer.profile_approved(@user).deliver
+    end
     if @user.update user_params
       if params[:redirect] != nil
         redirect_to onboarding_path(page: params[:redirect])
+      else
+        redirect_to @user
       end
     else
       render 'edit'

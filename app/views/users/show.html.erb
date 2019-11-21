@@ -1,1 +1,5 @@
-<%= render "users/dashboard/new_writer" %>
+<% if @user_posts_approved.length < 1 %>
+  <%= render "users/dashboard/new_writer" %>
+<% else %>
+  <%= render "users/dashboard/official_writer" %>
+<% end %>

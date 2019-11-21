@@ -101,12 +101,8 @@
               <a class="link" href="/categories/health-fitness">Health</a>
               <a class="link" href="/categories/entertainment">Entertainment</a>
               <a class="link" href="/categories/fashion">Fashion</a>
-              <% if current_user && (current_user.admin? || current_user.editor?) %>
-                <%= link_to "Users", users_path, class: "link" %>
-              <% end %>
               <% if user_signed_in? %>
                 <%= link_to "Dashboard", user_path(current_user), class: "link" %>
-                <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
               <% else %>
                   <a class="link" href="/contacts/new">Contact</a>
                   <a class="link" href="/apply">Apply</a>

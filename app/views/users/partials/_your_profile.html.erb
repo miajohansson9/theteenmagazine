@@ -54,6 +54,12 @@
         <%= f.text_field :website, :style => "padding-left: 50px;" %>
       </div>
 
+      <%= f.label "Youtube" %>
+      <div class="add_link">
+        <span>youtube.com/</span>
+        <%= f.text_field :youtube, :style => "padding-left: 103px;" %>
+      </div>
+
       <%= f.label "Instagram" %>
       <div class="add_link social">
         <span>@</span>
@@ -72,11 +78,6 @@
         <%= f.text_field :facebook %>
       </div>
 
-      <%= f.label "Youtube" %>
-      <div class="add_link social">
-        <span>@</span>
-        <%= f.text_field :youtube %>
-      </div>
     </div>
 
     <p>You may opt out of a profile picture if you do not upload an image.
