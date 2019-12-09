@@ -1,8 +1,8 @@
 class Mailer < Devise::Mailer
-  default from: 'mia@theteenmagazine.com'
+  default from: 'marcela@theteenmagazine.com'
 
   def welcome_email
     @user = params[:user]
-    mail(to: "mia@theteenmagazine.com", subject: "#{@user.first_name}, Welcome to The Teen Magazine!")
+    mail(to: @user.email, subject: "#{@user.first_name}, Welcome to The Teen Magazine!")
   end
 end
