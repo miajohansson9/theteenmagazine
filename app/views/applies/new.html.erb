@@ -4,8 +4,25 @@ pintrk('track', 'pagevisit');
 
 <!-- let someone create an application; sends to editor -->
 
-<h1 id="page_title">Become a Journalist for the Teen Magazine</h1>
 <div class="form_wrapper wrapper_padding">
+  <h1>Interested in getting a jumpstart on your future career today? Join the TTM Writer Community.</h1>
+  <p>Here at The Teen Magazine, we are a close-knit group of young college and high school writers who work closely with one another to improve journalism skills,
+    gain writing experience, and receive quality feedback from top-tier student journalists. Here is a video of TTM's founder and Editor in Chief explaining who we are a bit more!</p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/9dsKTqtu1bw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br />
+<h1>What Does it Mean to be a Writer for The Teen Magazine?</h1>
+<p>As a writer for The Teen Magazine, you will get the opportunity to:  </p>
+<ul>
+  <li>Pitch article topics and get published in an international online magazine</li>
+  <li>Have your own public author page that you can share with potential employers</li>
+  <li>Gain applicable experience and training in the editorial industry</li>
+  <li>Be paired with a mentor who can give you feedback and guidance</li>
+  <li>Interview successful people and work with brands</li>
+  <li>Learn from and network with our talented writer community</li>
+  <li>Apply for other positions and internships within The Teen Magazine</li>
+</ul>
+  <h1>Convinced? Apply now.</h1>
+  <p>Because we only have a limited number of openings per month, please be thoughtful in your application and explain exactly why you would really love to write for The Teen Magazine. We can’t wait to read your submission!</p>
   <%= form_for @application do |f| %>
     <span>First Name</span>
     <%= f.text_field :first_name, required: true %>
@@ -20,7 +37,7 @@ pintrk('track', 'pagevisit');
     <%= f.select :category, ['Academics', 'Beauty', 'DIY', 'Entertainment', 'Fashion', 'Get Involved', 'Health & Fitness', 'Lifestyle', 'News', 'Tips & Hacks']%><br />
     <br />
     <br />
-    <span>Please write a short cover letter introducing yourself and describing why you would be a good fit for The Teen Magazine journalist position.
+    <span>Please write a one-page cover letter introducing yourself and describing why you would be a good fit for The Teen Magazine. Please include links to any previously published work/blog if applicable.
     </span>
     <%= f.text_area :description, required: true %>
     <br />
