@@ -10,7 +10,7 @@
 .wrapper_home {
   width: 95%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 20px auto;
 }
 
 .section--title {
@@ -42,13 +42,13 @@
     flex-grow: 300;
     flex-shrink: 300;
   }
-  .beauty--section {
+  .ctgry_section {
     display: flex;
     flex-direction: row;
     width: 100%;
     margin: 0 auto;
     justify-content: space-between;
-    .one_beauty_article {
+    .ctgry_article {
       width: 31%;
       img {
         width: 100%;
@@ -68,19 +68,19 @@
     }
   }
   p {
-    font-size: 0.5em;
+    font-size: 12px;
     margin-bottom: 5px;
+    color: #545454
   }
-  .entertainment--section {
-    .entertainment {
+  .ctgry_section {
+    .ctgry_grid {
       display: flex;
       flex-direction: row;
       width: 100%;
       margin: 0 auto;
       justify-content: space-between;
     }
-
-    .entertainment_article {
+    .ctgry_grid_article {
       width: 31%;
       img {
         width: 100%;
@@ -98,7 +98,7 @@
       }
     }
   }
-  .flex_entertainment_wrapper {
+  .ctgry_grid_wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -109,13 +109,13 @@
         width: 100%;
       }
     }
-    .entertainment_grid_container {
+    .ctgry_grid {
       width: 48%;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-between;
-      .entertainment_article_grid {
+      .ctgry_grid_article {
         width: 47.5%;
         margin-bottom: 20px;
         img {
@@ -141,8 +141,6 @@
     flex-grow: 1;
     flex-shrink: 1;
     width: 340px;
-    height: 1100px;
-    padding-left: 20px;
     h1 {
       margin-left: 0;
       margin-bottom: 20px;
@@ -150,10 +148,9 @@
       border-bottom: none;
       padding: 0;
     }
-    .one_article {
+    .ctgry_article {
       display: flex;
       flex-direction: row;
-      //margin: 0 10px;
       img {
         width: 150px;
         height: 100px;
@@ -176,7 +173,7 @@
   }
 }
 
-.three--section {
+.ctgry_section {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -184,12 +181,12 @@
   margin: 0 auto;
   justify-content: space-between;
   p {
-    font-size: 0.5em;
+    font-size: 12px;
     margin-bottom: 5px;
+    color: #545454;
   }
-  .one_article {
+  .ctgry_article {
     width: 31%;
-    margin-bottom: 50px;
     img {
       width: 100%;
     }
@@ -205,29 +202,18 @@
       }
     }
   }
-  .list--articles {
+  .rcnt_article {
     width: 100%;
     display: flex;
     flex-direction: row;
     border-top: 3px dotted gray;
     padding-top: 20px;
     padding-bottom: 20px;
-    .article--description {
+    .article_description {
       width: 50%;
       padding: 20px 0;
       display: flex;
       flex-direction: column;
-      .category a {
-        color: $highlight;
-        font-family: 'Kristi';
-        font-size: 30px;
-        margin-bottom: -20px;
-        margin: 0;
-        text-decoration: none;
-        &:hover {
-          color: #EFA6C4 !important;
-        }
-      }
     }
     .image_recent_articles {
       width: 50%;
@@ -252,6 +238,16 @@
   }
 }
 
+.category a {
+  color: $highlight;
+  font-family: 'Kristi';
+  font-size: 1.9rem;
+  font-weight: bold;
+  margin-bottom: -20px;
+  margin: 0;
+  text-decoration: none;
+}
+
 @media (min-width: 640px) and (max-width: 800px) {
   .featured {
     margin-top: 0px !important;
@@ -259,23 +255,43 @@
 }
 
 @media (max-width: 900px) {
-  .most_read {
-    display: none;
+  .ctgry_section {
+    .ctgry_article, .rcnt_article {
+      h1 {
+        font-size: 24px !important;
+      }
+    }
+  }
+  .flex--welcome {
+    flex-direction: column;
+    .most_read {
+      margin: 0;
+      width: 100%;
+      margin: 10px 0;
+      h1 {
+        border-bottom: 3px solid #222;
+        padding-bottom: 20px;
+      }
+      .ctgry_article {
+        img {
+          width: 200px;
+          height: auto;
+        }
+        p {
+          font-size: 20px;
+          line-height: 25px;
+          margin: 0px 10px;
+          font-family: "Playfair Display";
+        }
+      }
+    }
   }
 }
 
 @media(max-width: 900px) {
-  .one_article {
-    h1 {
-      font-size: 24px !important;
-    }
-  }
-  .article--description {
+  .article_description {
     padding: 0px !important;
     justify-content: center;
-    h1 {
-      font-size: 24px !important;
-    }
     .category {
       font-size: 20px !important;
     }
@@ -284,39 +300,38 @@
 
 
 @media (max-width: 640px) {
-  .entertainment {
-    flex-direction: column !important;
-    .entertainment_article {
-      width: 100% !important;
-      margin-bottom: 10px;
-    }
-  }
   .section--title {
     margin-bottom: 20px;
   }
-  .beauty--section, .entertainment {
-    margin-bottom: -30px !important;
+  #recent_title {
+    margin: 0;
+  }
+  .ctgry_section {
     flex-direction: column !important;
-    .one_beauty_article, .entertainment_article {
+    .ctgry_article {
       width: 100% !important;
       margin-bottom: 30px;
       h1 {
-        font-size: 30px !important;
+        font-size: 25px !important;
       }
     }
   }
-  .three--section {
+  .ctgry_section {
     flex-direction: column !important;
-    .one_article {
+    .ctgry_article {
       width: 100% !important;
     }
-    .list--articles {
-      flex-direction: column;
-      a, .article--description {
+    .rcnt_article, .recent {
+      flex-direction: column-reverse;
+      border-top: none;
+      border-bottom: 3px dotted gray;
+      padding: 20px 0;
+      margin: 0 !important;
+      a, .article_description {
         width: 100%;
       }
       h1 {
-        font-size: 34px;
+        font-size: 25px;
       }
       img, a {
         width: 100% !important;
@@ -324,11 +339,11 @@
       }
     }
   }
-  .article--description {
+  .article_description {
     margin-top: 10px !important;
   }
   .flex--welcome .flex-1 {
-    .flex_entertainment_wrapper {
+    .ctgry_grid_wrapper {
       flex-direction: column !important;
       .applies {
         margin: 0 auto;
@@ -336,7 +351,7 @@
         margin-bottom: 20px;
       }
       }
-      .entertainment_grid_container {
+      .ctgry_grid {
         width: 100% !important;
       }
     }

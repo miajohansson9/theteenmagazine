@@ -50,9 +50,9 @@
     <br />
     <div class="flex--welcome">
       <div class="flex-1">
-        <div class="beauty--section">
+        <div class="ctgry_section">
           <% @posts_approved[0..2].each do |post| %>
-            <div class="one_beauty_article">
+            <div class="ctgry_article">
               <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
               <h1><%= link_to post.title, post %></h1>
               <p><%= post.created_at.strftime("%A, %b %d")%></p>

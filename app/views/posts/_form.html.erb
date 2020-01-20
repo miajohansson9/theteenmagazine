@@ -53,31 +53,7 @@
 <%= f.hidden_field :user_id, :value => current_user.id %>
 <% end %>
 
-<% if @post.meta_title == "Fashion" %>
-<%= f.hidden_field :category_id, :value => 1 %>
-<% elsif @post.meta_title == "Beauty" %>
-<%= f.hidden_field :category_id, :value => 2 %>
-<% elsif @post.meta_title == "Entertainment" %>
-<%= f.hidden_field :category_id, :value => 3 %>
-<% elsif @post.meta_title == "Academics" %>
-<%= f.hidden_field :category_id, :value => 7 %>
-<% elsif @post.meta_title == "Get Involved" %>
-<%= f.hidden_field :category_id, :value => 12 %>
-<% elsif @post.meta_title == "Health & Fitness" %>
-<%= f.hidden_field :category_id, :value => 4 %>
-<% elsif @post.meta_title == "Lifestyle" %>
-<%= f.hidden_field :category_id, :value => 5 %>
-<% elsif @post.meta_title == "DIY" %>
-<%= f.hidden_field :category_id, :value => 9 %>
-<% elsif @post.meta_title == "Travel" %>
-<%= f.hidden_field :category_id, :value => 10 %>
-<% elsif @post.meta_title == "Tips & Hacks" %>
-<%= f.hidden_field :category_id, :value => 8 %>
-<% elsif @post.meta_title == "Personal Stories" %>
-<%= f.hidden_field :category_id, :value => 13 %>
-<% elsif @post.meta_title == "News" %>
-<%= f.hidden_field :category_id, :value => 14 %>
-<% end %>
+<%= f.hidden_field :category_id, :value => Category.where(name: @post.meta_title).first.id %>
 
 <% if (current_user && (current_user.admin? || current_user.editor?)) %>
 <br><%= f.label "Approve" %>

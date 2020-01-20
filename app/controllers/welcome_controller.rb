@@ -4,9 +4,6 @@ class WelcomeController < ApplicationController
   def index
     @postsranking = Post.approved.all.order("post_impressions desc")
     @posts_approved = Post.approved.all.order("created_at desc")
-    @posts_approved_academics = Post.academics.all.order("created_at desc")
-    @posts_approved_entertainment = Post.entertainment.all.order("created_at desc")
-    @posts_approved_health = Post.health.all.order("created_at desc")
   end
 
   def show
