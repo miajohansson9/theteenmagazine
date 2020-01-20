@@ -4,7 +4,7 @@
       <div class="parentflex">
         <div class="flexbox">
           <div class="featured divfeatured">
-            <% publishedPosts = @posts_approved[0..25] %>
+            <% publishedPosts = @posts_approved %>
             <div class="featured individual">
               <div class="featured_img">
                 <%=link_to(image_tag(publishedPosts.first.thumbnail.url(:large2), alt: publishedPosts.first.title, :id => "image_thumbnail"), publishedPosts.first )%>
