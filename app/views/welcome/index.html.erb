@@ -64,9 +64,9 @@
           </div>
         <% end %>
       </div>
-      <h1 class="section--title"><a href="/categories/health-fitness">Health & Fitness</a></h1>
+      <h1 class="section--title"><a href="/categories/get-involved">Get Involved</a></h1>
       <div class="ctgry_section">
-        <% publishedPosts.where(meta_title: "Health & Fitness").all.order("created_at desc")[0..2].each do |post| %>
+        <% publishedPosts.where(meta_title: "Get Involved").all.order("created_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
@@ -79,7 +79,7 @@
       <div class="ctgry_grid_wrapper">
         <a class="applies" href="/apply"><img src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
         <div class="ctgry_grid">
-          <% publishedPosts.where(meta_title: "Health & Fitness").all.order("created_at desc")[3..6].each do |post| %>
+          <% publishedPosts.where(meta_title: "Get Involved").all.order("created_at desc")[3..6].each do |post| %>
             <% featuredPostIds << post.id %>
             <div class="ctgry_grid_article">
               <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
