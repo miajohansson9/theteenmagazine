@@ -18,31 +18,7 @@ class Post < ApplicationRecord
   scope :after_approved, -> {
   where(:after_approved => nil, :approved => true)
   }
-  scope :fashion, -> {
-  where(approved: true, after_approved: true, :meta_title => "Fashion")
-  }
-  scope :beauty, -> {
-  where(approved: true, after_approved: true, :meta_title => "Beauty")
-  }
-  scope :health, -> {
-  where(approved: true, after_approved: true, :meta_title => "Health & Fitness")
-  }
-  scope :tips, -> {
-  where(approved: true, after_approved: true, :meta_title => "Tips & Hacks")
-  }
-  scope :academics, -> {
-  where(approved: true, after_approved: true, :meta_title => "Academics")
-  }
-  scope :entertainment, -> {
-  where(approved: true, after_approved: true, :meta_title => "Entertainment")
-  }
-  scope :get_involved, -> {
-  where(approved: true, after_approved: true, :meta_title => "Get Involved")
-  }
-  scope :other, -> {
-  where(approved: true, after_approved: true, :meta_title => ['Health & Fitness', 'Lifestyle', 'Trends', 'Academics', 'Tips & Hacks', 'DIY', 'Travel', 'Love & Relationships'] )
-  }
-
+  
   has_attached_file :thumbnail, styles: {
       medium: '270x170#',
       large: '560x280#',
