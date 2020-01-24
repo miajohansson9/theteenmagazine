@@ -92,7 +92,7 @@
       </div>
     </div>
     <div class="most_read contain_articles">
-      <h1 class="section--title">Most Read</h1>
+      <h1 class="section--title">Trending Articles</h1>
       <% @postsranking[0..9].each do |post| %>
       <div class="ctgry_article">
         <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>

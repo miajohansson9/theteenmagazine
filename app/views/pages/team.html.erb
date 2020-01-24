@@ -19,7 +19,7 @@
              <% if user.profile.exists? %>
                <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
              <% else %>
-               <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+               <%= image_tag("profile_image", :class => "profile_img") %>
              <% end %>
              <h6><%= user.full_name %></h6>
            </div>
@@ -34,7 +34,7 @@
               <% if user.profile.exists? %>
                 <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
               <% else %>
-                <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+                <%= image_tag("profile_image", :class => "profile_img") %>
               <% end %>
               <h6><%= user.full_name %></h6>
             </div>

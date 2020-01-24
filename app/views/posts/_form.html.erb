@@ -53,10 +53,6 @@
 <%= f.hidden_field :user_id, :value => current_user.id %>
 <% end %>
 
-<% if @post.meta_title != nil %>
-  <%= f.hidden_field :category_id, :value => Category.where(name: @post.meta_title).first.id %>
-<% end %>
-
 <% if (current_user && (current_user.admin? || current_user.editor?)) %>
 <br><%= f.label "Approve" %>
 <%= f.check_box :approved %><br /><br />

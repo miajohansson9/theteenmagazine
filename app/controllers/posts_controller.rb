@@ -13,8 +13,6 @@ class PostsController < ApplicationController
   def load_user
     if @post.user != nil
       @user = @post.user
-      @user_posts_approved = @user.posts.approved.all
-      @user_posts = @user.posts.all.order("created_at desc")
     end
   end
 
@@ -55,6 +53,9 @@ class PostsController < ApplicationController
   def create
     if user_signed_in?
       @post = current_user.posts.build(post_params)
+      @category = Category.where(name: post_params[:meta_title]).first
+      @post.category = @category
+      @post.category_id = @category.id
     else
       @post = Post.new(post_params)
     end
@@ -70,7 +71,6 @@ class PostsController < ApplicationController
 
   def show
     redirect_to root_path unless (@post.approved || (current_user && (@post.user_id == current_user.id || @post.collaboration == current_user.email || current_user.admin? || current_user.editor?)))
-    @users = User.all.order("created_at desc")
     set_meta_tags title: @post.title,
                   description: @post.meta_description,
                   keywords: @post.keywords
@@ -86,6 +86,10 @@ class PostsController < ApplicationController
 
   def update
     if @post.update post_params
+      @category = Category.where(name: post_params[:meta_title]).first
+      @post.category = @category
+      @post.category_id = @category.id
+      @post.save
       redirect_to @post, notice: "Changes were successfully saved!"
     else
       render 'edit'

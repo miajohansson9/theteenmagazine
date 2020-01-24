@@ -2,7 +2,7 @@
   <% if @user.profile.exists? %>
     <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
   <% else %>
-    <%= image_tag("https://isw.fbk.eu/sites/isw2015.fbk.eu/files/Profilo_2.jpg", :class => "profile_img") %>
+    <%= image_tag("profile_image", :class => "profile_img") %>
   <% end %>
   <div class="info">
     <h2 style="margin-bottom: 5px;">
