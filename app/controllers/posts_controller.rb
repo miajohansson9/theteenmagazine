@@ -56,6 +56,9 @@ class PostsController < ApplicationController
       @category = Category.where(name: post_params[:meta_title]).first
       @post.category = @category
       @post.category_id = @category.id
+      if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
+          @post.content = @post.content << "<script>instgrm.Embeds.process()</script>"
+      end
     else
       @post = Post.new(post_params)
     end
@@ -89,6 +92,9 @@ class PostsController < ApplicationController
       @category = Category.where(name: post_params[:meta_title]).first
       @post.category = @category
       @post.category_id = @category.id
+      if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
+          @post.content << "<script>instgrm.Embeds.process()</script>"
+      end
       @post.save
       redirect_to @post, notice: "Changes were successfully saved!"
     else
