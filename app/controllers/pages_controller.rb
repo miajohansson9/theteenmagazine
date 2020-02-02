@@ -10,10 +10,6 @@ class PagesController < ApplicationController
     @users = User.order("posts_count DESC")
   end
 
-  def ranking
-    @posts = Post.all.order("created_at desc")
-  end
-
   def criteria
   end
 

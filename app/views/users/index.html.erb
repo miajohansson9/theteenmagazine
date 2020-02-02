@@ -19,7 +19,7 @@
             <% if user.profile.exists? %>
               <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
             <% else %>
-              <%= image_tag("profile.jpg", :class => "profile_img") %>
+              <%= image_tag("profile_image.jpg", :class => "profile_img") %>
             <% end %>
           </a>
           <h6 style="margin-bottom: 5px;">
@@ -49,18 +49,11 @@
           <% if user.profile.exists? %>
             <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
           <% else %>
-            <%= image_tag("profile.jpg", :class => "profile_img") %>
+            <%= image_tag("profile_image.jpg", :class => "profile_img") %>
           <% end %>
           <div class="info">
           <h2 style="margin-bottom: 5px;">
-            <% @name =
-              if (user.first_name != "" && user.first_name !=nil)
-                user.first_name
-              end
-              if (user.last_name != "" && user.last_name!= nil)
-                @name = @name + " " + user.last_name
-              end %>
-            <%= link_to(@name, user) %>
+            <%= link_to(user.full_name, user) %>
           </h2>
           <% if user.editor? %>
             <span class="editor_status">

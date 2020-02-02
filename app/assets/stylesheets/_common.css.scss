@@ -65,7 +65,6 @@ html, body {
 .sidebar_menu {
   background-color: $highlight;
   margin-left: 0;
-  overflow: hidden;
   width: 250px;
   height: 2000px;
   position: fixed;
@@ -120,10 +119,6 @@ html, body {
 
 .hide_menu {
   margin-left: -250px;
-}
-
-.overflow {
-  overflow: hidden;
 }
 
 .push {

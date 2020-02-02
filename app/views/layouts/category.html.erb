@@ -21,91 +21,81 @@
     </script>
   </head>
   <body>
-      <style>
-      .ng-hide {
-        display: none !important;
-      }
-      </style>
-      <amp-auto-ads type="adsense"
-          data-ad-client="ca-pub-4986861624955300">
-      </amp-auto-ads>
-
-      <div class="sidebar_menu hide_menu" style="background-color: #65B19D;">
-        <i class="fa fa-times"></i>
-        <h1><%= link_to "The Teen Magazine", root_path %></h1>
-        <a href="/categories/get-involved">Get Involved</a>
-        <a href="/categories/academics">Academics</a>
-        <a href="/categories/health-fitness">Health</a>
-        <a href="/categories/beauty">Beauty</a>
-        <a href="/categories/fashion">Fashion</a>
-        <a href="/categories/entertainment">Entertainment</a>
-        <a href="/categories/personal-stories">Personal Stories</a>
-        <a href="/contacts/new">Contact</a>
-        <% if current_user && (current_user.admin? || current_user.editor?) %>
-          <%= link_to "Users", users_path %>
-        <% end %>
-        <% if user_signed_in? %>
-           <%= link_to "Dashboard", user_path(current_user) %>
-           <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-       <% else %>
-           <a href="/apply">Apply</a>
-        <% end %>
-        <div style="height: 2000px; background-color: #65B19D;">
-        </div>
+    <amp-auto-ads type="adsense"
+        data-ad-client="ca-pub-4986861624955300">
+    </amp-auto-ads>
+    <div class="sidebar_menu hide_menu" style="background-color: #65B19D;">
+      <i class="fa fa-times"></i>
+      <h1><%= link_to "The Teen Magazine", root_path %></h1>
+      <a href="/categories/get-involved">Get Involved</a>
+      <a href="/categories/academics">Academics</a>
+      <a href="/categories/health-fitness">Health</a>
+      <a href="/categories/beauty">Beauty</a>
+      <a href="/categories/fashion">Fashion</a>
+      <a href="/categories/entertainment">Entertainment</a>
+      <a href="/categories/personal-stories">Personal Stories</a>
+      <a href="/contacts/new">Contact</a>
+      <% if current_user && (current_user.admin? || current_user.editor?) %>
+        <%= link_to "Users", users_path %>
+      <% end %>
+      <% if user_signed_in? %>
+         <%= link_to "Dashboard", user_path(current_user) %>
+         <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+     <% else %>
+         <a href="/apply">Apply</a>
+      <% end %>
+      <div style="height: 2000px; background-color: #65B19D;">
       </div>
-
-      <div class="overflow">
-        <div class="bodywrapper">
-          <header id="main_navigation" class="clearfix">
-            <div id="banner">
-              <div class="logo--flex banner_item" style="margin-top: 0;">
-                <i class="fa fa-bars toggle_menu" style="color: black;"></i>
-              </div>
-              <div class="banner_item" style="text-align: center;">
-                <a href="/"><img id="name" src="https://i.ibb.co/jJcQ2zh/teenmag2.png"/></a>
-              </div>
-              <div class="banner_item" style="text-align: right;">
-                <div class="social-media">
-                  <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
-                  <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
-                  <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-                  <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-                </div>
+    </div>
+    <div class="overflow">
+      <div class="bodywrapper">
+        <header id="main_navigation" class="clearfix">
+          <div id="banner">
+            <div class="logo--flex banner_item" style="margin-top: 0;">
+              <i class="fa fa-bars toggle_menu" style="color: black;"></i>
+            </div>
+            <div class="banner_item" style="text-align: center;">
+              <a href="/"><%= image_tag "teenmag.webp", id: "name" %></a>
+            </div>
+            <div class="banner_item" style="text-align: right;">
+              <div class="social-media">
+                <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
+                <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
+                <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+                <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
               </div>
             </div>
-
-            <div class="border">
-              <nav style="border-bottom: 1px solid rgba(0,0,0,0.1); border-top: 1px solid rgba(0,0,0,0.1); margin-top: 0 !important;" class="nav_article">
-                <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
-                <a class="link" href="/categories/news">News</a>
-                <a class="link" href="/categories/get-involved">Get Involved</a>
-                <a class="link" href="/categories/academics">Academics</a>
-                <a class="link" href="/categories/health-fitness">Health</a>
-                <a class="link" href="/categories/entertainment">Entertainment</a>
-                <a class="link" href="/categories/fashion">Fashion</a>
-                <% if current_user && (current_user.admin? || current_user.editor?) %>
-                  <%= link_to "Users", users_path, class: "link" %>
-                <% end %>
-                <% if user_signed_in? %>
-                  <%= link_to "Dashboard", user_path(current_user), class: "link" %>
-                  <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
-                <% else %>
-                    <a class="link" href="/contacts/new">Contact</a>
-                    <a class="link" href="/apply">Apply</a>
-                <% end %>
-              </nav>
-            </div>
-          </header>
-
+          </div>
+          <div class="border">
+            <nav style="border-bottom: 1px solid rgba(0,0,0,0.1); border-top: 1px solid rgba(0,0,0,0.1); margin-top: 0 !important;" class="nav_article">
+              <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
+              <a class="link" href="/categories/news">News</a>
+              <a class="link" href="/categories/get-involved">Get Involved</a>
+              <a class="link" href="/categories/academics">Academics</a>
+              <a class="link" href="/categories/health-fitness">Health</a>
+              <a class="link" href="/categories/entertainment">Entertainment</a>
+              <a class="link" href="/categories/fashion">Fashion</a>
+              <% if current_user && (current_user.admin? || current_user.editor?) %>
+                <%= link_to "Users", users_path, class: "link" %>
+              <% end %>
+              <% if user_signed_in? %>
+                <%= link_to "Dashboard", user_path(current_user), class: "link" %>
+                <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
+              <% else %>
+                  <a class="link" href="/contacts/new">Contact</a>
+                  <a class="link" href="/apply">Apply</a>
+              <% end %>
+            </nav>
+          </div>
+        </header>
         <% if notice %>
           <p class="notice"><%= notice %></p>
           <% elsif alert %>
           <p class="alert"><%= alert %></p>
         <% end %>
-      <%= yield %>
+        <%= yield %>
       </div>
     </div>
-
     <footer id="main_footer">
       <div class="container--footer">
         <div class="flex--column--footer">
@@ -120,28 +110,5 @@
         </nav>
       </div>
     </footer>
-
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-89987071-1', 'auto');
-    ga('send', 'pageview');
-      $(document).ready(function() {
-        $(".fa-times").click(function() {
-          $(".sidebar_menu").addClass("hide_menu");
-          $(".bodywrapper").removeClass("push");
-          $(".bodywrapper").addClass("pushback");
-        });
-
-        $(".toggle_menu").click(function() {
-          $(".sidebar_menu").removeClass("hide_menu");
-          $(".bodywrapper").addClass("push");
-          $(".bodywrapper").removeClass("pushback");
-        });
-      });
-    </script>
-
   </body>
 </html>

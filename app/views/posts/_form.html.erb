@@ -1,8 +1,9 @@
 <script>
  CKEDITOR.addCss('img{width: 55% !important; height: auto !important;margin-left: auto !important;margin-right: auto !important;display: block;}');
  CKEDITOR.addCss('iframe{margin: 0 auto !important;}');
+ CKEDITOR.addCss('p, h1, h2, h3, h4, h5, h6, span {font-family: "Source Sans Pro", sans-serif !important};');
  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #65B19D;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
- </script>
+</script>
 
 <%= form_for @post do |f| %>
   <% if @post.errors.any? %>
@@ -28,11 +29,11 @@
 <br><%= f.label "Category" %>
 <%= f.select :meta_title, ['Academics', 'Get Involved', 'Health & Fitness', 'News', 'Lifestyle', 'Entertainment', 'Tips & Hacks', 'DIY', 'Beauty', 'Fashion', 'Travel', 'Personal Stories'] %><br />
 
-<br><%= f.label :meta_description %><br>
-<%= f.text_field :meta_description %>
+<br><%= f.label "Grab your ideal reader's interest in 1-2 sentences." %><br>
+<%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
 
-<br><span>(Optional) If you are writing an article with another writer, you may put their email here to share the article with them.</span><br>
-<%= f.text_field :collaboration %>
+<br><span>If you are writing an article with another writer, you may put their email here to share the article with them.</span><br>
+<%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
 
 <% if @post.approved == true %>
   <% if @post.after_approved == nil %>
