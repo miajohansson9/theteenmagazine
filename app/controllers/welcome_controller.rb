@@ -3,7 +3,7 @@ class WelcomeController < ApplicationController
 
   def index
     @posts_approved = Post.approved.limit(40).order("created_at desc")
-    @postsranking = @posts_approved.order("post_impressions desc")
+    @postsranking = @posts_approved.reorder("post_impressions desc")
   end
 
   def show
