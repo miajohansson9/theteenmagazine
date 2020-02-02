@@ -25,7 +25,7 @@ gem 'will_paginate', '~> 3.1', '>= 3.1.5'
 gem 'mail_form', '~> 1.5', '>= 1.5.1'
 gem 'devise', '~> 4.2'
 gem 'kramdown', '~> 1.9'
-gem "paperclip", "5.1.0"
+gem "paperclip", "5.2.0"
 gem 'aws-sdk', '~> 2.6.44'
 gem 'ckeditor', '~> 4.2.3'
 gem 'bootstrap', '~> 4.0.0.alpha3'
