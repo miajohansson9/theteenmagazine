@@ -28,7 +28,7 @@ gem 'kramdown', '~> 1.9'
 gem "paperclip", "5.1.0"
 gem 'aws-sdk', '~> 2.6.44'
 gem 'ckeditor', '~> 4.2.3'
-gem 'bootstrap', '~> 4.0.0.alpha3'
+gem 'bootstrap', '~> 4.3.1'
 gem 'meta-tags', '~> 2.1'
 gem 'cancancan'
 gem 'jquery-turbolinks', '~> 2.1'
