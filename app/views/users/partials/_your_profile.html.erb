@@ -32,12 +32,12 @@
       </ul>
     </p>
     <div class="number_wrapper">
-      <img class="img_number" src="https://i.imgur.com/8MzzFbT.png" /><%= f.label "Upload a profile picture" %><br><br />
+      <%= image_tag "1-num.png", class: "img_number" %><%= f.label "Upload a profile picture" %><br><br />
     </div>
     <%= f.file_field :profile, :class => "add_margin_left" %><br/><br/>
 
     <div class="number_wrapper">
-      <img class="img_number" src="https://i.imgur.com/oimxncT.png" /><%= f.label "Description" %><br><br />
+      <%= image_tag "2-num.png", class: "img_number" %><%= f.label "Description" %><br><br />
     </div>
     <div class="add_margin_left">
       <%= f.text_area :description %><br /><br />
