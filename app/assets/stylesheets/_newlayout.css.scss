@@ -25,12 +25,7 @@
 
 .meta {
   color: #555;
-  font-size: 0.9em !important;
-  line-height: 1.2;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
+  font-size: 0.8em !important;
 }
 
 .flex--welcome {
@@ -69,7 +64,7 @@
   }
   p {
     font-size: 12px;
-    margin-bottom: 5px;
+    margin: 4px 0 5px 0;
     color: #545454
   }
   .ctgry_section {
@@ -239,7 +234,7 @@
 }
 
 .category a {
-  color: $highlight;
+  color: #65B19D;
   font-family: 'Kristi';
   font-size: 1.9rem;
   font-weight: bold;

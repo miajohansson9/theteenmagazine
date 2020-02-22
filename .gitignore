@@ -24,3 +24,6 @@
 /config/s3.yml
 /config/app_environment_variables.rb
 /config/secrets.yml
+
+# Ignore application configuration
+/config/application.yml

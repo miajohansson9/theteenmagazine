@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20190823035155) do
     t.string   "slug"
     t.string   "image_file_name"
     t.string   "image_content_type"
-    t.integer  "image_file_size"
+    t.bigint   "image_file_size"
     t.datetime "image_updated_at"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20190823035155) do
     t.string   "category_id"
     t.string   "thumbnail_file_name"
     t.string   "thumbnail_content_type"
-    t.integer  "thumbnail_file_size"
+    t.bigint   "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
     t.integer  "post_impressions"
     t.integer  "ranking"
@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(version: 20190823035155) do
     t.boolean  "admin"
     t.string   "profile_file_name"
     t.string   "profile_content_type"
-    t.integer  "profile_file_size"
+    t.bigint   "profile_file_size"
     t.datetime "profile_updated_at"
     t.boolean  "editor"
     t.string   "full_name"

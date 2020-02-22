@@ -10,12 +10,6 @@
   src: url("Hidden meanings.ttf");
 }
 
-$dark: #424653;
-$light: #9a9da4;
-$highlight: #65B19D;
-$border: #E9E9E9;
-$white: #FFFFFF;
-
 * {
   box-sizing: border-box;
 }
@@ -63,7 +57,7 @@ html, body {
 }
 
 .sidebar_menu {
-  background-color: $highlight;
+  background-color: #65B19D;
   margin-left: 0;
   width: 250px;
   height: 2000px;
@@ -239,7 +233,7 @@ footer {
     padding: 13px;
     &:hover {
       h3, .content, .date {
-        color: $highlight;
+        color: #65B19D;
       }
     }
     h3 {
@@ -339,6 +333,7 @@ footer {
       }
       .date {
         font-size: 12px;
+        margin-top: 4px;
         color: #545454;
       }
     }
@@ -444,8 +439,8 @@ footer {
 }
 
 .project_button {
-  background: $highlight;
-  color: $white;
+  background: #65B19D;
+  color: #FFFFFF;
   text-decoration: none;
   padding: 1em 2em;
 }
@@ -738,7 +733,7 @@ body {
 
 #page_title {
   text-align: center;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid #E9E9E9;
   padding: 3em 0;
   font-size: 1rem;
   text-transform: uppercase;
@@ -760,7 +755,7 @@ body {
   }
 
   a:hover {
-    color: $dark;
+    color: #424653;
   }
   nav {
     float: right;
@@ -768,7 +763,7 @@ body {
       margin-left: 1em;
       padding-top: 1.6em;
       &:hover {
-        color: $dark;
+        color: #424653;
       }
     }
   }
@@ -778,7 +773,7 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
   width: 100%;
   max-width: 100%;
   height: 3em;
-  border: 2px solid $border;
+  border: 2px solid #E9E9E9;
   padding: 1em;
   outline: none;
   margin: .5em 0 2em 0;
@@ -791,16 +786,16 @@ textarea {
 input[type="submit"] {
   outline: none;
   background: transparent;
-  border: 2px solid $border;
+  border: 2px solid #E9E9E9;
   text-align: center;
   font-size: 1em;
-  color: $dark;
+  color: #424653;
   text-decoration: none;
   padding: 1em 2em;
   margin-bottom: 2em;
   &:hover {
-    border: 2px solid $highlight;
-    color: $highlight;
+    border: 2px solid #65B19D;
+    color: #65B19D;
   }
 }
 
@@ -842,7 +837,7 @@ hr {
   display: block;
   height: 2px;
   border: 0;
-  border-top: 2px solid $highlight;
+  border-top: 2px solid #65B19D;
   margin: 2rem 0;
 }
 
@@ -1112,7 +1107,7 @@ hr {
     margin: 0;
 
     .logo--flex {
-      border-bottom: 3px solid $border;
+      border-bottom: 3px solid #E9E9E9;
 
       .nav-image {
         display: inline-block;

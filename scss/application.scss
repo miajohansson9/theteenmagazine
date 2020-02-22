@@ -1,11 +1,5 @@
 @import 'normalize';
 
-$dark: #424653;
-$light: #9a9da4;
-$highlight: #8bc6db;
-$border: #E9E9E9;
-$white: #FFFFFF;
-
 * {
   box-sizing: border-box;
 }
@@ -46,7 +40,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, p, ul, li {
-  color: $dark;
+  color: #424653;
 }
 
 h1 {
@@ -83,13 +77,13 @@ hr {
   display: block;
   height: 2px;
   border: 0;
-  border-top: 2px solid $highlight;
+  border-top: 2px solid #65B19D;
   margin: 2rem 0;
 }
 
 #main_navigation {
   padding: 2.5em 5%;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid #E9E9E9;
   .name {
     font-weight: 700;
     font-size: .8em;
@@ -98,23 +92,23 @@ hr {
     border: 2px solid #E9E9E9;
     padding: 1rem;
     text-decoration: none;
-    color: $dark;
+    color: #424653;
     float: left;
   }
   nav {
     float: right;
     padding-top: 1.5rem;
     .clicked {
-      color: $highlight;
+      color: #65B19D;
     }
     a {
-      color: $dark;
+      color: #424653;
       text-decoration: none;
       margin: 0 1rem;
       font-size: 1rem;
       float: left;
       &:hover {
-        color: $highlight;
+        color: #65B19D;
       }
     }
   }
@@ -141,7 +135,7 @@ hr {
 
 #page_title {
   text-align: center;
-  border-bottom: 1px solid $border;
+  border-bottom: 1px solid #E9E9E9;
   padding: 3em 0;
   font-size: 1rem;
   text-transform: uppercase;
@@ -149,7 +143,7 @@ hr {
 
 #main_footer {
   padding: 2.5em 5%;
-  border-top: 1px solid $border;
+  border-top: 1px solid #E9E9E9;
   .copyright {
     float: left;
     font-size: .9em;
@@ -158,11 +152,11 @@ hr {
   nav {
     float: right;
     i {
-      color: $dark;
+      color: #424653;
       margin-left: 1em;
       padding-top: .2em;
       &:hover {
-        color: $highlight;
+        color: #65B19D;
       }
     }
   }
@@ -172,7 +166,7 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
   width: 100%;
   max-width: 100%;
   height: 3em;
-  border: 2px solid $border;
+  border: 2px solid #E9E9E9;
   padding: 1em;
   outline: none;
   margin: .5em 0 2em 0;
@@ -185,15 +179,15 @@ textarea {
 input[type="submit"] {
   outline: none;
   background: transparent;
-  border: 2px solid $border;
+  border: 2px solid #E9E9E9;
   text-align: center;
   font-size: 1em;
-  color: $dark;
+  color: #424653;
   text-decoration: none;
   padding: 1em 2em;
   &:hover {
-    border: 2px solid $highlight;
-    color: $highlight;
+    border: 2px solid #65B19D;
+    color: #65B19D;
   }
 }
 

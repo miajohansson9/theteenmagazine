@@ -25,15 +25,15 @@
   }
   a {
     text-decoration: none;
-    color: $dark;
+    color: #424653;
     &:hover {
-      color: $highlight;
+      color: #65B19D;
     }
   }
   .date {
     font-size: .85em;
     margin-bottom: 2em;
-    color: $light;
+    color: #9a9da4;
   }
   p {
     margin: 0 0 .75em 0;
@@ -43,7 +43,7 @@
 .about {
   padding: 0 7.5% 0 0;
   a {
-    color: $highlight;
+    color: #65B19D;
     font-weight: 700;
     text-decoration: none;
   }

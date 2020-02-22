@@ -35,10 +35,10 @@
 
 .articles {
   .title {
-    border-bottom: 1px dotted $light;
+    border-bottom: 1px dotted #9a9da4;
   }
   .title, .title a {
-    color: $highlight;
+    color: #65B19D;
     margin-bottom:  10px;
     padding-bottom: 10px;
     text-shadow: 0.5px 0.5px #191919;
@@ -128,9 +128,9 @@
       a {
         font-weight: bold;
         text-decoration: none;
-        color: $dark;
+        color: #424653;
         &:hover {
-          color: $highlight;
+          color: #65B19D;
         }
       }
     }
@@ -169,7 +169,7 @@ iframe { margin: 0px auto;  display: block; }
   h1 {
     margin-top: 30px;
     margin-bottom: 15px;
-    color: $highlight;
+    color: #65B19D;
     text-shadow: 1px 1px #191919;
     font-size: 50px;
     font-family: 'Roboto Condensed', sans-serif;
@@ -280,34 +280,34 @@ hr {
     margin: 0;
     font-weight: 700;
     text-transform: uppercase;
-    color: $dark;
+    color: #424653;
     font-size: .8em;
   }
   i {
-    color: $dark;
+    color: #424653;
     padding: 1em 1.5em;
     &:hover {
-      color: $highlight;
+      color: #65B19D;
       cursor: pointer;
     }
   }
 }
 
 #admin_links {
-  border-top: 1px solid $border;
-  border-bottom: 1px solid $border;
+  border-top: 1px solid #E9E9E9;
+  border-bottom: 1px solid #E9E9E9;
   text-align: center;
   padding: 1em 0;
   margin: 3em 0;
   a {
     text-decoration: none;
-    color: $light;
+    color: #9a9da4;
     margin: 0 1em;
     font-weight: 700;
     font-size: .8em;
     text-transform: uppercase;
     &:hover {
-      color: $highlight;
+      color: #65B19D;
     }
   }
 
@@ -335,25 +335,25 @@ hr {
     border-radius: .15em;
     line-height: 20px;
     text-decoration: none;
-    background: $white;
+    background: #FFFFFF;
     font-weight: bold;
     font-size: .7em;
     font-style: normal;
-    color: $dark;
+    color: #424653;
     &:hover {
-      background: $highlight;
-      color: $white;
+      background: #65B19D;
+      color: #FFFFFF;
     }
   }
   .current {
-    background: $highlight;
-    color: $white;
+    background: #65B19D;
+    color: #FFFFFF;
   }
   .disabled {
     color: #C0C0C0;
     &:hover {
       color: #C0C0C0;
-      background: $white;
+      background: #FFFFFF;
     }
   }
 }

@@ -11,8 +11,7 @@ group :development do
   gem 'sqlite3', '~> 1.3.6'
 end
 
-gem 'puma', '~> 3.0'
-gem 'sass-rails', '~> 5.0'
+gem "puma", ">= 3.12.2"
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
@@ -23,16 +22,17 @@ gem 'pygments.rb', '~> 0.6.3'
 gem 'friendly_id', '~> 5.1'
 gem 'will_paginate', '~> 3.1', '>= 3.1.5'
 gem 'mail_form', '~> 1.5', '>= 1.5.1'
-gem 'devise', '~> 4.2'
+gem "devise", ">= 4.7.1"
 gem 'kramdown', '~> 1.9'
-gem "paperclip", "5.1.0"
-gem 'aws-sdk', '~> 2.6.44'
+gem "paperclip", ">= 5.2.0"
 gem 'ckeditor', '~> 4.2.3'
-gem 'bootstrap', '~> 4.0.0.alpha3'
+gem "bootstrap", ">= 4.3.1"
 gem 'meta-tags', '~> 2.1'
 gem 'cancancan'
 gem 'jquery-turbolinks', '~> 2.1'
 gem 'figaro'
+gem 'nokogiri', '~>1.10.8'
+gem 'aws-sdk', '~> 3'
 
 group :development, :test do
   gem 'byebug', platform: :mri
