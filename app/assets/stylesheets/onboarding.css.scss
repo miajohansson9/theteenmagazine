@@ -11,6 +11,46 @@
    }
 }
 
+.delete_btn {
+  display: block;
+  float: right;
+  margin-top: -60px;
+  color: #FF78CB;
+}
+
+.edit_btn {
+  color: #FF78CB;
+  padding: 3px 5px;
+  text-decoration: underline;
+  border-radius: 2px;
+  background-color: white;
+  float: left;
+  position: absolute;
+}
+
+.edit_btn:hover {
+  color: #FF78CB;
+}
+
+.flex-wrapper {
+  margin: 0 auto 40px auto;
+  display: flex;
+  flex-flow: row wrap; /* Shorthand – you could use ‘flex-direction: column’ and ‘flex-wrap: wrap’ instead */
+  justify-content: space-between;
+  align-items: flex-start;
+  .card {
+    margin-top: 1.2em;
+    .card-text {
+      font-size: 14px;
+    }
+    .btn {
+      background-color: #FF78CB;
+      border-color: #FF78CB;
+      float: right;
+    }
+  }
+}
+
 #edit--profile {
   .add_link input {
     margin-left: 0px !important;
@@ -228,6 +268,15 @@ h5, h3 {
   margin: 0px 10px;
   color: white;
   background-color: black;
+}
+
+@media (max-width: 720px) {
+  .flex-wrapper {
+    flex-direction: column;
+    .card {
+      width: 100% !important;
+    }
+  }
 }
 
 @media (max-width: 600px) {

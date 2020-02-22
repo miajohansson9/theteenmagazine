@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :contacts, only: [:new, :create]
   resources :applies
   resources :categories
+  resources :pitches
 
   get 'welcome/index'
   root 'welcome#index'

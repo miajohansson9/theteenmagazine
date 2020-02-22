@@ -1,0 +1,18 @@
+<div class="skinny_wrapper wrapper_padding">
+  <h1>Pitches</h1>
+  <div class="flex-wrapper">
+    <% @pitches.each do |pitch| %>
+      <div class="card" style="width: 32%;">
+        <%=image_tag(pitch.thumbnail.url(:card), alt: pitch.title, :class => "card-img-top")%>
+        <% if current_user.admin? || current_user.editor? %>
+          <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn")%>
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= pitch.title %></h5>
+          <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
+          <a href="#" class="btn btn-primary">Claim</a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

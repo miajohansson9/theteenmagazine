@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190823035155) do
+ActiveRecord::Schema.define(version: 20200222220204) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -86,6 +86,21 @@ ActiveRecord::Schema.define(version: 20190823035155) do
   create_table "mailers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pitches", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "slug"
+    t.string   "thumbnail_file_name"
+    t.string   "thumbnail_content_type"
+    t.integer  "thumbnail_file_size",    limit: 8
+    t.datetime "thumbnail_updated_at"
+    t.integer  "category_id"
+    t.integer  "user_id"
+    t.index ["slug"], name: "index_pitches_on_slug", unique: true
   end
 
   create_table "posts", force: :cascade do |t|

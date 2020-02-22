@@ -1,0 +1,22 @@
+<%= form_for @pitch do |f| %>
+  <% if @pitch.errors.any? %>
+    <h2><%= pluralize(@pitch.errors.count, "error")%> prevented this post from saving:</h2>
+    <ul>
+      <% @pitch.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= f.label :title %><br>
+  <%= f.text_field :title %>
+
+  <%= f.label :description, "Describe your idea and who the ideal reader would be (3-4 sentences)." %><br><br />
+  <%= f.text_area :description %><br /><br />
+
+  <%= f.label "Upload thumbnail image" %><br/><br />
+  <%= f.file_field :thumbnail %><br /><br />
+
+  <%= f.submit "Share Pitch" %>
+
+<% end %>
