@@ -14,7 +14,7 @@
                <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
              </div>
              <div class="thumbnail--container">
-               <p class="date"><%= post.meta_title%></p>
+               <p class="date"><%= post.category.name %></p>
                <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
                <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
              </div>

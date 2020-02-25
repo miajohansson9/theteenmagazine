@@ -5,12 +5,12 @@
       <div class="card" style="width: 32%;">
         <%=image_tag(pitch.thumbnail.url(:card), alt: pitch.title, :class => "card-img-top")%>
         <% if current_user.admin? || current_user.editor? %>
-          <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn")%>
+          <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn")%>
         <% end %>
         <div class="card-body">
-          <h5 class="card-title"><%= pitch.title %></h5>
+          <h4 class="card-title pitch_ttl"><%= pitch.title %></h4>
           <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
-          <a href="#" class="btn btn-primary">Claim</a>
+          <%= link_to "Claim", pitch, :class => "btn btn-primary" %>
         </div>
       </div>
     <% end %>

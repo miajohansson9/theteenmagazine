@@ -27,7 +27,7 @@
 <%= f.file_field :thumbnail %><br /><br />
 
 <br><%= f.label "Category" %>
-<%= f.select :meta_title, ['Academics', 'Get Involved', 'Health & Fitness', 'News', 'Lifestyle', 'Entertainment', 'Tips & Hacks', 'DIY', 'Beauty', 'Fashion', 'Travel', 'Personal Stories'] %><br />
+<%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>
 
 <br><%= f.label "Grab your ideal reader's interest in 1-2 sentences." %><br>
 <%= f.text_field :meta_description, placeholder: 'What is your article about?' %>

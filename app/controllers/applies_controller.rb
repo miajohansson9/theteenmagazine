@@ -1,5 +1,7 @@
 class AppliesController < ApplicationController
+  before_action :authenticate_user!
   before_action :is_admin?, only: [:show, :index]
+  load_and_authorize_resource
 
   #show all applications
   def index

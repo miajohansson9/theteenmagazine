@@ -19,16 +19,19 @@
 }
 
 .edit_btn {
-  color: #FF78CB;
   padding: 3px 5px;
-  text-decoration: underline;
   border-radius: 2px;
   background-color: white;
   float: left;
   position: absolute;
 }
 
-.edit_btn:hover {
+.pitch_btn {
+  color: #FF78CB;
+  text-decoration: underline;
+}
+
+.pitch_btn:hover {
   color: #FF78CB;
 }
 
@@ -48,6 +51,30 @@
       border-color: #FF78CB;
       float: right;
     }
+  }
+}
+
+.thumbnail_img {
+  max-width: 300px;
+  width: 100%;
+}
+
+.pitch_ttl {
+  font-family: "Playfair Display";
+}
+
+.pitch_usr {
+  font-size: 16px;
+  margin-top: 0px;
+  font-style: italic;
+}
+
+.pitch_flds {
+  input, select, label {
+    display: block;
+  }
+  .margin_flds {
+    margin: 25px 0;
   }
 }
 

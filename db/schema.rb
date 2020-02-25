@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200222220204) do
+ActiveRecord::Schema.define(version: 20200225185152) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20200222220204) do
     t.datetime "thumbnail_updated_at"
     t.integer  "category_id"
     t.integer  "user_id"
+    t.integer  "claimed_id"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
   end
 
@@ -107,11 +108,10 @@ ActiveRecord::Schema.define(version: 20200222220204) do
     t.string   "title"
     t.text     "content"
     t.string   "link"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "slug"
     t.string   "image"
-    t.text     "meta_title"
     t.text     "meta_description"
     t.text     "keywords"
     t.string   "category"
@@ -123,11 +123,12 @@ ActiveRecord::Schema.define(version: 20200222220204) do
     t.string   "category_id"
     t.string   "thumbnail_file_name"
     t.string   "thumbnail_content_type"
-    t.bigint   "thumbnail_file_size"
+    t.integer  "thumbnail_file_size",    limit: 8
     t.datetime "thumbnail_updated_at"
     t.integer  "post_impressions"
     t.integer  "ranking"
     t.string   "collaboration"
+    t.integer  "pitch_id"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 

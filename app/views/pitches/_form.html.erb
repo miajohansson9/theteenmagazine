@@ -8,15 +8,22 @@
     </ul>
   <% end %>
 
-  <%= f.label :title %><br>
-  <%= f.text_field :title %>
+  <div class="pitch_flds">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
 
-  <%= f.label :description, "Describe your idea and who the ideal reader would be (3-4 sentences)." %><br><br />
-  <%= f.text_area :description %><br /><br />
+    <%= f.label :description, "Describe your idea and who the ideal reader would be (3-4 sentences)." %>
+    <%= f.text_area :description %>
 
-  <%= f.label "Upload thumbnail image" %><br/><br />
-  <%= f.file_field :thumbnail %><br /><br />
+    <div class="margin_flds">
+      <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>
+    </div>
 
-  <%= f.submit "Share Pitch" %>
+    <div class="margin_flds">
+      <%= f.label "Upload thumbnail image" %>
+      <%= f.file_field :thumbnail %>
+    </div>
 
+    <%= f.submit "Share Pitch" %>
+  </div>
 <% end %>

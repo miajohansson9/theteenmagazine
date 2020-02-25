@@ -16,6 +16,9 @@ class Ability
       can :create, Post
       can :read, Post
       can :manage, User, id: user.id
+
+      can :read, Pitch
+      can :manage, Pitch, claimed_id: user.id
     end
 
     # Define abilities for the passed in user here. For example:

@@ -43,28 +43,26 @@ class PostsController < ApplicationController
   end
 
   def new
-    if user_signed_in?
-      @post = current_user.posts.build
-    else
-      @post = Post.new
-    end
+    @categories = Category.all
+    @post = current_user.posts.build
   end
 
   def create
-    if user_signed_in?
-      @post = current_user.posts.build(post_params)
-      @category = Category.where(name: post_params[:meta_title]).first
-      @post.category = @category
-      @post.category_id = @category.id
-      if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
-          @post.content = @post.content << "<script>instgrm.Embeds.process()</script>"
-      end
-    else
-      @post = Post.new(post_params)
+    @categories = Category.all
+    @post = current_user.posts.build(post_params)
+    if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
+        @post.content = @post.content << "<script>instgrm.Embeds.process()</script>"
+    end
+    if !@post.pitch.nil?
+      @post.thumbnail = @post.pitch.thumbnail
     end
 
     if @post.save && @post.approved && @post.after_approved
       redirect_to @post, notice: "Congrats! Your post was successfully published on The Teen Magazine!"
+    elsif @post.save && !@post.pitch.nil? && @post.pitch.claimed_id.nil?
+      @post.pitch.claimed_id = current_user.id
+      @post.pitch.save
+      redirect_to @post, notice: "You claimed this pitch!"
     elsif @post.save
       redirect_to @post, notice: "Changes were successfully saved!"
     else
@@ -85,13 +83,12 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @categories = Category.all
   end
 
   def update
+    @categories = Category.all
     if @post.update post_params
-      @category = Category.where(name: post_params[:meta_title]).first
-      @post.category = @category
-      @post.category_id = @category.id
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
           @post.content << "<script>instgrm.Embeds.process()</script>"
       end
@@ -110,7 +107,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :thumbnail, :ranking, :content, :image, :category, :category_id, :post_impressions, :meta_title, :meta_description, :keywords, :user_id, :admin_id, :waiting_for_approval, :approved, :collaboration, :after_approved, :created_at, :slug)
+    params.require(:post).permit(:title, :thumbnail, :ranking, :content, :image, :category_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :collaboration, :after_approved, :created_at, :slug)
   end
 
   def find_post_history

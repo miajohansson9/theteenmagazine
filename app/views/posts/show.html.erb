@@ -11,6 +11,9 @@
 <% end %>
 
 <div class="div">
+  <% if !@post.approved %>
+    <p class="banner_stts">DRAFT</p>
+  <% end %>
   <div class="post_image">
   </div>
 </div>
