@@ -1,5 +1,6 @@
 <div class="skinny_wrapper wrapper_padding">
-  <h1>Pitches</h1>
+  <h1 class="pitch_ttl">Editor Pitches</h1>
+  <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. You will have two weeks to submit your article for review. If your article is not submitted within two weeks and/or not approved within one month of claiming the topic, the pitch will become unclaimed and any writer can claim it. If another writer claims the pitch during that time, your article will become locked and you will no longer be able to make changes to it.</i>
   <div class="flex-wrapper">
     <% @pitches.each do |pitch| %>
       <div class="card" style="width: 32%;">
@@ -10,7 +11,7 @@
         <div class="card-body">
           <h4 class="card-title pitch_ttl"><%= pitch.title %></h4>
           <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
-          <%= link_to "Claim", pitch, :class => "btn btn-primary" %>
+          <%= link_to "Claim Article Pitch", pitch, :class => "btn btn-primary" %>
         </div>
       </div>
     <% end %>
