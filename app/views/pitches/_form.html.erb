@@ -24,6 +24,10 @@
       <%= f.file_field :thumbnail %>
     </div>
 
-    <%= f.submit "Share Pitch" %>
+    <% if @pitch.slug.nil? %>
+      <%= f.submit "Share Pitch" %>
+    <% else %>
+      <%= f.submit "Save Changes" %>
+    <% end %>
   </div>
 <% end %>

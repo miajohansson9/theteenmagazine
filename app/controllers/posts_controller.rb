@@ -49,24 +49,29 @@ class PostsController < ApplicationController
 
   def create
     @categories = Category.all
-    @post = current_user.posts.build(post_params)
-    if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
-        @post.content = @post.content << "<script>instgrm.Embeds.process()</script>"
-    end
-    if !@post.pitch.nil?
-      @post.thumbnail = @post.pitch.thumbnail
-    end
-
-    if @post.save && @post.approved && @post.after_approved
-      redirect_to @post, notice: "Congrats! Your post was successfully published on The Teen Magazine!"
-    elsif @post.save && !@post.pitch.nil? && @post.pitch.claimed_id.nil?
-      @post.pitch.claimed_id = current_user.id
-      @post.pitch.save
-      redirect_to @post, notice: "You claimed this pitch!"
-    elsif @post.save
-      redirect_to @post, notice: "Changes were successfully saved!"
+    @prev_post_pitch = current_user.posts.where(pitch_id: post_params[:pitch_id]).last
+    if !@prev_post_pitch.nil?
+      @prev_post_pitch.pitch.claimed_id = current_user.id
+      @prev_post_pitch.pitch.save
+      redirect_to @prev_post_pitch, notice: "You've reclaimed this pitch!"
     else
-      render 'new', notice: "Oh no! Your post was not able to be saved!"
+      @post = current_user.posts.build(post_params)
+      if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
+          @post.content = @post.content << "<script>instgrm.Embeds.process()</script>"
+      end
+      if @post.save && @post.approved && @post.after_approved
+        redirect_to @post, notice: "Congrats! Your post was successfully published on The Teen Magazine!"
+      elsif @post.save && !@post.pitch.nil? && @post.pitch.claimed_id.nil?
+        @post.thumbnail = @post.pitch.thumbnail
+        @post.save
+        @post.pitch.claimed_id = current_user.id
+        @post.pitch.save
+        redirect_to @post, notice: "You've claimed this pitch!"
+      elsif @post.save
+        redirect_to @post, notice: "Changes were successfully saved!"
+      else
+        render 'new', notice: "Oh no! Your post was not able to be saved!"
+      end
     end
   end
 
@@ -100,8 +105,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    if !@post.pitch.try(:claimed_id).nil?
+      @post.pitch.claimed_id = nil
+      @post.pitch.save
+    end
     @post.destroy
-    redirect_to welcome_index_path
+    redirect_to current_user, notice: "Your article was deleted."
   end
 
   private

@@ -19,7 +19,7 @@ class Post < ApplicationRecord
   scope :after_approved, -> {
   where(:after_approved => nil, :approved => true)
   }
-
+  
   has_attached_file :thumbnail, styles: {
       medium: '270x170#',
       large: '560x280#',
