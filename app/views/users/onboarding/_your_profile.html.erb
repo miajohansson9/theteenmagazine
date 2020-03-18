@@ -1,11 +1,11 @@
 <div class="stair_step">
   <a href="/onboarding?page=welcome" class="node">
-    <span class="progress">
+    <span class="progress_step">
       &#x25cf;
       <p>Welcome</p>
     </span>
   </a>
-  <span class="progress">◦<p>Your Profile</p></span>
+  <span class="progress_step">◦<p>Your Profile</p></span>
   <span>◦<p>Next Steps</p></span>
   <div class="hr">
     <hr />
@@ -85,7 +85,7 @@
 
     <% @full = @user.first_name + " " + @user.last_name %>
     <%= f.hidden_field :full_name, :value => @full %>
-    <%= f.hidden_field :posts_count, :value => @user.posts.approved.count %>
+    <%= f.hidden_field :posts_count, :value => @user.posts.published.count %>
   </div>
   <%= f.submit "Preview Profile", :id => "onboarding_button" %>
   <% end %>

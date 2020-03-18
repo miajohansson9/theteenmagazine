@@ -1,9 +1,9 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:privacy, :team, :submitted, :subscribe]
-  layout "minimal"
+  layout "minimal", except: [:about, :team, :subscribe, :privacy]
 
   def subscribe
-    @posts_approved = Post.approved.all.order("created_at desc")
+    @posts_approved = Post.published.all.order("created_at desc")
   end
 
   def team

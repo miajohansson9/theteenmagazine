@@ -27,8 +27,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
@@ -70,7 +70,8 @@
       <a href="/categories/personal-stories">Personal Stories</a>
       <a href="/contacts/new">Contact</a>
       <% if current_user && (current_user.admin? || current_user.editor?) %>
-        <%= link_to "Users", users_path %>
+        <%= link_to "Writers", users_path %>
+        <%= link_to "Editing", reviews_path %>
       <% end %>
       <% if user_signed_in? %>
          <%= link_to "Pitches", pitches_path %>
@@ -83,6 +84,11 @@
       </div>
     </div>
     <div class="bodywrapper">
+      <% if notice %>
+        <p class="notice"><%= notice %></p>
+        <% elsif alert %>
+        <p class="alert"><%= alert %></p>
+      <% end %>
       <header id="main_navigation" class="clearfix">
         <div id="banner">
           <div class="logo--flex banner_item" style="margin-top: 0;">
@@ -110,7 +116,8 @@
             <a class="link" href="/categories/entertainment">Entertainment</a>
             <a class="link" href="/categories/fashion">Fashion</a>
             <% if current_user && (current_user.admin? || current_user.editor?) %>
-              <%= link_to "Users", users_path, class: "link" %>
+              <%= link_to "Writers", users_path, class: "link" %>
+              <%= link_to "Editing", reviews_path, class: "link" %>
             <% end %>
             <% if user_signed_in? %>
               <%= link_to "Pitches", pitches_path, class: "link" %>
@@ -123,11 +130,6 @@
           </nav>
         </div>
       </header>
-      <% if notice %>
-        <p class="notice"><%= notice %></p>
-        <% elsif alert %>
-        <p class="alert"><%= alert %></p>
-      <% end %>
       <%= yield %>
     </div>
     <footer id="main_footer">

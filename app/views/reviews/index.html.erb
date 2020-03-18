@@ -1,0 +1,50 @@
+<div class="skinny_wrapper wrapper_padding pitches_wrapper reviews_wrapper">
+  <h1 class="pitch_ttl">Articles you're editing</h1>
+  <% @editors_reviews.each do |draft| %>
+    <div class="flex--postlist--item review_items">
+      <div class="inside--item">
+        <%= link_to (image_tag draft.thumbnail(:medium)), edit_post_path(draft) %>
+        <div>
+          <h4 class="pitch_ttl"><%= link_to draft.title, edit_post_path(draft)%></h4>
+          <% @deadline = draft.reviews.last.updated_at < Time.now - 5.days %>
+          <p class="edited_dt <% if @deadline %> deadline_dt <% end %>"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.updated_at) %></p>
+          <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %></p>
+          <p class="edit_lnk"><%= link_to "Edit Article", edit_post_path(draft) %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% if current_user.admin? %>
+    <h1 class="pitch_ttl">All articles under review</h1>
+    <% @all_reviews.each do |draft| %>
+      <div class="flex--postlist--item review_items">
+        <div class="inside--item">
+          <div>
+            <h4 class="pitch_ttl" style="padding: 0px;"><%= link_to draft.title, edit_post_path(draft)%></h4>
+            <% @editor = User.find(draft.reviews.last.editor_id) %>
+            <% @deadline = draft.reviews.last.created_at > 7.days %>
+            <p class="edited_dt" style="padding: 0px;"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) + " days ago and is being reviewed by " %><%= link_to(@editor.full_name, @editor, style: "vertical-align: baseline;") %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <h1 class="pitch_ttl">Article submissions</h1>
+  <div class="flex-wrapper">
+    <% @submitted_for_review.each do |draft| %>
+      <div class="card card-review" style="width: 100%;">
+        <h4 class="card-title pitch_ttl"><%= link_to draft.title, draft %></h4>
+        <div class="card-bottom-flex">
+          <%= image_tag draft.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
+          <div>
+            <% if !draft.pitch.blank? %>
+              <p class="card-text"> <%= draft.pitch.description.truncate_words(20) %></p>
+            <% end %>
+            <p class="card-text"> Submitted by <%= link_to draft.user.full_name, draft.user %> on <%= draft.reviews.last.updated_at.strftime("%A, %b %d") %> </p>
+          </div>
+          <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

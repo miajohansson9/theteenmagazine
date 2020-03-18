@@ -22,7 +22,7 @@
           <% end %>
           <%= render 'profile' %>
         </div>
-        <div class="initial--training--wrapper">
+        <div class="dashboard--articles--wrapper">
           <h1 id="page_title">Welcome to The Teen Magazine!</h1>
           <p>When you publish your first article, you will become an official writer for The Teen Magazine and will receive your own
           author page.</p>
@@ -44,16 +44,16 @@
           <% @user_posts.each do |post| %>
           <div class="flex--postlist--item">
             <div class="inside--item">
-              <% if post.approved && post.after_approved == true %>
+              <% if post.published && post.after_approved == true %>
               <%= image_tag "published.png", class: "icon" %>
-              <% elsif post.waiting_for_approval && (post.approved == nil || post.approved == false) %>
+              <% elsif post.waiting_for_approval && (post.published == nil || post.published == false) %>
               <%= image_tag "waiting.png", class: "icon" %>
-              <% elsif post.approved && post.after_approved == nil %>
+              <% elsif post.published && post.after_approved == nil %>
               <%= image_tag "approved.png", class: "icon" %>
               <% else %>
               <%= image_tag "saved.png", class: "icon" %>
               <% end %>
-                <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
+              <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
             </div>
           </div>
           <% end %>
@@ -61,13 +61,14 @@
           <%= link_to "New Article", new_post_path(@post), class: "newpost--new--profile" %>
         </div>
       </div>
-      <div class="new--writer--flex--two">
+      <div class="dashboard--writer--flex--two">
         <div class="links">
           <div>
             <a href="/users/<%= @user.slug %>/edit">Edit Profile</a>
             <%= link_to("Change Password", edit_user_registration_path) %>
             <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
             <%= link_to("Editor Pitches", pitches_path) %>
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
           </div>
         </div>
         <br />

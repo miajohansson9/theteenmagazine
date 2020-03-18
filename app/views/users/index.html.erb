@@ -1,14 +1,3 @@
-<h1 id="page_title" style="border-bottom: none; margin-bottom: -20px;">Submitted Articles</h1>
-<div id="posts_wrapper" class="index_users">
-  <div class="skinny_wrapper submitted--articles">
-    <% @posts_waiting.each do |post| %>
-    <div class="flex--postlist--item">
-        <h6 id="post_title"><a href="#"><%= link_to post.title, post%></a></h6>
-        <h6 id="date"><%= post.created_at.strftime('%A, %B %d') %></h6>
-    </div>
-    <% end %>
-  </div>
-</div>
 <h1 id="page_title" style="border-bottom: none; margin-bottom: -20px; margin-top: 0px;">Submitted Profiles</h1>
 <div id="posts_wrapper" class="index_users">
   <div class="skinny_wrapper profiles--flex">

@@ -1,5 +1,24 @@
-<h1 id="page_title">Edit Post</h1>
-  <div class="skinny_wrapper wrapper_padding">
-    <%= render 'form' %>
-  </div>
+<% @most_recent_review = @post.reviews.where.not(status: "In Progress").last %>
+<% if !@most_recent_review.nil? && (!@most_recent_review.try(:status).eql? "Rejected") %>
+  <%= render '/posts/banner_status' %>
+<% end %>
+<div class="skinny_wrapper wrapper_padding">
+  <% if @most_recent_review.try(:status).eql? "Rejected" %>
+  <% if !@most_recent_review.notes.blank? %>
+   <br><i style="background-color: yellow;">Editor Notes: <%= @most_recent_review.notes %></i>
+  <% end %>
+    <div class="card mb-3 changes_requested">
+      <div class="card-header">The below problems prevented this article from being published.</div>
+      <div class="card-body">
+        <% @requested_changes.each do |requested_change| %>
+          <% @feedback = Feedback.find(requested_change.feedback_id) %>
+          <h5 class="card-title">✎ <%= @feedback.try(:editor_descr) %></h5>
+          <p class="card-text"><%= @feedback.try(:review_descr) %></p>
+        <% end %>
+      </div>
+     </div>
+     <i style="color: #757575;">Please complete the changes above and submit your article again for consideration.</i>
+  <% end %>
+  <%= render 'form' %>
+</div>
 <br>

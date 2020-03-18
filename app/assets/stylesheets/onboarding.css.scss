@@ -11,6 +11,83 @@
    }
 }
 
+.changes_requested {
+  margin: 20px 10px 10px 10px;
+  background-color: #ffeded;
+}
+
+.review_frm {
+  background-color: #FFFBDA;
+  margin-bottom: 1.5em;
+  input {
+    margin: 0.5em 0;
+  }
+}
+
+.changes_requested, .review_frm {
+  .card-title, h6 {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  .card-text {
+    font-size: 13px;
+    font-style: italic;
+    color: #757575;
+  }
+}
+
+#edit_post {
+  padding-top: 30px;
+  #cke_1_contents {
+    height: 400px !important;
+  }
+}
+
+.pitches_wrapper {
+  .flex-wrapper {
+    margin: 0 auto 40px auto;
+    display: flex;
+    flex-flow: row wrap; /* Shorthand – you could use ‘flex-direction: column’ and ‘flex-wrap: wrap’ instead */
+    align-items: flex-start;
+    .card-review {
+      padding: 30px;
+      p {
+        margin: 5px 0;
+      }
+    }
+    .card {
+      margin-top: 1.2em;
+      margin: 10px 0.5%;
+      .card-text {
+        font-size: 14px;
+      }
+      .card-bottom-flex {
+        display: flex;
+        position: relative;
+        #review_img {
+          padding: 10px;
+        }
+        .btn {
+          position: absolute;
+          bottom:0px;
+          right:0px;
+        }
+      }
+      .btn {
+        background-color: #FF78CB;
+        border-color: #FF78CB;
+        float: right;
+        height: 38px;
+      }
+    }
+  }
+}
+
+.thumbnail_img {
+  max-width: 300px;
+  width: 100%;
+}
+
 .delete_btn {
   display: block;
   float: right;
@@ -33,30 +110,6 @@
 
 .pitch_btn:hover {
   color: #FF78CB;
-}
-
-.flex-wrapper {
-  margin: 0 auto 40px auto;
-  display: flex;
-  flex-flow: row wrap; /* Shorthand – you could use ‘flex-direction: column’ and ‘flex-wrap: wrap’ instead */
-  justify-content: space-between;
-  align-items: flex-start;
-  .card {
-    margin-top: 1.2em;
-    .card-text {
-      font-size: 14px;
-    }
-    .btn {
-      background-color: #FF78CB;
-      border-color: #FF78CB;
-      float: right;
-    }
-  }
-}
-
-.thumbnail_img {
-  max-width: 300px;
-  width: 100%;
 }
 
 .pitch_ttl {
@@ -160,12 +213,16 @@ a {
   color: #65B19D;
 }
 
+a:hover {
+  color: #65B19D;
+}
+
 h5, h3 {
   margin: 20px 0;
 }
 
 .node {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .new--writer--wrapper {
@@ -195,7 +252,7 @@ h5, h3 {
 
 .stair_step {
   text-align: center;
-  .progress, .progress p {
+  .progress_step, .progress_step p {
     color: #65B19D !important;
     border-top-color: #65B19D !important;
   }
@@ -206,6 +263,7 @@ h5, h3 {
     color: #DCDCDC;
     font-size: 25px;
     width: 75px;
+    line-height: 30px;
     p {
       margin: 0;
       font-size: 14px;
@@ -242,7 +300,7 @@ h5, h3 {
   }
 }
 
-.initial--training--wrapper {
+.dashboard--articles--wrapper {
   margin-top: 20px;
   p, ul, li {
     margin: 10px;

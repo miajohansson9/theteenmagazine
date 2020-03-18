@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user_posts = @user.posts.all.order("created_at desc")
-    @user_posts_approved = @user.posts.all.approved.order("created_at desc")
+    @user_posts_approved = @user.posts.published.order("created_at desc")
     @posts = Post.all.order("created_at desc");
     if @user_posts_approved.length < 1
       begin
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all.order("created_at desc")
-    @posts_waiting = Post.all.waiting_for_approval
+    @posts_waiting = Post.all.submitted
     @users_waiting = User.all.review_profile
   end
 
@@ -59,10 +59,10 @@ class UsersController < ApplicationController
       if params[:redirect] != nil
         redirect_to onboarding_path(page: params[:redirect])
       else
-        redirect_to @user
+        redirect_to @user, notice: "Your profile has been updated."
       end
     else
-      render 'edit'
+      render 'edit', alert: "Changes were unable to be saved."
     end
   end
 

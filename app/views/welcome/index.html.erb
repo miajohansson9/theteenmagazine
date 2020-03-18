@@ -19,7 +19,7 @@
                 <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title, :class => "image_thumbnail"), post )%>
                 <div class="thumbnail--container">
                   <h3 class="article_title"><a href="#"><%= link_to post.title, post %></a></h3>
-                  <p class="date"><%= post.created_at.strftime("%A, %b %d")%></p>
+                  <p class="date"><%= post.publish_at.strftime("%A, %b %d")%></p>
                 </div>
               </div>
             <% end %>
@@ -43,7 +43,7 @@
             <div class="ctgry_article" style="width: 23%;">
               <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
               <h1><%= link_to post.title, post %></h1>
-              <p><%= post.created_at.strftime("%A, %b %d")%></p>
+              <p><%= post.publish_at.strftime("%A, %b %d")%></p>
               <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
             </div>
           <% end %>
@@ -59,7 +59,7 @@
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
-            <p><%= post.created_at.strftime("%A, %b %d")%></p>
+            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
           </div>
         <% end %>
@@ -71,7 +71,7 @@
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
-            <p><%= post.created_at.strftime("%A, %b %d")%></p>
+            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
           </div>
         <% end %>
@@ -84,7 +84,7 @@
             <div class="ctgry_grid_article">
               <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
               <h1><%= link_to post.title, post %></h1>
-              <p><%= post.created_at.strftime("%A, %b %d")%></p>
+              <p><%= post.publish_at.strftime("%A, %b %d")%></p>
               <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
             </div>
           <% end %>
@@ -112,7 +112,7 @@
           <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>
           <h1><%= link_to post.title, post %></h1>
           <p class="category"><%= link_to(post.category.name, post.category) %></p>
-          <p><%= post.created_at.strftime("%A, %b %d")%></p>
+          <p><%= post.publish_at.strftime("%A, %b %d")%></p>
           <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
         </div>
       <% else %>
@@ -120,7 +120,7 @@
           <div class="article_description">
             <h1><%= link_to post.title, post %></h1>
             <p class="category"><%= link_to(post.category.name, post.category) %></p>
-            <p><%= post.created_at.strftime("%A, %b %d")%></p>
+            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
             <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
           </div>
           <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post, class: "image_recent_articles" )%>

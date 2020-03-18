@@ -1,3 +1,3 @@
 class Impression < ApplicationRecord
-  belongs_to :article
+  belongs_to :post
 end

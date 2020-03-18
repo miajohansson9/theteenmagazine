@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :applies
   resources :categories
   resources :pitches
+  resources :reviews
+  resources :feedbacks
 
   get 'welcome/index'
   root 'welcome#index'

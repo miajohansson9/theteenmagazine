@@ -5,58 +5,60 @@
  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #65B19D;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
 </script>
 
-<%= form_for @post do |f| %>
-  <% if @post.errors.any? %>
-    <h2><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h2>
-    <ul>
-      <% @post.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
+<div id="edit_post">
+  <%= form_for @post do |f| %>
+    <% if @post.errors.any? %>
+      <h2><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h2>
+      <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <br>
+    <%= f.label :content, "Write your article here. Make sure you are saving often." %><br>
+    <%= f.cktext_area :content %>
+    <br>
+    <%= f.label "Upload thumbnail image:" %>
+    <%= f.file_field :thumbnail %>
+    <br>
+    <br>
+    <%= f.label "Category:" %>
+    <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>
+    <br>
+    <br>
+    <%= f.label "Grab your ideal reader's interest in 1-2 sentences." %>
+    <%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
+    <br>
+    <span>If you are writing an article with another writer, you may put their email here to share the article with them.</span>
+    <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
+
+    <%= f.fields_for :reviews, @review do |rv| %>
+      <% if current_user.id == @post.reviews.last.editor_id %>
+        <div class="card review_frm">
+          <div class="card-header">
+            <h6>Editor Feedback Form</h6>
+          </div>
+          <div class="card-body">
+            <% @feedbacks.each_with_index do |feedback, index| %>
+              <%= f.check_box :feedback_list, { :multiple => true, checked: !(@review.try(:feedback_givens).where(feedback_id: feedback.id).blank?) }, feedback.id, nil %>
+              <%= feedback.editor_descr %><br>
+            <% end %>
+            <br>
+            <%= rv.label "Editor Notes:" %>
+            <%= rv.text_field :notes, placeholder: "(Optional) Share any additional comments you have about this article." %>
+          </div>
+        </div>
       <% end %>
-    </ul>
+      <%= f.label "Article Status:" %>
+      <% @statuses = current_user.editor? ? ["In Progress", "Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review"] %>
+      <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
+    <% end %>
+    <br>
+    <br>
+    <%= f.submit "Save Changes" %>
   <% end %>
-
-<%= f.label :title %><br>
-<%= f.text_field :title %>
-
-<br>
-
-<%= f.label :content, "Write your article here" %><br><br />
-<%= f.cktext_area :content %><br /><br />
-
-<%= f.label "Upload thumbnail image" %><br/><br />
-<%= f.file_field :thumbnail %><br /><br />
-
-<br><%= f.label "Category" %>
-<%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>
-
-<br><%= f.label "Grab your ideal reader's interest in 1-2 sentences." %><br>
-<%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
-
-<br><span>If you are writing an article with another writer, you may put their email here to share the article with them.</span><br>
-<%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
-
-<% if @post.approved == true %>
-  <% if @post.after_approved == nil %>
-    <%= f.hidden_field :created_at, :value => Time.now %>
-    <%= f.hidden_field :after_approved, :value => true %>
-    <br><%= f.submit "Publish My Article" %>
-  <% else %>
-    <br><%= f.submit "Publish Changes" %>
-  <% end %>
-<% else %>
-  <br><%= f.label "Submit My Article For Approval" %>
-  <%= f.check_box :waiting_for_approval %><br>
-  <%= f.hidden_field :approved, :value => false %><br>
-  <br><%= f.submit "Save & Preview" %>
-<% end %>
-
-<% if :user_id == nil %>
-<%= f.hidden_field :user_id, :value => current_user.id %>
-<% end %>
-
-<% if (current_user && (current_user.admin? || current_user.editor?)) %>
-<br><%= f.label "Approve" %>
-<%= f.check_box :approved %><br /><br />
-<% end %>
-
-<% end %>
+</div>

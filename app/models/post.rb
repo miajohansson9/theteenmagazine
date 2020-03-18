@@ -3,23 +3,37 @@ class Post < ApplicationRecord
   belongs_to :pitch, optional: true
   belongs_to :category
   has_many :impressions
+  has_many :reviews
 
   validates :title, :presence => true
   validates :content, :presence => true
 
-  scope :approved, -> {
-  where(approved: true, after_approved: true)
+  scope :draft, -> {
+    joins(:reviews).where(:reviews => {:status => nil })
+    .or(joins(:reviews).where(:reviews => {:status => "In Progress", active: [nil, true]}))
   }
-  scope :waiting_for_approval, -> {
-  where(waiting_for_approval: true, approved: false)
+  scope :submitted, -> {
+    joins(:reviews).where(:reviews => {:status => "Ready for Review", active: true})
   }
-  scope :waiting_to_be_published, -> {
-  where(approved: true, after_approved: nil)
+  scope :rejected, -> {
+    joins(:reviews).where(:reviews => {:status => "Rejected", active: true})
   }
-  scope :after_approved, -> {
-  where(:after_approved => nil, :approved => true)
+  scope :in_review, -> {
+    joins(:reviews).where(:reviews => {:status => "In Review", active: true})
   }
-  
+  scope :scheduled_for_publishing, -> {
+    joins(:reviews).where.not("publish_at < ?", Time.now).where(:reviews => {:status => "Approved for Publishing", active: true})
+  }
+  scope :published, -> {
+    joins(:reviews).where(:reviews => {:status => "Approved for Publishing", active: true}).where("publish_at < ?", Time.now)
+  }
+
+  def is_published?
+    @published = publish_at.present? ? (publish_at < Time.now) : false
+  end
+
+  accepts_nested_attributes_for :reviews
+
   has_attached_file :thumbnail, styles: {
       medium: '270x170#',
       large: '560x280#',

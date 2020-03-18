@@ -4,18 +4,18 @@
     <hr />
   </div>
   <a href="/onboarding?page=welcome" class="node">
-    <span class="progress">
+    <span class="progress_step">
       &#x25cf;
       <p>Welcome</p>
     </span>
   </a>
   <a href="/onboarding?page=your_profile" class="node">
-    <span class="progress">
+    <span class="progress_step">
       &#x25cf;
       <p>Your Profile</p>
     </span>
   </a>
-  <span class="progress">◦<p>Next Steps</p></span>
+  <span class="progress_step">◦<p>Next Steps</p></span>
 </div>
 <div class="onboarding_page_container">
   <div id="onboarding_page">
@@ -24,9 +24,9 @@
     <p style="margin-top: 10px;">Great job! One of our amazing editors will review your profile as soon as possible.
       You will be notified <b>via email</b> within 48 hours.</p>
     <h5>Next Steps:</h5>
-    <p>On your new writer dashboard, you will find three introductory courses that will walk you through
+    <p>On your new writer dashboard, you will find resources that will walk you through
        writing your first article. Once completed, your full writer account will be
-       activated, and you will be able to access The Teen Magazine's full writer resources.</p>
+       activated, and you will get your own Author page on The Teen Magazine.</p>
   </div>
   <%= link_to "Go to Dashboard!", user_path(current_user.slug), :id => "onboarding_button" %>
 </div>

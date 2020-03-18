@@ -1,0 +1,12 @@
+  <% @message = (@most_recent_review.status.eql? "Ready for Review") ? "Submitted For Review" : @most_recent_review.status %>
+  <% if @most_recent_review.status == "Ready for Review" %>
+    <% @banner_color = "#61BD4F" %>
+  <% elsif @most_recent_review.status == "In Review" %>
+    <% @banner_color = "#F2D600" %>
+  <% elsif @most_recent_review.status == "Rejected" %>
+    <% @banner_color = "#EB5946" %>
+  <% else %>
+    <% @banner_color = "#00A9FF" %>
+  <% end %>
+  <p class="banner_stts" style="background-color: <%= @banner_color %>">This article's status changed to <b><%= @message %></b> on <%= @most_recent_review.created_at.strftime("%A, %B %d") %></p>
+  <br><br>

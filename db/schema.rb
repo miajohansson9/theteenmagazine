@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200225185152) do
+ActiveRecord::Schema.define(version: 20200318013602) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -65,6 +65,20 @@ ActiveRecord::Schema.define(version: 20200225185152) do
     t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
+  create_table "feedback_givens", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "feedback_id"
+    t.integer  "review_id"
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.text     "editor_descr"
+    t.text     "review_descr"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
@@ -108,8 +122,8 @@ ActiveRecord::Schema.define(version: 20200225185152) do
     t.string   "title"
     t.text     "content"
     t.string   "link"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.string   "slug"
     t.string   "image"
     t.text     "meta_description"
@@ -129,6 +143,8 @@ ActiveRecord::Schema.define(version: 20200225185152) do
     t.integer  "ranking"
     t.string   "collaboration"
     t.integer  "pitch_id"
+    t.datetime "publish_at"
+    t.integer  "feedback_list",                    default: 0
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
@@ -140,6 +156,17 @@ ActiveRecord::Schema.define(version: 20200225185152) do
     t.datetime "updated_at",  null: false
     t.string   "slug"
     t.index ["slug"], name: "index_projects_on_slug", unique: true
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "post_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.text     "status"
+    t.boolean  "active"
+    t.integer  "editor_id"
+    t.text     "notes"
+    t.integer  "feedback",   default: 0
   end
 
   create_table "users", force: :cascade do |t|

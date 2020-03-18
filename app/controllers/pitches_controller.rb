@@ -28,11 +28,17 @@ class PitchesController < ApplicationController
 
   def update
     @categories = Category.all
-    @message = @pitch.claimed_id == current_user.id && pitch_params[:claimed_id].blank? ?
-               "You've unclaimed this pitch." : "Changes were successfully saved!"
+    if @pitch.claimed_id == current_user.id && pitch_params[:claimed_id].blank?
+      current_user.posts.where(pitch_id: @pitch.id).last.reviews.each do |review|
+        review.destroy
+      end
+      @message = "You've unclaimed this pitch."
+    else
+      @message = "Changes were successfully saved!"
+    end
     if @pitch.update pitch_params
       @pitch.save
-      redirect_to pitch_path, notice: @message
+      redirect_to @pitch, notice: @message
     else
       render 'edit', notice: "Oops, something went wrong."
     end
