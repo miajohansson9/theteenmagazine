@@ -13,7 +13,7 @@
           <% @deadline = post.pitch.updated_at + 14.days %>
         <% end %>
         <% if @deadline.present? %>
-          <p <% if @deadline - Time.now < 7.days %>class="deadline_dt" <% end %>><%= "The deadline to submit this article for review is in " + distance_of_time_in_words_to_now(@deadline) + "." %></p>
+          <p <% if @deadline - Time.now < 7.days %>class="deadline_dt" <% end %>><%= "The deadline to submit this article is in " + distance_of_time_in_words_to_now(@deadline) + "." %></p>
         <% end %>
       <% elsif (post.reviews.last.try(:status).eql? "Approved for Publishing") %>
         <p><%= "Great job! This article will be published on " + post.publish_at.localtime.strftime("%D at %I:%M %p") + "." %></p>

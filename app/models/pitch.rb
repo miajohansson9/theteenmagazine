@@ -1,12 +1,13 @@
 class Pitch < ApplicationRecord
   belongs_to :user
   belongs_to :category
+  has_many :posts
 
   validates :title, :presence => true
   validates :description, :presence => true
   validates :category_id, :presence => true
   validates :thumbnail, :presence => true
-
+  
   has_attached_file :thumbnail, styles: {
       card: '540x380#'
     }

@@ -116,7 +116,6 @@
 .guidelines {
   display: flex;
   flex-direction: row;
-  margin-top: 50px;
   margin-right: -2px;
   margin-left: -4px;
   .thelink {
@@ -189,12 +188,19 @@
   float: right;
 }
 
-.newpost--new--profile {
-  color: white !important;
-  background-color: #2a2a2a;
-  border: 1px solid #2a2a2a;
-  padding: 10px 25px;
-  text-decoration: none !important;
+.btn_cntnr {
+  margin: 10px 0;
+  float: right;
+  padding-bottom: 20px;
+  .newpost--new--profile {
+    color: white !important;
+    background-color: #2a2a2a;
+    border: 1px solid #2a2a2a;
+    padding: 10px 25px;
+    text-decoration: none !important;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
 }
 
 #background {
@@ -291,6 +297,7 @@
     opacity: 1 !important;
   }
   .dashboard--articles--wrapper {
+    padding-bottom: 10px;
     .header_ttl {
       border-bottom: 1px #E9E9E9 solid;
       padding: 15px;
@@ -304,9 +311,13 @@
   #waiting--for--approval {
     display: flex;
     flex-direction: row;
+    margin: 0 auto;
+    padding: 0 30px;
+    max-width: 1400px;
     .flex--item {
       position: relative;
-      background-color: #C5B7B820;
+      max-width: 1000px;
+      margin-top: 10px;
       .flex--profile {
         pointer-events: none;
         z-index:1;
@@ -346,9 +357,8 @@
 
     .dashboard--writer--flex--two {
       border-left: 1px solid #E5E5E5;
-      margin-left: 30px;
       padding: 30px 0 0 30px;
-      max-width: 350px;
+      max-width: 400px;
       * {
           display: block;
           margin: 0;
@@ -364,6 +374,9 @@
           margin-bottom: 5px;
         }
       }
+    }
+    .dashboard--writer--flex--main {
+      width: 100%;
     }
   }
 }
@@ -394,6 +407,7 @@
       vertical-align: middle;
       line-height: 30px;
       color: #545454;
+      font-weight: bold;
     }
     .deadline_dt {
       color: #EB5946;
@@ -416,7 +430,7 @@
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid #E9E9E9;
-  margin-bottom: 20px;
+  margin: 10px 0;
   padding: 10px 30px 20px 30px;
 
   a {
@@ -537,7 +551,6 @@
   .guidelines {
     flex-wrap: wrap;
     margin: 0;
-    margin-top: 50px;
     .thelink {
       width: 50%;
       margin: 0;
@@ -547,13 +560,23 @@
     }
   }
   .new--writer--wrapper, .official--writer--wrapper {
-    .skinny_wrapper {
+    .dashboard_wrapper {
       #waiting--for--approval {
+        padding-top: 10px;
         flex-direction: column-reverse;
         .dashboard--writer--flex--two {
-          margin-left: 0;
-          border-left: none;
-          padding-left: 0;
+          display: none !important;
+        }
+        .dashboard--writer--flex--main {
+          margin-right: 0;
+          padding: 0;
+          width: 100%;
+          .flex--item {
+            margin: 0;
+          }
+          .analytics, .newpost--new--profile {
+            margin-right: 0;
+          }
         }
       }
     }
@@ -602,5 +625,9 @@
     img {
       display: none;
     }
+  }
+  .flex--postlist--item {
+    padding-left: 10px;
+    padding-right: 0;
   }
 }

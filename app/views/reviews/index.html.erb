@@ -23,7 +23,7 @@
             <h4 class="pitch_ttl" style="padding: 0px;"><%= link_to draft.title, edit_post_path(draft)%></h4>
             <% @editor = User.find(draft.reviews.last.editor_id) %>
             <% @deadline = draft.reviews.last.created_at > 7.days %>
-            <p class="edited_dt" style="padding: 0px;"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) + " days ago and is being reviewed by " %><%= link_to(@editor.full_name, @editor, style: "vertical-align: baseline;") %></p>
+            <p class="edited_dt" style="padding: 0px;"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) + " ago and is being reviewed by " %><%= link_to(@editor.full_name, @editor, style: "vertical-align: baseline;") %></p>
           </div>
         </div>
       </div>

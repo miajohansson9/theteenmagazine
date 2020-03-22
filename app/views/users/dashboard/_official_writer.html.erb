@@ -1,7 +1,7 @@
 <div class="official--writer--wrapper">
-  <div class="skinny_wrapper">
+  <div class="dashboard_wrapper">
     <div id="waiting--for--approval">
-      <div style="padding-top: 30px; width: 100%;">
+      <div class="dashboard--writer--flex--main">
         <div class="flex--item">
           <%= render 'profile' %>
         </div>
@@ -22,12 +22,45 @@
             <h6 class="header_ttl">Pending Review</h6>
             <%= render "/users/partials/dashboard_articles", articles: @user_posts.submitted, image: "waiting.png" %>
           <% end %>
-
           <h6 class="header_ttl">Articles In Progress</h6>
           <%= render "/users/partials/dashboard_articles", articles: @user_posts.draft, image: "saved.png" %>
-          <br>
-          <%= link_to "New Article", new_post_path(@post), class: "newpost--new--profile" %>
         </div>
+        <div class="analytics card-group">
+          <div class="card">
+            <div class="card-body dashboard-card-1 dashboard-card">
+              <div class="stats_wrapper">
+                <div class="value" id="value1"></div>
+                <div class="text-wrapper">
+                  <span>Claimed</span>
+                  <span>Pitches</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body dashboard-card-2 dashboard-card">
+              <div class="stats_wrapper">
+                <div class="value" id="value2"></div>
+                <div class="text-wrapper">
+                  <span>Published</span>
+                  <span>Articles</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body dashboard-card-3 dashboard-card">
+              <div class="stats_wrapper">
+                <div class="value" id="value3"></div>
+                <div class="text-wrapper">
+                  <span>Total</span>
+                  <span>Pageviews</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn_cntnr"><%= link_to "Claim a Pitch", pitches_path, class: "newpost--new--profile" %></div>
       </div>
       <div class="dashboard--writer--flex--two">
         <div class="links">
@@ -36,20 +69,25 @@
             <%= link_to("Change Password", edit_user_registration_path) %>
             <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
             <%= link_to("Editor Pitches", pitches_path) %>
+            <%= link_to "Start a new article", new_post_path(@post) %>
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
           </div>
         </div>
         <br />
-        <div class="card" style="width: 18rem;">
-          <div class="card-header">
-            What's New
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
+        <div class="card whats-new-wrapper" style="width: 18rem;">
+          <div class="card-header">What's New</div>
+          <ul class="list-group list-group-flush whats-new">
+            <% @pitches.each do |pitch| %>
+              <li class="list-group-item">
+                <%= link_to(image_tag(pitch.user.profile.url(:square), class: "profile_img_small"), pitch.user) %>
+                <div><%= link_to(pitch.user.full_name, pitch.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
+                <br><span class="date_ago"><%= time_ago_in_words(pitch.created_at) %> ago</span></div>
+              </li>
+            <% end %>
           </ul>
         </div>
+        <br>
+        <i>See more pitches <%= link_to("here", pitches_path, class: "link_inline") %></i>
       </div>
     </div>
   </div>
@@ -84,3 +122,43 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  var loaded = []
+  $.fn.isOnScreen = function(){
+    var win = $(window);
+    var viewport = {
+        top : win.scrollTop(),
+        left : win.scrollLeft()
+    };
+    viewport.right = viewport.left + win.width();
+    viewport.bottom = viewport.top + win.height();
+    var bounds = this.offset();
+    bounds.right = bounds.left + this.outerWidth();
+    bounds.bottom = bounds.top + this.outerHeight();
+    return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+  };
+
+  $.fn.triggerAnalytics = function(){
+    if (($('#value1').isOnScreen()) && (!loaded[0])) {
+      animateValue('value1', 0, <%= @claimed_pitches_cnt %>, 500);
+      loaded[0] = true;
+    }
+    if (($('#value2').isOnScreen()) && (!loaded[1])) {
+      animateValue('value2', 0, <%= @published_articles_cnt %>, 500);
+      loaded[1] = true;
+    }
+    if (($('#value3').isOnScreen()) && (!loaded[2])) {
+      animateValue('value3', 0, <%= @pageviews %>, 500);
+      loaded[2] = true;
+    }
+  };
+
+  $(document).ready(function(){
+    loaded = [false, false, false];
+    $.fn.triggerAnalytics();
+    $(window).scroll(function(){
+        $.fn.triggerAnalytics();
+    });
+  });
+</script>

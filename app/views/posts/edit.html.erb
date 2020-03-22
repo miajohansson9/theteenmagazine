@@ -1,12 +1,29 @@
 <% @most_recent_review = @post.reviews.where.not(status: "In Progress").last %>
 <% if !@most_recent_review.nil? && (!@most_recent_review.try(:status).eql? "Rejected") %>
   <%= render '/posts/banner_status' %>
+<% elsif !(@post.is_published?) %>
+  <% @rev = @post.reviews.last %>
+  <% if (@rev.nil? || (@rev.try(:status).eql? "In Progress")) && !@post.pitch.blank? %>
+    <% @post_reviews = @post.reviews.where.not(status: "In Progress") %>
+    <% if @post_reviews.present? %>
+      <% @deadline = @post_reviews.last.updated_at + 14.days %>
+    <% else %>
+      <% @deadline = @post.pitch.updated_at + 14.days %>
+    <% end %>
+    <% if @deadline.present? %>
+      <p class= "banner_stts" style="position: relative;">You have <%= distance_of_time_in_words_to_now(@deadline) %> left to submit this <%= link_to("Article Pitch", @post.pitch, class: "link_white") %> for review.</p>
+    <% end %>
+  <% end %>
 <% end %>
 <div class="skinny_wrapper wrapper_padding">
+  <% if @deadline.present? %>
+    <i>This article is associated with a pitch. After claiming an article pitch, you will have two weeks to submit your article for review. You have <%= distance_of_time_in_words_to_now(@deadline) %> left to submit this article for review.</i><br>
+  <% end %>
   <% if @most_recent_review.try(:status).eql? "Rejected" %>
   <% if !@most_recent_review.notes.blank? %>
    <br><i style="background-color: yellow;">Editor Notes: <%= @most_recent_review.notes %></i>
   <% end %>
+  <% if @requested_changes.present? %>
     <div class="card mb-3 changes_requested">
       <div class="card-header">The below problems prevented this article from being published.</div>
       <div class="card-body">
@@ -18,6 +35,7 @@
       </div>
      </div>
      <i style="color: #757575;">Please complete the changes above and submit your article again for consideration.</i>
+  <% end %>
   <% end %>
   <%= render 'form' %>
 </div>

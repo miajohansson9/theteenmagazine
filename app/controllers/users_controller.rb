@@ -20,7 +20,15 @@ class UsersController < ApplicationController
         redirect_to root_path, notice: "This writer does not have a public profile yet."
       end
     end
-    @rankings = User.all.order("monthly_views desc").pluck(:id)
+    @pitches = Pitch.all.order("created_at desc").limit(4)
+    @claimed_pitches_cnt =  Pitch.where(claimed_id: current_user.id).present? ? Pitch.where(claimed_id: current_user.id).count : 0;
+    @published_articles_cnt =  @user.posts.published.count;
+    @pageviews = 0
+    @user_posts_approved.each do |post|
+      if !post.post_impressions.nil?
+        @pageviews += post.post_impressions
+      end
+    end
   end
 
   def onboarding

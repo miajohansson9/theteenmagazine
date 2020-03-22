@@ -37,7 +37,7 @@
     <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
 
     <%= f.fields_for :reviews, @review do |rv| %>
-      <% if current_user.id == @post.reviews.last.editor_id %>
+      <% if (current_user.id == @post.reviews.last.editor_id) && (@post.reviews.last.try(:status).eql? "In Review") %>
         <div class="card review_frm">
           <div class="card-header">
             <h6>Editor Feedback Form</h6>

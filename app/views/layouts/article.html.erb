@@ -69,15 +69,15 @@
       <a href="/categories/entertainment">Entertainment</a>
       <a href="/categories/personal-stories">Personal Stories</a>
       <a href="/contacts/new">Contact</a>
-      <% if current_user && (current_user.admin? || current_user.editor?) %>
-        <%= link_to "Writers", users_path %>
-        <%= link_to "Editing", reviews_path %>
-      <% end %>
       <% if user_signed_in? %>
-         <%= link_to "Pitches", pitches_path %>
+         <%= link_to "Create", pitches_path %>
+         <% if current_user && (current_user.admin? || current_user.editor?) %>
+           <%= link_to "Edit", reviews_path %>
+           <%= link_to "Writers", users_path %>
+         <% end %>
          <%= link_to "Dashboard", user_path(current_user) %>
          <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-     <% else %>
+      <% else %>
          <a href="/apply">Apply</a>
       <% end %>
       <div style="height: 2000px; background-color: #65B19D;">
@@ -115,14 +115,14 @@
             <a class="link" href="/categories/health-fitness">Health</a>
             <a class="link" href="/categories/entertainment">Entertainment</a>
             <a class="link" href="/categories/fashion">Fashion</a>
-            <% if current_user && (current_user.admin? || current_user.editor?) %>
-              <%= link_to "Writers", users_path, class: "link" %>
-              <%= link_to "Editing", reviews_path, class: "link" %>
-            <% end %>
             <% if user_signed_in? %>
-              <%= link_to "Pitches", pitches_path, class: "link" %>
-              <%= link_to "Dashboard", user_path(current_user), class: "link" %>
-              <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
+               <%= link_to "Create", pitches_path, class: "link" %>
+               <% if current_user && (current_user.admin? || current_user.editor?) %>
+                 <%= link_to "Edit", reviews_path, class: "link" %>
+                 <%= link_to "Writers", users_path, class: "link" %>
+               <% end %>
+               <%= link_to "Dashboard", user_path(current_user), class: "link" %>
+               <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
             <% else %>
                 <a class="link" href="/contacts/new">Contact</a>
                 <a class="link" href="/apply">Apply</a>

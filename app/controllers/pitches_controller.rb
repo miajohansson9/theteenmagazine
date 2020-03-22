@@ -7,7 +7,8 @@ class PitchesController < ApplicationController
 
   #show all pitches
   def index
-    @pitches = Pitch.all.order("created_at desc")
+    @pitches = Pitch.all.where(claimed_id: nil).order("created_at desc")
+    @claimed_pitches =  Pitch.where(claimed_id: current_user.id)
   end
 
   #create a new pitch

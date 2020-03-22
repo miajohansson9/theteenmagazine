@@ -1248,6 +1248,15 @@ hr {
   }
 }
 
+.cke_screen_reader_only {
+  width: 0px !important;
+  height: 0px !important;
+}
+
+.date_ago {
+  color: #A6A09E;
+}
+
 @media (max-width: 285px) {
 
   #main_navigation {

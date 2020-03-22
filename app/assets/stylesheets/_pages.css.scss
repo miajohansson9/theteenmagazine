@@ -133,4 +133,19 @@
 .link_nrml {
   color: #545454;
   font-weight: 400;
+  &:hover {
+    color: #545454;
+  }
+}
+
+.link_inline {
+  display: inline !important;
+}
+
+.link_white {
+  color: white;
+  font-weight: bolder;
+  &:hover {
+    color: white;
+  }
 }
