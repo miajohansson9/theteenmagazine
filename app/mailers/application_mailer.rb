@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'sewonpark@college.harvard.edu'
+  default from: 'miajohansson@college.harvard.edu'
 
   def welcome_email(user)
     @user = user
@@ -8,6 +8,6 @@ class ApplicationMailer < ActionMailer::Base
 
   def profile_approved(user)
     @user = user
-    mail(to: user.email, subject: "#{user.first_name}, your profile was approved!", from: "sewonpark@college.harvard.edu")
+    mail(to: user.email, subject: "#{user.first_name}, your profile was approved!", from: "miajohansson@college.harvard.edu")
   end
 end

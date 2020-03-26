@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:privacy, :team, :submitted, :subscribe]
-  layout "minimal", except: [:about, :team, :subscribe, :privacy]
+  before_action :authenticate_user!, except: [:privacy, :team, :submitted, :subscribe, :reset]
+  layout "minimal", except: [:about, :team, :subscribe, :privacy, :reset]
 
   def subscribe
     @posts_approved = Post.published.all.order("created_at desc")
@@ -35,4 +35,7 @@ class PagesController < ApplicationController
   def submitted
   end
 
+  def reset
+    @user = User.new
+  end
 end

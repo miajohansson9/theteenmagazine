@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :is_admin?, only: [:index, :new]
+  before_action :is_admin?, only: [:show_users, :new]
   layout :set_layout
 
   def show
@@ -39,9 +39,22 @@ class UsersController < ApplicationController
   end
 
   def index
+    if params[:commit].eql? "Send reset link"
+      reset_email
+    else
+      show_users
+    end
+  end
+
+  def show_users
     @users = User.all.order("created_at desc")
     @posts_waiting = Post.all.submitted
     @users_waiting = User.all.review_profile
+  end
+
+  def reset_email
+    User.where(email: params[:user][:email]).first.send_reset_password_instructions
+    redirect_to "/reset-password", notice: "A reset password email was sent to #{params[:user][:email]}."
   end
 
   def edit

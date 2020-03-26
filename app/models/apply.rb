@@ -11,7 +11,7 @@ class Apply < ActiveRecord::Base
   def headers
   {
     :subject => "Writer Application ##{id}: theteenmagazine.com/applies/#{id}",
-    :to => "mia@theteenmagazine.com",
+    :to => "miajohansson@college.harvard.edu",
     :from => %("#{first_name} #{last_name}" <#{email}>)
   }
   end

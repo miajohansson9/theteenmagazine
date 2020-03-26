@@ -2,8 +2,7 @@
 <div class="skinny_wrapper wrapper_padding">
   <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started.
     You will have <b>two weeks</b> to submit your article for review. If your article is not submitted within two weeks and/or not approved within one month of
-    claiming the topic, the pitch will become unclaimed and any writer can claim it. If another writer claims the pitch during that time, your article will become
-    locked and you will no longer be able to make changes to it.</i>
+    claiming the topic, the pitch will become unclaimed and any writer can claim it instead.</i>
   <h3 class="pitch_ttl"><%= @pitch.title %></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.full_name, @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
   <%= image_tag(@pitch.thumbnail, class: "thumbnail_img") %>

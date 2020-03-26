@@ -82,12 +82,12 @@
 
 .share_article_feedback {
   h3 {
-    margin: 10px 0;
+    margin: 0;
   }
   .comments {
     i {
       line-height: 1.5;
-      font-family: "Playfair Display"
+      font-family: "Playfair Display";
     }
     ul {
       padding-left: 0;
@@ -138,17 +138,18 @@
     a {
       text-decoration: none;
     }
-    .comment_field {
-      outline: 0;
-      border-width: 0 0 2px;
-      padding-left: 0;
-      border-color: #E9E9E9;
-      margin: 10px 0 0 0;
-    }
-    .comment_field:focus {
-      border-color: #65B19D;
-    }
   }
+}
+
+.comment_field {
+  outline: 0;
+  border-width: 0 0 2px;
+  padding-left: 0;
+  border-color: #E9E9E9;
+  margin: 10px 0 0 0;
+}
+.comment_field:focus {
+  border-color: #65B19D;
 }
 
 .post_apply, .share_article_feedback {

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get 'subscribe' => 'pages#subscribe'
   get "/apply" => "applies#new"
   get "/submitted" => "applies#create"
+  get "/reset-password" => "pages#reset"
 
   resources :posts, only: [:new, :create]
   resources :posts, path: "", except: [:new, :create]
