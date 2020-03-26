@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
-
 .div {
   height: 200px;
   width: 100%;
@@ -82,11 +80,82 @@
   }
 }
 
-.post_apply {
+.share_article_feedback {
+  h3 {
+    margin: 10px 0;
+  }
+  .comments {
+    i {
+      line-height: 1.5;
+      font-family: "Playfair Display"
+    }
+    ul {
+      padding-left: 0;
+      margin: 15px 0;
+      li {
+        padding: 5px 0;
+        font-size: 14px;
+        margin-right: 0;
+        div {
+          max-width: 85%;
+        }
+        span {
+          word-wrap: break-word;
+        }
+        h6 {
+          margin: 0;
+          line-height: 1.5;
+          font-size: 12px;
+          a {
+            color: black !important;
+          }
+        }
+        .date_ago {
+          font-size: 12px;
+        }
+      }
+      .delete_btn_x {
+        width: 15px !important;
+        float: right;
+        padding-top: 28px;
+      }
+      .submit_comment {
+        width: 35px;
+        height: 35px;
+        border: none;
+        padding: 0;
+        margin: 3px 0 0 0;
+        float: right;
+        background-image: url("post_comment.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        &:hover {
+          cursor:pointer;
+          opacity: 0.9;
+        }
+      }
+    }
+    a {
+      text-decoration: none;
+    }
+    .comment_field {
+      outline: 0;
+      border-width: 0 0 2px;
+      padding-left: 0;
+      border-color: #E9E9E9;
+      margin: 10px 0 0 0;
+    }
+    .comment_field:focus {
+      border-color: #65B19D;
+    }
+  }
+}
+
+.post_apply, .share_article_feedback {
   display: flex;
   flex-direction: column;
   background-color: white;
-  padding-left: 20px;
+  padding: 15px 0 0 20px;
   min-width: 310px;
   max-width: 310px;
   img {
@@ -150,11 +219,10 @@ iframe { margin: 0px auto;  display: block; }
   margin-left: auto;
   margin-right: auto;
   margin-top: 100px;
-  margin-bottom: 10px;
   display: block;
   position: relative;
   z-index: 0;
-  padding: 10px 40px;
+  padding: 10px 40px 0 40px;
 
   .authors {
     display: flex;
@@ -197,6 +265,7 @@ iframe { margin: 0px auto;  display: block; }
 #content {
   padding: 0 40px;
    .post_content {
+     padding-bottom: 20px;
      h1, h2, h3, h4, h5, h6 {
        font-weight: normal;
      }
@@ -298,7 +367,8 @@ hr {
   border-bottom: 1px solid #E9E9E9;
   text-align: center;
   padding: 1em 0;
-  margin: 3em 0;
+  margin: 1em 0;
+  margin-top: 0;
   a {
     text-decoration: none;
     color: #9a9da4;

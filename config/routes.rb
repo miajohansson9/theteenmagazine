@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :pitches
   resources :reviews
   resources :feedbacks
+  resources :analytics
+  resources :comments
 
   get 'welcome/index'
   root 'welcome#index'

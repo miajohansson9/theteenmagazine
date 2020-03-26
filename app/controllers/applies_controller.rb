@@ -26,7 +26,7 @@ class AppliesController < ApplicationController
 
   #only allow admin and editors to see submitted applications
   def is_admin?
-    redirect_to root_path unless (current_user && (current_user.admin? || current_user.editor?))
+    redirect_to new_user_session_path unless (current_user && (current_user.admin? || current_user.editor?))
   end
 
   #show application to editor

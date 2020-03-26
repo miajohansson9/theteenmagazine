@@ -5,6 +5,49 @@
         <div class="flex--item">
           <%= render 'profile' %>
         </div>
+        <div class="analytics card-group">
+          <div class="card">
+            <div class="card-body dashboard-card-1 dashboard-card">
+              <a href="<%= pitches_path(user_id: @user.id) %>">
+                <div class="stats_wrapper">
+                  <div class="value" id="value1"></div>
+                  <div class="text-wrapper">
+                    <span>Claimed</span>
+                    <span>Pitches</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="card">
+              <div class="card-body dashboard-card-2 dashboard-card">
+                <a href="<%= user_path(page: "public") %>">
+                  <div class="stats_wrapper">
+                    <div class="value" id="value2"></div>
+                    <div class="text-wrapper">
+                      <span>Published</span>
+                      <span>Articles</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+          </div>
+          <div class="card">
+            <div class="card-body dashboard-card-3 dashboard-card">
+              <a href="<%= analytics_path(user_id: @user.id) %>">
+                <div class="stats_wrapper">
+                  <div class="value sparkley last" id="value3"></div>
+                  <div class="text-wrapper">
+                    <span>Total</span>
+                    <span>Pageviews</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="btn_cntnr"><%= link_to "Claim a Pitch", pitches_path, class: "newpost--new--profile" %></div>
+        <br>
         <div class="dashboard--articles--wrapper">
           <% if @user_posts.rejected.present? %>
             <h6 class="header_ttl">Changes Requested</h6>
@@ -25,47 +68,12 @@
           <h6 class="header_ttl">Articles In Progress</h6>
           <%= render "/users/partials/dashboard_articles", articles: @user_posts.draft, image: "saved.png" %>
         </div>
-        <div class="analytics card-group">
-          <div class="card">
-            <div class="card-body dashboard-card-1 dashboard-card">
-              <div class="stats_wrapper">
-                <div class="value" id="value1"></div>
-                <div class="text-wrapper">
-                  <span>Claimed</span>
-                  <span>Pitches</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body dashboard-card-2 dashboard-card">
-              <div class="stats_wrapper">
-                <div class="value" id="value2"></div>
-                <div class="text-wrapper">
-                  <span>Published</span>
-                  <span>Articles</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body dashboard-card-3 dashboard-card">
-              <div class="stats_wrapper">
-                <div class="value" id="value3"></div>
-                <div class="text-wrapper">
-                  <span>Total</span>
-                  <span>Pageviews</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="btn_cntnr"><%= link_to "Claim a Pitch", pitches_path, class: "newpost--new--profile" %></div>
+        <br>
       </div>
       <div class="dashboard--writer--flex--two">
         <div class="links">
           <div>
-            <a href="/users/<%= @user.slug %>/edit">Edit Profile</a>
+            <%= link_to("Edit Profile", edit_user_path(@user)) %>
             <%= link_to("Change Password", edit_user_registration_path) %>
             <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
             <%= link_to("Editor Pitches", pitches_path) %>
@@ -75,7 +83,7 @@
         </div>
         <br />
         <div class="card whats-new-wrapper" style="width: 18rem;">
-          <div class="card-header">What's New</div>
+          <div class="card-header"><%= link_to "What's New...", pitches_path, style: "font-size: 0.9rem; font-weight: bold; text-decoration: none; line-height: 1.5; color: #212529;" %></div>
           <ul class="list-group list-group-flush whats-new">
             <% @pitches.each do |pitch| %>
               <li class="list-group-item">

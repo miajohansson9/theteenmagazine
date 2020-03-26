@@ -217,9 +217,8 @@ $gray:  #2a2a2a;
     p {
       text-align: center;
       margin: 0;
-      font-size: 15px;
-      color: lightgray;
-      font-family: "Pacifico";
+      font-style: italic;
+      font-family: "Display Playfair";
     }
     hr {
       border-color: black;
@@ -276,13 +275,21 @@ $gray:  #2a2a2a;
        }
      }
    }
+   .share_article_feedback {
+     padding: 0;
+     max-width: 100%;
+   }
+}
+
+@media(max-width: 800px) {
+  #mce-EMAIL, .mccontainer label {
+    min-width: 75% !important;
+    max-width: 75% !important;
+    margin-left: 10px;
+  }
 }
 
 @media (max-width: 900px) {
-  #mce-EMAIL {
-    min-width: 100% !important;
-    max-width: 100% !important;
-  }
   .post_apply {
     flex-direction: column-reverse !important;
     h3 {

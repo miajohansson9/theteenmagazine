@@ -7,8 +7,16 @@ class PitchesController < ApplicationController
 
   #show all pitches
   def index
-    @pitches = Pitch.all.where(claimed_id: nil).order("created_at desc")
-    @claimed_pitches =  Pitch.where(claimed_id: current_user.id)
+    if params[:user_id].nil?
+      @title = "Editor Pitches"
+      @desc = true
+      @button_text = "Claim Article Pitch"
+      @pitches = Pitch.all.where(claimed_id: nil).order("created_at desc")
+    else
+      @title = "Your  claimed pitches"
+      @button_text = "View Pitch"
+      @pitches = Pitch.all.where(claimed_id: params[:user_id]).order("updated_at desc")
+    end
   end
 
   #create a new pitch
@@ -76,7 +84,7 @@ class PitchesController < ApplicationController
   private
 
   def pitch_params
-    params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :claimed_id, :category_id, :user_id)
+    params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :claimed_id, :category_id, :user_id)
   end
 
   def find_pitch

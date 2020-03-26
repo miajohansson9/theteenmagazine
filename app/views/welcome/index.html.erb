@@ -10,7 +10,7 @@
                 <%=link_to(image_tag(publishedPosts.first.thumbnail.url(:large2), alt: publishedPosts.first.title, :id => "image_thumbnail"), publishedPosts.first )%>
               </div>
               <h3 class="article_title"><a href="#"><%= link_to publishedPosts.first.title, publishedPosts.first %></a></h3>
-              <p class="date"><%= publishedPosts.first.created_at.strftime("%A, %b %d")%></p>
+              <p class="date"><%= publishedPosts.first.publish_at.strftime("%A, %b %d")%></p>
             </div>
           </div>
           <div class="articles2-6">
@@ -38,7 +38,7 @@
     <div class="flex--welcome">
       <div class="flex-1">
         <div class="ctgry_section">
-          <% publishedPosts.where(:category_id => Category.friendly.find("lifestyle").id).all.order("created_at desc")[0..3].each do |post| %>
+          <% publishedPosts.where(:category_id => Category.friendly.find("lifestyle").id).all.order("publish_at desc")[0..3].each do |post| %>
             <% featuredPostIds << post.id %>
             <div class="ctgry_article" style="width: 23%;">
               <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
@@ -54,7 +54,7 @@
   <div class="flex--welcome">
     <div class="flex-1">
       <div class="ctgry_section">
-        <% publishedPosts.where(:category_id => Category.friendly.find("academics").id).all.order("created_at desc")[0..2].each do |post| %>
+        <% publishedPosts.where(:category_id => Category.friendly.find("academics").id).all.order("publish_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
@@ -66,7 +66,7 @@
       </div>
       <h1 class="section--title"><a href="/categories/get-involved">Entertainment</a></h1>
       <div class="ctgry_section">
-        <% publishedPosts.where(:category_id => Category.friendly.find("entertainment").id).all.order("created_at desc")[0..2].each do |post| %>
+        <% publishedPosts.where(:category_id => Category.friendly.find("entertainment").id).all.order("publish_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
@@ -77,9 +77,9 @@
         <% end %>
       </div>
       <div class="ctgry_grid_wrapper">
-        <a class="applies" href="/apply"><img src="https://s3.amazonaws.com/theteenmagazine/3M0jhbo.jpg" /></a>
+        <a class="applies" href="/apply"><%= image_tag "become_a_writer.jpg" %></a>
         <div class="ctgry_grid">
-          <% publishedPosts.where(:category_id => Category.friendly.find("entertainment").id).all.order("created_at desc")[3..4].each do |post| %>
+          <% publishedPosts.where(:category_id => Category.friendly.find("entertainment").id).all.order("publish_at desc")[3..4].each do |post| %>
             <% featuredPostIds << post.id %>
             <div class="ctgry_grid_article">
               <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
@@ -105,7 +105,7 @@
   </div>
   <h1 id="recent_title" class="section--title">Recent Articles</h1>
   <div class="ctgry_section">
-    <% publishedPosts = publishedPosts.where.not(id: featuredPostIds).order("created_at desc")%>
+    <% publishedPosts = publishedPosts.where.not(id: featuredPostIds).order("publish_at desc")%>
     <% publishedPosts.each_with_index do |post, index| %>
       <% if index < 3 %>
         <div style="margin-bottom: 20px;" class="ctgry_article recent">

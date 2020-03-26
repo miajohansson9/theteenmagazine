@@ -4,6 +4,7 @@ class Post < ApplicationRecord
   belongs_to :category
   has_many :impressions
   has_many :reviews
+  has_many :comments
 
   validates :title, :presence => true
   validates :content, :presence => true

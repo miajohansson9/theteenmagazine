@@ -6,8 +6,12 @@
     locked and you will no longer be able to make changes to it.</i>
   <h3 class="pitch_ttl"><%= @pitch.title %></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.full_name, @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
-  <%= image_tag(@pitch.thumbnail, class: "thumbnail_img") %><br/><br />
+  <%= image_tag(@pitch.thumbnail, class: "thumbnail_img") %>
   <%= markdown @pitch.description %>
+  <% if @pitch.requirements.present? %>
+    <i>Additional notes:</i>
+    <%= markdown @pitch.requirements %>
+  <% end %>
 
   <% if @claimed_user.nil? %>
     <%= form_for @post do |f| %>
@@ -19,6 +23,7 @@
     <% end %>
   <% else %>
     <span><%= @pitch.description %></span>
+    <%= markdown @pitch.requirements %>
     <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.created_at.strftime('%A, %B %d') %></p>
     <% if @claimed_user.id == current_user.id || current_user.admin? %>
       <%= form_for @pitch do |f| %>

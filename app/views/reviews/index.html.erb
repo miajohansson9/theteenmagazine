@@ -7,27 +7,12 @@
         <div>
           <h4 class="pitch_ttl"><%= link_to draft.title, edit_post_path(draft)%></h4>
           <% @deadline = draft.reviews.last.updated_at < Time.now - 5.days %>
-          <p class="edited_dt <% if @deadline %> deadline_dt <% end %>"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.updated_at) %></p>
-          <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %></p>
+          <p class="edited_dt <% if @deadline %> deadline_dt <% end %>"><%= "Last edited by you " + time_ago_in_words(draft.reviews.last.updated_at) %> ago</p>
+          <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
           <p class="edit_lnk"><%= link_to "Edit Article", edit_post_path(draft) %></p>
         </div>
       </div>
     </div>
-  <% end %>
-  <% if current_user.admin? %>
-    <h1 class="pitch_ttl">All articles under review</h1>
-    <% @all_reviews.each do |draft| %>
-      <div class="flex--postlist--item review_items">
-        <div class="inside--item">
-          <div>
-            <h4 class="pitch_ttl" style="padding: 0px;"><%= link_to draft.title, edit_post_path(draft)%></h4>
-            <% @editor = User.find(draft.reviews.last.editor_id) %>
-            <% @deadline = draft.reviews.last.created_at > 7.days %>
-            <p class="edited_dt" style="padding: 0px;"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) + " ago and is being reviewed by " %><%= link_to(@editor.full_name, @editor, style: "vertical-align: baseline;") %></p>
-          </div>
-        </div>
-      </div>
-    <% end %>
   <% end %>
   <h1 class="pitch_ttl">Article submissions</h1>
   <div class="flex-wrapper">
@@ -47,4 +32,19 @@
       </div>
     <% end %>
   </div>
+  <% if current_user.admin? %>
+    <h1 class="pitch_ttl">All articles under review</h1>
+    <% @all_reviews.each do |draft| %>
+      <div class="flex--postlist--item review_items">
+        <div class="inside--item">
+          <div>
+            <h4 class="pitch_ttl" style="padding: 0px;"><%= link_to draft.title, edit_post_path(draft)%></h4>
+            <% @editor = User.find(draft.reviews.last.editor_id) %>
+            <% @deadline = draft.reviews.last.created_at > 7.days %>
+            <p class="edited_dt" style="padding: 0px;"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) + " ago and is being reviewed by " %><%= link_to(@editor.full_name, @editor, style: "vertical-align: baseline;") %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
 </div>

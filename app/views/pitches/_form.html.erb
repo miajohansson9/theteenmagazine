@@ -13,7 +13,10 @@
     <%= f.text_field :title %>
 
     <%= f.label :description, "Describe your idea and who the ideal reader would be (3-4 sentences)." %>
-    <%= f.text_area :description %>
+    <%= f.text_area :description %><br><br>
+
+    <%= f.label :requirements, "(Optional) What else should this article have? (ie. length, topics, images, personal trial/review, interviews/research)." %>
+    <%= f.text_area :requirements %>
 
     <div class="margin_flds">
       <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>

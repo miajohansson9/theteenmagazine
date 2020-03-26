@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  before_action :find_user, only: [:show, :edit, :update, :destroy]
+  before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :is_admin?, only: [:index, :new]
   layout :set_layout
 
   def show
     @user_posts = @user.posts.all.order("created_at desc")
-    @user_posts_approved = @user.posts.published.order("created_at desc")
+    @user_posts_approved = @user.posts.published.order("publish_at desc")
     @posts = Post.all.order("created_at desc");
     if @user_posts_approved.length < 1
       begin
@@ -20,13 +20,15 @@ class UsersController < ApplicationController
         redirect_to root_path, notice: "This writer does not have a public profile yet."
       end
     end
-    @pitches = Pitch.all.order("created_at desc").limit(4)
-    @claimed_pitches_cnt =  Pitch.where(claimed_id: current_user.id).present? ? Pitch.where(claimed_id: current_user.id).count : 0;
-    @published_articles_cnt =  @user.posts.published.count;
-    @pageviews = 0
-    @user_posts_approved.each do |post|
-      if !post.post_impressions.nil?
-        @pageviews += post.post_impressions
+    if current_user.present?
+      @pitches = Pitch.all.order("created_at desc").limit(4)
+      @claimed_pitches_cnt =  Pitch.where(claimed_id: current_user.id).present? ? Pitch.where(claimed_id: current_user.id).count : 0;
+      @published_articles_cnt =  @user.posts.published.count;
+      @pageviews = 0
+      @user_posts_approved.each do |post|
+        if !post.post_impressions.nil?
+          @pageviews += post.post_impressions
+        end
       end
     end
   end

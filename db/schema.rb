@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200318013602) do
+ActiveRecord::Schema.define(version: 20200326055012) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -27,6 +27,11 @@ ActiveRecord::Schema.define(version: 20200318013602) do
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "analytics", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "applies", force: :cascade do |t|
@@ -63,6 +68,14 @@ ActiveRecord::Schema.define(version: 20200318013602) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.index ["type"], name: "index_ckeditor_assets_on_type"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text     "text"
+    t.integer  "user_id"
+    t.integer  "post_id"
   end
 
   create_table "feedback_givens", force: :cascade do |t|
@@ -115,6 +128,7 @@ ActiveRecord::Schema.define(version: 20200318013602) do
     t.integer  "category_id"
     t.integer  "user_id"
     t.integer  "claimed_id"
+    t.text     "requirements"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
   end
 
@@ -139,12 +153,13 @@ ActiveRecord::Schema.define(version: 20200318013602) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size",    limit: 8
     t.datetime "thumbnail_updated_at"
-    t.integer  "post_impressions"
+    t.integer  "post_impressions",                 default: 0
     t.integer  "ranking"
     t.string   "collaboration"
     t.integer  "pitch_id"
     t.datetime "publish_at"
     t.integer  "feedback_list",                    default: 0
+    t.boolean  "sharing"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
@@ -160,9 +175,9 @@ ActiveRecord::Schema.define(version: 20200318013602) do
 
   create_table "reviews", force: :cascade do |t|
     t.integer  "post_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.text     "status"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "status",     default: "In Progress"
     t.boolean  "active"
     t.integer  "editor_id"
     t.text     "notes"

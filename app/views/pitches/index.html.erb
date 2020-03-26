@@ -1,20 +1,26 @@
 <div class="skinny_wrapper wrapper_padding pitches_wrapper">
-  <h1 class="pitch_ttl">Editor Pitches</h1>
-  <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. You will have two weeks to submit your article for review. If your article is not submitted within two weeks and/or not approved within one month of claiming the topic, the pitch will become unclaimed and any writer can claim it. If another writer claims the pitch during that time, your article will become locked and you will no longer be able to make changes to it.</i>
-  <br><br>
+  <div class="btn_cntnr" style="margin-bottom: 0px;"><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %></div>
+  <h1 class="pitch_ttl"><%= @title %></h1>
+  <% if @desc %>
+    <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. You will have two weeks to submit your article for review. If your article is not submitted within two weeks and/or not approved within one month of claiming the topic, the pitch will become unclaimed and any writer can claim it. If another writer claims the pitch during that time, your article will become locked and you will no longer be able to make changes to it.</i>
+    <br>
+    <br>
+  <% end %>
   <div class="flex-wrapper">
     <% @pitches.each do |pitch| %>
+    <a href="<%= pitch_path(pitch)%>">
       <div class="card" style="width: 32%;">
         <%=image_tag(pitch.thumbnail.url(:card), alt: pitch.title, :class => "card-img-top")%>
         <% if current_user.admin? || current_user.editor? %>
           <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn")%>
         <% end %>
         <div class="card-body">
-          <h4 class="card-title pitch_ttl"><%= pitch.title %></h4>
+          <h4 class="card-title pitch_ttl"><%= link_to pitch.title, pitch, style: "color: black; text-decoration: none;" %></h4>
           <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
-          <%= link_to "Claim Article Pitch", pitch, :class => "btn btn-primary" %>
+          <%= link_to @button_text, pitch, :class => "btn btn-primary" %>
         </div>
       </div>
+    </a>
     <% end %>
   </div>
 </div>

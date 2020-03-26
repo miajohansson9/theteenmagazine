@@ -3,12 +3,13 @@ pintrk('track', 'pagevisit');
 </script>
 
 <!-- let someone create an application; sends to editor -->
-
-<div class="form_wrapper wrapper_padding">
-  <h3>Join the TTM Writer Team!</h3>
+<div id="apply_image">
+</div>
+<div class="apply_wrapper">
+  <h2>Join the TTM Writer Fam!</h2>
   <p>We are a close-knit group of young college and high school writers who work closely with one another to improve journalism skills,
-    gain writing experience, and receive quality feedback from top-tier student journalists.</p>
-<h3>What Does it Mean to be a Writer for The Teen Magazine?</h3>
+    gain writing experience, and receive quality feedback from top-tier student journalists. We hope you join our team!</p>
+<h2>What will you gain from being a writer for The Teen Magazine?</h2>
 <p>As a writer for The Teen Magazine, you will get the opportunity to:  </p>
 <ul>
   <li>Pitch article topics and get published in an international online magazine</li>
@@ -19,7 +20,7 @@ pintrk('track', 'pagevisit');
   <li>Learn from and network with our talented writer community</li>
   <li>Apply for other positions and internships within The Teen Magazine</li>
 </ul>
-  <p>Because we only have a limited number of openings per month, please be thoughtful in your application and explain exactly why you would really love to write for The Teen Magazine. We can’t wait to read your submission!</p>
+  <p>We can’t wait to read your submission and welcome you to the team!</p>
   <%= form_for @application do |f| %>
     <span>First Name</span>
     <%= f.text_field :first_name, required: true %>
@@ -34,19 +35,20 @@ pintrk('track', 'pagevisit');
     <%= f.select :category, ['Academics', 'Beauty', 'DIY', 'Entertainment', 'Fashion', 'Get Involved', 'Health & Fitness', 'Lifestyle', 'News', 'Tips & Hacks']%><br />
     <br />
     <br />
-    <span>Please write a one-page cover letter introducing yourself and describing why you would be a good fit for The Teen Magazine. Please include links to any previously published work/blog(s) if applicable.
-    </span>
+    <p>Please write a one-page cover letter introducing yourself and describing why you would be a good fit for The Teen Magazine. Please include links to any previously published work/blog(s) if applicable.
+    </p>
     <%= f.text_area :description, required: true %>
     <br />
     <div class="hidden">
       <%= f.label :nickname %> <br />
       <%= f.text_field :nickname %>
     </div>
-    <span>
-      Applications are accepted on a rolling basis. If accepted, you will receive an email from our team of editors within 48 hours.
-    </span><br /><br />
     <%= f.submit 'Submit Application' %>
   <% end %>
+  <i style="opacity: 50%;">
+    Applications are accepted on a rolling basis. If accepted, you will receive an email from our team of editors within 48 hours. Please note that writers and editors are not paid and instead write for us
+    to gain applicable experience and mentorship in the editorial industry.
+  </i>
   <br>
   <br>
 </div>

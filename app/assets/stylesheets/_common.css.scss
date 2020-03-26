@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700');
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
 
 @font-face {
   font-family: justwaitandsee;
@@ -22,6 +23,15 @@
 body {
   font-family: 'Source Sans Pro', sans-serif;
   min-width: 310px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.border {
+  border: none !important;
+  border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+  border-top: 1px solid rgba(0,0,0,0.1) !important;
+  margin-top: 0 !important;
 }
 
 html, body {
@@ -86,16 +96,33 @@ html, body {
   }
   a {
     text-decoration: none;
-    color: white;
+    color: white !important;
     font-size: 20px;
     font-family: 'Roboto Condensed';
     display: inline-block;
+    width: fit-content;
+    margin: 0 auto;
     margin-top: 15px;
   }
 }
 
 .index_users #post_title {
   margin: 0px;
+}
+
+#apply_image {
+  background-image: url(writer.jpg);
+  background-size: cover;
+  background-position: center center;
+  margin-top: -10px;
+  height: 0;
+  padding-top: 29%;
+}
+
+.date_post_preview {
+  font-size: 20px !important;
+  font-style: italic;
+  color: #C0C0C0 !important;
 }
 
 .fa-times {
@@ -172,6 +199,34 @@ html, body {
 }
 
 /////////////////Projects///////////////////////////////////////////////////
+
+
+.whats-new, .comments {
+  a, div {
+    display: inline !important;
+  }
+  .profile_img_small {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 50%;
+  }
+  .list-group-item {
+    font-size: 12px;
+    display: flex !important;
+    flex-direction: row;
+  }
+  div {
+    padding-left: 10px;
+    a:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
+}
 
 .read_more_button {
   text-align: center;
@@ -358,6 +413,7 @@ footer {
   border-bottom: 1px solid #E9E9E9;
   color: #212529;
   background-color: #C5B7B820;
+  margin: 0;
 }
 
 #main_title {
@@ -520,6 +576,7 @@ body {
   background-color: #FF78CB;
   font-size: 17px;
   padding: 2px;
+  margin: 0 0 20px 0;
 }
 
 .fb-comments, .fb-comments iframe[style], .fb-comments span {
@@ -581,11 +638,10 @@ body {
   }
 
   img {
-    padding: 2px;
     margin-right: 5px;
-    min-width: 42px !important;
-    max-width: 42px !important;
-    max-height: 42px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
   }
 
   .fa-clock-o {
@@ -839,7 +895,7 @@ p, li {
 }
 
 p, ul, ol {
-  margin: 0 0 1.6em 0;
+  margin: 0.8em 0;
 }
 
 hr {

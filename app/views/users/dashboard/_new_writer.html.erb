@@ -1,110 +1,110 @@
 <div class="new--writer--wrapper">
-  <div class="skinny_wrapper">
-    <div id="waiting--for--approval">
-      <div style="padding-top: 30px; width: 100%;">
-        <div class="flex--item">
-          <% if @user.submitted_profile == true && @user.approved_profile == false %>
-              <div class="overlay">
-                <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
-                <h5>Your profile is waiting to be reviewed</h5>
-              </div>
-          <% elsif @user.submitted_profile == false && @user.approved_profile == false %>
-              <div class="overlay">
-                <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
-                <h5>Your profile was rejected. Please make changes and submit again.</h5>
-              </div>
-          <% else %>
-              <style>
-                .flex--profile {
-                  opacity: 1 !important;
-                }
-              </style>
-          <% end %>
-          <%= render 'profile' %>
-        </div>
-        <div class="dashboard--articles--wrapper">
-          <h1 id="page_title">Welcome to The Teen Magazine!</h1>
+  <div id="waiting--for--approval">
+    <div class="dashboard--writer--flex--main">
+      <div class="flex--item" style="background-color: #F7F6F6; margin-top: 30px; margin-right: 30px;">
+        <% if @user.submitted_profile == true && @user.approved_profile == false %>
+            <div class="overlay">
+              <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
+              <h5>Your profile is waiting to be reviewed</h5>
+            </div>
+        <% elsif @user.submitted_profile == false && @user.approved_profile == false %>
+            <div class="overlay">
+              <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
+              <h5>Your profile was rejected. Please make changes and submit again.</h5>
+            </div>
+        <% else %>
+            <style>
+              .flex--profile {
+                opacity: 1 !important;
+              }
+            </style>
+        <% end %>
+        <%= render 'profile' %>
+      </div>
+      <div class="dashboard--articles--wrapper">
+        <h1 id="page_title">Welcome to The Teen Magazine!</h1>
+        <div style="padding-right: 10px;">
           <p>When you publish your first article, you will become an official writer for The Teen Magazine and will receive your own
           author page.</p>
-          <p>To Become an Official Writer:</p>
+          <p>To unlock your official writer account:</p>
           <ol>
             <li>Introduce yourself to the <a target="_blank" href="https://www.facebook.com/groups/615063885673363/">Facebook group</a></li>
             <li>Read through the resources found at the bottom of your dashboard</li>
-            <li>Claim a pitch from the <%= link_to("pitches page", pitches_path) %> to start your first article.</li>
+            <li>Claim a pitch from the <%= link_to("pitches page", pitches_path) %> and start your first article.</li>
             <li>Once you've finished your first article, you can submit it for review though the article form. Our amazing editors will look it over and give you
             feedback.</li>
           </ol>
-          <p>If you have your own article idea that fits our audience, you can <%= link_to("start a new article", new_post_path) %>. Please not that your article may not be approved if the content is not unique enough or relevant to our teenage audience. </p>
+          <p>If you have your own article idea that fits our audience, you can <%= link_to("start a new article", new_post_path) %> instead. Please not that your article may not be approved if the content is not relevant to our teenage audience. </p>
           <p>If you are looking for some additional inspiration, visit the <a target="_blank" href="https://docs.google.com/spreadsheets/d/1I-za5WKWPTQWiC2sAGBHZbjsOjb74EUZgvCAfQ4dU9I/edit?usp=sharing">Community Group Brainstorm</a> or the <a target="_blank" href="https://www.facebook.com/groups/615063885673363/">Facebook group</a>.</p>
-          <% if @user_posts.count == 0 %>
-            <h1 id="page_title">Your saved/submitted articles will show up here</h1>
-          <% else %>
-            <h1 id="page_title">Your saved/submitted articles</h1>
-          <% end %>
-          <% @user_posts.each do |post| %>
-          <div class="flex--postlist--item">
-            <div class="inside--item">
-              <% if post.published && post.after_approved == true %>
-              <%= image_tag "published.png", class: "icon" %>
-              <% elsif post.waiting_for_approval && (post.published == nil || post.published == false) %>
-              <%= image_tag "waiting.png", class: "icon" %>
-              <% elsif post.published && post.after_approved == nil %>
-              <%= image_tag "approved.png", class: "icon" %>
-              <% else %>
-              <%= image_tag "saved.png", class: "icon" %>
-              <% end %>
-              <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
-            </div>
-          </div>
-          <% end %>
-          <br />
-          <%= link_to "New Article", new_post_path(@post), class: "newpost--new--profile" %>
         </div>
-      </div>
-      <div class="dashboard--writer--flex--two">
-        <div class="links">
-          <div>
-            <a href="/users/<%= @user.slug %>/edit">Edit Profile</a>
-            <%= link_to("Change Password", edit_user_registration_path) %>
-            <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
-            <%= link_to("Editor Pitches", pitches_path) %>
-            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-          </div>
+        <div class="dashboard--articles--wrapper">
+          <% if @user_posts.rejected.present? %>
+            <h6 class="header_ttl">Changes Requested</h6>
+            <%= render "/users/partials/dashboard_articles", articles: @user_posts.rejected, image: "saved.png" %>
+          <% end %>
+          <% if @user_posts.scheduled_for_publishing.present? %>
+            <h6 class="header_ttl">Pending Publication</h6>
+            <%= render "/users/partials/dashboard_articles", articles: @user_posts.scheduled_for_publishing, image: "published.png" %>
+          <% end %>
+          <% if @user_posts.in_review.present? %>
+            <h6 class="header_ttl">Articles In Review</h6>
+            <%= render "/users/partials/dashboard_articles", articles: @user_posts.in_review, image: "waiting.png" %>
+          <% end %>
+          <% if @user_posts.submitted.present? %>
+            <h6 class="header_ttl">Pending Review</h6>
+            <%= render "/users/partials/dashboard_articles", articles: @user_posts.submitted, image: "waiting.png" %>
+          <% end %>
+          <h6 class="header_ttl">Articles In Progress</h6>
+          <%= render "/users/partials/dashboard_articles", articles: @user_posts.draft, image: "saved.png" %>
         </div>
         <br />
-        <p>This is a new writer account. Your full writer account will be activated
-            once you publish your first article.</p>
+        <div class="btn_cntnr"><%= link_to "Claim a Pitch", pitches_path, class: "newpost--new--profile" %></div>
       </div>
+    </div>
+    <div class="dashboard--writer--flex--two">
+      <div class="links">
+        <div>
+          <%= link_to("Edit Profile", edit_user_path(@user)) %>
+          <%= link_to("Change Password", edit_user_registration_path) %>
+          <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
+          <%= link_to("Editor Pitches", pitches_path) %>
+          <%= link_to "Start a new article", new_post_path(@post) %>
+          <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+        </div>
+      </div>
+      <br />
+      <p>This is a new writer account. Your full writer account will be activated
+          once you publish your first article.</p>
     </div>
   </div>
-  <div class="guidelines">
-    <div class="thelink">
-      <a href="/criteria">
-      <div class="box foo G1 ">
-        <p>Criteria & FAQ</p>
+</div>
+<div class="guidelines">
+  <div class="thelink">
+    <a href="/criteria">
+    <div class="box foo G1 ">
+      <p>Criteria & FAQ</p>
+    </div>
+    </a>
+  </div>
+  <div class="thelink">
+    <a href="/choosing-a-topic">
+      <div class="G2 box foo">
+        <p>Choosing A Topic</p>
       </div>
-      </a>
-    </div>
-    <div class="thelink">
-      <a href="/choosing-a-topic">
-        <div class="G2 box foo">
-          <p>Choosing A Topic</p>
-        </div>
-      </a>
-    </div>
-    <div class="thelink">
-      <a href="/writing-the-perfect-article">
-        <div class="G3 box foo">
-          <p>Writing The Perfect Article</p>
-        </div>
-      </a>
-    </div>
-    <div class="thelink">
-      <a href="/finding-images">
-        <div class="G5 box foo">
-          <p>Finding Images</p>
-        </div>
-      </a>
-    </div>
+    </a>
+  </div>
+  <div class="thelink">
+    <a href="/writing-the-perfect-article">
+      <div class="G3 box foo">
+        <p>Writing The Perfect Article</p>
+      </div>
+    </a>
+  </div>
+  <div class="thelink">
+    <a href="/finding-images">
+      <div class="G5 box foo">
+        <p>Finding Images</p>
+      </div>
+    </a>
   </div>
 </div>

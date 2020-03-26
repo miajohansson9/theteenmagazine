@@ -4,8 +4,8 @@
 
   <% if current_user.admin? || current_user.editor? %>
     <%= f.label "Approve profile" %>
-    <%= f.check_box :approved_profile, value: @user.approved_profile %><br /><br />
-    <%= f.hidden_field :submitted_profile, value: false %><br />
+    <%= f.check_box :approved_profile, value: @user.approved_profile %><br /><br>
+    <%= f.hidden_field :submitted_profile, value: false %>
   <% end %>
 
   <%= f.label "First Name" %>
@@ -23,19 +23,19 @@
   <%= f.label "Email (Will not be published)" %><br>
   <%= f.text_field :email %>
 
-  <h3>Links (Optional)</h3>
+  <h5>Links (Optional)</h5>
 
   <div id="edit--profile">
     <%= f.label "Website" %>
     <div class="add_link">
       <span>www.</span>
-      <%= f.text_field :website, :style => "padding-left: 50px;" %>
+      <%= f.text_field :website, :style => "padding-left: 52px;" %>
     </div>
 
     <%= f.label "Youtube" %>
     <div class="add_link">
       <span>youtube.com/</span>
-      <%= f.text_field :youtube, :style => "padding-left: 106px;" %>
+      <%= f.text_field :youtube, :style => "padding-left: 110px;" %>
     </div>
 
     <%= f.label "Instagram" %>
