@@ -20,10 +20,12 @@ class PitchesController < ApplicationController
       end
       @title = "Editor Pitches"
       @desc = true
+      @message = "There are no unclaimed pitches. Check back in a few days!"
       @button_text = "Claim Article Pitch"
     else
       @title = "Your claimed pitches"
       @button_text = "View Pitch"
+      @message = "You don't have any claimed pitches. :("
       @pitches = Pitch.all.where(claimed_id: params[:user_id]).paginate(page: params[:page]).order("updated_at desc")
     end
   end

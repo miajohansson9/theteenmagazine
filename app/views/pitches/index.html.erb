@@ -13,6 +13,9 @@
     <% end %>
     <br>
   <% end %>
+  <% if @pitches.count.eql? 0 %>
+    <i><%= @message %></i>
+  <% end %>
   <div class="flex-wrapper">
     <% @pitches.each do |pitch| %>
     <a href="<%= pitch_path(pitch)%>">
