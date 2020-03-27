@@ -143,10 +143,10 @@
 
 .comment_field {
   outline: 0;
-  border-width: 0 0 2px;
-  padding-left: 0;
+  border-width: 0 0 2px !important;
+  padding-left: 0 !important;
   border-color: #E9E9E9;
-  margin: 10px 0 0 0;
+  margin: 10px 0 0 0 !important;
 }
 .comment_field:focus {
   border-color: #65B19D;

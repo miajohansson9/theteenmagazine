@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p><%= @user.first_name %>, there is a new comment on one of your recent drafts. To see the writer's feedback, click <%= link_to "here", @post, :style => "color: #65B19D;"%>.</p>
+  </body>
+</html>

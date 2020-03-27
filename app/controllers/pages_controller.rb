@@ -14,6 +14,8 @@ class PagesController < ApplicationController
   end
 
   def topics
+    @pitch = Pitch.new
+    @categories = Category.all
   end
 
   def writing

@@ -40,4 +40,10 @@ class ApplicationMailer < ActionMailer::Base
     @post = post
     mail(to: user.email, subject: "#{user.first_name}, your article has changes requested.", from: "miajohansson@college.harvard.edu")
   end
+
+  def comment_added(user, post)
+    @user = user
+    @post = post
+    mail(to: user.email, subject: "A writer commented on your article.", from: "miajohansson@college.harvard.edu")
+  end
 end

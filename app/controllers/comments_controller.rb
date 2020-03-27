@@ -9,6 +9,9 @@ class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(comment_params)
     @comment.save
+    if current_user.id != @comment.post.user.id
+      ApplicationMailer.comment_added(@comment.post.user, @comment.post).deliver
+    end
     redirect_to :back
   end
 

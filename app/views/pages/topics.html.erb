@@ -1,25 +1,12 @@
 <div class="skinny_wrapper topics">
   <h1 id="page_title">Choosing a Topic and Search Analysis</h1>
-  <h3>Categories:</h3>
-  <div class="categories">
-    <p> Lifestyle </p>
-    <p> Beauty </p>
-    <p> Fashion </p>
-    <p> Health & Fitness </p>
-    <p> Food </p>
-    <p> DIY </p>
-    <p> High School </p>
-    <p> Academics </p>
-    <p> Tips & Hacks </p>
-    <p> Advice </p>
-    <p> Travel </p>
-    <p> Love & Relationships </p>
-    <p> Entreprenuership </p>
-    <p> Humor </p>
-    <p> News </p>
-  </div>
 
-  <h3 style="margin-bottom:10px;">Here are some ideas for titles:</h3>
+  <p>You may write an article on anything that fits into a category and is relevant/helpful to our teenage audience.
+     If you're not sure what to write about, it is recommended to claim a pitch from our editors <%= link_to "here", pitches_path %>.</p>
+  <p>If you start an article not associated with a pitch, you run the risk of your article not being approved because
+     it doesn't fit the content published on The Teen Magazine. Go to <%= link_to "Editor Pitches", pitches_path %>.</p>
+
+  <h3 style="margin-bottom:10px;">If you decide to write your own article, here are some ideas for titles:</h3>
   <ol>
     <li> 10 different ways to wear <p class="blank">(clothing item)</p></li>
     <li> <p class="blank">(season)</p> outfits you need to copy</li>
@@ -35,7 +22,7 @@
     <li> <p class="blank">(something)</p> every <p class="blank">(adjective: ex. busy, on the go)</p> girl needs to know/have</li>
   </ol>
 
-  <p>Please change these titles as much as you want! They are here for inspiration. If you need more ideas about what type of things to write about, visit these websites:</p>
+  <p>Please change these titles as much as you want. They are here for inspiration. If you need more ideas about the structure of great articles, visit these websites:</p>
 
   <ol>
     <li><a target="_blank" href="https://www.society19.com/">Society19.com</a></li>
@@ -46,7 +33,14 @@
 
   <p>Remember to <b>never copy anything</b> off of these websites. They are just here to give you an idea of what types of things to write about.</p>
 
-  <p>A powerful strategy for choosing what to write about is to search for a broad category you're interested in writing about, then seeing what comes up. If you narrow your search and look at the "suggested" keywords in the search bar, you can get a sense of what people are searching for. If it's unique enough, you could generate lots of traffic through organic searches.</p>
+  <h3>Categories:</h3>
+  <div class="categories">
+    <% @categories.each do |category| %>
+      <p><%= link_to category.name, category %></p>
+    <% end %>
+  </div>
+
+  <p>Bonus: A powerful strategy for choosing what to write about is to search for a broad category you're interested in writing about out of the below categories, then seeing what comes up. If you narrow your search and look at the "suggested" keywords in the search bar, you can get a sense of what people are searching for. If it's unique enough, you could generate lots of traffic through organic searches.</p>
 
   <p>Read "<a href="/writing-the-perfect-article">Writing The Perfect Article</a>" Next →</p>
 </div>

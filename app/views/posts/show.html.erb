@@ -228,7 +228,7 @@
                 <% end %>
               </ul>
             </div>
-            <% if current_user.admin? || current_user.id = @post.id %>
+            <% if current_user.admin? || current_user.id == @post.id %>
               <div class="btn_cntnr">
                 <%= link_to "Turn off sharing", post_path(@post, sharing: false), :data => {:confirm => "Are you sure you want to turn off peer sharing?"}, class: "newpost--new--profile" %>
               </div>
