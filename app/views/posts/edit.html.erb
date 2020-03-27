@@ -1,14 +1,14 @@
 <% @most_recent_review = @post.reviews.where.not(status: "In Progress").last %>
 <% if !@most_recent_review.nil? && (!@most_recent_review.try(:status).eql? "Rejected") %>
   <%= render '/posts/banner_status' %>
-<% elsif !(@post.is_published?) %>
+<% elsif !(@post.is_published?) && @post.pitch.present? %>
   <% @rev = @post.reviews.where.not(status: "In Progress").last %>
   <% if @rev.present? %>
     <% if @rev.status.eql? "In Progress" %>
       <% @deadline = @rev.created_at + 14.days %>
     <% elsif @rev.status.eql? "Rejected" %>
       <% @deadline = @rev.updated_at + 14.days %>
-    <% else %>
+    <% elsif @post.pitch.present? %>
       <% @deadline = @post.pitch.updated_at + 14.days %>
     <% end %>
   <% else %>
