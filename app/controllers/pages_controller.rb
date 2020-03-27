@@ -25,9 +25,6 @@ class PagesController < ApplicationController
   def images
   end
 
-  def styling
-  end
-
   def privacy
   end
 

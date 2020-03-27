@@ -51,7 +51,7 @@
         <div class="dashboard--articles--wrapper">
           <% if @user_posts.rejected.present? %>
             <h6 class="header_ttl">Changes Requested</h6>
-            <%= render "/users/partials/dashboard_articles", articles: @user_posts.rejected, image: "saved.png" %>
+            <%= render "/users/partials/dashboard_articles", articles: @user_posts.rejected, image: "changes_requested.png" %>
           <% end %>
           <% if @user_posts.scheduled_for_publishing.present? %>
             <h6 class="header_ttl">Pending Publication</h6>
@@ -59,7 +59,7 @@
           <% end %>
           <% if @user_posts.in_review.present? %>
             <h6 class="header_ttl">Articles In Review</h6>
-            <%= render "/users/partials/dashboard_articles", articles: @user_posts.in_review, image: "waiting.png" %>
+            <%= render "/users/partials/dashboard_articles", articles: @user_posts.in_review, image: "in_review.png" %>
           <% end %>
           <% if @user_posts.submitted.present? %>
             <h6 class="header_ttl">Pending Review</h6>
