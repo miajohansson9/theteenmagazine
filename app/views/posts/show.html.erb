@@ -180,7 +180,7 @@
             <div class="flex_other_articles">
               <h3 class="title">Trending in <%= link_to(@post.category.name, @post.category) %></h3>
               <div class="contain_articles">
-                <% @post.category.posts.published.limit(15).order("publish_at desc").dup.order("post_impressions desc")[0..6].each do |post| %>
+                <% @trending.each do |post| %>
                   <div class="ctgry_article">
                      <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
                     <div class="paragraph">

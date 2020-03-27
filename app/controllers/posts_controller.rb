@@ -96,6 +96,8 @@ class PostsController < ApplicationController
       end
       if !@post.is_published?
         @comments = @post.comments.order("created_at asc")
+      else
+         @trending = @post.category.posts.published.where(:publish_at => (Time.now - 3.months)..Time.now).order("post_impressions desc").limit(7)
       end
       set_meta_tags title: @post.title,
                     description: @post.meta_description,
