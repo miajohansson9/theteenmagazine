@@ -1,5 +1,7 @@
 <div class="skinny_wrapper wrapper_padding pitches_wrapper">
-  <div class="btn_cntnr" style="margin-bottom: 0px;"><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %></div>
+  <% if current_user.editor? || current_user.admin? %>
+    <div class="btn_cntnr" style="margin-bottom: 0px;"><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %></div>
+  <% end %>
   <h1 class="pitch_ttl"><%= @title %></h1>
   <% if @desc %>
     <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. You will have two weeks to submit your article for review after claiming the pitch.</i>

@@ -6,9 +6,11 @@
       <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
       <p class="edited_dt"><%= "Last edited " + time_ago_in_words(post.updated_at) + " ago" %></p>
       <% if ((post.reviews.last.try(:status).eql? "In Progress") || (post.reviews.last.try(:status).eql? "Rejected")) && post.pitch.present? %>
-        <% @post_reviews = post.reviews.where.not(status: "In Progress") %>
-        <% if @post_reviews.present? %>
-          <% @deadline = @post_reviews.last.updated_at + 14.days %>
+        <% @post_reviews = post.reviews.last %>
+        <% if @post_reviews.status.eql? "In Progress" %>
+          <% @deadline = @post_reviews.created_at + 14.days %>
+        <% elsif @post_reviews.status.eql? "Rejected" %>
+          <% @deadline = @post_reviews.updated_at + 14.days %>
         <% else %>
           <% @deadline = post.pitch.updated_at + 14.days %>
         <% end %>

@@ -1,14 +1,30 @@
-<h1 id="page_title">Claim Article Pitch</h1>
+<h1 id="page_title"><%= @title %></h1>
 <div class="skinny_wrapper wrapper_padding">
-  <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started.
-    You will have <b>two weeks</b> to submit your article for review. If your article is not submitted within two weeks and/or not approved within one month of
-    claiming the topic, the pitch will become unclaimed and any writer can claim it instead.</i>
+  <% if @claimed_user.nil? %>
+    <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. You will have <b>two weeks</b> to submit your article for review after claiming the pitch.</i>
+  <% else %>
+    <% @post_reviews = Post.where(user_id: @pitch.claimed_id, pitch_id: @pitch.id).last.reviews.last %>
+    <% if @post_reviews.present? %>
+      <% if @post_reviews.status.eql? "In Progress" %>
+        <% @deadline = @post_reviews.created_at + 14.days %>
+      <% elsif @post_reviews.status.eql? "Rejected" %>
+        <% @deadline = @post_reviews.updated_at + 14.days %>
+      <% else %>
+        <% @deadline = @pitch.updated_at + 14.days %>
+      <% end %>
+    <% else %>
+      <% @deadline = @pitch.updated_at + 14.days %>
+    <% end %>
+    <% if !(@post_reviews.try(:status).eql? "In Review") && !(@post_reviews.try(:status).eql? "Approved for Publishing") && !(@post_reviews.try(:status).eql? "Ready for Review") %>
+      <i <% if @deadline - Time.now < 7.days %>class="deadline_dt" <% end %>>The deadline to submit <%= link_to("this article", @pitch.posts.last, :class => "pitch_btn") %> is in <%= distance_of_time_in_words_to_now(@deadline) + "." %></i>
+    <% end %>
+  <% end %>
   <h3 class="pitch_ttl"><%= @pitch.title %></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.full_name, @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
   <%= image_tag(@pitch.thumbnail, class: "thumbnail_img") %>
   <%= markdown @pitch.description %>
   <% if @pitch.requirements.present? %>
-    <i>Additional notes:</i>
+    <i>Notes:</i>
     <%= markdown @pitch.requirements %>
   <% end %>
 
@@ -21,14 +37,12 @@
       <%= f.submit "Claim Article Pitch", data: { confirm: "You will have two weeks to write and submit this article." } %>
     <% end %>
   <% else %>
-    <span><%= @pitch.description %></span>
-    <%= markdown @pitch.requirements %>
     <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.created_at.strftime('%A, %B %d') %></p>
     <% if @claimed_user.id == current_user.id || current_user.admin? %>
       <%= form_for @pitch do |f| %>
         <%= f.hidden_field :claimed_id, value: nil %>
         <p class="pitch_usr">Go to this pitch's <%= link_to("article", @article, class: "pitch_btn") %>.<br>Note: If you unclaim this pitch, any writer will be able to claim it. The associated article will become locked unless you claim the pitch again.</p>
-        <%= f.submit "Unclaim Pitch" %>
+        <%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }  %>
       <% end %>
     <% end %>
   <% end %>

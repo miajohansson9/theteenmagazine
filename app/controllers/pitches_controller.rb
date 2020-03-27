@@ -46,10 +46,15 @@ class PitchesController < ApplicationController
 
   def update
     @categories = Category.all
-    if @pitch.claimed_id == current_user.id && pitch_params[:claimed_id].blank?
-      current_user.posts.where(pitch_id: @pitch.id).last.reviews.each do |review|
+    if (@pitch.claimed_id == current_user.id || current_user.admin?) && pitch_params[:claimed_id].blank?
+      @post = Post.where(user_id: @pitch.claimed_id, pitch_id: @pitch.id).last
+      @post.reviews.each do |review|
         review.destroy
       end
+      @slug = FriendlyId::Slug.where(slug: @post.slug).first
+      @slug.destroy
+      @post.title = "#{@post.title} (locked)"
+      @post.save
       @message = "You've unclaimed this pitch."
     else
       @message = "Changes were successfully saved!"
@@ -84,6 +89,7 @@ class PitchesController < ApplicationController
     @post.content = "<i>" + @pitch.description + "</i>"
     @claimed_user = @pitch.claimed_id.present? ? User.find(@pitch.claimed_id) : nil
     @article = @claimed_user ? @claimed_user.posts.where(pitch_id: @pitch.id).last : nil
+    @title = @claimed_user.nil? ? "Claim article pitch" : "You've claimed this pitch"
   end
 
   def edit

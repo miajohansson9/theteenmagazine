@@ -56,6 +56,7 @@ class PostsController < ApplicationController
       @prev_post_pitch.pitch.save
       @prev_post_pitch.reviews.destroy
       @prev_post_pitch.reviews.build(status: "In Progress", active: true)
+      @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
       @prev_post_pitch.save
       redirect_to @prev_post_pitch, notice: "You've reclaimed this pitch!"
     else
@@ -183,9 +184,11 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if !@post.pitch.try(:claimed_id).nil?
-      @post.pitch.claimed_id = nil
-      @post.pitch.save
+    if !@post.pitch.nil?
+      if @post.pitch.claimed_id.eql? @post.user.id
+        @post.pitch.claimed_id = nil
+        @post.pitch.save
+      end
     end
     @post.destroy
     redirect_to current_user, notice: "Your article was deleted."

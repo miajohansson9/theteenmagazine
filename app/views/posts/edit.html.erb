@@ -2,17 +2,20 @@
 <% if !@most_recent_review.nil? && (!@most_recent_review.try(:status).eql? "Rejected") %>
   <%= render '/posts/banner_status' %>
 <% elsif !(@post.is_published?) %>
-  <% @rev = @post.reviews.last %>
-  <% if (@rev.nil? || (@rev.try(:status).eql? "In Progress")) && !@post.pitch.blank? %>
-    <% @post_reviews = @post.reviews.where.not(status: "In Progress") %>
-    <% if @post_reviews.present? %>
-      <% @deadline = @post_reviews.last.updated_at + 14.days %>
+  <% @rev = @post.reviews.where.not(status: "In Progress").last %>
+  <% if @rev.present? %>
+    <% if @rev.status.eql? "In Progress" %>
+      <% @deadline = @rev.created_at + 14.days %>
+    <% elsif @rev.status.eql? "Rejected" %>
+      <% @deadline = @rev.updated_at + 14.days %>
     <% else %>
       <% @deadline = @post.pitch.updated_at + 14.days %>
     <% end %>
-    <% if @deadline.present? %>
-      <p class= "banner_stts" style="position: relative;">You have <%= distance_of_time_in_words_to_now(@deadline) %> left to submit this <%= link_to("Article Pitch", @post.pitch, class: "link_white") %> for review.</p>
-    <% end %>
+  <% else %>
+    <% @deadline = @post.pitch.updated_at + 14.days %>
+  <% end %>
+  <% if @deadline.present? %>
+    <p class= "banner_stts" style="position: relative;">You have <%= distance_of_time_in_words_to_now(@deadline) %> left to submit this <%= link_to("Article Pitch", @post.pitch, class: "link_white") %> for review.</p>
   <% end %>
 <% end %>
 <div class="skinny_wrapper wrapper_padding">
