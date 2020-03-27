@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+    <p>Your article <%= link_to @post.title, @post, :style => "color: #65B19D;" %> has requested changes to it.</p>
+    <p>Best,<br/>Mia</p>
+  </body>
+</html>

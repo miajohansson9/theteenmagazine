@@ -14,14 +14,17 @@
   <%= f.label "Last Name" %>
   <%= f.text_field :last_name %>
 
-  <%= f.label "Upload profile picture" %><br><br />
+  <%= f.label "Upload profile picture" %><br>
   <%= f.file_field :profile %><br/><br/>
 
   <%= f.label "Description" %>
   <%= f.text_area :description %><br><br />
 
-  <%= f.label "Email (Will not be published)" %><br>
+  <%= f.label "Email (will not be published)" %><br>
   <%= f.text_field :email %>
+
+  <%= f.check_box :bi_monthly_assignment %>
+  <%= f.label "receive bi-monthly article assignments" %><br>
 
   <h5>Links (Optional)</h5>
 

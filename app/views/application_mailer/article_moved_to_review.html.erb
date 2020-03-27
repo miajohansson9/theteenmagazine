@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>Your article <%= link_to @post.title, @post, style: "color: #65B19D;" %> has been moved to <b>in review</b>.</p>
+    <p>Log into your account <a href="https://www.theteenmagazine.com/login" style="color: #65B19D;">here</a>.</p>
+  </body>
+</html>

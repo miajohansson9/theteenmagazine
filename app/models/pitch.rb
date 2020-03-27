@@ -7,7 +7,9 @@ class Pitch < ApplicationRecord
   validates :description, :presence => true
   validates :category_id, :presence => true
   validates :thumbnail, :presence => true
-  
+
+  self.per_page = 18
+
   has_attached_file :thumbnail, styles: {
       card: '540x380#'
     }

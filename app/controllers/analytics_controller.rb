@@ -18,7 +18,7 @@ class AnalyticsController < ApplicationController
   private
 
   def access
-    @user.admin || @user.editor || current_user.id == @user.id
+    current_user.admin? || current_user.editor? || current_user.id == @user.id
   end
 
 end

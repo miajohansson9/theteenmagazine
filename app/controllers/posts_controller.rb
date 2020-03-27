@@ -147,7 +147,12 @@ class PostsController < ApplicationController
         end
         @post.reviews.last.active = true
         @post.reviews.last.save!
-        if @new_status.eql? "Approved for Publishing"
+        if (@new_status.eql? "Approved for Publishing") && !(@prev_status.eql? "Approved for Publishing")
+          if @post.user.posts.published.count.eql? 0
+            ApplicationMailer.first_article_published(@post.user, @post).deliver
+          else
+            ApplicationMailer.article_published(@post.user, @post).deliver
+          end
           @post.publish_at = Time.now
         end
       end
@@ -155,12 +160,19 @@ class PostsController < ApplicationController
       if (@new_status.eql? "In Progress") && ((@prev_status.eql? "Ready for Review") || (@prev_status.eql? "In Review"))
         @notice = "Your article was withdrawn from review."
       elsif ((@prev_status.eql? "In Progress") || (@prev_status.blank?)) && (@new_status.eql? "Ready for Review")
+        ApplicationMailer.article_moved_to_submitted(@post.user, @post).deliver
         @notice = "Your article was submitted for review."
       else
         @notice = "Your changes were saved."
       end
+      if @new_status.eql? "Rejected"
+        ApplicationMailer.article_has_requested_changes(@post.user, @post).deliver
+      end
       if @new_status.eql? "In Review"
         @notice = @prev_review.editor_id == current_user.id ? "Your changes were saved." : "Great job! You've claimed editing this article!"
+        if !@prev_status.eql? "In Review"
+          ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
+        end
         redirect_to reviews_path, notice: @notice
       else
         redirect_to @post, notice: @notice

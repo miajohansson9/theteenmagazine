@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     end
     if current_user.present?
       @pitches = Pitch.all.order("created_at desc").limit(4)
-      @claimed_pitches_cnt =  Pitch.where(claimed_id: current_user.id).present? ? Pitch.where(claimed_id: current_user.id).count : 0;
+      @claimed_pitches_cnt =  Pitch.where(claimed_id: @user.id).present? ? Pitch.where(claimed_id: @user.id).count : 0;
       @published_articles_cnt =  @user.posts.published.count;
       @pageviews = 0
       @user_posts_approved.each do |post|
@@ -105,7 +105,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap)
+    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment)
   end
 
   def find_user

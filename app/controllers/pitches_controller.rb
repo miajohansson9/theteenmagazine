@@ -8,14 +8,23 @@ class PitchesController < ApplicationController
   #show all pitches
   def index
     if params[:user_id].nil?
+      if params[:pitch].nil?
+        @pitch = Pitch.new
+        @categories = Category.all
+        @pitches = Pitch.all.where(claimed_id: nil).paginate(page: params[:page]).order("updated_at desc")
+      else
+        @categories = Category.all
+        @category_id = (params[:pitch][:category_id].blank?) ? @categories.map {|category| category.id} : params[:pitch][:category_id]
+        @pitch = Pitch.new(category_id: params[:pitch][:category_id])
+        @pitches = Pitch.all.where(category_id: @category_id, claimed_id: nil).paginate(page: params[:page]).order("updated_at desc")
+      end
       @title = "Editor Pitches"
       @desc = true
       @button_text = "Claim Article Pitch"
-      @pitches = Pitch.all.where(claimed_id: nil).order("created_at desc")
     else
-      @title = "Your  claimed pitches"
+      @title = "Your claimed pitches"
       @button_text = "View Pitch"
-      @pitches = Pitch.all.where(claimed_id: params[:user_id]).order("updated_at desc")
+      @pitches = Pitch.all.where(claimed_id: params[:user_id]).paginate(page: params[:page]).order("updated_at desc")
     end
   end
 
