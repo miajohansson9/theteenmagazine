@@ -10,8 +10,8 @@ class AnalyticsController < ApplicationController
 
   def index
     redirect_to @user unless access
-    @posts_by_impressions = @user.posts.published.order("post_impressions desc")
-    @posts = @user.posts.published.order("publish_at desc")
+    @posts_by_impressions = Post.published.order("post_impressions desc")
+    @user_posts = @user.posts.published.order("publish_at desc")
   end
 
   private
