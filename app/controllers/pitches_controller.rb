@@ -50,13 +50,15 @@ class PitchesController < ApplicationController
     @categories = Category.all
     if (@pitch.claimed_id == current_user.id || current_user.admin?) && pitch_params[:claimed_id].blank?
       @post = Post.where(user_id: @pitch.claimed_id, pitch_id: @pitch.id).last
-      @post.reviews.each do |review|
-        review.destroy
+      if @post.present?
+        @post.reviews.each do |review|
+          review.destroy
+        end
+        @slug = FriendlyId::Slug.where(slug: @post.slug).first
+        @slug.destroy
+        @post.title = "#{@post.title} (locked)"
+        @post.save
       end
-      @slug = FriendlyId::Slug.where(slug: @post.slug).first
-      @slug.destroy
-      @post.title = "#{@post.title} (locked)"
-      @post.save
       @message = "You've unclaimed this pitch."
     else
       @message = "Changes were successfully saved!"
