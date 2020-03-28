@@ -10,6 +10,9 @@ class AppliesController < ApplicationController
   #create a new application
   def new
     @application = Apply.new
+    set_meta_tags title: "Apply to The Teen Magazine Writer Team",
+                  image: "https://theteenmagazine.s3.amazonaws.com/become_a_writer-4c75511ff2d771fd380fad4dcdbeeef932870882239e52252cbea070a877761e.jpg",
+                  description: "Get your writing published on the front page of The Teen Magazine and join a supportive community of over 200 student writers."
   end
 
   #send submitted application

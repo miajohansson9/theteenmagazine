@@ -101,7 +101,7 @@ class PostsController < ApplicationController
       end
       set_meta_tags title: @post.title,
                     description: @post.meta_description,
-                    keywords: @post.keywords
+                    image: @post.thumbnail.url(:large2)
     else
       redirect_to new_user_session_path, notice: "You must sign in to continue."
     end
