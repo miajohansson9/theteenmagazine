@@ -129,7 +129,9 @@ class PostsController < ApplicationController
         @post.content << "<script>instgrm.Embeds.process()</script>"
       end
       @new_status = @post.reviews.last.status.clone
-      @post.publish_at = nil
+      if @new_status != "Approved for Publishing"
+        @post.publish_at = nil
+      end
       if (@new_status.eql? "In Progress") && (@prev_status.eql? "Rejected")
         @post.reviews.last.destroy
       else
