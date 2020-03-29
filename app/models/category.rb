@@ -5,5 +5,9 @@ class Category < ApplicationRecord
   validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: :history
+
+  def should_generate_new_friendly_id?
+    slug.blank? || name_changed?
+  end
 end

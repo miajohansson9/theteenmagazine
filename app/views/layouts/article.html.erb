@@ -58,16 +58,21 @@
     <amp-auto-ads type="adsense"
         data-ad-client="ca-pub-4986861624955300">
     </amp-auto-ads>
+    <% if notice %>
+      <p class="notice"><%= notice %></p>
+      <% elsif alert %>
+      <p class="alert"><%= alert %></p>
+    <% end %>
     <div class="sidebar_menu hide_menu" style="background-color: #65B19D;">
       <i class="fa fa-times"></i>
       <h1><%= link_to "The Teen Magazine", root_path %></h1>
-      <a href="/categories/get-involved">Get Involved</a>
-      <a href="/categories/academics">Academics</a>
-      <a href="/categories/health-fitness">Health</a>
-      <a href="/categories/beauty">Beauty</a>
-      <a href="/categories/fashion">Fashion</a>
-      <a href="/categories/entertainment">Entertainment</a>
-      <a href="/categories/personal-stories">Personal Stories</a>
+      <a href="/categories/student-life">Student Life</a>
+      <a href="/categories/wellness">Wellness</a>
+      <a href="/categories/beauty-style">Beauty & Style</a>
+      <a href="/categories/culture">Culture</a>
+      <a href="/categories/relationships">Relationships</a>
+      <a href="/categories/lifestyle">Lifestyle</a>
+      <a href="/categories/opinion">Opinion</a>
       <a href="/contacts/new">Contact</a>
       <% if user_signed_in? %>
          <%= link_to "Create", pitches_path %>
@@ -85,11 +90,6 @@
       </div>
     </div>
     <div class="bodywrapper">
-      <% if notice %>
-        <p class="notice"><%= notice %></p>
-        <% elsif alert %>
-        <p class="alert"><%= alert %></p>
-      <% end %>
       <header id="main_navigation" class="clearfix">
         <div id="banner">
           <div class="logo--flex banner_item" style="margin-top: 0;">
@@ -110,12 +110,13 @@
         <div class="border">
           <nav class="nav_article">
             <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
-            <a class="link" href="/categories/news">News</a>
-            <a class="link" href="/categories/get-involved">Get Involved</a>
-            <a class="link" href="/categories/academics">Academics</a>
-            <a class="link" href="/categories/health-fitness">Health</a>
-            <a class="link" href="/categories/entertainment">Entertainment</a>
-            <a class="link" href="/categories/fashion">Fashion</a>
+            <a href="/categories/student-life">Student Life</a>
+            <a href="/categories/wellness">Wellness</a>
+            <a href="/categories/beauty-style">Beauty & Style</a>
+            <a href="/categories/culture">Culture</a>
+            <a href="/categories/relationships">Relationships</a>
+            <a href="/categories/lifestyle">Lifestyle</a>
+            <a href="/categories/opinion">Opinion</a>
             <% if user_signed_in? %>
                <%= link_to "Create", pitches_path, class: "link" %>
                <% if current_user && (current_user.admin? || current_user.editor?) %>

@@ -34,7 +34,7 @@
   <% publishedPosts = Post.where(id: @posts_approved.drop(5).map(&:id))%>
   <% featuredPostIds = [] %>
   <div class="wrapper_home">
-    <h1 class="section--title"><a href="/categories/entertainment">Lifestyle</a></h1>
+    <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
     <div class="flex--welcome">
       <div class="flex-1">
         <div class="ctgry_section">
@@ -50,11 +50,11 @@
         </div>
       </div>
   </div>
-  <h1 class="section--title"><a href="/categories/academics">Academics</a></h1>
+  <h1 class="section--title"><a href="/categories/student-life">Student Life</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
       <div class="ctgry_section">
-        <% publishedPosts.where(:category_id => Category.friendly.find("academics").id).all.order("publish_at desc")[0..2].each do |post| %>
+        <% publishedPosts.where(:category_id => Category.friendly.find("student-life").id).all.order("publish_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
@@ -64,9 +64,9 @@
           </div>
         <% end %>
       </div>
-      <h1 class="section--title"><a href="/categories/get-involved">Entertainment</a></h1>
+      <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
       <div class="ctgry_section">
-        <% publishedPosts.where(:category_id => Category.friendly.find("entertainment").id).all.order("publish_at desc")[0..2].each do |post| %>
+        <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
@@ -79,7 +79,7 @@
       <div class="ctgry_grid_wrapper">
         <a class="applies" href="/apply"><%= image_tag "become_a_writer.jpg" %></a>
         <div class="ctgry_grid">
-          <% publishedPosts.where(:category_id => Category.friendly.find("entertainment").id).all.order("publish_at desc")[3..4].each do |post| %>
+          <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[3..4].each do |post| %>
             <% featuredPostIds << post.id %>
             <div class="ctgry_grid_article">
               <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
