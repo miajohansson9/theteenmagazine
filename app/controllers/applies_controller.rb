@@ -16,7 +16,6 @@ class AppliesController < ApplicationController
   def create
     @application = Apply.new(apply_params)
     @application.request = request
-    puts @application.request
     if @application.deliver
       flash.now[:error] = nil
     else
