@@ -5,7 +5,6 @@ class Apply < ActiveRecord::Base
   attributes :last_name,  :validate => true
   attributes :email, :validate => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
   attributes :description, :validate => true
-  attributes :category, :validate => true
   attributes :nickname,   :captcha => true
 
   def headers
