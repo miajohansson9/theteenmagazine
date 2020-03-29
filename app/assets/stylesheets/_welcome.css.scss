@@ -325,10 +325,18 @@ $gray:  #2a2a2a;
   }
 }
 
+@media (max-width: 1080px) {
+  .nav-title {
+    display: none;
+  }
+  .nav_article {
+    .link {
+      margin-left: 0.8em !important;
+    }
+  }
+}
+
 @media (max-width: 980px) {
-   .nav-title {
-     display: none;
-   }
   .other--articles {
     .container {
       width: 100%;
