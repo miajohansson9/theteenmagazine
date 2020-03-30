@@ -11,7 +11,7 @@ class CategoriesController < ApplicationController
 
   def show
     set_meta_tags title: @category.name
-    @category_posts = Post.where(category_id: @category.id).published.all.order("created_at desc")
+    @category_posts = Post.where(category_id: @category.id).published.all.order("publish_at desc")
   end
 
   def edit

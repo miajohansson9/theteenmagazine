@@ -91,7 +91,7 @@ class PostsController < ApplicationController
         @message = @post.sharing ? "Peer sharing is turned on!" : "Peer sharing is turned off."
         redirect_to @post, notice: @message
       end
-      if @post.sharing
+      if @post.sharing && !current_user.nil?
         @comment = current_user.comments.build(post_id: @post.id)
       end
       if !@post.is_published?
