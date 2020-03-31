@@ -19,7 +19,7 @@ class Pitch < ApplicationRecord
   }
 
   scope :is_approved, -> {
-    where.not(status: ["Ready for Review", "Rejected"])
+    where(status: ["Approved", nil])
   }
 
   scope :not_claimed, -> {
