@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+    <p>An editor has reviewed your pitch. Go to <%= link_to @pitch.title, @pitch %> to see the comments.</p>
+    <p>Best,<br/>Mia</p>
+  </body>
+</html>

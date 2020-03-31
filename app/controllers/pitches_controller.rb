@@ -1,6 +1,6 @@
 class PitchesController < ApplicationController
   before_action :find_pitch, only: [:show, :edit, :update, :destroy]
-  before_action :is_admin?, only: [:new, :create, :destroy, :edit]
+  before_action :is_admin?, only: [:edit]
   before_action :authenticate_user!
   load_and_authorize_resource
   layout "minimal"
@@ -11,12 +11,12 @@ class PitchesController < ApplicationController
       if params[:pitch].nil?
         @pitch = Pitch.new
         @categories = Category.all
-        @pitches = Pitch.all.where(claimed_id: nil).paginate(page: params[:page]).order("updated_at desc")
+        @pitches = Pitch.is_approved.not_claimed.where(status: nil).paginate(page: params[:page]).order("updated_at desc")
       else
         @categories = Category.all
         @category_id = (params[:pitch][:category_id].blank?) ? @categories.map {|category| category.id} : params[:pitch][:category_id]
         @pitch = Pitch.new(category_id: params[:pitch][:category_id])
-        @pitches = Pitch.all.where(category_id: @category_id, claimed_id: nil).paginate(page: params[:page]).order("updated_at desc")
+        @pitches = Pitch.is_approved.not_claimed.where(category_id: @category_id, status: nil).paginate(page: params[:page]).order("updated_at desc")
       end
       @title = "Editor Pitches"
       @desc = true
@@ -39,8 +39,10 @@ class PitchesController < ApplicationController
   def create
     @categories = Category.all
     @pitch = current_user.pitches.build(pitch_params)
-    if @pitch.save
+    if @pitch.save && current_user.editor?
       redirect_to "/pitches", notice: "Your pitch was successfully added!"
+    elsif @pitch.save
+      redirect_to user_path(current_user), notice: "Your pitch was successfully submitted!"
     else
       render 'new', notice: "Oh no! Your changes were not able to be saved!"
     end
@@ -48,6 +50,9 @@ class PitchesController < ApplicationController
 
   def update
     @categories = Category.all
+    if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
+      ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
+    end
     if (@pitch.claimed_id == current_user.id || current_user.admin?) && pitch_params[:claimed_id].blank?
       @post = Post.where(user_id: @pitch.claimed_id, pitch_id: @pitch.id).last
       if @post.present?
@@ -103,7 +108,7 @@ class PitchesController < ApplicationController
   private
 
   def pitch_params
-    params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :claimed_id, :category_id, :user_id)
+    params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :claimed_id, :category_id, :user_id)
   end
 
   def find_pitch

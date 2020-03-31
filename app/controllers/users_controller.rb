@@ -9,6 +9,9 @@ class UsersController < ApplicationController
     @user_posts = @user.posts.all.order("created_at desc")
     @user_posts_approved = @user.posts.published.order("publish_at desc")
     @posts = Post.all.order("created_at desc");
+    if !@user.editor?
+      @user_pitches = @user.pitches.not_claimed
+    end
     if @user_posts_approved.length < 1
       begin
         if (current_user.id != @user.id && (!current_user.admin?) && (!current_user.editor?))

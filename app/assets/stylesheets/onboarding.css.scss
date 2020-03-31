@@ -109,13 +109,16 @@
 }
 
 .pitches_wrapper {
+  h3 {
+    margin-bottom: 10px;
+  }
   .flex-wrapper {
     margin: 0 auto 40px auto;
     display: flex;
     flex-flow: row wrap; /* Shorthand – you could use ‘flex-direction: column’ and ‘flex-wrap: wrap’ instead */
     align-items: flex-start;
     .card-review {
-      padding: 30px;
+      padding: 20px;
       p {
         margin: 5px 0;
       }

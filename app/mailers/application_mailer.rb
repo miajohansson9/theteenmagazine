@@ -46,4 +46,10 @@ class ApplicationMailer < ActionMailer::Base
     @post = post
     mail(to: user.email, subject: "A writer commented on your article.", from: "miajohansson@college.harvard.edu")
   end
+
+  def pitch_has_been_reviewed(user, pitch)
+    @user = user
+    @pitch = pitch
+    mail(to: user.email, subject: "There are changes on your pitch.", from: "miajohansson@college.harvard.edu")
+  end
 end

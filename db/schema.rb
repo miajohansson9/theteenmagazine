@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200327003551) do
+ActiveRecord::Schema.define(version: 20200331145640) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -130,6 +130,8 @@ ActiveRecord::Schema.define(version: 20200327003551) do
     t.integer  "claimed_id"
     t.text     "requirements"
     t.boolean  "assign_if_not_claimed"
+    t.text     "status"
+    t.text     "notes"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
   end
 

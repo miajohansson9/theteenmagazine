@@ -11,6 +11,7 @@ class ReviewsController < ApplicationController
     end
     @editors_reviews = Post.all.in_review.where(:reviews => {editor_id: current_user.id}).order("updated_at desc")
     @submitted_for_review = Post.all.submitted.order("updated_at desc")
+    @submitted_pitches = Pitch.is_submitted.order("updated_at desc")
   end
 
   def update

@@ -1,0 +1,14 @@
+<% pitches.each do |pitch| %>
+  <div class="flex--postlist--item">
+    <div class="inside--item">
+      <%= image_tag image, class: "icon" %>
+      <div>
+        <h6 id="post-title"><a href="#"><%= link_to pitch.title, pitch %></a></h6>
+        <p class="edited_dt"><%= "Changes made " + time_ago_in_words(pitch.updated_at) + " ago" %></p>
+        <% if pitch.status.eql? "Approved" %>
+          <p>Great job! This article pitch can be claimed!</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

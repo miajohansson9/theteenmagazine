@@ -49,6 +49,10 @@
         <div class="btn_cntnr"><%= link_to "Claim a Pitch", pitches_path, class: "newpost--new--profile" %></div>
         <br>
         <div class="dashboard--articles--wrapper">
+          <% if @user_pitches.present? %>
+            <h6 class="header_ttl">Your Pitches</h6>
+            <%= render "/users/partials/dashboard_pitches", pitches: @user_pitches, image: "waiting.png" %>
+          <% end %>
           <% if @user_posts.rejected.present? %>
             <h6 class="header_ttl">Changes Requested</h6>
             <%= render "/users/partials/dashboard_articles", articles: @user_posts.rejected, image: "changes_requested.png" %>
@@ -77,7 +81,10 @@
             <%= link_to("Change Password", edit_user_registration_path) %>
             <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
             <%= link_to("Editor Pitches", pitches_path) %>
-            <%= link_to "Start a new article", new_post_path(@post) %>
+            <%= link_to "Pitch a new article", new_pitch_path %>
+            <% if current_user.admin? %>
+              <%= link_to "Start a new article", new_post_path %>
+            <% end %>
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
           </div>
         </div>

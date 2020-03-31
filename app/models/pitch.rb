@@ -10,6 +10,22 @@ class Pitch < ApplicationRecord
 
   self.per_page = 18
 
+  scope :is_submitted, -> {
+    where(status: "Ready for Review")
+  }
+
+  scope :is_rejected, -> {
+    where(status: "Rejected")
+  }
+
+  scope :is_approved, -> {
+    where.not(status: ["Ready for Review", "Rejected"])
+  }
+
+  scope :not_claimed, -> {
+    where(claimed_id: nil)
+  }
+
   has_attached_file :thumbnail, styles: {
       card: '540x380#'
     }

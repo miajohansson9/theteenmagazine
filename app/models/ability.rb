@@ -19,6 +19,7 @@ class Ability
 
       can :read, Pitch
       can :manage, Pitch, claimed_id: user.id
+      can :destroy, Pitch, user_id: user.id
     end
 
     # Define abilities for the passed in user here. For example:

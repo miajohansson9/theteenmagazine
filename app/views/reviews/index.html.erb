@@ -1,5 +1,5 @@
 <div class="skinny_wrapper wrapper_padding pitches_wrapper reviews_wrapper">
-  <h1 class="pitch_ttl">Articles you're editing</h1>
+  <h3 class="pitch_ttl">Articles you're editing</h3>
   <% @editors_reviews.each do |draft| %>
     <div class="flex--postlist--item review_items">
       <div class="inside--item">
@@ -14,7 +14,7 @@
       </div>
     </div>
   <% end %>
-  <h1 class="pitch_ttl">Article submissions</h1>
+  <h3 class="pitch_ttl">Article submissions</h3>
   <div class="flex-wrapper">
     <% @submitted_for_review.each do |draft| %>
       <div class="card card-review" style="width: 100%;">
@@ -31,11 +31,33 @@
         </div>
       </div>
     <% end %>
+    <% if @submitted_for_review.count.eql? 0 %>
+      <i>There are no submitted articles right now. Check back in a few days!</i>
+    <% end %>
+  </div>
+  <h3 class="pitch_ttl">Pitch submissions</h3>
+  <div class="flex-wrapper">
+    <% @submitted_pitches.each do |pitch| %>
+      <div class="card card-review" style="width: 100%;">
+        <h4 class="card-title pitch_ttl"><%= link_to pitch.title, pitch %></h4>
+        <div class="card-bottom-flex">
+          <%= image_tag pitch.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
+          <div>
+            <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
+            <p class="card-text"> Submitted by <%= link_to pitch.user.full_name, pitch.user %> on <%= pitch.updated_at.strftime("%A, %b %d") %> </p>
+          </div>
+          <%= link_to "View Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review" %>
+        </div>
+      </div>
+    <% end %>
+    <% if @submitted_pitches.count.eql? 0 %>
+      <i>There are no submitted pitches right now. Check back in a few days!</i>
+    <% end %>
   </div>
   <% if current_user.admin? %>
-    <h1 class="pitch_ttl">All articles under review</h1>
+    <h3 class="pitch_ttl">All articles under review</h3>
     <% @all_reviews.each do |draft| %>
-      <div class="flex--postlist--item review_items">
+      <div class="flex--postlist--item review_items" style="padding-left: 0;">
         <div class="inside--item">
           <div>
             <h4 class="pitch_ttl" style="padding: 0px;"><%= link_to draft.title, edit_post_path(draft)%></h4>

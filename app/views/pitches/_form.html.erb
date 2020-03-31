@@ -12,25 +12,48 @@
     <%= f.label :title %>
     <%= f.text_field :title, placeholder: "Title" %>
 
-    <%= f.label :description, "Describe your idea and who the ideal reader would be (3-4 sentences)." %>
-    <%= f.text_area :description, placeholder: "What's your pitch?" %><br><br>
+    <%= f.label :description, "Describe your idea and who the ideal reader would be." %>
+    <%= f.text_area :description, placeholder: "What's your pitch?" %>
 
-    <%= f.label :requirements, "(Optional) What else should this article have? (ie. length, topics, images, personal trial/review, interviews/research)." %>
-    <%= f.text_area :requirements, style: "min-height: 100px;", placeholder: "- requirement..." %>
+    <% if (current_user.editor?) && (@pitch.try(:user).try(:editor)) %>
+      <br><br>
+      <%= f.label :requirements, "(Optional) What else should this article have? (ie. length, topics, images, personal trial/review, interviews/research)." %>
+      <%= f.text_area :requirements, style: "min-height: 100px;", placeholder: "- requirement..." %>
+    <% elsif !current_user.editor? %>
+      <%= f.hidden_field :status, value: "Ready for Review" %>
+    <% end %>
 
     <div class="margin_flds">
       <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>
     </div>
+
+    <% if @pitch.try(:thumbnail).present? %>
+      <%= image_tag(@pitch.thumbnail, class: "thumbnail_img") %>
+    <% end %>
 
     <div class="margin_flds">
       <%= f.label "Upload thumbnail image" %>
       <%= f.file_field :thumbnail %>
     </div>
 
-    <%= f.check_box :assign_if_not_claimed, style: "display: inline;" %>
-    <span>Automatically assign this pitch to a writer if it's not claimed in two weeks.</span><br><br>
+    <% if current_user.editor? && @pitch.nil? %>
+      <%= f.check_box :assign_if_not_claimed, style: "display: inline;" %>
+      <span>Automatically assign this pitch to a writer if it's not claimed in two weeks.</span><br><br>
+    <% elsif current_user.editor? %>
+      <div class="card review_frm">
+        <div class="card-header">
+          <h6>Editor Form</h6>
+        </div>
+        <div class="card-body">
+          <%= f.select :status, options_for_select(["Rejected", "Approved"], {prompt: "Select status"}) %>
+          <%= f.text_field :notes, placeholder: "(Optional) Editor notes" %>
+        </div>
+      </div>
+    <% end %>
 
-    <% if @pitch.slug.nil? %>
+    <% if @pitch.slug.nil? && !@pitch.user.try(:editor) %>
+      <%= f.submit "Submit Pitch" %>
+    <% elsif @pitch.slug.nil? %>
       <%= f.submit "Share Pitch" %>
     <% else %>
       <%= f.submit "Save Changes" %>

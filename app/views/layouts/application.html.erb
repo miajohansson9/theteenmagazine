@@ -60,10 +60,6 @@
       <a href="/contacts/new">Contact</a>
       <% if user_signed_in? %>
          <%= link_to "Create", pitches_path %>
-         <% if current_user && (current_user.admin? || current_user.editor?) %>
-           <%= link_to "Edit", reviews_path %>
-           <%= link_to "Writers", users_path %>
-         <% end %>
          <%= link_to "Dashboard", user_path(current_user) %>
          <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
      <% else %>
