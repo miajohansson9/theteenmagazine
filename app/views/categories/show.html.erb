@@ -30,9 +30,6 @@
     <div id="admin_links">
       <%= link_to "Edit Category", edit_category_path(@category) %>
       <%= link_to "Delete",category_path(@category), method: :delete, data: {confirm: "Are you sure you want to delete this category?"} %>
-      <% if current_user && current_user.admin? %>
-        <%= @category.id %>
-      <% end %>
     </div>
   <% end %>
 </div>

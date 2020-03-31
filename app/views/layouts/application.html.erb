@@ -56,7 +56,7 @@
       <a href="/categories/culture">Culture</a>
       <a href="/categories/relationships">Relationships</a>
       <a href="/categories/lifestyle">Lifestyle</a>
-      <a href="/categories/opinion">Opinion</a>
+      <a href="/categories/op-ed">Op-Ed</a>
       <a href="/contacts/new">Contact</a>
       <% if user_signed_in? %>
          <%= link_to "Create", pitches_path %>
@@ -96,7 +96,7 @@
             <a class="link" href="/categories/culture">Culture</a>
             <a class="link" href="/categories/relationships">Relationships</a>
             <a class="link" href="/categories/lifestyle">Lifestyle</a>
-            <a class="link" href="/categories/opinion">Opinion</a>
+            <a class="link" href="/categories/op-ed">Op-Ed</a>
             <% if user_signed_in? %>
               <%= link_to "Create", pitches_path, class: "link" %>
               <%= link_to "Dashboard", user_path(current_user), class: "link" %>
