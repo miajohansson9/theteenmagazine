@@ -34,7 +34,7 @@ class Pitch < ApplicationRecord
   validates_attachment_content_type :thumbnail, :content_type => /\Aimage\/.*\Z/
 
   extend FriendlyId
-  friendly_id :title
+  friendly_id :title, use: :history
 
   def should_generate_new_friendly_id?
     slug.blank? || title_changed?
