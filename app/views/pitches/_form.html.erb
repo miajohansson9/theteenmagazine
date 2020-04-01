@@ -39,7 +39,7 @@
     <% if current_user.editor? && @pitch.title.nil? %>
       <%= f.check_box :assign_if_not_claimed, style: "display: inline;" %>
       <span>Automatically assign this pitch to a writer if it's not claimed in two weeks.</span><br><br>
-    <% elsif current_user.editor? %>
+    <% elsif (current_user.editor?) && !(@pitch.user.try(:editor)) %>
       <div class="card review_frm">
         <div class="card-header">
           <h6>Editor Form</h6>
