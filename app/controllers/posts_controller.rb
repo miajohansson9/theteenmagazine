@@ -150,8 +150,9 @@ class PostsController < ApplicationController
           @critique = @feedback.feedback_givens.build(review_id: @post.reviews.last.id)
           @critique.save
         end
-        @post.reviews.last.active = true
-        @post.reviews.last.save!
+        @rev = @post.reviews.last
+        @rev.active = true
+        @rev.save
         if (@new_status.eql? "Approved for Publishing") && !(@prev_status.eql? "Approved for Publishing")
           if @post.user.posts.published.count.eql? 0
             ApplicationMailer.first_article_published(@post.user, @post).deliver
