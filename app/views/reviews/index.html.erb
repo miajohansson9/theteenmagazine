@@ -3,9 +3,9 @@
   <% @editors_reviews.each do |draft| %>
     <div class="flex--postlist--item review_items">
       <div class="inside--item">
-        <%= link_to (image_tag draft.thumbnail(:medium)), edit_post_path(draft) %>
+        <%= link_to (image_tag draft.thumbnail(:medium)), post_path(draft) %>
         <div>
-          <h4 class="pitch_ttl"><%= link_to draft.title, edit_post_path(draft)%></h4>
+          <h4 class="pitch_ttl"><%= link_to draft.title, post_path(draft)%></h4>
           <% @deadline = draft.reviews.last.updated_at < Time.now - 5.days %>
           <p class="edited_dt <% if @deadline %> deadline_dt <% end %>"><%= "Last edited by you " + time_ago_in_words(draft.reviews.last.updated_at) %> ago</p>
           <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
