@@ -134,34 +134,33 @@ class PostsController < ApplicationController
       end
       if (@new_status.eql? "In Progress") && (@prev_status.eql? "Rejected")
         @post.reviews.last.destroy
-      else
-        @post.reviews.each do |review|
-          review.active = false
-        end
-        if @new_status.eql? "In Review"
-          @post.reviews.last.editor_id = current_user.id
-        end
-        @post.reviews.last.feedback_givens.each do |feedback|
-          feedback.destroy
-        end
-        @feedback_given = post_params[:feedback_list]
-        @feedback_given.try(:each) do |feedback_id|
-          @feedback = Feedback.find(feedback_id)
-          @critique = @feedback.feedback_givens.build(review_id: @post.reviews.last.id)
-          @critique.save
-        end
-        @rev = @post.reviews.last
-        @rev.active = true
-        @rev.save
-        if (@new_status.eql? "Approved for Publishing") && !(@prev_status.eql? "Approved for Publishing")
-          if @post.user.posts.published.count.eql? 0
-            ApplicationMailer.first_article_published(@post.user, @post).deliver
-          else
-            ApplicationMailer.article_published(@post.user, @post).deliver
-          end
-          @post.publish_at = Time.now
-        end
       end
+      @post.reviews.each do |review|
+        review.active = false
+      end
+      if @new_status.eql? "In Review"
+        @post.reviews.last.editor_id = current_user.id
+      end
+      @post.reviews.last.feedback_givens.each do |feedback|
+        feedback.destroy
+      end
+      @feedback_given = post_params[:feedback_list]
+      @feedback_given.try(:each) do |feedback_id|
+        @feedback = Feedback.find(feedback_id)
+        @critique = @feedback.feedback_givens.build(review_id: @post.reviews.last.id)
+        @critique.save
+      end
+      if (@new_status.eql? "Approved for Publishing") && !(@prev_status.eql? "Approved for Publishing")
+        if @post.user.posts.published.count.eql? 0
+          ApplicationMailer.first_article_published(@post.user, @post).deliver
+        else
+          ApplicationMailer.article_published(@post.user, @post).deliver
+        end
+        @post.publish_at = Time.now
+      end
+      @rev = @post.reviews.last
+      @rev.active = true
+      @rev.save
       @post.save
       if (@new_status.eql? "In Progress") && ((@prev_status.eql? "Ready for Review") || (@prev_status.eql? "In Review"))
         @notice = "Your article was withdrawn from review."
