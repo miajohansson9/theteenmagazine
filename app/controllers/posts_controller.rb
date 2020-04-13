@@ -158,9 +158,11 @@ class PostsController < ApplicationController
         end
         @post.publish_at = Time.now
       end
-      @rev = @post.reviews.last
-      @rev.active = true
-      @rev.save
+      if @post.reviews.present?
+        @rev = @post.reviews.last
+        @rev.active = true
+        @rev.save
+      end
       @post.save
       if (@new_status.eql? "In Progress") && ((@prev_status.eql? "Ready for Review") || (@prev_status.eql? "In Review"))
         @notice = "Your article was withdrawn from review."
