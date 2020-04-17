@@ -1,5 +1,5 @@
 class Mailer < Devise::Mailer
-  default from: 'miajohansson@college.harvard.edu'
+  default from: 'editors@theteenmagazine.com'
 
   def welcome_email
     @user = params[:user]

@@ -51,7 +51,7 @@ class PostsController < ApplicationController
   def create
     @categories = Category.all
     @prev_post_pitch = current_user.posts.where(pitch_id: post_params[:pitch_id]).last
-    if !@prev_post_pitch.try(:pitch).nil?
+    if !(@prev_post_pitch.try(:pitch).nil?)
       @prev_post_pitch.pitch.claimed_id = current_user.id
       @prev_post_pitch.pitch.save
       @prev_post_pitch.reviews.destroy
