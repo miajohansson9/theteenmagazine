@@ -115,9 +115,9 @@ class PostsController < ApplicationController
   def edit
     @categories = Category.all
     #create new review if no current review or last review was rejected
+    @requested_changes = @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
     @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.feedback_givens) : @post.reviews.last
     @feedbacks = Feedback.all
-    @requested_changes = @review.feedback_givens
   end
 
   def update
@@ -129,26 +129,21 @@ class PostsController < ApplicationController
         @post.content << "<script>instgrm.Embeds.process()</script>"
       end
       @new_status = @post.reviews.last.status.clone
+      @rev = @post.reviews.last
       if @new_status != "Approved for Publishing"
         @post.publish_at = nil
       end
-      if (@new_status.eql? "In Progress") && (@prev_status.eql? "Rejected")
-        @post.reviews.last.destroy
-      end
-      @post.reviews.each do |review|
-        review.active = false
-      end
-      if @new_status.eql? "In Review"
-        @post.reviews.last.editor_id = current_user.id
-      end
-      @post.reviews.last.feedback_givens.each do |feedback|
-        feedback.destroy
-      end
-      @feedback_given = post_params[:feedback_list]
-      @feedback_given.try(:each) do |feedback_id|
-        @feedback = Feedback.find(feedback_id)
-        @critique = @feedback.feedback_givens.build(review_id: @post.reviews.last.id)
-        @critique.save
+      if (@new_status.eql? "In Review") || ((@new_status.eql? "Rejected") && (@prev_status.eql? "In Review"))
+        @rev.update_column('editor_id', current_user.id)
+        @rev.feedback_givens.each do |rev|
+          rev.destroy
+        end
+        @feedback_given = post_params[:feedback_list]
+        @feedback_given.try(:each) do |feedback_id|
+          @feedback = Feedback.find(feedback_id)
+          @critique = @feedback.feedback_givens.build(review_id: @rev.id)
+          @critique.save
+        end
       end
       if (@new_status.eql? "Approved for Publishing") && !(@prev_status.eql? "Approved for Publishing")
         if @post.user.posts.published.count.eql? 0
@@ -158,10 +153,11 @@ class PostsController < ApplicationController
         end
         @post.publish_at = Time.now
       end
-      if @post.reviews.present?
-        @rev = @post.reviews.last
-        @rev.active = true
-        @rev.save
+      if @rev.present?
+        @post.reviews.each do |review|
+          review.update_column('active', false)
+        end
+        @rev.update_column('active', true)
       end
       @post.save
       if (@new_status.eql? "In Progress") && ((@prev_status.eql? "Ready for Review") || (@prev_status.eql? "In Review"))

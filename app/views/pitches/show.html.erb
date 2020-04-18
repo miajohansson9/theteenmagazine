@@ -51,17 +51,21 @@
       <% end %>
     <% else %>
       <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.created_at.strftime('%A, %B %d') %></p>
-      <% if @claimed_user.id == current_user.id || current_user.admin? %>
-        <%= form_for @pitch do |f| %>
-          <%= f.hidden_field :claimed_id, value: nil %>
-          <p class="pitch_usr">Go to this pitch's <%= link_to("article", @article, class: "pitch_btn") %>.<br>Note: If you unclaim this pitch, any writer will be able to claim it. The associated article will become locked unless you claim the pitch again.</p>
-          <%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }  %>
+      <% if !@article.is_published? %>
+        <% if @claimed_user.id == current_user.id || current_user.admin? %>
+          <%= form_for @pitch do |f| %>
+            <%= f.hidden_field :claimed_id, value: nil %>
+            <p class="pitch_usr">Go to this pitch's <%= link_to("article", @article, class: "pitch_btn") %>.<br>Note: If you unclaim this pitch, any writer will be able to claim it. The associated article will become locked unless you claim the pitch again.</p>
+            <%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }  %>
+          <% end %>
         <% end %>
+      <% else %>
+        <p class="pitch_usr">This pitch's <%= link_to("article", @article, class: "pitch_btn") %> was published on <%= @article.publish_at.strftime("%A, %B %d") %>.</p>
       <% end %>
     <% end %>
   <% end %>
 
-  <% if @pitch.user.id.eql? current_user.id %>
+  <% if (@pitch.user.id.eql? current_user.id) && !@article.try(:is_published?) %>
     <%= link_to "Delete", pitch_path(@pitch), method: :delete, data: {confirm: "Are you sure you want to delete this pitch? This cannot be undone."}, :class => "pitch_btn delete_btn" %>
   <% end %>
   <br>

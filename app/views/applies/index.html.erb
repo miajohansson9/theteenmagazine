@@ -1,7 +1,7 @@
 <!-- shows all accepted applications -->
 
 <div class="skinny_wrapper">
-    <h1 id="page_title">Accepted Writer Applications</h1>
+    <h1 id="page_title">Writer Applications</h1>
     <% @applies.each do | application | %>
       <% @user = User.where(email: application.email).first %>
         <% if @user != nil %>
@@ -29,6 +29,11 @@
             <% end %>
               <p class="description_user" style="margin-top: 5px;"><%= application.description %></p>
             </div>
+          </div>
+        <% else %>
+          <div>
+            <p>Not Accepted: <%= link_to ("#{application.first_name} #{application.last_name}"), application, :class => "link_nrml" %></p>
+            <p><%= application.description %></p>
           </div>
         <% end %>
     <% end %>

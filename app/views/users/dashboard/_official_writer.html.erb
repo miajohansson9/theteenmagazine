@@ -84,6 +84,7 @@
             <%= link_to "Pitch a new article", new_pitch_path %>
             <% if @user.admin? %>
               <%= link_to "Start a new article", new_post_path %>
+              <%= link_to "Writer Applications", applies_path %>
             <% end %>
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
           </div>

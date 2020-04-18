@@ -55,6 +55,7 @@
       <% end %>
       <%= f.label "Article Status:" %>
       <% @statuses = current_user.editor? ? ["In Progress", "Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review"] %>
+      <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
       <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
     <% end %>
     <br>

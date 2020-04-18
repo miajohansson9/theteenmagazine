@@ -45,7 +45,7 @@
           <h6>Editor Form</h6>
         </div>
         <div class="card-body">
-          <%= f.select :status, options_for_select(["Rejected", "Approved"], {prompt: "Select status"}) %>
+          <%= f.select :status, options_for_select(["Approved", "Rejected"], {prompt: "Select status"}) %>
           <%= f.text_field :notes, placeholder: "(Optional) Editor notes" %>
         </div>
       </div>
