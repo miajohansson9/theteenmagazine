@@ -13,8 +13,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # create a new user with sign up params
     @user = resource
     resource.save
-    # send welcome email
-    ApplicationMailer.welcome_email(resource).deliver
     # from devise code
     yield resource if block_given?
     if resource.persisted?
@@ -23,6 +21,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       else
         expire_data_after_sign_in!
       end
+      # send welcome email
+      ApplicationMailer.welcome_email(resource).deliver
       # if user was saved, then redirect to user path
       redirect_to "/users/#{@user.slug}", notice: 'Application successfully accepted.'
     else
