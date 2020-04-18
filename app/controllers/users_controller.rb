@@ -44,8 +44,10 @@ class UsersController < ApplicationController
   def index
     if params[:commit].eql? "Send reset link"
       reset_email
-    else
+    elsif current_user && (current_user.admin? || current_user.editor?)
       show_users
+    else
+      redirect_to root_path
     end
   end
 

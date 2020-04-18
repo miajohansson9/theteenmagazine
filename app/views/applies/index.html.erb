@@ -4,7 +4,7 @@
     <h1 id="page_title">Writer Applications</h1>
     <% @applies.each do | application | %>
       <% @user = User.where(email: application.email).first %>
-        <% if @user != nil %>
+        <% if @user.present? %>
           <div class="flex--profile">
             <% if @user.profile.exists? %>
               <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
