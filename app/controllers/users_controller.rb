@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   end
 
   def show_users
-    @users = User.all.order("created_at desc")
+    @users = User.all.paginate(page: params[:page]).order("created_at desc")
     @posts_waiting = Post.all.submitted
     @users_waiting = User.all.review_profile
   end

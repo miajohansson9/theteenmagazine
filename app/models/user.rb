@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
     where(submitted_profile: true, approved_profile: false)
   }
 
+  self.per_page = 24
+
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :profile, :content_type => /\Aimage\/.*\Z/
 

@@ -386,49 +386,6 @@ hr {
 
 // --------------- Pagination
 
-.pagination:before,
-.pagination:after {
-  content: " ";
-  display: table;
-}
-
-.pagination:after {
-  clear: box;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 3em;
-  a, .previous_page, .current, .next_page {
-    padding: .75em 1em;
-    margin: 0 .5em;
-    border-radius: .15em;
-    line-height: 20px;
-    text-decoration: none;
-    background: #FFFFFF;
-    font-weight: bold;
-    font-size: .7em;
-    font-style: normal;
-    color: #424653;
-    &:hover {
-      background: #65B19D;
-      color: #FFFFFF;
-    }
-  }
-  .current {
-    background: #65B19D;
-    color: #FFFFFF;
-  }
-  .disabled {
-    color: #C0C0C0;
-    &:hover {
-      color: #C0C0C0;
-      background: #FFFFFF;
-    }
-  }
-}
-
 @media (max-width: 830px) {
   .authors {
     display: inline-block !important;

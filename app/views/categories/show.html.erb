@@ -24,6 +24,7 @@
        <a class="apply" href="/apply" target="blank">
        </a>
      </div>
+     <%= will_paginate @category_posts %>
    </div>
   </div>
   <% if current_user && current_user.admin? %>
