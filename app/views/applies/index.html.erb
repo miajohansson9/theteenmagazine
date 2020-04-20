@@ -4,38 +4,16 @@
     <h1 id="page_title">Writer Applications</h1>
     <% @applies.each do | application | %>
       <% @user = User.where(email: application.email).first %>
-        <% if @user.present? %>
-          <div class="flex--profile">
-            <% if @user.profile.exists? %>
-              <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
-            <% else %>
-              <%= image_tag("profile_image", :class => "profile_img") %>
-            <% end %>
-            <div class="info">
-            <h2 style="margin-bottom: 5px;">
-              <% @name =
-                if (@user.first_name != "" && @user.first_name !=nil)
-                  @user.first_name
-                end
-                if (@user.last_name != "" && @user.last_name!= nil)
-                  @name = @name + " " + @user.last_name
-                end %>
-              <%= link_to(@name, @user) %>
-            </h2>
-            <% if @user.editor? %>
-              <span class="editor_status">
-                Editor
-              </span>
-            <% end %>
-              <p class="description_user" style="margin-top: 5px;"><%= application.description %></p>
+        <% if @user.nil? %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to ("#{application.first_name} #{application.last_name}"), application %></h5>
+              <p class="card-text"><small class="text-muted">Submitted <%= application.created_at.strftime("%D") %></small></p>
+              <p class="card-text"><%= application.description %></p>
             </div>
-          </div>
-        <% else %>
-          <div>
-            <p>Not Accepted: <%= link_to ("#{application.first_name} #{application.last_name}"), application, :class => "link_nrml" %></p>
-            <p><%= application.description %></p>
           </div>
         <% end %>
     <% end %>
     <%= will_paginate @applies %>
+    <br>
   </div>
