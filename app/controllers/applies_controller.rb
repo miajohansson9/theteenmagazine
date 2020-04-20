@@ -2,8 +2,6 @@ class AppliesController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create]
   before_action :is_admin?, only: [:show, :index]
 
-  layout "minimal"
-
   #show all applications
   def index
     @applies = Apply.all.paginate(page: params[:page]).order("created_at desc")
