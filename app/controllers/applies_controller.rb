@@ -4,7 +4,7 @@ class AppliesController < ApplicationController
 
   #show all applications
   def index
-    @applies = Apply.all.order("created_at desc")
+    @applies = Apply.all.paginate(page: params[:page]).order("created_at desc")
   end
 
   #create a new application

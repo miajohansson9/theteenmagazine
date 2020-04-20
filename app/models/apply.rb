@@ -7,6 +7,8 @@ class Apply < ActiveRecord::Base
   attributes :description, :validate => true
   attributes :nickname,   :captcha => true
 
+  self.per_page = 10
+
   def headers
   {
     :subject => "Writer Application ##{id}: theteenmagazine.com/applies/#{id}",
