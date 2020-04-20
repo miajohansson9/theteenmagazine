@@ -7,7 +7,7 @@ class Apply < ActiveRecord::Base
   attributes :description, :validate => true
   attributes :nickname,   :captcha => true
 
-  self.per_page = 10
+  self.per_page = 25
 
   def headers
   {

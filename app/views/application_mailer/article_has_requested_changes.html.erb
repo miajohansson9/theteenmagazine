@@ -9,7 +9,8 @@
 
   <body>
     <p>Hi <%= @user.first_name %>,</p>
-    <p>Your article <%= link_to @post.title, @post, :style => "color: #65B19D;" %> has requested changes to it.</p>
+    <p>Your article <%= link_to @post.title, @post, :style => "color: #65B19D;" %> has requested changes to it.
+      You can view them on the edit page of your article.</p>
     <p>Best,<br/>Mia</p>
   </body>
 </html>
