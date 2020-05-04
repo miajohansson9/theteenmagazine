@@ -58,8 +58,12 @@ class UsersController < ApplicationController
   end
 
   def reset_email
-    User.where(email: params[:user][:email]).first.send_reset_password_instructions
-    redirect_to "/reset-password", notice: "A reset password email was sent to #{params[:user][:email]}."
+    begin
+      User.where(email: params[:user][:email].strip).first.send_reset_password_instructions
+      redirect_to "/reset-password", notice: "A reset password email was sent to #{params[:user][:email]}."
+    rescue
+      redirect_to "/reset-password", notice: "Oops, something went wrong! #{params[:user][:email]} may not be associated with a writer account."
+    end
   end
 
   def edit

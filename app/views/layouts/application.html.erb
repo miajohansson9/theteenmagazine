@@ -10,6 +10,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link href="https://fonts.googleapis.com/css?family=Kameron:700|Vollkorn:700" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <% if @post %>
+      <meta property="fb:app_id" content="1190455601051741" />
+      <meta property="og:url"                content="https://www.theteenmagazine.com/<%= @post.slug %>" />
+      <meta property="og:type"               content="article" />
+      <meta property="og:title"              content="<%= @post.title %>" />
+      <meta property="og:description"        content="<%= @post.meta_description %>" />
+      <meta property="og:image"              content="http:<%= @post.thumbnail.url %>" />
+      <meta property="og:image:url"          content="http:<%= @post.thumbnail.url %>" />
+      <meta property="og:image:alt"          content="<%= @post.title %>" />
+      <meta property="article:publisher" content="https://www.facebook.com/theteenmagazinee" />
+      <meta property="og:site_name" content="The Teen Magazine" />
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:site" content="@theteenmagazin_">
+      <meta name="twitter:title" content="<%= @post.title %>">
+      <meta name="twitter:description" content="<%= @post.meta_description %>">
+      <meta name="twitter:creator" content="<%= @post.user.full_name %>">
+      <meta name="twitter:image" content="https:<%= @post.thumbnail.url(:large) %>">
+      <meta name="twitter:domain" content="https://www.theteenmagazine.com/">
+    <% end %>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all' %>

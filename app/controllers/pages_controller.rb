@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:privacy, :team, :submitted, :subscribe, :reset]
+  before_action :authenticate_user!, except: [:privacy, :team, :submitted, :subscribe, :reset, :reset_confirmation]
   layout "minimal", except: [:about, :team, :subscribe, :privacy, :reset]
 
   def subscribe

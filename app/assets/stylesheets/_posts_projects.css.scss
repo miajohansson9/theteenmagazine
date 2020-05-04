@@ -92,8 +92,9 @@
     ul {
       padding-left: 0;
       margin: 15px 0;
+      position: relative;
       li {
-        padding: 5px 0;
+        padding: 8px 0;
         font-size: 14px;
         margin-right: 0;
         div {
@@ -116,8 +117,10 @@
       }
       .delete_btn_x {
         width: 15px !important;
-        float: right;
+        right: 0;
         padding-top: 28px;
+        position: absolute;
+        z-index: 1;
       }
       .submit_comment {
         width: 35px;

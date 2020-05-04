@@ -1,9 +1,10 @@
 <div class="skinny_wrapper">
+  <%= @message %>
   <h1>Oh no, we heard you forgot your password</h1>
   <h4>No worries, we are here to help!</h4>
-  <p>Just enter your email below, and we'll send you the link to reset your password.</p>
+  <p>Enter your email below, and we'll send you the link to reset your password.</p>
   <%= form_for @user, method: "get" do |f| %>
     <%= f.text_field 'email', :placeholder => "Your email", class: "comment_field" %>
-    <%= submit_tag 'Send reset link', method: :send_email %>
+    <%= submit_tag 'Send reset link', method: :send_email, style: "margin-top: 15px;" %>
   <% end %>
 </div>

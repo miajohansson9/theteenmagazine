@@ -226,6 +226,14 @@ Devise.setup do |config|
   # devise role declared in your routes (usually :user).
   # config.default_scope = :user
 
+  Warden::Manager.after_authentication do |user, auth, opts|
+    if user.remember_me
+      auth.cookies[:email] = {value: user.email, expires: 2.months.from_now}
+    else
+      auth.cookies.delete :email
+    end
+  end
+
   # Set this configuration to false if you want /users/sign_out to sign out
   # only the current scope. By default, Devise signs out all scopes.
   # config.sign_out_all_scopes = true

@@ -133,7 +133,7 @@ class PostsController < ApplicationController
       if @new_status != "Approved for Publishing"
         @post.publish_at = nil
       end
-      if (@new_status.eql? "In Review") || ((@new_status.eql? "Rejected") && (@prev_status.eql? "In Review"))
+      if ((@new_status.eql? "In Review") || ((@new_status.eql? "Rejected") && (@prev_status.eql? "In Review"))) && current_user.editor?
         @rev.update_column('editor_id', current_user.id)
         @rev.feedback_givens.each do |rev|
           rev.destroy
@@ -171,9 +171,9 @@ class PostsController < ApplicationController
       if @new_status.eql? "Rejected"
         ApplicationMailer.article_has_requested_changes(@post.user, @post).deliver
       end
-      if @new_status.eql? "In Review"
+      if (@new_status.eql? "In Review") && (current_user.editor?)
         @notice = @prev_review.editor_id == current_user.id ? "Your changes were saved." : "Great job! You've claimed editing this article!"
-        if !@prev_status.eql? "In Review"
+        if !(@prev_status.eql? "In Review")
           ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
         end
         redirect_to reviews_path, notice: @notice
