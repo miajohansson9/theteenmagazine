@@ -12,7 +12,7 @@
            <% @user_posts_approved.each do |post| %>
              <div class="thumbnail">
                <div class="container--image">
-                 <%=link_to(image_tag(post.thumbnail.url(:large2), post), :class => "image_thumbnail" )%>
+                 <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
                </div>
                <div class="thumbnail--container">
                  <p class="date_post_preview"><%= post.category.name %></p>
