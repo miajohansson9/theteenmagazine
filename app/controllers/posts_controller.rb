@@ -99,9 +99,35 @@ class PostsController < ApplicationController
       else
          @trending = @post.category.posts.published.order("post_impressions desc").limit(7)
       end
-      set_meta_tags title: @post.title,
-                    description: @post.meta_description,
-                    image: @post.thumbnail.url(:large2)
+      set_meta_tags :title => @post.title,
+                    :description => @post.meta_description,
+                    :image => @post.thumbnail.url(:large2),
+                    :fb => {
+                      :app_id => "1190455601051741"
+                    },
+                    :og => {
+                      :url => "https://www.theteenmagazine.com/#{@post.slug}",
+                      :type => "article",
+                      :title => @post.title,
+                      :description => @post.meta_description,
+                      :image => {
+                        :url => @post.thumbnail.url,
+                        :alt => @post.title,
+                      },
+                      :site_name => "The Teen Magazine",
+                    },
+                    :article => {
+                      :publisher => "https://www.facebook.com/theteenmagazinee"
+                    },
+                    :twitter => {
+                      :card => "summary_large_image",
+                      :site => "@theteenmagazin_",
+                      :title => @post.title,
+                      :description => @post.meta_description,
+                      :creator => @post.user.full_name,
+                      :image => @post.thumbnail.url(:large),
+                      :domain => "https://www.theteenmagazine.com/"
+                    }
     else
       redirect_to new_user_session_path, notice: "You must sign in to continue."
     end
