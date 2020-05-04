@@ -146,11 +146,11 @@
     .ctgry_article {
       display: flex;
       flex-direction: row;
+      margin-bottom: 0.5em;
       img {
         width: 150px;
         height: 100px;
         object-fit: cover;
-        padding-bottom: 5px;
       }
       p {
         font-size: .9em;
@@ -302,8 +302,11 @@
 
 
 @media (max-width: 640px) {
+  .wrapper_home {
+    margin-top: 20px;
+  }
   .section--title {
-    margin-bottom: 20px;
+    margin: 0 0 20px 0;
   }
   #recent_title {
     margin: 0;

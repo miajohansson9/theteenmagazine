@@ -244,7 +244,6 @@ iframe { margin: 0px auto;  display: block; }
     font-family: 'Roboto Condensed', sans-serif;
   }
   h3 {
-    padding: 0 10px;
     font-family: 'Kristi';
     font-size: 15px;
     margin: 0;
@@ -264,7 +263,7 @@ iframe { margin: 0px auto;  display: block; }
 }
 
 #content {
-  padding: 0 40px;
+   padding: 0 40px;
    .post_content {
      padding-bottom: 20px;
      h1, h2, h3, h4, h5, h6 {
@@ -408,7 +407,7 @@ hr {
     }
 
     #content {
-      padding: 0 10px;
+      padding: 0 20px;
     }
 }
 
