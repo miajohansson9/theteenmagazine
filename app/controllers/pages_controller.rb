@@ -7,7 +7,6 @@ class PagesController < ApplicationController
   end
 
   def team
-    @users = User.order("posts_count DESC")
   end
 
   def criteria

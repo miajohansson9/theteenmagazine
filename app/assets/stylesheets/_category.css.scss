@@ -6,7 +6,6 @@
   .category_image {
     width: 100%;
     height: 200px;
-    margin-top: -10px;
     background-size: cover;
     background-position: center center;
     display: flex;
@@ -25,7 +24,6 @@
   }
 
   #main_navigation {
-    margin-top: -10px;
     background-image: none;
 
     #main_title {
@@ -39,8 +37,16 @@
   }
 
   .category--show {
-    .other--articles {
-      margin-top: 25px;
+    margin: 25px;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .category {
+    .category--show {
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 }

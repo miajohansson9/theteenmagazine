@@ -157,13 +157,13 @@ $gray:  #2a2a2a;
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 20px;
 
     .container--image {
       width: 40%;
       .image_thumbnail {
         object-fit: cover;
         width: 100%;
-        margin-bottom: 20px;
       }
     }
 
