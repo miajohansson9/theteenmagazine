@@ -464,6 +464,11 @@
 }
 
 .team {
+  max-width: 800px;
+  margin: 0 auto;
+  h1 {
+    font-family: "Display Playfair";
+  }
   .about {
     max-width: 1100px;
     margin: 0 auto;

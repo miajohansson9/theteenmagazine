@@ -155,6 +155,15 @@
   }
 }
 
+.link_grn {
+  color: #65B19D;
+  &:hover {
+    color: #65B19D;
+    text-decoration: none;
+    opacity: 0.8;
+  }
+}
+
 .apply_wrapper {
   position: relative;
   margin: 0 auto;

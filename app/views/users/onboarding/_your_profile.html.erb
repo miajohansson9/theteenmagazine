@@ -81,10 +81,9 @@
     </div>
     <br>
     <%= f.check_box :bi_monthly_assignment %>
-    <%= f.label "I want to be assigned articles per month" %>
-    <i><br>If you opt-in to bi-weekly articles, we will send you two article assignments per month after your first article is published. You may opt-out at any time.</i>
-
-    <br><i>You may opt-out of a profile picture if you do not upload an image.</i><br>
+    <%= f.label "I want to be assigned articles" %>
+    <i><br>If you opt-in to assigned articles, we will send article assignments no more than two times per month after your first article is published. You may opt-out at any time.</i>
+    <br><br><i>You may also opt-out of a profile picture if you do not upload an image.</i><br>
     <% @full = @user.first_name + " " + @user.last_name %>
     <%= f.hidden_field :full_name, :value => @full %>
     <%= f.hidden_field :posts_count, :value => @user.posts.published.count %>

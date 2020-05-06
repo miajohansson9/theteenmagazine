@@ -13,14 +13,7 @@
     <p><%= @user.first_name %>, congratulations on publishing your first article on The Teen Magazine! This is a huge accomplishment! To view your published article, click on the link, <%= link_to @post.title, @post, :style => "color: #65B19D;"%>.</p>
     <img style="display: block; max-width: 100%; width: 400px; margin: 0 auto;" src=<%= images[rand(0..2)] %>>
     <p>We've activated your official writer account and public author page on The Teen Magazine. To view the changes made to your account, <a href="https://www.theteenmagazine.com/login" style="color: #65B19D;">sign into your account</a>.</p>
-    <% if @user.bi_monthly_assignment %>
-      <p>You are signed up to receive monthly article assignments. You will get your first assignment sometime within the next two weeks so make sure to be checking your email!
-        If you would like to opt-out of monthly assignments, may change your preferences on your profile.</p>
-    <% else %>
-      <p>You are not signed up yet to receive monthly article assignments. If this is a mistake, you can change your preferences to receive monthly article assignments
-         on your <%= link_to "profile edit page", @user, :style => "color: #65B19D;" %>.</p>
-    <% end %>
-    <p>As always, if you have any questions, please do not hesitate to send us an email. Congratulations!</p>
+    <p>If you have any questions, please do not hesitate to send us an email. Congratulations!</p>
     <p>Best Regards,<br/>Editor Team</p>
   </body>
 </html>
