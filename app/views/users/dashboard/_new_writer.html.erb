@@ -61,9 +61,9 @@
           <h6 class="header_ttl">Articles In Progress</h6>
           <%= render "/users/partials/dashboard_articles", articles: @user_posts.draft, image: "saved.png" %>
         </div>
-        <br />
         <div class="btn_cntnr"><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %></div>
       </div>
+      <br/>
     </div>
     <div class="dashboard--writer--flex--two">
       <div class="links">
@@ -77,8 +77,9 @@
         </div>
       </div>
       <br />
-      <p>This is a new writer account. Your full writer account will be activated
+      <p style="width: 100%; min-width: 18rem;">This is a new writer account. Your full writer account will be activated
           once you publish your first article.</p>
+      <br>
     </div>
   </div>
 </div>
