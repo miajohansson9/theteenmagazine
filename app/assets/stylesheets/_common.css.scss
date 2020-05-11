@@ -688,7 +688,7 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 20px 9px 20px 0;
+    margin: 20px -10px 20px 0;
     .social-media-footer, h1 {
       display: inline;
       margin: 0;
@@ -718,10 +718,14 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin: 0;
     div {
       width: fit-content;
       padding: 0 20px;
     }
+  }
+  .footer-copyright {
+    padding-left: 20px;
   }
 }
 
@@ -1124,6 +1128,10 @@ hr {
         margin: 20px auto;
         text-align: center;
       }
+    }
+    .footer-copyright {
+      text-align: center;
+      padding: 0;
     }
   }
 
