@@ -7,6 +7,10 @@ Rails.application.routes.draw do
     get "/onboarding" => "users#onboarding"
   end
 
+  devise_scope :contact do
+    get "/contact-us" => "contacts#new"
+  end
+
   resources :users
   resources :contacts, only: [:new, :create]
   resources :applies

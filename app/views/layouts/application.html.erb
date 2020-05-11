@@ -58,7 +58,7 @@
       <a href="/categories/relationships">Relationships</a>
       <a href="/categories/lifestyle">Lifestyle</a>
       <a href="/categories/op-ed">Op-Ed</a>
-      <a href="/contacts/new">Contact</a>
+      <a href="/contact-us">Contact</a>
       <% if user_signed_in? %>
          <%= link_to "Create", pitches_path %>
          <%= link_to "Dashboard", user_path(current_user) %>
@@ -110,20 +110,7 @@
       </header>
       <%= yield %>
     </div>
-    <footer id="main_footer">
-      <div class="container--footer">
-        <div class="flex--column--footer">
-          <a href="/" class="copyright">The Teen Magazine</a>
-          <a href="/about-us">About Us</a>
-          <a href="/apply">Write For Our Magazine</a>
-          <a href="/privacy-policy">Privacy Policy</a>
-        </div>
-        <nav>
-          <a href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-          <a href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-        </nav>
-      </div>
-    </footer>
+    <%= render "layouts/partials/footer" %>
     <script type="text/javascript">
       var vglnk = {key: 'b94b361d3afef20f64f14e9c76009b84'};
       (function(d, t) {

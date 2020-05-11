@@ -26,7 +26,7 @@
          <%= link_to("Edit Profile", edit_user_path(current_user)) %>
          <%= link_to("Change Password", edit_user_registration_path) %>
          <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
-         <% if current_user.admin? %>
+         <% if (current_user.admin?) || (current_user.editor?) %>
            <%= link_to "Start a new article", new_post_path %>
          <% end %>
          <% if current_user && (current_user.admin? || current_user.editor?) %>
@@ -76,7 +76,7 @@
                  <%= link_to "Dashboard", user_path(current_user), class: "link" %>
                  <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
               <% else %>
-                  <a class="link" href="/contacts/new">Contact</a>
+                  <a class="link" href="/contact-us">Contact</a>
                   <a class="link" href="/apply">Apply</a>
               <% end %>
             </nav>
@@ -85,20 +85,7 @@
       </header>
       <%= yield %>
     </div>
-    <footer id="main_footer">
-      <div class="container--footer">
-        <div class="flex--column--footer">
-          <a href="/" class="copyright">The Teen Magazine</a>
-          <a href="/about-us">About Us</a>
-          <a href="/apply">Write For Our Magazine</a>
-          <a href="/privacy-policy">Privacy Policy</a>
-        </div>
-        <nav>
-          <a href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-          <a href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-        </nav>
-      </div>
-    </footer>
+    <%= render "layouts/partials/footer" %>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

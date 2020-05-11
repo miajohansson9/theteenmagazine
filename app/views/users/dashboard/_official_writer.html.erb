@@ -82,8 +82,10 @@
             <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
             <%= link_to("Editor Pitches", pitches_path) %>
             <%= link_to "Pitch a new article", new_pitch_path %>
-            <% if @user.admin? %>
+            <% if (current_user.admin?) || (current_user.editor?)%>
               <%= link_to "Start a new article", new_post_path %>
+            <% end %>
+            <% if current_user.admin? %>
               <%= link_to "Writer Applications", applies_path %>
             <% end %>
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
@@ -95,7 +97,8 @@
           <ul class="list-group list-group-flush whats-new">
             <% @pitches.each do |pitch| %>
               <li class="list-group-item">
-                <%= link_to(image_tag(pitch.user.profile.url(:square), class: "profile_img_small"), pitch.user) %>
+                <% @profile_img = pitch.user.profile.exists? ? image_tag(pitch.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+                <%= link_to(@profile_img, pitch.user) %>
                 <div><%= link_to(pitch.user.full_name, pitch.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
                 <br><span class="date_ago"><%= time_ago_in_words(pitch.created_at) %> ago</span></div>
               </li>

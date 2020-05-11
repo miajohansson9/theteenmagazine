@@ -176,9 +176,11 @@
   position: absolute;
 }
 
-.pitch_btn {
-  color: #FF78CB;
-  text-decoration: underline;
+.flex_container_mobile_reverse_order {
+  .pitch_btn {
+    color: #FF78CB;
+    text-decoration: underline;
+  }
 }
 
 .pitch_btn:hover {
@@ -198,6 +200,9 @@
 .pitch_form_wrapper {
   max-width: 800px;
   padding: 30px 40px;
+  h2, h1, h3, h4, h5, h6 {
+    font-family: "Playfair Display"
+  }
   .pitch_flds {
     textarea {
       min-height: 150px;
@@ -441,9 +446,17 @@ h5, h3 {
     .btn_cntnr {
       margin-top: 10px;
     }
-    .newpost--new--profile {
-      margin-right: 0;
-      padding: 10px;
+    .flex_container_mobile_reverse_order {
+      display: flex;
+      flex-direction: column-reverse;
+      .btn_cntnr {
+        margin: 0 0 20px 0 !important;
+        float: right;
+        .newpost--new--profile {
+          padding: 10px;
+          margin: 0;
+        }
+      }
     }
   }
   .analytics .card {

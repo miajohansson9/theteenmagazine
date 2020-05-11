@@ -23,7 +23,11 @@
       <div class="card card-review" style="width: 100%;">
         <h4 class="card-title pitch_ttl"><%= link_to draft.title, draft %></h4>
         <div class="card-bottom-flex">
-          <%= image_tag draft.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
+          <% if draft.user.profile.exists? %>
+            <%= image_tag draft.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
+          <% else %>
+            <%= image_tag "profile_image", :class => "profile_img", :id => "review_img" %>
+          <% end %>
           <div>
             <% if !draft.pitch.blank? %>
               <p class="card-text"> <%= draft.pitch.description.truncate_words(20) %></p>
@@ -44,7 +48,11 @@
       <div class="card card-review" style="width: 100%;">
         <h4 class="card-title pitch_ttl"><%= link_to pitch.title, pitch %></h4>
         <div class="card-bottom-flex">
-          <%= image_tag pitch.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
+          <% if pitch.user.profile.exists? %>
+            <%= image_tag pitch.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
+          <% else %>
+            <%= image_tag "profile_image", :class => "profile_img", :id => "review_img" %>
+          <% end %>
           <div>
             <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
             <p class="card-text"> Submitted by <%= link_to pitch.user.full_name, pitch.user %> on <%= pitch.updated_at.strftime("%A, %b %d") %> </p>

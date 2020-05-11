@@ -16,10 +16,10 @@
     <% end %>
     <div class="website">
       <% if (@user.website != "" && @user.website !=  nil) %>
-         <p class="website_link"><span>Website: </span><a href="https://<%= @user.website %>" target="_blank"><%= @user.website %></a></p>
+         <p class="website_link"><span>Website: </span><a href="https://www.<%= @user.website %>" target="_blank"><%= @user.website %></a></p>
       <% end %>
       <% if (@user.twitter != "" && @user.twitter !=  nil) %>
-         <p class="website_link"><a href="<%= @user.twitter %>" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a></p>
+         <p class="website_link"><a href="https://www.twitter.com/<%= @user.twitter %>" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a></p>
       <% end %>
       <% if (@user.insta != "" && @user.insta != nil) %>
          <p class="website_link"><a href="https://www.instagram.com/<%= @user.insta %>" target="_blank" style="padding-right: 4px;"><i class="fa fa-instagram" aria-hidden="false"></i></a>
@@ -29,12 +29,6 @@
       <% end %>
       <% if (@user.youtube != "" && @user.youtube != nil) %>
          <p class="website_link"><a href="https://www.youtube.com/<%= @user.youtube %>" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></p>
-      <% end %>
-      <% if (@user.pintrest != "" && @user.pintrest != nil) %>
-         <p class="website_link"><a href="<%= @user.pintrest %>" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a></p>
-      <% end %>
-      <% if (@user.snap != "" && @user.snap != nil) %>
-         <p class="website_link"><a href="<%= @user.snap %>" target="_blank"><i class="fa fa-snapchat" aria-hidden="true"></i></a></p>
       <% end %>
     </div>
   </div>

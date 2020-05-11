@@ -125,26 +125,20 @@
                <p class="description_user" style="margin-top: 5px;"><%= @collab.description %></p>
              <% end %>
                <div class="website">
-                 <% if (@collab.website != "" && @collab.website !=  nil) %>
-                    <p class="website_link"><span>Website: </span><a href="<%= @collab.website %>" target="_blank"><%= @collab.website %></a></p>
+                 <% if (@user.website != "" && @user.website !=  nil) %>
+                    <p class="website_link"><span>Website: </span><a href="https://www.<%= @user.website %>" target="_blank"><%= @user.website %></a></p>
                  <% end %>
-                 <% if (@collab.twitter != "" && @collab.twitter !=  nil) %>
-                    <p class="website_link"><a href="<%= @collab.twitter %>" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a></p>
+                 <% if (@user.twitter != "" && @user.twitter !=  nil) %>
+                    <p class="website_link"><a href="https://www.twitter.com/<%= @user.twitter %>" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a></p>
                  <% end %>
-                 <% if (@collab.insta != "" && @collab.insta != nil) %>
-                    <p class="website_link"><a href="<%= @collab.insta %>" target="_blank" style="padding-right: 4px;"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+                 <% if (@user.insta != "" && @user.insta != nil) %>
+                    <p class="website_link"><a href="https://www.instagram.com/<%= @user.insta %>" target="_blank" style="padding-right: 4px;"><i class="fa fa-instagram" aria-hidden="false"></i></a>
                  <% end %>
-                 <% if (@collab.facebook != "" && @collab.facebook !=  nil) %>
-                    <p class="website_link"><a href="<%= @collab.facebook %>" target="_blank" style="padding-left: 5px;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></p>
+                 <% if (@user.facebook != "" && @user.facebook !=  nil) %>
+                    <p class="website_link"><a href="https://www.facebook.com/<%= @user.facebook %>" target="_blank" style="padding-left: 5px;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></p>
                  <% end %>
-                 <% if (@collab.youtube != "" && @collab.youtube != nil) %>
-                    <p class="website_link"><a href="<%= @collab.youtube %>" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></p>
-                 <% end %>
-                 <% if (@collab.pintrest != "" && @collab.pintrest != nil) %>
-                    <p class="website_link"><a href="<%= @collab.pintrest %>" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a></p>
-                 <% end %>
-                 <% if (@collab.snap != "" && @collab.snap != nil) %>
-                    <p class="website_link"><a href="<%= @collab.snap %>" target="_blank"><i class="fa fa-snapchat" aria-hidden="true"></i></a></p>
+                 <% if (@user.youtube != "" && @user.youtube != nil) %>
+                    <p class="website_link"><a href="https://www.youtube.com/<%= @user.youtube %>" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></p>
                  <% end %>
                </div>
              </div>
@@ -166,7 +160,7 @@
                 </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                   <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5c2a24e15a906f29e2c6a9b72_3081d2e76a" tabindex="-1" value=""></div>
                   <div class="clear"><input type="submit" value="Subscribe" name="subscribe subscribe_btn" id="mc-embedded-subscribe" class="button"></div>
-                  </div>
+                </div>
             </form>
           </div>
         <% end %>
@@ -212,7 +206,8 @@
                       <%= link_to image_tag("delete_x.png"), comment_path(comment), method: :delete, class: "delete_btn_x" %>
                     <% end %>
                     <li class="list-group-item comment">
-                      <%= link_to(image_tag(comment.user.profile.url(:square), class: "profile_img_small"), comment.user) %>
+                      <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+                      <%= link_to(@profile_img, comment.user) %>
                       <div>
                         <h6><%= link_to comment.user.full_name, comment.user %></h6>
                         <span class="date_ago"><%= comment.user.comments.count %> points, <%= time_ago_in_words(comment.created_at) %> ago</span><br>

@@ -1,19 +1,23 @@
 <div class="skinny_wrapper wrapper_padding pitches_wrapper">
-  <div class="btn_cntnr" style="margin-bottom: 0px;"><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %></div>
-  <h1 class="pitch_ttl"><%= @title %></h1>
-  <% if @desc %>
-    <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. You will have two weeks to submit your article for review after claiming the pitch.</i>
-    <br><br>
-    <p style="display: inline;">Filter by category</p>
-    <%= form_for @pitch, method: "get" do |f| %>
-      <%= f.collection_select(:category_id, @categories, :id, :name, {include_blank: "All Pitches"}) %>
-      <%= f.submit "Apply filter", method: :index, id: "button_nrml" %>
+  <div class="flex_container_mobile_reverse_order">
+    <div class="btn_cntnr" style="margin-bottom: 0px;"><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %></div>
+    <div>
+      <h1 class="pitch_ttl"><%= @title %></h1>
+      <% if @desc %>
+        <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. You will have two weeks to submit your article for review after claiming the pitch.</i>
+        <br><br>
+        <p style="display: inline;">Filter by category</p>
+        <%= form_for @pitch, method: "get" do |f| %>
+          <%= f.collection_select(:category_id, @categories, :id, :name, {include_blank: "All Pitches"}) %>
+          <%= f.submit "Apply filter", method: :index, id: "button_nrml" %>
+        <% end %>
+        <br>
+      <% end %>
+      <% if @pitches.count.eql? 0 %>
+        <i><%= @message %></i>
     <% end %>
-    <br>
-  <% end %>
-  <% if @pitches.count.eql? 0 %>
-    <i><%= @message %></i>
-  <% end %>
+    </div>
+  </div>
   <div class="flex-wrapper">
     <% @pitches.each do |pitch| %>
     <a href="<%= pitch_path(pitch)%>">
