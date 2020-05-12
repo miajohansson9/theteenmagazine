@@ -72,46 +72,6 @@ html, body {
   margin: 0 auto;
 }
 
-.sidebar_menu {
-  background-color: #65B19D;
-  margin-left: 0;
-  width: 250px;
-  height: 2000px;
-  position: fixed;
-  transition: all 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  h1 {
-    margin-bottom: 5px;
-  }
-  h1 a {
-    color: white;
-    font-size: 23px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 15px;
-    padding-bottom: 0;
-    font-family: 'justwaitandsee', serif;
-  }
-  hr {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    border-color: white;
-    display: none;
-  }
-  a {
-    text-decoration: none;
-    color: white !important;
-    font-size: 20px;
-    font-family: 'Roboto Condensed';
-    display: inline-block;
-    width: fit-content;
-    margin: 0 auto;
-    margin-top: 15px;
-  }
-}
-
 .index_users #post_title {
   margin: 0px;
 }
@@ -312,6 +272,12 @@ html, body {
   a {
     color: #65B19D !important;
   }
+}
+
+hr {
+  margin: 0.3em auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 ///////////////////////////////////////////////////////////////////////////

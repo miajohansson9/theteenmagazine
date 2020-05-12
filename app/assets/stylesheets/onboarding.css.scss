@@ -325,6 +325,18 @@ h5, h3 {
   color: black;
 }
 
+
+.hr {
+  hr {
+    width: 3em;
+    display: block;
+    height: 2px;
+    border: 0;
+    border-top: 2px solid #65B19D;
+    margin: 2rem 0;
+  }
+}
+
 .stair_step {
   text-align: center;
   .progress_step, .progress_step p {
@@ -338,7 +350,7 @@ h5, h3 {
     color: #DCDCDC;
     font-size: 25px;
     width: 75px;
-    line-height: 30px;
+    line-height: 25px;
     p {
       margin: 0;
       font-size: 14px;
