@@ -16,76 +16,58 @@
     <%= javascript_include_tag 'application'%>
   </head>
   <body>
-    <div class="sidebar_menu hide_menu" style="background-color: #65B19D;">
-      <i class="fa fa-times"></i>
-      <h1><%= link_to "The Teen Magazine", root_path %></h1>
-      <% if user_signed_in? %>
-         <%= link_to "Dashboard", user_path(current_user) %>
-         <%= link_to("Editor Pitches", pitches_path) %>
-         <%= link_to "Pitch a new article", new_pitch_path %>
-         <%= link_to("Edit Profile", edit_user_path(current_user)) %>
-         <%= link_to("Change Password", edit_user_registration_path) %>
-         <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
-         <% if (current_user.admin?) || (current_user.editor?) %>
-           <%= link_to "Start a new article", new_post_path %>
-         <% end %>
-         <% if current_user && (current_user.admin? || current_user.editor?) %>
-           <%= link_to "Edit", reviews_path %>
-           <%= link_to "Writers", users_path %>
-         <% end %>
-         <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-      <% else %>
-         <a href="/apply">Apply</a>
-      <% end %>
-      <div style="height: 2000px; background-color: #65B19D;">
-      </div>
-    </div>
-    <div class="bodywrapper">
-      <% if notice %>
-        <p class="notice"><%= notice %></p>
-        <% elsif alert %>
-        <p class="alert"><%= alert %></p>
-      <% end %>
-      <header id="main_navigation" class="clearfix">
-        <div id="banner">
-          <div class="logo--flex banner_item" style="margin-top: 0;">
-            <i class="fa fa-bars toggle_menu" style="color: black;"></i>
-          </div>
-          <div class="banner_item" style="text-align: center;">
-            <a href="/users/<%= current_user.slug %>"><%= image_tag "teenmag.png", id: "name" %></a>
-          </div>
-          <div class="banner_item" style="text-align: right;">
-            <div class="social-media">
-              <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
-              <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
-              <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-              <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+    <% if notice %>
+      <p class="notice"><%= notice %></p>
+      <% elsif alert %>
+      <p class="alert"><%= alert %></p>
+    <% end %>
+    <div id="site-wrapper">
+      <%= render "layouts/partials/slide-in-menu" %>
+      <div id="site-canvas">
+        <div class="bodywrapper">
+          <header id="main_navigation" class="clearfix">
+            <div id="banner">
+              <div class="logo--flex banner_item" style="margin-top: 0;">
+                <i class="fa fa-bars toggle-nav" style="color: black;"></i>
+              </div>
+              <div class="banner_item" style="text-align: center;">
+                <a href="/users/<%= current_user.slug %>"><%= image_tag "teenmag.png", id: "name" %></a>
+              </div>
+              <div class="banner_item" style="text-align: right;">
+                <div class="social-media">
+                  <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
+                  <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
+                  <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+                  <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+                </div>
+              </div>
             </div>
-          </div>
+            <div class="border">
+              <div class="nav_wrapper">
+                <nav class="nav_article">
+                  <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
+                  <% if user_signed_in? %>
+                     <%= link_to "Create", pitches_path, class: "link" %>
+                     <% if current_user && (current_user.admin? || current_user.editor?) %>
+                       <%= link_to "Edit", reviews_path, class: "link" %>
+                       <%= link_to "Writers", users_path, class: "link" %>
+                     <% end %>
+                     <%= link_to "Dashboard", user_path(current_user), class: "link" %>
+                     <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
+                  <% else %>
+                      <a class="link" href="/contact-us">Contact</a>
+                      <a class="link" href="/apply">Apply</a>
+                  <% end %>
+                </nav>
+              </div>
+            </div>
+          </header>
+          <%= yield %>
         </div>
-        <div class="border">
-          <div class="nav_wrapper">
-            <nav class="nav_article">
-              <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
-              <% if user_signed_in? %>
-                 <%= link_to "Create", pitches_path, class: "link" %>
-                 <% if current_user && (current_user.admin? || current_user.editor?) %>
-                   <%= link_to "Edit", reviews_path, class: "link" %>
-                   <%= link_to "Writers", users_path, class: "link" %>
-                 <% end %>
-                 <%= link_to "Dashboard", user_path(current_user), class: "link" %>
-                 <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
-              <% else %>
-                  <a class="link" href="/contact-us">Contact</a>
-                  <a class="link" href="/apply">Apply</a>
-              <% end %>
-            </nav>
-          </div>
-        </div>
-      </header>
-      <%= yield %>
+      </div>
+      <div class="toggle-nav" id="navigation_overlay"></div>
+      <%= render "layouts/partials/footer" %>
     </div>
-    <%= render "layouts/partials/footer" %>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -93,19 +75,6 @@
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-89987071-1', 'auto');
       ga('send', 'pageview');
-        $(document).ready(function() {
-          $(".fa-times").click(function() {
-            $(".sidebar_menu").addClass("hide_menu");
-            $(".bodywrapper").removeClass("push");
-            $(".bodywrapper").addClass("pushback");
-          });
-
-          $(".toggle_menu").click(function() {
-            $(".sidebar_menu").removeClass("hide_menu");
-            $(".bodywrapper").addClass("push");
-            $(".bodywrapper").removeClass("pushback");
-          });
-        });
     </script>
   </body>
 </html>

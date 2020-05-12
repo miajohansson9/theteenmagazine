@@ -130,75 +130,98 @@ html, body {
   color: #C0C0C0 !important;
 }
 
-.fa-times {
-  right: 10px;
-  top: 10px;
-  opacity: 0.7;
-  cursor: pointer;
-  position: absolute;
-  color: white;
-  transition: all 0.3s ease-in-out;
-  &:hover {
-    opacity: 1;
-  }
-}
-
-.hide_menu {
-  margin-left: -250px;
-}
-
-.push {
-  transform: translate(250px);
-  transition: all 0.3s ease-in-out;
-}
-
-.pushback {
-  transition: all 0.3s ease-in-out;
-}
-
-.fullwidth--signup {
+/*
+* Uses Font Awesome and Bootstrap 3
+* Both aren't required for this demo
+*/
+#site-wrapper {
+  position: relative;
   width: 100%;
-  background-color: #65B19D;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  display: none;
-  margin-bottom: 20px;
+  height: 100%;
+}
 
-  h3 {
-    text-align: center;
-    font-size: 25px;
-    margin-right: 30px;
-    color: white;
-    margin-left: 30px;
-    padding: 10px;
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
-  hr {
-    display: none;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border-color: #00b5f9;
-  }
-  p {
-    text-align: center;
-    color: white;
-    margin-left: 30px;
-    padding-top: 0;
-    margin-bottom: 0;
+#site-canvas, #site-menu {
+  position: relative;
+
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+
+  -webkit-transition: .2s ease all;
+  transition: .2s ease all;
+
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.show-nav {
+  overflow: hidden;
+  #site-canvas, #site-menu {
+    -webkit-transform: translateX(320px);
+    transform: translateX(320px);
+
+    -webkit-transform: translate3d(320px, 0, 0);
+    transform: translate3d(320px, 0, 0);
+    height: 100%;
   }
 }
 
-.ads {
-  max-width: 250px;
-  max-height: 600px;
+.show-nav #navigation_overlay {
+  visibility: visible;
+  opacity: 0.75;
+  height: 100%;
+}
 
-  .apply {
-    min-width: 100%;
-    max-width: 100%;
+#navigation_overlay {
+  background: #333;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  visibility: hidden;
+  height: 0;
+  z-index: 5002;
+  opacity:0;
+  transition: visibility 0.2s linear, opacity 0.2s linear;
+}
+
+#site-menu {
+  width: 320px;
+  position: absolute;
+  top: 0;
+  left: -320px;
+  background: white;
+  padding: 25px;
+  z-index: 5003;
+  a, h2 {
+    width: fit-content;
+  }
+  a {
+    text-decoration: none;
+    display: block;
+    line-height: 38px;
+    font-size: 18px;
+    font-family: 'Playfair Display';
+    color: black;
+  }
+  h2 {
+    margin: 0;
+    a {
+      font-family: "justwaitandsee";
+      font-size: 50px;
+      padding: 0;
+      line-height: 1;
+    }
+  }
+  .toggle-nav-x {
+    color: black;
+    font-size: 20px;
+    float: right;
+    margin-top: -5px;
     &:hover {
-      opacity: .85;
+      cursor: pointer;
     }
   }
 }
@@ -913,15 +936,6 @@ p, li {
 
 p, ul, ol {
   margin: 0.8em 0;
-}
-
-hr {
-  width: 3em;
-  display: block;
-  height: 2px;
-  border: 0;
-  border-top: 2px solid #65B19D;
-  margin: 2rem 0;
 }
 
 @media (max-width: 1100px) {

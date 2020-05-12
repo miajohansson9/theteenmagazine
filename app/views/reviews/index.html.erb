@@ -80,5 +80,10 @@
         </div>
       </div>
     <% end %>
+    <% if @all_reviews.count.eql? 0 %>
+      <i>There are no articles in review right now.</i>
+      <br>
+    <% end %>
   <% end %>
+  <br>
 </div>
