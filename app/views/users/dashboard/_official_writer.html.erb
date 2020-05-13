@@ -82,10 +82,10 @@
             <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
             <%= link_to("Editor Pitches", pitches_path) %>
             <%= link_to "Pitch a new article", new_pitch_path %>
-            <% if (current_user.admin?) || (current_user.editor?)%>
+            <% if (@user.editor?) && (current_user.editor?)%>
               <%= link_to "Start a new article", new_post_path %>
             <% end %>
-            <% if current_user.admin? %>
+            <% if (current_user.admin?) && (@user.admin?) %>
               <%= link_to "Writer Applications", applies_path %>
             <% end %>
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>

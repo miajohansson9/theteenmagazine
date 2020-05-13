@@ -7,7 +7,7 @@ class WelcomeController < ApplicationController
   end
 
   def show
-    set_meta_tags title: 'The Teen Magazine | An Online Magazine For Teens',
-                  description: 'The Teen Magazine is an online magazine for teens covering all things lifestyle, beauty, style, health, student life, high school, and more... '
+    set_meta_tags title: 'The Teen Magazine',
+                  description: 'The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.'
   end
 end

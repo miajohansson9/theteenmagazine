@@ -1,12 +1,14 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:privacy, :team, :submitted, :subscribe, :reset, :reset_confirmation]
-  layout "minimal", except: [:about, :team, :subscribe, :privacy, :reset]
-
-  def subscribe
-    @posts_approved = Post.published.all.order("created_at desc")
-  end
+  before_action :authenticate_user!, except: [:privacy, :contact, :team, :submitted, :reset, :reset_confirmation]
+  layout "minimal", except: [:about, :team, :privacy, :reset, :contact]
 
   def team
+    set_meta_tags :title => "About us",
+                  :description => "We believe that teen magazines should be inclusive and focus on topics written by, and important to, teens."
+  end
+
+  def contact
+    set_meta_tags :title => "Contact us | The Teen Magazine"
   end
 
   def criteria

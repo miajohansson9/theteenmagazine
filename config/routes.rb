@@ -7,10 +7,6 @@ Rails.application.routes.draw do
     get "/onboarding" => "users#onboarding"
   end
 
-  devise_scope :contact do
-    get "/contact-us" => "contacts#new"
-  end
-
   resources :users
   resources :contacts, only: [:new, :create]
   resources :applies
@@ -26,6 +22,7 @@ Rails.application.routes.draw do
 
   get 'criteria' => 'pages#criteria'
   get 'about-us' => 'pages#team'
+  get 'contact-us' => 'pages#contact'
   get 'choosing-a-topic' => 'pages#topics'
   get 'writing-the-perfect-article' => 'pages#writing'
   get 'finding-images' => 'pages#images'

@@ -10,6 +10,8 @@ class AppliesController < ApplicationController
   #create a new application
   def new
     @application = Apply.new
+    set_meta_tags title: "Apply",
+                  description: "Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!"
   end
 
   #send submitted application
