@@ -1,4 +1,4 @@
-task send_draft_reminder: :production do
+task :send_draft_reminder => :environment do
   User.all.each do |user|
     @posts = []
     user.posts.draft.where.not(updated_at: (Time.now - 1.week)..Time.now).each do |post|
@@ -8,6 +8,7 @@ task send_draft_reminder: :production do
     end
     if @posts.present?
       ApplicationMailer.articles_in_progress_reminder(user, @posts).deliver
+      puts "Sent email to #{user.email}"
     end
   end
 end
