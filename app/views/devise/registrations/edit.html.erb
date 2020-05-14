@@ -1,5 +1,6 @@
-<h1 id="page_title">Edit <%= resource_name.to_s.humanize %></h1>
-<div class="skinny_wrapper">
+<h1 id="page_title">Change Password</h1>
+<div class="skinny_wrapper wrapper_padding" style="max-width: 1000px;">
+  <br>
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= devise_error_messages! %>
 

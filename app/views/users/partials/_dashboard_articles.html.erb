@@ -5,19 +5,7 @@
     <div>
       <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
       <p class="edited_dt"><%= "Last edited " + time_ago_in_words(post.updated_at) + " ago" %></p>
-      <% if ((post.reviews.last.try(:status).eql? "In Progress") || (post.reviews.last.try(:status).eql? "Rejected")) && post.pitch.present? %>
-        <% @post_reviews = post.reviews.last %>
-        <% if @post_reviews.status.eql? "In Progress" %>
-          <% @deadline = @post_reviews.created_at + 14.days %>
-        <% elsif @post_reviews.status.eql? "Rejected" %>
-          <% @deadline = @post_reviews.updated_at + 14.days %>
-        <% else %>
-          <% @deadline = post.pitch.updated_at + 14.days %>
-        <% end %>
-        <% if @deadline.present? %>
-          <p><%= "The deadline to submit this article is in " + distance_of_time_in_words_to_now(@deadline) + "." %></p>
-        <% end %>
-      <% elsif (post.reviews.last.try(:status).eql? "Approved for Publishing") %>
+      <% if (post.reviews.last.try(:status).eql? "Approved for Publishing") %>
         <p><%= "Great job! This article will be published on " + post.publish_at.localtime.strftime("%D at %I:%M %p") + "." %></p>
       <% end %>
     </div>

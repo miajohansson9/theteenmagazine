@@ -1,44 +1,38 @@
 <% @most_recent_review = @post.reviews.where.not(status: "In Progress").last %>
-<% if !@most_recent_review.nil? && (!@most_recent_review.try(:status).eql? "Rejected") %>
-  <%= render '/posts/banner_status' %><br><br>
-<% elsif !(@post.is_published?) && @post.pitch.present? %>
-  <% @rev = @post.reviews.where.not(status: "In Progress").last %>
-  <% if @rev.present? %>
-    <% if @rev.status.eql? "In Progress" %>
-      <% @deadline = @rev.created_at + 14.days %>
-    <% elsif @rev.status.eql? "Rejected" %>
-      <% @deadline = @rev.updated_at + 14.days %>
-    <% elsif @post.pitch.present? %>
-      <% @deadline = @post.pitch.updated_at + 14.days %>
-    <% end %>
-  <% else %>
-    <% @deadline = @post.pitch.updated_at + 14.days %>
-  <% end %>
-  <% if @deadline.present? %>
-    <p class= "banner_stts" style="position: relative;">You have <%= distance_of_time_in_words_to_now(@deadline) %> left to submit this <%= link_to("Article Pitch", @post.pitch, class: "link_white") %> for review.</p>
-  <% end %>
+<% @review_banner_soft = @post.reviews.where.not(status: nil).last %>
+<style>.banner_stts {position: relative}</style>
+<% if !@most_recent_review.nil? && !(@review_banner_soft.status.eql? "In Progress") %>
+  <%= render '/posts/banner_status' %>
+<% elsif @post.pitch.present? %>
+  <p class= "banner_stts">In Progress | Review this draft's pitch <%= link_to("here", @post.pitch, target: "_blank", class: "link_white") %></p>
+<% else %>
+  <p class="banner_stts">In Progress</p>
 <% end %>
 <div class="skinny_wrapper wrapper_padding">
-  <% if @deadline.present? %>
-    <i>This article is associated with a pitch. After claiming an article pitch, you will have two weeks to submit your article for review. You have <%= distance_of_time_in_words_to_now(@deadline) %> left to submit this article for review.</i><br>
+  <% @reviews = @post.reviews.where(status: "Rejected") %>
+  <p style="margin-bottom: 0;"><i>This article has been given feedback <%= @reviews.count %> time(s).
+     View all past reviews <%= link_to("here", reviews_path(post: @post), target: "_blank", :class => "link_nrml", :style => "text-decoration: underline;") %>.
+  </i></p>
+  <% if (@reviews.count >= 5) && !(@post.is_published?) %>
+    <p style="margin-bottom: 0px; font-style: italic;">You have reached the maximum amount of times you can submit this article for review.</p>
   <% end %>
   <% if @most_recent_review.try(:status).eql? "Rejected" %>
-  <% if !@most_recent_review.notes.blank? %>
-   <br><i style="background-color: yellow;">Editor Notes: <%= @most_recent_review.notes %></i>
-  <% end %>
-  <% if @requested_changes.present? %>
-    <div class="card mb-3 changes_requested">
-      <div class="card-header">The below problems prevented this article from being published.</div>
-      <div class="card-body">
-        <% @requested_changes.each do |requested_change| %>
-          <% @feedback = Feedback.find(requested_change.feedback_id) %>
-          <h5 class="card-title">✎ <%= @feedback.try(:editor_descr) %></h5>
-          <p class="card-text"><%= @feedback.try(:review_descr) %></p>
-        <% end %>
-      </div>
-     </div>
-     <i style="color: #757575;">Please complete the changes above and submit your article again for consideration.</i>
-  <% end %>
+    <% if !@most_recent_review.notes.blank? %>
+     <p><i style="background-color: yellow;">Editor Notes: <%= @most_recent_review.notes %></i></p>
+    <% end %>
+    <% if @requested_changes.present? %>
+      <div class="card mb-3 changes_requested">
+        <div class="card-header">Review #<%= @reviews.count %>: The below problems prevented this article from being published.</div>
+        <div class="card-body">
+          <% @requested_changes.each do |requested_change| %>
+            <% @feedback = Feedback.find(requested_change.feedback_id) %>
+            <h5 class="card-title">✎ <%= @feedback.try(:editor_descr) %></h5>
+            <p class="card-text"><%= @feedback.try(:review_descr) %></p>
+          <% end %>
+        </div>
+       </div>
+       <p><i>Please make the above changes before submitting your article again.</i></p>
+    <% end %>
   <% end %>
   <%= render 'form' %>
 </div>

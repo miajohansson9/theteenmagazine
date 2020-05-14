@@ -12,6 +12,10 @@
    }
 }
 
+#post_reviews_attributes_0_status {
+  background-color: WhiteSmoke;
+}
+
 .nav_wrapper {
   max-width: 1300px;
   margin: 0 auto;
@@ -80,6 +84,9 @@
 .changes_requested {
   margin: 20px 10px 10px 10px;
   background-color: #ffeded;
+  .fa-times {
+    float: right;
+  }
 }
 
 .review_frm {
@@ -114,7 +121,6 @@
     margin-bottom: 10px;
   }
   .flex-wrapper {
-    margin: 0 auto 40px auto;
     display: flex;
     flex-flow: row wrap; /* Shorthand – you could use ‘flex-direction: column’ and ‘flex-wrap: wrap’ instead */
     align-items: flex-start;
@@ -161,6 +167,12 @@
   width: 100%;
 }
 
+.thumbnail--container {
+  .article_title {
+    font-size: 20px;
+  }
+}
+
 .delete_btn {
   display: block;
   float: right;
@@ -183,8 +195,8 @@
   }
 }
 
-.pitch_btn:hover {
-  color: #FF78CB;
+.pitch_btn {
+  color: #FF78CB !important;
 }
 
 .pitch_ttl {
@@ -471,10 +483,6 @@ h5, h3 {
           padding: 10px;
           margin: 0;
         }
-      }
-      .pitches-message {
-        margin-top: 45px;
-        position: absolute;
       }
     }
   }

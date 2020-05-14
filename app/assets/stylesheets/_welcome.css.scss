@@ -356,7 +356,7 @@ $gray:  #2a2a2a;
     width: 100%;
     .thumbnail {
       flex-direction: column;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
       .container--image {
         width: 100%;
         .image_thumbnail {
@@ -424,34 +424,8 @@ $gray:  #2a2a2a;
   .link {
     display: none;
   }
-  .banner_fundraiser {
-    height: 80px;
-
-    .container_fundraiser {
-      max-height: 80px;
-      .nbfr_donate_container {
-        display: flex;
-        flex-direction: row;
-        margin: 0;
-        div {
-          margin-top: 40px;
-          h1 {
-            font-family: "Playfair Display";
-            font-size: 20px;
-            margin: 0;
-            color: white;
-            text-shadow: 2px 2px black;
-          }
-        }
-        .green_button {
-          margin-top: 30px;
-          padding: 10px;
-          h1 {
-            font-size: 17px;
-          }
-        }
-      }
-    }
+  .minimal_banner {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
   }
 }
 

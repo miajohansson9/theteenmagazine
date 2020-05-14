@@ -4,23 +4,7 @@
     <% if @pitch.status.eql? "Ready for Review" %>
       <p><b><i>This pitch has not been reviewed yet.</i></b></p>
     <% end %>
-    <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. You will have <b>two weeks</b> to submit your article for review after claiming the pitch.</i>
-  <% else %>
-    <% @post_reviews = Post.where(user_id: @pitch.claimed_id, pitch_id: @pitch.id).last.reviews.last %>
-    <% if @post_reviews.present? %>
-      <% if @post_reviews.status.eql? "In Progress" %>
-        <% @deadline = @post_reviews.created_at + 14.days %>
-      <% elsif @post_reviews.status.eql? "Rejected" %>
-        <% @deadline = @post_reviews.updated_at + 14.days %>
-      <% else %>
-        <% @deadline = @pitch.updated_at + 14.days %>
-      <% end %>
-    <% else %>
-      <% @deadline = @pitch.updated_at + 14.days %>
-    <% end %>
-    <% if !(@post_reviews.try(:status).eql? "In Review") && !(@post_reviews.try(:status).eql? "Approved for Publishing") && !(@post_reviews.try(:status).eql? "Ready for Review") %>
-      <i <% if @deadline - Time.now < 7.days %>class="deadline_dt" <% end %>>The deadline to submit <%= link_to("this article", @pitch.posts.last, :class => "pitch_btn") %> is in <%= distance_of_time_in_words_to_now(@deadline) + "." %></i>
-    <% end %>
+    <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Please only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
   <% end %>
   <h3 class="pitch_ttl"><%= @pitch.title %></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.full_name, @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
@@ -48,7 +32,7 @@
           <%= f.hidden_field :content, value: @pitch.description %>
           <%= f.hidden_field :category_id, value: @pitch.category_id %>
           <%= f.hidden_field :pitch_id, value: @pitch.id %>
-          <%= f.submit "Claim Article Pitch", data: { confirm: "You will have two weeks to write and submit this article." } %>
+          <%= f.submit "Claim Article Pitch", data: { confirm: "When you claim this pitch, your draft will be started." } %>
         <% end %>
       <% else %>
         <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.created_at.strftime('%A, %B %d') %></p>
@@ -64,7 +48,7 @@
           <p class="pitch_usr">This pitch's <%= link_to("article", @article, class: "pitch_btn") %> was published on <%= @article.publish_at.strftime("%A, %B %d") %>.</p>
         <% end %>
       <% end %>
-    <% end %> 
+    <% end %>
   <% end %>
 
   <% if (@pitch.user.id.eql? current_user.id) && !@article.try(:is_published?) %>

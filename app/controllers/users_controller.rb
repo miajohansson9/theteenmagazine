@@ -34,6 +34,8 @@ class UsersController < ApplicationController
         end
       end
     end
+    set_meta_tags title: "#{@user.full_name} | The Teen Magazine",
+                  description: @user.description
   end
 
   def onboarding
@@ -46,8 +48,11 @@ class UsersController < ApplicationController
       reset_email
     elsif current_user && (current_user.admin? || current_user.editor?)
       show_users
+    elsif current_user
+      redirect_to current_user, notice: "You do not have access to this page."
     else
-      redirect_to root_path
+      redirect_to "/login", notice: "You must sign in before continuing."
+      store_location_for(:user, request.fullpath)
     end
   end
 

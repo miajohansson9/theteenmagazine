@@ -34,6 +34,7 @@ class PitchesController < ApplicationController
   def new
     @pitch = current_user.pitches.build
     @categories = Category.all
+    set_meta_tags :title => "New Pitch | The Teen Magazine"
   end
 
   def create
@@ -99,10 +100,12 @@ class PitchesController < ApplicationController
     @claimed_user = @pitch.claimed_id.present? ? User.find(@pitch.claimed_id) : nil
     @article = @claimed_user ? @claimed_user.posts.where(pitch_id: @pitch.id).last : nil
     @title = @claimed_user.nil? ? "Claim article pitch" : "You've claimed this pitch"
+    set_meta_tags :title => @pitch.title
   end
 
   def edit
     @categories = Category.all
+    set_meta_tags :title => "Edit Pitch | The Teen Magazine"
   end
 
   private

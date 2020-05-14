@@ -128,8 +128,11 @@ class PostsController < ApplicationController
                       :image => @post.thumbnail.url(:large),
                       :domain => "https://www.theteenmagazine.com/"
                     }
+    elsif current_user.present?
+      redirect_to current_user, notice: "This draft does not have sharing turned on."
     else
       redirect_to new_user_session_path, notice: "You must sign in to continue."
+      store_location_for(:user, request.fullpath)
     end
   end
 
@@ -144,6 +147,7 @@ class PostsController < ApplicationController
     @requested_changes = @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
     @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.feedback_givens) : @post.reviews.last
     @feedbacks = Feedback.all
+    set_meta_tags :title => "Edit Article"
   end
 
   def update
@@ -190,7 +194,7 @@ class PostsController < ApplicationController
         @notice = "Your article was withdrawn from review."
       elsif ((@prev_status.eql? "In Progress") || (@prev_status.blank?)) && (@new_status.eql? "Ready for Review")
         ApplicationMailer.article_moved_to_submitted(@post.user, @post).deliver
-        @notice = "Your article was submitted for review."
+        @notice = "Great job! Your article was submitted for review."
       else
         @notice = "Your changes were saved."
       end

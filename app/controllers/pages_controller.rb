@@ -23,6 +23,10 @@ class PagesController < ApplicationController
     @post = current_user.posts.build
   end
 
+  def reviews(post)
+    @post = post
+  end
+
   def images
   end
 

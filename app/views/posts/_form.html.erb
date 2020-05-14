@@ -53,13 +53,36 @@
           </div>
         </div>
       <% end %>
-      <%= f.label "Article Status:" %>
-      <% @statuses = current_user.editor? ? ["In Progress", "Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review"] %>
-      <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
-      <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
+      <% @reviews = @post.reviews.where(status: "Rejected") %>
+      <% if (@reviews.count >= 5) && !(@post.is_published?) %>
+        <%= rv.hidden_field :status, :value => "In Progress" %>
+      <% else %>
+        <%= f.label "Article Status:" %>
+        <% @rejected_cnt = @post.reviews.where(status: "Rejected").count %>
+        <% @statuses = current_user.editor? ? ["In Progress", "Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review"] %>
+        <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
+        <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
+        <br>
+        <br>
+      <% end %>
     <% end %>
-    <br>
-    <br>
     <%= f.submit "Save Changes" %>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  $('document').ready(function(){
+    console.log("hi");
+    $("#edit_post").on("submit", function(event){
+      var reply = true;
+      var selected = document.getElementById('post_reviews_attributes_0_status').value;
+      <% if !(@post.reviews.last.status.eql? "Ready for Review") %>
+        if (selected == "Ready for Review") {
+          <%= @count = 5 - @post.reviews.where(status: "Rejected").count %>
+          reply=confirm("You have <%= @count %> reviews remaining for this article. Are you sure you want to continue?");
+        }
+      <% end %>
+      return reply;
+    });
+  });
+</script>

@@ -15,8 +15,10 @@
     <% @most_recent_review = @post.reviews.last %>
     <% if !@most_recent_review.nil? && !(@most_recent_review.try(:status).eql? "In Progress") %>
       <%= render '/posts/banner_status' %>
+    <% elsif @post.pitch.present? %>
+      <p class= "banner_stts">In Progress | Review this draft's pitch <%= link_to("here", @post.pitch, target: "_blank", class: "link_white") %></p>
     <% else %>
-      <p class="banner_stts">DRAFT</p>
+      <p class="banner_stts">In Progress</p>
     <% end %>
   <% end %>
   <div class="post_image">
@@ -92,7 +94,7 @@
           <div id="admin_links">
             <%= link_to "Edit Article", edit_post_path(@post) %>
             <% if current_user && (current_user.id == @post.user_id || current_user.admin) %>
-            <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete this post?"} %>
+            <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete this article?"} %>
             <% end %>
           </div>
         <% end %>

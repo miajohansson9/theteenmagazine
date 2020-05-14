@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+      <% if @posts.count.eql? 1 %>
+        <p>
+          You have 1 article in progress that hasn't been worked on for a while. If you are still working on it, you can
+          access your draft <%= link_to("here", @posts.last) %>. If you no longer want to finish this article,
+          please unclaim the pitch.
+        </p>
+        <% else %>
+        <p>
+          You have <%= @posts.count %> drafts that haven't been worked on for a while. If you are still working on these
+          articles, you can access them here:
+        </p>
+            <% @posts.each do |post| %>
+              <p><%= link_to(post.title, post) %></p>
+            <% end %>
+        <p>
+          If you no longer want to work on one or more of these articles, please unclaim the
+          pitches associated with them.
+        </p>
+      <% end %>
+    <p>Best,<br/>
+       The Teen Magazine Editor Team
+    </p>
+  </body>
+</html>

@@ -39,6 +39,9 @@
   .category--show {
     margin: 25px;
     margin-bottom: 0;
+    .thumbnail {
+      margin-bottom: 25px;
+    }
   }
 }
 
@@ -58,23 +61,13 @@
   .flex--container--post--title {
     margin-top: 0px !important;
   }
-  .fa-bars {
-    padding-top: 19px !important;
-  }
-  .logo--flex {
-    margin-top: 15px;
-    border-bottom: none !important;
-  }
-
   .category_image {
     margin-top: 0px !important;
   }
 
   #banner {
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-
     #name {
-      width: 150px;
+      width: 190px;
     }
   }
 

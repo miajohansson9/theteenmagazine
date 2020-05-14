@@ -180,7 +180,7 @@ html, body {
     color: black;
     font-size: 20px;
     float: right;
-    margin-top: -5px;
+    line-height: 33px;
     &:hover {
       cursor: pointer;
     }
@@ -461,6 +461,7 @@ hr {
   .container {
     display: flex;
     flex-direction: column;
+    padding: 0;
     .exclusive-offer {
       height: 210px;
       background-repeat: no-repeat;
@@ -468,7 +469,6 @@ hr {
       background-image: url("https://i.ibb.co/JsS5zrC/subscribe.png");
       background-position: center;
       margin-bottom: -10px;
-      margin-top: 10px;
 
       #exclusive-title--id {
         margin-top: 45px;
@@ -689,16 +689,15 @@ footer {
 }
 
 .social-media {
-  justify-content: space-between;
-  margin-right: 20px;
+  display: flex;
+  justify-content: flex-end;
   font-size: 22px !important;
-  position: relative;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-
-  .fa {
-    margin-right: 14px;
+  align-items: center;
+  a {
+    height: fit-content;
+    .fa {
+      margin: 0 7px;
+    }
   }
 }
 
@@ -711,45 +710,39 @@ footer {
   #banner {
     display: flex;
     flex-direction: row;
-
-    #name {
-      max-width: 260px;
-    }
-
-    .banner_item {
-      width: 33%;
-      position: relative;
-      .fa-twitter {
-        color: #00aced;
-      }
-      .fa-instagram {
-        color: #3f729b;
-      }
-      .fa-pinterest {
-        color: #cb2027;
-      }
-      .fa-facebook-official {
-        color: #3b5998;
-      }
-    }
-  }
-
-  .logo--flex {
-    .fa-bars {
-      cursor: pointer;
-      z-index: 10000000;
-      color: white;
-      margin-left: 40px;
-      font-size: 20px !important;
-      position: absolute;
-      top: 50%;
-      -ms-transform: translateY(-50%);
-      transform: translateY(-50%) scale(1.5,1);
-    }
-
-    .name {
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 95%;
+    align-items: center;
+    #name_wrapper {
       display: block;
-      margin-top: 70px;
+      #name {
+        max-height: 83px;
+        margin: 0 auto;
+        display: block;
+      }
+    }
+    .social-media, .fa-bars, #name_wrapper {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+    .fa-bars:hover {
+      cursor: pointer;
+    }
+    .fa {
+      font-size: 20px;
+    }
+    .fa-twitter {
+      color: #00aced;
+    }
+    .fa-instagram {
+      color: #3f729b;
+    }
+    .fa-pinterest {
+      color: #cb2027;
+    }
+    .fa-facebook-official {
+      color: #3b5998;
     }
   }
 
@@ -981,7 +974,14 @@ p, ul, ol {
     }
   }
 
-  .articles2-6, .wrapper_home {
+  #site-menu {
+    .toggle-nav-x {
+      line-height: normal;
+      margin-top: -5px;
+    }
+  }
+
+  .articles2-6, .wrapper_home, #banner {
     width: 100%;
     padding: 0 15px;
     margin: 0;
@@ -993,26 +993,6 @@ p, ul, ol {
   #main_navigation {
     background-image: none;
     margin: 0;
-
-    .logo--flex {
-      border-bottom: 3px solid #E9E9E9;
-
-      .nav-image {
-        display: inline-block;
-        margin-top: 15px;
-        margin-left: 6%;
-        width: 20px;
-        height: 20px;
-      }
-      .fa-bars {
-        padding: 20px;
-        margin-left: 0px;
-        padding-top: 23px;
-      }
-      .name {
-        margin-top: 20px;
-      }
-    }
     nav {
       display: none;
     }
@@ -1068,17 +1048,6 @@ p, ul, ol {
   }
 }
 
-@media (max-width: 386px) {
-  #main_navigation {
-    .logo--flex {
-      .fa-bars {
-        margin-left: 0px;
-        padding-top: 23px;
-      }
-    }
-  }
-}
-
 .cke_screen_reader_only {
   width: 0px !important;
   height: 0px !important;
@@ -1086,15 +1055,4 @@ p, ul, ol {
 
 .date_ago {
   color: #A6A09E;
-}
-
-@media (max-width: 285px) {
-
-  #main_navigation {
-    .logo--flex {
-      .name {
-        width: 180px;
-      }
-    }
-  }
 }

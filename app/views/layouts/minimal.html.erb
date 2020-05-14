@@ -25,21 +25,15 @@
       <%= render "layouts/partials/slide-in-menu" %>
       <div id="site-canvas">
         <div class="bodywrapper">
-          <header id="main_navigation" class="clearfix">
+          <header id="main_navigation" class="clearfix minimal_banner">
             <div id="banner">
-              <div class="logo--flex banner_item" style="margin-top: 0;">
-                <i class="fa fa-bars toggle-nav" style="color: black;"></i>
-              </div>
-              <div class="banner_item" style="text-align: center;">
-                <a href="/users/<%= current_user.slug %>"><%= image_tag "teenmag.png", id: "name" %></a>
-              </div>
-              <div class="banner_item" style="text-align: right;">
-                <div class="social-media">
-                  <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
-                  <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
-                  <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-                  <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-                </div>
+              <i class="fa fa-bars toggle-nav"></i>
+              <a id="name_wrapper" href="/"><%= image_tag "teenmag.png", id: "name" %></a>
+              <div class="social-media">
+                <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
+                <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
+                <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+                <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
               </div>
             </div>
             <div class="border">
