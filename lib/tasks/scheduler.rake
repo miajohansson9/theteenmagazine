@@ -1,4 +1,4 @@
-task send_draft_reminder: :environment do
+task send_draft_reminder: :production do
   User.all.each do |user|
     @posts = []
     user.posts.draft.where.not(updated_at: (Time.now - 1.week)..Time.now).each do |post|
