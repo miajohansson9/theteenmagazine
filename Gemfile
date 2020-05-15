@@ -32,6 +32,7 @@ gem 'cancancan'
 gem 'figaro'
 gem 'nokogiri', '~>1.10.8'
 gem 'aws-sdk', '~> 3'
+gem 'sitemap_generator'
 
 group :development, :test do
   gem 'byebug', platform: :mri
