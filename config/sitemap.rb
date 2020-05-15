@@ -1,5 +1,15 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://www.theteenmagazine.com"
+SitemapGenerator::Sitemap.default_host = "https://www.theteenmagazine.com"
+
+SitemapGenerator::Sitemap.adapter = Class.new(SitemapGenerator::FileAdapter) {
+  def gzip(stream, data)
+    stream.write(data)
+    stream.close
+    open(stream.path.sub(/\.gz/, ''), 'wb') do |file|
+      file.write(data)
+    end
+  end
+}.new
 
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.
@@ -21,7 +31,6 @@ SitemapGenerator::Sitemap.create do
   #
   # Add all articles:
   #
-  add root_path, :priority => 1.0, :changefreq => 'daily'
   add "/about-us", :priority => 0.8, :changefreq => 'monthly'
   add "/apply", :priority => 0.8, :changefreq => 'yearly'
   add "/contact-us", :priority => 0.8, :changefreq => 'yearly'
@@ -31,7 +40,7 @@ SitemapGenerator::Sitemap.create do
     add category_path(category), :lastmod => category.updated_at, :priority => 0.8
   end
 
-  Post.find_each do |post|
+  Post.published.find_each do |post|
     add post_path(post), :lastmod => post.updated_at, :priority => 0.5, :changefreq => 'never'
   end
 
