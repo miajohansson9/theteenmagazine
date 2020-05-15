@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200331145640) do
+ActiveRecord::Schema.define(version: 20200515203152) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20200331145640) do
     t.string   "image_content_type"
     t.bigint   "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "description"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 

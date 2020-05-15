@@ -12,15 +12,17 @@ class PagesController < ApplicationController
   end
 
   def criteria
+    set_meta_tags :title => "Criteria & FAQ | The Teen Magazine"
   end
 
   def topics
     @pitch = Pitch.new
     @categories = Category.all
+    set_meta_tags :title => "Choosing a Topic | The Teen Magazine"
   end
 
   def writing
-    @post = current_user.posts.build
+    set_meta_tags :title => "Writing the Perfect Article | The Teen Magazine"
   end
 
   def reviews(post)
@@ -28,6 +30,7 @@ class PagesController < ApplicationController
   end
 
   def images
+    set_meta_tags :title => "Finding Images | The Teen Magazine"
   end
 
   def privacy

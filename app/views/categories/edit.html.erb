@@ -1,21 +1,4 @@
-<h1>Edit Category</h1>
-
-<%= form_for @category do |f| %>
-  <% if @category.errors.any? %>
-    <h2><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h2>
-    <ul>
-      <% @category.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-      <% end %>
-    </ul>
-  <% end %>
-
-<br><%= f.label "Category" %><br>
-<%= f.text_field :name %>
-<br><%= f.label "Image" %><br>
-<%= f.file_field :image %>
-<br />
-
-<br><%= f.submit "Save Category" %><br><br>
-
-<%end%>
+<div class="skinny_wrapper">
+  <h1 id="page_title">Edit Category</h1>
+  <%= render "/categories/form" %>
+</div>

@@ -5,18 +5,42 @@ class AppliesController < ApplicationController
   #show all applications
   def index
     @applies = Apply.all.paginate(page: params[:page]).order("created_at desc")
+    set_meta_tags :title => "Writer Applications | The Teen Magazine"
   end
 
   #create a new application
   def new
     @application = Apply.new
     set_meta_tags title: "Apply",
-                  description: "Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!"
+                  description: "Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!",
+                  image: ActionController::Base.helpers.image_path('become_a_writer.png'),
+                  :fb => {
+                    :app_id => "1190455601051741"
+                  },
+                  :og => {
+                    :image => {
+                      :url => ActionController::Base.helpers.image_path('become_a_writer.png'),
+                      :alt => 'The Teen Magazine',
+                    },
+                    :site_name => "The Teen Magazine",
+                  },
+                  :article => {
+                    :publisher => "https://www.facebook.com/theteenmagazinee"
+                  },
+                  :twitter => {
+                    :card => "summary_large_image",
+                    :site => "@theteenmagazin_",
+                    :title => "The Teen Magazine",
+                    description: "Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!",
+                    :image => ActionController::Base.helpers.image_path('become_a_writer.png'),
+                    :domain => "https://www.theteenmagazine.com/"
+                  }
   end
 
   #send submitted application
   def create
     @application = Apply.new(apply_params)
+    set_meta_tags title: "Application Submitted"
     @application.request = request
     if @application.deliver
       flash.now[:error] = nil

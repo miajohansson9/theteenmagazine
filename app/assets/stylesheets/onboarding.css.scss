@@ -471,17 +471,15 @@ h5, h3 {
   }
   .pitches_wrapper {
     .btn_cntnr {
-      margin-top: 10px;
+      margin-top: 20px;
     }
     .flex_container_mobile_reverse_order {
       display: flex;
       flex-direction: column-reverse;
       .btn_cntnr {
-        margin: 0 0 20px 0 !important;
-        float: right;
+        margin-bottom: 20px !important;
         .newpost--new--profile {
           padding: 10px;
-          margin: 0;
         }
       }
     }
