@@ -13,13 +13,13 @@ class AppliesController < ApplicationController
     @application = Apply.new
     set_meta_tags title: "Apply",
                   description: "Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!",
-                  image: ActionController::Base.helpers.image_path('become_a_writer.png'),
+                  image: "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path('become_a_writer.png')}",
                   :fb => {
                     :app_id => "1190455601051741"
                   },
                   :og => {
                     :image => {
-                      :url => ActionController::Base.helpers.image_path('become_a_writer.png'),
+                      :url => "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path('become_a_writer.png')}",
                       :alt => 'The Teen Magazine',
                     },
                     :site_name => "The Teen Magazine",
@@ -32,7 +32,7 @@ class AppliesController < ApplicationController
                     :site => "@theteenmagazin_",
                     :title => "The Teen Magazine",
                     description: "Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!",
-                    :image => ActionController::Base.helpers.image_path('become_a_writer.png'),
+                    :image => "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path('become_a_writer.png')}",
                     :domain => "https://www.theteenmagazine.com/"
                   }
   end

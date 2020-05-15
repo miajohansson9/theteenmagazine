@@ -7,18 +7,19 @@ class WelcomeController < ApplicationController
   end
 
   def show
-    set_meta_tags title: 'The Teen Magazine',
-                  image: ActionController::Base.helpers.image_path('ttm.png'),
-                  description: 'The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.',
+    set_meta_tags :title => 'The Teen Magazine',
+                  :image => "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path('ttm.png')}",
+                  :description => 'The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.',
                   :fb => {
                     :app_id => "1190455601051741"
                   },
                   :og => {
                     :image => {
-                      :url => ActionController::Base.helpers.image_path('ttm.png'),
+                      :url => "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path('ttm.png')}",
                       :alt => 'The Teen Magazine',
                     },
                     :site_name => "The Teen Magazine",
+                    :description => 'The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.',
                   },
                   :article => {
                     :publisher => "https://www.facebook.com/theteenmagazinee"
@@ -28,7 +29,7 @@ class WelcomeController < ApplicationController
                     :site => "@theteenmagazin_",
                     :title => "The Teen Magazine",
                     :description => "The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.",
-                    :image => ActionController::Base.helpers.image_path('ttm.png'),
+                    :image => "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path('ttm.png')}",
                     :domain => "https://www.theteenmagazine.com/"
                   }
   end
