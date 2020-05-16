@@ -38,6 +38,20 @@
 
     <%= f.fields_for :reviews, @review do |rv| %>
       <% if (current_user.id == @post.reviews.last.editor_id) && (@post.reviews.last.try(:status).eql? "In Review") %>
+      <% if @post.editor_can_make_changes %>
+        <i>
+          The writer has given permission for you to make changes to this article.
+          These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
+          Larger edits should be sent back for changes.
+        </i>
+      <% else %>
+        <i style="background-color: yellow;">
+          The writer has not given permission for you to make changes to this article.
+          Please only fill out the feedback form below, and do not make any changes directly to the article.
+        </i>
+      <% end %>
+        <br>
+        <br>
         <div class="card review_frm">
           <div class="card-header">
             <h6>Editor Feedback Form</h6>
@@ -64,6 +78,15 @@
         <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
         <br>
         <br>
+        <% if @post.user_id.eql? current_user.id %>
+          <%= f.check_box :editor_can_make_changes %>
+          <i>
+            I give permission for an editor to make changes to my article when I submit. These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
+            I understand I am still able to alter these once my article is published. Large edits will always be sent back for changes.
+          </i>
+          <br>
+          <br>
+        <% end %>
       <% end %>
     <% end %>
     <%= f.submit "Save Changes" %>
