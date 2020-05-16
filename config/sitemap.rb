@@ -1,15 +1,15 @@
+require 'fog-aws'
+require 'aws-sdk'
+
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "https://www.theteenmagazine.com"
+SitemapGenerator::Sitemap.sitemaps_host = "https://theteenmagazine.s3.amazonaws.com/"
 
-SitemapGenerator::Sitemap.adapter = Class.new(SitemapGenerator::FileAdapter) {
-  def gzip(stream, data)
-    stream.write(data)
-    stream.close
-    open(stream.path.sub(/\.gz/, ''), 'wb') do |file|
-      file.write(data)
-    end
-  end
-}.new
+SitemapGenerator::Sitemap.adapter = SitemapGenerator::AwsSdkAdapter.new(ENV.fetch('S3_BUCKET_NAME'),
+  aws_access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
+  aws_secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
+  aws_region: ENV.fetch('AWS_REGION')
+)
 
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.

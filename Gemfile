@@ -33,6 +33,7 @@ gem 'figaro'
 gem 'nokogiri', '~>1.10.8'
 gem 'aws-sdk', '~> 3'
 gem 'sitemap_generator'
+gem 'fog-aws'
 
 group :development, :test do
   gem 'byebug', platform: :mri
