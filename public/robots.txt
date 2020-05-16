@@ -1,2 +1,4 @@
 User-agent: *
-Disallow:
+Disallow: /onboarding/
+
+Sitemap: https://theteenmagazine.s3.amazonaws.com/sitemaps/sitemap.xml.gz

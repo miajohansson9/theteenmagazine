@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:privacy, :contact, :team, :submitted, :reset, :reset_confirmation]
+  before_action :authenticate_user!, except: [:privacy, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation]
   layout "minimal", except: [:about, :team, :privacy, :reset, :contact]
 
   def team
@@ -34,6 +34,10 @@ class PagesController < ApplicationController
   end
 
   def privacy
+  end
+
+  def sitemap
+    redirect_to 'https://theteenmagazine.s3.amazonaws.com/sitemaps/sitemap.xml.gz'
   end
 
   def about
