@@ -11,7 +11,7 @@
 <div class="skinny_wrapper wrapper_padding">
   <% @reviews = @post.reviews.where(status: "Rejected") %>
   <p style="margin-bottom: 0;"><i>This article has been given feedback <%= @reviews.count %> time(s).
-     View all past reviews <%= link_to("here", reviews_path(post: @post), target: "_blank", :class => "link_nrml", :style => "text-decoration: underline;") %>.
+     View all past reviews <%= link_to("here", reviews_path(post: @post), target: "_blank", :class => "link_nrml underline") %>.
   </i></p>
   <% if (@reviews.count >= 5) && !(@post.is_published?) %>
     <p style="margin-bottom: 0px; font-style: italic;">You have reached the maximum amount of times you can submit this article for review.</p>

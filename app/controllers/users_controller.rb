@@ -47,6 +47,7 @@ class UsersController < ApplicationController
     if params[:commit].eql? "Send reset link"
       reset_email
     elsif current_user && (current_user.admin? || current_user.editor?)
+      set_meta_tags title: "Writers | The Teen Magazine"
       show_users
     elsif current_user
       redirect_to current_user, notice: "You do not have access to this page."
@@ -72,6 +73,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    set_meta_tags title: "Edit Profile | The Teen Magazine"
   end
 
   def new
@@ -104,8 +106,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    @user.posts.each do |post|
+      post.user = User.where(email: "anonymous@theteenmagazine.com").first
+      post.save
+    end
     @user.destroy
-    redirect_to users_path
+    redirect_to users_path, notice: "The writer account was deleted."
   end
 
   def is_admin?
@@ -119,7 +125,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :editor, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment)
+    params.require(:user).permit(:email, :do_not_send_emails, :editor, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment)
   end
 
   def find_user

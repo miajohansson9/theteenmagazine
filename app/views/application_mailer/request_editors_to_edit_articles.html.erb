@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+    <p>This is just an automated reminder to let you know that there are <%= @submitted %> articles waiting to be reviewed on The Teen Magazine.
+      If you have some free time today, it would be really helpful if you can claim a couple article reviews!
+    </p>
+    <p><a href="https://www.theteenmagazine.com/reviews">https://www.theteenmagazine.com/reviews</a></p>
+    <p>Thank you!</p>
+    <p>Best,<br>
+       Mia</p>
+  </body>
+</html>

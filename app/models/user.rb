@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
     where(submitted_profile: true, approved_profile: false)
   }
 
+  scope :editor, -> {
+    where(editor: true)
+  }
+
   self.per_page = 24
 
   # Validate the attached image is image/jpg, image/png, etc

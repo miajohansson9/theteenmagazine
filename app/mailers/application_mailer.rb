@@ -8,54 +8,95 @@ class ApplicationMailer < ActionMailer::Base
 
   def profile_approved(user)
     @user = user
-    mail(to: user.email, subject: "#{user.first_name}, Your profile was approved!")
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "#{user.first_name}, Your profile was approved!")
+    end
   end
 
   def first_article_published(user, post)
     @user = user
     @post = post
-    mail(to: user.email, subject: "Your first article was just published!")
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "Your first article was just published!")
+    end
   end
 
   def article_published(user, post)
     @user = user
     @post = post
-    mail(to: user.email, subject: "You're published!")
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "You're published!")
+    end
   end
 
   def article_moved_to_review(user, post)
     @user = user
     @post = post
-    mail(to: user.email, subject: "#{user.first_name}, Your article moved to in review.")
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "#{user.first_name}, Your article moved to in review.")
+    end
   end
 
   def article_moved_to_submitted(user, post)
     @user = user
     @post = post
-    mail(to: user.email, subject: "#{user.first_name}, Your article was submitted for review")
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "#{user.first_name}, Your article was submitted for review")
+    end
   end
 
   def article_has_requested_changes(user, post)
     @user = user
     @post = post
-    mail(to: user.email, subject: "#{user.first_name}, Your article has changes requested.")
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "#{user.first_name}, Your article has changes requested.")
+    end
   end
 
   def comment_added(user, post)
     @user = user
     @post = post
-    mail(to: user.email, subject: "A writer commented on your article.")
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "A writer commented on your article.")
+    end
   end
 
   def pitch_has_been_reviewed(user, pitch)
     @user = user
     @pitch = pitch
-    mail(to: user.email, subject: "There are changes on your pitch.")
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "There are changes on your pitch.")
+    end
   end
 
   def articles_in_progress_reminder(user, posts)
     @user = user
     @posts = posts
-    mail(to: user.email, subject: "You have drafts started on your profile.")
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "You have drafts started on your profile.")
+    end
+  end
+
+  def send_pitches(user, pitches)
+    @user = user
+    @pitches = pitches
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "Get Inspired by These Topic Ideas")
+    end
+  end
+
+  def remind_editors_to_add_pitches(user)
+    @user = user
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "Requesting editors to add pitches for this week!", from: "Mia from The Teen Magazine <miajohansson@college.harvard.edu>")
+    end
+  end
+
+  def request_editors_to_edit_articles(user, submitted)
+    @user = user
+    @submitted = submitted
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "There are #{@submitted} articles waiting to be reviewed", from: "Mia from The Teen Magazine <miajohansson@college.harvard.edu>")
+    end
   end
 end
