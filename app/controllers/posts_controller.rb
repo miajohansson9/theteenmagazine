@@ -154,6 +154,7 @@ class PostsController < ApplicationController
     @categories = Category.all
     @prev_review = @post.reviews.last.clone
     @prev_status = @post.reviews.last.status.clone
+    fix_formatting
     if @post.update! post_params
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
         @post.content << "<script>instgrm.Embeds.process()</script>"
@@ -189,6 +190,7 @@ class PostsController < ApplicationController
         end
         @rev.update_column('active', true)
       end
+      fix_formatting
       @post.save
       if (@new_status.eql? "In Progress") && ((@prev_status.eql? "Ready for Review") || (@prev_status.eql? "In Review"))
         @notice = "Your article was withdrawn from review."
@@ -227,6 +229,41 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def fix_formatting
+    loop do
+      if @post.content[/style="margin(.*?)"/m, 0].present?
+        @post.content.gsub!(@post.content[/style="margin(.*?)"/m, 0], "")
+      else
+        break
+      end
+    end
+    loop do
+      if @post.content[/<b (.*?)>/m, 0].present?
+        @post.content.gsub!(@post.content[/<b (.*?)>/m, 0], "")
+      else
+        break
+      end
+    end
+    loop do
+      if @post.content[/<span(.*?)>/m, 0].present?
+        @post.content.gsub!(@post.content[/<span(.*?)>/m, 0], "")
+      else
+        break
+      end
+    end
+    @post.content.gsub!('dir="ltr"', "")
+    @post.content.gsub!("h1", "h2")
+    @post.content.gsub!("&nbsp;", " ")
+    @post.content.gsub!('<p> </p>', "")
+    @post.content.gsub!("</span>", "")
+    @post.content.gsub!("<b>", "")
+    @post.content.gsub!("</b>", "")
+    @post.content.gsub!('<p><meta charset="utf-8" /></p>', "")
+    @post.content.gsub!("<br />", "")
+    @post.content.gsub!("<br>", "")
+    @post.content.gsub!("<hr />", "")
+  end
 
   def post_params
     params.require(:post).permit(:title, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes])

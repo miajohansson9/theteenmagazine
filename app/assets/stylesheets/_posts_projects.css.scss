@@ -210,7 +210,7 @@
   }
 }
 
-iframe { margin: 0px auto;  display: block; }
+iframe { margin: 1em auto;  display: block; }
 
 #post_title_show {
   z-index: 100;
@@ -264,19 +264,18 @@ iframe { margin: 0px auto;  display: block; }
 #content {
    padding: 0 40px;
    .post_content {
-     padding-bottom: 20px;
-     h1, h2, h3, h4, h5, h6 {
-       font-weight: normal;
+     br {
+       display: none;
      }
+     padding-bottom: 20px;
      img {
        width: 70% !important;
        height: auto !important;
-       margin-left: auto !important;
-       margin-right: auto !important;
+       margin: 25px auto !important;
        display: block;
      }
      iframe {
-        margin: 0 auto !important;
+        margin: 1em auto !important;
     }
     html {
        margin-left: auto;
