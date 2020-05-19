@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   layout :set_layout
 
   def show
+    set_meta_tags title: "#{@user.full_name} | The Teen Magazine",
+                  description: @user.description
     @user_posts = @user.posts.all.order("created_at desc")
     @user_posts_approved = @user.posts.published.order("publish_at desc")
     @posts = Post.all.order("created_at desc");
@@ -34,8 +36,6 @@ class UsersController < ApplicationController
         end
       end
     end
-    set_meta_tags title: "#{@user.full_name} | The Teen Magazine",
-                  description: @user.description
   end
 
   def onboarding

@@ -8,6 +8,8 @@ class PitchesController < ApplicationController
   #show all pitches
   def index
     if params[:user_id].nil?
+      @title = "Editor Pitches"
+      set_meta_tags :title => @title
       if params[:pitch].nil?
         @pitch = Pitch.new
         @categories = Category.all
@@ -18,12 +20,12 @@ class PitchesController < ApplicationController
         @pitch = Pitch.new(category_id: params[:pitch][:category_id])
         @pitches = Pitch.is_approved.not_claimed.where(category_id: @category_id, status: nil).paginate(page: params[:page]).order("updated_at desc")
       end
-      @title = "Editor Pitches"
       @desc = true
       @message = "There are no unclaimed pitches. Check back in a few days!"
       @button_text = "Claim Article Pitch"
     else
       @title = "Your Claimed Pitches"
+      set_meta_tags :title => @title
       @button_text = "View Pitch"
       @message = "You don't have any claimed pitches. :("
       @pitches = Pitch.all.where(claimed_id: params[:user_id]).paginate(page: params[:page]).order("updated_at desc")
