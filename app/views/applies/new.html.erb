@@ -38,10 +38,7 @@ pintrk('track', 'pagevisit');
     <p style="margin-top: 0px;">Please write one to two paragraphs introducing yourself and describing why you would be a good fit for The Teen Magazine writer team. Please include links to any previously published work/blog(s) if applicable.</p>
     <%= f.text_area :description, required: true %>
     <br />
-    <div class="hidden">
-      <%= f.label :nickname %> <br />
-      <%= f.text_field :nickname %>
-    </div>
+    <%= f.hidden_field :nickname %>
     <%= f.submit 'Submit Application' %>
   <% end %>
   <i style="opacity: 50%;">

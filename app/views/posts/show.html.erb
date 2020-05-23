@@ -174,7 +174,7 @@ blockquote {
       <% if @post.is_published? %>
         <div class="post_apply">
           <div id="apply_link">
-            <a href="/apply"><%= image_tag "become_a_writer.jpg" %></a>
+            <a href="/apply"><%= image_tag "become_writer.jpg" %></a>
           </div>
           <div class="articles">
             <div class="flex_other_articles">
@@ -209,7 +209,9 @@ blockquote {
                 <% else %>
                   <% @comments.each do |comment| %>
                     <% if (comment.user_id.eql? current_user.id) || (@post.user_id.eql? current_user.id) || (current_user.admin) %>
-                      <%= link_to image_tag("delete_x.png"), comment_path(comment), method: :delete, class: "delete_btn_x" %>
+                      <%= link_to comment_path(comment), method: :delete, class: "delete_btn_x" do %>
+                        <i class="fa fa-times"></i>
+                      <% end %>
                     <% end %>
                     <li class="list-group-item comment">
                       <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
@@ -241,7 +243,7 @@ blockquote {
   </div>
   <br />
  <div id="disqus_thread"></div>
- <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+ <%= javascript_include_tag 'mailchimp' %>
  <script>
  (function() { // DON'T EDIT BELOW THIS LINE
  var d = document, s = d.createElement('script');

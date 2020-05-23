@@ -1,5 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700');
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("RobotoCondensed-BoldItalic.ttf");
+}
 
 @font-face {
   font-family: justwaitandsee;
@@ -222,19 +224,6 @@ html, body {
   }
 }
 
-.read_more_button {
-  text-align: center;
-  width: fit-content;
-  margin: 0 auto 20px auto;
-  padding: 20px 30px;
-  border-radius: 10px;
-  background-color: #191919;
-  a {
-    color: white;
-    text-decoration: none;
-  }
-}
-
 .pagination {
   justify-content: center;
   em, a, span {
@@ -351,12 +340,6 @@ hr {
   }
 }
 
-.flexbox--posts {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 .notice, .alert {
   text-align: center;
   padding: 0.9em 0;
@@ -399,43 +382,6 @@ hr {
   margin: 0 auto;
 }
 
-.ranking {
-  width: 600px;
-  margin: 0 auto;
-  margin-top: 50px;
-  .flex-ranking {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    p {
-      min-width: 20px;
-    }
-    form {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: row;
-      margin-left: 10px;
-      height: 50px;
-      input {
-        height: 100%;
-        margin: 0;
-        margin-left: 10px;
-        padding: 5px 10px 5px 10px;
-      }
-      #submit {
-        width: 50px;
-      }
-    }
-  }
-}
-
-.wrapper {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-
 .clearfix:before,
 .clearfix:after {
   content: " ";
@@ -444,22 +390,6 @@ hr {
 
 .clearfix:after {
   clear: both;
-}
-
-.project_button {
-  background: #65B19D;
-  color: #FFFFFF;
-  text-decoration: none;
-  padding: 1em 2em;
-}
-
-.button_wrapper {
-  text-align: center;
-  margin-top: 2em;
-}
-
-.hidden {
-  display: none !important;
 }
 
 .signupdiv {
@@ -1050,15 +980,10 @@ p, ul, ol {
 
 @media (max-width: 990px) {
   #main_navigation {
-    .social, .nav--apply {
+    .social {
       display: none;
     }
   }
-}
-
-.cke_screen_reader_only {
-  width: 0px !important;
-  height: 0px !important;
 }
 
 .date_ago {

@@ -13,7 +13,6 @@
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
     <script data-ad-client="ca-pub-4566416931763342" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- Facebook Pixel Code -->
     <script>
@@ -83,16 +82,8 @@
       <div class="toggle-nav" id="navigation_overlay"></div>
       <%= render "layouts/partials/footer" %>
     </div>
+    <%= javascript_include_tag 'application' %>
     <script type="text/javascript">
-      var vglnk = {key: 'b94b361d3afef20f64f14e9c76009b84'};
-      (function(d, t) {
-          var s = d.createElement(t);
-              s.type = 'text/javascript';
-              s.async = true;
-              s.src = '//cdn.viglink.com/api/vglnk.js';
-          var r = d.getElementsByTagName(t)[0];
-              r.parentNode.insertBefore(s, r);
-      }(document, 'script'));
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)

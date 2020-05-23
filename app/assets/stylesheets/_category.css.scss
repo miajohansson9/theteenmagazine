@@ -1,7 +1,3 @@
-.hide {
-  display: none;
-}
-
 .category {
   .category_image {
     width: 100%;
@@ -56,9 +52,6 @@
 
 @media (max-width: 800px)  {
   .div {
-    margin-top: 0px !important;
-  }
-  .flex--container--post--title {
     margin-top: 0px !important;
   }
   .category_image {
