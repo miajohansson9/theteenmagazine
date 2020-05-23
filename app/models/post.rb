@@ -36,7 +36,7 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :reviews
 
   has_attached_file :thumbnail, styles: {
-      medium: '270x170#',
+      medium: '150x100#',
       large: '560x280#',
       large2: '540x340#'
     }

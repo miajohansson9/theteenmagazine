@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   before_filter :log_impression, :only=> [:show]
   load_and_authorize_resource
 
-  layout "article", only: [:show]
+  layout "application", only: [:show]
   layout "minimal", except: [:show]
 
   def load_user
