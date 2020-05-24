@@ -89,5 +89,15 @@
       ga('create', 'UA-89987071-1', 'auto');
       ga('send', 'pageview');
     </script>
+    <script type="text/javascript">
+      $('document').ready(function() {
+        setTimeout(function() {
+          $('.notice').slideUp();
+        }, 1500);
+        setTimeout(function() {
+          $('.alert').slideUp();
+        }, 1500);
+      });
+    </script>
   </body>
 </html>
