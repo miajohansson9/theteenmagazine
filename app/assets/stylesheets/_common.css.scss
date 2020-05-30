@@ -29,6 +29,10 @@
   }
 }
 
+iframe {
+  min-width: 300px !important;
+}
+
 .ads_wrapper {
   background-color: #F3F3F3;
   z-index: 600000;
@@ -827,8 +831,8 @@ p, ul, ol {
       min-width: 100% !important;
       max-width: 100% !important;
     }
-    .post_apply p a {
-      font-size: 1.2em;
+    .post_apply .ads_wrapper, iframe {
+      margin: 0 !important;
     }
   }
   .parentflex {
