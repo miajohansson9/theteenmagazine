@@ -1,6 +1,11 @@
 @font-face {
-  font-family: "Roboto Condensed";
+  font-family: "Roboto Condensed Bold";
   src: url("RobotoCondensed-BoldItalic.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Condensed Light";
+  src: url("RobotoCondensed-LightItalic.ttf");
 }
 
 @font-face {
@@ -22,6 +27,12 @@
     padding: 0 !important;
     margin: 0 !important;
   }
+}
+
+.ads_wrapper {
+  background-color: #F3F3F3;
+  z-index: 600000;
+  display: block;
 }
 
 .underline {
@@ -799,7 +810,22 @@ p, ul, ol {
   margin: 0.8em 0;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
+  .flex_wrapper_columns {
+    flex-direction: column !important;
+    .share_article_feedback {
+      margin-top: 30px !important;
+    }
+    .post_apply, .share_article_feedback {
+      margin: 0;
+      padding: 0 40px;
+      min-width: 100% !important;
+      max-width: 100% !important;
+    }
+    .post_apply p a {
+      font-size: 1.2em;
+    }
+  }
   .parentflex {
     flex-direction: column;
     .flexbox {
@@ -807,7 +833,12 @@ p, ul, ol {
       max-width: 100%;
     }
   }
+}
 
+@media (max-width: 1100px) {
+  .parentflex {
+    flex-direction: column;
+  }
   .divfeatured {
     width: 50%;
     .individual {
