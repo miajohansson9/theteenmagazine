@@ -159,13 +159,20 @@
   color: black;
 }
 
+.post_apply {
+  padding: 15px;
+}
+
+.share_article_feedback {
+  padding: 30px;
+}
+
 .post_apply, .share_article_feedback {
   display: flex;
   flex-direction: column;
   background-color: white;
   min-width: 330px;
   max-width: 330px;
-  padding: 30px;
   z-index: 30;
   margin-top: 140px;
   margin-left: 20px;

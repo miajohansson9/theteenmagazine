@@ -33,6 +33,11 @@
   background-color: #F3F3F3;
   z-index: 600000;
   display: block;
+  margin: 0 auto;
+  ins, iframe {
+    margin: 0 auto;
+    display: block;
+  }
 }
 
 .underline {
