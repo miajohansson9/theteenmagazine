@@ -177,19 +177,16 @@ blockquote {
   <div class="post_apply">
     <div class="articles">
       <div class="flex_other_articles">
-        <!-- Post right column -->
         <div class="ads_wrapper">
+          <!-- Post right column -->
           <ins class="adsbygoogle"
-               style="display:block"
+               style="display:inline-block;width:300px;height:250px"
                data-ad-client="ca-pub-4566416931763342"
-               data-ad-slot="2500875060"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
+               data-ad-slot="2500875060"></ins>
           <script>
                (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
         </div>
-        <br>
         <h3>Trending in <%= link_to(@post.category.name, @post.category) %></h3>
         <div class="contain_articles">
           <% @trending.each do |post| %>
