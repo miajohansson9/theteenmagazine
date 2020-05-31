@@ -819,11 +819,25 @@ p, ul, ol {
   margin: 0.8em 0;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1030px) {
   .flex_wrapper_columns {
     flex-direction: column !important;
     .share_article_feedback {
       margin-top: 30px !important;
+    }
+    .post_apply {
+      padding: 0px !important;
+      .ads_wrapper {
+        margin: 0 -10% !important;
+        iframe {
+          max-width: 100%;
+          display: block;
+          margin: 0 auto !important;
+        }
+      }
+      h3, .contain_articles {
+        padding: 20px !important;
+      }
     }
     .post_apply, .share_article_feedback {
       margin: 0;
@@ -833,8 +847,12 @@ p, ul, ol {
     }
     .post_apply .ads_wrapper, iframe {
       margin: 0 !important;
+      background-color: transparent;
     }
   }
+}
+
+@media (max-width: 1000px) {
   .parentflex {
     flex-direction: column;
     .flexbox {
