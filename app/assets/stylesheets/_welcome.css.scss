@@ -392,3 +392,13 @@ $gray:  #2a2a2a;
     }
   }
 }
+
+@media (max-width: 800px) {
+  .flex--welcome {
+    .ads_wrapper {
+      ins {
+        margin: 0 -15px !important;
+      }
+    }
+  }
+}
