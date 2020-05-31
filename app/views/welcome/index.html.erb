@@ -50,6 +50,20 @@
         </div>
       </div>
   </div>
+</div>
+<div class="ads_wrapper">
+  <!-- Homepage 1 -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-4566416931763342"
+       data-ad-slot="2546543885"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<div class="wrapper_home">
   <h1 class="section--title"><a href="/categories/student-life">Student Life</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
@@ -66,7 +80,7 @@
       </div>
       <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
       <div class="ctgry_section">
-        <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[0..2].each do |post| %>
+        <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[0..5].each do |post| %>
           <% featuredPostIds << post.id %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
@@ -75,20 +89,6 @@
             <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
           </div>
         <% end %>
-      </div>
-      <div class="ctgry_grid_wrapper">
-        <a class="applies" href="/apply"><%= image_tag "become_writer.jpg" %></a>
-        <div class="ctgry_grid">
-          <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[3..4].each do |post| %>
-            <% featuredPostIds << post.id %>
-            <div class="ctgry_grid_article">
-              <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
-              <h1><%= link_to post.title, post %></h1>
-              <p><%= post.publish_at.strftime("%A, %b %d")%></p>
-              <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
-            </div>
-          <% end %>
-        </div>
       </div>
     </div>
     <div class="most_read contain_articles">
@@ -103,6 +103,20 @@
       <% end %>
     </div>
   </div>
+</div>
+<div class="ads_wrapper">
+  <!-- Homepage 2 -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-4566416931763342"
+       data-ad-slot="2226925786"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+<div class="wrapper_home">
   <h1 id="recent_title" class="section--title">Recent Articles</h1>
   <div class="ctgry_section">
     <% publishedPosts = publishedPosts.where.not(id: featuredPostIds).order("publish_at desc")%>
@@ -128,6 +142,18 @@
       <% end %>
     <% end %>
   </div>
+</div>
+<div class="ads_wrapper">
+  <!-- Homepage 3 -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-4566416931763342"
+       data-ad-slot="2354972197"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 </div>
 
 <%= javascript_include_tag 'mailchimp' %>
