@@ -34,29 +34,13 @@
   <% publishedPosts = Post.where(id: @posts_approved.drop(5).map(&:id))%>
   <% featuredPostIds = [] %>
   <div class="wrapper_home">
-    <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
-    <div class="flex--welcome">
-      <div class="flex-1">
-        <div class="ctgry_section">
-          <% publishedPosts.where(:category_id => Category.friendly.find("lifestyle").id).all.order("publish_at desc")[0..3].each do |post| %>
-            <% featuredPostIds << post.id %>
-            <div class="ctgry_article" style="width: 23%;">
-              <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
-              <h1><%= link_to post.title, post %></h1>
-              <p><%= post.publish_at.strftime("%A, %b %d")%></p>
-              <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
-            </div>
-          <% end %>
-        </div>
-      </div>
-  </div>
   <h1 class="section--title"><a href="/categories/student-life">Student Life</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
-      <div class="ctgry_section">
+      <div class="ctgry_section" style="margin-top: -20px;">
         <% publishedPosts.where(:category_id => Category.friendly.find("student-life").id).all.order("publish_at desc")[0..5].each do |post| %>
           <% featuredPostIds << post.id %>
-          <div class="ctgry_article">
+          <div class="ctgry_article" style="margin-top: 20px;">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
             <p><%= post.publish_at.strftime("%A, %b %d")%></p>
@@ -65,10 +49,10 @@
         <% end %>
       </div>
       <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
-      <div class="ctgry_section">
-        <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[0..5].each do |post| %>
+      <div class="ctgry_section" style="margin-top: -20px;">
+        <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
-          <div class="ctgry_article">
+          <div class="ctgry_article" style="margin-top: 20px;">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
             <p><%= post.publish_at.strftime("%A, %b %d")%></p>
@@ -92,7 +76,7 @@
       </div>
       <br>
       <h1 class="section--title">Trending Articles</h1>
-      <% @postsranking[0..9].each do |post| %>
+      <% @postsranking[0..4].each do |post| %>
       <div class="ctgry_article">
         <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
         <p class="paragraph">
@@ -102,18 +86,36 @@
       <% end %>
     </div>
   </div>
-  <br>
-  <div class="ads_wrapper">
-    <!-- Homepage 2 -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-4566416931763342"
-         data-ad-slot="2226925786"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+  <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
+  <div class="flex--welcome">
+    <div class="flex-1">
+      <div class="ctgry_section" style="margin-top: -20px;">
+        <% publishedPosts.where(:category_id => Category.friendly.find("lifestyle").id).all.order("publish_at desc")[0..5].each do |post| %>
+          <% featuredPostIds << post.id %>
+          <div class="ctgry_article" style="margin-top: 20px;">
+            <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
+            <h1><%= link_to post.title, post %></h1>
+            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
+            <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="most_read contain_articles">
+      <div class="ads_wrapper">
+        <!-- Homepage 1 -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4566416931763342"
+             data-ad-slot="2546543885"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+      <br>
+    </div>
   </div>
   <h1 id="recent_title" class="section--title">Recent Articles</h1>
   <div class="ctgry_section">
@@ -140,19 +142,6 @@
       <% end %>
     <% end %>
   </div>
-  <div class="ads_wrapper">
-    <!-- Homepage 3 -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-4566416931763342"
-         data-ad-slot="2354972197"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
-  <br>
 </div>
 
 <%= javascript_include_tag 'mailchimp' %>
