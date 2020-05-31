@@ -829,14 +829,18 @@ p, ul, ol {
       padding: 0px !important;
       .ads_wrapper {
         margin: 0 -10% !important;
+        background-color: transparent;
         iframe {
           max-width: 100%;
           display: block;
           margin: 0 auto !important;
         }
       }
+      h3 {
+        margin-top: 20px;
+      }
       h3, .contain_articles {
-        padding: 20px !important;
+        padding: 0 20px !important;
       }
     }
     .post_apply, .share_article_feedback {
@@ -844,10 +848,6 @@ p, ul, ol {
       padding: 0 40px;
       min-width: 100% !important;
       max-width: 100% !important;
-    }
-    .post_apply .ads_wrapper, iframe {
-      margin: 0 !important;
-      background-color: transparent;
     }
   }
 }
