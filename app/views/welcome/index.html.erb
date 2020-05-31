@@ -48,9 +48,21 @@
           </div>
         <% end %>
       </div>
+      <h1 class="section--title"><a href="/categories/culture">Op-ed</a></h1>
+      <div class="ctgry_section" style="margin-top: -20px;">
+        <% publishedPosts.where(:category_id => Category.friendly.find("opinion").id).all.order("publish_at desc")[0..2].each do |post| %>
+          <% featuredPostIds << post.id %>
+          <div class="ctgry_article" style="margin-top: 20px;">
+            <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
+            <h1><%= link_to post.title, post %></h1>
+            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
+            <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
+          </div>
+        <% end %>
+      </div>
       <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
       <div class="ctgry_section" style="margin-top: -20px;">
-        <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[0..5].each do |post| %>
+        <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
           <div class="ctgry_article" style="margin-top: 20px;">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
@@ -76,12 +88,9 @@
       </div>
       <br>
       <h1 class="section--title">Trending Articles</h1>
-      <% @postsranking[0..4].each do |post| %>
-      <div class="ctgry_article">
-        <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title), post )%>
-        <p class="paragraph">
-          <%=link_to(post.title.truncate_words(20), post )%>
-        </p>
+      <% @postsranking.each_with_index do |post, index| %>
+      <div class="ctgry_article" style="margin-bottom: 10px;">
+        <h6 class="number"><%= index + 1 %>.</h6><h6 class="trending_title"><%=link_to(post.title.truncate_words(20), post )%> by <%= link_to(post.user.full_name, post.user) %></h6>
       </div>
       <% end %>
     </div>

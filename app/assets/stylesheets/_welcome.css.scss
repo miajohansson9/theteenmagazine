@@ -13,6 +13,22 @@ $gray:  #2a2a2a;
   }
 }
 
+.number {
+  font-size: 1.7em;
+  font-family: 'Playfair Display';
+  white-space: nowrap;
+  margin-right: 10px;
+  color: #545454;
+}
+
+.trending_title{
+  font-family: 'Playfair Display';
+  font-size: 1.1em;
+  a:hover {
+    text-decoration: none;
+  }
+}
+
 .welcome {
   img {
     opacity: 1;

@@ -3,7 +3,7 @@ class WelcomeController < ApplicationController
 
   def index
     @posts_approved = Post.published.limit(40).order("publish_at desc")
-    @postsranking = Post.published.where(:publish_at => (Time.now - 3.months)..Time.now).order("post_impressions desc").limit(8)
+    @postsranking = Post.published.where(:publish_at => (Time.now - 1.months)..Time.now).order("post_impressions desc").limit(9)
   end
 
   def show
