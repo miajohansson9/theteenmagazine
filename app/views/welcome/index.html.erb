@@ -90,7 +90,7 @@
       <h1 class="section--title">Trending Articles</h1>
       <% @postsranking.each_with_index do |post, index| %>
       <div class="ctgry_article" style="margin-bottom: 10px;">
-        <h6 class="number"><%= index + 1 %>.</h6><h6 class="trending_title"><%=link_to(post.title.truncate_words(20), post )%> by <%= link_to(post.user.full_name, post.user) %></h6>
+        <h6 class="number"><%= index + 1 %>.</h6><h6 class="trending_title"><i><%=link_to(post.title.truncate_words(20), post )%></i> by <%= link_to(post.user.full_name, post.user) %></h6>
       </div>
       <% end %>
     </div>
