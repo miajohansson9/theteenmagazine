@@ -37,10 +37,10 @@
   <h1 class="section--title"><a href="/categories/student-life">Student Life</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
-      <div class="ctgry_section" style="margin-top: -20px;">
+      <div class="ctgry_section">
         <% publishedPosts.where(:category_id => Category.friendly.find("student-life").id).all.order("publish_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
-          <div class="ctgry_article" style="margin-top: 20px;">
+          <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
             <p><%= post.publish_at.strftime("%A, %b %d")%></p>
@@ -49,10 +49,10 @@
         <% end %>
       </div>
       <h1 class="section--title"><a href="/categories/culture">Op-ed</a></h1>
-      <div class="ctgry_section" style="margin-top: -20px;">
+      <div class="ctgry_section">
         <% publishedPosts.where(:category_id => Category.friendly.find("opinion").id).all.order("publish_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
-          <div class="ctgry_article" style="margin-top: 20px;">
+          <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
             <p><%= post.publish_at.strftime("%A, %b %d")%></p>
@@ -61,10 +61,10 @@
         <% end %>
       </div>
       <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
-      <div class="ctgry_section" style="margin-top: -20px;">
+      <div class="ctgry_section">
         <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[0..2].each do |post| %>
           <% featuredPostIds << post.id %>
-          <div class="ctgry_article" style="margin-top: 20px;">
+          <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
             <p><%= post.publish_at.strftime("%A, %b %d")%></p>
@@ -98,10 +98,10 @@
   <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
-      <div class="ctgry_section" style="margin-top: -20px;">
+      <div class="ctgry_section big_block">
         <% publishedPosts.where(:category_id => Category.friendly.find("lifestyle").id).all.order("publish_at desc")[0..5].each do |post| %>
           <% featuredPostIds << post.id %>
-          <div class="ctgry_article" style="margin-top: 20px;">
+          <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
             <p><%= post.publish_at.strftime("%A, %b %d")%></p>
