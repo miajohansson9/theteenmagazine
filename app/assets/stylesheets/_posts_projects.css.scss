@@ -402,6 +402,17 @@ iframe { margin: 1em auto;  display: block; }
 
 }
 
+.category_title_trending {
+  opacity: 0.8;
+  transition: opacity 0.8s;
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.55;
+    transition: opacity 0.8s;
+  }
+}
+
 // --------------- Pagination
 
 @media (max-width: 830px) {
