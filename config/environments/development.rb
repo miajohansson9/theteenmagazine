@@ -70,7 +70,10 @@ Rails.application.configure do
     storage: :s3,
     s3_region: 'us-east-1',
     bucket:'media.theteenmagazine.com',
-    s3_credentials: "#{Rails.root}/config/s3.yml"
+    s3_credentials: "#{Rails.root}/config/s3.yml",
+    :s3_host_alias => "media.theteenmagazine.com",
+    :url => ":s3_alias_url",
+    :path => ":class/:attachment/:id_partition/:style/:filename",
   }
 
 end

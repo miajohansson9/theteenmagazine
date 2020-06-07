@@ -99,6 +99,9 @@ Rails.application.configure do
 
   config.paperclip_defaults = {
       storage: :s3,
+      :s3_host_alias => "media.theteenmagazine.com",
+      :url => ":s3_alias_url",
+      :path => ":class/:attachment/:id_partition/:style/:filename",
       s3_credentials: {
         bucket: ENV.fetch('S3_BUCKET_NAME'),
         access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),

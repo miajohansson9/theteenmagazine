@@ -263,6 +263,8 @@ class PostsController < ApplicationController
     @post.content.gsub!("<br />", "")
     @post.content.gsub!("<br>", "")
     @post.content.gsub!("<hr />", "")
+    @post.content.gsub!("s3.amazonaws.com/media.theteenmagazine.com", "media.theteenmagazine.com")
+    @post.content.gsub!("s3.amazonaws.com/theteenmagazine", "media.theteenmagazine.com")
   end
 
   def post_params
