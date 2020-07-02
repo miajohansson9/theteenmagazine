@@ -8,75 +8,77 @@
     <%= f.hidden_field :submitted_profile, value: false %>
   <% end %>
 
-  <%= f.label "First Name" %>
-  <%= f.text_field :first_name %>
+  <% if current_user.admin? || (current_user.id.eql? @user.id) %>
+    <%= f.label "First Name" %>
+    <%= f.text_field :first_name %>
 
-  <%= f.label "Last Name" %>
-  <%= f.text_field :last_name %>
+    <%= f.label "Last Name" %>
+    <%= f.text_field :last_name %>
 
-  <%= f.label "Upload profile picture" %><br>
-  <%= f.file_field :profile %><br/><br/>
+    <%= f.label "Upload profile picture" %><br>
+    <%= f.file_field :profile %><br/><br/>
 
-  <%= f.label "Description" %>
-  <%= f.text_area :description %><br><br />
+    <%= f.label "Description" %>
+    <%= f.text_area :description %><br><br />
 
-  <%= f.label "Email (will not be published)" %><br>
-  <%= f.text_field :email %>
+    <%= f.label "Email (will not be published)" %><br>
+    <%= f.text_field :email %>
 
-  <%= f.check_box :bi_monthly_assignment %>
-  <%= f.label "receive occasional article assignments" %><br>
+    <%= f.check_box :bi_monthly_assignment %>
+    <%= f.label "receive occasional article assignments" %><br>
 
-  <%= f.check_box :do_not_send_emails %>
-  <%= f.label "turn off all email notifications" %><br>
+    <%= f.check_box :do_not_send_emails %>
+    <%= f.label "turn off all email notifications" %><br>
 
-  <h5>Links (Optional)</h5>
+    <h5>Links (Optional)</h5>
 
-  <div id="edit--profile">
-    <%= f.label "Website" %>
-    <div class="add_link">
-      <span>www.</span>
-      <%= f.text_field :website, :style => "padding-left: 52px;" %>
+    <div id="edit--profile">
+      <%= f.label "Website" %>
+      <div class="add_link">
+        <span>www.</span>
+        <%= f.text_field :website, :style => "padding-left: 52px;" %>
+      </div>
+
+      <%= f.label "Youtube" %>
+      <div class="add_link">
+        <span>youtube.com/</span>
+        <%= f.text_field :youtube, :style => "padding-left: 110px;" %>
+      </div>
+
+      <%= f.label "Instagram" %>
+      <div class="add_link social">
+        <span>@</span>
+        <%= f.text_field :insta %>
+      </div>
+
+      <%= f.label "Twitter" %>
+      <div class="add_link social">
+        <span>@</span>
+        <%= f.text_field :twitter %>
+      </div>
+
+      <%= f.label "Facebook" %>
+      <div class="add_link social">
+        <span>@</span>
+        <%= f.text_field :facebook %>
+      </div>
     </div>
 
-    <%= f.label "Youtube" %>
-    <div class="add_link">
-      <span>youtube.com/</span>
-      <%= f.text_field :youtube, :style => "padding-left: 110px;" %>
-    </div>
+    <% @full = @user.first_name + " " + @user.last_name %>
+    <%= f.hidden_field :full_name, :value => @full %>
+    <%= f.hidden_field :posts_count, :value => @user.posts.published.count %>
 
-    <%= f.label "Instagram" %>
-    <div class="add_link social">
-      <span>@</span>
-      <%= f.text_field :insta %>
-    </div>
+    <% if current_user && current_user.admin? %>
+    <%= f.label "Editor" %>
+    <%= f.check_box :editor %><br />
+    <% end %>
 
-    <%= f.label "Twitter" %>
-    <div class="add_link social">
-      <span>@</span>
-      <%= f.text_field :twitter %>
-    </div>
-
-    <%= f.label "Facebook" %>
-    <div class="add_link social">
-      <span>@</span>
-      <%= f.text_field :facebook %>
-    </div>
-  </div>
-
-  <% @full = @user.first_name + " " + @user.last_name %>
-  <%= f.hidden_field :full_name, :value => @full %>
-  <%= f.hidden_field :posts_count, :value => @user.posts.published.count %>
-
-  <% if current_user && current_user.admin? %>
-  <%= f.label "Editor" %>
-  <%= f.check_box :editor %><br />
+    <% if current_user && current_user.admin? %>
+    <%= f.label "Admin" %>
+    <%= f.check_box :admin %><br />
+    <% end %>
+    <br>
   <% end %>
-
-  <% if current_user && current_user.admin? %>
-  <%= f.label "Admin" %>
-  <%= f.check_box :admin %><br />
-  <% end %>
-  <br>
 
 <%= f.submit "Update Profile" %>
 

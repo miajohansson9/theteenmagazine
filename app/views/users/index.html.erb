@@ -50,7 +50,9 @@
             </span>
           <% end %>
             <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
-            <h6 style="margin: 0;"><%= user.email %></h6>
+            <% if current_user.admin? %>
+              <h6 style="margin: 0;"><%= user.email %></h6>
+            <% end %>
           </div>
         </div>
       <% end %>
