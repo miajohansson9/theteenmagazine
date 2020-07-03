@@ -5,7 +5,7 @@
  CKEDITOR.addCss('h1 {font-size: 1.7rem;} h2 {font-size: 1.5rem;} h3 {font-size: 1.3rem;} h4 {font-size: 1.1rem;} h5 {font-size: 0.9rem;} h1, h2, h3, h4, h5, h6, span {margin: 10px 0;}');
  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #65B19D;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
 </script>
-
+<% if !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (current_user.admin?) %>
 <div id="edit_post">
   <%= form_for @post do |f| %>
     <% if @post.errors.any? %>
@@ -93,6 +93,9 @@
     <%= f.submit "Save Changes" %>
   <% end %>
 </div>
+<% else %>
+  <h1 class="title">This article has already been published and can only be edited by the author and admins.</h1>
+<% end %>
 
 <script type="text/javascript">
   $('document').ready(function(){
@@ -104,6 +107,10 @@
         if (selected == "Ready for Review") {
           <%= @count = 5 - @post.reviews.where(status: "Rejected").count %>
           reply=confirm("You have <%= @count %> reviews remaining for this article. Are you sure you want to continue?");
+        }
+      <% elsif !(@post.reviews.last.status.eql? "Approved for Publishing") && (@post.user_id != current_user.id) %>
+        if (selected == "Approved for Publishing") {
+          reply=confirm("You will not be able to edit this article once you approve it for publishing. Are you sure you want to continue?");
         }
       <% end %>
       return reply;

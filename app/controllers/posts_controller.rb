@@ -262,6 +262,8 @@ class PostsController < ApplicationController
     @post.content.gsub!('<p><meta charset="utf-8" /></p>', "")
     @post.content.gsub!("<br />", "")
     @post.content.gsub!("<br>", "")
+    @post.content.gsub!("<pre>", "<p>")
+    @post.content.gsub!("</pre>", "</p>")
     @post.content.gsub!("<hr />", "")
     @post.content.gsub!("s3.amazonaws.com/media.theteenmagazine.com", "media.theteenmagazine.com")
     @post.content.gsub!("s3.amazonaws.com/theteenmagazine", "media.theteenmagazine.com")

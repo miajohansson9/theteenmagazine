@@ -83,7 +83,7 @@ blockquote {
               <div class="post_content">
                 <%= markdown @post.content %>
               </div>
-              <% if current_user && (current_user.id == @post.user_id || @post.collaboration == current_user.email || current_user.admin? || current_user.editor?) %>
+              <% if current_user && (current_user.id == @post.user_id || @post.collaboration == current_user.email || current_user.admin?) %>
                 <div id="admin_links">
                   <%= link_to "Edit Article", edit_post_path(@post) %>
                   <% if current_user && (current_user.id == @post.user_id || current_user.admin) %>
