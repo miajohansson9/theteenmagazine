@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200516223931) do
+ActiveRecord::Schema.define(version: 20200706021747) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -114,6 +114,16 @@ ActiveRecord::Schema.define(version: 20200516223931) do
   create_table "mailers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "outreaches", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "partner_email"
+    t.string   "partner_name"
+    t.integer  "user_id"
+    t.text     "email_draft"
+    t.boolean  "sent"
   end
 
   create_table "pitches", force: :cascade do |t|
@@ -233,6 +243,7 @@ ActiveRecord::Schema.define(version: 20200516223931) do
     t.boolean  "approved_profile"
     t.boolean  "bi_monthly_assignment"
     t.boolean  "do_not_send_emails"
+    t.boolean  "marketer"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

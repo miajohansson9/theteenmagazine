@@ -83,6 +83,17 @@ class UsersController < ApplicationController
   end
 
   def edit
+    if @user.editor?
+      @editor_pitches =  @user.pitches
+      @editor_reviews = Review.where(editor_id: @user.id)
+      @writers_helped = Array.new
+      @editor_reviews.each do |review|
+        @writer = review.post.try(:user)
+        if @writer.present? && !(@writers_helped.include? @writer)
+          @writers_helped << review.post.user
+        end
+      end
+    end
     set_meta_tags title: "Edit Profile | The Teen Magazine"
   end
 
@@ -135,7 +146,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :do_not_send_emails, :editor, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment)
+    params.require(:user).permit(:email, :do_not_send_emails, :editor, :marketer, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment)
   end
 
   def find_user

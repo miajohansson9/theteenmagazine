@@ -9,7 +9,7 @@
       <%= link_to(@user.full_name, @user) %>
     </h2>
     <% if @user.editor? %>
-      <span class="editor_status"><i>Editor</i> · <%= @editor_reviews.count %> edited articles · <%= @editor_pitches.count %> pitched topics · <%= @writers_helped.count %> writers helped  </span>
+      <span class="editor_status">Editor · <%= @editor_reviews.count %> edited articles · <%= @editor_pitches.count %> pitched topics · <%= @writers_helped.count %> writers helped  </span>
     <% end %>
     <% if (@user.description != "" && @user.description != nil) %>
       <p class="description_user" style="margin-top: 5px;"><%= @user.description %></p>

@@ -1,0 +1,2 @@
+module OutreachesHelper
+end

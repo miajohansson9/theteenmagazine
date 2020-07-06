@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :feedbacks
   resources :analytics
   resources :comments
+  resources :outreaches
 
   get 'welcome/index'
   root 'welcome#index'
