@@ -33,6 +33,11 @@ iframe {
   min-width: 300px !important;
 }
 
+.image_fit_scrn {
+  display: block;
+  max-width: 100%;
+}
+
 .ads_wrapper {
   background-color: #F3F3F3;
   z-index: 600000;

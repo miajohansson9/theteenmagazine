@@ -23,8 +23,16 @@
     <%= f.label :content, "Write your article here. Make sure you are saving often. Saving can also help fix formatting issues." %><br>
     <%= f.cktext_area :content %>
     <br>
-    <%= f.label "Upload thumbnail image:" %>
-    <%= f.file_field :thumbnail %>
+    <% if @post.thumbnail.present? %>
+      <%= f.label "Thumbnail Preview:" %>
+      <%= image_tag(@post.thumbnail.url(:large2), :class => "image_fit_scrn") %>
+      <br>
+      <%= f.label "Upload different thumbnail image:" %>
+      <%= f.file_field :thumbnail %>
+    <% else %>
+      <%= f.label "Upload thumbnail image:" %>
+      <%= f.file_field :thumbnail %>
+    <% end %>
     <br>
     <br>
     <%= f.label "Category:" %>

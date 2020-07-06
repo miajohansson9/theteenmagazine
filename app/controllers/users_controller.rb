@@ -11,8 +11,18 @@ class UsersController < ApplicationController
     @user_posts = @user.posts.all.order("created_at desc")
     @user_posts_approved = @user.posts.published.order("publish_at desc")
     @posts = Post.all.order("created_at desc");
-    if !@user.editor?
+    if !@user.editor? && current_user.present?
       @user_pitches = @user.pitches.not_claimed
+    elsif @user.editor?
+      @editor_pitches =  @user.pitches
+      @editor_reviews = Review.where(editor_id: @user.id)
+      @writers_helped = Array.new
+      @editor_reviews.each do |review|
+        @writer = review.post.try(:user)
+        if @writer.present? && !(@writers_helped.include? @writer)
+          @writers_helped << review.post.user
+        end
+      end
     end
     if @user_posts_approved.length < 1
       begin
