@@ -3,7 +3,7 @@
 <div class="skinny_wrapper">
     <h1 id="page_title">Writer Applications</h1>
     <% @applies.each do | application | %>
-      <% @user = User.where(email: application.email).first %>
+      <% @user = User.where(email: application.email.downcase).first %>
         <% if @user.nil? %>
           <div class="card mb-3">
             <div class="card-body">
