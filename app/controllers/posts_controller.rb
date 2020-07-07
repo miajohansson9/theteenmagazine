@@ -168,6 +168,7 @@ class PostsController < ApplicationController
     fix_formatting
     if @post.update! post_params
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
+        @post.content << "<script async src='https://instagram.com/static/bundles/es6/EmbedSDK.js/47c7ec92d91e.js'></script>"
         @post.content << "<script>instgrm.Embeds.process()</script>"
       end
       @new_status = @post.reviews.last.status.clone
