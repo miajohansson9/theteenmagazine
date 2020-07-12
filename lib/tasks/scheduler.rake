@@ -28,13 +28,13 @@ task :run_all_tasks => :environment do
     end
   end
 
-  if (Post.submitted.count >= 5)
+  if (Post.submitted.count >= 8)
     User.editor do |editor|
       ApplicationMailer.request_editors_to_edit_articles(editor, Post.submitted.count).deliver
     end
   end
 
-  if (Date.today.day.eql? 1)
+  if (Date.today.monday?)
     Rake::Task["sitemap:refresh"].invoke
   end
 end

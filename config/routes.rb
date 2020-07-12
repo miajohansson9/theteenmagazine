@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   get "/apply" => "applies#new"
   get "/submitted" => "applies#create"
   get "/reset-password" => "pages#reset"
-  get '/sitemap', to: 'pages#sitemap'
+  get '/sitemap.xml', to: 'pages#sitemap'
 
   resources :posts, only: [:new, :create]
   resources :posts, path: "", except: [:new, :create]
