@@ -24,7 +24,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       # send welcome email
       ApplicationMailer.welcome_email(resource).deliver
       # if user was saved, then redirect to user path
-      redirect_to "/users/#{@user.slug}", notice: 'Application successfully accepted.'
+      redirect_to applies_path, notice: 'Application successfully accepted.'
     else
       # user model did not persist
       clean_up_passwords resource
