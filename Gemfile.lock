@@ -966,6 +966,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubis (2.7.0)
     excon (0.73.0)
     execjs (2.7.0)
@@ -1167,6 +1171,7 @@ DEPENDENCIES
   ckeditor (~> 4.2.3)
   coffee-rails (~> 4.2)
   devise (>= 4.7.1)
+  dotenv-rails
   figaro
   fog-aws
   friendly_id (~> 5.1)
