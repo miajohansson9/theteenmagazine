@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get "/submitted" => "applies#create"
   get "/reset-password" => "pages#reset"
   get '/sitemap.xml', to: 'pages#sitemap'
+  get '/july2020-RCUzi9NVVYAoXNLSkwtK', to: 'pages#issue'
 
   resources :posts, only: [:new, :create]
   resources :posts, path: "", except: [:new, :create]

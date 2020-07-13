@@ -49,6 +49,9 @@ class PagesController < ApplicationController
   def subscribe
   end
 
+  def issue
+  end
+
   def reset
     @user = User.new
   end

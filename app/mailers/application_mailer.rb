@@ -99,4 +99,9 @@ class ApplicationMailer < ActionMailer::Base
       mail(to: user.email, subject: "There are #{@submitted} articles waiting to be reviewed", from: "Mia from The Teen Magazine <miajohansson@college.harvard.edu>")
     end
   end
+
+  def monthly_issue(email)
+    @link = "https://www.theteenmagazine.com/july2020-RCUzi9NVVYAoXNLSkwtK"
+    mail(to: email, subject: "Your July Issue is Here!", from: "The Teen Magazine Designer Team <editors@theteenmagazine.com>")
+  end
 end
