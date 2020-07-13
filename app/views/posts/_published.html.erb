@@ -53,7 +53,7 @@ blockquote {
             </div>
             <div class="social_icons">
               <a class="fb-share" href="//www.facebook.com/v2.3/dialog/feed?app_id=1190455601051741
-              &name=<%= @post.title %>
+              &name=<%= @post.title.sub! '#', '' %>
               &description=<%= @post.meta_description %>
               &link=http://www.theteenmagazine.com/<%= @post.slug %>">
                 <div>
