@@ -1048,6 +1048,12 @@ p, ul, ol {
   }
 }
 
+@media(max-width: 590px) {
+  .bodywrapper {
+    padding-top: 60px !important;
+  }
+}
+
 .date_ago {
   color: #A6A09E;
 }
