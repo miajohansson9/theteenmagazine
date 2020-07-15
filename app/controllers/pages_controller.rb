@@ -47,6 +47,29 @@ class PagesController < ApplicationController
   end
 
   def subscribe
+    set_meta_tags :title => "The Teen Magazine | 2020 July Issue",
+                  :image => "https://www.theteenmagazine.com/assets/ttm-july-2020-20fbf4ec4a74c308ba3788f2adf7281afa4a87fa15b05c91c10466f1e1b9657e.png",
+                  :fb => {
+                    :app_id => "1190455601051741"
+                  },
+                  :og => {
+                    :image => {
+                      :url => "https://www.theteenmagazine.com/assets/ttm-july-2020-20fbf4ec4a74c308ba3788f2adf7281afa4a87fa15b05c91c10466f1e1b9657e.png",
+                      :alt => 'The Teen Magazine',
+                    },
+                    :site_name => "The Teen Magazine",
+                  },
+                  :article => {
+                    :publisher => "https://www.facebook.com/theteenmagazinee"
+                  },
+                  :twitter => {
+                    :card => "summary_large_image",
+                    :site => "@theteenmagazin_",
+                    :title => "The Teen Magazine",
+                    description: "Our monthly magazine is created by a team of talented young writers and designers at The Teen Magazine.",
+                    :image => "https://www.theteenmagazine.com/assets/ttm-july-2020-20fbf4ec4a74c308ba3788f2adf7281afa4a87fa15b05c91c10466f1e1b9657e.png",
+                    :domain => "https://www.theteenmagazine.com/"
+                  }
   end
 
   def issue
