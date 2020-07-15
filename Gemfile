@@ -34,6 +34,9 @@ gem 'nokogiri', '~>1.10.8'
 gem 'aws-sdk', '~> 3'
 gem 'sitemap_generator'
 gem 'fog-aws'
+gem 'gibbon', git: 'git://github.com/amro/gibbon.git'
+gem 'faraday', '>= 0.9.1'
+gem 'multi_json', '>= 1.11.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri

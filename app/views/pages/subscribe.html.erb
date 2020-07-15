@@ -17,8 +17,10 @@
   <br>
   <br>
   <h4><i>Enter your email to gain access to this month's magazine issue:</i></h4>
+
+<!--End mc_embed_signup-->
   <%= form_for(:pages, url:"/july2020_RCUzi9NVVYAoXNLSkwtK") do |f| %>
-    <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 10px;", required: true %>
+    <%= f.text_field :email, placeholder: "email@gmail.com", :style => "margin-bottom: 10px;", required: true %>
     <%= f.check_box :sub, :checked => true %>
     <span>Subscribe to The Teen Magazine newsletter & receive all future monthly issues.</span>
     <br>

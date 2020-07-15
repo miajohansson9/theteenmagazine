@@ -119,6 +119,7 @@ class UsersController < ApplicationController
       if params[:redirect] != nil
         redirect_to onboarding_path(page: params[:redirect])
       else
+        add_to_list(@user)
         redirect_to @user, notice: "Your profile has been updated."
       end
     else
@@ -141,6 +142,15 @@ class UsersController < ApplicationController
 
   def set_layout
     current_user ? "minimal" : "application"
+  end
+
+  def add_to_list(user)
+    begin
+      @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+      @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.create(body: {email_address: user.email, status: "subscribed"})
+    rescue
+      puts "Error: Failed to subscribe to mailchimp list"
+    end
   end
 
   private
