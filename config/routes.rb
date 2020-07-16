@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get "/submitted" => "applies#create"
   get "/reset-password" => "pages#reset"
   get '/sitemap.xml', to: 'pages#sitemap'
+  get '/july2020_RCUzi9NVVYAoXNLSkwtK', to: 'pages#issue'
   post '/july2020_RCUzi9NVVYAoXNLSkwtK', to: 'pages#issue'
 
   resources :posts, only: [:new, :create]

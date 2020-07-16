@@ -74,12 +74,14 @@ class PagesController < ApplicationController
   end
 
   def issue
-    if params[:pages][:sub].eql? "1"
-      begin
-        @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
-        @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.create(body: {email_address: params[:pages][:email], status: "subscribed"})
-      rescue
-        puts "Error: Failed to subscribe to mailchimp list"
+    if params[:pages].present?
+      if params[:pages][:sub].eql? "1"
+        begin
+          @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+          @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.create(body: {email_address: params[:pages][:email], status: "subscribed"})
+        rescue
+          puts "Error: Failed to subscribe to mailchimp list"
+        end
       end
     end
   end
