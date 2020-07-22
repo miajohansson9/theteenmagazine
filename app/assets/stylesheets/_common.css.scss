@@ -271,6 +271,15 @@ hr {
 }
 
 ///////////////////////////////////////////////////////////////////////////
+.link_white {
+  color: white;
+  font-weight: bolder;
+  font-family: "Playfair Display";
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
 
 .divfeatured {
   width: 70%;
@@ -1052,7 +1061,7 @@ p, ul, ol {
   }
 }
 
-@media(max-width: 590px) {
+@media(max-width: 630px) {
   .bodywrapper {
     padding-top: 60px !important;
   }
