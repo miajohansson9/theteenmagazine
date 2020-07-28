@@ -37,7 +37,7 @@ class PagesController < ApplicationController
   end
 
   def sitemap
-    redirect_to 'https://theteenmagazine.s3.amazonaws.com/sitemaps/sitemap.xml.gz'
+    redirect_to 'https://s3.amazonaws.com/media.theteenmagazine.com/sitemaps/sitemap.xml.gz'
   end
 
   def about
