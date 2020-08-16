@@ -1,30 +1,30 @@
 <%= image_tag "banner_onboarding", id: "banner_writing" %>
 <div class="apply_wrapper">
-  <h2>The Teen Magazine · July 2020 Issue</h2>
+  <h2>The Teen Magazine · August 2020 Issue</h2>
     <br>
   <h4><i>A special thanks to this month's magazine issue writers and designers:</i></h4>
   <span>
     <%= link_to("Malak Yousry - Creative Director", "https://theteenmagazine.com/users/malak-yousry", :target => "_blank", :class => "link_nrml") %>,
     <%= link_to("Khushi Gupta - Creative Director", "https://theteenmagazine.com/users/khushi-gupta", :target => "_blank", :class => "link_nrml") %>,
-    <%= link_to("Daniela Paris - Visual Designer", "https://theteenmagazine.com/users/daniela-paris", :target => "_blank", :class => "link_nrml") %>,
-    <%= link_to("Bettina Henares - Visual Designer", "https://theteenmagazine.com/users/bettina-henares", :target => "_blank", :class => "link_nrml") %>,
     <%= link_to("Jane Park - Visual Designer", "https://theteenmagazine.com/users/jane-park", :target => "_blank", :class => "link_nrml") %>,
+    <%= link_to("Jessica Zhu - Visual Designer", "https://theteenmagazine.com/users/jessica-zhu", :target => "_blank", :class => "link_nrml") %>,
+    <%= link_to("Jennifer Xia - Visual Designer", "https://theteenmagazine.com/users/jennifer-xia", :target => "_blank", :class => "link_nrml") %>,
     <%= link_to("Lishmello - Image Editor", "https://www.instagram.com/lishmello", :target => "_blank", :class => "link_nrml") %>
   </span>
   <br>
   <br>
-  <%= image_tag("ttm-july-2020.png", :class => "image_fit_scrn") %>
+  <%= image_tag("ttm-august-2020.png", :class => "image_fit_scrn") %>
   <br>
   <br>
   <h4><i>Enter your email to gain access to this month's magazine issue:</i></h4>
 
 <!--End mc_embed_signup-->
-  <%= form_for(:pages, url:"/july2020_RCUzi9NVVYAoXNLSkwtK") do |f| %>
+  <%= form_for(:pages, url:"/august2020_dbOZUS3qy0rqUJrgazud") do |f| %>
     <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 10px;", required: true %>
     <%= f.check_box :sub, :checked => true %>
     <span>Subscribe to The Teen Magazine newsletter & receive all future monthly issues.</span>
     <br>
     <br>
-    <%= f.submit "View July Issue", class: "submit_btn" %>
+    <%= f.submit "View August Issue", class: "submit_btn" %>
   <% end %>
 </div>

@@ -836,6 +836,17 @@ p, ul, ol {
   margin: 0.8em 0;
 }
 
+//banner padding
+.bodywrapper {
+  padding-top: 30px;
+}
+
+@media (max-width: 651px) {
+  .bodywrapper {
+  padding-top: 60px;
+}
+}
+
 @media (max-width: 1030px) {
   .flex_wrapper_columns {
     flex-direction: column !important;
