@@ -81,7 +81,6 @@ vertamedia.com, 35546, RESELLER, 7de89dc7742b5b11
 altitudedigital.com, 146321, RESELLER
 oath.com, 5702, RESELLER
 brightroll.com, 6836317, RESELLER
-openx.com, 537141219, RESELLER, 20041fe3-accf-fff1-8123-bc75af
 openx.com, 537141219, RESELLER, 6a698e2ec38604c6
 pubmatic.com, 93915, RESELLER
 rubicon.com, 14410, RESELLER
@@ -149,7 +148,6 @@ google.com, pub-9557089510405422, RESELLER, f08c47fec0942fa0
 lkqd.com, 470, RESELLER, 59c49fa9598a0117
 lkqd.net, 470, RESELLER, 59c49fa9598a0117
 openx.com, 537120563, RESELLER, 6a698e2ec38604c6
-openx.com, 537149485, RESELLER, 6a698e2ec38604c6
 outbrain.com, 01a755b08c8c22b15d46a8b753ab6955d4, RESELLER
 outbrain.com, 01a755b08c8c22b15d46a8b753ab6955d4, DIRECT
 pubmatic.com, 50758, RESELLER, 5d62403b186f2ace
