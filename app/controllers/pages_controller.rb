@@ -37,7 +37,7 @@ class PagesController < ApplicationController
   end
 
   def ads
-    redirect_to 'https://www.theteenmagazine.com/ads.txt'
+    redirect_to 'https://srv.adstxtmanager.com/10188/theteenmagazine.com'
   end
 
   def sitemap
