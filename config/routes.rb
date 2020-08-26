@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'welcome#index'
 
+  get '/ads.txt' => 'pages#ads'
   get 'criteria' => 'pages#criteria'
   get 'about-us' => 'pages#team'
   get 'contact-us' => 'pages#contact'

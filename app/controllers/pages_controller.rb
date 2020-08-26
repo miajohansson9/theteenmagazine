@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:issue, :privacy, :subscribe, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation]
+  before_action :authenticate_user!, except: [:ads, :issue, :privacy, :subscribe, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation]
   layout "minimal", except: [:issue, :about, :team, :privacy, :reset, :contact, :subscribe]
 
   def team
@@ -34,6 +34,10 @@ class PagesController < ApplicationController
   end
 
   def privacy
+  end
+
+  def ads
+    redirect_to 'https://www.theteenmagazine.com/ads.txt'
   end
 
   def sitemap
