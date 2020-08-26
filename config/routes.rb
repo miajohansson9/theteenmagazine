@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'welcome#index'
 
-  get '/ads.txt' => 'pages#ads'
   get 'criteria' => 'pages#criteria'
   get 'about-us' => 'pages#team'
   get 'contact-us' => 'pages#contact'
@@ -38,6 +37,7 @@ Rails.application.routes.draw do
   get "/submitted" => "applies#create"
   get "/reset-password" => "pages#reset"
   get '/sitemap.xml', to: 'pages#sitemap'
+  get '/ads.txt', to: 'pages#ads'
   get '/august2020_dbOZUS3qy0rqUJrgazud', to: 'pages#issue'
   post '/august2020_dbOZUS3qy0rqUJrgazud', to: 'pages#issue'
 
