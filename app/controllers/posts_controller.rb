@@ -112,7 +112,7 @@ class PostsController < ApplicationController
       end
       set_meta_tags :title => @post.title,
                     :description => @post.meta_description,
-                    :image => @post.thumbnail.url(:large2),
+                    :image => "https:" + @post.thumbnail.url(:large2),
                     :fb => {
                       :app_id => "1190455601051741"
                     },
@@ -122,7 +122,7 @@ class PostsController < ApplicationController
                       :title => @post.title,
                       :description => @post.meta_description,
                       :image => {
-                        :url => @post.thumbnail.url(:large),
+                        :url => "https:" + @post.thumbnail.url(:large2),
                         :alt => @post.title,
                       },
                       :site_name => "The Teen Magazine",
@@ -136,7 +136,7 @@ class PostsController < ApplicationController
                       :title => @post.title,
                       :description => @post.meta_description,
                       :creator => @post.user.full_name,
-                      :image => @post.thumbnail.url(:large),
+                      :image => "https:" + @post.thumbnail.url(:large),
                       :domain => "https://www.theteenmagazine.com/"
                     }
     elsif current_user.present?
