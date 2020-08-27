@@ -1,6 +1,7 @@
 class AppliesController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create]
   before_action :is_admin?, only: [:show, :index]
+  layout 'minimal', only: [:editor]
 
   #show all applications
   def index
