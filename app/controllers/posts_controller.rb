@@ -122,7 +122,7 @@ class PostsController < ApplicationController
                       :title => @post.title,
                       :description => @post.meta_description,
                       :image => {
-                        :url => @post.thumbnail.url(:large2),
+                        :url => @post.thumbnail.url(:large),
                         :alt => @post.title,
                       },
                       :site_name => "The Teen Magazine",
