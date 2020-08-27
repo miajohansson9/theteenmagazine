@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get 'subscribe' => 'pages#subscribe'
   get 'reviews:post_id' => 'pages#reviews'
   get "/apply" => "applies#new"
+  get '/applications/editor', to: 'applies#editor'
   get "/submitted" => "applies#create"
   get "/reset-password" => "pages#reset"
   get '/sitemap.xml', to: 'pages#sitemap'

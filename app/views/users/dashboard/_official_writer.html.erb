@@ -84,6 +84,8 @@
             <%= link_to "Pitch a new article", new_pitch_path %>
             <% if (@user.editor?) && (current_user.editor?)%>
               <%= link_to "Start a new article", new_post_path %>
+            <% else %>
+              <%= link_to "Editor Application", "/applications/editor" %>
             <% end %>
             <% if (current_user.admin?) && (@user.admin?) %>
               <%= link_to "Writer Applications", applies_path %>

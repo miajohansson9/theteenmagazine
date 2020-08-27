@@ -50,6 +50,11 @@ class AppliesController < ApplicationController
     end
   end
 
+  def editor
+    set_meta_tags title: "Editor Application | The Teen Magazine",
+                  description: "Our editor team is in charge of pitching new article topics, publishing/giving feedback to articles, and responding to profile submissions. We are active on Slack and support each other in helping our writer team succeed at The Teen Magazine."
+  end
+
   #only allow admin and editors to see submitted applications
   def is_admin?
     if (current_user && (current_user.admin? || current_user.editor?))
