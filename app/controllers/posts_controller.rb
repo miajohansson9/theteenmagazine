@@ -122,7 +122,7 @@ class PostsController < ApplicationController
                       :title => @post.title,
                       :description => @post.meta_description,
                       :image => {
-                        :url => @post.thumbnail.url,
+                        :url => @post.thumbnail.url(:large2),
                         :alt => @post.title,
                       },
                       :site_name => "The Teen Magazine",
@@ -136,7 +136,7 @@ class PostsController < ApplicationController
                       :title => @post.title,
                       :description => @post.meta_description,
                       :creator => @post.user.full_name,
-                      :image => @post.thumbnail.url(:large),
+                      :image => @post.thumbnail.url(:large2),
                       :domain => "https://www.theteenmagazine.com/"
                     }
     elsif current_user.present?
