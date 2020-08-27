@@ -6,7 +6,7 @@
         <h6 id="post-title"><a href="#"><%= link_to pitch.title, pitch %></a></h6>
         <p class="edited_dt"><%= "Changes made " + time_ago_in_words(pitch.updated_at) + " ago" %></p>
         <% if pitch.status.eql? "Approved" %>
-          <p>Great job! This article pitch can be claimed!</p>
+          <p style="color: limegreen;">Great job! This article pitch can be claimed!</p>
         <% end %>
       </div>
     </div>

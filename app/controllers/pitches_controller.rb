@@ -102,6 +102,7 @@ class PitchesController < ApplicationController
     @claimed_user = @pitch.claimed_id.present? ? User.find(@pitch.claimed_id) : nil
     @article = @claimed_user ? @claimed_user.posts.where(pitch_id: @pitch.id).last : nil
     @title = @claimed_user.nil? ? "Claim article pitch" : "You've claimed this pitch"
+    @editor = @pitch.editor_id.present? ? User.find(@pitch.editor_id) : nil
     set_meta_tags :title => @pitch.title
   end
 
@@ -113,7 +114,7 @@ class PitchesController < ApplicationController
   private
 
   def pitch_params
-    params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :claimed_id, :category_id, :user_id)
+    params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :claimed_id, :category_id, :user_id, :editor_id)
   end
 
   def find_pitch

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user_posts_approved = @user.posts.published.order("publish_at desc")
     @posts = Post.all.order("created_at desc");
     if !@user.editor? && current_user.present?
-      @user_pitches = @user.pitches.not_claimed
+      @user_pitches = @user.pitches.not_claimed.order("updated_at desc")
     elsif @user.editor?
       @editor_pitches =  @user.pitches
       @editor_reviews = Review.where(editor_id: @user.id)

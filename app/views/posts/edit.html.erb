@@ -22,7 +22,8 @@
     <% end %>
     <% if @requested_changes.present? %>
       <div class="card mb-3 changes_requested">
-        <div class="card-header">Review #<%= @reviews.count %>: The below problems prevented this article from being published.</div>
+        <% @editor = User.find(@most_recent_review.editor_id) %>
+        <div class="card-header">Review #<%= @reviews.count %> given by <%= link_to(@editor.full_name, @editor, :class => "link_nrml", :target => "_blank") %>: The below problems prevented this article from being published.</div>
         <div class="card-body">
           <% @requested_changes.each do |requested_change| %>
             <% @feedback = Feedback.find(requested_change.feedback_id) %>

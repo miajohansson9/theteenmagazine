@@ -47,6 +47,7 @@
         <div class="card-body">
           <%= f.select :status, options_for_select(["Approved", "Rejected"], {prompt: "Select status"}) %>
           <%= f.text_field :notes, placeholder: "(Optional) Editor notes" %>
+          <%= f.hidden_field :editor_id, value: current_user.id %>
         </div>
       </div>
     <% end %>
