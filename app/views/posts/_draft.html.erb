@@ -37,10 +37,12 @@ blockquote {
                   <p class="author_name" style="margin-right: 10px;">By <%= link_to(author.full_name, author) %></p>
                 </div>
               <% end %>
-              <span>
+            </div>
+            <div class="right_side_wrapper <% if @authors.count < 3 %>right_side_flex<% end %>">
+              <div class="date_wrapper">
                 <i class="fa fa-clock-o" style="margin-right: 3px;" aria-hidden="true"></i>
-                <span class="date"><%= @date.strftime('%A, %B %d')%></span>
-              </span>
+                <p class="date"><%= @date.strftime('%A, %B %d')%></p>
+              </div>
             </div>
           </div>
         </header>
