@@ -21,7 +21,7 @@ blockquote {
           <h3 id="category_title"><%= link_to(@post.category.name, @post.category) %></h3>
           <div class="post_info">
             <% @authors = [@user] + @collabs %>
-            <div class="left_side_flex">
+            <div class="left_side_flex <% if @authors.count == 2 %>flex_column<%end%>">
               <% @authors.each do |author| %>
                 <div class="author">
                   <% @profile = author.profile.exists? ? author.profile.url(:square) : "profile_image" %>
@@ -30,9 +30,9 @@ blockquote {
                 </div>
               <% end %>
             </div>
-            <div class="right_side_wrapper <% if @authors.count < 3 %>right_side_flex<% end %>">
+            <div class="right_side_wrapper <% if @authors.count == 1 %>right_side_flex<% end %>">
               <div class="date_wrapper">
-                <i class="fa fa-clock-o" style="margin-right: 3px;" aria-hidden="true"></i>
+                <p><i class="fa fa-clock-o" style="margin-right: 3px;" aria-hidden="true"></i><p>
                 <p class="date"><%= @date.strftime('%A, %B %d')%></p>
               </div>
               <div class="social_icons">

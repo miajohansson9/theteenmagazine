@@ -546,6 +546,10 @@ body {
    width: 100% !important;
 }
 
+.flex_column {
+  flex-direction: column !important;
+}
+
 .post_info {
   display: flex;
   flex-direction: row;
@@ -571,6 +575,9 @@ body {
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      p {
+        margin: 0.7em 0 0.5em 0;
+      }
     }
   }
 
