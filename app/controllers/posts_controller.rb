@@ -95,7 +95,7 @@ class PostsController < ApplicationController
 
   def show
     @date = @post.is_published? ? @post.publish_at : @post.created_at
-    if (@post.is_published? || (current_user && (@post.sharing || @post.user_id == current_user.id || (@post.collaboration.include? current_user.email) || current_user.admin? || current_user.editor?)))
+    if (@post.is_published? || (current_user && (@post.sharing || @post.user_id == current_user.id || (@post.collaboration&.include? current_user.email) || current_user.admin? || current_user.editor?)))
       @collabs = []
       if @post.collaboration.present?
         @emails = @post.collaboration.delete(' ').split(",")

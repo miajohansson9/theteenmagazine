@@ -5,7 +5,7 @@
  CKEDITOR.addCss('h1 {font-size: 1.7rem;} h2 {font-size: 1.5rem;} h3 {font-size: 1.3rem;} h4 {font-size: 1.1rem;} h5 {font-size: 0.9rem;} h1, h2, h3, h4, h5, h6, span {margin: 10px 0;}');
  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #65B19D;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
 </script>
-<% if !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (@post.collaboration.include? current_user.email) || (current_user.admin?) %>
+<% if !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (@post.collaboration&.include? current_user.email) || (current_user.admin?) %>
 <div id="edit_post">
   <%= form_for @post do |f| %>
     <% if @post.errors.any? %>
