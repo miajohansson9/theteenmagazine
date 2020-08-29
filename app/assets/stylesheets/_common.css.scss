@@ -581,22 +581,6 @@ body {
     }
   }
 
-  .right_side_flex {
-    display: flex;
-    flex-direction: row;
-    min-width: 340px;
-    justify-content:flex-end;
-    align-items: center;
-    .social_icons {
-      margin: 0.5em;
-      margin-right: 0;
-      margin-left: 10px;
-    }
-    .date_wrapper {
-      margin: 0;
-    }
-  }
-
   img {
     margin-right: 5px;
     min-width: 40px !important;
@@ -882,9 +866,17 @@ p, ul, ol {
 
 @media (max-width: 651px) {
   .bodywrapper {
-  padding-top: 60px;
+    padding-top: 60px;
+  }
 }
+
+@media (max-width: 340px) {
+  .bodywrapper {
+    padding-top: 90px;
+  }
 }
+
+//end banner padding
 
 @media (max-width: 1030px) {
   .flex_wrapper_columns {
