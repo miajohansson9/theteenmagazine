@@ -1,7 +1,7 @@
 <br>
 <div style="max-width: 840px; margin: 0 auto;">
   <div id="background" style="max-width: 800px; margin: 0 15px;">
-    <%= render 'profile' %>
+    <%= render :partial => 'profile', locals: {user: @user} %>
   </div>
 </div>
 <div class="category">

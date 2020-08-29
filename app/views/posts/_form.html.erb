@@ -42,7 +42,7 @@
     <%= f.label "Grab your ideal reader's interest in 1-2 sentences." %>
     <%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
     <br>
-    <span>If you are writing an article with another writer, you may put their email here to share the article with them.</span>
+    <span>If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</span>
     <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
 
     <%= f.fields_for :reviews, @review do |rv| %>

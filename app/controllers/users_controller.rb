@@ -8,9 +8,8 @@ class UsersController < ApplicationController
   def show
     set_meta_tags title: "#{@user.full_name} | The Teen Magazine",
                   description: @user.description
-    @user_posts = @user.posts.all.order("created_at desc")
-    @user_posts_approved = @user.posts.published.order("publish_at desc")
-    @posts = Post.all.order("created_at desc");
+    @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id))
+    @user_posts_approved = @user_posts.published.order("publish_at desc")
     if !@user.editor? && current_user.present?
       @user_pitches = @user.pitches.not_claimed.order("updated_at desc")
     elsif @user.editor?
@@ -38,7 +37,6 @@ class UsersController < ApplicationController
     if current_user.present?
       @pitches = Pitch.all.order("created_at desc").limit(4)
       @claimed_pitches_cnt =  Pitch.where(claimed_id: @user.id).present? ? Pitch.where(claimed_id: @user.id).count : 0;
-      @published_articles_cnt =  @user.posts.published.count;
       @pageviews = 0
       @user_posts_approved.each do |post|
         if !post.post_impressions.nil?

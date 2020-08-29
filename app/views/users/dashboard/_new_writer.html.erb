@@ -19,7 +19,7 @@
               }
             </style>
         <% end %>
-        <%= render 'profile' %>
+        <%= render :partial => 'profile', locals: {user: @user} %>
       </div>
       <div class="dashboard--articles--wrapper">
         <h1 id="page_title">Welcome to The Teen Magazine!</h1>

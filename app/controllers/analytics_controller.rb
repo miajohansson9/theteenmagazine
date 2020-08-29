@@ -11,7 +11,7 @@ class AnalyticsController < ApplicationController
   def index
     redirect_to @user unless access
     @posts_by_impressions = Post.published.order("post_impressions desc")
-    @user_posts = @user.posts.published.order("publish_at desc")
+    @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id))
   end
 
   private

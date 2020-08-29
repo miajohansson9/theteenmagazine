@@ -8,10 +8,6 @@ blockquote {
 }
 </style>
 
-<% @collab = nil %>
-<% if @post.collaboration != "" %>
-  <% @collab = User.where(email: @post.collaboration).first %>
-<% end %>
 <div class="div">
   <div class="post_image">
   </div>
@@ -19,63 +15,52 @@ blockquote {
 <div class="flex_wrapper_posts">
   <div class="skinny wrapper_padding" id="post_show_content">
     <div class="flex_wrapper_columns">
-      <div>
+      <div class="content_wrapper">
         <header id="post_title_show">
           <h1 class="title_article_show"><%= @post.title %></h1>
           <h3 id="category_title"><%= link_to(@post.category.name, @post.category) %></h3>
           <div class="post_info">
+            <% @authors = [@user] + @collabs %>
             <div class="left_side_flex">
-              <div class="authors">
-                <% @byauthor = @collab.present? ? "" : "By " %>
-                <div class="one_author">
-                  <% if @post.user.profile.exists? %>
-                    <%= image_tag(@post.user.profile.url(:square), :class => "profile_img") %>
-                  <% else %>
-                    <%= image_tag("profile_image", :class => "profile_img") %>
-                  <% end %>
-                  <p class="author" style="margin-right: 10px;">
-                      <%= @byauthor %><%= link_to(@post.user.full_name, @user) %>
+              <% @authors.each do |author| %>
+                <div class="author">
+                  <% @profile = author.profile.exists? ? author.profile.url(:square) : "profile_image" %>
+                  <%= image_tag(@profile, :class => "profile_img") %>
+                  <p class="author_name" style="margin-right: 10px;">By <%= link_to(author.full_name, author) %></p>
                 </div>
-                <div class="one_author second_author">
-                  <% if @collab.present? %>
-                      <% if @collab.profile.exists? %>
-                        <%= image_tag(@collab.profile.url(:square), :class => "profile_img") %>
-                      <% else %>
-                        <%= image_tag("profile_image", :class => "profile_img") %>
-                      <% end %>
-                      <p class="author" style="margin-right: 10px;">
-                        <%= link_to(@collab.full_name, @collab) %></p>
-                  <% end %>
-                </div>
-              </div>
-              <i class="fa fa-clock-o" style="margin-right: 3px;" aria-hidden="true"></i>
-              <p class="date"><%= @date.strftime('%A, %B %d')%></p>
+              <% end %>
             </div>
-            <div class="social_icons">
-              <a class="fb-share" href="//www.facebook.com/v2.3/dialog/feed?app_id=1190455601051741
-              &name=<%= @post.title.sub! '#', '' %>
-              &description=<%= @post.meta_description %>
-              &link=http://www.theteenmagazine.com/<%= @post.slug %>">
-                <div>
-                  <i aria-hidden="true" class="fa fa-facebook"></i>
-                </div>
-             </a>
-            <a class="js-share-twitter-link" href="https://www.twitter.com/share?url=http://www.theteenmagazine.com/<%= @post.slug %>&text=<%= @post.title %> &via=theteenmagazin_" >
-              <div style="background-color: #55ACEE">
-                <i aria-hidden="true" class="fa fa-twitter"></i>
+            <div class="right_side_wrapper <% if @authors.count < 3 %>right_side_flex<% end %>">
+              <div class="date_wrapper">
+                <i class="fa fa-clock-o" style="margin-right: 3px;" aria-hidden="true"></i>
+                <p class="date"><%= @date.strftime('%A, %B %d')%></p>
               </div>
-           </a>
-           <a class="js-share-pinterest-link" href="//pinterest.com/pin/create/button/?url=http://www.theteenmagazine.com/<%=@post.slug%>&media=<%= @post.thumbnail.url(:large)%>&description=<%= @post.title %>  - TheTeenMagazine.com">
-             <div style="background-color: #cb2027">
-               <i aria-hidden="true" class="fa fa-pinterest"></i>
-             </div>
-          </a>
-           <a title="Email" href="mailto:?subject=<%= @post.title %>&body=http://www.theteenmagazine.com/<%= @post.slug %>" target="_top">
-             <div  style="background-color: #333">
-               <i aria-hidden="true" class="fa fa-envelope-o"></i>
-             </div>
-           </a>
-          </div>
+              <div class="social_icons">
+                <a class="fb-share" href="//www.facebook.com/v2.3/dialog/feed?app_id=1190455601051741
+                  &name=<%= @post.title.sub! '#', '' %>
+                  &description=<%= @post.meta_description %>
+                  &link=http://www.theteenmagazine.com/<%= @post.slug %>">
+                  <div>
+                    <i aria-hidden="true" class="fa fa-facebook"></i>
+                  </div>
+                </a>
+                <a class="js-share-twitter-link" href="https://www.twitter.com/share?url=http://www.theteenmagazine.com/<%= @post.slug %>&text=<%= @post.title %> &via=theteenmagazin_" >
+                  <div style="background-color: #55ACEE">
+                    <i aria-hidden="true" class="fa fa-twitter"></i>
+                  </div>
+                </a>
+                <a class="js-share-pinterest-link" href="//pinterest.com/pin/create/button/?url=http://www.theteenmagazine.com/<%=@post.slug%>&media=<%= @post.thumbnail.url(:large)%>&description=<%= @post.title %>  - TheTeenMagazine.com">
+                 <div style="background-color: #cb2027">
+                   <i aria-hidden="true" class="fa fa-pinterest"></i>
+                 </div>
+                </a>
+                <a title="Email" href="mailto:?subject=<%= @post.title %>&body=http://www.theteenmagazine.com/<%= @post.slug %>" target="_top">
+                 <div  style="background-color: #333">
+                   <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                 </div>
+               </a>
+              </div>
+            </div>
           </div>
         </header>
         <div id="content">
@@ -93,52 +78,9 @@ blockquote {
                 </div>
               <% end %>
               <div id= "background">
-               <%= render :partial => 'users/profile' %>
-               <% if @collab != nil %>
-                 <div class="flex--profile" style="margin-top: -40px">
-                   <% if @collab.profile.exists? %>
-                     <%= image_tag(@collab.profile.url(:square), :class => "profile_img") %>
-                   <% else %>
-                     <%= image_tag("profile_image", :class => "profile_img") %>
-                   <% end %>
-                   <div class="info">
-                   <h2 style="margin-bottom: 5px;">
-                   <% @name =
-                     if (@collab.first_name != "" && @collab.first_name !=nil)
-                       @collab.first_name
-                     end
-                     if (@collab.last_name != "" && @collab.last_name!= nil)
-                       @name = @name + " " + @collab.last_name
-                     end %>
-                   <%= link_to(@name, @collab) %>
-                   </h2>
-                   <% if @collab.editor? %>
-                     <span class="editor_status">
-                       Editor
-                     </span>
-                   <% end %>
-                   <% if (@collab.description != "" && @collab.description != nil) %>
-                     <p class="description_user" style="margin-top: 5px;"><%= @collab.description %></p>
-                   <% end %>
-                     <div class="website">
-                       <% if (@user.website != "" && @user.website !=  nil) %>
-                          <p class="website_link"><span>Website: </span><a href="https://www.<%= @user.website %>" target="_blank"><%= @user.website %></a></p>
-                       <% end %>
-                       <% if (@user.twitter != "" && @user.twitter !=  nil) %>
-                          <p class="website_link"><a href="https://www.twitter.com/<%= @user.twitter %>" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a></p>
-                       <% end %>
-                       <% if (@user.insta != "" && @user.insta != nil) %>
-                          <p class="website_link"><a href="https://www.instagram.com/<%= @user.insta %>" target="_blank" style="padding-right: 4px;"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-                       <% end %>
-                       <% if (@user.facebook != "" && @user.facebook !=  nil) %>
-                          <p class="website_link"><a href="https://www.facebook.com/<%= @user.facebook %>" target="_blank" style="padding-left: 5px;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></p>
-                       <% end %>
-                       <% if (@user.youtube != "" && @user.youtube != nil) %>
-                          <p class="website_link"><a href="https://www.youtube.com/<%= @user.youtube %>" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></p>
-                       <% end %>
-                     </div>
-                   </div>
-                 </div>
+               <%= render :partial => 'users/profile', locals: {user: @user} %>
+               <% @collabs.each do |collab| %>
+                <%= render :partial => 'users/profile', locals: {user: collab} %>
                <% end %>
               </div>
               <br />

@@ -196,6 +196,10 @@
   margin: 0 auto;
 }
 
+.content_wrapper {
+  max-width: 736px;
+}
+
 .skinny {
   margin-left: 100px;
   margin-right: 100px;
@@ -252,6 +256,7 @@ iframe { margin: 1em auto;  display: block; }
   .authors {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .one_author {
