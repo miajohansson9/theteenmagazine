@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def show
     set_meta_tags title: "#{@user.full_name} | The Teen Magazine",
                   description: @user.description
-    @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id))
+    @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).order("updated_at desc")
     @user_posts_approved = @user_posts.published.order("publish_at desc")
     if !@user.editor? && current_user.present?
       @user_pitches = @user.pitches.not_claimed.order("updated_at desc")

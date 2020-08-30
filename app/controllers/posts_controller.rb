@@ -72,6 +72,7 @@ class PostsController < ApplicationController
       redirect_to @prev_post_pitch, notice: "You've reclaimed this pitch!"
     else
       @post = current_user.posts.build(post_params)
+      fix_formatting
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
           @post.content = @post.content << "<script>instgrm.Embeds.process()</script>"
       end
