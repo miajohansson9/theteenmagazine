@@ -254,6 +254,28 @@ class PostsController < ApplicationController
   private
 
   def fix_formatting
+    @post.title = @post.title.titleize
+    @post.title.gsub!(" A ", " a ")
+    @post.title.gsub!(" Is ", " is ")
+    @post.title.gsub!(" The ", " the ")
+    @post.title.gsub!(" For ", " for ")
+    @post.title.gsub!(" An ", " an ")
+    @post.title.gsub!(" Nor ", " nor ")
+    @post.title.gsub!(" Yet ", " yet ")
+    @post.title.gsub!(" So ", " so ")
+    @post.title.gsub!(" At ", " at ")
+    @post.title.gsub!(" Around ", " around ")
+    @post.title.gsub!(" But ", " but ")
+    @post.title.gsub!(" By ", " by ")
+    @post.title.gsub!(" After ", " after ")
+    @post.title.gsub!(" Along ", " along ")
+    @post.title.gsub!(" From ", " from ")
+    @post.title.gsub!(" Of ", " of ")
+    @post.title.gsub!(" On ", " on ")
+    @post.title.gsub!(" To ", " to ")
+    @post.title.gsub!(" With ", " without ")
+    @post.title.gsub!(" In ", " in ")
+
     loop do
       if @post.content[/style="margin(.*?)"/m, 0].present?
         @post.content.gsub!(@post.content[/style="margin(.*?)"/m, 0], "")
