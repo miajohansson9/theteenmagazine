@@ -42,6 +42,7 @@ class PitchesController < ApplicationController
   def create
     @categories = Category.all
     @pitch = current_user.pitches.build(pitch_params)
+    fix_title
     if @pitch.save && current_user.editor?
       redirect_to "/pitches", notice: "Your pitch was successfully added!"
     elsif @pitch.save
@@ -72,6 +73,7 @@ class PitchesController < ApplicationController
       @message = "Changes were successfully saved!"
     end
     if @pitch.update pitch_params
+      fix_title
       @pitch.save
       redirect_to @pitch, notice: @message
     else
@@ -112,6 +114,30 @@ class PitchesController < ApplicationController
   end
 
   private
+
+  def fix_title
+    @pitch.title = @pitch.title.titleize
+    @pitch.title.gsub!(" A ", " a ")
+    @pitch.title.gsub!(" Is ", " is ")
+    @pitch.title.gsub!(" The ", " the ")
+    @pitch.title.gsub!(" For ", " for ")
+    @pitch.title.gsub!(" An ", " an ")
+    @pitch.title.gsub!(" Nor ", " nor ")
+    @pitch.title.gsub!(" Yet ", " yet ")
+    @pitch.title.gsub!(" So ", " so ")
+    @pitch.title.gsub!(" At ", " at ")
+    @pitch.title.gsub!(" Around ", " around ")
+    @pitch.title.gsub!(" But ", " but ")
+    @pitch.title.gsub!(" By ", " by ")
+    @pitch.title.gsub!(" After ", " after ")
+    @pitch.title.gsub!(" Along ", " along ")
+    @pitch.title.gsub!(" From ", " from ")
+    @pitch.title.gsub!(" Of ", " of ")
+    @pitch.title.gsub!(" On ", " on ")
+    @pitch.title.gsub!(" To ", " to ")
+    @pitch.title.gsub!(" With ", " without ")
+    @pitch.title.gsub!(" In ", " in ")
+  end
 
   def pitch_params
     params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :claimed_id, :category_id, :user_id, :editor_id)
