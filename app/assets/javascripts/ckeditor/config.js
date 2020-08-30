@@ -21,5 +21,6 @@ CKEDITOR.editorConfig = function (config) {
   config.removePlugins = 'scayt,wsc';
   config.filebrowserImageBrowseUrl = '/ckeditor/pictures';
   config.filebrowserImageUploadUrl = '/ckeditor/pictures';
+  config.pasteFilter = 'p; a[!href]';
 
 }
