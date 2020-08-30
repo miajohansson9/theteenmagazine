@@ -19,5 +19,7 @@ CKEDITOR.editorConfig = function (config) {
   config.disableNativeSpellChecker = false;
 
   config.removePlugins = 'scayt,wsc';
+  config.filebrowserImageBrowseUrl = '/ckeditor/pictures';
+  config.filebrowserImageUploadUrl = '/ckeditor/pictures';
 
 }
