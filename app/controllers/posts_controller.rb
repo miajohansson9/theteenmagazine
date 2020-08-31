@@ -55,6 +55,7 @@ class PostsController < ApplicationController
 
   def new
     @categories = Category.all
+    @service_id = ENV['WEBSPELLCHECKER_ID']
     @post = current_user.posts.build
     @review = @post.reviews.build(status: "In Progress", active: true)
   end
