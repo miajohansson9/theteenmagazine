@@ -24,6 +24,7 @@
 /config/s3.yml
 /config/app_environment_variables.rb
 /config/secrets.yml
+/app/assets/javascripts/ckeditor_credentials.js
 
 # Ignore application configuration
 /config/application.yml
