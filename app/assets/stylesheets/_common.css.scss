@@ -571,6 +571,10 @@ body {
   }
 }
 
+.banner_stts_relative .banner_stts {
+  position: relative !important;
+}
+
 .banner_stts {
   position: absolute;
   z-index: 100;
@@ -580,7 +584,7 @@ body {
   background-color: #FF78CB;
   font-size: 17px;
   padding: 2px;
-  margin: 0 0 20px 0;
+  margin: 0;
 }
 
 .fb-comments, .fb-comments iframe[style], .fb-comments span {
@@ -900,25 +904,6 @@ p, li {
 p, ul, ol {
   margin: 0.8em 0;
 }
-
-//banner padding
-.bodywrapper {
-  padding-top: 30px;
-}
-
-@media (max-width: 651px) {
-  .bodywrapper {
-    padding-top: 60px;
-  }
-}
-
-@media (max-width: 340px) {
-  .bodywrapper {
-    padding-top: 90px;
-  }
-}
-
-//end banner padding
 
 @media (max-width: 1030px) {
   .flex_wrapper_columns {
