@@ -158,8 +158,6 @@
     var bounds = this.offset();
     bounds.right = bounds.left + this.outerWidth();
     bounds.bottom = bounds.top + this.outerHeight();
-    console.log(bounds.right);
-    console.log(bounds.left);
     return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
   };
 
@@ -181,10 +179,8 @@
   $(document).ready(function(){
     loaded = [false, false, false];
     $.fn.triggerAnalytics();
-    console.log("fired1");
     $("#site-wrapper").scroll(function(){
         $.fn.triggerAnalytics();
-        console.log("fired");
     });
   });
 </script>
