@@ -287,11 +287,11 @@ hr {
 }
 
 .link_pink {
-  color: #FF78CB;
+  color: #FF78CB !important;
   font-weight: bolder;
   font-family: "Playfair Display";
   &:hover {
-    color: #FF78CB;
+    color: #FF78CB !important;
     text-decoration: none;
   }
 }
