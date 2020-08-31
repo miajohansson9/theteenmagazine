@@ -70,13 +70,15 @@
             <h6>Editor Feedback Form</h6>
           </div>
           <div class="card-body">
-            <% @feedbacks.each_with_index do |feedback, index| %>
+            <% @feedbacks_editor_frm.each_with_index do |feedback, index| %>
               <%= f.check_box :feedback_list, { :multiple => true, checked: !(@review.try(:feedback_givens).where(feedback_id: feedback.id).blank?) }, feedback.id, nil %>
               <%= feedback.editor_descr %><br>
             <% end %>
             <br>
             <%= rv.label "Editor Notes:" %>
             <%= rv.text_field :notes, placeholder: "(Optional) Share any additional comments you have about this article." %>
+            <br>
+            <%= link_to("View/edit feedback descriptions", feedbacks_path, class: "link_nrml float_right") %>
           </div>
         </div>
       <% end %>
@@ -103,7 +105,7 @@
         <% end %>
       <% end %>
     <% end %>
-    <%= f.submit "Save Changes" %>
+    <%= f.submit "Save Changes", :class => "button" %>
   <% end %>
 </div>
 <% else %>

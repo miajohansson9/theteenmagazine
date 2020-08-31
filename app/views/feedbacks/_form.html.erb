@@ -1,10 +1,10 @@
 <%= form_for @feedback do |f| %>
-  <%= f.label "Short Description for editor" %>
+  <%= f.label "In under 10 words, describe the main type of problem." %>
   <%= f.text_field :editor_descr %>
 
-  <%= f.label "Feedback for writer" %>
+  <%= f.label "Give a more detailed explanation of the problem as well as resources and suggestions for improving." %>
   <%= f.text_area :review_descr %>
-
+  <br><br>
   <% if @feedback.id.nil? %>
     <%= f.submit "Add feedback field" %>
   <% else %>

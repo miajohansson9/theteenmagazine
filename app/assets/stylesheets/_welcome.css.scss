@@ -6,10 +6,14 @@ $gray:  #2a2a2a;
 
 .contact {
   text-align: center;
-  h3 {
+}
+
+.page, .contact {
+  h3, h4, h5, h6 {
     font-family: "Playfair Display";
     line-height: 1.5;
     margin: 30px auto 0 auto;
+    max-width: fit-content;
   }
 }
 

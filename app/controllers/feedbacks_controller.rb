@@ -1,20 +1,29 @@
 class FeedbacksController < ApplicationController
-  before_action :find_feedback, except: [:new, :create]
+  before_action :find_feedback, except: [:new, :create, :index]
   before_action :is_admin?
   before_action :authenticate_user!
   load_and_authorize_resource
+  layout "minimal"
 
   def new
     @feedback = Feedback.new
+    set_meta_tags :title => "New Feedback Field"
   end
 
   def edit
+    set_meta_tags :title => "Edit Feedback Field"
+  end
+
+  def index
+    @feedbacks = Feedback.active.left_joins(:feedback_givens).group(:id).order('COUNT(feedback_givens.id) DESC')
+    @feedbacks_given = FeedbackGiven.all
+    set_meta_tags :title => "Editor Feedback Fields"
   end
 
   def update
     if @feedback.update feedback_params
       @feedback.save
-      redirect_to reviews_path, notice: "Your changes were saved."
+      redirect_to feedbacks_path, notice: "Your changes were saved."
     else
       render 'edit', notice: "Oops, something went wrong."
     end
@@ -35,7 +44,7 @@ class FeedbacksController < ApplicationController
   private
 
   def feedback_params
-    params.require(:feedback).permit(:id, :editor_descr, :review_descr)
+    params.require(:feedback).permit(:id, :editor_descr, :review_descr, :archive)
   end
 
   def find_feedback

@@ -1,0 +1,28 @@
+<div class="skinny_wrapper wrapper_padding">
+  <br>
+  <div class="card review_frm">
+    <div class="card-header">
+      <h6>Editor Feedback Fields</h6>
+    </div>
+    <div class="card-body">
+      <% @feedbacks.each_with_index do |feedback| %>
+        <h6><b><%= feedback.editor_descr%></b> <i><%= link_to("(Edit)", edit_feedback_path(feedback), class: "link_pink") %></i></h6>
+        <i><%=feedback.review_descr %></i>
+        <br>
+        <br>
+        <div class="flex_horizontal_justify_between">
+          <i>Used <%= @feedbacks_given.where(feedback_id: feedback.id).count %> times</i>
+          <% if current_user.admin? %>
+            <%= form_for feedback do |f| %>
+              <%= f.hidden_field :archive, value: true %>
+              <%= f.submit "Archive", data: {confirm: "Are you sure you want to archive this feedback field? It will no longer show up for other editors."}, :class => "no_style link_nrml" %>
+            <% end %>
+          <% end %>
+        </div>
+        <hr>
+      <% end %>
+    </div>
+  </div>
+  <div class="btn_cntnr"><%= link_to "New Feedback Field", new_feedback_path, class: "newpost--new--profile", style: "margin-right: 0px;" %></div>
+  <br><br><br>
+</div>
