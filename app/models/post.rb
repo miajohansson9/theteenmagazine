@@ -41,9 +41,6 @@ class Post < ApplicationRecord
       large2: '540x340#'
     }
 
-  # Validate the attached image is image/jpg, image/png, etc
-  validates_attachment_content_type :thumbnail, :content_type => /\Aimage\/.*\Z/
-
   extend FriendlyId
   friendly_id :title, use: :history
 
