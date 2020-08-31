@@ -165,6 +165,7 @@ class PostsController < ApplicationController
 
   def edit
     @categories = Category.all
+    @service_id = ENV['WEBSPELLCHECKER_ID']
     #create new review if no current review or last review was rejected
     @requested_changes = @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
     @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.feedback_givens) : @post.reviews.last
