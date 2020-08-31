@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
       <% @feedbacks.each_with_index do |feedback| %>
-        <h6><b><%= feedback.editor_descr%></b> <i><%= link_to("(Edit)", edit_feedback_path(feedback), class: "link_pink") %></i></h6>
+        <h6><%= feedback.editor_descr%> <i><%= link_to("(Edit)", edit_feedback_path(feedback), class: "link_pink") %></i></h6>
         <i><%=feedback.review_descr %></i>
         <br>
         <br>

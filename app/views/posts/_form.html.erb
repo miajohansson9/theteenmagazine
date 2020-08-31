@@ -78,17 +78,19 @@
             <%= rv.label "Editor Notes:" %>
             <%= rv.text_field :notes, placeholder: "(Optional) Share any additional comments you have about this article." %>
             <br>
-            <%= link_to("View/edit feedback descriptions", feedbacks_path, class: "link_nrml float_right") %>
+            <%= link_to("View/Edit feedback descriptions", feedbacks_path, class: "link_nrml float_right", target: "_blank") %>
           </div>
         </div>
       <% end %>
       <% @reviews = @post.reviews.where(status: "Rejected") %>
       <% if (@reviews.count >= 5) && !(@post.is_published?) %>
-        <%= rv.hidden_field :status, :value => "In Progress" %>
+        <%= rv.select :status, options_for_select((["In Progress"] << @review.try(:status)).uniq, @review.try(:status)) %>
+        <br>
+        <br>
       <% else %>
         <%= f.label "Article Status:" %>
         <% @rejected_cnt = @post.reviews.where(status: "Rejected").count %>
-        <% @editor_options = (@post.reviews.last.status.eql? "In Review") ? ["Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["Ready for Review", "In Review"] %>
+        <% @editor_options = ((@post.reviews.last.status.eql? "In Review") || (@post.reviews.last.status.eql? "Approved for Publishing")) ? ["In Progress", "Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review", "In Review"] %>
         <% @statuses = current_user.editor? ? @editor_options : ["In Progress", "Ready for Review"] %>
         <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
         <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
