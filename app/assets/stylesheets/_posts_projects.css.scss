@@ -325,10 +325,6 @@ iframe { margin: 1em auto;  display: block; }
        border-left: 5px solid #cccccc;
        padding-left: 10px;
      }
-     span {
-       font-family: 'Source Sans Pro', sans-serif !important;
-       font-size: 1.1rem !important;
-     }
      h1 span {
        font-size: 2.5rem !important;
      }
@@ -351,11 +347,6 @@ iframe { margin: 1em auto;  display: block; }
 
      h6 span {
        font-size: 1rem !important;
-     }
-     p span {
-       font-family: 'Source Sans Pro', sans-serif !important;
-       font-size: 1.1rem !important;
-       line-height: 1.75 !important;
      }
      @media (max-width: 600px) {
       img {
