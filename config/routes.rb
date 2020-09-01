@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get '/applications/editor', to: 'applies#editor'
   get "/submitted" => "applies#create"
   get "/reset-password" => "pages#reset"
+  get "/search" => "pages#search"
   get '/sitemap.xml', to: 'pages#sitemap'
   get '/ads.txt', to: 'pages#ads'
   get '/august2020_dbOZUS3qy0rqUJrgazud', to: 'pages#issue'

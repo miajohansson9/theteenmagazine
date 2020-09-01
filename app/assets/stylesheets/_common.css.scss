@@ -278,7 +278,7 @@ hr {
 ///////////////////////////////////////////////////////////////////////////
 .link_white {
   color: white;
-  font-weight: bolder;
+  font-weight: bold;
   font-family: "Playfair Display";
   &:hover {
     color: white;
@@ -288,7 +288,7 @@ hr {
 
 .link_pink {
   color: #FF78CB !important;
-  font-weight: bolder;
+  font-weight: bold;
   font-family: "Playfair Display";
   &:hover {
     color: #FF78CB !important;
@@ -816,8 +816,8 @@ footer {
       text-transform: uppercase;
       letter-spacing: 0.01rem;
       line-height: 1;
-      font-size: 0.8rem;
-      font-weight: bolder;
+      font-size: 0.75rem;
+      font-weight: 600;
       padding-top: 20px;
       color: black;
       text-decoration: none;
