@@ -3,9 +3,9 @@
 <% if !@most_recent_review.nil? && !(@review_banner_soft.status.eql? "In Progress") %>
   <div class="banner_stts_relative"><%= render '/posts/banner_status' %></div>
 <% elsif @post.pitch.present? %>
-  <p class= "banner_stts">In Progress | Review this draft's pitch <%= link_to("here", @post.pitch, target: "_blank", class: "link_white") %></p>
+  <div class="banner_stts_relative"><p class= "banner_stts">In Progress | Review this draft's pitch <%= link_to("here", @post.pitch, target: "_blank", class: "link_white") %></p></div>
 <% else %>
-  <p class="banner_stts">In Progress</p>
+  <div class="banner_stts_relative"><p class="banner_stts">In Progress</p></div>
 <% end %>
 <div class="skinny_wrapper wrapper_padding">
   <% @reviews = @post.reviews.where(status: "Rejected") %>
