@@ -13,15 +13,10 @@ class UsersController < ApplicationController
     if !@user.editor? && current_user.present?
       @user_pitches = @user.pitches.not_claimed.order("updated_at desc")
     elsif @user.editor?
-      @editor_pitches =  @user.pitches
+      @editor_pitches_cnt =  @user.pitches.count
       @editor_reviews = Review.where(editor_id: @user.id)
-      @writers_helped = Array.new
-      @editor_reviews.each do |review|
-        @writer = review.post.try(:user)
-        if @writer.present? && !(@writers_helped.include? @writer)
-          @writers_helped << review.post.user
-        end
-      end
+      @editor_reviews_cnt = @editor_reviews.count
+      @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
     end
     if @user_posts_approved.length < 1
       begin
@@ -82,15 +77,10 @@ class UsersController < ApplicationController
 
   def edit
     if @user.editor?
-      @editor_pitches =  @user.pitches
+      @editor_pitches_cnt =  @user.pitches.count
       @editor_reviews = Review.where(editor_id: @user.id)
-      @writers_helped = Array.new
-      @editor_reviews.each do |review|
-        @writer = review.post.try(:user)
-        if @writer.present? && !(@writers_helped.include? @writer)
-          @writers_helped << review.post.user
-        end
-      end
+      @editor_reviews_cnt = @editor_reviews.count
+      @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
     end
     set_meta_tags title: "Edit Profile | The Teen Magazine"
   end

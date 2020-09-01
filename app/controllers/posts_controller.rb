@@ -14,15 +14,10 @@ class PostsController < ApplicationController
     if @post.user != nil
       @user = @post.user
       if @user.editor?
-        @editor_pitches =  @user.pitches
+        @editor_pitches_cnt =  @user.pitches.count
         @editor_reviews = Review.where(editor_id: @user.id)
-        @writers_helped = Array.new
-        @editor_reviews.each do |review|
-          @writer = review.post.try(:user)
-          if @writer.present? && !(@writers_helped.include? @writer)
-            @writers_helped << review.post.user
-          end
-        end
+        @editor_reviews_cnt = @editor_reviews.count
+        @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
       end
     end
   end
