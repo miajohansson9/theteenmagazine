@@ -8,6 +8,10 @@
     autoSearch: true,
     serviceId: "<%= @service_id %>"
   };
+  // Material Select Initialization
+  $(document).ready(function() {
+  $('.mdb-select').materialSelect();
+  });
 </script>
 <% if !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (@post.collaboration&.include? current_user.email) || (current_user.admin?) %>
 <div id="edit_post">
@@ -40,7 +44,7 @@
     <br>
     <br>
     <%= f.label "Category:" %>
-    <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>
+    <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form") %>
     <br>
     <br>
     <%= f.label "Grab your ideal reader's interest in 1-2 sentences." %>

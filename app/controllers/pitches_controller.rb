@@ -22,7 +22,7 @@ class PitchesController < ApplicationController
       end
       @desc = true
       @message = "There are no unclaimed pitches. Check back in a few days!"
-      @button_text = "Claim Article Pitch"
+      @button_text = "Claim Pitch"
     else
       @title = "Your Claimed Pitches"
       set_meta_tags :title => @title
