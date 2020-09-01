@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:ads, :issue, :privacy, :subscribe, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation]
-  layout "minimal", except: [:issue, :about, :team, :privacy, :reset, :contact, :subscribe]
+  layout "minimal", except: [:issue, :about, :team, :privacy, :reset, :contact, :subscribe, :search]
 
   def team
     set_meta_tags :title => "About us",
@@ -48,6 +48,9 @@ class PagesController < ApplicationController
   end
 
   def submitted
+  end
+
+  def search
   end
 
   def subscribe

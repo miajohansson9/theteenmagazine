@@ -1,26 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="https://i.ibb.co/TBp2fyD/logot-2.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:700" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
-
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
-    <!-- <script type="text/javascript">
-      $('document').ready(function() {
-        setTimeout(function() {
-          $('.notice').slideUp();
-        }, 2500);
-        setTimeout(function() {
-          $('.alert').slideUp();
-        }, 2500);
-      });
-    </script> -->
+    <%= stylesheet_link_tag 'mdbootstrap/css/bootstrap.min.css' %>
+    <%= stylesheet_link_tag 'mdbootstrap/css/mdb.min.css' %>
+    <%= stylesheet_link_tag 'mdbootstrap/css/style.css' %>
     <%= stylesheet_link_tag 'onboarding', media: 'all' %>
     <%= javascript_include_tag 'application'%>
     <%= javascript_include_tag 'dashboard'%>
