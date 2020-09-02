@@ -1,4 +1,4 @@
-<h1 id="page_title" style="border-bottom: none; margin-bottom: -20px; margin-top: 0px;">Submitted Profiles</h1>
+<h1 id="page_title" style="border-bottom: none; margin-top: 0px;">Submitted Profiles</h1>
 <div id="posts_wrapper" class="index_users">
   <div class="skinny_wrapper profiles--flex">
     <% @users_waiting.each do |user| %>
@@ -26,7 +26,10 @@
     <% end %>
   </div>
 </div>
-<h1 id="page_title" style="margin-bottom: -20px; border-bottom: none;">Writers</h1>
+<div class="flex_horizontal center">
+  <h1 id="page_title" style="margin-bottom: -20px; border-bottom: none;">Writers</h1>
+  <a href="/search?utf8=✓&filter=writers"><i class="fa fa-search" aria-hidden="true"></i></a>
+</div>
 <div id="posts_wrapper" class="skinny_wrapper">
   <% @users.each do | user | %>
       <% if user != nil %>
