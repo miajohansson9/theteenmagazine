@@ -116,7 +116,7 @@ class PitchesController < ApplicationController
   private
 
   def fix_title
-    @pitch.title = @pitch.title.titleize
+    @pitch.title = @pitch.title.split.map(&:capitalize).join(' ')
     @pitch.title.gsub!(" A ", " a ")
     @pitch.title.gsub!(" Is ", " is ")
     @pitch.title.gsub!(" The ", " the ")
