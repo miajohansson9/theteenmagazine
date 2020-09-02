@@ -8,10 +8,6 @@
     autoSearch: true,
     serviceId: "<%= @service_id %>"
   };
-  // Material Select Initialization
-  $(document).ready(function() {
-  $('.mdb-select').materialSelect();
-  });
 </script>
 <% if !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (@post.collaboration&.include? current_user.email) || (current_user.admin?) %>
 <div id="edit_post">
