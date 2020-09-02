@@ -271,7 +271,7 @@ class PostsController < ApplicationController
     @post.title.gsub!(" Of ", " of ")
     @post.title.gsub!(" On ", " on ")
     @post.title.gsub!(" To ", " to ")
-    @post.title.gsub!(" With ", " without ")
+    @pitch.title.gsub!(" With ", " with ")
     @post.title.gsub!(" In ", " in ")
     loop do
       if @post.content[/style="margin(.*?)"/m, 0].present?
