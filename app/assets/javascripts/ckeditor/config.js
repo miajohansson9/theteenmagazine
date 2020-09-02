@@ -16,17 +16,17 @@ CKEDITOR.editorConfig = function (config) {
 	];
 
   config.allowedContent = {
-        script: true,
-        div: true,
-        iframe: true,
-        $1: {
-            // This will set the default set of elements
-            elements: CKEDITOR.dtd,
-            attributes: true,
-            styles: true,
-            classes: true
-        }
-    };
+    script: true,
+    div: true,
+    iframe: true,
+    $1: {
+        // This will set the default set of elements
+        elements: CKEDITOR.dtd,
+        attributes: true,
+        styles: true,
+        classes: true
+    }
+  };
 
 	config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Cut,SelectAll,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Subscript,Superscript,CopyFormatting,Outdent,Indent,CreateDiv,JustifyBlock,JustifyRight,BidiLtr,BidiRtl,Language,Anchor,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Styles,Font,FontSize,ShowBlocks,About,Scayt,Copy,Maximize,RemoveFormat,PasteFromWord,PasteText,Paste,Find,Undo,Redo';
   config.disableNativeSpellChecker = false;
@@ -34,5 +34,4 @@ CKEDITOR.editorConfig = function (config) {
   config.removePlugins = 'scayt,wsc';
   config.filebrowserImageBrowseUrl = '/ckeditor/pictures';
   config.filebrowserImageUploadUrl = '/ckeditor/pictures';
-  config.pasteFilter = 'p; a[!href];';
 }

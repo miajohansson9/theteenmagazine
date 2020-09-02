@@ -93,8 +93,7 @@
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
           </div>
         </div>
-        <br />
-        <div class="card whats-new-wrapper" style="width: 18rem;">
+        <div class="card whats-new-wrapper" style="width: 18rem; margin-top: 15px">
           <div class="card-header"><%= link_to "What's New...", pitches_path, style: "font-size: 0.9rem; font-weight: bold; text-decoration: none; line-height: 1.5; color: #212529;" %></div>
           <ul class="list-group list-group-flush whats-new">
             <% @pitches.each do |pitch| %>
@@ -107,8 +106,7 @@
             <% end %>
           </ul>
         </div>
-        <br>
-        <i>See more pitches <%= link_to("here", pitches_path, class: "link_inline") %></i>
+        <i style="margin-top: 15px">See more pitches <%= link_to("here", pitches_path, class: "link_inline") %></i>
         <br>
       </div>
     </div>
