@@ -16,11 +16,7 @@ CKEDITOR.editorConfig = function (config) {
 	];
 
   config.allowedContent = true;
-
 	config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Cut,SelectAll,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Subscript,Superscript,CopyFormatting,Outdent,Indent,CreateDiv,JustifyBlock,JustifyRight,BidiLtr,BidiRtl,Language,Anchor,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Styles,Font,FontSize,ShowBlocks,About,Scayt,Copy,Maximize,RemoveFormat,PasteFromWord,PasteText,Paste,Find,Undo,Redo';
-  config.disableNativeSpellChecker = false;
-
-  config.removePlugins = 'scayt,wsc';
   config.filebrowserImageBrowseUrl = '/ckeditor/pictures';
   config.filebrowserImageUploadUrl = '/ckeditor/pictures';
 }
