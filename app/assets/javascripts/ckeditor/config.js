@@ -17,6 +17,8 @@ CKEDITOR.editorConfig = function (config) {
 
   config.allowedContent = {
         script: true,
+        div: true,
+        iframe: true,
         $1: {
             // This will set the default set of elements
             elements: CKEDITOR.dtd,
