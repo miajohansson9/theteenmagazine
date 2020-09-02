@@ -258,6 +258,7 @@ class PostsController < ApplicationController
     @post.title.gsub!(" The ", " the ")
     @post.title.gsub!(" For ", " for ")
     @post.title.gsub!(" An ", " an ")
+    @post.title.gsub!(" And ", " and ")
     @post.title.gsub!(" Nor ", " nor ")
     @post.title.gsub!(" Yet ", " yet ")
     @post.title.gsub!(" So ", " so ")
