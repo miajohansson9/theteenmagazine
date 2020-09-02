@@ -36,7 +36,7 @@
               <% end %>
               <p class="card-text"> Submitted by <%= link_to draft.user.full_name, draft.user %> on <%= draft.reviews.last.updated_at.strftime("%A, %b %d") %> </p>
             </div>
-            <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review" %>
+            <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_pink" %>
           </div>
         </div>
       <% end %>
@@ -59,7 +59,7 @@
               <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
               <p class="card-text"> Submitted by <%= link_to pitch.user.full_name, pitch.user %> on <%= pitch.updated_at.strftime("%A, %b %d") %> </p>
             </div>
-            <%= link_to "View Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review" %>
+            <%= link_to "View Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review", :id => "btn_pink" %>
           </div>
         </div>
       <% end %>
