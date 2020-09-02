@@ -252,7 +252,7 @@ class PostsController < ApplicationController
   private
 
   def fix_formatting
-    @post.title = @post.title.split.map(&:capitalize).join(' ')
+    @post.title = @post.title.split.map{|s| s.slice(0,1).capitalize + s.slice(1..-1)}.join(' ')
     @post.title.gsub!(" A ", " a ")
     @post.title.gsub!(" Is ", " is ")
     @post.title.gsub!(" The ", " the ")
