@@ -783,6 +783,7 @@ footer {
   justify-content: flex-end;
   font-size: 22px !important;
   align-items: center;
+  z-index: 100;
   a {
     height: fit-content;
     .fa {
