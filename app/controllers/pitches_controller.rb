@@ -135,7 +135,7 @@ class PitchesController < ApplicationController
     @pitch.title.gsub!(" Of ", " of ")
     @pitch.title.gsub!(" On ", " on ")
     @pitch.title.gsub!(" To ", " to ")
-    @pitch.title.gsub!(" With ", " without ")
+    @pitch.title.gsub!(" With ", " with ")
     @pitch.title.gsub!(" In ", " in ")
   end
 
