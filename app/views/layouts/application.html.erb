@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:700" rel="stylesheet">
     <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://use.fontawesome.com/9fbc74da52.js"></script>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= javascript_include_tag 'application' %>
@@ -50,7 +50,7 @@
           <p class= "banner_stts" style="background-color: #FF78CB;">The Teen Magazine's August 2020 issue has been released! Download it for free <%= link_to("here", "/subscribe", class: "link_white", target: "_blank") %>.</p>
         </div>
         <div class="bodywrapper">
-          <header id="main_navigation" class="clearfix">
+          <header id="main_navigation" class="clearfix minimal_banner">
             <div id="banner">
               <i class="fa fa-bars toggle-nav" onclick="toggleNav();"></i>
               <a id="name_wrapper" href="/"><%= image_tag "teenmag.png", id: "name" %></a>
@@ -59,6 +59,7 @@
                 <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
                 <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
                 <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+                <a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
               </div>
             </div>
             <div class="border">

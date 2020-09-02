@@ -19,7 +19,7 @@ blockquote {
         <header id="post_title_show">
           <h1 class="title_article_show"><%= @post.title %></h1>
           <h3 id="category_title"><%= link_to(@post.category.name, @post.category) %></h3>
-          <div class="post_info">
+          <div class="post_info post_info_published">
             <% @authors = [@user] + @collabs %>
             <div class="left_side_flex <% if @authors.count == 2 %>flex_column<%end%>">
               <% @authors.each do |author| %>
@@ -31,7 +31,7 @@ blockquote {
               <% end %>
             </div>
             <div class="right_side_wrapper <% if @authors.count == 1 %>right_side_flex<% end %>">
-              <div class="date_wrapper">
+              <div class="date_wrapper published">
                 <p><i class="fa fa-clock-o" style="margin-right: 3px;" aria-hidden="true"></i><p>
                 <p class="date"><%= @date.strftime('%A, %B %d')%></p>
               </div>

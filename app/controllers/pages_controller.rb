@@ -51,6 +51,13 @@ class PagesController < ApplicationController
   end
 
   def search
+    if params[:search].present?
+      @query = params[:search][:query]
+      @posts = Post.published.where("title like ?", "%#{@query}%").paginate(page: params[:page], per_page: 15).order("publish_at desc")
+    else
+      @posts = Post.published.all.paginate(page: params[:page], per_page: 15).order("publish_at desc")
+    end
+    set_meta_tags :title => "Search | The Teen Magazine"
   end
 
   def subscribe
