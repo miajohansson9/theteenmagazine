@@ -21,12 +21,12 @@ class UsersController < ApplicationController
     if @user_posts_approved.length < 1
       begin
         if (current_user.id != @user.id && (!current_user.admin?) && (!current_user.editor?))
-          redirect_to root_path, notice: "This writer does not have a public profile yet."
+          redirect_to "/search?utf8=✓&filter=writers", notice: "This writer does not have a public profile yet."
         elsif (current_user.submitted_profile == nil)
           redirect_to "/onboarding"
         end
       rescue
-        redirect_to root_path, notice: "This writer does not have a public profile yet."
+        redirect_to "/search?utf8=✓&filter=writers", notice: "This writer does not have a public profile yet."
       end
     end
     if current_user.present?

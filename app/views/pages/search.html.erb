@@ -3,36 +3,62 @@
      <div class="other--articles">
        <div class="flex">
           <div class="container">
-            <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
-              <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Searching in All Articles" %>
-              <%= button_tag(class: "btn_no_style") do %>
-                <i class="fa fa-search" aria-hidden="true"></i>
+            <div class="flex_horizontal">
+              <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
+                <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Searching in #{@filter.titleize}" %>
+                <%= f.hidden_field :filter, value: @filter %>
               <% end %>
-            <% end %>
+              <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex  justify-content-left md-form form-sm active-theme-2 mt-2', style: "flex: 1;"}) do |f| %>
+                <%= button_tag(class: "btn_no_style", name: "filter", value: @next) do %>
+                  <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <% end %>
+              <% end %>
+            </div>
              <% if @query.present? %>
                <h2>Searching for... <span style="background-color: yellow"><%= @query %></span></h2>
                <br>
              <% end %>
-             <% @posts.each do |post| %>
-               <div class="thumbnail">
-                 <div class="container--image">
-                   <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
+             <% if @posts.present? %>
+               <% @posts.each do |post| %>
+                 <div class="thumbnail">
+                   <div class="container--image">
+                     <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
+                   </div>
+                   <div class="thumbnail--container">
+                     <p class="date_post_preview"><%= post.category.name %></p>
+                     <h3 class="article_title"><%= link_to post.title, post %></h3>
+                     <p class="date_post_preview"><%= post.publish_at.strftime("%A, %b %d")%></p>
+                   </div>
                  </div>
-                 <div class="thumbnail--container">
-                   <p class="date_post_preview"><%= post.category.name %></p>
-                   <h3 class="article_title"><%= link_to post.title, post %></h3>
-                   <p class="date_post_preview"><%= post.publish_at.strftime("%A, %b %d")%></p>
-                 </div>
-               </div>
-             <% end %>
-             <% if @posts.count.eql? 0 %>
-                <p style="margin-top: -10px;">Your search did not have any results.</p>
-             <% end %>
+               <% end %>
+               <%= will_paginate @posts %>
+              <% elsif @users.present? %>
+                <% @users.each do | user | %>
+                    <div class="flex--profile" style="padding-left: 0; padding-right: 0;">
+                      <% if user.profile.exists? %>
+                        <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+                      <% else %>
+                        <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+                      <% end %>
+                      <div class="info">
+                      <h2 style="margin-bottom: 5px;">
+                        <%= link_to(user.full_name, user) %>
+                      </h2>
+                      <% if user.editor? %>
+                        <span class="editor_status">
+                          Editor
+                        </span>
+                      <% end %>
+                        <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
+                      </div>
+                    </div>
+                  <% end %>
+                <%= will_paginate @users %>
+                <% else %>
+                  <p style="margin-top: -10px;">Your search did not have any results.</p>
+              <% end %>
            </div>
-           <a class="apply" href="/apply" target="blank">
-           </a>
          </div>
-       <%= will_paginate @posts %>
      </div>
     </div>
   </div>

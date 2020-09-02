@@ -53,10 +53,26 @@ class PagesController < ApplicationController
   def search
     if params[:search].present?
       @query = params[:search][:query]
-      @posts = Post.published.where("lower(title) LIKE ?", "%#{@query.downcase}%").published.order("publish_at desc").paginate(page: params[:page], per_page: 15)
+      @filter = params[:search][:filter]
+      if @filter.eql? "writers"
+        @users = User.where("lower(full_name) LIKE ?", "%#{@query.downcase}%").order("full_name desc").paginate(page: params[:page], per_page: 15)
+      else
+        @posts = Post.published.where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc").paginate(page: params[:page], per_page: 15)
+      end
     else
-      @posts = Post.published.all.paginate(page: params[:page], per_page: 15).order("publish_at desc")
+      if params[:filter].present?
+        @filter = params[:filter]
+        if @filter.eql? "writers"
+          @users = User.all.order("full_name desc").paginate(page: params[:page], per_page: 15)
+        else
+          @posts = Post.published.all.paginate(page: params[:page], per_page: 15).order("publish_at desc")
+        end
+      else
+        @filter = "all articles"
+        @posts = Post.published.all.paginate(page: params[:page], per_page: 15).order("publish_at desc")
+      end
     end
+    @next = (@filter.eql? "writers") ? "all articles" : "writers"
     set_meta_tags :title => "Search | The Teen Magazine"
   end
 
