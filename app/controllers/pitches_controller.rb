@@ -122,7 +122,7 @@ class PitchesController < ApplicationController
     @pitch.title.gsub!(" The ", " the ")
     @pitch.title.gsub!(" For ", " for ")
     @pitch.title.gsub!(" An ", " an ")
-    @post.title.gsub!(" And ", " and ")
+    @pitch.title.gsub!(" And ", " and ")
     @pitch.title.gsub!(" Nor ", " nor ")
     @pitch.title.gsub!(" Yet ", " yet ")
     @pitch.title.gsub!(" So ", " so ")
