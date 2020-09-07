@@ -86,7 +86,7 @@
       <% else %>
         <%= f.label "Article Status:" %>
         <% @rejected_cnt = @post.reviews.where(status: "Rejected").count %>
-        <% @editor_options = ((@post.reviews.last.status.eql? "In Review") || (@post.reviews.last.status.eql? "Approved for Publishing")) ? ["In Progress", "Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review", "In Review"] %>
+        <% @editor_options = ((@post.reviews.last.status.eql? "In Review") || (@post.reviews.last.status.eql? "Approved for Publishing")) ? ["Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review", "In Review"] %>
         <% @statuses = current_user.editor? ? @editor_options : ["In Progress", "Ready for Review"] %>
         <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
         <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
