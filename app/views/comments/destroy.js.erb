@@ -1,1 +1,5 @@
 $('#comment_<%= @comment.id %>').remove()
+<% if @parent.present? %>
+  $('.toggle_<%= @parent.id %>').text("Reply (<%= @parent.comments.count %>)");
+<% end %>
+$('.date_ago').val("<%= @comment.user.comments.count %> points, <%= time_ago_in_words(@comment.created_at) %> ago");

@@ -4,7 +4,11 @@
   <% else %>
     document.querySelector('#reply_<%= @parent.id %>').insertAdjacentHTML('afterbegin', '<%= escape_javascript(render @comment) %>');
   <% end %>
+  $('.toggle_<%= @parent.id %>').text("Reply (<%= @parent.comments.count %>)");
+  $('.submit_<%= @parent.id %>').addClass("disabled");
+  $('.comment_val_<%= @parent.id %>').val("");
 <% else %>
   document.querySelector('#list-group-comments').insertAdjacentHTML('afterbegin', '<%= escape_javascript(render @comment) %>') ;
+  $('.submit_0').addClass("disabled");
+  $('.comment_val_0').val("");
 <% end %>
-$('.comment_val').val("");

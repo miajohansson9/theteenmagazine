@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   def destroy
     @post = @comment.post
     if @comment.destroy
+      @parent = Comment.find_by(id: @comment.comment_id)
       respond_to do |format|
         format.js
       end

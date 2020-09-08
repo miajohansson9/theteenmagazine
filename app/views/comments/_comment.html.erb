@@ -12,7 +12,7 @@
     <span><%= comment.text %></span>
     <% @reply_text = comment.comments.present? ? "Reply (#{comment.comments.count})" : "Reply" %>
     <% if comment.comment_id.nil? %>
-      <p id="toggle" onclick="reply('#reply_<%= comment.id %>')" class="link_theme"><%= @reply_text %></p>
+      <p id="toggle" onclick="reply('#reply_<%= comment.id %>')" class="link_theme toggle_<%= comment.id %>"><%= @reply_text %></p>
     <% end %>
     <%= render :partial => 'comments/reply_form', locals: {post: comment.post, comment: @comment, parent: comment } %>
   </div>

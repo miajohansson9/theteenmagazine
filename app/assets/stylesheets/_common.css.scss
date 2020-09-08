@@ -29,6 +29,13 @@
   }
 }
 
+.disabled {
+  opacity: 0.2;
+  &:hover {
+    cursor: none;
+  }
+}
+
 #btn_pink {
   position: absolute;
   color: white;
