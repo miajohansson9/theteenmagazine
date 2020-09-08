@@ -306,7 +306,7 @@ $gray:  #2a2a2a;
   .right_side_flex {
     display: flex;
     flex-direction: row;
-    min-width: 340px;
+    min-width: fit-content;
     justify-content:flex-end;
     align-items: center;
     .social_icons {
@@ -484,7 +484,7 @@ $gray:  #2a2a2a;
   }
 }
 
-@media (max-width: 370px) {
+@media (max-width: 420px) {
   .post_info .right_side_wrapper .published {
     position: relative !important;
     bottom: 0;

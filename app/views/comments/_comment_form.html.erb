@@ -1,0 +1,9 @@
+<div class="comment_form_wrapper">
+  <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+  <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+  <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
+    <%= f.text_area :text, :placeholder => "Your feedback", id: "comment_field", class: "comment_val" %>
+    <%= f.hidden_field :post_id, :post_id => post.id %>
+    <%= f.submit "", class: "submit_comment" %>
+  <% end %>
+</div>

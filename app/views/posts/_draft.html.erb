@@ -80,37 +80,20 @@ blockquote {
         <% else %>
           <h3>Peer comments and reviews</h3>
           <div class="comments">
-            <ul class="list-group list-group-flush">
+            <%= render :partial => 'comments/comment_form', locals: {post: @post, comment: @comment } %>
+            <ul class="list-group list-group-flush" id="list-group-comments">
               <% if @comments.count.eql? 0 %>
                 <i>Social sharing is turned on! Ask other TTM writers to give their feedback on your article by posting the link to this article in the <a href="https://www.facebook.com/groups/615063885673363/" target="_blank" style="color: #65B19D;">Facebook group</a>.</i>
               <% else %>
                 <% @comments.each do |comment| %>
-                  <li class="list-group-item comment">
-                    <% if (comment.user_id.eql? current_user.id) || (@post.user_id.eql? current_user.id) || (current_user.admin) %>
-                      <%= link_to comment_path(comment), method: :delete, class: "delete_btn_x" do %>
-                        <i class="fa fa-times"></i>
-                      <% end %>
-                    <% end %>
-                    <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
-                    <%= link_to(@profile_img, comment.user) %>
-                    <div>
-                      <h6><%= link_to comment.user.full_name, comment.user %></h6>
-                      <span class="date_ago"><%= comment.user.comments.count %> points, <%= time_ago_in_words(comment.created_at) %> ago</span><br>
-                      <span><%= comment.text %></span><br>
-                    </div>
-                  </li>
+                  <%= render :partial => 'comments/comment', locals: {comment: comment, post: @post} %>
                 <% end %>
-              <% end %>
-              <%= form_for @comment do |f| %>
-                <%= f.text_field :text, :placeholder => "Your feedback", class: "comment_field" %>
-                <%= f.hidden_field :post_id, :post_id => @post.id %>
-                <%= f.submit "", class: "submit_comment" %>
               <% end %>
             </ul>
           </div>
           <% if current_user.admin? || current_user.id == @post.user_id %>
-            <div class="btn_cntnr">
-              <%= link_to "Turn off sharing", post_path(@post, sharing: false), :data => {:confirm => "Are you sure you want to turn off peer sharing?"}, class: "newpost--new--profile" %>
+            <div class="btn_cntnr margin_top_20">
+              <%= link_to "Turn off sharing", post_path(@post, sharing: false), :data => {:confirm => "Are you sure you want to turn off peer sharing?"}, class: "newpost--new--profile", style: "float: right;" %>
             </div>
           <% end %>
         <% end %>

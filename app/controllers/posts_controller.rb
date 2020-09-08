@@ -113,7 +113,7 @@ class PostsController < ApplicationController
         @comment = current_user.comments.build(post_id: @post.id)
       end
       if !@post.is_published?
-        @comments = @post.comments.order("created_at asc")
+        @comments = @post.comments.where(comment_id: nil).order("created_at desc")
       else
         @trending = @post.category.posts.published.where(:publish_at => (Time.now - 2.months)..Time.now).order("post_impressions desc").limit(7)
       end

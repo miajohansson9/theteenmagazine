@@ -87,21 +87,64 @@
     font-family: 'Playfair Display';
   }
   .comments {
+    .comment_form_wrapper {
+      display: block !important;
+      margin-top: 20px;
+      img {
+        position: absolute;
+      }
+    }
+    .reply_form_wrapper {
+       display: none;
+     }
+    .comment_form_wrapper, .reply_form_wrapper {
+      padding: 0;
+      form {
+        padding: 10px 0 0 45px !important;
+        position: relative;
+        max-width: 100% !important;
+      }
+      #comment_field {
+        outline: 0;
+        margin: 0 !important;
+        border-width: 2px !important;
+        border-color: #E9E9E9;
+        padding: 5px !important;
+        border-radius: 5px;
+        min-height: 96px;
+        height: 96px;
+      }
+      #comment_field:focus {
+        border-color: #65B19D;
+      }
+    }
+    .submit_comment {
+      width: 35px;
+      height: 35px;
+      border: none;
+      padding: 0;
+      float: right;
+      background-image: url("post_comment.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-bottom: 10px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
     i {
       line-height: 1.5;
       color: black;
     }
     ul {
       padding-left: 0;
-      margin: 15px 0;
+      margin: 0;
+      width: 100%;
       position: relative;
       li {
         padding: 8px 0;
         font-size: 14px;
         margin-right: 0;
-        div {
-          max-width: 85%;
-        }
         span {
           word-wrap: break-word;
         }
@@ -116,6 +159,9 @@
         .date_ago {
           font-size: 12px;
         }
+        #toggle:hover {
+          cursor: pointer;
+        }
       }
       .delete_btn_x {
         width: 15px !important;
@@ -123,35 +169,22 @@
         position: absolute;
         z-index: 10;
       }
-      .submit_comment {
-        width: 35px;
-        height: 35px;
-        border: none;
-        padding: 0;
-        margin: 3px 0 0 0;
-        float: right;
-        background-image: url("post_comment.png");
-        background-size: contain;
-        background-repeat: no-repeat;
-        &:hover {
-          cursor: pointer;
-        }
-      }
     }
     a {
       text-decoration: none;
+      height: fit-content;
     }
   }
 }
 
-.comment_field {
+.text_field {
   outline: 0;
   border-width: 0 0 2px !important;
-  padding-left: 0 !important;
   border-color: #E9E9E9;
-  margin: 10px 0 0 0 !important;
+  margin: 0 !important;
+  padding: 5px !important;
 }
-.comment_field:focus {
+.text_field:focus {
   border-color: #65B19D;
 }
 

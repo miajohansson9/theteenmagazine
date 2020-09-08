@@ -1,18 +1,33 @@
 class CommentsController < ApplicationController
-  before_action :find_comment, except: [:create]
+  before_action :find_comment, only: [:destroy]
 
   def destroy
-    @comment.destroy
-    redirect_to :back
+    @post = @comment.post
+    if @comment.destroy
+      respond_to do |format|
+        format.js
+      end
+    end
   end
 
   def create
     @comment = current_user.comments.build(comment_params)
-    @comment.save
-    if current_user.id != @comment.post.user.id
-      ApplicationMailer.comment_added(@comment.post.user, @comment.post).deliver
+    if @comment.save
+      @parent = Comment.find_by(id: @comment.comment_id)
+      if current_user.id != @comment.post.user.id
+        ApplicationMailer.comment_added(@comment.post.user, @comment.post).deliver
+      end
+      respond_to do |format|
+        format.html { redirect_to @comment.post}
+        format.js
+      end
+    else
+      redirect_to :back
     end
-    redirect_to :back
+  end
+
+  def update
+    create
   end
 
   private
@@ -22,6 +37,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:created_at, :id, :text, :user_id, :post_id)
+    params.require(:comment).permit(:created_at, :id, :text, :user_id, :post_id, :comment_id)
   end
 end

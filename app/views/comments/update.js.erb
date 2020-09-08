@@ -1,0 +1,10 @@
+<% if @parent.present? %>
+  <% if @parent.comments.where.not(id: @comment.id).present? %>
+    document.querySelector('#comment_<%= @parent.comments.where.not(id: @comment.id).last.id %>').insertAdjacentHTML('afterend', '<%= escape_javascript(render @comment) %>') ;
+  <% else %>
+    document.querySelector('#reply_<%= @parent.id %>').insertAdjacentHTML('afterbegin', '<%= escape_javascript(render @comment) %>');
+  <% end %>
+<% else %>
+  document.querySelector('#list-group-comments').insertAdjacentHTML('afterbegin', '<%= escape_javascript(render @comment) %>') ;
+<% end %>
+$('.comment_val').val("");

@@ -27,4 +27,9 @@ function animateValue(id, start, end, duration) {
 
     timer = setInterval(run, stepTime);
     run();
+};
+
+function reply(id) {
+  $(".reply_form_wrapper").stop().slideUp(400);
+  $(id).stop().slideToggle(400);
 }

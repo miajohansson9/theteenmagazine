@@ -57,6 +57,10 @@ iframe {
   max-width: 100%;
 }
 
+.margin_top_20 {
+  margin-top: 20px !important;
+}
+
 .ads_wrapper {
   background-color: #F3F3F3;
   z-index: 600000;
@@ -249,16 +253,16 @@ html, body {
 }
 
 .whats-new, .comments {
-  a, div {
+  a {
     display: inline !important;
   }
   .profile_img_small {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    min-height: 40px;
-    max-width: 40px;
-    max-height: 40px;
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    min-height: 35px;
+    max-width: 35px;
+    max-height: 35px;
     border-radius: 50%;
   }
   .list-group-item {
@@ -307,6 +311,17 @@ hr {
     text-decoration: none;
   }
 }
+
+.link_theme {
+  color: black !important;
+  font-weight: bold;
+  font-size: 0.9em;
+  &:hover {
+    color: black !important;
+    text-decoration: none;
+  }
+}
+
 
 .link_pink {
   color: #FF78CB !important;
