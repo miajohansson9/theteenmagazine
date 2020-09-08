@@ -10,5 +10,6 @@
 <% else %>
   document.querySelector('#list-group-comments').insertAdjacentHTML('afterbegin', '<%= escape_javascript(render @comment) %>') ;
   $('.submit_0').addClass("disabled");
+  $('.comment_val_<%= @comment.id %>').val("");
   $('.comment_val_0').val("");
 <% end %>

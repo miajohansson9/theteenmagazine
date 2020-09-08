@@ -30,14 +30,15 @@ function animateValue(id, start, end, duration) {
 };
 
 function reply(id) {
+  $(".reply_form_wrapper").stop().slideUp(400);
   $(id).stop().slideToggle(400);
 }
 
 function isDisabled(id) {
-  var input = $(`.comment_field_${id}`).val();
+  var input = $('.comment_field_' + id).val();
   if (input != "") {
-    $(`.submit_${id}`).removeClass("disabled");
+    $('.submit_' + id).removeClass("disabled");
   } else {
-    $(`.submit_${id}`).addClass("disabled");
+    $('.submit_' + id).addClass("disabled");
   }
 }

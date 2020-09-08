@@ -15,12 +15,12 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.build(comment_params)
     if @comment.save
       @parent = Comment.find_by(id: @comment.comment_id)
-      if current_user.id != @comment.post.user.id
-        ApplicationMailer.comment_added(@comment.post.user, @comment.post).deliver
-      end
       respond_to do |format|
         format.html { redirect_to @comment.post}
         format.js
+      end
+      if current_user.id != @comment.post.user.id
+        ApplicationMailer.comment_added(@comment.post.user, @comment.post).deliver
       end
     else
       redirect_to :back
