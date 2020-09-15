@@ -10,9 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery.min
 //= require jquery_ujs
 //= require ckeditor/init
+//= require umd/popper.min
 //= require_tree .
 
 /*========================================

@@ -32,7 +32,7 @@
             We have an active dm group there that will keep you updated with everything happening with The Teen Magazine.</li>
             <li>Read through the resources found at the bottom of your dashboard.</li>
             <li>Claim a pitch from the <%= link_to("pitches page", pitches_path) %> and start your first article. If you have your own article idea that fits our audience, you can <%= link_to("pitch a new article", new_pitch_path) %> instead.</li>
-            <li>Once you've finished your first article, you can submit it for review though the article form. Our amazing editors will look it over and give you
+            <li>Once you've finished your first article, you can submit it for review though the article form. Our editors will look it over and give you
             feedback.</li>
           </ol>
           <p>We're so happy you've joined The Teen Magazine! Our editors are looking forward to reading your first article submission.</p>
@@ -65,21 +65,10 @@
       </div>
       <br/>
     </div>
-    <div class="dashboard--writer--flex--two">
-      <div class="links">
-        <div>
-          <%= link_to("Edit Profile", edit_user_path(@user)) %>
-          <%= link_to("Change Password", edit_user_registration_path) %>
-          <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
-          <%= link_to("Claimed Pitches", pitches_path(user_id: @user.id)) %>
-          <%= link_to("Editor Pitches", pitches_path) %>
-          <%= link_to "Pitch a new article", new_pitch_path %>
-          <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-        </div>
-      </div>
-      <p style="width: 100%; min-width: 18rem; margin-top: 15px">This is a new writer account. Your full writer account will be activated
-          once you publish your first article.</p>
-      <br>
+    <div class="dashboard--writer--flex--two" style="width: 30rem;">
+      <%= render "/users/partials/featured_writers", users: @featured_writers %>
+      <p class="pl-3 pr-3 mt-2 pb-3 text-center" style="width: 100%; color: gray;">This is a new writer account. Your public writer account will be activated
+            once you publish your first article.</p>
     </div>
   </div>
 </div>

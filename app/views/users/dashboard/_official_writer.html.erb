@@ -74,40 +74,30 @@
         </div>
         <br>
       </div>
-      <div class="dashboard--writer--flex--two">
-        <div class="links">
-          <div>
-            <%= link_to("Edit Profile", edit_user_path(@user)) %>
-            <%= link_to("Change Password", edit_user_registration_path) %>
-            <%= link_to("Review Onboarding", onboarding_path(:page => "welcome")) %>
-            <%= link_to("Editor Pitches", pitches_path) %>
-            <%= link_to "Pitch a new article", new_pitch_path %>
-            <% if (@user.editor?) && (current_user.editor?)%>
-              <%= link_to "Start a new article", new_post_path %>
-            <% else %>
-              <%= link_to "Editor Application", "/applications/editor" %>
-            <% end %>
-            <% if (current_user.admin?) && (@user.admin?) %>
-              <%= link_to "Writer Applications", applies_path %>
-            <% end %>
-            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+      <div class="dashboard--writer--flex--two" style="width: 30rem;">
+        <% if @featured_writers.include? @user %>
+          <div class="alert alert-success" role="alert">
+            Great job, you're a part of this list!
           </div>
+        <% end %>
+        <%= render "/users/partials/featured_writers", users: @featured_writers %>
+        <div>
+          <div class="card whats-new-wrapper mt-4" style="border-radius: 10px; overflow: hidden;">
+            <div class="card-header"><%= link_to "What's New...", pitches_path, style: "font-size: 0.9rem; font-weight: bold; text-decoration: none; line-height: 1.5; color: #212529;" %></div>
+            <ul class="list-group list-group-flush whats-new">
+              <% @pitches.each do |pitch| %>
+                <li class="list-group-item">
+                  <% @profile_img = pitch.user.profile.exists? ? image_tag(pitch.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+                  <%= link_to(@profile_img, pitch.user) %>
+                  <div><%= link_to(pitch.user.full_name, pitch.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
+                  <br><span class="date_ago"><%= time_ago_in_words(pitch.created_at) %> ago</span></div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <i class="mt-4 d-block">See more pitches <%= link_to("here", pitches_path, class: "link_inline") %></i>
+          <br>
         </div>
-        <div class="card whats-new-wrapper" style="width: 18rem; margin-top: 15px">
-          <div class="card-header"><%= link_to "What's New...", pitches_path, style: "font-size: 0.9rem; font-weight: bold; text-decoration: none; line-height: 1.5; color: #212529;" %></div>
-          <ul class="list-group list-group-flush whats-new">
-            <% @pitches.each do |pitch| %>
-              <li class="list-group-item">
-                <% @profile_img = pitch.user.profile.exists? ? image_tag(pitch.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
-                <%= link_to(@profile_img, pitch.user) %>
-                <div><%= link_to(pitch.user.full_name, pitch.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
-                <br><span class="date_ago"><%= time_ago_in_words(pitch.created_at) %> ago</span></div>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-        <i style="margin-top: 15px">See more pitches <%= link_to("here", pitches_path, class: "link_inline") %></i>
-        <br>
       </div>
     </div>
   </div>

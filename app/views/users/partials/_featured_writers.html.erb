@@ -1,0 +1,23 @@
+<!--Carousel Wrapper-->
+<div>
+  <h6 class="mb-4 text-center ml-4 mr-4">Meet the writers published this week on The Teen Magazine</h6>
+  <div style="width: 100%;" id="multi-item-example" data-interval="false" class="carousel slide carousel-multi-item">
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+      <% users.each_with_index do |user, index| %>
+        <div class="carousel-item <% if index.eql? 0 %> active <% end %>">
+          <div>
+            <%= render :partial => 'profile_minimal', locals: {user: user} %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <!--Controls-->
+    <div class="controls-top">
+      <a class="left-control" href="#multi-item-example" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+      <a class="right-control" href="#multi-item-example" data-slide="next"><i class="fa fa-angle-right"></i></a>
+    </div>
+    <!--/.Controls-->
+    <!--/.Slides-->
+  </div>
+</div>

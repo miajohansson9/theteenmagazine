@@ -22,7 +22,7 @@
     <h3 class="pitch_ttl">Article submissions</h3>
     <div class="flex-wrapper">
       <% @submitted_for_review.each do |draft| %>
-        <div class="card card-review" style="width: 100%;">
+        <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
           <h4 class="card-title pitch_ttl"><%= link_to draft.title, draft %></h4>
           <div class="card-bottom-flex">
             <% if draft.user.profile.exists? %>
@@ -47,7 +47,7 @@
     <h3 class="pitch_ttl">Pitch submissions</h3>
     <div class="flex-wrapper">
       <% @submitted_pitches.each do |pitch| %>
-        <div class="card card-review" style="width: 100%;">
+      <div class="card card-review <% if @unseen_pitches.include? pitch %> unread <% end %>" style="width: 100%;">
           <h4 class="card-title pitch_ttl"><%= link_to pitch.title, pitch %></h4>
           <div class="card-bottom-flex">
             <% if pitch.user.profile.exists? %>

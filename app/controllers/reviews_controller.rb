@@ -15,6 +15,10 @@ class ReviewsController < ApplicationController
       @editors_reviews = Post.all.in_review.where(:reviews => {editor_id: current_user.id}).order("updated_at desc")
       @submitted_for_review = Post.all.submitted.order("updated_at desc")
       @submitted_pitches = Pitch.is_submitted.order("updated_at desc")
+      @unseen_posts = Review.where(:status => "Ready for Review", active: true).where('updated_at > ?', current_user.last_saw_editor_dashboard).map{|r| Post.find_by(id: r.post_id)}.reject(&:blank?)
+      @unseen_pitches = Pitch.is_submitted.where('updated_at > ?', current_user.last_saw_editor_dashboard)
+      current_user.last_saw_editor_dashboard = Time.now
+      current_user.save
       set_meta_tags :title => "Edit | The Teen Magazine"
     else
       redirect_to user_path(current_user), notice: "You are not allowed access to editor reviews."

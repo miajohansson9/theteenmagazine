@@ -6,15 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:700" rel="stylesheet">
     <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="https://use.fontawesome.com/9fbc74da52.js"></script>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
-    <%= javascript_include_tag 'application' %>
     <%= stylesheet_link_tag 'mdbootstrap/css/bootstrap.min.css' %>
     <%= stylesheet_link_tag 'mdbootstrap/css/mdb.min.css' %>
     <%= stylesheet_link_tag 'mdbootstrap/css/style.css' %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application'%>
     <script data-ad-client="ca-pub-4566416931763342" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- Facebook Pixel Code -->
     <script>
@@ -37,8 +36,6 @@
   <body>
     <% if notice %>
       <p class="notice"><%= notice %></p>
-      <% elsif alert %>
-      <p class="alert"><%= alert %></p>
     <% end %>
     <amp-auto-ads type="adsense"
         data-ad-client="ca-pub-4986861624955300">
@@ -100,9 +97,6 @@
       $('document').ready(function() {
         setTimeout(function() {
           $('.notice').slideUp();
-        }, 1500);
-        setTimeout(function() {
-          $('.alert').slideUp();
         }, 1500);
       });
     </script>

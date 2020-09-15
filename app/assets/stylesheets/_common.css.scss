@@ -36,6 +36,10 @@
   }
 }
 
+.unread {
+  background-color: #E6F6FF !important;
+}
+
 #btn_pink {
   position: absolute;
   color: white;
@@ -259,18 +263,19 @@ html, body {
   }
 }
 
+.profile_img_small {
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  min-height: 35px;
+  max-width: 35px;
+  max-height: 35px;
+  border-radius: 50%;
+}
+
 .whats-new, .comments {
   a {
     display: inline !important;
-  }
-  .profile_img_small {
-    width: 35px;
-    height: 35px;
-    min-width: 35px;
-    min-height: 35px;
-    max-width: 35px;
-    max-height: 35px;
-    border-radius: 50%;
   }
   .list-group-item {
     font-size: 12px;
@@ -444,7 +449,7 @@ hr {
   }
 }
 
-.notice, .alert {
+.notice {
   text-align: center;
   padding: 0.9em 0;
   border-bottom: 1px solid #E9E9E9;
@@ -886,10 +891,9 @@ footer {
 
     a {
       font-family: 'Univers-CnUlt', Arial, Sans-serif;
-      text-transform: uppercase;
       letter-spacing: 0.01rem;
       line-height: 1;
-      font-size: 0.75rem;
+      font-size: 0.8em;
       font-weight: 600;
       padding-top: 20px;
       color: black;

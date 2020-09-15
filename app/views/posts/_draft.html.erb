@@ -102,3 +102,18 @@ blockquote {
   </div>
 </div>
 </br>
+
+<script type="text/javascript">
+  $('document').ready(function() {
+    <% if @comment_from_notifications.present? %>
+      <% if @comment_parent_from_notifications.present? %>
+        window.location.hash = "#reply_<%= @comment_parent_from_notifications %>";
+        $('#comment_<%= @comment_from_notifications %>').addClass("unread");
+        reply('#reply_<%= @comment_parent_from_notifications %>');
+      <% else %>
+        window.location.hash = "#comment_<%= @comment_from_notifications %>";
+        $('#comment_<%= @comment_from_notifications %>').addClass("unread");
+      <% end %>
+    <% end %>
+  });
+</script>

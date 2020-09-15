@@ -21,7 +21,7 @@
   <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
     <% @pitches.each do |pitch| %>
     <a href="<%= pitch_path(pitch)%>">
-      <div class="card" style="width: 32%;">
+      <div class="card" style="width: 32%; <% if @unseen_pitches.to_a.include? pitch %>background-color: #E6F6FF;<% end %>">
         <%=image_tag(pitch.thumbnail.url(:card), alt: pitch.title, :class => "card-img-top")%>
         <% if current_user.admin? || current_user.editor? %>
           <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn")%>

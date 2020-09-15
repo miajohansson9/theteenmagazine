@@ -1,0 +1,11 @@
+<li class="list-group-item comment" id="comment_<%=comment.id %>">
+  <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+  <div class="li-content" style="width: 100%;">
+    <%= link_to(@profile_img, comment.user) %>
+    <span><%= link_to comment.user.full_name, comment.user, class: "link_nrml" %> commented on your article <%= link_to(comment.post.title, comment.post, class: "link_nrml") %> <%= time_ago_in_words(comment.created_at) %> ago:
+    <span class="date_ago"><%= comment.text.truncate_words(12) %></span></span>
+  </div>
+  <div class="li-link-wrapper">
+    <%= link_to("", post_path(comment.post, :comment_id => comment.id)) %>
+  </div>
+</li>

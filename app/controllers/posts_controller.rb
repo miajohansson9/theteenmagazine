@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :find_post_history, only: [:show]
   before_action :find_post, only: [:edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:show]
   before_action :load_user,  only: [:show]
   before_action :create,  only: [:unapprove]
   before_filter :log_impression, :only=> [:show]
@@ -45,7 +45,16 @@ class PostsController < ApplicationController
    end
 
   def index
-    @posts = Post.published.all.order("created_at desc").paginate(page: params[:page], per_page: 15)
+    set_meta_tags :title => "Community | The Teen Magazine"
+    @shared_drafts = Post.draft.where(sharing: true).all.order("updated_at desc").paginate(page: params[:page], per_page: 15)
+    @replies  = current_user.comments.map{|c| c.comments.where.not(user_id: current_user.id)}.flatten.reject(&:blank?)
+    @comments_following  = current_user.comments.where.not(comment_id: nil).map{ |c| @parent = Comment.find_by(id: c.comment_id)
+                                                                                 if @parent.try(:comments).present?
+                                                                                   @parent.comments.where('created_at > ?', c.created_at)
+                                                                                 end
+                                                                               }.flatten.reject(&:blank?).delete_if{|c| c.user_id.eql? current_user.id}
+    @post_comments = current_user.posts.draft.map{|p| p.comments.where.not(user_id: current_user.id)}.flatten
+    @all = (@comments_following + @post_comments + @replies).uniq.sort_by(&:created_at).reverse.take(8)
   end
 
   def new
@@ -114,6 +123,10 @@ class PostsController < ApplicationController
       end
       if !@post.is_published?
         @comments = @post.comments.where(comment_id: nil).order("created_at desc")
+        if params[:comment_id].present?
+          @comment_from_notifications = Comment.find(params[:comment_id]).id
+          @comment_parent_from_notifications = Comment.find(params[:comment_id]).comment_id
+        end
       else
         @trending = @post.category.posts.published.where(:publish_at => (Time.now - 2.months)..Time.now).order("post_impressions desc").limit(7)
       end

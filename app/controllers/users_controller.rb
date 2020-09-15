@@ -31,6 +31,8 @@ class UsersController < ApplicationController
     end
     if current_user.present?
       @pitches = Pitch.all.order("created_at desc").limit(4)
+      @featured_writers = Post.where(publish_at: (Time.now - 7.days)..Time.now).order("updated_at desc").map{|p| p.user}.uniq
+      puts @featured_writers.map{|p| p.email}
       @claimed_pitches_cnt =  Pitch.where(claimed_id: @user.id).present? ? Pitch.where(claimed_id: @user.id).count : 0;
       @pageviews = 0
       @user_posts_approved.each do |post|
@@ -111,7 +113,7 @@ class UsersController < ApplicationController
         redirect_to @user, notice: "Your profile has been updated."
       end
     else
-      render 'edit', alert: "Changes were unable to be saved."
+      render 'edit', notice: "Changes were unable to be saved."
     end
   end
 
@@ -144,7 +146,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :do_not_send_emails, :editor, :marketer, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment)
+    params.require(:user).permit(:email, :do_not_send_emails, :editor, :marketer, :full_name, :admin, :first_name, :last_name, :category, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback)
   end
 
   def find_user

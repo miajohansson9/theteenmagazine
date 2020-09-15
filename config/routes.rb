@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   get '/august2020_dbOZUS3qy0rqUJrgazud', to: 'pages#issue'
   post '/august2020_dbOZUS3qy0rqUJrgazud', to: 'pages#issue'
 
-  resources :posts, only: [:new, :create]
+  resources :posts, only: [:new, :create, :index]
   resources :posts, path: "", except: [:new, :create]
 
   get '*path' => redirect('/')

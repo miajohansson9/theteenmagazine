@@ -1,0 +1,37 @@
+<div class="skinny_wrapper" id="comments_feed">
+  <h3>Your points: <%= current_user.comments.count %></h3>
+  <h3>Conversations you're following</h3>
+  <div class="comments">
+    <ul class="list-group list-group-flush" id="list-group-comments">
+      <% @all.each do |comment| %>
+        <% if @replies.include? comment %>
+          <%= render :partial => 'comments/comment_reply', locals: {comment: comment} %>
+        <% elsif @post_comments.include? comment %>
+          <%= render :partial => 'comments/comment_on_post', locals: {comment: comment} %>
+        <% else %>
+          <%= render :partial => 'comments/comment_following', locals: {comment: comment} %>
+        <% end %>
+      <% end %>
+    </ul>
+    <% if @all.count.eql? 0 %>
+      <p><i>You aren't following any conversations. Comment on some articles to get involved in the community.</i></p>
+    <% end %>
+  </div>
+  <h3>Drafts looking for peer feedback</h3>
+  <div class="flex-wrapper flex-drafts">
+    <% @shared_drafts.each do |draft| %>
+      <a href="<%= post_path(draft)%>">
+        <div class="card" style="width: 32%">
+          <%= image_tag(draft.thumbnail.url(:large2), :class => "card-img-top") %>
+          <div class="card-body">
+            <p class="card-text"><%= link_to(draft.user.full_name, draft.user) %> is asking for peer feedback on <%= link_to draft.title, draft %></p>
+          </div>
+          <div class="rounded-bottom mdb-color lighten-3 text-left p-3">
+            <p class="list-inline-item pr-2 white-text"><%= link_to("Give Feedback", post_path(draft), style: "color: white !important;")%></p>
+            <p class="list-inline-item pr-2 white-text"><i class="fa fa-comments" aria-hidden="true"></i> <%= draft.comments.count %> comments</p>
+          </div>
+        </div>
+      </a>
+    <% end %>
+  </div>
+</div>

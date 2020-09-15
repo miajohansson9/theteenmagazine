@@ -4,7 +4,6 @@
     <link rel="icon" href="https://i.ibb.co/TBp2fyD/logot-2.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:700" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
     <script src="https://use.fontawesome.com/9fbc74da52.js"></script>
     <%= display_meta_tags %>
@@ -14,13 +13,10 @@
     <%= stylesheet_link_tag 'mdbootstrap/css/style.css' %>
     <%= stylesheet_link_tag 'onboarding', media: 'all' %>
     <%= javascript_include_tag 'application'%>
-    <%= javascript_include_tag 'dashboard'%>
   </head>
   <body>
     <% if notice %>
       <p class="notice"><%= notice %></p>
-      <% elsif alert %>
-      <p class="alert"><%= alert %></p>
     <% end %>
     <div id="site-wrapper">
       <%= render "layouts/partials/slide-in-menu" %>
@@ -46,13 +42,42 @@
                 <nav class="nav_article">
                   <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
                   <% if user_signed_in? %>
-                     <%= link_to "Create", pitches_path, class: "link" %>
-                     <% if current_user && (current_user.admin? || current_user.editor?) %>
-                       <%= link_to "Edit", reviews_path, class: "link" %>
-                       <%= link_to "Writers", users_path, class: "link" %>
+                     <%= link_to "Pitch an Article", new_pitch_path, class: "link" %>
+                     <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image") %>
+                     <% @unseen_pitches = Pitch.is_approved.not_claimed.where(status: nil).where('updated_at > ?', current_user.last_saw_pitches) %>
+                     <% @notifications = @unseen_pitches.count %>
+                     <% if current_user.admin? %>
+                      <% @unseen_applications = Apply.where('created_at > ?', current_user.last_saw_writer_applications).map{|a| User.where(email: a.email.downcase).present?}.count(false) %>
+                      <% @notifications = @notifications + @unseen_applications %>
+                    <% end %>
+                     <% if current_user.editor? %>
+                       <% @unseen_editor_dashboard_cnt = Review.where(:status => "Ready for Review", active: true).where('updated_at > ?', current_user.last_saw_editor_dashboard).map{|r| Post.find_by(id: r.post_id)}.reject(&:blank?).count +
+                                                         Pitch.is_submitted.where('updated_at > ?', current_user.last_saw_editor_dashboard).count %>
+                       <% @notifications = @notifications + @unseen_editor_dashboard_cnt %>
                      <% end %>
-                     <%= link_to "Dashboard", user_path(current_user), class: "link" %>
-                     <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "link" %>
+                     <div class="dropdown">
+                       <a class="mr-0 btn-floating btn-sm pt-0 dropdown-toggle btn-profile" type="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false"><span><i class="fa fa-bars"></i><%= @profile_img %><% if !(@notifications.eql? 0) %><span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 4px !important;" <% end %>><%= @notifications %></span><% end %></span></a>
+                        <div class="dropdown-menu">
+                          <%= link_to "My Profile", user_path(current_user), class: "dropdown-item" %>
+                          <div class="dropdown-divider"></div>
+                          <% if current_user.editor? %>
+                             <a href="/reviews" class="dropdown-item">Editor Dashboard<% if !(@unseen_editor_dashboard_cnt.eql? 0) %> <span class="sec counter counter-sm"></span><p><%= @unseen_editor_dashboard_cnt %> new</p><% end %></a>
+                          <% end %>
+                          <a href="/pitches" class="dropdown-item">Unclaimed Pitches<% if @unseen_pitches.present? %> <span class="sec counter counter-sm"></span><p><%= @unseen_pitches.count %> new</p><% end %></a>
+                          <a href="/posts" class="dropdown-item">Community <span class="sec counter counter-sm"></span><p>2 new</p></a>
+                          <% if current_user.admin? %>
+                            <a href="/applies" class="dropdown-item">Writer Applications<% if !(@unseen_applications.eql? 0) %> <span class="sec counter counter-sm"></span><p><%= @unseen_applications %> new</p><% end %></a>
+                          <% end %>
+                          <div class="dropdown-divider"></div>
+                          <%= link_to "Edit Profile", edit_user_path(current_user), class: "dropdown-item" %>
+                          <%= link_to "Change Password", edit_user_registration_path, class: "dropdown-item" %>
+                          <%= link_to "Review Onboarding", onboarding_path(:page => "welcome"), class: "dropdown-item" %>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" target="_blank" href="https://www.facebook.com/groups/615063885673363">Writer Facebook Group <i class="fa fa-external-link"></i></a>
+                          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+                        </div>
+                    </div>
                   <% else %>
                       <a class="link" href="/contact-us">Contact</a>
                       <a class="link" href="/apply">Apply</a>
@@ -79,9 +104,6 @@
       $('document').ready(function() {
         setTimeout(function() {
           $('.notice').slideUp();
-        }, 1500);
-        setTimeout(function() {
-          $('.alert').slideUp();
         }, 1500);
       });
     </script>

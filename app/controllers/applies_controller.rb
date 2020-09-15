@@ -1,11 +1,14 @@
 class AppliesController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create]
   before_action :is_admin?, only: [:show, :index]
-  layout 'minimal', only: [:editor]
+  layout 'minimal', only: [:editor, :index]
 
   #show all applications
   def index
     @applies = Apply.all.paginate(page: params[:page]).order("created_at desc")
+    @unseen_applications = Apply.where('created_at > ?', current_user.last_saw_writer_applications)
+    current_user.last_saw_writer_applications = Time.now
+    current_user.save
     set_meta_tags :title => "Writer Applications | The Teen Magazine"
   end
 

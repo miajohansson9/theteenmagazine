@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :pitches
   has_many :comments
+  before_create :set_default_last_seen
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_attached_file :profile, styles: {
@@ -19,6 +21,13 @@ class User < ActiveRecord::Base
   }
 
   self.per_page = 24
+
+  def set_default_last_seen
+    self.last_saw_pitches = Time.now
+    self.last_saw_peer_feedback = Time.now
+    self.last_saw_writer_applications = Time.now
+    self.last_saw_editor_dashboard = Time.now
+  end
 
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :profile, :content_type => /\Aimage\/.*\Z/
