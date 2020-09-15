@@ -40,8 +40,8 @@ Rails.application.routes.draw do
   get "/search" => "pages#search"
   get '/sitemap.xml', to: 'pages#sitemap'
   get '/ads.txt', to: 'pages#ads'
-  get '/august2020_dbOZUS3qy0rqUJrgazud', to: 'pages#issue'
-  post '/august2020_dbOZUS3qy0rqUJrgazud', to: 'pages#issue'
+  get '/september_2020_mbDFSSOqy0rqUJrgazud', to: 'pages#issue'
+  post '/september_2020_mbDFSSOqy0rqUJrgazud', to: 'pages#issue'
 
   resources :posts, only: [:new, :create, :index]
   resources :posts, path: "", except: [:new, :create]
