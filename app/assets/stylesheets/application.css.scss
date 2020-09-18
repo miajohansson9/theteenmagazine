@@ -6,3 +6,20 @@
 @import "welcome";
 @import "category";
 @import "newlayout";
+
+@media (max-width: 1080px) {
+  .nav-title {
+    display: none;
+  }
+  .nav_article {
+    .link {
+      margin-left: 0.8em !important;
+    }
+  }
+}
+
+@media (max-width: 800px)  {
+  .border {
+    display: none;
+  }
+}

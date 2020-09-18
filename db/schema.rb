@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200912164539) do
+ActiveRecord::Schema.define(version: 20200918133632) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 20200912164539) do
     t.integer  "feedback_list",                     default: 0
     t.boolean  "sharing"
     t.boolean  "editor_can_make_changes"
+    t.datetime "promoting_until"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
@@ -203,18 +204,18 @@ ActiveRecord::Schema.define(version: 20200912164539) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                        default: "", null: false
-    t.string   "encrypted_password",           default: "", null: false
+    t.string   "email",                                  default: "", null: false
+    t.string   "encrypted_password",                     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                default: 0,  null: false
+    t.integer  "sign_in_count",                          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
     t.text     "image"
     t.text     "description"
     t.text     "first_name"
@@ -229,7 +230,7 @@ ActiveRecord::Schema.define(version: 20200912164539) do
     t.boolean  "admin"
     t.string   "profile_file_name"
     t.string   "profile_content_type"
-    t.bigint   "profile_file_size"
+    t.integer  "profile_file_size",            limit: 8
     t.datetime "profile_updated_at"
     t.boolean  "editor"
     t.string   "full_name"
@@ -251,6 +252,8 @@ ActiveRecord::Schema.define(version: 20200912164539) do
     t.datetime "last_saw_peer_feedback"
     t.datetime "last_saw_writer_applications"
     t.datetime "last_saw_editor_dashboard"
+    t.datetime "last_saw_community"
+    t.integer  "points",                                 default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

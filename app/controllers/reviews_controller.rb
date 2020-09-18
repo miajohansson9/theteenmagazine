@@ -9,14 +9,14 @@ class ReviewsController < ApplicationController
       @post = Post.friendly.find(params[:post])
       set_meta_tags :title => "Editor Feedback for #{@post.title}"
     elsif (current_user.admin?) || (current_user.editor?)
+      @notifications = @notifications - @unseen_editor_dashboard_cnt
+      @unseen_editor_dashboard_cnt = 0
       if current_user.admin?
         @all_reviews = Post.all.in_review.order("updated_at desc")
       end
       @editors_reviews = Post.all.in_review.where(:reviews => {editor_id: current_user.id}).order("updated_at desc")
       @submitted_for_review = Post.all.submitted.order("updated_at desc")
       @submitted_pitches = Pitch.is_submitted.order("updated_at desc")
-      @unseen_posts = Review.where(:status => "Ready for Review", active: true).where('updated_at > ?', current_user.last_saw_editor_dashboard).map{|r| Post.find_by(id: r.post_id)}.reject(&:blank?)
-      @unseen_pitches = Pitch.is_submitted.where('updated_at > ?', current_user.last_saw_editor_dashboard)
       current_user.last_saw_editor_dashboard = Time.now
       current_user.save
       set_meta_tags :title => "Edit | The Teen Magazine"

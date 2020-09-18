@@ -7,8 +7,7 @@ class PostsController < ApplicationController
   before_filter :log_impression, :only=> [:show]
   load_and_authorize_resource
 
-  layout "application", only: [:show]
-  layout "minimal", except: [:show]
+  layout :set_layout
 
   def load_user
     if @post.user != nil
@@ -46,7 +45,15 @@ class PostsController < ApplicationController
 
   def index
     set_meta_tags :title => "Community | The Teen Magazine"
-    @shared_drafts = Post.draft.where(sharing: true).all.order("updated_at desc").paginate(page: params[:page], per_page: 15)
+    @notifications = @unseen_shared_drafts_cnt - @unseen_shared_drafts_cnt
+    @unseen_shared_drafts_cnt = 0
+    if current_user.points.nil?
+      current_user.points = 0
+      current_user.save
+    end
+    @points = current_user.points
+    @my_shared_drafts = current_user.posts.where(sharing: true, publish_at: nil).draft.order("updated_at desc")
+    @shared_drafts = Post.where(sharing: true).draft.order("updated_at desc").paginate(page: params[:page], per_page: 15)
     @replies  = current_user.comments.map{|c| c.comments.where.not(user_id: current_user.id)}.flatten.reject(&:blank?)
     @comments_following  = current_user.comments.where.not(comment_id: nil).map{ |c| @parent = Comment.find_by(id: c.comment_id)
                                                                                  if @parent.try(:comments).present?
@@ -55,6 +62,8 @@ class PostsController < ApplicationController
                                                                                }.flatten.reject(&:blank?).delete_if{|c| c.user_id.eql? current_user.id}
     @post_comments = current_user.posts.draft.map{|p| p.comments.where.not(user_id: current_user.id)}.flatten
     @all = (@comments_following + @post_comments + @replies).uniq.sort_by(&:created_at).reverse.take(8)
+    current_user.last_saw_community = Time.now
+    current_user.save
   end
 
   def new
@@ -187,7 +196,6 @@ class PostsController < ApplicationController
     @categories = Category.all
     @prev_review = @post.reviews.last.clone
     @prev_status = @post.reviews.last.status.clone
-    fix_formatting
     if @post.update! post_params
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
         @post.content << "<script async src='https://instagram.com/static/bundles/es6/EmbedSDK.js/47c7ec92d91e.js'></script>"
@@ -237,7 +245,11 @@ class PostsController < ApplicationController
       if @new_status.eql? "Rejected"
         ApplicationMailer.article_has_requested_changes(@post.user, @post).deliver
       end
-      if (@new_status.eql? "In Review") && (current_user.editor?)
+      if post_params[:promoting_until].present?
+        @post.user.points = @post.user.points - 300
+        @post.user.save
+        redirect_to "/community", notice: "Your draft is now being promoted!"
+      elsif (@new_status.eql? "In Review") && (current_user.editor?)
         @notice = @prev_review.editor_id == current_user.id ? "Your changes were saved." : "Great job! You've claimed editing this article!"
         if !(@prev_status.eql? "In Review")
           ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
@@ -326,7 +338,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes])
+    params.require(:post).permit(:title, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes])
   end
 
   def find_post_history
@@ -345,6 +357,16 @@ class PostsController < ApplicationController
       @post = Post.friendly.find params[:id]
     rescue
       redirect_to root_path
+    end
+  end
+
+  def set_layout
+    if @post.nil?
+      "minimal"
+    elsif @post.is_published? && @review.nil?
+      "application"
+    else
+      "minimal"
     end
   end
 end

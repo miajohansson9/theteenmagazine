@@ -11,7 +11,7 @@
         <%= link_to(@profile_img, reply.user) %>
         <div class="li-content" style="width: 100%;">
           <h6><%= link_to reply.user.full_name, reply.user %></h6>
-          <span class="date_ago"><%= reply.user.comments.count %> points, <%= time_ago_in_words(reply.created_at) %> ago</span><br>
+          <span class="date_ago"><%= time_ago_in_words(reply.created_at) %> ago</span><br>
           <span><%= reply.text %></span>
         </div>
       </li>

@@ -46,7 +46,13 @@
             </div>
           </div>
         </div>
-        <div class="btn_cntnr"><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %></div>
+        <div class="btn_cntnr">
+          <% if current_user.editor? %>
+             <%= link_to "Start an Article", new_post_path, class: "newpost--new--profile" %>
+          <% else %>
+             <%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %>
+          <% end %>
+        </div>
         <br>
         <div class="dashboard--articles--wrapper">
           <% if @user_pitches.present? %>
@@ -98,6 +104,13 @@
           <i class="mt-4 d-block">See more pitches <%= link_to("here", pitches_path, class: "link_inline") %></i>
           <br>
         </div>
+        <div class="links">
+          <div>
+            <%= link_to("Interview Application", "https://docs.google.com/forms/d/e/1FAIpQLScDJe80_E686pG1L7R5w-84HHZcotFmuBSyQV5rqUB2jUQTag/viewform", target: "_blank") %><br>
+            <%= link_to("Editor Application", "/applications/editor") %>
+          </div>
+        </div>
+        <br>
       </div>
     </div>
   </div>

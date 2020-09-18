@@ -5,8 +5,9 @@ class AppliesController < ApplicationController
 
   #show all applications
   def index
+    @notifications = @notifications - @unseen_applications_cnt
+    @unseen_applications_cnt = 0
     @applies = Apply.all.paginate(page: params[:page]).order("created_at desc")
-    @unseen_applications = Apply.where('created_at > ?', current_user.last_saw_writer_applications)
     current_user.last_saw_writer_applications = Time.now
     current_user.save
     set_meta_tags :title => "Writer Applications | The Teen Magazine"

@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:700" rel="stylesheet">
     <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
     <script src="https://use.fontawesome.com/9fbc74da52.js"></script>
+    <script src="https://kit.fontawesome.com/f816369528.js" crossorigin="anonymous"></script>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'mdbootstrap/css/bootstrap.min.css' %>
@@ -47,7 +48,7 @@
           <p class= "banner_stts" style="background-color: #FF78CB;">The Teen Magazine's September 2020 issue has been released! Download it for free <%= link_to("here", "/subscribe", class: "link_white", target: "_blank") %>.</p>
         </div>
         <div class="bodywrapper">
-          <header id="main_navigation" class="clearfix minimal_banner">
+          <header id="main_navigation" class="clearfix">
             <div id="banner">
               <i class="fa fa-bars toggle-nav" onclick="toggleNav();"></i>
               <a id="name_wrapper" href="/"><%= image_tag "teenmag.png", id: "name" %></a>

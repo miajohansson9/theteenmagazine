@@ -14,6 +14,9 @@
 }
 
 #comments_feed {
+  h3 {
+    margin: 1em 0;
+  }
   .comments {
     .li-content {
       display: flex;
@@ -22,6 +25,9 @@
       }
       a, span {
         font-size: 13px;
+      }
+      .date_ago {
+        margin-left: 0;
       }
     }
     .li-link-wrapper {
@@ -38,7 +44,6 @@
   }
   .flex-drafts {
     margin: 0 auto 40px auto;
-    justify-content: space-between;
   }
 }
 
@@ -448,10 +453,6 @@ a:hover {
   color: #65B19D;
 }
 
-h5, h3 {
-  margin: 20px 0;
-}
-
 .node {
   text-decoration: none !important;
 }
@@ -610,6 +611,12 @@ h5, h3 {
 }
 
 @media (max-width: 600px) {
+  #banner {
+    display: none !important;
+  }
+  .border {
+    border-top: none !important;
+  }
   .skinny_wrapper {
     width: 90%;
   }

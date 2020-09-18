@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
-  devise_for :users, controllers: {:registrations => "users/registrations"}
+  devise_for :users, controllers: {:registrations => "users/registrations", :sessions => "users/sessions"}
 
   devise_scope :user do
     get "/login" => "users/sessions#new"
@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'welcome#index'
 
+  get 'community' => 'posts#index'
   get 'criteria' => 'pages#criteria'
   get 'about-us' => 'pages#team'
   get 'contact-us' => 'pages#contact'
@@ -42,6 +43,9 @@ Rails.application.routes.draw do
   get '/ads.txt', to: 'pages#ads'
   get '/september_2020_mbDFSSOqy0rqUJrgazud', to: 'pages#issue'
   post '/september_2020_mbDFSSOqy0rqUJrgazud', to: 'pages#issue'
+
+  get '/community', to: 'posts#index'
+  post '/community', to: 'posts#index'
 
   resources :posts, only: [:new, :create, :index]
   resources :posts, path: "", except: [:new, :create]

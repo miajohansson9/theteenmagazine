@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_filter :notifications, if: :current_user?
 
   after_action :store_user_location!, if: :storable_location?, only: :authenticate_user
   # The callback which stores the current location must be added before you authenticate the user
@@ -17,6 +18,32 @@ class ApplicationController < ActionController::Base
   # - The request is handled by a Devise controller such as Devise::SessionsController as that could cause an
   #    infinite redirect loop.
   # - The request is an Ajax request as this can lead to very unexpected behaviour.
+
+  def notifications
+    initiate_last_seen
+    @unseen_pitches = Pitch.is_approved.not_claimed.where(status: nil).where.not(user_id: current_user.id).where('updated_at > ?', current_user.last_saw_pitches)
+    @unseen_pitches_cnt = @unseen_pitches.size
+
+    @unseen_shared_drafts  = Post.where(sharing: true, publish_at: nil).draft.where('posts.updated_at > ?', current_user.last_saw_community)
+    @unseen_shared_drafts_cnt  = @unseen_shared_drafts.size
+
+    @notifications = @unseen_pitches_cnt + @unseen_shared_drafts_cnt
+    if current_user.editor?
+      @unseen_posts = Review.where(:status => "Ready for Review", active: true).where('updated_at > ?', current_user.last_saw_editor_dashboard).map{|r| Post.find_by(id: r.post_id)}.reject(&:blank?)
+      @unseen_submitted_pitches = Pitch.is_submitted.where('updated_at > ?', current_user.last_saw_editor_dashboard)
+      @unseen_editor_dashboard_cnt = @unseen_submitted_pitches.size + @unseen_posts.size
+      @notifications = @notifications + @unseen_editor_dashboard_cnt
+    end
+    if current_user.admin?
+      @unseen_applications = Apply.where('created_at > ?', current_user.last_saw_writer_applications)
+      @unseen_applications_cnt = @unseen_applications.size
+      @notifications = @notifications + @unseen_applications_cnt
+    end
+  end
+
+  def current_user?
+    current_user.present?
+  end
 
   def storable_location?
     if current_user.nil?
@@ -35,5 +62,18 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     stored_location_for(resource) || resource
+  end
+
+  def initiate_last_seen
+    if current_user.last_saw_pitches.nil?
+      current_user.last_saw_pitches = Time.now
+      current_user.last_saw_community = Time.now
+    end
+    if current_user.admin && current_user.last_saw_writer_applications.nil?
+      current_user.last_saw_writer_applications = Time.now
+    end
+    if current_user.editor && current_user.last_saw_editor_dashboard.nil?
+      selcurrent_userf.last_saw_editor_dashboard = Time.now
+    end
   end
 end

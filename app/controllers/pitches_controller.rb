@@ -9,6 +9,8 @@ class PitchesController < ApplicationController
   def index
     if params[:user_id].nil?
       @title = "Editor Pitches"
+      @notifications = @notifications - @unseen_pitches_cnt
+      @unseen_pitches_cnt = 0
       set_meta_tags :title => @title
       if params[:pitch].nil?
         @pitch = Pitch.new
@@ -23,7 +25,6 @@ class PitchesController < ApplicationController
       @desc = true
       @message = "There are no unclaimed pitches. Check back in a few days!"
       @button_text = "Claim Pitch"
-      @unseen_pitches = Pitch.is_approved.not_claimed.where(status: nil).where.not(user_id: current_user.id).where('updated_at > ?', current_user.last_saw_pitches)
       current_user.last_saw_pitches = Time.now
       current_user.save
     else
@@ -77,7 +78,6 @@ class PitchesController < ApplicationController
     end
     if @pitch.update pitch_params
       fix_title
-      @pitch.save
       redirect_to @pitch, notice: @message
     else
       render 'edit', notice: "Oops, something went wrong."

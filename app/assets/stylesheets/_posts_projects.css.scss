@@ -279,6 +279,8 @@ iframe { margin: 1em auto;  display: block; }
 
   #category_title a {
     font-family: "Roboto Condensed Light";
+    color: #212529;
+    margin-bottom: .5rem !important;
     &:hover {
       text-decoration: none;
       color: inherit;

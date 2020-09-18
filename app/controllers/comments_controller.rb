@@ -20,6 +20,14 @@ class CommentsController < ApplicationController
         format.js
       end
       if current_user.id != @comment.post.user.id
+        if @comment.post.promoting_until.present? && @comment.post.promoting_until > Time.now
+          @points = @comment.text.size/10
+        else
+          @points = @comment.text.size/20
+        end
+        @points = @points < 10 ? 10 : @points
+        current_user.points = current_user.points + @points
+        current_user.save
         ApplicationMailer.comment_added(@comment.post.user, @comment.post).deliver
       end
     else

@@ -8,7 +8,7 @@
   <%= link_to(@profile_img, comment.user) %>
   <div class="li-content" style="width: 100%;">
     <h6><%= link_to comment.user.full_name, comment.user %></h6>
-    <span class="date_ago"><%= comment.user.comments.count %> points, <%= time_ago_in_words(comment.created_at) %> ago</span><br>
+    <span class="date_ago"><%= time_ago_in_words(comment.created_at) %> ago</span><br>
     <span><%= comment.text %></span>
     <% @reply_text = comment.comments.present? ? "Reply (#{comment.comments.count})" : "Reply" %>
     <% if comment.comment_id.nil? %>

@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:700" rel="stylesheet">
     <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
     <script src="https://use.fontawesome.com/9fbc74da52.js"></script>
+    <script src="https://kit.fontawesome.com/f816369528.js" crossorigin="anonymous"></script>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'mdbootstrap/css/bootstrap.min.css' %>
@@ -25,7 +26,7 @@
           <p class= "banner_stts" style="background-color: #FF78CB;">The Teen Magazine's September 2020 issue has been released! Download it for free <%= link_to("here", "/subscribe", class: "link_white", target: "_blank") %>.</p>
         </div>
         <div class="bodywrapper">
-          <header id="main_navigation" class="clearfix minimal_banner">
+          <header id="main_navigation" class="clearfix">
             <div id="banner">
               <i class="fa fa-bars toggle-nav" onclick="toggleNav();"></i>
               <a id="name_wrapper" href="/"><%= image_tag "teenmag.png", id: "name" %></a>
@@ -42,37 +43,50 @@
                 <nav class="nav_article">
                   <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
                   <% if user_signed_in? %>
-                     <%= link_to "Pitch an Article", new_pitch_path, class: "link" %>
-                     <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image") %>
-                     <% @unseen_pitches = Pitch.is_approved.not_claimed.where(status: nil).where('updated_at > ?', current_user.last_saw_pitches) %>
-                     <% @notifications = @unseen_pitches.count %>
-                     <% if current_user.admin? %>
-                      <% @unseen_applications = Apply.where('created_at > ?', current_user.last_saw_writer_applications).map{|a| User.where(email: a.email.downcase).present?}.count(false) %>
-                      <% @notifications = @notifications + @unseen_applications %>
-                    <% end %>
                      <% if current_user.editor? %>
-                       <% @unseen_editor_dashboard_cnt = Review.where(:status => "Ready for Review", active: true).where('updated_at > ?', current_user.last_saw_editor_dashboard).map{|r| Post.find_by(id: r.post_id)}.reject(&:blank?).count +
-                                                         Pitch.is_submitted.where('updated_at > ?', current_user.last_saw_editor_dashboard).count %>
-                       <% @notifications = @notifications + @unseen_editor_dashboard_cnt %>
+                        <%= link_to "Start an Article", new_post_path, class: "pt-4" %>
+                     <% else %>
+                        <%= link_to "Pitch an Article", new_pitch_path, class: "pt-4" %>
                      <% end %>
                      <div class="dropdown">
+                       <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image") %>
                        <a class="mr-0 btn-floating btn-sm pt-0 dropdown-toggle btn-profile" type="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false"><span><i class="fa fa-bars"></i><%= @profile_img %><% if !(@notifications.eql? 0) %><span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 4px !important;" <% end %>><%= @notifications %></span><% end %></span></a>
                         <div class="dropdown-menu">
                           <%= link_to "My Profile", user_path(current_user), class: "dropdown-item" %>
                           <div class="dropdown-divider"></div>
                           <% if current_user.editor? %>
-                             <a href="/reviews" class="dropdown-item">Editor Dashboard<% if !(@unseen_editor_dashboard_cnt.eql? 0) %> <span class="sec counter counter-sm"></span><p><%= @unseen_editor_dashboard_cnt %> new</p><% end %></a>
+                             <a href="/reviews" class="dropdown-item">Editor Dashboard
+                               <% if @unseen_editor_dashboard_cnt > 0 %>
+                                <span class="sec counter counter-sm"></span><p><%= @unseen_editor_dashboard_cnt %> new</p>
+                               <% end %>
+                             </a>
                           <% end %>
-                          <a href="/pitches" class="dropdown-item">Unclaimed Pitches<% if @unseen_pitches.present? %> <span class="sec counter counter-sm"></span><p><%= @unseen_pitches.count %> new</p><% end %></a>
-                          <a href="/posts" class="dropdown-item">Community <span class="sec counter counter-sm"></span><p>2 new</p></a>
+                          <a href="/pitches" class="dropdown-item">Unclaimed Pitches
+                            <% if @unseen_pitches_cnt > 0 %>
+                              <span class="sec counter counter-sm"></span><p><%= @unseen_pitches_cnt %> new</p>
+                            <% end %>
+                          </a>
+                          <a href="/community" class="dropdown-item">Community
+                            <% if @unseen_shared_drafts_cnt > 0 %>
+                              <span class="sec counter counter-sm"></span><p><%= @unseen_shared_drafts_cnt %> new</p>
+                            <% end %>
+                          </a>
                           <% if current_user.admin? %>
-                            <a href="/applies" class="dropdown-item">Writer Applications<% if !(@unseen_applications.eql? 0) %> <span class="sec counter counter-sm"></span><p><%= @unseen_applications %> new</p><% end %></a>
+                            <a href="/applies" class="dropdown-item">Writer Applications
+                              <% if @unseen_applications_cnt > 0 %>
+                                <span class="sec counter counter-sm"></span><p><%= @unseen_applications_cnt %> new</p>
+                              <% end %>
+                            </a>
                           <% end %>
                           <div class="dropdown-divider"></div>
+                          <% if current_user.editor? %>
+                            <%= link_to "Writers", users_path, class: "dropdown-item" %>
+                          <% else %>
+                            <%= link_to "Review Onboarding", onboarding_path(:page => "welcome"), class: "dropdown-item" %>
+                          <% end %>
                           <%= link_to "Edit Profile", edit_user_path(current_user), class: "dropdown-item" %>
                           <%= link_to "Change Password", edit_user_registration_path, class: "dropdown-item" %>
-                          <%= link_to "Review Onboarding", onboarding_path(:page => "welcome"), class: "dropdown-item" %>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" target="_blank" href="https://www.facebook.com/groups/615063885673363">Writer Facebook Group <i class="fa fa-external-link"></i></a>
                           <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
