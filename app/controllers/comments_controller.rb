@@ -22,10 +22,11 @@ class CommentsController < ApplicationController
       if current_user.id != @comment.post.user.id
         if @comment.post.promoting_until.present? && @comment.post.promoting_until > Time.now
           @points = @comment.text.size/10
+          @points = @points < 20 ? 20 : @points
         else
           @points = @comment.text.size/20
+          @points = @points < 10 ? 10 : @points
         end
-        @points = @points < 10 ? 10 : @points
         current_user.points = current_user.points + @points
         current_user.save
         ApplicationMailer.comment_added(@comment.post.user, @comment.post).deliver
