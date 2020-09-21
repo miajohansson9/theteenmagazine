@@ -1,21 +1,21 @@
 @font-face {
   font-family: "Roboto Condensed Bold";
-  src: url("RobotoCondensed-BoldItalic.ttf");
+  src: font-url("RobotoCondensed-BoldItalic.ttf");
 }
 
 @font-face {
   font-family: "Roboto Condensed Light";
-  src: url("RobotoCondensed-LightItalic.ttf");
+  src: font-url("RobotoCondensed-LightItalic.ttf");
 }
 
 @font-face {
-  font-family: justwaitandsee;
-  src: url("MORVA.otf");
+  font-family: "justwaitandsee";
+  src: font-url("MORVA.otf");
 }
 
 @font-face {
   font-family: "Kristi";
-  src: url("Hidden meanings.ttf");
+  src: font-url("HiddenMeanings.ttf");
 }
 
 * {
