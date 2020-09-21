@@ -7,7 +7,7 @@
             <i class="fa fa-times"></i>
           <% end %>
         <% end %>
-        <% @profile_img = reply.user.profile.exists? ? image_tag(reply.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+        <% @profile_img = reply.user.profile.exists? ? image_tag(reply.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
         <%= link_to(@profile_img, reply.user) %>
         <div class="li-content" style="width: 100%;">
           <h6><%= link_to reply.user.full_name, reply.user %></h6>
@@ -17,7 +17,7 @@
       </li>
     <% end %>
   </ul>
-  <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+  <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
   <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
   <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
     <%= f.text_area :text, :placeholder => "Reply to #{parent.user.try(:full_name)}", id: "comment_field", class: "comment_val_#{parent.id} comment_field_#{parent.id}", onkeyup: "isDisabled('#{parent.id}')" %>

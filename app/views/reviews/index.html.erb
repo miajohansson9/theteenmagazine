@@ -28,7 +28,7 @@
             <% if draft.user.profile.exists? %>
               <%= image_tag draft.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
             <% else %>
-              <%= image_tag "profile_image", :class => "profile_img", :id => "review_img" %>
+              <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
             <% end %>
             <div>
               <% if !draft.pitch.blank? %>
@@ -53,7 +53,7 @@
             <% if pitch.user.profile.exists? %>
               <%= image_tag pitch.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
             <% else %>
-              <%= image_tag "profile_image", :class => "profile_img", :id => "review_img" %>
+              <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
             <% end %>
             <div>
               <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>

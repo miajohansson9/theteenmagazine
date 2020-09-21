@@ -52,7 +52,7 @@
                         <%= link_to "Pitch an Article", new_pitch_path, class: "pt-4" %>
                      <% end %>
                      <div class="dropdown">
-                       <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image") %>
+                       <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image.jpg") %>
                        <a class="mr-0 btn-floating btn-sm pt-0 dropdown-toggle btn-profile" type="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false"><span><i class="fa fa-bars"></i><%= @profile_img %><% if !(@notifications.eql? 0) %><span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 4px !important;" <% end %>><%= @notifications %></span><% end %></span></a>
                         <div class="dropdown-menu">

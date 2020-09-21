@@ -24,7 +24,7 @@ blockquote {
             <div class="left_side_flex <% if @authors.count == 2 %>flex_column<%end%>">
               <% @authors.each do |author| %>
                 <div class="author">
-                  <% @profile = author.profile.exists? ? author.profile.url(:square) : "profile_image" %>
+                  <% @profile = author.profile.exists? ? author.profile.url(:square) : "profile_image.jpg" %>
                   <%= image_tag(@profile, :class => "profile_img") %>
                   <p class="author_name" style="margin-right: 10px;">By <%= link_to(author.full_name, author) %></p>
                 </div>

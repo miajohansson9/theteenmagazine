@@ -4,7 +4,7 @@
       <i class="fa fa-times"></i>
     <% end %>
   <% end %>
-  <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+  <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
   <%= link_to(@profile_img, comment.user) %>
   <div class="li-content" style="width: 100%;">
     <h6><%= link_to comment.user.full_name, comment.user %></h6>

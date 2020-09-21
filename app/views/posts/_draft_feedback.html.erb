@@ -12,7 +12,7 @@
         <i id="response_text"></i>
       </div>
       <div class="comment_form_wrapper mt-0 pl-4 pr-4">
-        <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+        <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
         <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
         <%= form_for(@comment, remote: true, id: "submit-comment-modal") do |f| %>
           <%= f.text_area :text, :placeholder => "Share your thoughts on this text", id: "comment_field", class: "comment_field_modal", onkeyup: "isDisabled('modal')" %>

@@ -1,5 +1,5 @@
 <li class="list-group-item comment" id="comment_<%=comment.id %>">
-  <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image", :class => "profile_img_small") %>
+  <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
   <div class="li-content" style="width: 100%;">
     <%= link_to(@profile_img, comment.user) %>
     <span><%= link_to comment.user.full_name, comment.user, class: "link_nrml" %> also replied to <%= Comment.find(comment.comment_id).user.try(:full_name) %>'s comment <%= time_ago_in_words(comment.created_at) %> ago:
