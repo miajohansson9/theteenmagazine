@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
       current_user.last_saw_writer_applications = Time.now
     end
     if current_user.editor && current_user.last_saw_editor_dashboard.nil?
-      selcurrent_userf.last_saw_editor_dashboard = Time.now
+      current_user.last_saw_editor_dashboard = Time.now
     end
   end
 end
