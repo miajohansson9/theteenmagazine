@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_filter :notifications, if: :current_user?
+  before_filter :onboarding, if: :current_user?
 
   after_action :store_user_location!, if: :storable_location?, only: :authenticate_user
   # The callback which stores the current location must be added before you authenticate the user
@@ -18,6 +19,12 @@ class ApplicationController < ActionController::Base
   # - The request is handled by a Devise controller such as Devise::SessionsController as that could cause an
   #    infinite redirect loop.
   # - The request is an Ajax request as this can lead to very unexpected behaviour.
+
+  def onboarding
+    if current_user.submitted_profile.eql? nil
+      redirect_to "/onboarding", notice: "You must complete the onboarding process first."
+    end
+  end
 
   def notifications
     initiate_last_seen

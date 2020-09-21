@@ -23,7 +23,7 @@ class UsersController < ApplicationController
         if (current_user.id != @user.id && (!current_user.admin?) && (!current_user.editor?))
           redirect_to(:back, notice: "This writer does not have a public profile yet.")
         elsif (current_user.submitted_profile == nil)
-          redirect_to "/onboarding"
+          redirect_to "/onboarding", notice: "You must complete the onboarding process first."
         end
       rescue
         redirect_to(:back, notice: "This writer does not have a public profile yet.")

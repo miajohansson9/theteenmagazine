@@ -12,4 +12,8 @@
   $('.submit_0').addClass("disabled");
   $('.comment_val_<%= @comment.id %>').val("");
   $('.comment_val_0').val("");
+  <% if @comment.response_to.present? %>
+    $('.comment_field_modal').val("");
+    $('#dismiss-modal').click();
+  <% end %>
 <% end %>

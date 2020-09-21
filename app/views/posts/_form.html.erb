@@ -24,7 +24,7 @@
     <%= f.label :title %>
     <%= f.text_field :title %>
     <br>
-    <%= f.label :content, "Write your article here. Make sure you are saving often. Saving can also help fix formatting issues." %><br>
+    <%= f.label :content, "Write your article here. Make sure you are saving often." %><br>
     <%= f.cktext_area :content %>
     <br>
     <% if @post.thumbnail.present? %>
@@ -112,7 +112,10 @@
 
 <script type="text/javascript">
   $('document').ready(function(){
+    var unsaved = false;
+
     $("#edit_post").on("submit", function(event){
+      unsaved = false;
       var reply = true;
       var selected = document.getElementById('post_reviews_attributes_0_status').value;
       var isChecked = $("input[type=checkbox]").is(":checked");
@@ -134,5 +137,21 @@
       <% end %>
       return reply;
     });
+
+    var editor = CKEDITOR.instances.post_content.on( 'change', function( evt ) {
+      unsaved = true;
+    });
+
+    $(":input").change(function(){ //triggers change in all input fields including text type
+      unsaved = true;
+    });
+
+    function unloadPage(){
+      if(unsaved){
+        return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+      }
+    }
+
+    window.onbeforeunload = unloadPage;
   });
 </script>

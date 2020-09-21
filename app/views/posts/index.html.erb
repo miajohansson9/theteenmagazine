@@ -3,9 +3,9 @@
   <div class="progress mt-3">
     <div class="progress-bar" role="progressbar" style="width: <%= @points / 3 %>%" aria-valuenow="<%= @points %>" aria-valuemin="0" aria-valuemax="300"></div>
   </div>
-  <p>You can use your points to promote your shared drafts and get more feedback from other writers. Earn points by commenting and giving valuable feedback on the shared articles below.</p>
+  <p>You can use your points to promote your shared drafts and get more feedback from other writers. Earn points by commenting and giving constructive criticism on other writers' shared drafts below.</p>
   <% if @my_shared_drafts.count.eql? 0 %>
-    <p class="mb-0"><i>You haven't turned on sharing for any of your drafts.</i></p>
+    <p class="mb-0"><i>You don't have any drafts that have sharing turned on.</i></p>
   <% else %>
     <div class="flex-wrapper flex-drafts">
       <% @my_shared_drafts.each do |draft| %>

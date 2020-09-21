@@ -49,10 +49,10 @@ blockquote {
         <div id="content">
           <div class="flex_wrapper_content">
             <div class="post_wrapper">
-              <div class="post_content">
-                <%= markdown @post.content %>
+              <div id="selectable_content" class="post_content">
+                  <%= markdown @post.content %>
               </div>
-              <% if current_user && (current_user.id == @post.user_id || @post.collaboration == current_user.email || current_user.admin? || current_user.editor?) %>
+              <% if current_user && (current_user.id == @post.user_id || (@post.collaboration.include? current_user.email) || current_user.admin?) %>
                 <div id="admin_links">
                   <%= link_to "Edit Article", edit_post_path(@post) %>
                   <% if current_user && (current_user.id == @post.user_id || current_user.admin) %>
@@ -80,9 +80,12 @@ blockquote {
         <% else %>
           <h3>Peer comments and reviews</h3>
           <div class="comments">
+            <% if !(@post.reviews.last.try(:status).eql? "In Progress") %>
+              <i class="d-block mt-3 mb-3">Social sharing in the <%= link_to("writer community", "/community") %> has been paused while your article's status is <b><%= @post.reviews.last.try(:status) %></b>.</i>
+            <% end %>
             <%= render :partial => 'comments/comment_form', locals: {post: @post, comment: @comment } %>
             <ul class="list-group list-group-flush" id="list-group-comments">
-              <% if @comments.count.eql? 0 %>
+              <% if (@comments.count.eql? 0) && (@post.reviews.last.try(:status).eql? "In Progress") %>
                 <i>Social sharing is turned on! Your article is now viewable in the <%= link_to("writer community", "/community") %>.</i>
               <% else %>
                 <% @comments.each do |comment| %>
@@ -104,7 +107,7 @@ blockquote {
 </br>
 
 <script type="text/javascript">
-  $('document').ready(function() {
+  window.onload = function () {
     <% if @comment_from_notifications.present? %>
       <% if @comment_parent_from_notifications.present? %>
         window.location.hash = "#reply_<%= @comment_parent_from_notifications %>";
@@ -115,5 +118,8 @@ blockquote {
         $('#comment_<%= @comment_from_notifications %>').addClass("unread");
       <% end %>
     <% end %>
-  });
+  };
 </script>
+<% if @post.sharing %>
+  <%= javascript_include_tag 'plugins/index_bundle' %>
+<% end %>

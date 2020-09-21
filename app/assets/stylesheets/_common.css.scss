@@ -725,6 +725,9 @@ body {
     color: #333;
     text-align: center;
     text-decoration: none;
+    &:hover {
+      color: #333;
+    }
 
     div {
       height: 40px;

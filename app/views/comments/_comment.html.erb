@@ -9,6 +9,15 @@
   <div class="li-content" style="width: 100%;">
     <h6><%= link_to comment.user.full_name, comment.user %></h6>
     <span class="date_ago"><%= time_ago_in_words(comment.created_at) %> ago</span><br>
+    <% if comment.response_to.present? %>
+      <span class="d-block">Commented on:
+        <span id="anchor_link" style="font-size: 14px;" onclick="scrollToResponseText(`<%= comment.response_to %>`)" class="date_ago mb-2">
+          <i class="fas fa-quote fa-quote-left"></i>
+            <%= comment.response_to.truncate_words(30) %>
+          <i class="fas fa-quote fa-quote-right"></i>
+        </span>
+      </span>
+    <% end %>
     <span><%= comment.text %></span>
     <% @reply_text = comment.comments.present? ? "Reply (#{comment.comments.count})" : "Reply" %>
     <% if comment.comment_id.nil? %>

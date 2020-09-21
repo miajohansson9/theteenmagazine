@@ -13,6 +13,21 @@
    }
 }
 
+.pitch_ttl {
+  margin-top: 1em;
+}
+
+#selectable_content {
+  #response_to_text_0 {
+    background-color: yellow;
+  }
+}
+
+#dismiss-modal {
+  background-color: white !important;
+  color: #2a2a2a !important;
+}
+
 #comments_feed {
   h3 {
     margin: 1em 0;
@@ -598,6 +613,14 @@ a:hover {
   background-color: black;
 }
 
+@media(max-width: 900px) {
+  .flex-wrapper, .flex-drafts {
+    .card {
+      width: 49% !important;
+    }
+  }
+}
+
 @media (max-width: 720px) {
   .flex-wrapper, .flex-drafts {
     flex-direction: column !important;
@@ -607,6 +630,18 @@ a:hover {
   }
   .pitch_form_wrapper {
     padding: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  .nav_article .pt-4 {
+    display: none;
+  }
+}
+
+@media (max-width: 340px) {
+  .nav_article .nav-title {
+    font-size: 1.2rem !important;
   }
 }
 
