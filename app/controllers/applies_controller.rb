@@ -1,7 +1,7 @@
 class AppliesController < ApplicationController
   before_action :authenticate_user!, except: [:new, :create]
   before_action :is_admin?, only: [:show, :index]
-  layout 'minimal', only: [:editor, :index]
+  layout 'minimal', only: [:editor, :index, :show]
 
   #show all applications
   def index
@@ -50,7 +50,7 @@ class AppliesController < ApplicationController
     if @application.deliver
       flash.now[:error] = nil
     else
-      flash.now[:error] = 'Cannot send message'
+      flash.now[:error] = "An error occured. Please check that you've filled out all the fields."
       render :new
     end
   end
@@ -81,6 +81,6 @@ class AppliesController < ApplicationController
   private
 
   def apply_params
-    params.require(:apply).permit(:email, :first_name, :last_name, :nickname, :description)
+    params.require(:apply).permit(:email, :first_name, :last_name, :nickname, :description, :sample_writing, :resume)
   end
 end

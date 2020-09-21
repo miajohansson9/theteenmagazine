@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200921031252) do
+ActiveRecord::Schema.define(version: 20200921182839) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -41,8 +41,16 @@ ActiveRecord::Schema.define(version: 20200921031252) do
     t.string   "nickname"
     t.text     "description"
     t.string   "category"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "resume_file_name"
+    t.string   "resume_content_type"
+    t.bigint   "resume_file_size"
+    t.datetime "resume_updated_at"
+    t.string   "sample_writing_file_name"
+    t.string   "sample_writing_content_type"
+    t.bigint   "sample_writing_file_size"
+    t.datetime "sample_writing_updated_at"
   end
 
   create_table "categories", force: :cascade do |t|

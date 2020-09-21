@@ -27,24 +27,35 @@ pintrk('track', 'pagevisit');
 <h4>We hope you apply to our team, and we can’t wait to read your submission!</h4>
 <br>
   <%= form_for @application do |f| %>
+    <% if @application.errors.any? %>
+      <h2><%= pluralize(@application.errors.count, "error")%> prevented this application from submitting:</h2>
+      <ul>
+        <% @application.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    <% end %>
     <span>First Name</span>
-    <%= f.text_field :first_name, required: true %>
+    <%= f.text_field :first_name, required: true, placeholder: "First" %>
     <br />
     <span>Last Name</span>
-    <%= f.text_field :last_name, required: true %>
+    <%= f.text_field :last_name, required: true, placeholder: "Last" %>
     <br />
-    <span>Email</span>
-    <%= f.email_field :email, required: true %>
-    <p style="margin-top: 0px;">Please write a cover letter introducing yourself and describing why you would be a good fit for The Teen Magazine writer team. Please include links to any previously published work/blog(s) if applicable.</p>
-    <%= f.text_area :description, required: true %>
+    <span>Email Address</span>
+    <%= f.email_field :email, required: true, placeholder: "Email" %>
+    <p style="margin-top: 0px;">Please submit a cover letter describing why you want to write for The Teen Magazine and why you would be a good fit for our team (300-500 words). Include links to any previously published articles if applicable.</p>
+    <%= f.text_area :description, required: true, placeholder: "Write your cover letter here..." %>
     <br />
+    <span class="d-block">Upload your resume (pdf):</span>
+    <%= f.file_field :resume %>
+    <span class="d-block mt-4">Upload a sample of your writing that demonstrates your writing proficiency and style. Please only include a previously-written essay or blog post. Poems and fictional stories will not be considered. (pdf)</span>
+    <%= f.file_field :sample_writing %>
     <%= f.hidden_field :nickname %>
-    <%= f.submit 'Submit Application' %>
+    <div class="btn_cntnr pb-0 mt-4 pt-2" style="float: none !important;"><%= f.submit 'Submit Application', class: "newpost--new--profile mr-0" %></div>
   <% end %>
-  <i style="opacity: 50%;">
+  <i style="opacity: 50%;" class="d-block">
     Applications are accepted on a rolling basis. If accepted, you will receive an email from our team of editors within 48 hours. Please note that writers and editors are not paid and instead write for us
     to gain applicable experience and mentorship in the editorial industry. Read more about us <%= link_to("here", "/about-us", :class => "link_nrml underline") %>.
   </i>
-  <br>
   <br>
 </div>

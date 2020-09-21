@@ -16,9 +16,21 @@
     <span>Cover Letter:</span>
       <p style="margin: 10px 0;"><%= @application.description %></p>
     <br />
+    <% if @application.resume.present? %>
+      <span>Resume:</span>
+      <iframe style="width: 100%; height: 600px;" src="<%= @application.resume %>"></iframe>
+    <% end %>
+    <% if @application.sample_writing.present? %>
+      <span>Sample Writing:</span>
+      <iframe style="width: 100%; height: 600px;" src="<%= @application.sample_writing %>"></iframe>
+      <br>
+    <% end %>
+    <span>Make Editor:</span>
+    <%= f.check_box :editor %>
+    <br><br />
     <%= f.hidden_field :monthly_views, value: 0 %>
     <%= f.hidden_field :password, value: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join %>
-    <%= f.submit 'Accept Application' %>
+    <%= f.submit 'Accept Application', class: "mt-2" %>
   <% end %>
   <br>
   <br>
