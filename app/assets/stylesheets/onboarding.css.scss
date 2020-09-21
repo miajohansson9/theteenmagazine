@@ -133,6 +133,7 @@
       margin: 6px 0 6px 20px;
       border: 1px solid #DDDDDD !important;
       box-shadow: none;
+      -webkit-appearance: none !important;
       &:hover {
         box-shadow: 0 2px 5px 0 rgba(0,0,0,0.18), 0 2px 5px 0 rgba(0,0,0,0.15);
         transition: box-shadow 0.2s ease !important;
