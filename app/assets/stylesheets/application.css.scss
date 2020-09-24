@@ -7,6 +7,10 @@
 @import "category";
 @import "newlayout";
 
+#apply_description {
+  min-height: 400px;
+}
+
 @media (max-width: 1080px) {
   .nav-title {
     display: none;

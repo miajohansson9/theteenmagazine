@@ -1,5 +1,6 @@
 <div class="skinny_wrapper" id="comments_feed">
-  <h3>Your available points: <%= @points %></h3>
+  <h3>Welcome to the community, <%= current_user.first_name %>!</h3>
+  <h4>Your available points: <%= @points %></h4>
   <div class="progress mt-3">
     <div class="progress-bar" role="progressbar" style="width: <%= @points / 3 %>%" aria-valuenow="<%= @points %>" aria-valuemin="0" aria-valuemax="300"></div>
   </div>
