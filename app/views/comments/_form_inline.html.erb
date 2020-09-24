@@ -26,7 +26,7 @@
           <% if comment.user_id.eql? current_user.id %>
             <p class="d-inline link_theme save"><%= f.submit "Save" %></p>
           <% end %>
-          <p class="d-inline link_theme"><%= link_to @reply_text, new_comment_path(parent_id: comment.id), remote: true, class: "link_theme toggle_#{parent.id}", style: "font-size: 1em;" %></p>
+          <p class="d-inline link_theme"><%= link_to @reply_text, new_comment_path(parent_id: comment.id), remote: true, class: "link_theme toggle_#{comment.id}", style: "font-size: 1em;" %></p>
         </span>
       <% elsif comment.user_id.eql? current_user.id %>
         <p class="d-inline link_theme save"><%= f.submit "Save" %></p>
