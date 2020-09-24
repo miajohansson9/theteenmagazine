@@ -27,7 +27,7 @@
       <%= f.text_area :text, :placeholder => "Reply to #{parent.user.full_name}", id: "comment_field_reply", class: "comment_val_#{parent.id} comment_field_#{parent.id}", onkeyup: "isDisabled('#{parent.id}')" %>
       <%= f.hidden_field :post_id, :value => post.id %>
       <%= f.hidden_field :comment_id, :value => parent.id %>
-      <%= f.submit "", class: "submit_comment disabled submit_#{parent.id}" %>
+      <input alt="Submit" src="https://s3.amazonaws.com/media.theteenmagazine.com/post_comment.png" type="image" class="submit_comment disabled submit_<%= parent.id %>" />
     <% end %>
   </div>
 </div>

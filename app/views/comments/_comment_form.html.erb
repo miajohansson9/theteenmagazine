@@ -5,6 +5,6 @@
   <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
     <%= f.text_area :text, :placeholder => @placeholder, id: "comment_field", class: "comment_val_0 comment_field_0", onkeyup: "isDisabled('0')" %>
     <%= f.hidden_field :post_id, :post_id => post.id %>
-    <%= f.submit "", class: "submit_comment disabled submit_0" %>
+    <input alt="Submit" src="https://s3.amazonaws.com/media.theteenmagazine.com/post_comment.png" type="image" class="submit_comment disabled submit_0" />
   <% end %>
 </div>
