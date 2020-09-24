@@ -43,7 +43,9 @@ pintrk('track', 'pagevisit');
     <br />
     <span>Email Address</span>
     <%= f.email_field :email, required: true, placeholder: "Email" %>
-    <p style="margin-top: 0px;">Please submit a cover letter describing why you want to join The Teen Magazine and what you hope to gain from being a part of, and contributing to, our writer community. Include links to any previously published articles if applicable (150-250 words).</p>
+    <span>Grade Level</span>
+    <%= f.select :grade, options_for_select(["College", "12th grade", "11th grade", "10th grade", "9th grade"]), :prompt => "Select a grade" %>
+    <p>Please submit a cover letter describing why you want to join The Teen Magazine and what you hope to gain from being a part of, and contributing to, our writer community. Include links to any previously published articles if applicable (150-250 words).</p>
     <%= f.text_area :description, required: true, placeholder: "Write your cover letter here..." %>
     <br />
     <span class="d-block">Upload your resume (pdf):</span>

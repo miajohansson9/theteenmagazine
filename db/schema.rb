@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200921182839) do
+ActiveRecord::Schema.define(version: 20200924223655) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20200921182839) do
     t.string   "sample_writing_content_type"
     t.bigint   "sample_writing_file_size"
     t.datetime "sample_writing_updated_at"
+    t.string   "grade"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -135,6 +136,22 @@ ActiveRecord::Schema.define(version: 20200921182839) do
     t.integer  "user_id"
     t.text     "email_draft"
     t.boolean  "sent"
+  end
+
+  create_table "phrasing_phrase_versions", force: :cascade do |t|
+    t.integer  "phrasing_phrase_id"
+    t.text     "value"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["phrasing_phrase_id"], name: "index_phrasing_phrase_versions_on_phrasing_phrase_id"
+  end
+
+  create_table "phrasing_phrases", force: :cascade do |t|
+    t.string   "locale"
+    t.string   "key"
+    t.text     "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pitches", force: :cascade do |t|

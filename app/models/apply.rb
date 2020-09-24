@@ -5,6 +5,7 @@ class Apply < ActiveRecord::Base
   attributes :last_name,  :validate => true
   attributes :email, :validate => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
   attributes :description, :validate => true
+  attributes :grade,  :validate => true
   attributes :nickname,   :captcha => true
   attributes :resume,  :validate => true
   attributes :sample_writing,  :validate => true

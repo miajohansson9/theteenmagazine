@@ -13,8 +13,11 @@
     <span>Email</span>
     <%= f.email_field :email, required: true, value: @application.email %>
     <br />
-    <span>Cover Letter:</span>
-      <p style="margin: 10px 0;"><%= @application.description %></p>
+    <span>Grade level:</span>
+    <b><%= @application.grade %></b>
+    <br>
+    <span class="d-block mt-4">Cover Letter:</span>
+      <p style="margin: 10px 0 0 0;"><%= @application.description %></p>
     <br />
     <% if @application.resume.present? %>
       <span>Resume:</span>
