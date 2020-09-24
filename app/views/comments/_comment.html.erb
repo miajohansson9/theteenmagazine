@@ -1,4 +1,4 @@
-<li class="list-group-item comment" id="comment_<%=comment.id %>">
+<li class="list-group-item comment" id="comment_<%= comment.id %>" style="width: 100%;">
   <% if (comment.user_id.eql? current_user.id) || (comment.post.user_id.eql? current_user.id) || (current_user.admin) %>
     <%= link_to comment_path(comment), method: :delete, data: {confirm: "Are you sure you want to delete this comment?"}, class: "delete_btn_x", :remote => true do %>
       <i class="fa fa-times"></i>
@@ -18,11 +18,17 @@
         </span>
       </span>
     <% end %>
-    <span><%= comment.text %></span>
+    <span class="comment_text"><%= comment.text %></span>
     <% @reply_text = comment.comments.present? ? "Reply (#{comment.comments.count})" : "Reply" %>
     <% if comment.comment_id.nil? %>
-      <p id="toggle" onclick="reply('#reply_<%= comment.id %>')" class="link_theme toggle_<%= comment.id %>"><%= @reply_text %></p>
+      <span class="d-block">
+        <% if comment.user_id.eql? current_user.id %>
+          <p class="d-inline link_theme"><%= link_to "Edit", edit_comment_path(comment), remote: true, class: "link_theme", style: "font-size: 1em;" %></p>
+        <% end %>
+        <p class="d-inline link_theme"><%= link_to @reply_text, new_comment_path(parent_id: comment.id), remote: true, class: "link_theme toggle_#{comment.id}", style: "font-size: 1em;" %></p>
+      </span>
+    <% elsif comment.user_id.eql? current_user.id %>
+      <p class="d-inline link_theme"><%= link_to "Edit", edit_comment_path(comment), remote: true, class: "link_theme", style: "font-size: 1em;" %></p>
     <% end %>
-    <%= render :partial => 'comments/reply_form', locals: {post: comment.post, comment: @comment, parent: comment } %>
   </div>
 </li>

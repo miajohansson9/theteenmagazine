@@ -1,6 +1,6 @@
 <div class="reply_form_wrapper" id="reply_<%= parent.id %>">
   <ul class="list-group list-group-flush" id="list-group-comments">
-    <% parent.comments.each do |reply| %>
+    <% replies.order("created_at asc").each do |reply| %>
       <li class="list-group-item comment" id="comment_<%=reply.id %>">
         <% if (reply.user_id.eql? current_user.id) || (reply.post.user_id.eql? current_user.id) || (current_user.admin) %>
           <%= link_to comment_path(reply), method: :delete, data: {confirm: "Are you sure you want to delete this comment?"}, class: "delete_btn_x", :remote => true do %>
@@ -12,17 +12,22 @@
         <div class="li-content" style="width: 100%;">
           <h6><%= link_to reply.user.full_name, reply.user %></h6>
           <span class="date_ago"><%= time_ago_in_words(reply.created_at) %> ago</span><br>
-          <span><%= reply.text %></span>
+          <span class="comment_text"><%= reply.text %></span>
+          <% if reply.user_id.eql? current_user.id %>
+            <p class="d-inline link_theme"><%= link_to "Edit", edit_comment_path(reply), remote: true, class: "link_theme", style: "font-size: 1em;" %></p>
+          <% end %>
         </div>
       </li>
     <% end %>
   </ul>
-  <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
-  <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
-  <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
-    <%= f.text_area :text, :placeholder => "Reply to #{parent.user.try(:full_name)}", id: "comment_field", class: "comment_val_#{parent.id} comment_field_#{parent.id}", onkeyup: "isDisabled('#{parent.id}')" %>
-    <%= f.hidden_field :post_id, :post_id => post.id %>
-    <%= f.hidden_field :comment_id, :value => parent.id %>
-    <%= f.submit "", class: "submit_comment disabled submit_#{parent.id}" %>
-  <% end %>
+  <div class="comment_form_wrapper mt-0 pl-0">
+    <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+    <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+    <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
+      <%= f.text_area :text, :placeholder => "Reply to #{parent.user.full_name}", id: "comment_field_reply", class: "comment_val_#{parent.id} comment_field_#{parent.id}", onkeyup: "isDisabled('#{parent.id}')" %>
+      <%= f.hidden_field :post_id, :value => post.id %>
+      <%= f.hidden_field :comment_id, :value => parent.id %>
+      <%= f.submit "", class: "submit_comment disabled submit_#{parent.id}" %>
+    <% end %>
+  </div>
 </div>

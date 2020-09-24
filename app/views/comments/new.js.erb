@@ -1,0 +1,5 @@
+var toggle = document.getElementById("reply_<%= @parent.id %>");
+if (!toggle) {
+  document.getElementById('<%= dom_id(@parent) %>').insertAdjacentHTML('afterend', "<%= j render 'reply_form', replies: @replies, post: @post, comment: @comment, parent: @parent %>")
+}
+reply('#reply_<%= @parent.id %>');

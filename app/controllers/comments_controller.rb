@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :find_comment, only: [:destroy]
+  before_action :find_comment, only: [:destroy, :update, :edit]
 
   def destroy
     @post = @comment.post
@@ -37,7 +37,25 @@ class CommentsController < ApplicationController
   end
 
   def update
-    create
+    respond_to do |format|
+      if @comment.update(comment_params)
+        format.js {}
+        format.html { redirect_to @comment.post }
+      else
+        format.js {}
+        format.html { render :edit }
+      end
+    end
+  end
+
+  def edit
+  end
+
+  def new
+    @parent = Comment.find(params[:parent_id])
+    @replies = @parent.comments
+    @post = @parent.post
+    @comment = current_user.comments.build
   end
 
   private

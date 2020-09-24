@@ -1,0 +1,36 @@
+<%= form_for comment, remote: true, :html => {id: dom_id(comment, 'form_inline')} do |f| %>
+  <li class="comment_form_wrapper form_inline_wrapper list-group-item comment" style="width: 100%;">
+    <% if (comment.user_id.eql? current_user.id) || (comment.post.user_id.eql? current_user.id) || (current_user.admin) %>
+      <%= link_to comment_path(comment), method: :delete, data: {confirm: "Are you sure you want to delete this comment?"}, class: "delete_btn_x", :remote => true do %>
+        <i class="fa fa-times"></i>
+      <% end %>
+    <% end %>
+    <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+    <%= link_to(@profile_img, comment.user) %>
+    <div class="li-content" style="width: 100%;">
+      <h6><%= link_to comment.user.full_name, comment.user %></h6>
+      <span class="date_ago"><%= time_ago_in_words(comment.created_at) %> ago</span><br>
+      <% if comment.response_to.present? %>
+        <span class="d-block">Commented on:
+          <span id="anchor_link" style="font-size: 14px;" onclick="scrollToResponseText(`<%= comment.response_to %>`)" class="date_ago mb-2">
+            <i class="fas fa-quote fa-quote-left"></i>
+              <%= comment.response_to.truncate_words(30) %>
+            <i class="fas fa-quote fa-quote-right"></i>
+          </span>
+        </span>
+      <% end %>
+      <%= f.text_area :text, id: "comment_field", class: "comment_val_0 comment_field_0", onkeyup: "isDisabled('0')" %>
+      <% @reply_text = comment.comments.present? ? "Reply (#{comment.comments.count})" : "Reply" %>
+      <% if comment.comment_id.nil? %>
+        <span class="d-block">
+          <% if comment.user_id.eql? current_user.id %>
+            <p class="d-inline link_theme save"><%= f.submit "Save" %></p>
+          <% end %>
+          <p class="d-inline link_theme"><%= link_to @reply_text, new_comment_path(parent_id: comment.id), remote: true, class: "link_theme toggle_#{parent.id}", style: "font-size: 1em;" %></p>
+        </span>
+      <% elsif comment.user_id.eql? current_user.id %>
+        <p class="d-inline link_theme save"><%= f.submit "Save" %></p>
+      <% end %>
+    </div>
+  </li>
+<% end %>

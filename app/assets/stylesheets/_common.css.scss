@@ -279,7 +279,7 @@ html, body {
   }
   .list-group-item {
     font-size: 12px;
-    display: flex !important;
+    display: flex;
     flex-direction: row;
     border: none;
   }
@@ -324,13 +324,18 @@ hr {
   }
 }
 
-.link_theme {
+.link_theme, .link_theme input {
   color: black !important;
   font-weight: bold;
   font-size: 0.9em;
+  font-family: "Playfair Display";
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+  border: none !important;
   &:hover {
     color: black !important;
     text-decoration: none;
+    border: none !important;
   }
 }
 
