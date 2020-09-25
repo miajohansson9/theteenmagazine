@@ -106,8 +106,11 @@
         </div>
         <div class="links">
           <div>
-            <%= link_to("Interview Application", "https://docs.google.com/forms/d/e/1FAIpQLScDJe80_E686pG1L7R5w-84HHZcotFmuBSyQV5rqUB2jUQTag/viewform", target: "_blank") %><br>
-            <%= link_to("Editor Application", "/applications/editor", target: "_blank") %>
+            <%= link_to("Interview Application", "https://forms.gle/eQyETofL6M1bxvqy5", target: "_blank") %><br>
+            <%= link_to("Editor Application", "/applications/editor", target: "_blank") %><br>
+            <% if current_user.admin? %>
+              <%= link_to("New Partner Profile", new_user_path) %>
+            <% end %>
           </div>
         </div>
         <br>

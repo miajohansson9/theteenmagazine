@@ -55,7 +55,7 @@ class PagesController < ApplicationController
       @query = params[:search][:query]
       @filter = params[:search][:filter]
       if @filter.eql? "writers"
-        @users = User.where("lower(full_name) LIKE ?", "%#{@query.downcase}%").order("full_name asc").paginate(page: params[:page], per_page: 15)
+        @users = User.where(partner: [false, nil]).where("lower(full_name) LIKE ?", "%#{@query.downcase}%").order("full_name asc").paginate(page: params[:page], per_page: 15)
       else
         @posts = Post.published.where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc").paginate(page: params[:page], per_page: 15)
       end
@@ -63,7 +63,7 @@ class PagesController < ApplicationController
       if params[:filter].present?
         @filter = params[:filter]
         if @filter.eql? "writers"
-          @users = User.all.order("full_name asc").paginate(page: params[:page], per_page: 15)
+          @users = User.where(partner: [false, nil]).order("full_name asc").paginate(page: params[:page], per_page: 15)
         else
           @posts = Post.published.all.paginate(page: params[:page], per_page: 15).order("publish_at desc")
         end

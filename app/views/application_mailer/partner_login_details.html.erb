@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+    <p><%= @partner.full_name %> was just added as a partner on The Teen Magazine. Please share the login information below with them.</p>
+    <p>Username: <%= @partner.email %></p>
+    <p>Password: <%= @partner.password %></p>
+    <p>Login at <%= link_to("theteenmagazine.com/login", "https://www.theteenmagazine.com/login") %></p>
+    <p>Once they log in, they will be able to view and give feedback on any articles you share with them. To share an article, go to the created <%= link_to("partner profile", "/partners/#{@partner.slug}")) %> and click on "Share Article with <%= @partner.full_name %>".
+       Please note that when the article is published, they will also be able to view in real time engagement and stats. Please reach out to mia@theteenmagazine.com with any questions.</p>
+    <p>- The Teen Magazine</p>
+  </body>
+</html>

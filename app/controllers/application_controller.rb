@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   # - The request is an Ajax request as this can lead to very unexpected behaviour.
 
   def onboarding
-    if current_user.submitted_profile.eql? nil
+    if (current_user.submitted_profile.eql? nil) && (!current_user.partner)
       redirect_to "/onboarding", notice: "You must complete the onboarding process first."
     end
   end

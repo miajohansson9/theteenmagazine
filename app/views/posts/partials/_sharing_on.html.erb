@@ -1,0 +1,21 @@
+<h3>Peer comments and reviews</h3>
+<div class="comments">
+  <% if !(post.reviews.last.try(:status).eql? "In Progress") %>
+    <i class="d-block mt-3 mb-3">Social sharing in the <%= link_to("writer community", "/community") %> has been paused while your article's status is <b><%= post.reviews.last.try(:status) %></b>.</i>
+  <% end %>
+  <%= render :partial => 'comments/comment_form', locals: {post: post, comment: comment } %>
+  <ul class="list-group list-group-flush" id="list-group-comments">
+    <% if (comments.count.eql? 0) && (post.reviews.last.try(:status).eql? "In Progress") %>
+      <i>Social sharing is turned on! Your article is now viewable in the <%= link_to("writer community", "/community") %>.</i>
+    <% else %>
+      <% comments.each do |comment| %>
+        <%= render :partial => 'comments/comment', locals: {comment: comment, post: post} %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+<% if (current_user.admin? || current_user.id == post.user_id) %>
+  <div class="btn_cntnr margin_top_20">
+    <%= link_to "Turn off sharing", post_path(post, sharing: false), :data => {:confirm => "Are you sure you want to turn off peer sharing?"}, class: "newpost--new--profile", style: "float: right;" %>
+  </div>
+<% end %>

@@ -20,7 +20,7 @@ blockquote {
   <div class="post_image">
   </div>
 </div>
-<div class="flex_wrapper_posts">
+<div class="flex_wrapper_posts mb-4">
   <div class="skinny wrapper_padding" id="post_show_content">
     <div class="flex_wrapper_columns">
       <div class="content_wrapper">
@@ -71,41 +71,17 @@ blockquote {
         </div>
       </div>
       <div class="share_article_feedback">
-        <% if @post.sharing != true %>
-          <h3 class="title">Get peer feedback on your article</h3>
-          <br>
-          <div class="btn_cntnr">
-            <%= link_to "Turn on sharing", post_path(@post, sharing: true), class: "newpost--new--profile" %>
-          </div>
+        <% if @post.partner_id.present? %>
+          <%= render :partial => 'posts/partials/partner_comments', locals: {partner: @partner, post: @post, comments: @comments, comment: @comment} %>
+        <% elsif @post.sharing %>
+          <%= render :partial => 'posts/partials/sharing_off', locals: {post: @post} %>
         <% else %>
-          <h3>Peer comments and reviews</h3>
-          <div class="comments">
-            <% if !(@post.reviews.last.try(:status).eql? "In Progress") %>
-              <i class="d-block mt-3 mb-3">Social sharing in the <%= link_to("writer community", "/community") %> has been paused while your article's status is <b><%= @post.reviews.last.try(:status) %></b>.</i>
-            <% end %>
-            <%= render :partial => 'comments/comment_form', locals: {post: @post, comment: @comment } %>
-            <ul class="list-group list-group-flush" id="list-group-comments">
-              <% if (@comments.count.eql? 0) && (@post.reviews.last.try(:status).eql? "In Progress") %>
-                <i>Social sharing is turned on! Your article is now viewable in the <%= link_to("writer community", "/community") %>.</i>
-              <% else %>
-                <% @comments.each do |comment| %>
-                  <%= render :partial => 'comments/comment', locals: {comment: comment, post: @post} %>
-                <% end %>
-              <% end %>
-            </ul>
-          </div>
-          <% if current_user.admin? || current_user.id == @post.user_id %>
-            <div class="btn_cntnr margin_top_20">
-              <%= link_to "Turn off sharing", post_path(@post, sharing: false), :data => {:confirm => "Are you sure you want to turn off peer sharing?"}, class: "newpost--new--profile", style: "float: right;" %>
-            </div>
-          <% end %>
+          <%= render :partial => 'posts/partials/sharing_on', locals: {user: @user, post: @post, comments: @comments, comment: @comment} %>
         <% end %>
       </div>
     </div>
   </div>
 </div>
-</br>
-
 <script type="text/javascript">
   window.onload = function () {
     <% if @comment_from_notifications.present? %>
@@ -120,6 +96,6 @@ blockquote {
     <% end %>
   };
 </script>
-<% if @post.sharing %>
+<% if @post.sharing || @post.partner_id.present? %>
   <%= javascript_include_tag 'plugins/index_bundle' %>
 <% end %>

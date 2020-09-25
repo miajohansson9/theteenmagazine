@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200924223655) do
+ActiveRecord::Schema.define(version: 20200925180550) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(version: 20200924223655) do
     t.boolean  "sharing"
     t.boolean  "editor_can_make_changes"
     t.datetime "promoting_until"
+    t.integer  "partner_id"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
@@ -280,6 +281,7 @@ ActiveRecord::Schema.define(version: 20200924223655) do
     t.datetime "last_saw_editor_dashboard"
     t.datetime "last_saw_community"
     t.integer  "points",                                 default: 0
+    t.boolean  "partner"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

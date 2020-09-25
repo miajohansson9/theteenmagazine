@@ -99,4 +99,10 @@ class ApplicationMailer < ActionMailer::Base
       mail(to: user.email, subject: "There are #{@submitted} articles waiting to be reviewed", from: "Mia from The Teen Magazine <miajohansson@college.harvard.edu>")
     end
   end
+
+  def partner_login_details(user, partner)
+    @user = user
+    @partner = partner
+    mail(to: user.email, subject: "#{partner.full_name} login info")
+  end
 end

@@ -7,7 +7,8 @@ Rails.application.routes.draw do
     get "/onboarding" => "users#onboarding"
   end
 
-  resources :users
+  resources :users, path: "writers", except: [:new]
+  resources :users, path: "partners", only: [:new]
   resources :contacts, only: [:new, :create]
   resources :applies
   resources :categories
@@ -41,6 +42,10 @@ Rails.application.routes.draw do
   get "/search" => "pages#search"
   get '/sitemap.xml', to: 'pages#sitemap'
   get '/ads.txt', to: 'pages#ads'
+  get '/partners/:id', to: 'users#partner'
+  get '/partners', to: 'users#show_partners'
+  get '/partners/:id/share', to: 'users#share'
+  get '/partners/:id/published', to: 'users#sponsored'
   get '/september_2020_mbDFSSOqy0rqUJrgazud', to: 'pages#issue'
   post '/september_2020_mbDFSSOqy0rqUJrgazud', to: 'pages#issue'
 

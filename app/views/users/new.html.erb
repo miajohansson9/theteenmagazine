@@ -1,0 +1,30 @@
+<%= image_tag "new_partner_background.jpg", id: "banner_writing" %>
+<div class="skinny_wrapper mt-4">
+  <h3>Create a Partner Profile</h3>
+  <p>Partners consist of any third party that The Teen Magazine works with to deliver an interview or sponsored article. Create a partner profile when you want to share a draft and receive feedback from an outside party. Stats for the article will automatically be shared with them.</p>
+  <%= form_for @user do |f| %>
+    <% if @user.errors.any? %>
+      <h2><%= pluralize(@user.errors.count, "error")%> prevented this post from saving:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <%= f.label "Partner Name" %>
+    <%= f.text_field :full_name, placeholder: "Name" %>
+
+    <%= f.label "Upload partner photo or logo" %><br>
+    <%= f.file_field :profile %><br/><br/>
+
+    <%= f.label "Contact Email" %><br>
+    <%= f.text_field :email, placeholder: "Email" %>
+
+    <%= f.label "Unique Password:" %>
+    <% @password = (0...8).map { (65 + rand(26)).chr }.join %>
+    <%= f.text_field :password, value: @password %>
+    <%= f.hidden_field :partner, :value => true %>
+
+    <%= f.submit "Create Partner", class: "mt-2" %>
+  <% end %>
+</div>

@@ -1,0 +1,23 @@
+<h3 class="title mb-2">This draft was shared with <%= link_to(partner.try(:full_name), partner) %></h3>
+<i>While we keep all opinions our own, we encourage you to give feedback on this article and let us know how we're doing.
+   To give specific feedback, highlight and comment by text, or write a more general comment below.</i>
+<div class="comments">
+  <% if !(post.reviews.last.try(:status).eql? "In Progress") %>
+    <i class="d-block mt-3 mb-3">Social sharing in the <%= link_to("writer community", "/community") %> has been paused while your article's status is <b><%= post.reviews.last.try(:status) %></b>.</i>
+  <% end %>
+  <%= render :partial => 'comments/comment_form', locals: {post: post, comment: comment } %>
+  <ul class="list-group list-group-flush" id="list-group-comments">
+    <% if (comments.count.eql? 0) && (post.reviews.last.try(:status).eql? "In Progress") %>
+      <i>Social sharing is turned on! Your article is now viewable in the <%= link_to("writer community", "/community") %>.</i>
+    <% else %>
+      <% comments.each do |comment| %>
+        <%= render :partial => 'comments/comment', locals: {comment: comment, post: post} %>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+<% if (current_user.admin? || current_user.id == post.user_id) %>
+  <div class="btn_cntnr margin_top_20">
+    <%= link_to "Stop sharing with #{partner.try(:full_name)}", post_path(post, partner: false), :data => {:confirm => "Are you sure you want to stop sharing this article with #{partner.try(:full_name)}?"}, class: "newpost--new--profile", style: "float: right;" %>
+  </div>
+<% end %>

@@ -10,6 +10,8 @@
     </h2>
     <% if user.editor? %>
       <span class="editor_status">Editor · <%= @editor_reviews_cnt %> edited articles · <%= @editor_pitches_cnt %> pitched topics · <%= @writers_helped_cnt %> writers helped  </span>
+    <% elsif user.partner? %>
+      <span class="editor_status">Partner Account with The Teen Magazine</span>
     <% end %>
     <% if (user.description != "" && user.description != nil) %>
       <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>

@@ -1,13 +1,18 @@
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews]
+  before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :is_admin?, only: [:show_users, :new]
+  before_action :is_editor?, only: [:show_users, :new]
+  before_action :is_admin?, only: [:new]
+  before_action :is_admin?, only: [:show_partners, :share]
   layout :set_layout
 
   def show
     set_meta_tags title: "#{@user.full_name} | The Teen Magazine",
                   description: @user.description
+    if @user.partner
+      redirect_to "/partners/#{@user.slug}"
+    end
     @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).order("updated_at desc")
     @user_posts_approved = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.order("publish_at desc")
     if !@user.editor? && current_user.present?
@@ -42,6 +47,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def partner
+    @partner = User.where(partner: true).find(params[:id])
+    @posts = Post.where(partner_id: @partner.id).where(publish_at: nil)
+    @published = Post.published.where(partner_id: @partner.id)
+    @pageviews = 0
+    @published.each do |post|
+      if !post.post_impressions.nil?
+        @pageviews += post.post_impressions
+      end
+    end
+  end
+
+  def sponsored
+    @partner = User.where(partner: true).find(params[:id])
+    set_meta_tags title: "#{@partner.full_name} Published Articles | The Teen Magazine"
+    @published = Post.published.where(partner_id: @partner.id)
+  end
+
   def onboarding
     @user = current_user
     @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
@@ -62,9 +85,13 @@ class UsersController < ApplicationController
   end
 
   def show_users
-    @users = User.all.paginate(page: params[:page]).order("created_at desc")
-    @posts_waiting = Post.all.submitted
+    @users = User.where(partner: [nil, false]).all.paginate(page: params[:page], per_page: 25).order("created_at desc")
     @users_waiting = User.all.review_profile
+  end
+
+  def show_partners
+    set_meta_tags title: "Partners | The Teen Magazine"
+    @partners = User.where(partner: true).all.paginate(page: params[:page], per_page: 25).order("created_at desc")
   end
 
   def reset_email
@@ -94,7 +121,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.save
     if @user.save
-      redirect_to @user, notice: "Your changes were successfully saved!"
+      if @user.partner
+        ApplicationMailer.partner_login_details(current_user, @user).deliver
+        redirect_to "/partners/#{@user.slug}", notice: "A new partner was added!"
+      else
+        redirect_to @user, notice: "Your changes were successfully saved!"
+      end
     else
       render 'new', notice: "Oh no! Your changes were not able to be saved!"
     end
@@ -125,7 +157,20 @@ class UsersController < ApplicationController
     redirect_to users_path, notice: "The writer account was deleted."
   end
 
+  def share
+    if params[:search].present?
+      @query = params[:search][:query]
+      @posts = Post.draft.where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc").paginate(page: params[:page], per_page: 15)
+    else
+      @posts = Post.draft.paginate(page: params[:page], per_page: 15).order("publish_at desc")
+    end
+  end
+
   def is_admin?
+    redirect_to root_path unless (current_user && current_user.admin?)
+  end
+
+  def is_editor?
     redirect_to root_path unless (current_user && (current_user.admin? || current_user.editor?))
   end
 
@@ -145,7 +190,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :do_not_send_emails, :editor, :marketer, :full_name, :admin, :first_name, :last_name, :category, :points, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community)
+    params.require(:user).permit(:email, :password, :do_not_send_emails, :editor, :marketer, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community)
   end
 
   def find_user

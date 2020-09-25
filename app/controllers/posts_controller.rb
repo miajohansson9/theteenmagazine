@@ -110,7 +110,7 @@ class PostsController < ApplicationController
 
   def show
     @date = @post.is_published? ? @post.publish_at : @post.created_at
-    if (@post.is_published? || (current_user && (@post.sharing || @post.user_id == current_user.id || (@post.collaboration&.include? current_user.email) || current_user.admin? || current_user.editor?)))
+    if (@post.is_published? || (current_user && (@post.sharing || @post.user_id == current_user.id || @post.partner_id == current_user.id || (@post.collaboration&.include? current_user.email) || current_user.admin? || current_user.editor?)))
       @collabs = []
       if @post.collaboration.present?
         @emails = @post.collaboration.delete(' ').split(",")
@@ -121,14 +121,19 @@ class PostsController < ApplicationController
           end
         end
       end
-      if !params[:sharing].nil? && (current_user.id = @post.id || current_user.admin || current_user.editor)
+      if params[:partner].present?
+        @post.partner_id = nil
+        @post.save
+        redirect_to @post, notice: "Partner sharing turned off for this article"
+      elsif !params[:sharing].nil? && (current_user.id = @post.id || current_user.admin || current_user.editor)
         @post.sharing = params[:sharing]
         @post.save
         @message = @post.sharing ? "Peer sharing is turned on!" : "Peer sharing is turned off."
         redirect_to @post, notice: @message
       end
-      if @post.sharing && !current_user.nil?
+      if (@post.sharing || @post.partner_id.present?) && !current_user.nil?
         @comment = current_user.comments.build(post_id: @post.id)
+        @partner = User.find_by(id: @post.partner_id)
       end
       if !@post.is_published?
         @comments = @post.comments.where(comment_id: nil).order("created_at desc")
@@ -249,6 +254,9 @@ class PostsController < ApplicationController
         @post.user.points = @post.user.points - 300
         @post.user.save
         redirect_to "/community", notice: "Your draft is now being promoted!"
+      elsif (post_params[:partner_id].present? && post_params[:partner_id] != false)
+        @partner = User.find(post_params[:partner_id])
+        redirect_to @partner, notice: "This article was successfully shared with #{@partner.full_name}."
       elsif (@new_status.eql? "In Review") && (current_user.editor?)
         @notice = @prev_review.editor_id == current_user.id ? "Your changes were saved." : "Great job! You've claimed editing this article!"
         if !(@prev_status.eql? "In Review")
@@ -338,7 +346,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes])
+    params.require(:post).permit(:title, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes])
   end
 
   def find_post_history

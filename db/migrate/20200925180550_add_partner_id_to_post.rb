@@ -1,0 +1,5 @@
+class AddPartnerIdToPost < ActiveRecord::Migration[5.0]
+  def change
+    add_column :posts, :partner_id, :integer
+  end
+end

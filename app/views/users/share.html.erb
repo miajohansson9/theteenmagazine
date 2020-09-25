@@ -1,0 +1,53 @@
+<div class="category">
+  <div class="category--show">
+   <div class="other--articles">
+     <div class="flex">
+        <div class="container" id="sharing_with_partners">
+           <h3>Share an article with <%= @user.full_name %></h3>
+           <i>*Note that an article must be <b>In Progress</b> to add a partner to it.</i>
+           <div class="flex_horizontal">
+             <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
+               <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Searching in all article drafts" %>
+             <% end %>
+           </div>
+           <% if @query.present? %>
+             <h2>Search for draft... <span style="background-color: yellow"><%= @query %></span></h2>
+             <br>
+           <% end %>
+           <% if @posts.present? %>
+             <div class="flex-wrapper flex-drafts">
+               <% @posts.each do |draft| %>
+                 <div class="card" style="width: 32%;">
+                   <a href="<%= post_path(draft)%>">
+                     <%= image_tag(draft.thumbnail.url(:large2), :class => "card-img-top") %>
+                   </a>
+                   <div class="card-body">
+                     <p class="card-text">Sharing has been turned on for your draft <%= link_to(draft.title, draft) %>.</p>
+                   </div>
+                   <% if draft.promoting_until.present? && draft.promoting_until > Time.now %>
+                     <div class="rounded-bottom rgba-red-strong lighten-3 text-right p-3">
+                       <p class="list-inline-item pr-2 white-text"><i class="fas fa-fire"></i> Promoting ends in <%= time_ago_in_words(draft.promoting_until) %></p>
+                     </div>
+                   <% else %>
+                     <%= form_for draft do |f| %>
+                       <%= f.hidden_field :partner_id, value: @user.id %>
+                       <%= f.hidden_field :sharing, value: false %>
+                       <div class="btn_cntnr mb-0 pb-0">
+                         <%= f.submit "Add #{@user.full_name}",
+                             data: {confirm: "This draft will become viewable by #{@user.full_name}. Do you want to continue?"},
+                             class: "newpost--new--profile" %>
+                       </div>
+                     <% end %>
+                   <% end %>
+                 </div>
+                <% end %>
+              </div>
+              <%= will_paginate @posts %>
+            <% else %>
+              <p style="margin-top: -10px;">Your search did not have any results.</p>
+            <% end %>
+         </div>
+       </div>
+   </div>
+  </div>
+</div>
