@@ -8,7 +8,7 @@
         <div class="inside--item">
           <%= link_to (image_tag draft.thumbnail(:medium)), post_path(draft) %>
           <div>
-            <h4 class="pitch_ttl"><%= link_to draft.title, post_path(draft)%></h4>
+            <h4><%= link_to draft.title, post_path(draft)%></h4>
             <p class="edited_dt"><%= "Last edited by you " + time_ago_in_words(draft.reviews.last.updated_at) %> ago</p>
             <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
             <p class="edit_lnk"><%= link_to "Edit Article", edit_post_path(draft) %></p>
@@ -23,7 +23,7 @@
     <div class="flex-wrapper">
       <% @submitted_for_review.each do |draft| %>
         <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
-          <h4 class="card-title pitch_ttl"><%= link_to draft.title, draft %></h4>
+          <h4 class="card-title"><%= link_to draft.title, draft %></h4>
           <div class="card-bottom-flex">
             <% if draft.user.profile.exists? %>
               <%= image_tag draft.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
@@ -48,7 +48,7 @@
     <div class="flex-wrapper">
       <% @submitted_pitches.each do |pitch| %>
       <div class="card card-review <% if @unseen_submitted_pitches.include? pitch %> unread <% end %>" style="width: 100%;">
-          <h4 class="card-title pitch_ttl"><%= link_to pitch.title, pitch %></h4>
+          <h4 class="card-title"><%= link_to pitch.title, pitch %></h4>
           <div class="card-bottom-flex">
             <% if pitch.user.profile.exists? %>
               <%= image_tag pitch.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
@@ -73,7 +73,7 @@
         <div class="flex--postlist--item review_items" style="padding-left: 0;">
           <div class="inside--item">
             <div>
-              <h4 class="pitch_ttl" style="padding: 0px;"><%= link_to draft.title, edit_post_path(draft)%></h4>
+              <h4 style="padding: 0px;"><%= link_to draft.title, edit_post_path(draft)%></h4>
               <% @editor = User.find(draft.reviews.last.editor_id) %>
               <p class="edited_dt" style="padding: 0px;"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) + " ago and is being reviewed by " %><%= link_to(@editor.full_name, @editor, style: "vertical-align: baseline;") %></p>
             </div>
