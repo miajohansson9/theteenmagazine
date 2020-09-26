@@ -90,6 +90,12 @@
         <% @statuses = current_user.editor? ? @editor_options : ["In Progress", "Ready for Review"] %>
         <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
         <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
+        <% if current_user.admin %>
+          <div style="float:right;">
+            <%= f.label "Feautured:" %>
+            <%= f.check_box :featured %>
+          </div>
+        <% end %>
         <br>
         <br>
         <% if @post.user_id.eql? current_user.id %>

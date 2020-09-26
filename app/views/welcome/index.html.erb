@@ -7,14 +7,14 @@
             <% publishedPosts = @posts_approved %>
             <div class="featured individual">
               <div class="featured_img">
-                <%=link_to(image_tag(publishedPosts.first.thumbnail.url(:large2), alt: publishedPosts.first.title, :id => "image_thumbnail"), publishedPosts.first )%>
+                <%=link_to(image_tag(@featured.thumbnail.url(:large2), alt: @featured.title, :id => "image_thumbnail"), @featured )%>
               </div>
-              <h3 class="article_title"><%= link_to publishedPosts.first.title, publishedPosts.first %></h3>
-              <p class="date"><%= publishedPosts.first.publish_at.strftime("%A, %b %d")%></p>
+              <h3 class="article_title"><%= link_to @featured.title, @featured %></h3>
+              <p class="date"><%= @featured.publish_at.strftime("%A, %b %d")%>, Featured article</p>
             </div>
           </div>
           <div class="articles2-6">
-            <% publishedPosts[1..4].each do |post| %>
+            <% publishedPosts[0..3].each do |post| %>
               <div class="thumbnail">
                 <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title, :class => "image_thumbnail"), post )%>
                 <div class="thumbnail--container">
@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-  <% publishedPosts = Post.where(id: @posts_approved.drop(5).map(&:id))%>
+  <% publishedPosts = Post.where(id: @posts_approved.drop(4).map(&:id))%>
   <% featuredPostIds = [] %>
   <div class="wrapper_home">
   <h1 class="section--title"><a href="/categories/student-life">Student Life</a></h1>

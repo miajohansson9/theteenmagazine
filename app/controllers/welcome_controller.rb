@@ -2,7 +2,8 @@ class WelcomeController < ApplicationController
   before_action :show
 
   def index
-    @posts_approved = Post.published.limit(40).order("publish_at desc")
+    @featured = Post.published.where(featured: true).order("publish_at desc").first
+    @posts_approved = Post.published.limit(40).order("publish_at desc").reject {|x| x.eql?(@featured.id)}
     @postsranking = Post.published.where(:publish_at => (Time.now - 1.months)..Time.now).order("post_impressions desc").limit(7)
   end
 
