@@ -1,0 +1,29 @@
+<%= form_for @user do |f| %>
+
+  <%= render :partial => 'profile', locals: {user: @user} %>
+
+  <% if @user.errors.any? %>
+    <h2><%= pluralize(@user.errors.count, "error")%> prevented this post from saving:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if current_user.admin? || (current_user.id.eql? @user.id) %>
+    <%= f.label "Partner Name" %>
+    <%= f.text_field :full_name %>
+
+    <%= f.label "Upload profile picture" %><br>
+    <%= f.file_field :profile %><br/><br/>
+
+    <%= f.label "Email" %><br>
+    <%= f.text_field :email, placeholder: "Email" %>
+
+    <%= f.check_box :do_not_send_emails %>
+    <%= f.label "turn off all email notifications" %><br><br>
+  <% end %>
+
+  <%= f.submit "Update Profile" %>
+<% end %>

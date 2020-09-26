@@ -1,7 +1,7 @@
 <div class="flex_horizontal center">
   <h1 id="page_title" style="margin-bottom: -20px; border-bottom: none;">Partners</h1>
 </div>
-<div id="posts_wrapper" class="skinny_wrapper">
+<div id="posts_wrapper" class="skinny_wrapper pb-5 mb-4">
   <% @partners.each do | user | %>
       <% if user != nil %>
         <div class="flex--profile">
@@ -28,4 +28,7 @@
       <% end %>
   <% end %>
   <%= will_paginate @partners %>
+  <div class="btn_cntnr">
+    <%= link_to "New Partner Profile", new_user_path, class: "newpost--new--profile" %>
+  </div>
 </div>

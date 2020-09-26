@@ -1,14 +1,14 @@
 <div class="flex--profile profile-minimal">
-  <% if user.profile.exists? %>
+  <% if user.try(:profile)&.exists? %>
     <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
   <% else %>
     <%= image_tag("profile_image.jpg", :class => "profile_img") %>
   <% end %>
   <div class="info">
     <h2 style="margin-bottom: 5px;">
-      <%= link_to(user.first_name, user) %><br>
-      <%= link_to(user.last_name, user) %>
+      <%= link_to(user.try(:first_name), user) %><br>
+      <%= link_to(user.try(:last_name), user) %>
     </h2>
-    <span>Writer since <%= user.created_at.strftime("%B %d, %Y") %></span>
+    <span>Writer since <%= user.try(:created_at)&.strftime("%B %d, %Y") %></span>
   </div>
 </div>

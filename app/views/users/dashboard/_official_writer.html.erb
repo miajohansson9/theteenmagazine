@@ -93,9 +93,9 @@
             <ul class="list-group list-group-flush whats-new">
               <% @pitches.each do |pitch| %>
                 <li class="list-group-item">
-                  <% @profile_img = pitch.user.profile.exists? ? image_tag(pitch.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+                  <% @profile_img = pitch.user.try(:profile)&.exists? ? image_tag(pitch.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
                   <%= link_to(@profile_img, pitch.user) %>
-                  <div><%= link_to(pitch.user.full_name, pitch.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
+                  <div><%= link_to(pitch.user.try(:full_name), pitch.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
                   <br><span class="date_ago"><%= time_ago_in_words(pitch.created_at) %> ago</span></div>
                 </li>
               <% end %>
@@ -108,9 +108,6 @@
           <div>
             <%= link_to("Interview Application", "https://forms.gle/eQyETofL6M1bxvqy5", target: "_blank") %><br>
             <%= link_to("Editor Application", "/applications/editor", target: "_blank") %><br>
-            <% if current_user.admin? %>
-              <%= link_to("New Partner Profile", new_user_path) %>
-            <% end %>
           </div>
         </div>
         <br>

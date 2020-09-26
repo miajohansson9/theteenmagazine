@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share]
+  before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share, :redirect]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :is_editor?, only: [:show_users, :new]
-  before_action :is_admin?, only: [:new]
-  before_action :is_admin?, only: [:show_partners, :share]
+  before_action :is_admin?, only: [:new, :partners, :share]
   layout :set_layout
 
   def show
@@ -27,8 +26,6 @@ class UsersController < ApplicationController
       begin
         if (current_user.id != @user.id && (!current_user.admin?) && (!current_user.editor?))
           redirect_to(:back, notice: "This writer does not have a public profile yet.")
-        elsif (current_user.submitted_profile == nil)
-          redirect_to "/onboarding", notice: "You must complete the onboarding process first."
         end
       rescue
         redirect_to(:back, notice: "This writer does not have a public profile yet.")
@@ -49,6 +46,7 @@ class UsersController < ApplicationController
 
   def partner
     @partner = User.where(partner: true).find(params[:id])
+    set_meta_tags title: "#{@partner.full_name} | The Teen Magazine"
     @posts = Post.where(partner_id: @partner.id).where(publish_at: nil)
     @published = Post.published.where(partner_id: @partner.id)
     @pageviews = 0
@@ -89,7 +87,7 @@ class UsersController < ApplicationController
     @users_waiting = User.all.review_profile
   end
 
-  def show_partners
+  def partners
     set_meta_tags title: "Partners | The Teen Magazine"
     @partners = User.where(partner: true).all.paginate(page: params[:page], per_page: 25).order("created_at desc")
   end
@@ -115,6 +113,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    set_meta_tags title: "New Partner | The Teen Magazine"
   end
 
   def create
@@ -149,29 +148,52 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    if @user.partner
+      Post.where(partner_id: @user.id).each do |post|
+        post.partner_id = nil
+        post.save
+      end
+    end
     @user.posts.each do |post|
       post.user = User.where(email: "anonymous@theteenmagazine.com").first
       post.save
     end
+    @user.comments.destroy_all
     @user.destroy
     redirect_to users_path, notice: "The writer account was deleted."
+  end
+
+  def redirect
+    if @user.partner
+      redirect_to "/partners/#{@user.slug}"
+    else
+      redirect_to "/writers/#{@user.slug}"
+    end
   end
 
   def share
     if params[:search].present?
       @query = params[:search][:query]
-      @posts = Post.draft.where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc").paginate(page: params[:page], per_page: 15)
+      @posts = Post.draft.where(partner_id: nil).where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc").paginate(page: params[:page], per_page: 15)
     else
-      @posts = Post.draft.paginate(page: params[:page], per_page: 15).order("publish_at desc")
+      @posts = Post.draft.where(partner_id: nil).paginate(page: params[:page], per_page: 15).order("publish_at desc")
     end
   end
 
   def is_admin?
-    redirect_to root_path unless (current_user && current_user.admin?)
+    if (current_user && current_user.admin?)
+      true
+    else
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
   end
 
   def is_editor?
-    redirect_to root_path unless (current_user && (current_user.admin? || current_user.editor?))
+    if (current_user && (current_user.admin? || current_user.editor?))
+      true
+    else
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
   end
 
   def set_layout

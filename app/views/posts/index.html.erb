@@ -64,7 +64,7 @@
         <div class="card" style="width: 32%; <% if @unseen_shared_drafts.to_a.include? draft %>background-color: #E6F6FF;<% end %>">
           <%= image_tag(draft.thumbnail.url(:large2), :class => "card-img-top") %>
           <div class="card-body">
-            <p class="card-text"><%= link_to(draft.user.full_name, draft.user) %> is asking for peer feedback on <%= link_to draft.title, draft %></p>
+            <p class="card-text"><%= link_to(draft.user.try(:full_name), draft.user) %> is asking for peer feedback on <%= link_to draft.title, draft %></p>
             <% if @featured %>
               <p class="card-text"><i class="fas fa-fire"></i> This draft is being promoted. All feedback given will be rewarded twice as many points.</p>
             <% end %>

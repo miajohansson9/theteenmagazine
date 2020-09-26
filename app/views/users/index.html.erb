@@ -4,7 +4,7 @@
     <% @users_waiting.each do |user| %>
       <div class="flex--profile">
         <div class="profiles">
-          <a href= "/users/<%= user.slug %>/edit">
+          <a href= "/writers/<%= user.slug %>/edit">
             <% if user.profile.exists? %>
               <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
             <% else %>
@@ -19,7 +19,7 @@
               if (user.last_name != "" && user.last_name!= nil)
                 @name = @name + " " + user.last_name
               end %>
-            <a href= "/users/<%= user.slug %>/edit"><%= @name %></a>
+            <a href= "/writers/<%= user.slug %>/edit"><%= @name %></a>
           </h6>
         </div>
       </div>

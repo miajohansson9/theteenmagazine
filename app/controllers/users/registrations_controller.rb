@@ -30,7 +30,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       # user model did not persist
       clean_up_passwords resource
       set_minimum_password_length
-      redirect_to "/users/", notice: 'Something went wrong.'
+      redirect_to "/writers/", notice: 'Something went wrong.'
     end
   end
 

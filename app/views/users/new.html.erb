@@ -1,7 +1,7 @@
 <%= image_tag "new_partner_background.jpg", id: "banner_writing" %>
 <div class="skinny_wrapper mt-4">
   <h3>Create a Partner Profile</h3>
-  <p>Partners consist of any third party that The Teen Magazine works with to deliver an interview or sponsored article. Create a partner profile when you want to share a draft and receive feedback from an outside party. Stats for the article will automatically be shared with them.</p>
+  <p>Partners consist of any third party that The Teen Magazine works with to deliver an interview or sponsored article. Create a partner profile when you want to share a draft and receive feedback from an outside party directly related to your article. Check your email with next steps after creating a profile.</p>
   <%= form_for @user do |f| %>
     <% if @user.errors.any? %>
       <h2><%= pluralize(@user.errors.count, "error")%> prevented this post from saving:</h2>

@@ -8,17 +8,11 @@
   <a href="/categories/wellness">Wellness</a>
   <a href="/categories/beauty-style">Beauty & Style</a>
   <a href="/categories/culture">Culture</a>
-  <!-- <a href="/categories/relationships">Relationships</a> -->
+  <a href="/categories/relationships">Relationships</a>
   <a href="/categories/lifestyle">Lifestyle</a>
   <a href="/categories/op-ed">Op-Ed</a>
   <% if user_signed_in? %>
-     <hr>
-     <%= link_to "Create", pitches_path %>
-     <% if current_user.admin? %>
-        <%= link_to "Edit", reviews_path %>
-        <%= link_to "Writers", users_path %>
-     <% end %>
-     <%= link_to "Dashboard", user_path(current_user) %>
+     <%= link_to "My Profile", user_path(current_user) %>
      <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
   <% else %>
     <a href="/apply">Apply</a>

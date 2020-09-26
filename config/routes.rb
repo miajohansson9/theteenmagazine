@@ -42,8 +42,10 @@ Rails.application.routes.draw do
   get "/search" => "pages#search"
   get '/sitemap.xml', to: 'pages#sitemap'
   get '/ads.txt', to: 'pages#ads'
+  get '/users/:id', to: 'users#redirect'
   get '/partners/:id', to: 'users#partner'
-  get '/partners', to: 'users#show_partners'
+  get '/partners/:id/edit', to: 'users#edit'
+  get '/partners', to: 'users#partners'
   get '/partners/:id/share', to: 'users#share'
   get '/partners/:id/published', to: 'users#sponsored'
   get '/september_2020_mbDFSSOqy0rqUJrgazud', to: 'pages#issue'

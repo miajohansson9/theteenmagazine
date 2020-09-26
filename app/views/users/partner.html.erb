@@ -8,7 +8,7 @@
         <div class="analytics card-group">
           <div class="card">
             <div class="card-body dashboard-card-2 dashboard-card">
-              <a href="/partners/sephora/published">
+              <a href="/partners/<%= @partner.slug %>/published">
                 <div class="stats_wrapper">
                   <div class="value" id="value2"></div>
                   <div class="text-wrapper">
@@ -48,8 +48,13 @@
       <div class="dashboard--writer--flex--two" style="width: 30rem;">
         <div class="links">
           <div>
-            <%= link_to("Interview Application", "https://forms.gle/eQyETofL6M1bxvqy5", target: "_blank") %><br>
-            <%= link_to("Editor Application", "/applications/editor", target: "_blank") %><br>
+            <h3><%= @partner.full_name %>, Welcome to The Teen Magazine!</h3>
+            <p>We are so excited to be collaborating with you. This account can be used to view and give feedback on the articles you've been added to before they are published.
+              You are also be able to track in real-time the viewership stats of all your articles once they have been published.</p>
+            <p>If you have any questions or concerns please contact any of the emails below:</p>
+            <p>Mia Johansson<br>Founder, CEO<br>mia@theteenmagazine.com</p>
+            <p>Kate-Yeonjae Jeong<br>Photography Lead & Marketing Director<br>katejeong@theteenmagazine.com</p>
+            <p>Khushi Gupta<br>Community Lead<br>khushigupta@theteenmagazine.com</p>
           </div>
         </div>
         <br>

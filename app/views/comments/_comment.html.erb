@@ -4,10 +4,10 @@
       <i class="fa fa-times"></i>
     <% end %>
   <% end %>
-  <% @profile_img = comment.user.profile.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+  <% @profile_img = comment.user.try(:profile)&.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
   <%= link_to(@profile_img, comment.user) %>
   <div class="li-content" style="width: 100%;">
-    <h6><%= link_to comment.user.full_name, comment.user %></h6>
+    <h6><%= link_to comment.user.try(:full_name), comment.user %></h6>
     <span class="date_ago"><%= time_ago_in_words(comment.created_at) %> ago</span><br>
     <% if comment.response_to.present? %>
       <span class="d-block">Commented on:

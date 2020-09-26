@@ -7,7 +7,7 @@
     <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Please only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
   <% end %>
   <h3 class="pitch_ttl"><%= @pitch.title %></h3>
-  <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.full_name, @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
+  <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
   <% if @pitch.status.eql? "Approved" %>
     <p style="background-color: yellow; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>! You may claim it to start your draft.</p><br>
   <% elsif @pitch.status.eql? "Rejected" %>

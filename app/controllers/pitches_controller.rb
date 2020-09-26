@@ -1,6 +1,7 @@
 class PitchesController < ApplicationController
   before_action :find_pitch, only: [:show, :edit, :update, :destroy]
   before_action :is_admin?, only: [:edit]
+  before_action :is_partner?, only: [:index, :new, :show]
   before_action :authenticate_user!
   load_and_authorize_resource
   layout "minimal"
@@ -114,6 +115,14 @@ class PitchesController < ApplicationController
   def edit
     @categories = Category.all
     set_meta_tags :title => "Edit Pitch | The Teen Magazine"
+  end
+
+  def is_partner?
+    if !current_user.partner
+      true
+    else
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
   end
 
   private

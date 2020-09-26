@@ -2,6 +2,15 @@
 
   <%= render :partial => 'profile', locals: {user: @user} %>
 
+  <% if @user.errors.any? %>
+    <h2><%= pluralize(@user.errors.count, "error")%> prevented this post from saving:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
   <% if current_user.admin? || current_user.editor? %>
     <%= f.label "Approve profile" %>
     <%= f.check_box :approved_profile, value: @user.approved_profile %><br /><br>

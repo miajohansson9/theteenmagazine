@@ -5,6 +5,8 @@ class PostsController < ApplicationController
   before_action :load_user,  only: [:show]
   before_action :create,  only: [:unapprove]
   before_filter :log_impression, :only=> [:show]
+  before_action :is_admin?, :only => [:new]
+  before_action :is_partner?, :only => [:index, :edit]
   load_and_authorize_resource
 
   layout :set_layout
@@ -41,7 +43,7 @@ class PostsController < ApplicationController
         end
       end
     end
-   end
+  end
 
   def index
     set_meta_tags :title => "Community | The Teen Magazine"
@@ -123,6 +125,7 @@ class PostsController < ApplicationController
       end
       if params[:partner].present?
         @post.partner_id = nil
+        @post.sharing = false
         @post.save
         redirect_to @post, notice: "Partner sharing turned off for this article"
       elsif !params[:sharing].nil? && (current_user.id = @post.id || current_user.admin || current_user.editor)
@@ -357,6 +360,22 @@ class PostsController < ApplicationController
       end
     rescue
       redirect_to root_path
+    end
+  end
+
+  def is_admin?
+    if (current_user && (current_user.admin? || current_user.editor?))
+      true
+    else
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
+  end
+
+  def is_partner?
+    if !current_user.partner
+      true
+    else
+      redirect_to current_user, notice: "You do not have access to this page."
     end
   end
 
