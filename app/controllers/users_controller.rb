@@ -172,6 +172,7 @@ class UsersController < ApplicationController
   end
 
   def share
+    set_meta_tags title: "Add Partner to Article | The Teen Magazine"
     if params[:search].present?
       @query = params[:search][:query]
       @posts = Post.draft.where(partner_id: nil).where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc").paginate(page: params[:page], per_page: 15)
