@@ -209,6 +209,12 @@ class PostsController < ApplicationController
         @post.content << "<script async src='https://instagram.com/static/bundles/es6/EmbedSDK.js/47c7ec92d91e.js'></script>"
         @post.content << "<script>instgrm.Embeds.process()</script>"
       end
+      if (@post.featured.eql? true) && (current_user.admin)
+        Post.published.where.not(id: @post.id).each do |pst|
+          pst.featured = false
+          pst.save
+        end
+      end
       @new_status = @post.reviews.last.status.clone
       @rev = @post.reviews.last
       if @new_status != "Approved for Publishing"
