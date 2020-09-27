@@ -105,4 +105,11 @@ class ApplicationMailer < ActionMailer::Base
     @partner = partner
     mail(to: user.email, subject: "#{partner.full_name} login info")
   end
+
+  def featured_article(user, post)
+    puts "LSKDJFLKSDJFLSKDJFLKSDJFLKS"
+    @user = user
+    @post = post
+    mail(to: user.email, subject: "Congratulations! Your article is featured")
+  end
 end

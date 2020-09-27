@@ -204,12 +204,15 @@ class PostsController < ApplicationController
     @categories = Category.all
     @prev_review = @post.reviews.last.clone
     @prev_status = @post.reviews.last.status.clone
+    @prev_featured = @post.featured.clone
     if @post.update! post_params
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
         @post.content << "<script async src='https://instagram.com/static/bundles/es6/EmbedSDK.js/47c7ec92d91e.js'></script>"
         @post.content << "<script>instgrm.Embeds.process()</script>"
       end
-      if (@post.featured.eql? true) && (current_user.admin)
+      if ((@prev_featured.eql? false) || (@prev_featured.nil?)) && (current_user.admin) && (post_params[:featured])
+        ApplicationMailer.featured_article(@post.user, @post).deliver
+        puts ":LSKDFLSDKF:SLDKFLKSJDFLKSDJ"
         Post.published.where.not(id: @post.id).each do |pst|
           pst.featured = false
           pst.save
