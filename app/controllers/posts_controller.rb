@@ -210,10 +210,10 @@ class PostsController < ApplicationController
         @post.content << "<script async src='https://instagram.com/static/bundles/es6/EmbedSDK.js/47c7ec92d91e.js'></script>"
         @post.content << "<script>instgrm.Embeds.process()</script>"
       end
-      if ((@prev_featured.eql? false) || (@prev_featured.nil?)) && (current_user.admin) && (post_params[:featured])
+      if (@prev_featured == false || @prev_featured.nil?) && (current_user.admin) && (post_params[:featured].eql? "1")
         ApplicationMailer.featured_article(@post.user, @post).deliver
-        puts ":LSKDFLSDKF:SLDKFLKSJDFLKSDJ"
-        Post.published.where.not(id: @post.id).each do |pst|
+        @prev = Post.published.where.not(id: @post.id)
+        @prev.each do |pst|
           pst.featured = false
           pst.save
         end
