@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <h1>Your article was chosen for this week's newsletter!</h1>
+    <p><%= @user.first_name %>, we wanted to let you know that your article, <%= link_to @post.title, @post %>,
+      was chosen to be featured in The Teen Magazine's newsletter! This is a huge accomplishment and means that our admins thought
+      that your article was in the top 10% of all articles published on The Teen Magazine.
+      It was sent out this morning with just four other articles to our thousands of email subscribers. Amazing job!</p>
+    <p>Best Regards,<br/>Editor Team</p>
+  </body>
+</html>

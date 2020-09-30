@@ -90,15 +90,18 @@
         <% @statuses = current_user.editor? ? @editor_options : ["In Progress", "Ready for Review"] %>
         <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
         <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
-        <% if current_user.admin %>
-          <div style="float:right;">
-            <%= f.label "Featured:" %>
-            <%= f.check_box :featured %>
+        <% if current_user.admin && @post.is_published? %>
+          <div style="float:right; text-align: right;">
+            <%= f.label "Featured on homepage:" %>
+            <%= f.check_box :featured %><br>
+            <%= f.label "Feature in next newsletter:" %>
+            <%= f.check_box :newsletter %>
           </div>
+          <br>
+          <br>
         <% end %>
-        <br>
-        <br>
-        <% if @post.user_id.eql? current_user.id %>
+        <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
+          <br>
           <%= f.check_box :editor_can_make_changes %>
           <i>
             I give permission for an editor to make changes to my article when I submit. These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.

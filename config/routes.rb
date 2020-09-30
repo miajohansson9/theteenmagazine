@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get 'privacy-policy' => 'pages#privacy'
   get 'subscribe' => 'pages#subscribe'
   get 'reviews:post_id' => 'pages#reviews'
+  get 'newsletter' => 'pages#newsletter'
   get "/apply" => "applies#new"
   get '/applications/editor', to: 'applies#editor'
   get "/submitted" => "applies#create"

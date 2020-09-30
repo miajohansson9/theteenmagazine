@@ -37,4 +37,24 @@ task :run_all_tasks => :environment do
   if (Date.today.monday?)
     Rake::Task["sitemap:refresh"].invoke
   end
+
+  if (Date.today.thursday?)
+    @posts = Post.published.where(newsletter: true).limit(5)
+    @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+    @offset = 0
+    loop do
+      @members = @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.retrieve(params: {"count": "1000", "offset": "#{@offset}", "fields": "members.email_address", "status": "subscribed"})
+      @offset = @offset + 1000
+      @emails = @members.body["members"].map{|x| x["email_address"]}
+      @emails.each do |email|
+        ApplicationMailer.weekly_newsletter(email, @posts).deliver
+      end
+      break if @emails.count.eql? 0
+    end
+    @posts.each do |post|
+      ApplicationMailer.featured_in_newsletter(post.user, post).deliver
+      post.newsletter = false
+      post.save
+    end
+  end
 end

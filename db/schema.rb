@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200926190735) do
+ActiveRecord::Schema.define(version: 20200930210024) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(version: 20200926190735) do
     t.datetime "promoting_until"
     t.integer  "partner_id"
     t.boolean  "featured"
+    t.boolean  "newsletter"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 

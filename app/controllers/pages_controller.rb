@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :authenticate_user!, except: [:ads, :issue, :privacy, :subscribe, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation, :search]
+  before_action :is_admin?, only: :featured
   layout "minimal", except: [:issue, :about, :team, :privacy, :reset, :contact, :subscribe, :search]
 
   def team
@@ -45,6 +46,10 @@ class PagesController < ApplicationController
   end
 
   def about
+  end
+
+  def newsletter
+    @posts = Post.published.where(newsletter: true)
   end
 
   def submitted
@@ -118,5 +123,13 @@ class PagesController < ApplicationController
 
   def reset
     @user = User.new
+  end
+
+  def is_admin?
+    if (current_user && (current_user.admin? || current_user.editor?))
+      true
+    else
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
   end
 end
