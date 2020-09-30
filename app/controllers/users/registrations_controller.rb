@@ -27,6 +27,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       begin
         @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
         @gb.lists(ENV['MAILCHIMP_WRITER_LIST_ID']).members.create(body: {email_address: resource.email, status: "subscribed", merge_fields: {FNAME: resource.first_name, LNAME: resource.last_name}})
+        @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.create(body: {email_address: resource.email, status: "subscribed"})
       rescue
         puts "Error: Failed to subscribe to mailchimp list"
       end
