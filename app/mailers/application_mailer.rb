@@ -107,9 +107,14 @@ class ApplicationMailer < ActionMailer::Base
   end
 
   def featured_article(user, post)
-    puts "LSKDJFLKSDJFLSKDJFLKSDJFLKS"
     @user = user
     @post = post
     mail(to: user.email, subject: "Congratulations! Your article is featured")
+  end
+
+  def weekly_newsletter(user, posts)
+    @user = user
+    @posts = posts
+    mail(to: user.email, subject: @posts.last.title)
   end
 end

@@ -118,7 +118,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.save
     if @user.save
       if @user.partner
         ApplicationMailer.partner_login_details(current_user, @user).deliver

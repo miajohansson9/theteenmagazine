@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     get "/login" => "users/sessions#new"
     get "/onboarding" => "users#onboarding"
+    post "/writers" => "users/registrations#create"
+    post "/partners" => "users#create"
   end
 
   resources :users, path: "writers", except: [:new]
