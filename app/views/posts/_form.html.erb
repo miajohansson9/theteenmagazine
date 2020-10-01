@@ -97,8 +97,6 @@
             <%= f.label "Feature in next newsletter:" %>
             <%= f.check_box :newsletter %>
           </div>
-          <br>
-          <br>
         <% end %>
         <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
           <br>
@@ -107,9 +105,9 @@
             I give permission for an editor to make changes to my article when I submit. These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
             I understand I am still able to alter these once my article is published. Large edits will always be sent back for changes.
           </i>
-          <br>
-          <br>
         <% end %>
+        <br>
+        <br>
       <% end %>
     <% end %>
     <%= f.submit "Save Changes" %>
