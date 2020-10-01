@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share, :redirect]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :redirect]
   before_action :is_editor?, only: [:show_users, :new]
   before_action :is_admin?, only: [:new, :partners, :share]
   layout :set_layout
