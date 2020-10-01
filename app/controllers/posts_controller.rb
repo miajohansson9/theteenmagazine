@@ -212,7 +212,7 @@ class PostsController < ApplicationController
       end
       if (@prev_featured == false || @prev_featured.nil?) && (current_user.admin) && (post_params[:featured].eql? "1")
         ApplicationMailer.featured_article(@post.user, @post).deliver
-        @prev = Post.published.where.not(id: @post.id)
+        @prev = Post.published.where.not(id: @post.id).where(featured: true)
         @prev.each do |pst|
           pst.featured = false
           pst.save
