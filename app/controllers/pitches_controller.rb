@@ -118,6 +118,7 @@ class PitchesController < ApplicationController
   end
 
   def is_partner?
+    authenticate_user!
     if !current_user.partner
       true
     else
