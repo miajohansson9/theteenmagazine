@@ -47,7 +47,7 @@
           </div>
         </div>
         <div class="btn_cntnr">
-          <% if current_user.editor? %>
+          <% if @user.editor? %>
              <%= link_to "Start an Article", new_post_path, class: "newpost--new--profile" %>
           <% else %>
              <%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %>
