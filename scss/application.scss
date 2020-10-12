@@ -73,7 +73,7 @@ hr {
   display: block;
   height: 2px;
   border: 0;
-  border-top: 2px solid #65B19D;
+  border-top: 2px solid #4ABEB6;
   margin: 2rem 0;
 }
 
@@ -95,7 +95,7 @@ hr {
     float: right;
     padding-top: 1.5rem;
     .clicked {
-      color: #65B19D;
+      color: #4ABEB6;
     }
     a {
       color: #424653;
@@ -104,7 +104,7 @@ hr {
       font-size: 1rem;
       float: left;
       &:hover {
-        color: #65B19D;
+        color: #4ABEB6;
       }
     }
   }
@@ -152,7 +152,7 @@ hr {
       margin-left: 1em;
       padding-top: .2em;
       &:hover {
-        color: #65B19D;
+        color: #4ABEB6;
       }
     }
   }
@@ -182,8 +182,8 @@ input[type="submit"] {
   text-decoration: none;
   padding: 1em 2em;
   &:hover {
-    border: 2px solid #65B19D;
-    color: #65B19D;
+    border: 2px solid #4ABEB6;
+    color: #4ABEB6;
   }
 }
 

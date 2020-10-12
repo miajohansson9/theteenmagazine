@@ -7,6 +7,7 @@
     <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
     <script src="https://use.fontawesome.com/9fbc74da52.js"></script>
     <script src="https://kit.fontawesome.com/f816369528.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'mdbootstrap/css/bootstrap.min.css' %>
@@ -29,7 +30,7 @@
       <%= render "layouts/partials/slide-in-menu" %>
       <div id="site-canvas">
         <!-- <div class="banner_stts_relative">
-          <p class= "banner_stts" style="background-color: #FF78CB;">The Teen Magazine's September 2020 issue has been released! Download it for free <%= link_to("here", "/subscribe", class: "link_white", target: "_blank") %>.</p>
+          <p class= "banner_stts" style="background-color: #F0255E;">The Teen Magazine's September 2020 issue has been released! Download it for free <%= link_to("here", "/subscribe", class: "link_white", target: "_blank") %>.</p>
         </div> -->
         <div class="bodywrapper">
           <header id="main_navigation" class="clearfix">
@@ -135,6 +136,10 @@
         setTimeout(function() {
           $('.notice').slideUp();
         }, 1500);
+        $("#submit-comment-modal-button").click(function() {
+          $("#submit-comment-modal-button").addClass("disabled");
+          $(".spinner-button").removeClass("hide");
+        });
       });
     </script>
   </body>

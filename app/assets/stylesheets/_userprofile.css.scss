@@ -36,7 +36,7 @@
 .box {
   position:relative;
   vertical-align: middle;
-  color: #65B19D;
+  color: #4ABEB6;
   display: inline-block;
   height: 60px;
   line-height: 60px;
@@ -55,7 +55,7 @@
 }
 
 .box:hover {
-  color: #65B19D;
+  color: #4ABEB6;
 }
 
 .box::before, .box::after {
@@ -72,32 +72,32 @@
 }
 
 .foo::before {
-  border-bottom: 6px solid #65B19D;
-  border-left: 6px solid #65B19D;
+  border-bottom: 6px solid #4ABEB6;
+  border-left: 6px solid #4ABEB6;
   -webkit-transform-origin: 0 100%;
 }
 
 .foo::after {
-  border-top: 6px solid #65B19D;
-  border-right: 6px solid #65B19D;
+  border-top: 6px solid #4ABEB6;
+  border-right: 6px solid #4ABEB6;
   -webkit-transform-origin: 100% 0%;
 }
 
 
 .bar::before {
-  border-bottom: 6px solid #65B19D;
-  border-left: 6px solid #65B19D;
+  border-bottom: 6px solid #4ABEB6;
+  border-left: 6px solid #4ABEB6;
   -webkit-transform-origin: 100% 0%;
 }
 
 .bar::after {
-  border-top: 6px solid #65B19D;
-  border-right: 6px solid #65B19D;
+  border-top: 6px solid #4ABEB6;
+  border-right: 6px solid #4ABEB6;
   -webkit-transform-origin: 0% 100%;
 }
 
 .curmudgeon::before {
-  border-bottom: 6px solid #65B19D;
+  border-bottom: 6px solid #4ABEB6;
   border-left: 0;
   -webkit-transform-origin: 0% 100%;
 }
@@ -258,7 +258,7 @@
       margin: 0;
       font-size: 30px;
       text-decoration: none;
-      color: #65B19D;
+      color: #4ABEB6;
       font-family: 'Vollkorn', serif;
     }
 
@@ -272,7 +272,7 @@
         display: inline-block;
       }
       a, p {
-        color: #65B19D;
+        color: #4ABEB6;
         margin: 0 !important;
         span {
           color: black;
@@ -394,6 +394,22 @@
   }
 }
 
+.reviews_wrapper .dashboard_wrapper {
+  #waiting--for--approval .card-review {
+    width: 100% !important;
+    .card-bottom-flex {
+      div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        * {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
 .flex--postlist--item, .reviews_wrapper {
   .inside--item {
     display: flex;
@@ -419,7 +435,7 @@
     }
     .edit_lnk a {
       font-size: 16px;
-      color: #FF78CB !important;
+      color: #4ABEB6 !important;
       text-decoration: underline;
     }
   }
@@ -484,7 +500,7 @@
     }
   }
   h3 {
-    color: #65B19D;
+    color: #4ABEB6;
   }
   .flex--profile {
     display: flex;

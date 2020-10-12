@@ -13,13 +13,17 @@
    }
 }
 
+.progress-bar {
+  background-color: #EF265F !important;
+}
+
 .pitch_ttl {
   margin-top: 1em;
 }
 
 #selectable_content {
   #response_to_text_0 {
-    background-color: yellow;
+    background-color: #FCD04D;
   }
 }
 
@@ -254,7 +258,7 @@
     font-family: 'Univers-CnUlt', "Arial", "Sans-serif";
   }
   b {
-    color: #FF78CB;
+    color: #F0255E;
   }
   hr {
     margin: 20px -20px;
@@ -338,7 +342,7 @@
   display: block;
   float: right;
   margin-top: -60px;
-  color: #FF78CB;
+  color: #F0255E;
 }
 
 .edit_btn {
@@ -351,13 +355,13 @@
 
 .flex_container_mobile_reverse_order {
   .pitch_btn {
-    color: #FF78CB;
+    color: #085F63;
     text-decoration: underline;
   }
 }
 
 .pitch_btn {
-  color: #FF78CB;
+  color: #085F63;
 }
 
 .pitch_ttl {
@@ -462,11 +466,11 @@
 }
 
 a {
-  color: #65B19D;
+  color: #4ABEB6;
 }
 
 a:hover {
-  color: #65B19D;
+  color: #4ABEB6;
 }
 
 .node {
@@ -505,7 +509,7 @@ a:hover {
     display: block;
     height: 2px;
     border: 0;
-    border-top: 2px solid #65B19D;
+    border-top: 2px solid #4ABEB6;
     margin: 2rem 0;
   }
 }
@@ -513,8 +517,8 @@ a:hover {
 .stair_step {
   text-align: center;
   .progress_step, .progress_step p {
-    color: #65B19D !important;
-    border-top-color: #65B19D !important;
+    color: #4ABEB6 !important;
+    border-top-color: #4ABEB6 !important;
   }
   span {
     display: inline-flex;
@@ -600,7 +604,7 @@ a:hover {
       margin-bottom: 5px;
       p {
         font-weight: bold;
-        color: #65B19D;
+        color: #4ABEB6;
       }
     }
   }

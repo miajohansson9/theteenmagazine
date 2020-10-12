@@ -3,7 +3,7 @@
   <% @reviews = @post.reviews.where(status: "Rejected").order("created_at asc") %>
   <% @reviews.each_with_index do |review, index| %>
   <% if !(review.notes.blank?) %>
-   <p><i style="background-color: yellow;">Editor Notes: <%= review.notes %></p>
+   <p><i style="background-color: #FCD04D;">Editor Notes: <%= review.notes %></p>
   <% end %>
     <div class="card mb-3 changes_requested">
       <div class="card-header">

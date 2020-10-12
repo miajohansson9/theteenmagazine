@@ -107,7 +107,7 @@ class PitchesController < ApplicationController
     @post.content = "<i>" + @pitch.description + "</i>"
     @claimed_user = @pitch.claimed_id.present? ? User.find(@pitch.claimed_id) : nil
     @article = @claimed_user ? @claimed_user.posts.where(pitch_id: @pitch.id).last : nil
-    @title = @claimed_user.nil? ? "Claim article pitch" : "You've claimed this pitch"
+    @title = @claimed_user.nil? ? "Claim Pitch" : "You've claimed this pitch"
     @editor = @pitch.editor_id.present? ? User.find(@pitch.editor_id) : nil
     set_meta_tags :title => @pitch.title
   end

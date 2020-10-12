@@ -15,14 +15,6 @@
     <%= f.label :description, "Describe your idea and who the ideal reader would be." %>
     <%= f.text_area :description, placeholder: "What's your pitch?" %>
 
-    <% if (current_user.editor?) && (@pitch.try(:user).try(:editor)) %>
-      <br><br>
-      <%= f.label :requirements, "(Optional) What else should this article have? (ie. length, topics, images, personal trial/review, interviews/research)." %>
-      <%= f.text_area :requirements, style: "min-height: 100px;", placeholder: "- requirement..." %>
-    <% elsif !current_user.editor? %>
-      <%= f.hidden_field :status, value: "Ready for Review" %>
-    <% end %>
-
     <div class="margin_flds">
       <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>
     </div>
@@ -39,17 +31,6 @@
     <% if current_user.editor? && @pitch.title.nil? %>
       <%= f.check_box :assign_if_not_claimed, style: "display: inline;" %>
       <span>Automatically assign this pitch to a writer if it's not claimed in two weeks.</span><br><br>
-    <% elsif (current_user.editor?) && !(@pitch.user.try(:editor)) %>
-      <div class="card review_frm">
-        <div class="card-header">
-          <h6>Editor Form</h6>
-        </div>
-        <div class="card-body">
-          <%= f.select :status, options_for_select(["Approved", "Rejected"], {prompt: "Select status"}) %>
-          <%= f.text_field :notes, placeholder: "(Optional) Editor notes" %>
-          <%= f.hidden_field :editor_id, value: current_user.id %>
-        </div>
-      </div>
     <% end %>
 
     <% if @pitch.slug.nil? && !@pitch.user.try(:editor) %>

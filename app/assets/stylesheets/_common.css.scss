@@ -45,11 +45,12 @@
   color: white;
   bottom:0px;
   right:0px;
-  background-color: #FF78CB !important;
-  border-color: #FF78CB;
+  background-color: #085F63 !important;
+  border-color: #F0255E;
+  font-weight: 800;
   float: right;
-  font-family: Arial;
-  font-size: 1em;
+  font-family: verdana;
+  font-size: 0.8em;
   border-radius: 8px;
   padding: 10px 20px;
   text-transform: capitalize;
@@ -66,6 +67,13 @@ iframe {
 .image_fit_scrn {
   display: block;
   max-width: 100%;
+  width: 100%;
+}
+
+.image_max_400 {
+  display: block;
+  max-width: 400px;
+  width: 100%;
 }
 
 .margin_top_20 {
@@ -89,7 +97,7 @@ iframe {
 }
 
 .theme_color {
-  color: #65B19D !important;
+  color: #4ABEB6 !important;
 }
 
 .btn_no_style {
@@ -111,6 +119,23 @@ body {
   border-bottom: 1px solid rgba(0,0,0,0.1) !important;
   border-top: 1px solid rgba(0,0,0,0.1) !important;
   margin-top: 0 !important;
+}
+
+.progress_editor_profile {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 20px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.editor {
+  height: 200px;
+  width: 100%;
+  background-color: #F0255E;
 }
 
 #banner_writing {
@@ -163,6 +188,16 @@ html, body {
   font-size: 20px !important;
   font-style: italic;
   color: #C0C0C0 !important;
+}
+
+.spinner-button {
+  position: absolute;
+  margin-left: 55px;
+  margin-top: 7px;
+}
+
+.hide {
+  display: none;
 }
 
 /*
@@ -299,7 +334,7 @@ html, body {
     text-decoration: none;
   }
   a {
-    color: #65B19D !important;
+    color: #4ABEB6 !important;
   }
 }
 
@@ -341,11 +376,11 @@ hr {
 
 
 .link_pink {
-  color: #FF78CB !important;
+  color: #F0255E !important;
   font-weight: bold;
   font-family: "Playfair Display";
   &:hover {
-    color: #FF78CB !important;
+    color: #F0255E !important;
     text-decoration: none;
   }
 }
@@ -658,7 +693,7 @@ body {
   width: 100%;
   text-align: center;
   color: white;
-  background-color: #FF78CB;
+  background-color: #F0255E;
   font-size: 17px;
   padding: 2px;
   margin: 0;
@@ -879,7 +914,7 @@ footer {
     font-family: 'justwaitandsee';
     font-size: 1.4rem;
     font-style: italic;
-    color: #65B19D;
+    color: #4ABEB6;
   }
 
   nav {
@@ -951,8 +986,8 @@ input[type="submit"] {
   padding: 1em 2em;
   margin-bottom: 2em;
   &:hover {
-    border: 2px solid #65B19D;
-    color: #65B19D;
+    border: 2px solid #4ABEB6;
+    color: #4ABEB6;
     cursor: pointer;
   }
 }

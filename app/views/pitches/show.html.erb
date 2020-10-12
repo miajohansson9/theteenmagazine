@@ -1,17 +1,17 @@
-<h1 id="page_title"><%= @title %></h1>
-<div class="skinny_wrapper wrapper_padding">
+<div id="banner_writing" class="editor"></div>
+<div class="apply_wrapper pitch_form_wrapper">
   <% if @claimed_user.nil? %>
     <% if @pitch.status.eql? "Ready for Review" %>
       <p><b><i>This pitch has not been reviewed yet.</i></b></p>
     <% end %>
     <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Please only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
   <% end %>
-  <h3 class="pitch_ttl"><%= @pitch.title %></h3>
+  <h3 class="pitch_ttl"><%= @title %> <i><%= @pitch.title %></i></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
   <% if @pitch.status.eql? "Approved" %>
-    <p style="background-color: yellow; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>! You may claim it to start your draft.</p><br>
+    <p style="background-color: #FCD04D; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>! You may claim it to start your draft.</p><br>
   <% elsif @pitch.status.eql? "Rejected" %>
-    <p style="background-color: yellow; display: inline-block;">This pitch was not approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>.</p><br>
+    <p style="background-color: #FCD04D; display: inline-block;">This pitch was not approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>.</p><br>
   <% end %>
   <% if @pitch.notes.present? %>
     <i>Editor Notes:</i>
@@ -32,7 +32,9 @@
           <%= f.hidden_field :content, value: @pitch.description %>
           <%= f.hidden_field :category_id, value: @pitch.category_id %>
           <%= f.hidden_field :pitch_id, value: @pitch.id %>
-          <%= f.submit "Claim Article Pitch", data: { confirm: "When you claim this pitch, your draft will be started." } %>
+          <div class="btn_cntnr">
+            <%= f.submit "Claim Article Pitch", data: { confirm: "When you claim this pitch, your draft will be started." }, class: "newpost--new--profile mb-0 mr-0", style: "padding-left: 2.5em; padding-right: 2.5em;" %>
+          </div>
         <% end %>
       <% else %>
         <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.created_at.strftime('%A, %B %d') %></p>

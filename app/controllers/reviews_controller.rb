@@ -14,6 +14,11 @@ class ReviewsController < ApplicationController
       if current_user.admin?
         @all_reviews = Post.all.in_review.order("updated_at desc")
       end
+      @user = current_user
+      @editor_pitches_cnt =  @user.pitches.count
+      @editor_reviews = Review.where(editor_id: @user.id)
+      @editor_reviews_cnt = @editor_reviews.count
+      @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
       @editors_reviews = Post.all.in_review.where(:reviews => {editor_id: current_user.id}).order("updated_at desc")
       @submitted_for_review = Post.all.submitted.order("updated_at desc")
       @submitted_pitches = Pitch.is_submitted.order("updated_at desc")

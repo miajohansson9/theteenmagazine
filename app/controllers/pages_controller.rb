@@ -55,6 +55,10 @@ class PagesController < ApplicationController
   def submitted
   end
 
+  def requirements
+    set_meta_tags :title => "Pitch Requirements | The Teen Magazine"
+  end
+
   def search
     if params[:search].present?
       @query = params[:search][:query]

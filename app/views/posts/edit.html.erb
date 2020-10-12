@@ -17,7 +17,7 @@
   <% end %>
   <% if @most_recent_review.try(:status).eql? "Rejected" %>
     <% if !@most_recent_review.notes.blank? %>
-     <p><i style="background-color: yellow;">Editor Notes: <%= @most_recent_review.notes %></i></p>
+     <p><i style="background-color: #FCD04D;">Editor Notes: <%= @most_recent_review.notes %></i></p>
     <% end %>
     <% if @requested_changes.present? %>
       <div class="card mb-3 changes_requested">

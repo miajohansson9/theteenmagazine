@@ -1,3 +1,22 @@
+function animateEditorStats() {
+  var count = $(('#count'));
+  $({ Counter: 0 }).animate({ Counter: count.text() }, {
+    duration: 1000,
+    easing: 'linear',
+    step: function () {
+      count.text(Math.ceil(this.Counter)+ "%");
+    }
+  });
+
+  var s = Snap('#animated');
+  var progress = s.select('#progress');
+
+  progress.attr({strokeDasharray: '0, 251.2'});
+  Snap.animate(0,251.2, function( value ) {
+      progress.attr({ 'stroke-dasharray':value+',251.2'});
+  }, 1000);
+}
+
 function animateValue(id, start, end, duration) {
     // assumes integer values for start and end
     var obj = document.getElementById(id);

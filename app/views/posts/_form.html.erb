@@ -1,9 +1,9 @@
 <script type="text/javascript">
   CKEDITOR.addCss('img{width: 55% !important; height: auto !important;margin-left: auto !important;margin-right: auto !important;display: block;}');
   CKEDITOR.addCss('iframe, .instagram-media{margin: 1em auto !important;}');
-  CKEDITOR.addCss('a{color: #65B19D !important;}');
+  CKEDITOR.addCss('a{color: #4ABEB6 !important;}');
   CKEDITOR.addCss('h1 {font-size: 1.7rem; text-transform: capitalize;} h2 {font-size: 1.5rem; text-transform: capitalize;} h3 {font-size: 1.3rem; text-transform: capitalize;} h4 {font-size: 1.1rem;} h5 {font-size: 0.9rem;} h1, h2, h3, h4, h5, h6, span {margin: 10px 0;}');
-  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #65B19D;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
+  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #4ABEB6;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
   window.WEBSPELLCHECKER_CONFIG = {
     autoSearch: true,
     serviceId: "<%= @service_id %>"
@@ -29,7 +29,7 @@
     <br>
     <% if @post.thumbnail.present? %>
       <%= f.label "Thumbnail Preview:" %>
-      <%= image_tag(@post.thumbnail.url(:large2), :class => "image_fit_scrn") %>
+      <%= image_tag(@post.thumbnail.url(:large2), :class => "image_max_400") %>
       <br>
       <%= f.label "Upload different thumbnail image:" %>
       <%= f.file_field :thumbnail %>
@@ -56,7 +56,7 @@
           Larger edits should be sent back for changes.
         </i>
       <% else %>
-        <i style="background-color: yellow;">
+        <i style="background-color: #FCD04D;">
           The writer has not given permission for you to make changes to this article.
           Please only fill out the feedback form below, and do not make any changes directly to the article.
         </i>

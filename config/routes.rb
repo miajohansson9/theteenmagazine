@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get 'about-us' => 'pages#team'
   get 'contact-us' => 'pages#contact'
   get 'choosing-a-topic' => 'pages#topics'
+  get '/pitch-requirements' => 'pages#requirements'
   get 'writing-the-perfect-article' => 'pages#writing'
   get 'finding-images' => 'pages#images'
   get 'formatting' => 'pages#formatting'
