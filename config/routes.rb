@@ -51,8 +51,8 @@ Rails.application.routes.draw do
   get '/partners', to: 'users#partners'
   get '/partners/:id/share', to: 'users#share'
   get '/partners/:id/published', to: 'users#sponsored'
-  get '/september_2020_mbDFSSOqy0rqUJrgazud', to: 'pages#issue'
-  post '/september_2020_mbDFSSOqy0rqUJrgazud', to: 'pages#issue'
+  get '/october_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
+  post '/october_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
 
   get '/community', to: 'posts#index'
   post '/community', to: 'posts#index'

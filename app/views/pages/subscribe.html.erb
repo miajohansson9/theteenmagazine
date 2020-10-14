@@ -1,6 +1,6 @@
-<%= image_tag "banner_onboarding.jpg", id: "banner_writing" %>
+<%= image_tag "october.jpg", id: "banner_writing" %>
 <div class="apply_wrapper">
-  <h2>The Teen Magazine · September 2020 Issue</h2>
+  <h2>The Teen Magazine · October 2020 Issue</h2>
     <br>
   <h4><i>A special thanks to this month's magazine issue writers and designers:</i></h4>
   <span>
@@ -10,22 +10,22 @@
     <%= link_to("Jessica Zhu - Visual Designer", "https://theteenmagazine.com/writers/jessica-zhu", :target => "_blank", :class => "link_nrml") %>,
     <%= link_to("Jennifer Xia - Visual Designer", "https://theteenmagazine.com/writers/jennifer-xia", :target => "_blank", :class => "link_nrml") %>,
     <%= link_to("Nameeda Elmi - Visual Designer", "https://theteenmagazine.com/writers/nameeda-elmi", :target => "_blank", :class => "link_nrml") %>,
-    <%= link_to("Lishmello - Image Editor", "https://www.instagram.com/lishmello", :target => "_blank", :class => "link_nrml") %>
+    <%= link_to("Lisanne - Image Editor", "#", :class => "link_nrml") %>
   </span>
   <br>
   <br>
-  <%= image_tag("ttm-september-2020.png", :class => "image_fit_scrn") %>
+  <%= image_tag("ttm-october-2020.png", :class => "image_fit_scrn") %>
   <br>
   <br>
   <h4><i>Enter your email to gain access to this month's magazine issue:</i></h4>
 
 <!--End mc_embed_signup-->
-  <%= form_for(:pages, url:"/september_2020_mbDFSSOqy0rqUJrgazud") do |f| %>
+  <%= form_for(:pages, url:"/october_2020_MCDVRcgNpmrhXWo") do |f| %>
     <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 10px;", required: true %>
     <%= f.check_box :sub, :checked => true %>
     <span>Subscribe to The Teen Magazine newsletter & receive all future monthly issues.</span>
     <br>
     <br>
-    <%= f.submit "Get September Issue", class: "submit_btn" %>
+    <%= f.submit "Get October Issue", class: "submit_btn" %>
   <% end %>
 </div>
