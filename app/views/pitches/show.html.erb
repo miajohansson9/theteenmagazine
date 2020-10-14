@@ -8,17 +8,17 @@
   <% end %>
   <h3 class="pitch_ttl"><%= @title %> <i><%= @pitch.title %></i></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
+  <%= markdown @pitch.description %>
   <% if @pitch.status.eql? "Approved" %>
     <p style="background-color: #FCD04D; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>! You may claim it to start your draft.</p><br>
   <% elsif @pitch.status.eql? "Rejected" %>
     <p style="background-color: #FCD04D; display: inline-block;">This pitch was not approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>.</p><br>
   <% end %>
+  <%= image_tag(@pitch.thumbnail, class: "image_fit_scrn") %>
   <% if @pitch.notes.present? %>
     <i>Editor Notes:</i>
     <%= @pitch.notes %><br>
   <% end %>
-  <%= image_tag(@pitch.thumbnail, class: "thumbnail_img") %>
-  <%= markdown @pitch.description %>
   <% if @pitch.requirements.present? %>
     <i>Notes:</i>
     <%= markdown @pitch.requirements %>
