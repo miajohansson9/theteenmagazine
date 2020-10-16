@@ -232,6 +232,15 @@
   .info {
     margin: 0 !important;
   }
+  .editor_label {
+    right: 32%;
+    top: 25px;
+    position: absolute;
+  }
+  .list-group-flush div {
+    border-color: whitesmoke;
+    border-width: 1px !important;
+  }
 }
 
 .flex--profile {

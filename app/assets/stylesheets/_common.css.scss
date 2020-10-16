@@ -29,6 +29,11 @@
   }
 }
 
+.strikethrough, .strikethrough a {
+  text-decoration: line-through;
+  color: black !important;
+}
+
 .disabled {
   opacity: 0.2;
   &:hover {

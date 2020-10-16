@@ -95,38 +95,48 @@
       </div>
       <div class="dashboard--writer--flex--two" style="width: 30rem;">
         <div class="flex--item">
-          <div class="flex--profile profile-minimal">
-            <div class="alert alert-danger" role="alert">
-              A simple danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+          <div class="profile-minimal">
+            <!-- <div class="alert alert-danger" role="alert">
+              <i class="fas fa-exclamation-triangle"></i> You are not on track for completing the editor assignments by <b><%= Date.today.end_of_month.strftime("%B %d") %></b>.
+              Missing a deadline may result in your removal from the editor team.
+            </div>
+            -->
+            <div class="alert alert-success" role="alert">
+              <i class="fas fa-check-circle"></i> You have completed the required 8 reviews and 10 pitched articles this month. Great job!
             </div>
             <div class="position-relative">
               <svg id="animated" class="value1" viewbox="0 0 100 100">
                 <circle cx="50" cy="50" r="45" fill="#fff"/>
-                <path id="progress" stroke-linecap="round" stroke-width="5" stroke="#FCD04D" fill="none"
+                <path id="progress" stroke-linecap="round" stroke-width="5" stroke="#F1255D" fill="none"
                       d="M50 10
                          a 40 40 0 0 1 0 80
                          a 40 40 0 0 1 0 -80">
                 </path>
               </svg>
               <% if @user.try(:profile)&.exists? %>
-                <%= image_tag(@user.profile.url(:square), :class => "progress_editor_profile profile_img") %>
+                <%= image_tag(@user.profile.url(:square), :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Editor</span>
               <% else %>
-                <%= image_tag("profile_image.jpg", :class => "progress_editor_profile profile_img") %>
+                <%= image_tag("profile_image.jpg", :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Editor</span>
               <% end %>
             </div>
             <h5>Welcome back,</h5>
             <div class="info">
-              <h2 style="margin-bottom: 5px;">
+              <h2 style="max-width: 80%; margin: 0 auto;">
                 <%= link_to(@user.try(:full_name), @user) %>
               </h2>
             </div>
+            <div class="list-group-flush text-left mt-4 pt-2">
+              <div class="list-group-item" style="background-color: whitesmoke;">
+                <p class="m-0"><i class="fas fa-calendar-alt fa-2x mr-4 grey p-3 white-text rounded-circle " aria-hidden="true"></i>Your <%= Date.today.strftime("%B") %> Report:</p>
+              </div>
+              <div class="list-group-item">
+                <p class="mb-0 <% if @editor_reviews_cnt >= 8 %>strikethrough<% end %>"> <i class="fas fa-glasses fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_reviews_cnt %>/8 Reviews</a> completed</p>
+              </div>
+              <div class="list-group-item" style="border-top: none !important;">
+                <p class="mb-0 <% if @editor_reviews_cnt >= 10 %>strikethrough<% end %>"><i class="fas fa-lightbulb-on fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_reviews_cnt %>/10 Pitches</a> completed</p>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="p-3">
-          <p><i>You are on track to completing 16 reviews this month and 16 pitched articles. Great job!</i></p>
-          <p><i>You are not on track to completing 16 reviews this month and 16 pitched articles by October 30.
-              Missing a deadline may result in your removal from the editor team.</i></p>
-          <br>
         </div>
       </div>
     </div>
@@ -137,6 +147,9 @@
   $(document).ready(function(){
     animateEditorStats();
   });
+  $(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
 </script>
 
 <%= javascript_include_tag 'plugins/snap.svg-min' %>
