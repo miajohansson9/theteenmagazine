@@ -55,8 +55,25 @@ class PagesController < ApplicationController
   def submitted
   end
 
-  def requirements
+  def reviewing_pitches
     set_meta_tags :title => "Pitch Requirements | The Teen Magazine"
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+  end
+
+  def reviewing_articles
+    set_meta_tags :title => "Article Requirements | The Teen Magazine"
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+  end
+
+  def pitching_new_articles
+    set_meta_tags :title => "Pitching New Articles | The Teen Magazine"
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+    @categories = Category.all
+  end
+
+  def start
+    set_meta_tags :title => "Editor Onboarding | The Teen Magazine"
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
   end
 
   def search

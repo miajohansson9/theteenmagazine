@@ -4,6 +4,9 @@
   font-family: 'Open Sans'}
 </style>
 
+<% @assigned_reviews = 8 %>
+<% @assigned_pitches = 10 %>
+
 <div class="official--writer--wrapper pitches_wrapper reviews_wrapper">
   <div class="dashboard_wrapper">
     <div id="waiting--for--approval">
@@ -41,8 +44,8 @@
                     <p class="card-text"> <%= draft.pitch.description.truncate_words(20) %></p>
                   <% end %>
                   <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> on <%= draft.reviews.last.updated_at.strftime("%A, %b %d") %> </p>
+                  <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
                 </div>
-                <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_pink" %>
               </div>
             </div>
           <% end %>
@@ -64,8 +67,8 @@
                   <h4 class="card-title"><%= link_to pitch.title, pitch, class: "link_nrml" %></h4>
                   <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
                   <p class="card-text"> Submitted by <%= link_to pitch.user.try(:full_name), pitch.user, class: "link_nrml" %> on <%= pitch.updated_at.strftime("%A, %b %d") %> </p>
+                  <%= link_to "Review Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
                 </div>
-                <%= link_to "Review Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review", :id => "btn_pink" %>
               </div>
             </div>
           <% end %>
@@ -93,21 +96,23 @@
         <% end %>
         <br>
       </div>
-      <div class="dashboard--writer--flex--two" style="width: 30rem;">
+      <div class="dashboard--writer--flex--two dashboard--editor" style="width: 30rem;">
         <div class="flex--item">
           <div class="profile-minimal">
-            <!-- <div class="alert alert-danger" role="alert">
-              <i class="fas fa-exclamation-triangle"></i> You are not on track for completing the editor assignments by <b><%= Date.today.end_of_month.strftime("%B %d") %></b>.
-              Missing a deadline may result in your removal from the editor team.
-            </div>
-            -->
-            <div class="alert alert-success" role="alert">
-              <i class="fas fa-check-circle"></i> You have completed the required 8 reviews and 10 pitched articles this month. Great job!
-            </div>
-            <div class="position-relative">
+            <% if @editor_pitches_cnt >= @assigned_pitches && @editor_reviews_cnt >= @assigned_reviews %>
+              <div class="alert alert-success" role="alert">
+                <i class="fas fa-check-circle"></i> You have completed the required <%= @assigned_reviews %> reviews and <%= @assigned_pitches %> pitched articles this month. Great job!
+              </div>
+            <% elsif Date.today.end_of_month.day - Date.today.day < 14 && ((@assigned_pitches / 2) > @editor_pitches_cnt || (@assigned_reviews / 2) > @editor_reviews_cnt) %>
+              <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-triangle"></i> You are not on track for completing the editor assignments by <b><%= Date.today.end_of_month.strftime("%B %d") %></b>.
+                Missing a deadline may result in your removal from the editor team.
+              </div>
+            <% end %>
+            <div class="position-relative" style="width: 120px; margin: 0 auto;">
               <svg id="animated" class="value1" viewbox="0 0 100 100">
                 <circle cx="50" cy="50" r="45" fill="#fff"/>
-                <path id="progress" stroke-linecap="round" stroke-width="5" stroke="#F1255D" fill="none"
+                <path id="progress" stroke-linecap="round" stroke-width="5" stroke="#F0255E" fill="none"
                       d="M50 10
                          a 40 40 0 0 1 0 80
                          a 40 40 0 0 1 0 -80">
@@ -121,19 +126,19 @@
             </div>
             <h5>Welcome back,</h5>
             <div class="info">
-              <h2 style="max-width: 80%; margin: 0 auto;">
+              <h2 style="max-width: 80%; margin: 0 auto; font-weight: bold;">
                 <%= link_to(@user.try(:full_name), @user) %>
               </h2>
             </div>
-            <div class="list-group-flush text-left mt-4 pt-2">
+            <div class="list-group-flush text-left mt-4 pt-2 mb-4">
               <div class="list-group-item" style="background-color: whitesmoke;">
                 <p class="m-0"><i class="fas fa-calendar-alt fa-2x mr-4 grey p-3 white-text rounded-circle " aria-hidden="true"></i>Your <%= Date.today.strftime("%B") %> Report:</p>
               </div>
               <div class="list-group-item">
-                <p class="mb-0 <% if @editor_reviews_cnt >= 8 %>strikethrough<% end %>"> <i class="fas fa-glasses fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_reviews_cnt %>/8 Reviews</a> completed</p>
+                <p class="mb-0 <% if @editor_reviews_cnt >= @assigned_reviews %>strikethrough<% end %>"> <i class="fas fa-glasses fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_reviews_cnt %>/<%= @assigned_reviews %> Reviews</a> completed</p>
               </div>
               <div class="list-group-item" style="border-top: none !important;">
-                <p class="mb-0 <% if @editor_reviews_cnt >= 10 %>strikethrough<% end %>"><i class="fas fa-lightbulb-on fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_reviews_cnt %>/10 Pitches</a> completed</p>
+                <p class="mb-0 <% if @editor_pitches_cnt >= @assigned_pitches %>strikethrough<% end %>"><i class="fas fa-lightbulb-on fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_pitches_cnt %>/<%= @assigned_pitches %> Pitches</a> completed</p>
               </div>
             </div>
           </div>
@@ -141,15 +146,52 @@
       </div>
     </div>
   </div>
+  <div class="guidelines">
+    <div class="thelink">
+      <a href="/editor-requirements">
+      <div class="box foo G6 ">
+        <p>Start Here</p>
+      </div>
+      </a>
+    </div>
+    <div class="thelink">
+      <a href="/pitching-new-articles">
+        <div class="G7 box foo">
+          <p>Pitching New Articles</p>
+        </div>
+      </a>
+    </div>
+    <div class="thelink">
+      <a href="/pitch-requirements">
+        <div class="G8 box foo">
+          <p>Reviewing Pitches</p>
+        </div>
+      </a>
+    </div>
+    <div class="thelink">
+      <a href="/article-requirements">
+        <div class="G9 box foo">
+          <p>Reviewing Articles</p>
+        </div>
+      </a>
+    </div>
+  </div>
 </div>
 
 <script type="text/javascript">
+  var pitches = <%= @editor_pitches_cnt %>;
+  var reviews = <%= @editor_reviews_cnt %>;
+  if (pitches > <%= @assigned_pitches %>) {
+    pitches = <%= @assigned_pitches %>;
+  };
+  if (reviews > <%= @assigned_reviews %>) {
+    reviews = <%= @assigned_reviews %>;
+  }
   $(document).ready(function(){
-    animateEditorStats();
+    var percent = (pitches + reviews) / <%= @assigned_reviews + @assigned_pitches %>;
+    animateEditorStats(percent);
   });
-  $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();
-});
+
 </script>
 
 <%= javascript_include_tag 'plugins/snap.svg-min' %>

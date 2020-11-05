@@ -115,8 +115,12 @@
   }
 }
 
+.modal .comment_form_wrapper {
+  padding: 0 1rem !important;
+}
+
 .comment_form_wrapper {
-  padding: 0;
+  padding: 0 !important;
   form {
     padding: 10px 0 0 45px !important;
     position: relative;

@@ -29,6 +29,9 @@
 }
 
 .topics {
+  a {
+    font-weight: bold;
+  }
   .categories {
     display: flex;
     flex-direction: row;

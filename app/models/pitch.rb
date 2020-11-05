@@ -28,7 +28,7 @@ class Pitch < ApplicationRecord
 
   has_attached_file :thumbnail, styles: {
       card: '540x380#'
-    }
+    }, :restricted_characters => /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
 
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :thumbnail, :content_type => /\Aimage\/.*\Z/

@@ -112,6 +112,19 @@
   -webkit-transform: scale(1);
 }
 
+.G6 {
+  background-image: image-url("journal_and_coffee.jpg");
+}
+.G7 {
+  background-image: image-url("magazine_and_scarf.jpg");
+}
+.G8 {
+  background-image: image-url("reading_magazine.jpg");
+}
+.G9 {
+  background-image: image-url("stack_of_magazines.jpg");
+}
+
 .guidelines {
   display: flex;
   flex-direction: row;
@@ -233,7 +246,7 @@
     margin: 0 !important;
   }
   .editor_label {
-    right: 32%;
+    right: 0;
     top: 25px;
     position: absolute;
   }
@@ -406,15 +419,8 @@
 .reviews_wrapper .dashboard_wrapper {
   #waiting--for--approval .card-review {
     width: 100% !important;
-    .card-bottom-flex {
-      div {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        * {
-          margin: 0;
-        }
-      }
+    .card-bottom-flex div {
+      width: 100%;
     }
   }
 }
@@ -455,7 +461,7 @@
   flex-direction: row;
   justify-content: space-between;
   margin: 10px 0;
-  padding: 10px 30px 20px 30px;
+  padding: 10px 10px 0px 10px;
 
   a {
       text-decoration: none;
@@ -544,10 +550,19 @@
       margin: 20px 0 0 0 !important;
     }
   }
+  .reviews_wrapper {
+    #waiting--for--approval {
+      flex-direction: column-reverse !important;
+    }
+  }
   .new--writer--wrapper, .official--writer--wrapper {
       #waiting--for--approval {
         padding-top: 10px;
         flex-direction: column;
+        .dashboard--editor {
+          width: 100% !important;
+          margin-bottom: 15px !important;
+        }
         .dashboard--writer--flex--two {
           padding: 0 !important;
           border-left: none;

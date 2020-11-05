@@ -1,23 +1,44 @@
 <h3 class="pitch_ttl mt-2">Review <i><%= @pitch.title %></i></h3>
-<%= markdown @pitch.description %>
+<p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
 <%= image_tag(@pitch.thumbnail.url(:card), class: "image_fit_scrn") %>
-<p>Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "link_theme") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "link_theme") %></p>
+<%= markdown @pitch.description %>
 
 <%= form_for @pitch do |f| %>
-  <p><i>If the pitch meets all of the requirements described in <a target="_blank" style="background-color: #FCD04D;" class="link_theme" href="/pitch-requirements">Notes on Approving Pitches</a>, you may approve this pitch. If you're not sure, you can reach out to me at mia@theteenmagazine.com.</i></p>
   <div class="mb-4 pb-4">
     <div class="card review_frm">
       <div class="card-header">
         <h6>Editor Form</h6>
       </div>
       <div class="card-body">
-        <%= f.select :status, options_for_select(["Approved", "Rejected"], {prompt: "Select status"}) %>
-        <%= f.text_field :notes, placeholder: "Give additional feedback on this pitch (optional)" %>
+        <div class="small-text-wrapper">
+          <p>Prerequisite: Before reviewing any pitch, make sure you have read all of <a target="_blank" href="/pitch-requirements">Reviewing Pitches</a> and <a target="_blank" href="/pitching-new-articles">Pitching New Articles</a>.</p>
+          <p>Pitch Checklist:</p>
+          <ol>
+            <li>Is the writer's argument for why this topic is relevant for The Teen Magazine's audience convincing?<a data-toggle="tooltip" title="See pitch requirements" class="ml-1 position-absolute" target="_blank" href="/pitch-requirements#first-question"><i class="fad fa-info-circle"></i></a></li>
+            <li>Is the title shareable and/or searchable?<a data-toggle="tooltip" title="See pitch requirements" class="ml-1 position-absolute" target="_blank" href="/pitch-requirements#second-question"><i class="fad fa-info-circle"></i></a></li>
+            <li>Does the image thumbnail fit this topic well and is it good quality?<a data-toggle="tooltip" title="See pitch requirements" class="ml-1 position-absolute" target="_blank" href="/pitch-requirements#third-question"><i class="fad fa-info-circle"></i></a></li>
+          </ol>
+          <p>If you answered yes to all these questions, you may choose "Approved" from the dropdown menu and save. If you answered no to at least one of the questions, select "Rejected", and mark the reason(s) why. If you are unsure, either let another editor review this pitch or contact mia@theteenmagazine.com to ask a clarifying question about the pitch requirements.</p>
+        </div>
+        <div class="pb-1">
+          <p class="d-inline">Reject or Approve pitch:</p>
+          <%= f.select :status, options_for_select(["Approved", "Rejected"], {prompt: "Select status"}), {}, {:onChange => "select_status();"} %>
+        </div>
+        <div class="small-text-wrapper">
+          <p class="accepted-descr">Make sure you've answered yes to all the above questions before approving.</p>
+        </div>
+        <p class="rejected-reason hide mb-1 mt-1">*Select reason(s) for rejecting:</p>
+        <div class="small-text-wrapper">
+          <p class="rejected-reason hide mb-1 mt-0"><%= f.check_box :rejected_topic %> Topic is not relevant enough for The Teen Magazine’s audience</p>
+          <p class="rejected-reason hide mb-1 mt-0"><%= f.check_box :rejected_title %> Title does not meet requirements</p>
+          <p class="rejected-reason hide mt-0"><%= f.check_box :rejected_thumbnail %> Thumbnail image does not meet requirements</p>
+        </div>
+        <%= f.text_field :notes, placeholder: "Additional feedback (optional)", class: "rejected-reason hide" %>
         <%= f.hidden_field :editor_id, value: current_user.id %>
       </div>
     </div>
     <div class="btn_cntnr">
-      <%= f.submit "Submit", class: "newpost--new--profile mb-0 mr-0", style: "padding-left: 2.5em; padding-right: 2.5em;" %>
+      <%= f.submit "Save", class: "newpost--new--profile mb-0 mr-0", style: "padding-left: 2.5em; padding-right: 2.5em;" %>
     </div>
   </div>
 <% end %>

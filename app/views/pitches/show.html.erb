@@ -1,60 +1,68 @@
 <div id="banner_writing" class="editor"></div>
 <div class="apply_wrapper pitch_form_wrapper">
-  <% if @claimed_user.nil? %>
-    <% if @pitch.status.eql? "Ready for Review" %>
-      <p><b><i>This pitch has not been reviewed yet.</i></b></p>
-    <% end %>
-    <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Please only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
-  <% end %>
   <h3 class="pitch_ttl"><%= @title %> <i><%= @pitch.title %></i></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
-  <%= markdown @pitch.description %>
-  <% if @pitch.status.eql? "Approved" %>
-    <p style="background-color: #FCD04D; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>! You may claim it to start your draft.</p><br>
+  <% if @claimed_user.present? %>
+    <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.created_at.strftime('%A, %B %d') %></p>
+  <% elsif @pitch.status.eql? "Approved" %>
+    <p class="mb-3" style="background-color: #FCD04D; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>! You may claim it to start your draft.</p>
   <% elsif @pitch.status.eql? "Rejected" %>
-    <p style="background-color: #FCD04D; display: inline-block;">This pitch was not approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>.</p><br>
+    <p><span style="background-color: #FCD04D; padding: 5px 0;">This was pitch rejected<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>. Please <%= link_to "delete", pitch_path(@pitch), method: :delete, data: {confirm: "Are you sure you want to delete this pitch? This cannot be undone."} %> it and submit a new pitch that meets all the requirements as described <a target="_blank" href="/choosing-a-topic">here</a>.</span></p>
+    <p>Reason(s) for rejection:</p>
+    <ul>
+      <% if @pitch.rejected_topic %>
+        <li>The topic is not relevant enough for The Teen Magazine's audience</li>
+      <% end %>
+      <% if @pitch.rejected_title %>
+        <li>The title does not meet the requirements</li>
+      <% end %>
+      <% if @pitch.rejected_thumbnail %>
+        <li>The thumbnail does not meet the requirements</li>
+      <% end %>
+    </ul>
+  <% elsif @claimed_user.nil? && (@pitch.status.eql? "Ready for Review") %>
+    <p><b><i>This pitch has not been reviewed yet.</i></b></p>
   <% end %>
-  <%= image_tag(@pitch.thumbnail, class: "image_fit_scrn") %>
   <% if @pitch.notes.present? %>
-    <i>Editor Notes:</i>
-    <%= @pitch.notes %><br>
+    <p class="mt-0"><i><%= @editor.full_name %> left a comment:
+    <%= @pitch.notes %><br></i></p>
   <% end %>
+  <%= image_tag(@pitch.thumbnail.url(:card), class: "image_fit_scrn mb-4") %>
+  <%= markdown @pitch.description %>
   <% if @pitch.requirements.present? %>
     <i>Notes:</i>
     <%= markdown @pitch.requirements %>
   <% end %>
 
-  <% if (!@pitch.status.eql? "Rejected") && (!@pitch.status.eql? "Ready for Review") %>
-    <% if (current_user.id.eql? @pitch.user.id) || @pitch.user.editor %>
-      <% if @claimed_user.nil? %>
-        <%= form_for @post do |f| %>
-          <%= f.hidden_field :title, value: @pitch.title %>
-          <%= f.hidden_field :content, value: @pitch.description %>
-          <%= f.hidden_field :category_id, value: @pitch.category_id %>
-          <%= f.hidden_field :pitch_id, value: @pitch.id %>
-          <div class="btn_cntnr">
-            <%= f.submit "Claim Article Pitch", data: { confirm: "When you claim this pitch, your draft will be started." }, class: "newpost--new--profile mb-0 mr-0", style: "padding-left: 2.5em; padding-right: 2.5em;" %>
-          </div>
+  <% if @claimed_user.nil? %>
+    <%= form_for @post do |f| %>
+      <%= f.hidden_field :title, value: @pitch.title %>
+      <%= f.hidden_field :content, value: @pitch.description %>
+      <%= f.hidden_field :category_id, value: @pitch.category_id %>
+      <%= f.hidden_field :pitch_id, value: @pitch.id %>
+      <i class="d-block pb-4 mb-2">When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
+      <div class="btn_cntnr" style="margin-top: -1rem;">
+        <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Claim Article Pitch", data: { confirm: "When you claim this pitch, your draft will be started." }, class: "newpost--new--profile mb-0 mr-0 #{@class}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
+      </div>
+      <br>
+    <% end %>
+    <% else %>
+      <% if !@article.is_published? %>
+        <% if @claimed_user.id == current_user.id %>
+          <%= form_for @pitch do |f| %>
+            <%= f.hidden_field :claimed_id, value: nil %>
+            <p class="pitch_usr mb-4">If you unclaim this pitch, the associated article will become locked unless you claim the pitch again. If this pitch was created by an editor, the topic will become available to any writer at TTM. Go to your started <%= link_to("draft", @article, class: "pitch_btn", target: "_blank") %>.</p>
+            <div class="btn_cntnr" style="margin-top: -1rem;">
+              <%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }, class: "newpost--new--profile mb-0 mr-0", style: "padding-left: 2.5em; padding-right: 2.5em;" %>
+            </div>
+            <br>
+          <% end %>
         <% end %>
       <% else %>
-        <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.created_at.strftime('%A, %B %d') %></p>
-        <% if !@article.is_published? %>
-          <% if @claimed_user.id == current_user.id || current_user.admin? %>
-            <%= form_for @pitch do |f| %>
-              <%= f.hidden_field :claimed_id, value: nil %>
-              <p class="pitch_usr">Go to this pitch's <%= link_to("article", @article, class: "pitch_btn") %>.<br>Note: If you unclaim this pitch, any writer will be able to claim it. The associated article will become locked unless you claim the pitch again.</p>
-              <%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }  %>
-            <% end %>
-          <% end %>
-        <% else %>
-          <p class="pitch_usr">This pitch's <%= link_to("article", @article, class: "pitch_btn") %> was published on <%= @article.publish_at.strftime("%A, %B %d") %>.</p>
-        <% end %>
+        <p class="pitch_usr">This pitch's <%= link_to("article", @article, class: "pitch_btn", target: "_blank") %> was published on <%= @article.publish_at.strftime("%A, %B %d") %>.</p>
       <% end %>
     <% end %>
-  <% end %>
-
-  <% if (@pitch.user.id.eql? current_user.id) && !@article.try(:is_published?) %>
-    <%= link_to "Delete", pitch_path(@pitch), method: :delete, data: {confirm: "Are you sure you want to delete this pitch? This cannot be undone."}, :class => "pitch_btn delete_btn" %>
-  <% end %>
-  <br>
+    <% if ((current_user.id.eql? @pitch.user.id) || current_user.admin) && !@article&.is_published? %>
+      <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme", style: "float: left; margin-top: -1.5rem;" %>
+    <% end %>
 </div>

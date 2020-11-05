@@ -23,16 +23,19 @@
               </div>
             <% else %>
               <div class="rounded-bottom lighten-3 text-right p-1">
-                <div class="<% if @points < 300 %>disabled<% end %> btn_cntnr mb-0 pb-0">
+                <% @class = @points < 300 ? "disabled" : "" %>
                   <%= form_for draft do |f| %>
                     <% @initial = (draft.promoting_until.present? && draft.promoting_until > Time.now) ? draft.promoting_until : Time.now %>
-                    <%= f.hidden_field :promoting_until, value: @initial + 1.day %>
-                    <%= f.submit 'Promote (300 points)',
-                        data: {confirm: "This draft will be featured for a day on the community page. You are using 20 points out of your available #{@points} points to do this. Do you want to continue?"},
-                        class: "newpost--new--profile" %>
+                    <%= f.hidden_field :promoting_until, value: @initial + 3.day %>
+                    <div class="btn_cntnr mb-0 pb-0">
+                      <span data-toggle="tooltip" title="<% if @points < 300 %>Give feedback on more articles<% end %>">
+                        <%= f.submit 'Promote (300 points)',
+                          data: {confirm: "This draft will be featured for a day on the community page. You are using 20 points out of your available #{@points} points to do this. Do you want to continue?"},
+                          class: "newpost--new--profile #{@class}" %>
+                      </span>
+                    </div>
                   <% end %>
                 </div>
-              </div>
             <% end %>
           </div>
       <% end %>

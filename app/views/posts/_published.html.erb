@@ -48,7 +48,7 @@ blockquote {
                     <i aria-hidden="true" class="fa fa-facebook"></i>
                   </div>
                 </a>
-                <a class="js-share-twitter-link" href="https://www.twitter.com/share?url=http://www.theteenmagazine.com/<%= @post.slug %>&text=<%= @post.title %> &via=theteenmagazin_" >
+                <a class="js-share-twitter-link" href="https://www.twitter.com/share?url=https://www.theteenmagazine.com/<%= @post.slug %>&text=<%= @post.title %> &via=theteenmagazin_" >
                   <div style="background-color: #55ACEE">
                     <i aria-hidden="true" class="fa fa-twitter"></i>
                   </div>
@@ -73,6 +73,31 @@ blockquote {
               <div class="post_content">
                 <%= markdown @post.content %>
               </div>
+              <div class="social_icons social_icons_full">
+                <a class="fb-share" href="//www.facebook.com/v2.3/dialog/feed?app_id=1190455601051741
+                  &name=<%= @post.title.sub! '#', '' %>
+                  &description=<%= @post.meta_description %>
+                  &link=http://www.theteenmagazine.com/<%= @post.slug %>">
+                  <div>
+                    <i aria-hidden="true" class="fa fa-facebook"></i>
+                  </div>
+                </a>
+                <a class="js-share-twitter-link" href="https://www.twitter.com/share?url=https://www.theteenmagazine.com/<%= @post.slug %>&text=<%= @post.title %> &via=theteenmagazin_" >
+                  <div style="background-color: #55ACEE">
+                    <i aria-hidden="true" class="fa fa-twitter"></i>
+                  </div>
+                </a>
+                <a class="js-share-pinterest-link" href="//pinterest.com/pin/create/button/?url=http://www.theteenmagazine.com/<%=@post.slug%>&media=<%= @post.thumbnail.url(:large)%>&description=<%= @post.title %>  - TheTeenMagazine.com">
+                 <div style="background-color: #cb2027">
+                   <i aria-hidden="true" class="fa fa-pinterest"></i>
+                 </div>
+                </a>
+                <a title="Email" href="mailto:?subject=<%= @post.title %>&body=http://www.theteenmagazine.com/<%= @post.slug %>" target="_top">
+                 <div  style="background-color: #333">
+                   <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                 </div>
+               </a>
+              </div>
               <% if current_user && (current_user.id == @post.user_id || (@post.collaboration&.include? current_user.email) || current_user.admin?) %>
                 <div id="admin_links">
                   <%= link_to "Edit Article", edit_post_path(@post) %>
@@ -81,7 +106,7 @@ blockquote {
                   <% end %>
                 </div>
               <% else %>
-                <p class="mt-0 mb-4"><i>Thank you for reading The Teen Magazine! If you are intersted in joining our writer community, you can apply on our website <a target="_blank" class="link_grn" href="/apply">here</a>.</i></p>
+                <p class="mt-0 mb-4"><i>Did you enjoy reading <%= @post.user.full_name %>'s article? Let your friends know by using any of the sharing options above. To apply to our writer team, fill out the application found on our website <a target="_blank" class="link_grn" href="/apply">here</a>.</i></p>
               <% end %>
               <div id= "background">
                <%= render :partial => 'users/profile', locals: {user: @user} %>

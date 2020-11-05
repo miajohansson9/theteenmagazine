@@ -75,7 +75,6 @@
       </div>
     </div>
 
-    <%= f.hidden_field :full_name, :value => @user.full_name %>
     <%= f.hidden_field :posts_count, :value => @user.posts.published.count %>
 
     <% if current_user && current_user.admin? %>

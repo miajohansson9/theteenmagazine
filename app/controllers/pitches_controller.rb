@@ -1,6 +1,6 @@
 class PitchesController < ApplicationController
   before_action :find_pitch, only: [:show, :edit, :update, :destroy]
-  before_action :is_admin?, only: [:edit]
+  before_action :can_edit?, only: [:edit]
   before_action :is_partner?, only: [:index, :new, :show]
   before_action :authenticate_user!
   load_and_authorize_resource
@@ -51,7 +51,7 @@ class PitchesController < ApplicationController
     if @pitch.save && current_user.editor?
       redirect_to "/pitches", notice: "Your pitch was successfully added!"
     elsif @pitch.save
-      redirect_to user_path(current_user), notice: "Your pitch was successfully submitted!"
+      redirect_to @pitch, notice: "Your pitch was successfully submitted!"
     else
       render 'new', notice: "Oh no! Your changes were not able to be saved!"
     end
@@ -73,7 +73,11 @@ class PitchesController < ApplicationController
         @post.title = "#{@post.title} (locked)"
         @post.save
       end
-      @message = "You've unclaimed this pitch."
+      if current_user.admin?
+        @message = "Changes were successfully saved!"
+      else
+        @message = "You've unclaimed this pitch."
+      end
     else
       @message = "Changes were successfully saved!"
     end
@@ -97,8 +101,12 @@ class PitchesController < ApplicationController
   end
 
   #only allow admin and editors to submit new pitches
-  def is_admin?
-    redirect_to root_path unless (current_user && (current_user.admin? || current_user.editor?))
+  def can_edit?
+    if (current_user && (current_user.admin? || current_user.editor? || (current_user.id.eql? @pitch.user.id)))
+      true
+    else
+      redirect_to @pitch, notice: "You do not have access to this page."
+    end
   end
 
   def show
@@ -107,7 +115,27 @@ class PitchesController < ApplicationController
     @post.content = "<i>" + @pitch.description + "</i>"
     @claimed_user = @pitch.claimed_id.present? ? User.find(@pitch.claimed_id) : nil
     @article = @claimed_user ? @claimed_user.posts.where(pitch_id: @pitch.id).last : nil
-    @title = @claimed_user.nil? ? "Claim Pitch" : "You've claimed this pitch"
+    if @pitch.status.eql? "Ready for Review"
+      @title =  "Pitch Submitted"
+      @class = "disabled"
+      @tooltip = "This pitch has not been reviewed yet"
+    elsif @pitch.status.eql? "Rejected"
+      @title =  "Pitch Rejected"
+      @class = "disabled"
+      @tooltip = "This pitch was rejected"
+    elsif @claimed_user.nil?
+      if @pitch.user.editor || (@pitch.user.id.eql? current_user.id)
+        @title = "Claim Article Pitch"
+        @class = ""
+        @tooltip = ""
+      else
+        @title = "#{@pitch.user.full_name} pitched"
+        @class = "disabled"
+        @tooltip = "This pitch isn't yours"
+      end
+    else
+      @title = "You've claimed the pitch"
+    end
     @editor = @pitch.editor_id.present? ? User.find(@pitch.editor_id) : nil
     set_meta_tags :title => @pitch.title
   end
@@ -154,7 +182,7 @@ class PitchesController < ApplicationController
   end
 
   def pitch_params
-    params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :claimed_id, :category_id, :user_id, :editor_id)
+    params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :category_id, :user_id, :editor_id)
   end
 
   def find_pitch

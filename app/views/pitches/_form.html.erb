@@ -9,11 +9,11 @@
   <% end %>
 
   <div class="pitch_flds">
-    <%= f.label :title %>
+    <p>Write a <a href="#">Shareable</a> and/or <a href="Searchable">Searchable</a> title here:</p>
     <%= f.text_field :title, placeholder: "Title" %>
 
-    <%= f.label :description, "Describe your idea and who the ideal reader would be." %>
-    <%= f.text_area :description, placeholder: "What's your pitch?" %>
+    <p>Explain your idea and why the article topic fits <a href="requirements">The Teen Magazine's audience</a>:</p>
+    <%= f.text_area :description, placeholder: "Your idea..." %>
 
     <div class="margin_flds">
       <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>
@@ -24,21 +24,23 @@
     <% end %>
 
     <div class="margin_flds">
-      <%= f.label "Upload thumbnail image" %>
+      <p>Upload a <a href="royalty free">royalty free and eye catching</a> thumbnail image</p>
       <%= f.file_field :thumbnail %>
     </div>
 
     <% if current_user.editor? && @pitch.title.nil? %>
       <%= f.check_box :assign_if_not_claimed, style: "display: inline;" %>
-      <span>Automatically assign this pitch to a writer if it's not claimed in two weeks.</span><br><br>
+      <span>Automatically assign this pitch to a writer if it's not claimed in two weeks.</span><br>
     <% end %>
 
     <% if @pitch.slug.nil? && !@pitch.user.try(:editor) %>
-      <%= f.submit "Submit Pitch" %>
+      <%= f.hidden_field :status, value: "Ready for Review" %>
+      <% @button_text = "Submit Pitch" %>
     <% elsif @pitch.slug.nil? %>
-      <%= f.submit "Share Pitch" %>
+      <% @button_text = "Share Pitch" %>
     <% else %>
-      <%= f.submit "Save Changes" %>
+      <% @button_text = "Save Changes" %>
     <% end %>
+    <div class="btn_cntnr pb-0 mt-4 pt-2" style="float: none !important;"><%= f.submit @button_text, class: "newpost--new--profile mr-0" %></div>
   </div>
 <% end %>
