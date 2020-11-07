@@ -14,6 +14,7 @@ Devise.setup do |config|
   # with default "from" parameter.
   config.mailer_sender = 'editors@theteenmagazine.com'
 
+  config.secret_key = ENV["DEVISE_KEY"]
   # Configure the class responsible to send e-mails.
   config.mailer = 'Mailer'
 
