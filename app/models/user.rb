@@ -39,6 +39,6 @@ class User < ActiveRecord::Base
   end
 
   def should_generate_new_friendly_id?
-    slug.blank? || first_name_changed? || last_name_changed?
+    slug.blank? || self.full_name_changed?
   end
 end

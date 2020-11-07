@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   def topics
     @pitch = Pitch.new
     @categories = Category.all
-    set_meta_tags :title => "Choosing a Topic | The Teen Magazine"
+    set_meta_tags :title => "Pitching an Article | The Teen Magazine"
   end
 
   def writing
@@ -53,6 +53,27 @@ class PagesController < ApplicationController
   end
 
   def submitted
+  end
+
+  def reviewing_pitches
+    set_meta_tags :title => "Pitch Requirements | The Teen Magazine"
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+  end
+
+  def reviewing_articles
+    set_meta_tags :title => "Article Requirements | The Teen Magazine"
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+  end
+
+  def pitching_new_articles
+    set_meta_tags :title => "Pitching New Articles | The Teen Magazine"
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+    @categories = Category.all
+  end
+
+  def start
+    set_meta_tags :title => "Editor Onboarding | The Teen Magazine"
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
   end
 
   def search

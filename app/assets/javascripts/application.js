@@ -10,11 +10,12 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery.min
+//= require jquery3
 //= require jquery_ujs
+//= require popper
+//= require bootstrap
 //= require ckeditor/init
-//= require umd/popper.min
-//= require_tree .
+//= require dashboard
 
 /*========================================
 =            CUSTOM FUNCTIONS            =
@@ -27,5 +28,4 @@ function toggleNav() {
       // Do things on Nav Open
       $('#site-wrapper').addClass('show-nav');
   }
-  //$('#site-wrapper').toggleClass('show-nav');
 }

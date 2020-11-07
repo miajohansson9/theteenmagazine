@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200930210024) do
+ActiveRecord::Schema.define(version: 20201028180259) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -172,6 +172,9 @@ ActiveRecord::Schema.define(version: 20200930210024) do
     t.text     "status"
     t.text     "notes"
     t.integer  "editor_id"
+    t.boolean  "rejected_title"
+    t.boolean  "rejected_topic"
+    t.boolean  "rejected_thumbnail"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
   end
 

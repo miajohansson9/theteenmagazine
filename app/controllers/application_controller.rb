@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
   end
 
   def initiate_last_seen
-    if current_user.last_saw_pitches.nil?
+    if current_user.last_saw_pitches.nil? && !(current_user.partner)
       current_user.last_saw_pitches = Time.now
       current_user.last_saw_community = Time.now
     end

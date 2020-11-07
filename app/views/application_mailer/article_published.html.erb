@@ -10,9 +10,9 @@
   <body>
     <% images = ["https://theteenmagazine.s3.amazonaws.com/giphy.gif", "http://s3.amazonaws.com/theteenmagazine/Users/miajohansson/Desktop/ttm/blog/public/ckeditor_assets/pictures/2/content_3ZJ5ZIO.gif", "http://s3.amazonaws.com/theteenmagazine/Users/miajohansson/Desktop/ttm/blog/public/ckeditor_assets/pictures/1/content_giphy-1.gif"] %>
     <p>Hi <%= @user.first_name %>,</p>
-    <p><%= link_to @post.title, @post, style: "color: #65B19D;" %> was just published!</p>
+    <p><%= link_to @post.title, @post, style: "color: #4ABEB6;" %> was just published!</p>
     <img style="display: block; max-width: 100%; width: 400px; margin: 0 auto;" src=<%= images[rand(0..2)] %>>
-    <p>Our editors loved your article! You can now view your published article on <%= link_to "The Teen Magazine", @post, :style => "color: #65B19D;" %> and share it with your friends!</p>
+    <p>Our editors loved your article! You can now view your published article on <%= link_to "The Teen Magazine", @post, :style => "color: #4ABEB6;" %> and share it with your friends!</p>
     <p>As always, if you have any questions, please do not hesitate to send us an email. Congratulations!</p>
     <p>Best,<br/>Editor Team</p>
   </body>

@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       end
     end
     if current_user.present?
-      @pitches = Pitch.all.order("created_at desc").limit(4)
+      @pitches = Pitch.where.not(status: "Rejected").all.order("created_at desc").limit(4)
       @featured_writers = Post.where(publish_at: (Time.now - 7.days)..Time.now).order("updated_at desc").map{|p| p.user}.uniq
       @claimed_pitches_cnt =  Pitch.where(claimed_id: @user.id).present? ? Pitch.where(claimed_id: @user.id).count : 0;
       @pageviews = 0
@@ -64,6 +64,11 @@ class UsersController < ApplicationController
   end
 
   def onboarding
+    @user = current_user
+    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+  end
+
+  def editor_onboarding
     @user = current_user
     @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
   end
@@ -135,6 +140,10 @@ class UsersController < ApplicationController
       ApplicationMailer.profile_approved(@user).deliver
     end
     if @user.update user_params
+      if @user.first_name.present? && @user.last_name.present?
+        @user.full_name = "#{@user.first_name} #{@user.last_name}"
+        @user.save
+      end
       if params[:redirect] != nil
         redirect_to onboarding_path(page: params[:redirect])
       else

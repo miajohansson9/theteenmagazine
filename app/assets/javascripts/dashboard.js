@@ -1,3 +1,24 @@
+function animateEditorStats(decimal) {
+  var s = Snap('#animated');
+  var progress = s.select('#progress');
+
+  progress.attr({strokeDasharray: '0, 251.2'});
+  Snap.animate(0,decimal * 251.2, function( value ) {
+      progress.attr({ 'stroke-dasharray':value+',251.2'});
+  }, 1000);
+}
+
+function select_status() {
+  var selected = document.getElementById('pitch_status').value;
+  if (selected == "Approved") {
+    $(".rejected-reason").addClass("hide");
+    $(".accepted-descr").removeClass("hide");
+  } else {
+    $(".rejected-reason").removeClass("hide");
+    $(".accepted-descr").addClass("hide");
+  }
+}
+
 function animateValue(id, start, end, duration) {
     // assumes integer values for start and end
     var obj = document.getElementById(id);

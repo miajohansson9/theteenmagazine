@@ -7,11 +7,9 @@
     <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
     <script src="https://use.fontawesome.com/9fbc74da52.js"></script>
     <script src="https://kit.fontawesome.com/f816369528.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet">
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag 'mdbootstrap/css/bootstrap.min.css' %>
-    <%= stylesheet_link_tag 'mdbootstrap/css/mdb.min.css' %>
-    <%= stylesheet_link_tag 'mdbootstrap/css/style.css' %>
     <%= stylesheet_link_tag 'onboarding', media: 'all' %>
     <%= javascript_include_tag 'application'%>
     <% if current_user.partner %>
@@ -30,7 +28,11 @@
       <%= render "layouts/partials/slide-in-menu" %>
       <div id="site-canvas">
         <!-- <div class="banner_stts_relative">
+<<<<<<< HEAD
           <p class= "banner_stts" style="background-color: black;"><span style="font-family: 'Griffy', cursive;">All Treats, No Tricks: </span> Get in the <span style="font-family: 'Griffy', cursive;">Spirit of Halloween</span> <i class="fas fa-ghost"></i> by grabbing your FREE copy of The Teen Magazine's October issue <a target="_blank" class="link_white" href="/subscribe">here</a>!</p>
+=======
+          <p class= "banner_stts" style="background-color: #F0255E;">The Teen Magazine's September 2020 issue has been released! Download it for free <%= link_to("here", "/subscribe", class: "link_white", target: "_blank") %>.</p>
+>>>>>>> b3412bcbdaef7bed91dd0ae024fd9e21814e28a0
         </div> -->
         <div class="bodywrapper">
           <header id="main_navigation" class="clearfix">
@@ -48,7 +50,9 @@
             <div class="border">
               <div class="nav_wrapper">
                 <nav class="nav_article">
-                  <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
+                  <div class="nav-title-wrapper nav-title">
+                    <%= link_to "The Teen Magazine", root_path %>
+                  </div>
                   <% if user_signed_in? %>
                      <% if current_user.editor? %>
                         <%= link_to "Start an Article", new_post_path, class: "pt-4" %>
@@ -58,14 +62,14 @@
                      <div class="dropdown">
                        <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image.jpg") %>
                        <a class="mr-0 btn-floating btn-sm pt-0 dropdown-toggle btn-profile" type="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false"><span><i class="fa fa-bars"></i><%= @profile_img %><% if !(@notifications.eql? 0) %><span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 4px !important;" <% end %>><%= @notifications %></span><% end %></span></a>
+                          aria-haspopup="true" aria-expanded="false"><span><i class="fa fa-bars"></i><%= @profile_img %><% if !(@notifications.eql? 0) %><span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 5px !important;" <% end %>><%= @notifications %></span><% end %></span></a>
                         <div class="dropdown-menu">
                           <%= link_to "My Profile", user_path(current_user), class: "dropdown-item" %>
                           <% if !current_user.partner? %>
                             <div class="dropdown-divider"></div>
                           <% end %>
                           <% if current_user.editor? %>
-                             <a href="/reviews" class="dropdown-item">Editor Dashboard
+                             <a href="/editors/<%= current_user.slug %>" class="dropdown-item">Editor Dashboard
                                <% if @unseen_editor_dashboard_cnt > 0 %>
                                 <span class="sec counter counter-sm"></span><p><%= @unseen_editor_dashboard_cnt %> new</p>
                                <% end %>
@@ -132,10 +136,37 @@
       ga('send', 'pageview');
     </script>
     <script type="text/javascript">
+      $.fn.isOnScreen = function(){
+        var win = $(window);
+        var viewport = {
+            top : win.scrollTop(),
+            left : win.scrollLeft()
+        };
+        viewport.right = viewport.left + win.width();
+        viewport.bottom = viewport.top + win.height();
+        var bounds = this.offset();
+        bounds.right = bounds.left + this.outerWidth();
+        bounds.bottom = bounds.top + this.outerHeight();
+        return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+      };
+      $.fn.triggerCheck = function(){
+        if ($('#checkmark').isOnScreen()) {
+          $('#checkmark').addClass("checkmark");
+          $('#checkmark path').addClass("checkmark__check");
+          $('#checkmark circle').addClass("checkmark__circle");
+        }
+      };
       $('document').ready(function() {
         setTimeout(function() {
           $('.notice').slideUp();
         }, 1500);
+        $("#submit-comment-modal-button").click(function() {
+          $("#submit-comment-modal-button").addClass("disabled");
+          $(".spinner-button").removeClass("hide");
+        });
+      });
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
       });
     </script>
   </body>

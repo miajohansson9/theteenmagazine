@@ -18,7 +18,7 @@
   .question {
     margin: 0;
     font-weight: 800;
-    color: #65B19D;
+    color: #4ABEB6;
     font-size: 25px;
   }
 }
@@ -29,6 +29,9 @@
 }
 
 .topics {
+  a {
+    font-weight: bold;
+  }
   .categories {
     display: flex;
     flex-direction: row;
@@ -37,7 +40,7 @@
     p {
       margin: 0;
       width: 33%;
-      color: #65B19D;
+      color: #4ABEB6;
       display: inline-block;
     }
   }
@@ -75,12 +78,12 @@
 
 .writing {
   .yellow {
-    background-color: yellow;
+    background-color: #FCD04D;
     color: black;
     padding: 5px;
   }
   b {
-    color: #65B19D;
+    color: #4ABEB6;
   }
   img {
     width: 100%;
@@ -107,9 +110,9 @@
 
 .theimages, .criteria, .privacy, .topics, .writing {
   a {
-    color: #65B19D;
+    color: #4ABEB6;
     &:hover {
-      background-color: yellow;
+      background-color: #FCD04D;
       opacity: 1;
     }
   }
@@ -129,7 +132,7 @@
   padding: 0;
   border: none;
   text-decoration: underline;
-  color: #65B19D;
+  color: #4ABEB6;
   &:hover {
     cursor: pointer;
   }
@@ -149,9 +152,9 @@
 }
 
 .link_grn {
-  color: #65B19D;
+  color: #4ABEB6;
   &:hover {
-    color: #65B19D;
+    color: #4ABEB6;
     text-decoration: none;
     opacity: 0.8;
   }
