@@ -133,6 +133,10 @@ class PitchesController < ApplicationController
         @class = "disabled"
         @tooltip = "This pitch isn't yours"
       end
+    elsif @claimed_user.id != current_user.id
+      @title = "#{@claimed_user.try(:full_name)} claimed the pitch"
+      @class = "disabled"
+      @tooltip = "This pitch isn't yours"
     else
       @title = "You've claimed the pitch"
     end

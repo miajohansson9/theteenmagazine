@@ -9,10 +9,14 @@
   <% end %>
 
   <div class="pitch_flds">
-    <p>Write a <a href="#">Shareable</a> and/or <a href="Searchable">Searchable</a> title here:</p>
+    <% if current_user.editor? && @pitch.title.nil? %>
+      <p>You are signed in with an Editor account. This pitch will show up in <a target="_blank" href="/pitches">Unclaimed Pitches</a> for any writer to claim.</p>
+    <% end %>
+
+    <p>Write a <a target="_blank" href="/choosing-a-topic#title-requirements">Shareable and/or Searchable</a> title here:</p>
     <%= f.text_field :title, placeholder: "Title" %>
 
-    <p>Explain your idea and why the article topic fits <a href="requirements">The Teen Magazine's audience</a>:</p>
+    <p>Explain your idea and why the article topic fits <a target="_blank" href="/choosing-a-topic#topic-requirements">The Teen Magazine's audience</a>:</p>
     <%= f.text_area :description, placeholder: "Your idea..." %>
 
     <div class="margin_flds">
@@ -24,13 +28,14 @@
     <% end %>
 
     <div class="margin_flds">
-      <p>Upload a <a href="royalty free">royalty free and eye catching</a> thumbnail image</p>
+      <p>Upload a <a target="_blank" href="/choosing-a-topic#thumbnail-requirements">royalty free and eye catching</a> thumbnail image</p>
       <%= f.file_field :thumbnail %>
     </div>
 
     <% if current_user.editor? && @pitch.title.nil? %>
       <%= f.check_box :assign_if_not_claimed, style: "display: inline;" %>
       <span>Automatically assign this pitch to a writer if it's not claimed in two weeks.</span><br>
+      <p class="mb-0">Note: If this pitch does not fit The Teen Magazine's audience as described in <a target="_blank" href="/pitching-new-articles">Pitching New Articles</a>, an admin reserves the right to delete the pitch from Editor Pitches within 48 hours of it being created. Deleted pitches will not be counted toward your 10 required pitches every month.</p>
     <% end %>
 
     <% if @pitch.slug.nil? && !@pitch.user.try(:editor) %>

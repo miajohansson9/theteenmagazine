@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   def topics
     @pitch = Pitch.new
     @categories = Category.all
-    set_meta_tags :title => "Choosing a Topic | The Teen Magazine"
+    set_meta_tags :title => "Pitching an Article | The Teen Magazine"
   end
 
   def writing

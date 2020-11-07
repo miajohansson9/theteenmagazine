@@ -9,6 +9,9 @@ class ReviewsController < ApplicationController
       @post = Post.friendly.find(params[:post])
       set_meta_tags :title => "Editor Feedback for #{@post.title}"
     elsif (current_user.admin?) || (current_user.editor?)
+      if !(params[:id].eql? current_user.slug)
+        redirect_to "/editors/#{current_user.slug}"
+      end
       @notifications = @notifications - @unseen_editor_dashboard_cnt
       @unseen_editor_dashboard_cnt = 0
       if current_user.admin?
@@ -24,7 +27,7 @@ class ReviewsController < ApplicationController
       current_user.save
       set_meta_tags :title => "Edit | The Teen Magazine"
     else
-      redirect_to user_path(current_user), notice: "You are not allowed access to editor reviews."
+      redirect_to user_path(current_user), notice: "You are not allowed access to the editor reviews."
     end
   end
 

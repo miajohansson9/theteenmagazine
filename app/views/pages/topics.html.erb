@@ -1,46 +1,43 @@
 <div class="skinny_wrapper topics">
-  <h1 id="page_title">Choosing a Topic and Search Analysis</h1>
+  <h1 id="page_title">Pitching an Article</h1>
 
   <p>You may write an article on anything that fits into a category and is relevant/helpful to our teenage audience.
      If you're not sure what to write about, it is recommended to claim a pitch from our editors <%= link_to "here", pitches_path %>.</p>
-  <p>If you start an article not associated with a pitch, you run the risk of your article not being approved because
-     it doesn't fit the content published on The Teen Magazine. Go to <%= link_to "Editor Pitches", pitches_path %>.</p>
 
-  <h3 style="margin-bottom:10px;">If you decide to write your own article, here are some ideas for titles:</h3>
-  <ol>
-    <li> 10 different ways to wear <p class="blank">(clothing item)</p></li>
-    <li> <p class="blank">(season)</p> outfits you need to copy</li>
-    <li> The Best <p class="blank">(makeup product)</p> You Need To Try This <p class="blank">(season)</p></li>
-    <li> Beauty/Fashion Hacks</li>
-    <li> 20 signs you are <p class="blank"> (addicted to ____ in love with _____ in need of ____)</p></li>
-    <li> <p class="blank">(season/month)</p> must haves under $25</li>
-    <li> <p class="blank">(hair, outfit, makeup, etc.)</p> trends you need to try</li>
-    <li> 13 of the best products from <p class="blank">(brand)</p></li>
-    <li> How To <p class="blank">(make money as a teen, pack for spring break, pick the perfect prom dress etc)</p></li>
-    <li> <p class="blank">(holiday/event)</p> must haves/essentials</li>
-    <li> <p class="blank">(something)</p> every girl needs to know</li>
-    <li> <p class="blank">(something)</p> every <p class="blank">(adjective: ex. busy, on the go)</p> girl needs to know/have</li>
-  </ol>
+  <p>Our editors reserve the right to reject any pitch that does not meet the below criteria. To pitch a new article topic, go <a target="_blank" href="/pitches/new">here</a>.</p>
 
-  <p>Please change these titles as much as you want. They are here for inspiration. If you need more ideas about the structure of great articles, visit these websites:</p>
+  <h3 id="topic-requirements">Topic requirements</h3>
 
-  <ol>
-    <li><a target="_blank" href="https://www.society19.com/">Society19.com</a></li>
-    <li><a target="_blank" href="http://www.hercampus.com/">HerCampus.com</a></li>
-    <li><a target="_blank" href="http://www.seventeen.com/">Seventeen.com</a></li>
-    <li><a target="_blank" href="http://www.collegemagazine.com/">CollegeMagazine.com</a></li>
-  </ol>
+  <p>Any article that is pitched should be specifically made for a teenage audience. This means it addresses a topic, experience, and/or problem that is felt by, or of interest to, some or most teens. It is not enough for the article to be of interest to some teens just because the topic has such a broad audience already (see diagram).</p>
+  <%= image_tag("specificity_diagram.png", class: "image_fit_scrn") %>
+  <p>It can be helpful to keep some notes on your phone to jot down ideas for article topics. If you are currently in, or just graduated, high school, think about your daily life and the things that you are struggling with. What excites you? What scares you? What would you love to learn more about?
+    Chances are your daily life is made up of experiences similar to those of lots of other teens your age. What you wonder about, what sparks your curiosity, what worries you, what stresses you out, are common experiences and should be drawn upon when thinking of new topics. Keep in mind that any article topic you pitch should fall in one of these categories:</p>
 
-  <p>Remember to <b>never copy anything</b> off of these websites. They are just here to give you an idea of what types of things to write about.</p>
-
-  <h3>Categories:</h3>
   <div class="categories">
     <% @categories.each do |category| %>
-      <p><%= link_to category.name, category %></p>
+      <p><%= link_to category.name, category, target: "_blank" %></p>
     <% end %>
   </div>
 
-  <p>Bonus: A powerful strategy for choosing what to write about is to search for a broad category you're interested in writing about out of the below categories, then seeing what comes up. If you narrow your search and look at the "suggested" keywords in the search bar, you can get a sense of what people are searching for. If it's unique enough, you could generate lots of traffic through organic searches.</p>
+  <p>If you are still struggling to think of new topic ideas and your own life and those of your friends aren't enough inspiration, take a look at this video which explains how you can find topic ideas via <a target="_blank" href="https://www.quora.com/"><b>Quora.com</b></a>. Of course, it isn't necessary to write a response post on Quora (as talked about in the video below), but questions on the platform asked about friendships, high school, self-worth and identity, studying, applying to colleges,
+    dealing with parental expectations, mental health in teenage years etc., can be very useful starting points. <a target="_blank" href="https://www.reddit.com/"><b>Reddit.com</b></a> can also be a great source of inspiration for article ideas when used in the same way.</p>
+
+  <h5>How to Always Come Up With Topics to Write About - Tips for Finding Blog Post Ideas:</h5>
+  <div class="responsive-iframe-container mb-4">
+    <iframe class="responsive-iframe" src="https://www.youtube.com/embed/zerxutoKcg0"></iframe>
+  </div>
+
+  <h3 id="title-requirements">The title should be shareable and/or searchable</h3>
+
+  <p>A title is shareable if it is interesting and can reasonably spark curiosity and/or some other emotion. Some great examples of shareable titles are "How Dressing Like Blair Waldorf Helped Me Take My SATs," "The Stages of All High School Relationships from an Outsider," "Why You Might Find It Hard to Make Deep Friendships," while vague, non-specific titles such as "Forgiveness is Freedom" does not fit this specification. If you are not sure, use the headline analyzer tool found here: <a href="https://aminstitute.com/headline/"><b>https://aminstitute.com/headline/</b></a>. Nine times out of ten, a shareable title should have an Emotional Marketing Value (EMV) score over 30. However, this measure is a tool, not the rule. If the title is only a few words, this headline analyzer is not reliable and the title is likely not interesting enough. Rely on your intuition and common sense in addition to the EMV score. </p>
+
+  <p>
+    A title is searchable if it contains keywords/phrases that would be reasonably typed into Google search. These titles are often questions, short responses, lists, etc. The topic should be specific enough that The Teen Magazine can come up in Google search (ie. “Cutest High School Romance Movies That Will Make You Cry” instead of “Best Netflix Movies”).
+  </p>
+
+  <h3 id="thumbnail-requirements">Thumbnail image requirements</h3>
+
+  <p>The thumbnail image should be relevant to the topic, not grainy, not cropped in a weird way, and not contain a mostly white background.</p>
 
   <p>Read "<a href="/writing-the-perfect-article">Writing The Perfect Article</a>" Next →</p>
 </div>
