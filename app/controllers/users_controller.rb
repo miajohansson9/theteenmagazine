@@ -97,6 +97,11 @@ class UsersController < ApplicationController
     @partners = User.where(partner: true).all.paginate(page: params[:page], per_page: 25).order("created_at desc")
   end
 
+  def editors
+    set_meta_tags title: "Editors | The Teen Magazine"
+    @editors = User.where(editor: true).all.paginate(page: params[:page], per_page: 25).order("created_at desc")
+  end
+
   def reset_email
     begin
       User.where(email: params[:user][:email].strip).first.send_reset_password_instructions

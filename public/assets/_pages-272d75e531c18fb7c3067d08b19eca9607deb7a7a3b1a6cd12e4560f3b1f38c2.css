@@ -1,0 +1,208 @@
+/* line 1, app/assets/stylesheets/_pages.css.scss */
+#apply_description {
+  min-height: 500px;
+}
+
+/* line 5, app/assets/stylesheets/_pages.css.scss */
+.criteria {
+  background-color: white;
+}
+
+/* line 7, app/assets/stylesheets/_pages.css.scss */
+.criteria span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* line 12, app/assets/stylesheets/_pages.css.scss */
+.criteria span p {
+  margin: 0;
+  margin-left: 20px;
+}
+
+/* line 18, app/assets/stylesheets/_pages.css.scss */
+.criteria .question {
+  margin: 0;
+  font-weight: 800;
+  color: #4ABEB6;
+  font-size: 25px;
+}
+
+/* line 26, app/assets/stylesheets/_pages.css.scss */
+.fa-angle-right, .fa-angle-left {
+  font-size: 40px;
+  margin-left: 10px;
+}
+
+/* line 32, app/assets/stylesheets/_pages.css.scss */
+.topics a {
+  font-weight: bold;
+}
+
+/* line 35, app/assets/stylesheets/_pages.css.scss */
+.topics .categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+/* line 40, app/assets/stylesheets/_pages.css.scss */
+.topics .categories p {
+  margin: 0;
+  width: 33%;
+  color: #4ABEB6;
+  display: inline-block;
+}
+
+/* line 48, app/assets/stylesheets/_pages.css.scss */
+.topics ol p {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* line 52, app/assets/stylesheets/_pages.css.scss */
+.topics ol .blank {
+  color: #D3D3D3;
+  display: inline-block;
+}
+
+@media (max-width: 700px) {
+  /* line 60, app/assets/stylesheets/_pages.css.scss */
+  .topics .categories p {
+    width: 50%;
+  }
+}
+
+@media (max-width: 440px) {
+  /* line 66, app/assets/stylesheets/_pages.css.scss */
+  .topics h3 {
+    margin-bottom: 15px;
+  }
+  /* line 70, app/assets/stylesheets/_pages.css.scss */
+  .topics .categories p {
+    width: 100%;
+    margin-left: 23px;
+  }
+}
+
+/* line 80, app/assets/stylesheets/_pages.css.scss */
+.writing .yellow {
+  background-color: #FCD04D;
+  color: black;
+  padding: 5px;
+}
+
+/* line 85, app/assets/stylesheets/_pages.css.scss */
+.writing b {
+  color: #4ABEB6;
+}
+
+/* line 88, app/assets/stylesheets/_pages.css.scss */
+.writing img {
+  width: 100%;
+}
+
+/* line 92, app/assets/stylesheets/_pages.css.scss */
+.writing li p {
+  margin: 0;
+}
+
+/* line 95, app/assets/stylesheets/_pages.css.scss */
+.writing li xmp {
+  margin: 0;
+}
+
+/* line 99, app/assets/stylesheets/_pages.css.scss */
+.writing .image {
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+}
+
+/* line 105, app/assets/stylesheets/_pages.css.scss */
+.writing .writing--images p {
+  margin-top: 10px;
+}
+
+/* line 112, app/assets/stylesheets/_pages.css.scss */
+.theimages a, .criteria a, .privacy a, .topics a, .writing a {
+  color: #4ABEB6;
+}
+
+/* line 114, app/assets/stylesheets/_pages.css.scss */
+.theimages a:hover, .criteria a:hover, .privacy a:hover, .topics a:hover, .writing a:hover {
+  background-color: #FCD04D;
+  opacity: 1;
+}
+
+/* line 121, app/assets/stylesheets/_pages.css.scss */
+.theimages img {
+  width: 70%;
+  display: block;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 130, app/assets/stylesheets/_pages.css.scss */
+#button_nrml {
+  margin: 10px;
+  padding: 0;
+  border: none;
+  text-decoration: underline;
+  color: #4ABEB6;
+}
+
+/* line 136, app/assets/stylesheets/_pages.css.scss */
+#button_nrml:hover {
+  cursor: pointer;
+}
+
+/* line 141, app/assets/stylesheets/_pages.css.scss */
+.analytics_wrapper {
+  max-width: 100%;
+  overflow: auto;
+}
+
+/* line 144, app/assets/stylesheets/_pages.css.scss */
+.analytics_wrapper .scrollmenu {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+/* line 150, app/assets/stylesheets/_pages.css.scss */
+.link_inline {
+  display: inline !important;
+}
+
+/* line 154, app/assets/stylesheets/_pages.css.scss */
+.link_grn {
+  color: #4ABEB6;
+}
+
+/* line 156, app/assets/stylesheets/_pages.css.scss */
+.link_grn:hover {
+  color: #4ABEB6;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+/* line 163, app/assets/stylesheets/_pages.css.scss */
+.apply_wrapper {
+  position: relative;
+  margin: 0 auto;
+  margin-top: -10%;
+  z-index: 0;
+  background-color: white;
+  padding: 3% 5%;
+  max-width: 800px;
+  width: 90%;
+}
+
+/* line 172, app/assets/stylesheets/_pages.css.scss */
+.apply_wrapper h2, .apply_wrapper h4 {
+  font-family: "Playfair Display";
+}

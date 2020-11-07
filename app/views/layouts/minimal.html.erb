@@ -15,7 +15,6 @@
     <% if current_user.partner %>
       <meta name="partner" content="Turn off ads">
     <% end %>
-    <link href="https://fonts.googleapis.com/css2?family=Griffy&display=swap" rel="stylesheet">
   </head>
   <body>
     <% if notice %>
@@ -101,6 +100,7 @@
                             <%= link_to "Review Onboarding", onboarding_path(:page => "welcome"), class: "dropdown-item" %>
                           <% end %>
                           <% if current_user.admin? %>
+                            <%= link_to "Editors", "/editors", class: "dropdown-item" %>
                             <%= link_to "Partners", "/partners", class: "dropdown-item" %>
                           <% end %>
                           <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>

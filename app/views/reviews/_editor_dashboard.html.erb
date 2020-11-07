@@ -76,7 +76,7 @@
             <i>There are no submitted pitches right now. Check back in a few days!</i>
           <% end %>
         </div>
-        <% if current_user.admin? %>
+        <% if @user.admin? %>
           <h5 class="pitch_ttl">All articles under review</h5>
           <% @all_reviews.each do |draft| %>
             <div class="flex--postlist--item review_items" style="padding-left: 0;">

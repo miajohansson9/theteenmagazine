@@ -1,0 +1,456 @@
+/* line 1, app/assets/stylesheets/_newlayout.css.scss */
+.removed {
+  display: none !important;
+}
+
+/* line 5, app/assets/stylesheets/_newlayout.css.scss */
+.section--title {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #222;
+  font-family: 'Playfair Display';
+  font-size: 30px;
+  width: 100%;
+}
+
+/* line 15, app/assets/stylesheets/_newlayout.css.scss */
+.meta {
+  color: #555;
+  font-size: 0.8em !important;
+}
+
+/* line 20, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* line 25, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .flex-1 {
+  flex-grow: 300;
+  flex-shrink: 300;
+}
+
+/* line 29, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+/* line 35, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section .ctgry_article {
+  width: 31%;
+}
+
+/* line 37, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section .ctgry_article img {
+  width: 100%;
+  height: auto;
+}
+
+/* line 41, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section .ctgry_article h1 {
+  margin: 0;
+  margin-top: 10px;
+  font-size: 22px;
+  font-family: 'Lucitana';
+  font-weight: 400;
+}
+
+/* line 47, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section .ctgry_article h1 a {
+  color: black;
+  text-decoration: none;
+}
+
+/* line 54, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome p {
+  font-size: 12px;
+  margin: 4px 0 5px 0;
+  color: #545454;
+}
+
+/* line 60, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section .ctgry_grid {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+/* line 67, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section .ctgry_grid_article {
+  width: 31%;
+}
+
+/* line 69, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section .ctgry_grid_article img {
+  width: 100%;
+}
+
+/* line 72, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section .ctgry_grid_article h1 {
+  margin: 0;
+  margin-top: 10px;
+  font-size: 22px;
+  font-family: 'Lucitana';
+  font-weight: 400;
+}
+
+/* line 78, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_section .ctgry_grid_article h1 a {
+  color: black;
+  text-decoration: none;
+}
+
+/* line 85, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_grid_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* line 90, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_grid_wrapper .applies {
+  width: 48%;
+}
+
+/* line 92, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_grid_wrapper .applies img {
+  width: 100%;
+}
+
+/* line 96, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_grid_wrapper .ctgry_grid {
+  width: 48%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* line 102, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_grid_wrapper .ctgry_grid .ctgry_grid_article {
+  width: 47.5%;
+  margin-bottom: 20px;
+}
+
+/* line 105, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_grid_wrapper .ctgry_grid .ctgry_grid_article img {
+  width: 100%;
+}
+
+/* line 108, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_grid_wrapper .ctgry_grid .ctgry_grid_article h1 {
+  margin: 0;
+  margin-top: 10px;
+  font-size: 20px;
+  font-family: 'Lucitana';
+  font-weight: 400;
+}
+
+/* line 114, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .ctgry_grid_wrapper .ctgry_grid .ctgry_grid_article h1 a {
+  color: black;
+  text-decoration: none;
+}
+
+/* line 123, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .most_read {
+  margin-left: 30px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 300px;
+}
+
+/* line 128, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .most_read h1 {
+  margin-left: 0;
+  margin-bottom: 20px;
+  margin-top: -5px;
+  border-bottom: none;
+  padding: 0;
+}
+
+/* line 135, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .most_read .ctgry_article {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.5em;
+}
+
+/* line 139, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .most_read .ctgry_article img {
+  width: 150px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* line 144, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .most_read .ctgry_article p {
+  font-size: 1em;
+  margin: 0;
+  margin-left: 10px;
+  line-height: 18px;
+  font-family: 'Roboto Condensed Bold', sans-serif;
+  font-style: italic;
+}
+
+/* line 151, app/assets/stylesheets/_newlayout.css.scss */
+.flex--welcome .most_read .ctgry_article p a {
+  color: #191919;
+  text-decoration: none;
+}
+
+/* line 160, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+/* line 167, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section p {
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: #545454;
+}
+
+/* line 172, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .ctgry_article {
+  width: 31%;
+}
+
+/* line 174, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .ctgry_article img {
+  width: 100%;
+}
+
+/* line 177, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .ctgry_article h1 {
+  margin: 0;
+  margin-top: 10px;
+  font-size: 34px;
+  font-family: 'Lucitana';
+  font-weight: 400;
+}
+
+/* line 183, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .ctgry_article h1 a {
+  color: black;
+  text-decoration: none;
+}
+
+/* line 189, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .rcnt_article {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  border-top: 3px dotted gray;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* line 196, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .rcnt_article .article_description {
+  width: 50%;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 202, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .rcnt_article .image_recent_articles {
+  width: 50%;
+  flex-grow: 1;
+  padding: 20px;
+  padding-right: 0px;
+  padding-left: 40px;
+}
+
+/* line 208, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .rcnt_article .image_recent_articles img {
+  width: 100%;
+}
+
+/* line 212, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .rcnt_article h1 {
+  margin: 0;
+  font-size: 34px;
+  font-family: 'Lucitana';
+  font-weight: 400;
+}
+
+/* line 217, app/assets/stylesheets/_newlayout.css.scss */
+.ctgry_section .rcnt_article h1 a {
+  color: black;
+  text-decoration: none;
+}
+
+/* line 226, app/assets/stylesheets/_newlayout.css.scss */
+.category a {
+  color: #4ABEB6;
+  margin-bottom: -20px;
+  margin: 0;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+/* line 233, app/assets/stylesheets/_newlayout.css.scss */
+.category .pagination {
+  text-align: center;
+  margin-bottom: 1.2em;
+  justify-content: center;
+}
+
+/* line 237, app/assets/stylesheets/_newlayout.css.scss */
+.category .pagination a {
+  font-size: inherit !important;
+}
+
+@media (min-width: 640px) and (max-width: 800px) {
+  /* line 244, app/assets/stylesheets/_newlayout.css.scss */
+  .featured {
+    margin-top: 0px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  /* line 252, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section .ctgry_article h1, .ctgry_section .rcnt_article h1 {
+    font-size: 24px !important;
+  }
+  /* line 257, app/assets/stylesheets/_newlayout.css.scss */
+  .flex--welcome {
+    flex-direction: column;
+  }
+  /* line 259, app/assets/stylesheets/_newlayout.css.scss */
+  .flex--welcome .most_read {
+    margin: 0;
+    width: 100%;
+    margin: 10px 0;
+  }
+  /* line 263, app/assets/stylesheets/_newlayout.css.scss */
+  .flex--welcome .most_read h1 {
+    border-bottom: 3px solid #222;
+    padding-bottom: 20px;
+  }
+  /* line 268, app/assets/stylesheets/_newlayout.css.scss */
+  .flex--welcome .most_read .ctgry_article img {
+    width: 200px;
+    height: auto;
+  }
+  /* line 272, app/assets/stylesheets/_newlayout.css.scss */
+  .flex--welcome .most_read .ctgry_article p {
+    font-size: 20px;
+    line-height: 25px;
+    margin: 0px 10px;
+    font-family: "Playfair Display";
+  }
+}
+
+@media (max-width: 900px) {
+  /* line 284, app/assets/stylesheets/_newlayout.css.scss */
+  .article_description {
+    padding: 0px !important;
+    justify-content: center;
+  }
+  /* line 287, app/assets/stylesheets/_newlayout.css.scss */
+  .article_description .category {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* line 295, app/assets/stylesheets/_newlayout.css.scss */
+  .wrapper_home {
+    margin-top: 20px;
+  }
+  /* line 298, app/assets/stylesheets/_newlayout.css.scss */
+  .section--title {
+    margin: 0 0 20px 0;
+  }
+  /* line 301, app/assets/stylesheets/_newlayout.css.scss */
+  #recent_title {
+    margin: 0;
+  }
+  /* line 304, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section {
+    flex-direction: column !important;
+  }
+  /* line 306, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section .ctgry_article {
+    width: 100% !important;
+    margin-bottom: 30px;
+  }
+  /* line 309, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section .ctgry_article h1 {
+    font-size: 25px !important;
+  }
+  /* line 314, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section {
+    flex-direction: column !important;
+  }
+  /* line 316, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section .ctgry_article {
+    width: 100% !important;
+  }
+  /* line 319, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section .rcnt_article, .ctgry_section .recent {
+    flex-direction: column-reverse;
+    border-top: none;
+    border-bottom: 3px dotted gray;
+    padding: 20px 0;
+    margin: 0 !important;
+  }
+  /* line 325, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section .rcnt_article a, .ctgry_section .rcnt_article .article_description, .ctgry_section .recent a, .ctgry_section .recent .article_description {
+    width: 100%;
+  }
+  /* line 328, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section .rcnt_article h1, .ctgry_section .recent h1 {
+    font-size: 25px;
+  }
+  /* line 331, app/assets/stylesheets/_newlayout.css.scss */
+  .ctgry_section .rcnt_article img, .ctgry_section .rcnt_article a, .ctgry_section .recent img, .ctgry_section .recent a {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  /* line 337, app/assets/stylesheets/_newlayout.css.scss */
+  .article_description {
+    margin-top: 10px !important;
+  }
+  /* line 341, app/assets/stylesheets/_newlayout.css.scss */
+  .flex--welcome .flex-1 .ctgry_grid_wrapper {
+    flex-direction: column !important;
+  }
+  /* line 343, app/assets/stylesheets/_newlayout.css.scss */
+  .flex--welcome .flex-1 .ctgry_grid_wrapper .applies {
+    margin: 0 auto;
+    width: 70%;
+    margin-bottom: 20px;
+  }
+  /* line 349, app/assets/stylesheets/_newlayout.css.scss */
+  .flex--welcome .flex-1 .ctgry_grid {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 500px) {
+  /* line 356, app/assets/stylesheets/_newlayout.css.scss */
+  .applies {
+    width: 100% !important;
+  }
+}

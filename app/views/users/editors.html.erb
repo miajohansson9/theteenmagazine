@@ -1,0 +1,31 @@
+<div class="flex_horizontal center">
+  <h1 id="page_title" style="margin-bottom: -20px; border-bottom: none;">Partners</h1>
+</div>
+<div id="posts_wrapper" class="skinny_wrapper mb-4">
+  <% @editors.each do | user | %>
+      <% if user != nil %>
+        <div class="flex--profile">
+          <% if user.profile.exists? %>
+            <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+          <% else %>
+            <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+          <% end %>
+          <div class="info">
+          <h2 style="margin-bottom: 5px;">
+            <%= link_to(user.full_name, "/editors/#{user.slug}") %>
+          </h2>
+          <% if user.editor? %>
+            <span class="editor_status">
+              Editor
+            </span>
+          <% end %>
+            <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
+            <% if current_user.admin? %>
+              <h6 style="margin: 0;"><%= user.email %></h6>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+  <% end %>
+  <%= will_paginate @editors %>
+</div>

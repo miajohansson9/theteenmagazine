@@ -1,0 +1,788 @@
+/* line 1, app/assets/stylesheets/_userprofile.css.scss */
+.profiles--flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #E9E9E9;
+  margin-bottom: 20px;
+}
+
+/* line 7, app/assets/stylesheets/_userprofile.css.scss */
+.profiles--flex .flex--profile {
+  padding: 30px 0 30px 30px;
+  margin: 0;
+}
+
+/* line 10, app/assets/stylesheets/_userprofile.css.scss */
+.profiles--flex .flex--profile .profiles {
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 13, app/assets/stylesheets/_userprofile.css.scss */
+.profiles--flex .flex--profile .profiles h6 {
+  text-align: center;
+  margin: 10px 0 0 0;
+}
+
+/* line 17, app/assets/stylesheets/_userprofile.css.scss */
+.profiles--flex .flex--profile .profiles h6 a {
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+/* line 20, app/assets/stylesheets/_userprofile.css.scss */
+.profiles--flex .flex--profile .profiles h6 a:hover {
+  text-decoration: underline;
+}
+
+/* line 24, app/assets/stylesheets/_userprofile.css.scss */
+.profiles--flex .flex--profile .profiles a {
+  margin: 0 auto;
+}
+
+/* line 31, app/assets/stylesheets/_userprofile.css.scss */
+.submitted--articles {
+  border-bottom: 1px solid #E9E9E9;
+  margin-bottom: 20px;
+}
+
+/* line 36, app/assets/stylesheets/_userprofile.css.scss */
+.box {
+  position: relative;
+  vertical-align: middle;
+  color: #4ABEB6;
+  display: inline-block;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  transition: 0.5s;
+  padding: 10px;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+}
+
+/* line 50, app/assets/stylesheets/_userprofile.css.scss */
+.editor_status {
+  color: #333;
+  font-family: 'Kristi';
+  font-size: 18px !important;
+  margin: 0;
+}
+
+/* line 57, app/assets/stylesheets/_userprofile.css.scss */
+.box:hover {
+  color: #4ABEB6;
+}
+
+/* line 61, app/assets/stylesheets/_userprofile.css.scss */
+.box::before, .box::after {
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  -webkit-transform: scale(0);
+  transition: 0.5s;
+}
+
+/* line 74, app/assets/stylesheets/_userprofile.css.scss */
+.foo::before {
+  border-bottom: 6px solid #4ABEB6;
+  border-left: 6px solid #4ABEB6;
+  -webkit-transform-origin: 0 100%;
+}
+
+/* line 80, app/assets/stylesheets/_userprofile.css.scss */
+.foo::after {
+  border-top: 6px solid #4ABEB6;
+  border-right: 6px solid #4ABEB6;
+  -webkit-transform-origin: 100% 0%;
+}
+
+/* line 87, app/assets/stylesheets/_userprofile.css.scss */
+.bar::before {
+  border-bottom: 6px solid #4ABEB6;
+  border-left: 6px solid #4ABEB6;
+  -webkit-transform-origin: 100% 0%;
+}
+
+/* line 93, app/assets/stylesheets/_userprofile.css.scss */
+.bar::after {
+  border-top: 6px solid #4ABEB6;
+  border-right: 6px solid #4ABEB6;
+  -webkit-transform-origin: 0% 100%;
+}
+
+/* line 99, app/assets/stylesheets/_userprofile.css.scss */
+.curmudgeon::before {
+  border-bottom: 6px solid #4ABEB6;
+  border-left: 0;
+  -webkit-transform-origin: 0% 100%;
+}
+
+/* line 105, app/assets/stylesheets/_userprofile.css.scss */
+.curmudgeon::after {
+  border-top: 0;
+  border-right: 0;
+  -webkit-transform-origin: 50% 50%;
+}
+
+/* line 111, app/assets/stylesheets/_userprofile.css.scss */
+.box:hover::after, .box:hover::before {
+  -webkit-transform: scale(1);
+}
+
+/* line 115, app/assets/stylesheets/_userprofile.css.scss */
+.G6 {
+  background-image: url(/assets/journal_and_coffee-4fe05b4cfe2b2759eb219be59fe58270b704b1df19d45655cdb96b790d990e44.jpg);
+}
+
+/* line 118, app/assets/stylesheets/_userprofile.css.scss */
+.G7 {
+  background-image: url(/assets/magazine_and_scarf-83a2b1fe257c510321a1bf8dab67bb74d52b46bdbf55404b24b1795ed210cee4.jpg);
+}
+
+/* line 121, app/assets/stylesheets/_userprofile.css.scss */
+.G8 {
+  background-image: url(/assets/reading_magazine-d859f66512ed544a0b2f932fb443c872b21d29cdb662d5becdb13159a602d9ea.jpg);
+}
+
+/* line 124, app/assets/stylesheets/_userprofile.css.scss */
+.G9 {
+  background-image: url(/assets/stack_of_magazines-8392f3e16b6ef285321b241b702a71f492799f07b90f9714d9219fa5829640e9.jpg);
+}
+
+/* line 128, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines {
+  display: flex;
+  flex-direction: row;
+  margin-right: -2px;
+  margin-left: -4px;
+}
+
+/* line 133, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines .thelink {
+  width: 100%;
+}
+
+/* line 136, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines a {
+  text-decoration: none;
+  width: 100%;
+}
+
+/* line 140, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines .box {
+  height: 200px;
+  margin-right: 2px;
+  margin-left: 2px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  font-family: 'Vollkorn', serif;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  transition: color 0.25s;
+}
+
+/* line 155, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines .box p {
+  line-height: 100%;
+  margin: 0;
+  padding: 5px;
+  font-size: 30px;
+  text-shadow: 1px 1px black;
+}
+
+/* line 163, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines .G1 {
+  background-image: url(/assets/topic-db6af040d3713902d778d8108099039f15815b05d0e44d49aea3f1d35401c08b.jpg);
+}
+
+/* line 166, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines .G2 {
+  background-image: url(/assets/scarf-103ba6662b01a718ae6beb668319860c2b78f2e42915817fcbdbc7cf93943278.jpg);
+}
+
+/* line 169, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines .G3 {
+  background-image: url(/assets/writing-ae3daef908b1c33b2a74e934f2806c16fa84ce56f3fe59732369dbbddc5e3714.jpg);
+}
+
+/* line 172, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines .G4 {
+  background-image: url(/images/glasses.jpeg);
+}
+
+/* line 175, app/assets/stylesheets/_userprofile.css.scss */
+.guidelines .G5 {
+  background-image: url(/assets/photo-ed796120e7fd7b41ff178482ed9eaabd2ac15991d99d321df6dee4be18f292b8.jpg);
+}
+
+/* line 180, app/assets/stylesheets/_userprofile.css.scss */
+.impressions {
+  text-align: center;
+}
+
+/* line 184, app/assets/stylesheets/_userprofile.css.scss */
+.profile_img {
+  max-width: 80px;
+  min-width: 80px;
+  width: 80px !important;
+  height: 80px;
+  border-radius: 50%;
+}
+
+/* line 192, app/assets/stylesheets/_userprofile.css.scss */
+.newpost--profile {
+  color: white;
+  background-color: #2a2a2a;
+  border: 1px solid #2a2a2a;
+  width: 150px;
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  float: right;
+}
+
+/* line 203, app/assets/stylesheets/_userprofile.css.scss */
+.btn_cntnr {
+  margin: 10px 0;
+  float: right;
+  padding-bottom: 20px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+/* line 208, app/assets/stylesheets/_userprofile.css.scss */
+.btn_cntnr .newpost--new--profile {
+  color: white !important;
+  background-color: #2a2a2a;
+  border: 1px solid #2a2a2a !important;
+  padding: 10px 25px;
+  text-decoration: none !important;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  z-index: 100;
+  font-family: "Playfair Display";
+  line-height: 1.5;
+}
+
+/* line 222, app/assets/stylesheets/_userprofile.css.scss */
+#background {
+  background-color: #d3d3d3;
+  padding: 7px;
+  margin: 0 auto;
+  background-image: linear-gradient(to right top, transparent 33%, #E8E8EE 33%, #E8E8EE 66%, transparent 66%);
+  background-size: 5px 5px;
+  background-position: 0 0, 15px 15px;
+}
+
+/* line 237, app/assets/stylesheets/_userprofile.css.scss */
+.profile-minimal {
+  flex-direction: column !important;
+  text-align: center;
+  padding: 0 !important;
+}
+
+/* line 241, app/assets/stylesheets/_userprofile.css.scss */
+.profile-minimal img {
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+/* line 245, app/assets/stylesheets/_userprofile.css.scss */
+.profile-minimal .info {
+  margin: 0 !important;
+}
+
+/* line 248, app/assets/stylesheets/_userprofile.css.scss */
+.profile-minimal .editor_label {
+  right: 0;
+  top: 25px;
+  position: absolute;
+}
+
+/* line 253, app/assets/stylesheets/_userprofile.css.scss */
+.profile-minimal .list-group-flush div {
+  border-color: whitesmoke;
+  border-width: 1px !important;
+}
+
+/* line 259, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile {
+  padding: 30px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 267, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile .info {
+  margin-left: 20px;
+}
+
+/* line 270, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile .info .description_user {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+/* line 275, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile .info h2 {
+  margin: 0;
+}
+
+/* line 279, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile .info h2 a, .flex--profile .info h2 {
+  margin: 0;
+  font-size: 30px;
+  text-decoration: none;
+  color: #4ABEB6;
+  font-family: 'Vollkorn', serif;
+}
+
+/* line 287, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile .info p {
+  font-size: 13px;
+}
+
+/* line 291, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile .info .website {
+  margin-bottom: 0;
+}
+
+/* line 293, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile .info .website .website_link {
+  display: inline-block;
+}
+
+/* line 296, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile .info .website a, .flex--profile .info .website p {
+  color: #4ABEB6;
+  margin: 0 !important;
+}
+
+/* line 299, app/assets/stylesheets/_userprofile.css.scss */
+.flex--profile .info .website a span, .flex--profile .info .website p span {
+  color: black;
+}
+
+/* line 307, app/assets/stylesheets/_userprofile.css.scss */
+.edit_user {
+  margin-bottom: 30px;
+}
+
+/* line 311, app/assets/stylesheets/_userprofile.css.scss */
+.flex--p {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* line 316, app/assets/stylesheets/_userprofile.css.scss */
+.flex--p .editlink--profile {
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* line 320, app/assets/stylesheets/_userprofile.css.scss */
+.flex--p .editlink--profile a {
+  color: #bdbdbd;
+  text-decoration: none;
+}
+
+/* line 325, app/assets/stylesheets/_userprofile.css.scss */
+.flex--p p {
+  margin-top: 10px;
+  color: #bdbdbd;
+  margin-bottom: 0;
+}
+
+/* line 333, app/assets/stylesheets/_userprofile.css.scss */
+.official--writer--wrapper .flex--profile, .new--writer--wrapper .flex--profile {
+  opacity: 1 !important;
+}
+
+/* line 336, app/assets/stylesheets/_userprofile.css.scss */
+.official--writer--wrapper .dashboard--articles--wrapper, .new--writer--wrapper .dashboard--articles--wrapper {
+  padding-bottom: 10px;
+}
+
+/* line 338, app/assets/stylesheets/_userprofile.css.scss */
+.official--writer--wrapper .dashboard--articles--wrapper .header_ttl, .new--writer--wrapper .dashboard--articles--wrapper .header_ttl {
+  border-bottom: 1px #E9E9E9 solid;
+  padding: 15px 10px;
+  width: 100%;
+  display: block;
+}
+
+/* line 348, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval, .official--writer--wrapper #waiting--for--approval {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  padding: 0 30px;
+  max-width: 1300px;
+}
+
+/* line 354, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval .flex--item, .official--writer--wrapper #waiting--for--approval .flex--item {
+  position: relative;
+  max-width: 1000px;
+  margin-top: 10px;
+}
+
+/* line 358, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval .flex--item .flex--profile, .official--writer--wrapper #waiting--for--approval .flex--item .flex--profile {
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+  background-color: transparent;
+}
+
+/* line 364, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval .flex--item .overlay, .official--writer--wrapper #waiting--for--approval .flex--item .overlay {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  z-index: 2;
+  align-items: center;
+  margin: 36px 0;
+  padding: 10px 30px;
+  bottom: -2%;
+  left: -8px;
+  background-color: white;
+  border: 1px solid #C5B7B820;
+  max-width: 390px;
+}
+
+/* line 377, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval .flex--item .overlay .icon, .new--writer--wrapper #waiting--for--approval .flex--item .overlay h5, .official--writer--wrapper #waiting--for--approval .flex--item .overlay .icon, .official--writer--wrapper #waiting--for--approval .flex--item .overlay h5 {
+  margin: 0;
+  font-weight: 400;
+  font-style: italic;
+  color: black;
+}
+
+/* line 383, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval .flex--item .overlay h5, .official--writer--wrapper #waiting--for--approval .flex--item .overlay h5 {
+  margin-left: 5px;
+}
+
+/* line 386, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval .flex--item .overlay .icon, .official--writer--wrapper #waiting--for--approval .flex--item .overlay .icon {
+  height: 20px;
+  width: 20px;
+  min-height: 20px;
+  min-width: 20px;
+}
+
+/* line 395, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval .dashboard--writer--flex--two, .official--writer--wrapper #waiting--for--approval .dashboard--writer--flex--two {
+  border-left: 1px solid #E5E5E5;
+  padding: 30px 0 0 30px;
+  max-width: 400px;
+}
+
+/* line 399, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval .dashboard--writer--flex--two p, .official--writer--wrapper #waiting--for--approval .dashboard--writer--flex--two p {
+  font-size: 13px;
+}
+
+/* line 403, app/assets/stylesheets/_userprofile.css.scss */
+.new--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main, .official--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main {
+  width: 100%;
+}
+
+/* line 410, app/assets/stylesheets/_userprofile.css.scss */
+.review_items .inside--item h4, .review_items .inside--item p {
+  padding-left: 20px;
+}
+
+/* line 413, app/assets/stylesheets/_userprofile.css.scss */
+.review_items .inside--item img {
+  width: 150px;
+  height: 95px;
+}
+
+/* line 420, app/assets/stylesheets/_userprofile.css.scss */
+.reviews_wrapper .dashboard_wrapper #waiting--for--approval .card-review {
+  width: 100% !important;
+}
+
+/* line 422, app/assets/stylesheets/_userprofile.css.scss */
+.reviews_wrapper .dashboard_wrapper #waiting--for--approval .card-review .card-bottom-flex div {
+  width: 100%;
+}
+
+/* line 429, app/assets/stylesheets/_userprofile.css.scss */
+.flex--postlist--item .inside--item, .reviews_wrapper .inside--item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/* line 433, app/assets/stylesheets/_userprofile.css.scss */
+.flex--postlist--item .inside--item div, .reviews_wrapper .inside--item div {
+  margin-left: 10px;
+}
+
+/* line 436, app/assets/stylesheets/_userprofile.css.scss */
+.flex--postlist--item .inside--item h6, .reviews_wrapper .inside--item h6 {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+/* line 440, app/assets/stylesheets/_userprofile.css.scss */
+.flex--postlist--item .inside--item a, .reviews_wrapper .inside--item a {
+  vertical-align: middle;
+  line-height: 30px;
+  color: #545454;
+  font-weight: bold;
+}
+
+/* line 446, app/assets/stylesheets/_userprofile.css.scss */
+.flex--postlist--item .inside--item p, .reviews_wrapper .inside--item p {
+  font-size: 14px;
+  color: #A6A09E;
+  margin: 0px;
+}
+
+/* line 451, app/assets/stylesheets/_userprofile.css.scss */
+.flex--postlist--item .inside--item .edit_lnk a, .reviews_wrapper .inside--item .edit_lnk a {
+  font-size: 16px;
+  color: #4ABEB6 !important;
+  text-decoration: underline;
+}
+
+/* line 459, app/assets/stylesheets/_userprofile.css.scss */
+.flex--postlist--item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 10px 10px 0px 10px;
+}
+
+/* line 466, app/assets/stylesheets/_userprofile.css.scss */
+.flex--postlist--item a {
+  text-decoration: none;
+}
+
+/* line 468, app/assets/stylesheets/_userprofile.css.scss */
+.flex--postlist--item a:hover {
+  text-decoration: underline;
+}
+
+/* line 474, app/assets/stylesheets/_userprofile.css.scss */
+.user {
+  text-align: center;
+}
+
+/* line 476, app/assets/stylesheets/_userprofile.css.scss */
+.user a {
+  text-decoration: none;
+  color: #00b5f9;
+  font-size: 20px;
+}
+
+/* line 480, app/assets/stylesheets/_userprofile.css.scss */
+.user a:hover {
+  color: #3f3f3f;
+}
+
+/* line 486, app/assets/stylesheets/_userprofile.css.scss */
+.delete {
+  text-decoration: none;
+  color: black;
+  margin-top: 30px;
+  float: right;
+  margin-bottom: 20px;
+}
+
+/* line 492, app/assets/stylesheets/_userprofile.css.scss */
+.delete:hover {
+  color: red;
+}
+
+/* line 497, app/assets/stylesheets/_userprofile.css.scss */
+.team {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* line 500, app/assets/stylesheets/_userprofile.css.scss */
+.team h1 {
+  font-family: "Display Playfair";
+}
+
+/* line 503, app/assets/stylesheets/_userprofile.css.scss */
+.team .about {
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 350px;
+}
+
+/* line 507, app/assets/stylesheets/_userprofile.css.scss */
+.team .about p {
+  padding: 30px;
+}
+
+/* line 510, app/assets/stylesheets/_userprofile.css.scss */
+.team .about #main {
+  width: 260px;
+  height: auto;
+  float: left;
+  margin: 30px;
+}
+
+/* line 517, app/assets/stylesheets/_userprofile.css.scss */
+.team h3 {
+  color: #4ABEB6;
+}
+
+/* line 520, app/assets/stylesheets/_userprofile.css.scss */
+.team .flex--profile {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* line 524, app/assets/stylesheets/_userprofile.css.scss */
+.team .flex--profile .featured {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+}
+
+/* line 529, app/assets/stylesheets/_userprofile.css.scss */
+.team .flex--profile .featured h6 {
+  margin: 20px;
+}
+
+@media (max-width: 900px) {
+  /* line 537, app/assets/stylesheets/_userprofile.css.scss */
+  .guidelines {
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  /* line 540, app/assets/stylesheets/_userprofile.css.scss */
+  .guidelines .thelink {
+    width: 50%;
+    margin: 0;
+  }
+  /* line 543, app/assets/stylesheets/_userprofile.css.scss */
+  .guidelines .thelink .box {
+    margin: 0;
+  }
+  /* line 549, app/assets/stylesheets/_userprofile.css.scss */
+  .new--writer--wrapper .flex--item {
+    margin: 20px 0 0 0 !important;
+  }
+  /* line 554, app/assets/stylesheets/_userprofile.css.scss */
+  .reviews_wrapper #waiting--for--approval {
+    flex-direction: column-reverse !important;
+  }
+  /* line 559, app/assets/stylesheets/_userprofile.css.scss */
+  .new--writer--wrapper #waiting--for--approval, .official--writer--wrapper #waiting--for--approval {
+    padding-top: 10px;
+    flex-direction: column;
+  }
+  /* line 562, app/assets/stylesheets/_userprofile.css.scss */
+  .new--writer--wrapper #waiting--for--approval .dashboard--editor, .official--writer--wrapper #waiting--for--approval .dashboard--editor {
+    width: 100% !important;
+    margin-bottom: 15px !important;
+  }
+  /* line 566, app/assets/stylesheets/_userprofile.css.scss */
+  .new--writer--wrapper #waiting--for--approval .dashboard--writer--flex--two, .official--writer--wrapper #waiting--for--approval .dashboard--writer--flex--two {
+    padding: 0 !important;
+    border-left: none;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  /* line 571, app/assets/stylesheets/_userprofile.css.scss */
+  .new--writer--wrapper #waiting--for--approval .dashboard--writer--flex--two .whats-new-wrapper, .official--writer--wrapper #waiting--for--approval .dashboard--writer--flex--two .whats-new-wrapper {
+    width: auto !important;
+  }
+  /* line 575, app/assets/stylesheets/_userprofile.css.scss */
+  .new--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main, .official--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main {
+    margin-right: 0;
+    padding: 0;
+    width: 100%;
+  }
+  /* line 579, app/assets/stylesheets/_userprofile.css.scss */
+  .new--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main .flex--item, .official--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main .flex--item {
+    margin: 0;
+  }
+  /* line 582, app/assets/stylesheets/_userprofile.css.scss */
+  .new--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main .analytics, .new--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main .newpost--new--profile, .official--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main .analytics, .official--writer--wrapper #waiting--for--approval .dashboard--writer--flex--main .newpost--new--profile {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  /* line 592, app/assets/stylesheets/_userprofile.css.scss */
+  .flex--profile {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+  /* line 596, app/assets/stylesheets/_userprofile.css.scss */
+  .flex--profile .info {
+    margin-left: 0;
+  }
+  /* line 598, app/assets/stylesheets/_userprofile.css.scss */
+  .flex--profile .info p {
+    font-size: 13px !important;
+  }
+  /* line 602, app/assets/stylesheets/_userprofile.css.scss */
+  .flex--profile .profile_img {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+  }
+  /* line 609, app/assets/stylesheets/_userprofile.css.scss */
+  .website_link {
+    font-size: 13px;
+    margin: 0 auto;
+    max-width: 210px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  /* line 617, app/assets/stylesheets/_userprofile.css.scss */
+  .website_link span {
+    display: none;
+  }
+  /* line 621, app/assets/stylesheets/_userprofile.css.scss */
+  .guidelines .thelink {
+    width: 100%;
+  }
+  /* line 625, app/assets/stylesheets/_userprofile.css.scss */
+  .review_items .inside--item {
+    flex-direction: column;
+    width: 100%;
+    margin-left: -20px;
+  }
+  /* line 629, app/assets/stylesheets/_userprofile.css.scss */
+  .review_items .inside--item img {
+    display: none;
+  }
+  /* line 633, app/assets/stylesheets/_userprofile.css.scss */
+  .flex--postlist--item {
+    padding-left: 10px;
+    padding-right: 0;
+  }
+}
