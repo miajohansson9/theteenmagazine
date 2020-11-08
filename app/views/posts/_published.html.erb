@@ -73,6 +73,7 @@ blockquote {
               <div class="post_content">
                 <%= markdown @post.content %>
               </div>
+              <p class="mt-0 mb-4"><i>Did you enjoy reading <%= @post.user.full_name %>'s article? Let your friends know by using any of the sharing options below.</p>
               <div class="social_icons social_icons_full">
                 <a class="fb-share" href="//www.facebook.com/v2.3/dialog/feed?app_id=1190455601051741
                   &name=<%= @post.title.sub! '#', '' %>
@@ -105,8 +106,6 @@ blockquote {
                   <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete this article?"} %>
                   <% end %>
                 </div>
-              <% else %>
-                <p class="mt-0 mb-4"><i>Did you enjoy reading <%= @post.user.full_name %>'s article? Let your friends know by using any of the sharing options above. To apply to our writer team, fill out the application found on our website <a target="_blank" class="link_grn" href="/apply">here</a>.</i></p>
               <% end %>
               <div id= "background">
                <%= render :partial => 'users/profile', locals: {user: @user} %>
