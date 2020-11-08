@@ -3,7 +3,7 @@
   <% if (current_user.editor?) && !(@pitch.user.try(:editor)) && (@pitch.status.eql? "Ready for Review") %>
     <%= render "/pitches/review_pitch" %>
   <% else %>
-    <h1>Edit Pitch</h1>
+    <h1 class="d-inline">Edit Pitch</h1><a data-toggle="tooltip" title="See pitch requirements" class="ml-1 position-absolute" href="/choosing-a-topic"><i class="fad fa-info-circle"></i></a>
     <%= render "/pitches/form" %>
     <%= link_to "Delete", pitch_path(@pitch), method: :delete, data: {confirm: "Are you sure you want to delete this pitch? This cannot be undone."}, :class => "link_theme delete_btn" %>
   <% end %>
