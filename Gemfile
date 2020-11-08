@@ -38,6 +38,7 @@ gem 'gibbon', git: 'git://github.com/amro/gibbon.git'
 gem 'faraday', '>= 0.9.1'
 gem 'multi_json', '>= 1.11.0'
 gem 'font-awesome-rails'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 group :development, :test do
   gem 'byebug', platform: :mri
