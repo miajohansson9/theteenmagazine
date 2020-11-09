@@ -270,11 +270,11 @@ class PostsController < ApplicationController
         @partner = User.find(post_params[:partner_id])
         redirect_to @partner, notice: "This article was successfully shared with #{@partner.full_name}."
       elsif (@new_status.eql? "In Review") && (current_user.editor?)
-        @notice = @prev_review.editor_id == current_user.id ? "Your changes were saved." : "Great job! You've claimed editing this article!"
+        @notice = (@prev_review.editor_id == current_user.id) ? "Your changes were saved." : "Great job, You've claimed editing this article!"
         if !(@prev_status.eql? "In Review")
           ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
         end
-        redirect_to reviews_path, notice: @notice
+        redirect_to "/editors/#{current_user.slug}", notice: @notice
       else
         redirect_to @post, notice: @notice
       end
