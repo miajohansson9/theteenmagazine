@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta name="p:domain_verify" content="b07db16852ac484ab4d32324394040a1"/>
-    <link rel="icon" href="https://i.ibb.co/TBp2fyD/logot-2.png">
+    <%= favicon_link_tag 'logo.png' %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link href="https://fonts.googleapis.com/css?family=Vollkorn:700" rel="stylesheet">
     <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
@@ -97,6 +97,8 @@
     </script>
     <script type="text/javascript">
       $('document').ready(function() {
+        $('a[href^="https://"]').not('a[href*=localhost]').attr('target','_blank');
+        $('a[href^="http://"]').not('a[href*=localhost]').attr('target','_blank');
         setTimeout(function() {
           $('.notice').slideUp();
         }, 1500);

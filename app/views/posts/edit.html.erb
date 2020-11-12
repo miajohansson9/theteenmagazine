@@ -12,9 +12,6 @@
   <p style="margin-bottom: 0;"><i>This article has been given feedback <%= @reviews.count %> time(s).
      View all past reviews <%= link_to("here", reviews_path(post: @post), target: "_blank", :class => "link_nrml underline") %>.
   </i></p>
-  <% if (@reviews.count >= 5) && !(@post.is_published?) %>
-    <p style="margin-bottom: 0px; font-style: italic;">You have reached the maximum amount of times you can submit this article for review.</p>
-  <% end %>
   <% if @most_recent_review.try(:status).eql? "Rejected" %>
     <% if !@most_recent_review.notes.blank? %>
      <p><i style="background-color: #FCD04D;">Editor Notes: <%= @most_recent_review.notes %></i></p>
@@ -27,11 +24,11 @@
           <% @requested_changes.each do |requested_change| %>
             <% @feedback = Feedback.find(requested_change.feedback_id) %>
             <h5 class="card-title">✎ <%= @feedback.try(:editor_descr) %></h5>
-            <p class="card-text"><%= @feedback.try(:review_descr) %></p>
+            <p class="card-text"><small><%= markdown @feedback.try(:review_descr) %></small></p>
           <% end %>
         </div>
        </div>
-       <p class="mb-0"><i>Please make the above changes before submitting your article again.</i></p>
+       <p class="mb-0"><i>Please make the above changes before submitting your article again. If you think there was a mistake, please email Mia at mia@theteenmagazine.com and explain the problem.</i></p>
     <% end %>
   <% end %>
   <%= render 'form' %>

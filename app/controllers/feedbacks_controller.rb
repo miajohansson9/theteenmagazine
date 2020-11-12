@@ -15,7 +15,7 @@ class FeedbacksController < ApplicationController
   end
 
   def index
-    @feedbacks = Feedback.active.left_joins(:feedback_givens).group(:id).order('COUNT(feedback_givens.id) DESC')
+    @feedbacks = Feedback.active.order('created_at asc')
     @feedbacks_given = FeedbackGiven.all
     set_meta_tags :title => "Editor Feedback Fields"
   end
@@ -31,7 +31,7 @@ class FeedbacksController < ApplicationController
 
   def create
     if @feedback.save
-      redirect_to reviews_path, notice: "Your feedback field was successfully added!"
+      redirect_to feedbacks_path, notice: "Your feedback field was successfully added!"
     else
       render 'new', notice: "Oh no! Your changes were not able to be saved!"
     end

@@ -14,7 +14,6 @@
 
   <p>Additionally, articles should be around 1000 words or more. Shorter articles should also have lots of images.</p>
 
-  <h3>Articles Should Follow This Structure:</h3>
   <p>
     - <b>Title:</b> Titles should be at least six words long. They should reflect keywords that people are searching for and be unique.
   </p>
@@ -34,10 +33,10 @@
   <%= image_tag("3.png", :class=>"image")%>
 
   <h1>Formatting Your Articles</h1>
-  <%= image_tag "texteditor.jpg" %>
+  <%= image_tag "texteditor.png" %>
   <ol>
     <li><p style="color: #ff00aa; display: inline;">Source:</p> Changes the text to the source code (HTML and CSS). Use this button when embedding youtube videos or instagram/twitter widgets. See instructions for doing this.</li>
-    <li><p style="color: #00a9ff; display: inline;">Format:</p> This button for changing the size of headers. Use Heading 1 for the main topics in your article and the others for subheaders.</li>
+    <li><p style="color: #00a9ff; display: inline;">Format:</p> This button for changing the size of headers. Use Heading 2 for the main topics in your article and the others for subheaders.</li>
     <li><p style="color: #a940de; display: inline;">Links:</p> See instructions for adding links.</li>
     <li><p style="color: #00d400; display: inline;">Images:</p> See instructions for adding images.</li>
     <li><p style="color: #0055ff; display: inline;">Lists:</p> Use these buttons to add ordered and unordered lists.</li>
@@ -46,20 +45,33 @@
   <h3>Links</h3>
   <p style="margin-bottom: 10px;">To add a link, first highlight the text you want to add the link to, then click on the infinity symbol (purple box). Next, enter the link in the URL box.</p>
   <%= image_tag "link.png", class: "image" %>
-  <p style="margin-top: 20px; margin-bottom:10px;">IMPORTANT: For all links, you must change the target setting to "New Window (_blank)".</p>
-  <%= image_tag "link_target.png", class: "image" %>
 
   <div class="writing--images">
     <h3>Images</h3>
     <p>
-      To add an image, click on the image symbol boxed in green. You may choose to either use a url or upload your own image. You can also add a link to your image under the Link tab. If you do, make sure you change the target to "New Window (_blank)". When uploading your own image, make sure to click "Send it to the Server" after choosing a file.
+      To add an image, click on the image symbol in the text editor. You may choose to either use a url or upload your own image.
     </p>
-    <p>IMPORTANT: Taking the url link directly from Pintrest or Instagram does not work. Instead, follow these directions:</p>
-    <h4>Pintrest:</h4>
-    <p>Right click on the image, and select "copy image address"</p>
+
+    <h3>Uploading Images</h3>
+    <p>
+      To upload your own image, click on the image symbol boxed in green. Click on the "Upload" tab.
+    </p>
+    <%= image_tag "uploadimage1.png", class: "image" %>
+    <p>
+      Then click on "Choose File" and choose an image from your computer.
+    </p>
+    <%= image_tag "uploadimage2.png", class: "image" %>
+    <p>
+      <b>IMPORTANT!</b> You need to click on "Send it to the Server" before clicking "OK". This can take up to 10 seconds. It should automatically reroute you to "Image Info". The larger the image, the more time it takes.
+    </p>
+    <p>
+      <b>"Image source URL is missing"</b>: If you get this error, it means that you did not click on "Send it to the Server", or your image is too large to be uploaded.
+    </p>
+    <%= image_tag "uploadimage3.png", class: "image" %>
+
+    <p>If you do not upload the image and instead link to it, it is important to note that taking the url link directly from a webpage (like Pinterest.com) does not work. Instead, right click on the image, and select "Copy image address" as shown below. You can then use this link in the URL input field and click return to upload.</p>
     <%= image_tag("5.png", :class=>"image")%>
-    <p>Alternatively, you can search for the image on google by saving the image from pintrest onto your desktop, and then dragging it into google's image search. You can then use the direct link from google. For more information go <a href="https://support.google.com/websearch/answer/1325808?hl=en">here</a>.</p>
-    <h4>Instagram:</h4>
+    <h4>Embedding Instagram Posts:</h4>
     <p>
       First, click "Source" in your toolbar to change to HTML and CSS. It will look a little weird, but that's okay.
     </p>
@@ -78,23 +90,6 @@
     <h4>Youtube:</h4>
     <p>For Youtube, go to Share, then Embed.</p>
     <%= image_tag("youtube.png", :class=>"image")%>
-
-    <h3>Uploading Images</h3>
-    <p>
-      To upload your own image, click on the image symbol boxed in green. Click on the "Upload" tab.
-    </p>
-    <%= image_tag "uploadimage1.png", class: "image" %>
-    <p>
-      Then click on "Choose File" and choose an image from your computer.
-    </p>
-    <%= image_tag "uploadimage2.png", class: "image" %>
-    <p>
-      <b>IMPORTANT!</b> You need to click on "Send it to the Server" before clicking "OK". This can take up to 10 seconds. It should automatically reroute you to "Image Info". The larger the image, the more time it takes.
-    </p>
-    <p>
-      <b>"Image source URL is missing"</b>: If you get this error, it means that you did not click on "Send it to the Server", or your image is too large to be uploaded.
-    </p>
-    <%= image_tag "uploadimage3.png", class: "image" %>
   </div>
 
   <hr />

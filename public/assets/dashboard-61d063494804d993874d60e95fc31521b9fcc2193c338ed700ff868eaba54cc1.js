@@ -8,23 +8,13 @@ function animateEditorStats(decimal) {
   }, 1000);
 }
 
-function select_article_status() {
-  var selected = document.getElementById("post_reviews_attributes_0_status").value;
-  if (selected == "Approved for Publishing") {
-    $(".rejected-reason").addClass("hide");
-    $(".accepted-descr").removeClass("hide");
-  } else if (selected == "Rejected") {
-    $(".rejected-reason").removeClass("hide");
-    $(".accepted-descr").addClass("hide");
-  } else {
-    $(".rejected-reason").addClass("hide");
-    $(".accepted-descr").addClass("hide");
-  }
-}
+function select_status(id) {
+  console.log(id);
+  console.log(selected);
+  console.log(document.getElementById(id));
+  var selected = document.getElementById(id).value;
 
-function select_status() {
-  var selected = document.getElementById("pitch_status").value;
-  if (selected == "Approved") {
+  if ((selected == "Approved") || (selected == "Approved for Publishing")) {
     $(".rejected-reason").addClass("hide");
     $(".accepted-descr").removeClass("hide");
   } else {

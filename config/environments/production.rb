@@ -24,6 +24,7 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
+  config.assets.check_precompiled_asset = false
 
   config.assets.precompile = ['*.js', '/plugins/*.js', '*.css', '*.scss', 'mdbootstrap/css/*.css', 'ckeditor/config.js']
 

@@ -48,6 +48,9 @@
     <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
 
     <%= f.fields_for :reviews, @review do |rv| %>
+      <% @editor_options = ((@post.reviews.last.status.eql? "In Review") || (@post.reviews.last.status.eql? "Approved for Publishing")) ? ["Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review", "In Review"] %>
+      <% @statuses = current_user.editor? ? @editor_options : ["In Progress", "Ready for Review"] %>
+      <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
       <% if (current_user.id == @post.reviews.last.editor_id) && (@post.reviews.last.try(:status).eql? "In Review") %>
       <% if @post.editor_can_make_changes %>
         <i>
@@ -65,30 +68,56 @@
         <br>
         <div class="card review_frm">
           <div class="card-header">
-            <h6>Editor Feedback Form</h6>
+            <h6>Editor Review Form</h6>
           </div>
           <div class="card-body">
-            <% @feedbacks_editor_frm.each_with_index do |feedback, index| %>
-              <%= f.check_box :feedback_list, { :multiple => true, checked: !(@review.try(:feedback_givens).where(feedback_id: feedback.id).blank?) }, feedback.id, nil %>
-              <%= feedback.editor_descr %><br>
-            <% end %>
-            <br>
-            <%= rv.label "Editor Notes:" %>
-            <%= rv.text_field :notes, placeholder: "(Optional) Share any additional comments you have about this article." %>
-            <br>
-            <%= link_to("View/Edit feedback descriptions", feedbacks_path, class: "link_nrml float_right", target: "_blank") %>
+            <div class="small-text-wrapper">
+              <p>Prerequisite: Before reviewing any pitch, make sure you have read all of <a target="_blank" href="/article-requirements">Reviewing Articles</a>.</p>
+              <p>Article Checklist:</p>
+              <ol>
+                <li>Is the topic relevant to The Teen Magazine's audience?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#first-question"><i class="fad fa-info-circle"></i></a></li>
+                <li>Is the title searchable and/or shareable?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#second-question"><i class="fad fa-info-circle"></i></a></li>
+                <li>Does the thumbnail image fit the criteria?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#third-question"><i class="fad fa-info-circle"></i></a></li>
+                <li>Is the main point of the article clear in the introduction?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#fourth-question"><i class="fad fa-info-circle"></i></a></li>
+                <li>Does the writer provide a unique perspective and/or information?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#fifth-question"><i class="fad fa-info-circle"></i></a></li>
+                <li>Does the most important information jump out of the page?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#sixth-question"><i class="fad fa-info-circle"></i></a></li>
+                <li>Is the article entirely free from grammar and spelling mistakes?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#seventh-question"><i class="fad fa-info-circle"></i></a></li>
+                <li>Is the article in-depth enough for this topic?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#eighth-question"><i class="fad fa-info-circle"></i></a></li>
+                <li>Do all the images fit the criteria?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#ninth-question"><i class="fad fa-info-circle"></i></a></li>
+              </ol>
+              <p>If you answered yes to all these questions, you may choose "Approved for Publishing" from the dropdown menu and save. If you answered no to at least one of the questions, select "Rejected," and mark the reason(s) why. If you are unsure, either move this article back into "Ready for Review" or contact mia@theteenmagazine.com to ask a clarifying question about the article requirements.</p>
+            </div>
+            <div class="pb-1">
+              <p class="d-inline">Reject or Approve:</p>
+              <%= rv.select :status, options_for_select(@statuses, @review.try(:status)), {}, {:onChange => "select_article_status();"} %>
+            </div>
+            <div class="small-text-wrapper">
+              <p class="accepted-descr hide">Make sure you've answered yes to all the above questions before publishing this article.</p>
+            </div>
+            <p class="rejected-reason hide mb-1 mt-1">*Select reason(s) for rejecting:</p>
+            <div class="small-text-wrapper">
+              <% @feedbacks_editor_frm.each_with_index do |feedback, index| %>
+                <p class="rejected-reason hide">
+                  <%= f.check_box :feedback_list, { :multiple => true, checked: !(@review.try(:feedback_givens).where(feedback_id: feedback.id).blank?), class: "rejected-reason hide mb-1 mt-0" }, feedback.id, nil %> <%= index + 1 %>. <%= feedback.editor_descr %>
+                </p>
+              <% end %>
+              <div class="rejected-reason hide">
+                <%= rv.text_field :notes, placeholder: "Explain other reason for rejection..." %>
+                <%= rv.hidden_field :editor_id, value: current_user.id %>
+                <br>
+                <%= link_to("View feedback descriptions", feedbacks_path, class: "link_nrml float_right", target: "_blank") %>
+              </div>
+            </div>
+            <%= f.hidden_field :editor_id, value: current_user.id %>
           </div>
         </div>
-      <% end %>
+      <% else %>
       <% @reviews = @post.reviews.where(status: "Rejected") %>
       <% if (@reviews.count >= 5) && !(@post.is_published?) %>
         <%= rv.hidden_field :status, :value => "In Progress" %>
-      <% else %>
+      <% elsif  %>
         <%= f.label "Article Status:" %>
         <% @rejected_cnt = @post.reviews.where(status: "Rejected").count %>
-        <% @editor_options = ((@post.reviews.last.status.eql? "In Review") || (@post.reviews.last.status.eql? "Approved for Publishing")) ? ["Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review", "In Review"] %>
-        <% @statuses = current_user.editor? ? @editor_options : ["In Progress", "Ready for Review"] %>
-        <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
         <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
         <% if current_user.admin && @post.is_published? %>
           <div style="float:right; text-align: right;">
@@ -109,6 +138,10 @@
         <br>
         <br>
       <% end %>
+      <% end %>
+    <% end %>
+    <% if (@reviews.count >= 5) && !(@post.is_published?) %>
+      <p class="mb-4 mt-0" style="font-style: italic;"><span class="highlight">You have reached the maximum amount of times you can submit this article for review.</span></p>
     <% end %>
     <%= f.submit "Save Changes" %>
   <% end %>
@@ -125,23 +158,37 @@
       unsaved = false;
       var reply = true;
       var selected = document.getElementById('post_reviews_attributes_0_status').value;
-      var isChecked = $("input[type=checkbox]").is(":checked");
+      var checked = $("input[type=checkbox]:checked").length;
       if (selected == "Rejected") {
-        if (!isChecked) {
+        if (checked == 0) {
           reply=confirm("You need to select at least one reason for rejecting this article.");
           return false;
+        } else if (checked > 3) {
+          reply=confirm("Please only select the top 3 reasons for rejection to not overwhelm the writer.");
+          return false
         }
-      }
-      <% if !(@post.reviews.last.status.eql? "Ready for Review") %>
-        if (selected == "Ready for Review") {
-          <%= @count = 5 - @post.reviews.where(status: "Rejected").count %>
-          reply=confirm("You have <%= @count %> reviews remaining for this article. Are you sure you want to continue?");
-        }
-      <% elsif !(@post.reviews.last.status.eql? "Approved for Publishing") && (@post.user_id != current_user.id) %>
-        if (selected == "Approved for Publishing") {
+      } else if (selected == "Approved for Publishing") {
+        <% if !(@post.reviews.last.status.eql? "Approved for Publishing") && (@post.user_id != current_user.id) %>
           reply=confirm("You will not be able to edit this article once you approve it for publishing. Are you sure you want to continue?");
-        }
-      <% end %>
+        <% end %>
+      } else if (selected == "In Review") {
+        <% if !(@post.reviews.last.status.eql? "In Review") %>
+          reply=confirm("You are claiming this article review. You have two days to either approve or request changes to this article.");
+        <% end %>
+      } else if (selected == "Ready for Review") {
+        <% if !(@post.reviews.last.status.eql? "Ready for Review") %>
+          <% if (@post.reviews.last.status.eql? "In Review") %>
+            reply=confirm("You are moving this article out of review.");
+          <% else %>
+            <%= @count = 5 - @post.reviews.where(status: "Rejected").count %>
+            reply=confirm("You have <%= @count %> reviews remaining for this article. Are you sure you want to continue?");
+          <% end %>
+        <% end %>
+      } else if (selected == "In Progress") {
+        <% if (@post.reviews.last.status.eql? "Ready for Review") %>
+          reply=confirm("You are unsubmitting this article for review.");
+        <% end %>
+      }
       return reply;
     });
 

@@ -196,7 +196,7 @@ class PostsController < ApplicationController
     @requested_changes = @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
     @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.feedback_givens) : @post.reviews.last
     @feedbacks = Feedback.all
-    @feedbacks_editor_frm = Feedback.active.left_joins(:feedback_givens).group(:id).order('COUNT(feedback_givens.id) DESC')
+    @feedbacks_editor_frm = Feedback.active.order('created_at asc')
     set_meta_tags :title => "Edit Article"
   end
 

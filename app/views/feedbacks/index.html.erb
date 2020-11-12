@@ -6,15 +6,15 @@
     </div>
     <div class="card-body">
       <% @feedbacks.each_with_index do |feedback| %>
-        <h6><%= feedback.editor_descr%> <i><%= link_to("(Edit)", edit_feedback_path(feedback), class: "link_pink") %></i></h6>
-        <i><%=feedback.review_descr %></i>
-        <br>
-        <br>
+        <h6><%= feedback.editor_descr%> <i><% if current_user.admin %><%= link_to("(Edit)", edit_feedback_path(feedback), class: "link_pink") %></i><% end %></h6>
+        <i><%=markdown feedback.review_descr %></i>
         <i>Used <%= @feedbacks_given.where(feedback_id: feedback.id).count %> times</i>
         <hr>
       <% end %>
     </div>
   </div>
-  <div class="btn_cntnr"><%= link_to "New Feedback Field", new_feedback_path, class: "newpost--new--profile", style: "margin-right: 0px;" %></div>
+  <% if current_user.admin %>
+    <div class="btn_cntnr"><%= link_to "New Feedback Field", new_feedback_path, class: "newpost--new--profile", style: "margin-right: 0px;" %></div>
+  <% end %>
   <br><br><br>
 </div>
