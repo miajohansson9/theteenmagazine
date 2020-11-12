@@ -26,6 +26,10 @@ class Pitch < ApplicationRecord
     where(claimed_id: nil)
   }
 
+  scope :not_rejected, -> {
+    where(status: ["Ready for Review", nil, "Approved"])
+  }
+
   has_attached_file :thumbnail, styles: {
       card: '540x380#'
     }, :restricted_characters => /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/

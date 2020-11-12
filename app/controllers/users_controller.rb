@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       end
     end
     if current_user.present?
-      @pitches = Pitch.where.not(status: "Rejected").all.order("created_at desc").limit(4)
+      @pitches = Pitch.not_rejected.all.order("created_at desc").limit(4)
       @featured_writers = Post.where(publish_at: (Time.now - 7.days)..Time.now).order("updated_at desc").map{|p| p.user}.uniq
       @claimed_pitches_cnt =  Pitch.where(claimed_id: @user.id).present? ? Pitch.where(claimed_id: @user.id).count : 0;
       @pageviews = 0
