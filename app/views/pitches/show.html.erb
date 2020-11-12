@@ -61,6 +61,6 @@
       <% end %>
     <% end %>
     <% if ((current_user.id.eql? @pitch.user.id) || current_user.admin) && !@article&.is_published? %>
-      <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme", style: "float: left; margin-top: -1.5rem;" %>
+      <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme edit_btn", style: "float: left; margin-top: -1.5rem;" %>
     <% end %>
 </div>

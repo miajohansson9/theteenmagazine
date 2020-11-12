@@ -31039,17 +31039,6 @@ a:hover {
 }
 
 /* line 112, app/assets/stylesheets/_pages.css.scss */
-.theimages a, .criteria a, .privacy a, .topics a, .writing a {
-  color: #4ABEB6;
-}
-
-/* line 114, app/assets/stylesheets/_pages.css.scss */
-.theimages a:hover, .criteria a:hover, .privacy a:hover, .topics a:hover, .writing a:hover {
-  background-color: #FCD04D;
-  opacity: 1;
-}
-
-/* line 121, app/assets/stylesheets/_pages.css.scss */
 .theimages img {
   width: 70%;
   display: block;
@@ -31058,7 +31047,7 @@ a:hover {
   margin-right: auto;
 }
 
-/* line 130, app/assets/stylesheets/_pages.css.scss */
+/* line 121, app/assets/stylesheets/_pages.css.scss */
 #button_nrml {
   margin: 10px;
   padding: 0;
@@ -31067,41 +31056,41 @@ a:hover {
   color: #4ABEB6;
 }
 
-/* line 136, app/assets/stylesheets/_pages.css.scss */
+/* line 127, app/assets/stylesheets/_pages.css.scss */
 #button_nrml:hover {
   cursor: pointer;
 }
 
-/* line 141, app/assets/stylesheets/_pages.css.scss */
+/* line 132, app/assets/stylesheets/_pages.css.scss */
 .analytics_wrapper {
   max-width: 100%;
   overflow: auto;
 }
 
-/* line 144, app/assets/stylesheets/_pages.css.scss */
+/* line 135, app/assets/stylesheets/_pages.css.scss */
 .analytics_wrapper .scrollmenu {
   overflow: auto;
   white-space: nowrap;
 }
 
-/* line 150, app/assets/stylesheets/_pages.css.scss */
+/* line 141, app/assets/stylesheets/_pages.css.scss */
 .link_inline {
   display: inline !important;
 }
 
-/* line 154, app/assets/stylesheets/_pages.css.scss */
+/* line 145, app/assets/stylesheets/_pages.css.scss */
 .link_grn {
   color: #4ABEB6;
 }
 
-/* line 156, app/assets/stylesheets/_pages.css.scss */
+/* line 147, app/assets/stylesheets/_pages.css.scss */
 .link_grn:hover {
   color: #4ABEB6;
   text-decoration: none;
   opacity: 0.8;
 }
 
-/* line 163, app/assets/stylesheets/_pages.css.scss */
+/* line 154, app/assets/stylesheets/_pages.css.scss */
 .apply_wrapper {
   position: relative;
   margin: 0 auto;
@@ -31113,7 +31102,7 @@ a:hover {
   width: 90%;
 }
 
-/* line 172, app/assets/stylesheets/_pages.css.scss */
+/* line 163, app/assets/stylesheets/_pages.css.scss */
 .apply_wrapper h2, .apply_wrapper h4 {
   font-family: "Playfair Display";
 }
@@ -31833,87 +31822,99 @@ h5 span {
   }
 }
 
-/* line 19, app/assets/stylesheets/onboarding.css.scss */
+/* line 20, app/assets/stylesheets/onboarding.css.scss */
+.theimages a, .criteria a, .privacy a, .topics a, .writing a {
+  color: #4ABEB6;
+  font-weight: bold;
+}
+
+/* line 23, app/assets/stylesheets/onboarding.css.scss */
+.theimages a:hover, .criteria a:hover, .privacy a:hover, .topics a:hover, .writing a:hover {
+  background-color: #FCD04D;
+  opacity: 1;
+}
+
+/* line 30, app/assets/stylesheets/onboarding.css.scss */
 .progress-bar {
   background-color: #EF265F !important;
 }
 
-/* line 23, app/assets/stylesheets/onboarding.css.scss */
+/* line 34, app/assets/stylesheets/onboarding.css.scss */
 .pitch_ttl {
   margin-top: 1em;
 }
 
-/* line 28, app/assets/stylesheets/onboarding.css.scss */
+/* line 39, app/assets/stylesheets/onboarding.css.scss */
 #selectable_content #response_to_text_0 {
   background-color: #FCD04D;
 }
 
-/* line 33, app/assets/stylesheets/onboarding.css.scss */
+/* line 44, app/assets/stylesheets/onboarding.css.scss */
 #dismiss-modal {
   background-color: white !important;
   color: #2a2a2a !important;
 }
 
-/* line 39, app/assets/stylesheets/onboarding.css.scss */
+/* line 50, app/assets/stylesheets/onboarding.css.scss */
 #comments_feed h3 {
   margin: 1em 0;
 }
 
-/* line 43, app/assets/stylesheets/onboarding.css.scss */
+/* line 54, app/assets/stylesheets/onboarding.css.scss */
 #comments_feed .comments .li-content {
   display: flex;
 }
 
-/* line 45, app/assets/stylesheets/onboarding.css.scss */
+/* line 56, app/assets/stylesheets/onboarding.css.scss */
 #comments_feed .comments .li-content span {
   margin-left: 10px;
 }
 
-/* line 48, app/assets/stylesheets/onboarding.css.scss */
+/* line 59, app/assets/stylesheets/onboarding.css.scss */
 #comments_feed .comments .li-content a, #comments_feed .comments .li-content span {
   font-size: 13px;
 }
 
-/* line 51, app/assets/stylesheets/onboarding.css.scss */
+/* line 62, app/assets/stylesheets/onboarding.css.scss */
 #comments_feed .comments .li-content .date_ago {
   margin-left: 0;
 }
 
-/* line 55, app/assets/stylesheets/onboarding.css.scss */
+/* line 66, app/assets/stylesheets/onboarding.css.scss */
 #comments_feed .comments .li-link-wrapper {
   position: absolute;
 }
 
-/* line 57, app/assets/stylesheets/onboarding.css.scss */
+/* line 68, app/assets/stylesheets/onboarding.css.scss */
 #comments_feed .comments .li-link-wrapper a {
   display: block !important;
   position: absolute;
 }
 
-/* line 62, app/assets/stylesheets/onboarding.css.scss */
+/* line 73, app/assets/stylesheets/onboarding.css.scss */
 #comments_feed .comments .li-link-wrapper, #comments_feed .comments .li-link-wrapper a {
   width: 100%;
   height: 90%;
 }
 
-/* line 67, app/assets/stylesheets/onboarding.css.scss */
+/* line 78, app/assets/stylesheets/onboarding.css.scss */
 #comments_feed .flex-drafts {
   margin: 0 auto 40px auto;
 }
 
-/* line 72, app/assets/stylesheets/onboarding.css.scss */
+/* line 83, app/assets/stylesheets/onboarding.css.scss */
 #post_reviews_attributes_0_status {
   background-color: WhiteSmoke;
 }
 
-/* line 77, app/assets/stylesheets/onboarding.css.scss */
+/* line 88, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper {
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 30px;
 }
 
-/* line 81, app/assets/stylesheets/onboarding.css.scss */
+/* line 92, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .counter {
   height: 10px;
   width: 10px;
@@ -31924,12 +31925,12 @@ h5 span {
   border: 2px white solid;
 }
 
-/* line 90, app/assets/stylesheets/onboarding.css.scss */
+/* line 101, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .dropdown {
   height: 100%;
 }
 
-/* line 92, app/assets/stylesheets/onboarding.css.scss */
+/* line 103, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .dropdown .sec {
   width: 5px;
   height: 5px;
@@ -31941,17 +31942,17 @@ h5 span {
   top: -10px;
 }
 
-/* line 102, app/assets/stylesheets/onboarding.css.scss */
+/* line 113, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .dropdown:hover {
   cursor: pointer;
 }
 
-/* line 106, app/assets/stylesheets/onboarding.css.scss */
+/* line 117, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .dropdown-toggle::after {
   display: none !important;
 }
 
-/* line 109, app/assets/stylesheets/onboarding.css.scss */
+/* line 120, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .dropdown-menu {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1), 0 2px 5px 0 rgba(0, 0, 0, 0.12);
   border-radius: 21px;
@@ -31962,13 +31963,13 @@ h5 span {
   transform: translate3d(-140px, 48px, 0px) !important;
 }
 
-/* line 117, app/assets/stylesheets/onboarding.css.scss */
+/* line 128, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .dropdown-menu .dropdown-item {
   font-weight: 400;
   padding: 15px !important;
 }
 
-/* line 120, app/assets/stylesheets/onboarding.css.scss */
+/* line 131, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .dropdown-menu .dropdown-item p {
   display: inline;
   position: absolute;
@@ -31978,14 +31979,14 @@ h5 span {
   color: gray;
 }
 
-/* line 128, app/assets/stylesheets/onboarding.css.scss */
+/* line 139, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .dropdown-menu .dropdown-item:hover {
   background-color: WhiteSmoke;
   box-shadow: none;
   color: black !important;
 }
 
-/* line 135, app/assets/stylesheets/onboarding.css.scss */
+/* line 146, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .btn-profile {
   width: 77px;
   height: 42px;
@@ -31997,19 +31998,19 @@ h5 span {
   -webkit-appearance: none !important;
 }
 
-/* line 144, app/assets/stylesheets/onboarding.css.scss */
+/* line 155, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .btn-profile:hover {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.18), 0 2px 5px 0 rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.2s ease !important;
 }
 
-/* line 148, app/assets/stylesheets/onboarding.css.scss */
+/* line 159, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .btn-profile .fa {
   color: #212529 !important;
   margin-left: 4px;
 }
 
-/* line 152, app/assets/stylesheets/onboarding.css.scss */
+/* line 163, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .btn-profile img {
   border-radius: 50%;
   width: 30px;
@@ -32017,18 +32018,18 @@ h5 span {
   margin-top: -4px;
 }
 
-/* line 158, app/assets/stylesheets/onboarding.css.scss */
+/* line 169, app/assets/stylesheets/onboarding.css.scss */
 #main_navigation .nav_wrapper .btn-profile span {
   width: 50%;
   line-height: 42px;
 }
 
-/* line 166, app/assets/stylesheets/onboarding.css.scss */
+/* line 177, app/assets/stylesheets/onboarding.css.scss */
 .carousel-multi-item {
   margin: 0;
 }
 
-/* line 168, app/assets/stylesheets/onboarding.css.scss */
+/* line 179, app/assets/stylesheets/onboarding.css.scss */
 .carousel-multi-item .controls-top {
   position: absolute;
   z-index: 0;
@@ -32036,70 +32037,70 @@ h5 span {
   width: 100%;
 }
 
-/* line 173, app/assets/stylesheets/onboarding.css.scss */
+/* line 184, app/assets/stylesheets/onboarding.css.scss */
 .carousel-multi-item .controls-top .fa {
   margin: 0;
   color: #DDDDDD;
 }
 
-/* line 177, app/assets/stylesheets/onboarding.css.scss */
+/* line 188, app/assets/stylesheets/onboarding.css.scss */
 .carousel-multi-item .controls-top .left-control {
   float: left;
 }
 
-/* line 180, app/assets/stylesheets/onboarding.css.scss */
+/* line 191, app/assets/stylesheets/onboarding.css.scss */
 .carousel-multi-item .controls-top .right-control {
   float: right;
 }
 
-/* line 186, app/assets/stylesheets/onboarding.css.scss */
+/* line 197, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card-1 {
   background-color: #f8ceec;
   background-image: linear-gradient(315deg, #f8ceec 0%, #a88beb 74%);
 }
 
-/* line 191, app/assets/stylesheets/onboarding.css.scss */
+/* line 202, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card-2 {
   background-color: #5de6de;
   background-image: linear-gradient(315deg, #3eadcf 0%, #a88beb 74%);
 }
 
-/* line 196, app/assets/stylesheets/onboarding.css.scss */
+/* line 207, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card-3 {
   background-color: #abe9cd;
   background-image: linear-gradient(315deg, #abe9cd 0%, #3eadcf 74%);
 }
 
-/* line 201, app/assets/stylesheets/onboarding.css.scss */
+/* line 212, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card {
   opacity: 1;
   transition: opacity 0.8s;
   -webkit-transition: opacity 0.8s;
 }
 
-/* line 205, app/assets/stylesheets/onboarding.css.scss */
+/* line 216, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card .value {
   font-family: Arial,Sans-serif;
   font-weight: lighter;
 }
 
-/* line 210, app/assets/stylesheets/onboarding.css.scss */
+/* line 221, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card:hover {
   opacity: 0.7;
 }
 
-/* line 213, app/assets/stylesheets/onboarding.css.scss */
+/* line 224, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card a {
   transition: .5s;
 }
 
-/* line 220, app/assets/stylesheets/onboarding.css.scss */
+/* line 231, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card a:hover {
   text-decoration: none;
   color: white;
 }
 
-/* line 224, app/assets/stylesheets/onboarding.css.scss */
+/* line 235, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card .stats_wrapper {
   margin: 0 auto;
   width: -webkit-fit-content;
@@ -32108,7 +32109,7 @@ h5 span {
   text-align: left;
 }
 
-/* line 228, app/assets/stylesheets/onboarding.css.scss */
+/* line 239, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card .stats_wrapper .value {
   font-size: 80px;
   color: white;
@@ -32116,7 +32117,7 @@ h5 span {
   word-break: normal;
 }
 
-/* line 234, app/assets/stylesheets/onboarding.css.scss */
+/* line 245, app/assets/stylesheets/onboarding.css.scss */
 .dashboard-card .stats_wrapper .text-wrapper {
   display: inline-flex;
   flex-direction: column;
@@ -32130,72 +32131,72 @@ h5 span {
   text-align: left;
 }
 
-/* line 249, app/assets/stylesheets/onboarding.css.scss */
+/* line 260, app/assets/stylesheets/onboarding.css.scss */
 .changes_requested {
   margin: 20px 10px 10px 10px;
   background-color: #ffeded;
 }
 
-/* line 252, app/assets/stylesheets/onboarding.css.scss */
+/* line 263, app/assets/stylesheets/onboarding.css.scss */
 .changes_requested .fa-times {
   float: right;
 }
 
-/* line 257, app/assets/stylesheets/onboarding.css.scss */
+/* line 268, app/assets/stylesheets/onboarding.css.scss */
 .review_frm {
   background-color: #FFFBDA;
   margin-bottom: 1.5em;
 }
 
-/* line 260, app/assets/stylesheets/onboarding.css.scss */
+/* line 271, app/assets/stylesheets/onboarding.css.scss */
 .review_frm h6 {
   font-family: 'Univers-CnUlt', "Arial", "Sans-serif";
 }
 
-/* line 263, app/assets/stylesheets/onboarding.css.scss */
+/* line 274, app/assets/stylesheets/onboarding.css.scss */
 .review_frm b {
   color: #F0255E;
 }
 
-/* line 266, app/assets/stylesheets/onboarding.css.scss */
+/* line 277, app/assets/stylesheets/onboarding.css.scss */
 .review_frm hr {
   margin: 20px -20px;
 }
 
-/* line 269, app/assets/stylesheets/onboarding.css.scss */
+/* line 280, app/assets/stylesheets/onboarding.css.scss */
 .review_frm input {
   margin: 0.5em 0;
 }
 
-/* line 275, app/assets/stylesheets/onboarding.css.scss */
+/* line 286, app/assets/stylesheets/onboarding.css.scss */
 .changes_requested .card-title, .changes_requested h6, .review_frm .card-title, .review_frm h6 {
   font-size: 18px;
   margin: 10px 0;
 }
 
-/* line 279, app/assets/stylesheets/onboarding.css.scss */
+/* line 290, app/assets/stylesheets/onboarding.css.scss */
 .changes_requested .card-text, .review_frm .card-text {
   font-size: 13px;
   font-style: italic;
   color: #757575;
 }
 
-/* line 286, app/assets/stylesheets/onboarding.css.scss */
+/* line 297, app/assets/stylesheets/onboarding.css.scss */
 #edit_post {
   padding-top: 20px;
 }
 
-/* line 288, app/assets/stylesheets/onboarding.css.scss */
+/* line 299, app/assets/stylesheets/onboarding.css.scss */
 #edit_post #cke_1_contents {
   min-height: 600px !important;
 }
 
-/* line 294, app/assets/stylesheets/onboarding.css.scss */
+/* line 305, app/assets/stylesheets/onboarding.css.scss */
 .pitches_wrapper h3, #comments_feed h3, #sharing_with_partners h3 {
   margin-bottom: 10px;
 }
 
-/* line 297, app/assets/stylesheets/onboarding.css.scss */
+/* line 308, app/assets/stylesheets/onboarding.css.scss */
 .pitches_wrapper .flex-wrapper, #comments_feed .flex-wrapper, #sharing_with_partners .flex-wrapper {
   display: flex;
   flex-flow: row wrap;
@@ -32203,62 +32204,62 @@ h5 span {
   align-items: flex-start;
 }
 
-/* line 301, app/assets/stylesheets/onboarding.css.scss */
+/* line 312, app/assets/stylesheets/onboarding.css.scss */
 .pitches_wrapper .flex-wrapper .card-review, #comments_feed .flex-wrapper .card-review, #sharing_with_partners .flex-wrapper .card-review {
   padding: 20px;
 }
 
-/* line 303, app/assets/stylesheets/onboarding.css.scss */
+/* line 314, app/assets/stylesheets/onboarding.css.scss */
 .pitches_wrapper .flex-wrapper .card-review p, #comments_feed .flex-wrapper .card-review p, #sharing_with_partners .flex-wrapper .card-review p {
   margin: 5px 0;
 }
 
-/* line 307, app/assets/stylesheets/onboarding.css.scss */
+/* line 318, app/assets/stylesheets/onboarding.css.scss */
 .pitches_wrapper .flex-wrapper .card, #comments_feed .flex-wrapper .card, #sharing_with_partners .flex-wrapper .card {
   margin-top: 1.2em;
   margin: 10px 0.5%;
 }
 
-/* line 310, app/assets/stylesheets/onboarding.css.scss */
+/* line 321, app/assets/stylesheets/onboarding.css.scss */
 .pitches_wrapper .flex-wrapper .card .card-text, #comments_feed .flex-wrapper .card .card-text, #sharing_with_partners .flex-wrapper .card .card-text {
   font-size: 14px;
 }
 
-/* line 313, app/assets/stylesheets/onboarding.css.scss */
+/* line 324, app/assets/stylesheets/onboarding.css.scss */
 .pitches_wrapper .flex-wrapper .card .card-bottom-flex, #comments_feed .flex-wrapper .card .card-bottom-flex, #sharing_with_partners .flex-wrapper .card .card-bottom-flex {
   display: flex;
   position: relative;
 }
 
-/* line 316, app/assets/stylesheets/onboarding.css.scss */
+/* line 327, app/assets/stylesheets/onboarding.css.scss */
 .pitches_wrapper .flex-wrapper .card .card-bottom-flex #review_img, #comments_feed .flex-wrapper .card .card-bottom-flex #review_img, #sharing_with_partners .flex-wrapper .card .card-bottom-flex #review_img {
   padding: 10px;
 }
 
-/* line 324, app/assets/stylesheets/onboarding.css.scss */
+/* line 335, app/assets/stylesheets/onboarding.css.scss */
 .analytics {
   margin: 0 20px 20px 0;
 }
 
-/* line 326, app/assets/stylesheets/onboarding.css.scss */
+/* line 337, app/assets/stylesheets/onboarding.css.scss */
 .analytics .card {
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
   border: 1px white solid;
 }
 
-/* line 333, app/assets/stylesheets/onboarding.css.scss */
+/* line 344, app/assets/stylesheets/onboarding.css.scss */
 .thumbnail_img {
   max-width: 300px;
   width: 100%;
 }
 
-/* line 339, app/assets/stylesheets/onboarding.css.scss */
+/* line 350, app/assets/stylesheets/onboarding.css.scss */
 .thumbnail--container .article_title {
   font-size: 20px;
 }
 
-/* line 344, app/assets/stylesheets/onboarding.css.scss */
+/* line 355, app/assets/stylesheets/onboarding.css.scss */
 .delete_btn {
   display: block;
   float: right;
@@ -32266,7 +32267,7 @@ h5 span {
   color: #F0255E;
 }
 
-/* line 351, app/assets/stylesheets/onboarding.css.scss */
+/* line 362, app/assets/stylesheets/onboarding.css.scss */
 .edit_btn {
   padding: 3px 5px;
   border-radius: 2px;
@@ -32275,82 +32276,82 @@ h5 span {
   position: absolute;
 }
 
-/* line 360, app/assets/stylesheets/onboarding.css.scss */
+/* line 371, app/assets/stylesheets/onboarding.css.scss */
 .flex_container_mobile_reverse_order .pitch_btn {
   color: #085F63;
   text-decoration: underline;
 }
 
-/* line 366, app/assets/stylesheets/onboarding.css.scss */
+/* line 377, app/assets/stylesheets/onboarding.css.scss */
 .pitch_btn {
   color: #085F63;
 }
 
-/* line 370, app/assets/stylesheets/onboarding.css.scss */
+/* line 381, app/assets/stylesheets/onboarding.css.scss */
 .pitch_ttl {
   font-family: "Playfair Display";
 }
 
-/* line 374, app/assets/stylesheets/onboarding.css.scss */
+/* line 385, app/assets/stylesheets/onboarding.css.scss */
 .pitch_usr {
   font-size: 16px;
   margin-top: 0px;
   font-style: italic;
 }
 
-/* line 380, app/assets/stylesheets/onboarding.css.scss */
+/* line 391, app/assets/stylesheets/onboarding.css.scss */
 .pitch_form_wrapper {
   max-width: 800px;
   padding: 30px 40px;
 }
 
-/* line 383, app/assets/stylesheets/onboarding.css.scss */
+/* line 394, app/assets/stylesheets/onboarding.css.scss */
 .pitch_form_wrapper h2, .pitch_form_wrapper h1, .pitch_form_wrapper h3, .pitch_form_wrapper h4, .pitch_form_wrapper h5, .pitch_form_wrapper h6 {
   font-family: "Playfair Display";
 }
 
-/* line 387, app/assets/stylesheets/onboarding.css.scss */
+/* line 398, app/assets/stylesheets/onboarding.css.scss */
 .pitch_form_wrapper .pitch_flds textarea {
   min-height: 150px;
 }
 
-/* line 390, app/assets/stylesheets/onboarding.css.scss */
+/* line 401, app/assets/stylesheets/onboarding.css.scss */
 .pitch_form_wrapper .pitch_flds input, .pitch_form_wrapper .pitch_flds select, .pitch_form_wrapper .pitch_flds label {
   display: block;
 }
 
-/* line 393, app/assets/stylesheets/onboarding.css.scss */
+/* line 404, app/assets/stylesheets/onboarding.css.scss */
 .pitch_form_wrapper .pitch_flds .margin_flds {
   margin: 25px 0;
 }
 
-/* line 399, app/assets/stylesheets/onboarding.css.scss */
+/* line 410, app/assets/stylesheets/onboarding.css.scss */
 .date_wrapper {
   bottom: 10px !important;
 }
 
-/* line 404, app/assets/stylesheets/onboarding.css.scss */
+/* line 415, app/assets/stylesheets/onboarding.css.scss */
 #edit--profile .add_link input {
   margin-left: 0px !important;
 }
 
-/* line 407, app/assets/stylesheets/onboarding.css.scss */
+/* line 418, app/assets/stylesheets/onboarding.css.scss */
 #edit--profile .social input {
   padding-left: 30px;
 }
 
-/* line 412, app/assets/stylesheets/onboarding.css.scss */
+/* line 423, app/assets/stylesheets/onboarding.css.scss */
 .welcome_hero {
   width: 100%;
 }
 
-/* line 416, app/assets/stylesheets/onboarding.css.scss */
+/* line 427, app/assets/stylesheets/onboarding.css.scss */
 .flex--p {
   max-width: 800px;
   margin: 0 auto;
 }
 
-/* line 421, app/assets/stylesheets/onboarding.css.scss */
+/* line 432, app/assets/stylesheets/onboarding.css.scss */
 .img_profile_example {
   max-width: 600px;
   width: 100%;
@@ -32358,18 +32359,18 @@ h5 span {
   margin: 0 auto;
 }
 
-/* line 430, app/assets/stylesheets/onboarding.css.scss */
+/* line 441, app/assets/stylesheets/onboarding.css.scss */
 .border nav .nav-title {
   flex-grow: 2;
 }
 
-/* line 436, app/assets/stylesheets/onboarding.css.scss */
+/* line 447, app/assets/stylesheets/onboarding.css.scss */
 .number_wrapper {
   height: 30px;
   margin-bottom: 8px;
 }
 
-/* line 439, app/assets/stylesheets/onboarding.css.scss */
+/* line 450, app/assets/stylesheets/onboarding.css.scss */
 .number_wrapper .img_number {
   height: 100%;
   padding: 2px 5px 2px 0px;
@@ -32377,23 +32378,23 @@ h5 span {
   vertical-align: middle;
 }
 
-/* line 448, app/assets/stylesheets/onboarding.css.scss */
+/* line 459, app/assets/stylesheets/onboarding.css.scss */
 .social input {
   padding-left: 25px;
 }
 
-/* line 453, app/assets/stylesheets/onboarding.css.scss */
+/* line 464, app/assets/stylesheets/onboarding.css.scss */
 .add_link {
   display: flex;
   flex-direction: row;
 }
 
-/* line 456, app/assets/stylesheets/onboarding.css.scss */
+/* line 467, app/assets/stylesheets/onboarding.css.scss */
 .add_link input {
   margin: 10px 0px 10px 5px;
 }
 
-/* line 459, app/assets/stylesheets/onboarding.css.scss */
+/* line 470, app/assets/stylesheets/onboarding.css.scss */
 .add_link span {
   position: absolute;
   color: #b0b0b0;
@@ -32401,33 +32402,33 @@ h5 span {
   margin-left: 15px;
 }
 
-/* line 467, app/assets/stylesheets/onboarding.css.scss */
+/* line 478, app/assets/stylesheets/onboarding.css.scss */
 .add_margin_left {
   margin-left: 31px;
 }
 
-/* line 471, app/assets/stylesheets/onboarding.css.scss */
+/* line 482, app/assets/stylesheets/onboarding.css.scss */
 a {
   color: #4ABEB6;
 }
 
-/* line 475, app/assets/stylesheets/onboarding.css.scss */
+/* line 486, app/assets/stylesheets/onboarding.css.scss */
 a:hover {
   color: #4ABEB6;
 }
 
-/* line 479, app/assets/stylesheets/onboarding.css.scss */
+/* line 490, app/assets/stylesheets/onboarding.css.scss */
 .node {
   text-decoration: none !important;
 }
 
-/* line 484, app/assets/stylesheets/onboarding.css.scss */
+/* line 495, app/assets/stylesheets/onboarding.css.scss */
 .new--writer--wrapper #page_title {
   text-align: left;
   padding: 30px 0;
 }
 
-/* line 490, app/assets/stylesheets/onboarding.css.scss */
+/* line 501, app/assets/stylesheets/onboarding.css.scss */
 #onboarding_button {
   color: white;
   background-color: #2a2a2a;
@@ -32442,12 +32443,12 @@ a:hover {
   cursor: pointer;
 }
 
-/* line 504, app/assets/stylesheets/onboarding.css.scss */
+/* line 515, app/assets/stylesheets/onboarding.css.scss */
 #edit_profile {
   color: black;
 }
 
-/* line 510, app/assets/stylesheets/onboarding.css.scss */
+/* line 521, app/assets/stylesheets/onboarding.css.scss */
 .hr hr {
   width: 3em;
   display: block;
@@ -32457,18 +32458,18 @@ a:hover {
   margin: 2rem 0;
 }
 
-/* line 520, app/assets/stylesheets/onboarding.css.scss */
+/* line 531, app/assets/stylesheets/onboarding.css.scss */
 .stair_step {
   text-align: center;
 }
 
-/* line 522, app/assets/stylesheets/onboarding.css.scss */
+/* line 533, app/assets/stylesheets/onboarding.css.scss */
 .stair_step .progress_step, .stair_step .progress_step p {
   color: #4ABEB6 !important;
   border-top-color: #4ABEB6 !important;
 }
 
-/* line 526, app/assets/stylesheets/onboarding.css.scss */
+/* line 537, app/assets/stylesheets/onboarding.css.scss */
 .stair_step span {
   display: inline-flex;
   flex-direction: column;
@@ -32479,7 +32480,7 @@ a:hover {
   line-height: 25px;
 }
 
-/* line 534, app/assets/stylesheets/onboarding.css.scss */
+/* line 545, app/assets/stylesheets/onboarding.css.scss */
 .stair_step span p {
   margin: 0;
   font-size: 14px;
@@ -32487,7 +32488,7 @@ a:hover {
   font-weight: bold;
 }
 
-/* line 541, app/assets/stylesheets/onboarding.css.scss */
+/* line 552, app/assets/stylesheets/onboarding.css.scss */
 .stair_step .hr {
   pointer-events: none;
   display: inline-block;
@@ -32499,7 +32500,7 @@ a:hover {
   margin-right: 20px;
 }
 
-/* line 550, app/assets/stylesheets/onboarding.css.scss */
+/* line 561, app/assets/stylesheets/onboarding.css.scss */
 .stair_step .hr hr {
   vertical-align: middle;
   display: inline-flex;
@@ -32508,26 +32509,26 @@ a:hover {
   margin: 0 5px;
 }
 
-/* line 560, app/assets/stylesheets/onboarding.css.scss */
+/* line 571, app/assets/stylesheets/onboarding.css.scss */
 .onboarding_page_container {
   margin: 30px auto;
   max-width: 800px;
   margin-bottom: 85px;
 }
 
-/* line 564, app/assets/stylesheets/onboarding.css.scss */
+/* line 575, app/assets/stylesheets/onboarding.css.scss */
 .onboarding_page_container #onboarding_page {
   padding: 30px;
   background-color: WhiteSmoke;
 }
 
-/* line 571, app/assets/stylesheets/onboarding.css.scss */
+/* line 582, app/assets/stylesheets/onboarding.css.scss */
 .dashboard--articles--wrapper p, .dashboard--articles--wrapper ul, .dashboard--articles--wrapper li {
   margin: 10px;
   font-size: 15px;
 }
 
-/* line 575, app/assets/stylesheets/onboarding.css.scss */
+/* line 586, app/assets/stylesheets/onboarding.css.scss */
 .dashboard--articles--wrapper .tab {
   display: flex;
   width: 100%;
@@ -32538,13 +32539,13 @@ a:hover {
   background-color: #f9f9f9;
 }
 
-/* line 583, app/assets/stylesheets/onboarding.css.scss */
+/* line 594, app/assets/stylesheets/onboarding.css.scss */
 .dashboard--articles--wrapper .tab span {
   font-weight: 600;
   color: black;
 }
 
-/* line 587, app/assets/stylesheets/onboarding.css.scss */
+/* line 598, app/assets/stylesheets/onboarding.css.scss */
 .dashboard--articles--wrapper .tab img {
   width: 25px;
   margin-right: 5px;
@@ -32552,7 +32553,7 @@ a:hover {
      object-fit: contain;
 }
 
-/* line 593, app/assets/stylesheets/onboarding.css.scss */
+/* line 604, app/assets/stylesheets/onboarding.css.scss */
 .dashboard--articles--wrapper .drop--down {
   border: 1px solid #E5E5E5;
   border-top: none;
@@ -32560,14 +32561,14 @@ a:hover {
   flex-direction: column;
 }
 
-/* line 598, app/assets/stylesheets/onboarding.css.scss */
+/* line 609, app/assets/stylesheets/onboarding.css.scss */
 .dashboard--articles--wrapper .drop--down p {
   margin: 0;
   padding: 10px;
   font-size: 15px;
 }
 
-/* line 603, app/assets/stylesheets/onboarding.css.scss */
+/* line 614, app/assets/stylesheets/onboarding.css.scss */
 .dashboard--articles--wrapper .drop--down .flex--start {
   display: flex;
   justify-content: space-between;
@@ -32575,13 +32576,13 @@ a:hover {
   margin-bottom: 5px;
 }
 
-/* line 608, app/assets/stylesheets/onboarding.css.scss */
+/* line 619, app/assets/stylesheets/onboarding.css.scss */
 .dashboard--articles--wrapper .drop--down .flex--start p {
   font-weight: bold;
   color: #4ABEB6;
 }
 
-/* line 616, app/assets/stylesheets/onboarding.css.scss */
+/* line 627, app/assets/stylesheets/onboarding.css.scss */
 .button_style {
   padding: 8px 30px;
   text-decoration: none;
@@ -32591,92 +32592,97 @@ a:hover {
 }
 
 @media (min-width: 900px) {
-  /* line 625, app/assets/stylesheets/onboarding.css.scss */
+  /* line 636, app/assets/stylesheets/onboarding.css.scss */
   .btn-review {
     margin-top: -2rem !important;
   }
 }
 
 @media (max-width: 900px) {
-  /* line 632, app/assets/stylesheets/onboarding.css.scss */
+  /* line 643, app/assets/stylesheets/onboarding.css.scss */
   .flex-wrapper .card, .flex-drafts .card {
     width: 49% !important;
   }
 }
 
 @media (max-width: 720px) {
-  /* line 639, app/assets/stylesheets/onboarding.css.scss */
+  /* line 650, app/assets/stylesheets/onboarding.css.scss */
   .flex-wrapper, .flex-drafts {
     flex-direction: column !important;
   }
-  /* line 641, app/assets/stylesheets/onboarding.css.scss */
+  /* line 652, app/assets/stylesheets/onboarding.css.scss */
   .flex-wrapper .card, .flex-drafts .card {
     width: 100% !important;
   }
 }
 
 @media (max-width: 450px) {
-  /* line 648, app/assets/stylesheets/onboarding.css.scss */
+  /* line 659, app/assets/stylesheets/onboarding.css.scss */
   .nav_article .pt-4 {
     display: none;
   }
 }
 
 @media (max-width: 340px) {
-  /* line 654, app/assets/stylesheets/onboarding.css.scss */
+  /* line 665, app/assets/stylesheets/onboarding.css.scss */
   .nav_article .nav-title {
     font-size: 1.2rem !important;
   }
 }
 
 @media (max-width: 600px) {
-  /* line 660, app/assets/stylesheets/onboarding.css.scss */
+  /* line 671, app/assets/stylesheets/onboarding.css.scss */
   #banner {
     display: none !important;
   }
-  /* line 663, app/assets/stylesheets/onboarding.css.scss */
+  /* line 674, app/assets/stylesheets/onboarding.css.scss */
   .border {
     border-top: none !important;
   }
-  /* line 666, app/assets/stylesheets/onboarding.css.scss */
+  /* line 677, app/assets/stylesheets/onboarding.css.scss */
   .skinny_wrapper {
     width: 90%;
   }
-  /* line 670, app/assets/stylesheets/onboarding.css.scss */
+  /* line 681, app/assets/stylesheets/onboarding.css.scss */
   .pitches_wrapper .btn_cntnr {
     margin-top: 20px;
   }
-  /* line 673, app/assets/stylesheets/onboarding.css.scss */
+  /* line 684, app/assets/stylesheets/onboarding.css.scss */
   .pitches_wrapper .flex_container_mobile_reverse_order {
     display: flex;
     flex-direction: column-reverse;
   }
-  /* line 676, app/assets/stylesheets/onboarding.css.scss */
+  /* line 687, app/assets/stylesheets/onboarding.css.scss */
   .pitches_wrapper .flex_container_mobile_reverse_order .btn_cntnr {
     margin-bottom: 20px !important;
   }
-  /* line 678, app/assets/stylesheets/onboarding.css.scss */
+  /* line 689, app/assets/stylesheets/onboarding.css.scss */
   .pitches_wrapper .flex_container_mobile_reverse_order .btn_cntnr .newpost--new--profile {
     padding: 10px;
   }
-  /* line 684, app/assets/stylesheets/onboarding.css.scss */
+  /* line 695, app/assets/stylesheets/onboarding.css.scss */
   .analytics .card {
     margin-bottom: 0px;
   }
-  /* line 687, app/assets/stylesheets/onboarding.css.scss */
+  /* line 698, app/assets/stylesheets/onboarding.css.scss */
   .analytics {
     margin-bottom: 10px;
   }
-  /* line 690, app/assets/stylesheets/onboarding.css.scss */
+  /* line 701, app/assets/stylesheets/onboarding.css.scss */
   .btn_cntnr {
     float: none;
     display: inline-block;
     margin: 20px 0;
     padding: 0;
   }
+  /* line 707, app/assets/stylesheets/onboarding.css.scss */
+  .edit_btn {
+    margin-top: 0px !important;
+    position: relative;
+  }
 }
 
-/* line 699, app/assets/stylesheets/onboarding.css.scss */
+/* line 714, app/assets/stylesheets/onboarding.css.scss */
 .checkmark__circle {
   stroke-dasharray: 166;
   stroke-dashoffset: 166;
@@ -32688,7 +32694,7 @@ a:hover {
           animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
 
-/* line 709, app/assets/stylesheets/onboarding.css.scss */
+/* line 724, app/assets/stylesheets/onboarding.css.scss */
 .checkmark {
   width: 56px;
   height: 56px;
@@ -32703,7 +32709,7 @@ a:hover {
           animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
 }
 
-/* line 722, app/assets/stylesheets/onboarding.css.scss */
+/* line 737, app/assets/stylesheets/onboarding.css.scss */
 .checkmark__check {
   transform-origin: 50% 50%;
   stroke-dasharray: 48;
