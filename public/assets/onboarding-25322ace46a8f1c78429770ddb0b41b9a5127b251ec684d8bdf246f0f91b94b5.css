@@ -32644,45 +32644,47 @@ a:hover {
     width: 90%;
   }
   /* line 681, app/assets/stylesheets/onboarding.css.scss */
-  .pitches_wrapper .edit_btn {
-    margin-top: 0px !important;
-    position: relative;
-  }
-  /* line 685, app/assets/stylesheets/onboarding.css.scss */
   .pitches_wrapper .btn_cntnr {
     margin-top: 20px;
   }
-  /* line 688, app/assets/stylesheets/onboarding.css.scss */
+  /* line 684, app/assets/stylesheets/onboarding.css.scss */
   .pitches_wrapper .flex_container_mobile_reverse_order {
     display: flex;
     flex-direction: column-reverse;
   }
-  /* line 691, app/assets/stylesheets/onboarding.css.scss */
+  /* line 687, app/assets/stylesheets/onboarding.css.scss */
   .pitches_wrapper .flex_container_mobile_reverse_order .btn_cntnr {
     margin-bottom: 20px !important;
   }
-  /* line 693, app/assets/stylesheets/onboarding.css.scss */
+  /* line 689, app/assets/stylesheets/onboarding.css.scss */
   .pitches_wrapper .flex_container_mobile_reverse_order .btn_cntnr .newpost--new--profile {
     padding: 10px;
   }
-  /* line 699, app/assets/stylesheets/onboarding.css.scss */
+  /* line 695, app/assets/stylesheets/onboarding.css.scss */
   .analytics .card {
     margin-bottom: 0px;
   }
-  /* line 702, app/assets/stylesheets/onboarding.css.scss */
+  /* line 698, app/assets/stylesheets/onboarding.css.scss */
   .analytics {
     margin-bottom: 10px;
   }
-  /* line 705, app/assets/stylesheets/onboarding.css.scss */
+  /* line 701, app/assets/stylesheets/onboarding.css.scss */
   .btn_cntnr {
     float: none;
     display: inline-block;
     margin: 20px 0;
     padding: 0;
   }
+  /* line 707, app/assets/stylesheets/onboarding.css.scss */
+  .edit_btn_rel {
+    margin-top: 0px !important;
+    position: relative;
+    float: none !important;
+    margin-bottom: 1rem;
+  }
 }
 
-/* line 714, app/assets/stylesheets/onboarding.css.scss */
+/* line 716, app/assets/stylesheets/onboarding.css.scss */
 .checkmark__circle {
   stroke-dasharray: 166;
   stroke-dashoffset: 166;
@@ -32694,7 +32696,7 @@ a:hover {
           animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
 
-/* line 724, app/assets/stylesheets/onboarding.css.scss */
+/* line 726, app/assets/stylesheets/onboarding.css.scss */
 .checkmark {
   width: 56px;
   height: 56px;
@@ -32709,7 +32711,7 @@ a:hover {
           animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
 }
 
-/* line 737, app/assets/stylesheets/onboarding.css.scss */
+/* line 739, app/assets/stylesheets/onboarding.css.scss */
 .checkmark__check {
   transform-origin: 50% 50%;
   stroke-dasharray: 48;

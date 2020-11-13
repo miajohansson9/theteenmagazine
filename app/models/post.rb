@@ -7,6 +7,7 @@ class Post < ApplicationRecord
   has_many :comments, :dependent => :destroy
 
   validates :title, :presence => true
+  validates_length_of :title, minimum: 30, maximum: 70
   validates :content, :presence => true
 
   scope :draft, -> {

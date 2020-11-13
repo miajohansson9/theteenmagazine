@@ -7,6 +7,7 @@ class Pitch < ApplicationRecord
   validates :description, :presence => true
   validates :category_id, :presence => true
   validates :thumbnail, :presence => true
+  validates_length_of :title, minimum: 30, maximum: 70
 
   self.per_page = 18
 
