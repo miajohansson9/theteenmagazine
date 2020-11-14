@@ -632,6 +632,41 @@ a:hover {
   background-color: black;
 }
 
+.writing {
+  .yellow {
+    background-color: #FCD04D;
+    color: black;
+    padding: 5px;
+  }
+  b {
+    color: #4ABEB6;
+  }
+  img {
+    width: 100%;
+  }
+  li {
+    p {
+      margin: 0;
+    }
+    xmp {
+      margin: 0;
+    }
+  }
+  .image {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+  }
+  h3, h5 {
+    margin: 20px 0;
+  }
+  .writing--images {
+    p {
+      margin-top: 10px;
+    }
+  }
+}
+
 @media(min-width: 900px) {
   .btn-review {
     margin-top: -2rem !important;
