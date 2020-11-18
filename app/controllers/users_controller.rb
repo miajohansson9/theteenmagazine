@@ -82,6 +82,7 @@ class UsersController < ApplicationController
     @partial = params[:step] || "welcome" || "your_profile" || "next_steps" || "final" || "done"
     @pitches = Pitch.is_approved.not_claimed.where(status: nil).paginate(page: params[:page], per_page: 9).order("updated_at desc")
     @pitch = Pitch.where(claimed_id: current_user.id).find_by(id: current_user.onboarding_claimed_pitch_id)
+    set_meta_tags onboarding: "Turn off ads"
   end
 
   def onboarding_redirect
