@@ -13,7 +13,7 @@
       </div>
       <div class="comment_form_wrapper mt-0 pl-4 pr-4">
         <div class="pitch_preview_wrapper pl-3 pr-3">
-          <div class="flex_child mr-1">
+          <div class="flex_child mr-3">
             <h3><i><%= pitch.title %></i></h3>
             <p class="pitch_usr">Pitched by <%= link_to(pitch.user.try(:full_name), pitch.user, class: "pitch_btn", target: "_blank") %> under <%= link_to(pitch.category.name, pitch.category, class: "pitch_btn", target: "_blank") %></p>
             <%= markdown pitch.description %>
