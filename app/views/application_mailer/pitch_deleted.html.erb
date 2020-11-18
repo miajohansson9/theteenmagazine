@@ -3,21 +3,20 @@
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
     <style>
-      img {
+      .image_max_400 {
         max-width: 400px;
         display: block;
-        margin: 0 auto;
       }
     </style>
   </head>
 
   <body>
     <p>Hi <%= @user.first_name %>,</p>
-    <p>This is an email notifying you that your pitch, <%= @pitch.title %>, was deleted by an admin. This means that it did not meet the criteria explained <a href="https://www.theteenmagazine.com/pitching-new-articles">here</a>. For your reference, the pitch title, description, and thumbnail image is displayed below.</p>
+    <p>This is an email notifying you that your pitch, <%= @pitch.title %>, was deleted by an admin. This means that it did not meet the criteria explained <a href="https://www.theteenmagazine.com/pitching-new-articles">here</a>. For your reference, the pitch title, description, and thumbnail image are displayed below.</p>
     <h3><%= @pitch.title %> (deleted)</h3>
     <p><%= @pitch.description %></p>
-    <img src="<%= @pitch.thumbnail.url(:card) %>"/>
-    <p>An admin reserves the right to an admin reserves the right to delete the pitch from Editor Pitches within 48 hours of it being created. Deleted pitches will not be counted toward your 10 required pitches every month. If you have any questions about this decision, please reach out to mia@theteenmagazine.com with any clarifying questions.</p>
+    <img class="image_max_400" src="http:<%= @pitch.thumbnail.url(:card) %>" alt="<%= @pitch.title %> thumbnail image">
+    <p>An admin reserves the right to delete pitches from Editor Pitches within 48 hours of it being created. Deleted pitches will not be counted toward your 10 required pitches every month. If you have any questions about this decision, please reach out to mia@theteenmagazine.com with clarifying questions.</p>
     <p>The Teen Magazine</p>
   </body>
 </html>

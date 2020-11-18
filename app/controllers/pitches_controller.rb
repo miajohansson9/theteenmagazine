@@ -90,6 +90,9 @@ class PitchesController < ApplicationController
   end
 
   def destroy
+    if current_user.admin? && !(@pitch.user_id.eql? current_user.id)
+      ApplicationMailer.pitch_deleted(@pitch.user, @pitch).deliver
+    end
     if @pitch&.destroy
       redirect_to pitches_path, notice: "Your pitch was deleted."
     end
