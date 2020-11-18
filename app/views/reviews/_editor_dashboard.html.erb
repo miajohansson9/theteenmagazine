@@ -103,7 +103,7 @@
               <div class="alert alert-success" role="alert">
                 <i class="fas fa-check-circle"></i> You have completed the required <%= @assigned_reviews %> reviews and <%= @assigned_pitches %> pitched articles this month. Great job!
               </div>
-            <% elsif Date.today.end_of_month.day - Date.today.day < 14 && ((@assigned_pitches / 2) > @editor_pitches_cnt || (@assigned_reviews / 2) > @editor_reviews_cnt) %>
+            <% elsif Date.today.end_of_month.day - Date.today.day < 16 && ((@assigned_pitches / 2) > @editor_pitches_cnt || (@assigned_reviews / 2) > @editor_reviews_cnt) %>
               <div class="alert alert-danger" role="alert">
                 <i class="fas fa-exclamation-triangle"></i> You are not on track for completing the editor assignments by <b><%= Date.today.end_of_month.strftime("%B %d") %></b>.
                 Missing a deadline may result in your removal from the editor team.

@@ -22,18 +22,19 @@
         <%= render :partial => 'profile', locals: {user: @user} %>
       </div>
       <div class="dashboard--articles--wrapper">
-        <h1 id="page_title">Welcome to The Teen Magazine!</h1>
-        <div style="padding-right: 10px;">
-          <p>When you publish your first article, you will become an official writer for The Teen Magazine and will receive your own
-          author page.</p>
-          <p>Please complete the following steps.</p>
+        <h1 id="page_title" class="pb-3" style="border-bottom: none !important;">Welcome to The Teen Magazine!</h1>
+        <div class="padding_right_wrapper" style="padding-right: 30px;">
+          <h6 class="pb-3">Your profile is <b><%= @percent_complete.round %>%</b> done. Please complete the following steps.</h6>
+          <div class="progress md-progress">
+              <div class="progress-bar" role="progressbar" style="width: <%= @percent_complete.round %>%" aria-valuenow="<%= @percent_complete.round %>" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
           <ol>
-            <li>Introduce yourself in the <a target="_blank" href="https://www.facebook.com/groups/615063885673363/">Facebook group</a>. You can also dm <%= link_to "The Teen Magazine", "https://www.instagram.com/theteenmagazine_/" %> on Instagram to be added as a close friend.
-            We have an active dm group there that will keep you updated with everything happening with The Teen Magazine.</li>
-            <li>Read through the resources found at the bottom of your dashboard.</li>
-            <li>Claim a pitch from the <%= link_to("pitches page", pitches_path) %> and start your first article. If you have your own article idea that fits our audience, you can <%= link_to("pitch a new article", new_pitch_path) %> instead.</li>
-            <li>Once you've finished your first article, you can submit it for review though the article form. Our editors will look it over and give you
-            feedback.</li>
+            <li class="<% if @has_completed_onboarding %>strikethrough<% end %>">Complete the onboarding process.</li>
+            <li class="<% if @has_submitted_profile %>strikethrough<% end %>">Submit your profile.</li>
+            <li class="<% if @has_claimed_pitch %>strikethrough<% end %>">Claim your first article pitch.</li>
+            <li class="<% if @has_read_resources %>strikethrough<% end %>">Read all of <a target="_blank" href="/choosing-a-topic" class="link_nrml" style="font-family: inherit; text-decoration: underline;">Pitching an Article</a>, <a target="_blank" href="/writing-the-perfect-article" class="link_nrml" style="font-family: inherit; text-decoration: underline;">Writing the Perfect Article</a>, and <a target="_blank" href="/finding-images" class="link_nrml underline" style="font-family: inherit; text-decoration: underline;">Finding Images</a>.</li>
+            <li class="<% if @has_submitted_first_draft %>strikethrough<% end %>">Submit your first draft.</li>
+            <li class="<% if @has_published %>strikethrough<% end %>">Have a draft get approved for publication.</li>
           </ol>
           <p>We're so happy you've joined The Teen Magazine! Our editors are looking forward to reading your first article submission.</p>
         </div>

@@ -3,30 +3,58 @@
     <hr />
     <hr />
   </div>
-  <a href="/onboarding?page=welcome" class="node">
+  <a href="/onboarding?step=welcome" class="node">
     <span class="progress_step">
       &#x25cf;
       <p>Welcome</p>
     </span>
   </a>
-  <a href="/onboarding?page=your_profile" class="node">
+  <a href="/onboarding?step=your_profile" class="node">
     <span class="progress_step">
       &#x25cf;
       <p>Your Profile</p>
     </span>
   </a>
-  <span class="progress_step">&#x25CB;<p>Next Steps</p></span>
+  <span class="progress_step" id="final_step">
+    <% if @pitch.present? %>
+      &#x25cf;
+    <% else %>
+      &#x25CB;
+    <% end %>
+    <p>Next Steps</p>
+  </span>
 </div>
 <div class="onboarding_page_container">
   <div id="onboarding_page">
     <h3>Your profile was submitted!</h3>
-    <%= image_tag "bloggers.jpg", :class => "welcome_hero" %>
-    <p style="margin-top: 10px;">Great job! One of our amazing editors will review your profile as soon as possible.
+    <p style="margin-top: 10px;">Great job! One of our editors will review your profile as soon as possible.
       You will be notified <b>via email</b> within 48 hours.</p>
-    <h5>Next Steps:</h5>
-    <p>On your new writer dashboard, you will find resources that will walk you through
-       writing your first article. Once completed, your full writer account will be
-       activated, and you will get your own author page on The Teen Magazine.</p>
+    <p>To get started writing your first article, select the topic you feel you know a lot about. A draft will automatically be started for you and will show up under your dashboard. If you change your mind later, you can
+      always unclaim the pitch.</p>
+    <div class="pitches_wrapper">
+      <div class="flex_container_mobile_reverse_order">
+        <div>
+          <h1 class="pitch_ttl"><%= @title %></h1>
+          <% if @pitches.count.eql? 0 %>
+            <p><i><%= @message %></i></p>
+          <% end %>
+        </div>
+      </div>
+      <div class="claim_pitch_wrapper">
+        <% if @pitch.nil? %>
+          <%= render "users/onboarding/next_steps_partials/pitches", pitches: @pitches %>
+        <% else %>
+          <%= render "users/onboarding/next_steps_partials/selected_pitch", pitch: @pitch %>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <%= link_to "Go to Dashboard!", user_path(current_user.slug), :id => "onboarding_button" %>
+  <div class="position-relative">
+    <% @disabled = @pitch.nil? ? "disabled" : "" %>
+    <% @hidden = @pitch.present? ? "hide" : "" %>
+    <span data-toggle="tooltip" class="<%= @hidden %>" id="tooltip" style="position: absolute; width: 150px; height: 45px; right: 0; top: 20px;" title="Select a pitch first"></span>
+    <%= link_to "Go to Profile", user_path(current_user), :class => "#{@disabled}", :id => "onboarding_button" %>
+  </div>
 </div>
+
+<%= javascript_include_tag 'plugins/index_bundle' %>

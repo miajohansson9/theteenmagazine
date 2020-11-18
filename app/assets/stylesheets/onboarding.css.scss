@@ -27,6 +27,11 @@
   }
 }
 
+.flex-wrapper-row {
+  display: flex;
+  flex-direction: row;
+}
+
 .progress-bar {
   background-color: #EF265F !important;
 }
@@ -354,9 +359,9 @@
 
 .delete_btn {
   display: block;
-  float: right;
-  margin-top: -60px;
   color: #F0255E;
+  float: right;
+  margin-top: -50px;
 }
 
 .edit_btn {
@@ -510,6 +515,7 @@ a:hover {
   margin: 20px 0;
   padding: 1px 7px 2px !important;
   cursor:pointer;
+  font-family: "Playfair Display";
 }
 
 #edit_profile {

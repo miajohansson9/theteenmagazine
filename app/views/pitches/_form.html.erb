@@ -1,6 +1,6 @@
 <%= form_for @pitch do |f| %>
   <% if @pitch.errors.any? %>
-    <h2><%= pluralize(@pitch.errors.count, "error")%> prevented this post from saving:</h2>
+    <h2><%= pluralize(@pitch.errors.count, "error")%> prevented this pitch from saving:</h2>
     <ul>
       <% @pitch.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
@@ -11,6 +11,8 @@
   <div class="pitch_flds">
     <% if current_user.editor? && @pitch.title.nil? %>
       <p>You are signed in with an Editor account. This pitch will show up in <a target="_blank" href="/pitches">Unclaimed Pitches</a> for any writer to claim.</p>
+    <% else %>
+      <p>Don't know what to write about? Visit <a target="_blank" href="/choosing-a-topic#topic-requirements">Topic Requirements</a> for some inspiration.</p>
     <% end %>
 
     <p>Write a <a target="_blank" href="/choosing-a-topic#title-requirements">Shareable and/or Searchable</a> title here:</p>

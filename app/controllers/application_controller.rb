@@ -3,10 +3,10 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
 
-  before_filter :configure_permitted_parameters, if: :devise_controller?
-  before_filter :notifications, if: :current_user?
-  before_filter :onboarding, if: :current_user?
-  before_filter :update_last_sign_in_at, if: :current_user?
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :notifications, if: :current_user?
+  before_action :onboarding_redirect, if: :current_user
+  before_action :update_last_sign_in_at, if: :current_user?
 
   after_action :store_user_location!, if: :storable_location?, only: :authenticate_user
   # The callback which stores the current location must be added before you authenticate the user
@@ -21,9 +21,9 @@ class ApplicationController < ActionController::Base
   #    infinite redirect loop.
   # - The request is an Ajax request as this can lead to very unexpected behaviour.
 
-  def onboarding
+  def onboarding_redirect
     if (current_user.submitted_profile.eql? nil) && (!current_user.partner)
-      redirect_to "/onboarding", notice: "You must complete the onboarding process first."
+      redirect_to "/onboarding"
     end
   end
 

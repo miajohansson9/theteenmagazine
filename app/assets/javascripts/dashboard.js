@@ -22,6 +22,16 @@ function select_article_status() {
   }
 }
 
+function showPopup() {
+  $('#basicExampleModal').modal();
+  $(document).off('focusin.modal');
+}
+
+function submitModal() {
+  $(".spinner-button").removeClass("hide");
+  $("#claim-pitch-modal-button").addClass("disabled");
+}
+
 function select_status() {
   var selected = document.getElementById("pitch_status").value;
   if (selected == "Approved") {

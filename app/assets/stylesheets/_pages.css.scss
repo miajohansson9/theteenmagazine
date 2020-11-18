@@ -118,6 +118,22 @@
   }
 }
 
+.pitch_preview_wrapper {
+  display: flex;
+  flex-direction: row;
+  .flex_child {
+    width: 50%;
+    display: block;
+    position: relative;
+    img {
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+
 .apply_wrapper {
   position: relative;
   margin: 0 auto;

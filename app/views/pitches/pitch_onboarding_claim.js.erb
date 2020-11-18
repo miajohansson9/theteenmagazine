@@ -1,0 +1,8 @@
+$('.spinner-button').addClass("hide");
+$("#basicExampleModal").modal('toggle');
+$('.claim_pitch_wrapper').empty();
+$('.claim_pitch_wrapper').append('<%= j render partial: "users/onboarding/next_steps_partials/selected_pitch", locals: {pitch: @pitch} %>');
+$('#onboarding_button').removeClass("disabled");
+$('#tooltip').addClass("hide");
+$('#final_step').empty();
+$('#final_step').append('&#x25cf;<p>Next Steps</p>');

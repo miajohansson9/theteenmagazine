@@ -38,6 +38,11 @@ class User < ActiveRecord::Base
     self.full_name
   end
 
+  def is_new?
+    @user_posts_approved = Post.where("collaboration like ?", "%#{self.email}%").or(Post.where(user_id: self.id)).published
+    @user_posts_approved.empty?
+  end
+
   def should_generate_new_friendly_id?
     slug.blank? || self.full_name_changed?
   end

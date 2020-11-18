@@ -69,7 +69,7 @@ class PitchesController < ApplicationController
           review.destroy
         end
         @slug = FriendlyId::Slug.where(slug: @post.slug).first
-        @slug.destroy
+        @slug&.destroy
         @post.title = "#{@post.title} (locked)"
         @post.save
       end
@@ -90,7 +90,7 @@ class PitchesController < ApplicationController
   end
 
   def destroy
-    if @pitch.destroy
+    if @pitch&.destroy
       redirect_to pitches_path, notice: "Your pitch was deleted."
     end
   end
@@ -98,6 +98,62 @@ class PitchesController < ApplicationController
   def claim
     @pitch.user_id = current_user.id
     @pitch.save
+  end
+
+  def pitch_modal
+    @pitch = Pitch.find(params[:id])
+    @post = current_user.posts.build
+    @intent = params[:intent]
+    respond_to do |format|
+      format.html { redirect_to "/onboarding?step=next_steps"}
+      format.js
+    end
+  end
+
+  def pitch_onboarding_claim
+    @pitch = Pitch.find(params[:id])
+    @post = current_user.posts.build(post_params)
+    @prev_post_pitch = current_user.posts.where(pitch_id: post_params[:pitch_id]).last
+    current_user.update(onboarding_claimed_pitch_id: @pitch.id)
+    if !(@prev_post_pitch.try(:pitch).nil?)
+      @prev_post_pitch.pitch.claimed_id = current_user.id
+      @prev_post_pitch.pitch.save
+      @prev_post_pitch.reviews.destroy
+      @prev_post_pitch.reviews.build(status: "In Progress", active: true)
+      @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
+      @prev_post_pitch.save
+    elsif @post.save && @post.pitch.claimed_id.nil?
+      @post.thumbnail = @post.pitch.thumbnail
+      @post.pitch.claimed_id = current_user.id
+      @post.pitch.save
+      @post.reviews.build(status: "In Progress", active: true)
+      @post.save
+    end
+    respond_to do |format|
+      format.html { redirect_to "/onboarding?step=next_steps"}
+      format.js
+    end
+  end
+
+  def pitch_onboarding_unclaim
+    @pitch = Pitch.find(params[:id])
+    @post = Post.where(user_id: @pitch.claimed_id, pitch_id: @pitch.id).last
+    if @post.present?
+      @post.reviews.each do |review|
+        review.destroy
+      end
+      @pitch.posts.where(publish_at: nil, user_id: current_user.id).destroy_all
+      current_user.update(onboarding_claimed_pitch_id: nil)
+      if @pitch.update(pitch_params)
+        @pitches = Pitch.is_approved.not_claimed.where(status: nil).paginate(page: params[:page], per_page: 9).order("updated_at desc")
+        respond_to do |format|
+          format.html { redirect_to "/onboarding?step=next_steps"}
+          format.js
+        end
+      else
+        redirect_to "/onboarding?step=next_steps", notice: "Something went wrong"
+      end
+    end
   end
 
   #only allow admin and editors to submit new pitches
@@ -187,6 +243,10 @@ class PitchesController < ApplicationController
 
   def pitch_params
     params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :category_id, :user_id, :editor_id)
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :featured, :newsletter, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes])
   end
 
   def find_pitch

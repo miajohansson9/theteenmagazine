@@ -109,7 +109,7 @@ class ApplicationMailer < ActionMailer::Base
   def featured_article(user, post)
     @user = user
     @post = post
-    mail(to: user.email, subject: "Congratulations! Your article is featured")
+    mail(to: user.email, subject: "#{@user.first_name}, congratulations! Your article is featured")
   end
 
   def weekly_newsletter(email, posts)
@@ -120,6 +120,12 @@ class ApplicationMailer < ActionMailer::Base
   def featured_in_newsletter(user, post)
     @user = user
     @post = post
-    mail(to: @user.email, subject: "Congratulations! Your article was chosen for this week's newsletter!")
+    mail(to: @user.email, subject: "#{@user.first_name}, congratulations! Your article was chosen for this week's newsletter!")
+  end
+
+  def pitch_deleted(user, pitch)
+    @user = user
+    @pitch = pitch
+    mail(to: @user.email, subject: "#{@user.first_name}, your pitch was deleted by an admin")
   end
 end

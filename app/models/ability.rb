@@ -19,7 +19,7 @@ class Ability
 
       can :read, Pitch
       can :manage, Review
-      can :manage, Pitch, claimed_id: user.id
+      can :manage, Pitch
       can :manage, Pitch, user_id: user.id
       can :destroy, Pitch, user_id: user.id
     end

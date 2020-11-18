@@ -61,11 +61,14 @@ Rails.application.routes.draw do
   get '/october_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
   post '/october_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
 
+  patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
+  post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim
+  patch 'pitches/:id/unclaim' => 'pitches#pitch_onboarding_unclaim', as: :pitch_onboarding_unclaim
+
   get '/community', to: 'posts#index'
   post '/community', to: 'posts#index'
 
   resources :posts, only: [:new, :create, :index]
   resources :posts, path: "", except: [:new, :create]
 
-  get '*path' => redirect('/')
 end

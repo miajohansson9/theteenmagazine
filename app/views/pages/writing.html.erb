@@ -70,7 +70,7 @@
   <p>For Youtube, click on "Share" below the Youtube video you want to include. The popup shown below should be displayed. Then select "Embed" and copy the code. Paste into the text editor in the same way as instagram posts.</p>
   <%= image_tag("youtube.png", :class=>"image_fit_scrn")%>
   <h5>Format</h5>
-  <p>The Format button changes the size of headers. Use Heading 2 for the main topics in your article and the smaller Header # for subheaders. Do not use formatted, address, or Normal (DIV). If you accidentally selected one of these options,
+  <p>The Format button changes the size of headers. Use Heading 2 for the main topics in your article and the smaller Header # for subheaders. Do not use <i>formatted</i>, <i>address</i>, or <i>Normal (DIV)</i>. If you accidentally select one of these options,
   follow the directions for <a href="#fix-formatting">Fix Formatting Problems</a>.</p>
   <h5>Links</h5>
   <p style="margin-bottom: 10px;">To add a link, first highlight the text you want to add the link to, then click on the infinity symbol (purple box). Next, enter the link in the URL box.</p>
@@ -102,5 +102,19 @@
     If you're confused about any of the requirements in this document, or want more clarification, you can send an email to <b>editors@theteenmagazine.com</b>
   </p>
 
+  <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+    <circle cx="26" cy="26" r="25" fill="none"/>
+    <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+  </svg>
+
   <p>Read "<a href="/finding-images">Finding Images</a>" Next →</p>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.fn.triggerCheck();
+    $("#site-wrapper").scroll(function(){
+        $.fn.triggerCheck();
+    });
+  });
+</script>

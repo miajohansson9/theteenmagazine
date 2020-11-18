@@ -29,6 +29,9 @@ class Post < ApplicationRecord
   scope :published, -> {
     joins(:reviews).where(:reviews => {:status => "Approved for Publishing", active: true}).where("publish_at < ?", Time.now)
   }
+  scope :has_been_submitted, -> {
+    joins(:reviews).where(:reviews => {:status => ["Rejected", "Ready for Review", "In Review", "Approved for Publishing"]})
+  }
 
   def is_published?
     @published = publish_at.present? ? (publish_at < Time.now) : false

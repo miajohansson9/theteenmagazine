@@ -10,27 +10,6 @@
   <p class="question">How long should my article be? </p>
   <p>The perfect article length is around 1000+ words. Slightly shorter articles are okay if they are filled with lots of images/gifs.</p>
 
-  <p class="question">What does a published article consist of? </p>
-  <p style="margin-bottom: 0;">A published article...
-    <ul>
-      <li>
-         is free of grammar and spelling mistakes
-      </li>
-      <li>
-         has at least one image
-      </li>
-      <li>
-         is broken up into multiple paragraphs to make it easy to read
-      </li>
-      <li>
-         has multiple relevant headers
-      </li>
-      <li>
-        is formatted corretly as described in <a href="/writing-the-perfect-article">Writing The Perfect Article</a>.
-      </li>
-    </ul>
-  </p>
-
   <p class="question">How often should I submit an article?</p>
   <p>Preferably, you should be uploading articles at least once every two weeks so that our site can stay active. You can opt-in to bi-weekly article
     assignments your <%= link_to "edit profile page", edit_user_path(current_user) %>. There is no limit to how many articles you can submit per month, and we would love for you to write as many articles as you have time for.</p>
@@ -48,20 +27,35 @@
   <p>That's great! Tell your friend to apply at <a href="http://www.theteenmagazine.com/apply">www.theteenmagazine.com/apply</a>. We will then review your friend's application and send her an email with her account if she's accepted.</p>
 
   <p class="question">How can I pitch an article idea? </p>
-  <p>Right now, only editors can pitch article topics.</p>
+  <p>Only editors can pitch article topics to the Unclaimed Pitches page but if you have your own article idea that you want to write, you can pitch the topic to our editors. Please follow the guide explained in <a href="/choosing-a-topic">Pitching an Article</a>.</p>
 
   <p class="question">How can I become an editor?</p>
-  <p>Email editors@theteenmagazine.com.</p>
+  <p>The application can be found on your writer dashboard once you've published at least one article. To have the best shot of being accepted, you should wait until after you've had at least three articles published. Please note that we want to keep our editor team small, so if you are not accepted the first time you apply,
+    do not become discouraged. Stay active in the writer team and try again at a later date.</p>
 
   <p class="question">How can I change my password? </p>
   <p>You can change your password  <a target="_blank" href="/users/edit">here</a>.</p>
 
   <p class="question">I have someone I want to interview. How do I reach out to them, and ask for an interview?</p>
   <p>Our interview team conducts all interviews on The Teen Magazine. Please apply to our interview team through our <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLScDJe80_E686pG1L7R5w-84HHZcotFmuBSyQV5rqUB2jUQTag/viewform">Google form</a>.
-    Please note that applications are accepted at the end of every month and writers who are not active in the interview group are removed for the following month.</p>
+    Please note that applications are accepted at the end of every month and writers who are not active in the interview group are removed the following month.</p>
 
   <p class="question">Have a question that wasn't answered here?</p>
   <p>Email us at editors@theteenmagazine.com or message one of the editors in the <a href="https://www.facebook.com/groups/615063885673363/">Facebook group</a>.</p>
 
+  <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+    <circle cx="26" cy="26" r="25" fill="none"/>
+    <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+  </svg>
+
   <p>Read "<a href="/choosing-a-topic">Pitching an Article</a>" Next →</p>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.fn.triggerCheck();
+    $("#site-wrapper").scroll(function(){
+        $.fn.triggerCheck();
+    });
+  });
+</script>

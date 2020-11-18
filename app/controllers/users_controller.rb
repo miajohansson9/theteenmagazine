@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
+  skip_before_action :onboarding_redirect, only: [:onboarding, :update]
   before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share, :redirect]
   before_action :authenticate_user!, except: [:index, :show, :redirect]
   before_action :is_editor?, only: [:show_users, :new]
@@ -13,7 +14,7 @@ class UsersController < ApplicationController
       redirect_to "/partners/#{@user.slug}"
     end
     @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).order("updated_at desc")
-    @user_posts_approved = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.order("publish_at desc")
+    @user_posts_approved = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.paginate(page: params[:page], per_page: 10).order("publish_at desc")
     if !@user.editor? && current_user.present?
       @user_pitches = @user.pitches.not_claimed.order("updated_at desc")
     elsif @user.editor?
@@ -41,7 +42,20 @@ class UsersController < ApplicationController
           @pageviews += post.post_impressions
         end
       end
+      if @user_posts_approved.length < 1
+        new_writer
+      end
     end
+  end
+
+  def new_writer
+    @has_completed_onboarding = @user.submitted_profile.present?
+    @has_submitted_profile = @user.submitted_profile.present?
+    @has_claimed_pitch = Pitch.where(claimed_id: @user.id).exists?
+    @has_read_resources = @user.read_pitches && @user.read_articles && @user.read_images
+    @has_submitted_first_draft = @user.posts.has_been_submitted.exists?
+    @has_published = @user.posts.published.exists?
+    @percent_complete = [@has_completed_onboarding, @has_submitted_profile, @has_claimed_pitch, @has_read_resources, @has_submitted_first_draft, @has_published].count(true) / 6.0 * 100.0
   end
 
   def partner
@@ -65,12 +79,19 @@ class UsersController < ApplicationController
 
   def onboarding
     @user = current_user
-    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
+    @partial = params[:step] || "welcome" || "your_profile" || "next_steps" || "final" || "done"
+    @pitches = Pitch.is_approved.not_claimed.where(status: nil).paginate(page: params[:page], per_page: 9).order("updated_at desc")
+    @pitch = Pitch.where(claimed_id: current_user.id).find_by(id: current_user.onboarding_claimed_pitch_id)
+  end
+
+  def onboarding_redirect
+    if (current_user.submitted_profile.eql? nil) && (!current_user.partner)
+      redirect_to "/onboarding"
+    end
   end
 
   def editor_onboarding
     @user = current_user
-    @partial = params[:page] || "welcome" || "your_profile" || "next_steps" || "done"
   end
 
   def index
@@ -150,7 +171,7 @@ class UsersController < ApplicationController
         @user.save
       end
       if params[:redirect] != nil
-        redirect_to onboarding_path(page: params[:redirect])
+        redirect_to onboarding_path(step: params[:redirect])
       else
         add_to_list(@user)
         redirect_to @user, notice: "Your profile has been updated."
@@ -226,7 +247,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :do_not_send_emails, :editor, :marketer, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community)
+    params.require(:user).permit(:email, :password, :onboarding_claimed_pitch_id, :do_not_send_emails, :editor, :marketer, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community)
   end
 
   def find_user

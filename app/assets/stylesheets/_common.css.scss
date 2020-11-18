@@ -29,6 +29,17 @@
   }
 }
 
+.selected_border {
+  border: 1px solid #F0255E !important;
+  box-shadow: 0 0 3px #F0255E !important;
+}
+
+.abs-right-corner {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
 .highlight {
   background-color: #FCD04D;
 }

@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :load_user,  only: [:show]
   before_action :create,  only: [:unapprove]
-  before_filter :log_impression, :only=> [:show]
+  before_action :log_impression, :only=> [:show]
   before_action :is_admin?, :only => [:new]
   before_action :is_partner?, :only => [:index, :edit]
   load_and_authorize_resource
@@ -77,6 +77,7 @@ class PostsController < ApplicationController
 
   def create
     @categories = Category.all
+    @post = current_user.posts.build(post_params)
     @prev_post_pitch = current_user.posts.where(pitch_id: post_params[:pitch_id]).last
     if !(@prev_post_pitch.try(:pitch).nil?)
       @prev_post_pitch.pitch.claimed_id = current_user.id
@@ -87,7 +88,6 @@ class PostsController < ApplicationController
       @prev_post_pitch.save
       redirect_to @prev_post_pitch, notice: "You've reclaimed this pitch!"
     else
-      @post = current_user.posts.build(post_params)
       fix_formatting
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
           @post.content = @post.content << "<script>instgrm.Embeds.process()</script>"
@@ -205,7 +205,7 @@ class PostsController < ApplicationController
     @prev_review = @post.reviews.last.clone
     @prev_status = @post.reviews.last.status.clone
     @prev_featured = @post.featured.clone
-    if @post.update! post_params
+    if @post.update post_params
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
         @post.content << "<script async src='https://instagram.com/static/bundles/es6/EmbedSDK.js/47c7ec92d91e.js'></script>"
         @post.content << "<script>instgrm.Embeds.process()</script>"

@@ -30,7 +30,7 @@
                     <div class="btn_cntnr mb-0 pb-0">
                       <span data-toggle="tooltip" title="<% if @points < 300 %>Give feedback on more articles<% end %>">
                         <%= f.submit 'Promote (300 points)',
-                          data: {confirm: "This draft will be featured for a day on the community page. You are using 20 points out of your available #{@points} points to do this. Do you want to continue?"},
+                          data: {confirm: "This draft will be featured for three days on the community page. You are using 300 points out of your available #{@points} points to do this. Do you want to continue?"},
                           class: "newpost--new--profile #{@class}" %>
                       </span>
                     </div>

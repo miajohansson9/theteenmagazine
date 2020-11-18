@@ -1,0 +1,8 @@
+<% if @pitch.claimed_id.nil? %>
+  $('body').append('<%= j render partial: "pitches/preview_pitch", locals: {pitch: @pitch, post: @post, intent: "Claim"} %>');
+  $('#basicExampleModal').modal();
+<% else %>
+  $('body').append('<%= j render partial: "pitches/preview_pitch", locals: {pitch: @pitch, post: @post, intent: "Unclaim"} %>');
+  $('#basicExampleModal').modal();
+<% end %>
+$(document).on('hidden.bs.modal', '.modal', function () { $("#basicExampleModal").remove(); $(".modal-dialog").remove(); });

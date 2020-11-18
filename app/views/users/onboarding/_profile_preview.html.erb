@@ -1,12 +1,12 @@
 <% @page = "next_steps" %>
 <div class="stair_step">
-  <a href="/onboarding?page=welcome" class="node">
+  <a href="/onboarding?step=welcome" class="node">
     <span class="progress_step">
       &#x25cf;
       <p>Welcome</p>
     </span>
   </a>
-  <a href="/onboarding?page=your_profile" class="node">
+  <a href="/onboarding?step=your_profile" class="node">
     <span class="progress_step">
       &#x25CB;
       <p>Your Profile</p>
@@ -33,7 +33,7 @@
         Do not include emojis or smiley faces.
       </li>
     </ul>
-    <%= link_to "Edit Profile", onboarding_path(page: "your_profile"), :id => "edit_profile" %>
+    <%= link_to "Edit Profile", onboarding_path(step: "your_profile"), :id => "edit_profile" %>
   </div>
   <%= form_for(@user, url: user_path(@user, redirect: "next_steps")) do |f| %>
     <%= f.hidden_field :submitted_profile, :value => true %>
