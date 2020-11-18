@@ -49,8 +49,8 @@ class UsersController < ApplicationController
   end
 
   def new_writer
-    @has_completed_onboarding = @user.submitted_profile.present?
-    @has_submitted_profile = @user.submitted_profile.present?
+    @has_completed_onboarding = !@user.submitted_profile.nil?
+    @has_submitted_profile = !@user.submitted_profile.nil?
     @has_claimed_pitch = Pitch.where(claimed_id: @user.id).exists?
     @has_read_resources = @user.read_pitches && @user.read_articles && @user.read_images
     @has_submitted_first_draft = @user.posts.has_been_submitted.exists?
