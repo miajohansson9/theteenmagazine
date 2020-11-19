@@ -132,13 +132,13 @@
             </div>
             <div class="list-group-flush text-left mt-4 pt-2 mb-4">
               <div class="list-group-item" style="background-color: whitesmoke;">
-                <p class="m-0"><i class="fas fa-calendar-alt fa-2x mr-4 grey p-3 white-text rounded-circle " aria-hidden="true"></i>Your <%= Date.today.strftime("%B") %> Report:</p>
+                <p class="m-0"><i class="fas fa-calendar-alt fa-2x mr-4 grey p-3 white-text rounded-circle" aria-hidden="true"></i>Your <%= Date.today.strftime("%B") %> Report:</p>
               </div>
               <div class="list-group-item">
-                <p class="mb-0 <% if @editor_reviews_cnt >= @assigned_reviews %>strikethrough<% end %>"> <i class="fas fa-glasses fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_reviews_cnt %>/<%= @assigned_reviews %> Reviews</a> completed</p>
+                <p class="mb-0 <% if @editor_reviews_cnt >= @assigned_reviews %>strikethrough<% end %>"> <i class="fas fa-glasses fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true" style="width: 58px; padding-left: 15px !important;"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_reviews_cnt %>/<%= @assigned_reviews %> Reviews</a> completed</p>
               </div>
               <div class="list-group-item" style="border-top: none !important;">
-                <p class="mb-0 <% if @editor_pitches_cnt >= @assigned_pitches %>strikethrough<% end %>"><i class="fas fa-lightbulb-on fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_pitches_cnt %>/<%= @assigned_pitches %> Pitches</a> completed</p>
+                <p class="mb-0 <% if @editor_pitches_cnt >= @assigned_pitches %>strikethrough<% end %>"><i class="fas fa-lightbulb-on fa-2x mr-4 mr-4 grey p-3 white-text rounded-circle" aria-hidden="true" style="width: 58px; padding-left: 13px !important;"></i><a href="#" data-toggle="tooltip" title="Due <%= Date.today.end_of_month.strftime("%B %d") %>"><%= @editor_pitches_cnt %>/<%= @assigned_pitches %> Pitches</a> completed</p>
               </div>
             </div>
           </div>

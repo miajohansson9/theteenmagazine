@@ -1,5 +1,6 @@
 @import "mdbootstrap/css/bootstrap.min";
 @import "mdbootstrap/css/mdb.min";
+@import "mdbootstrap/css/mdb";
 @import "common";
 @import 'normalize';
 @import 'welcome';
@@ -17,6 +18,19 @@
 
 .popover-text {
   font-size: 1em;
+}
+
+a {
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  /* ...and now for the proper property */
+  transition:.5s;
+}
+
+.tooltip-inner {
+  background-color: black !important;
 }
 
 .badge-default {
@@ -650,8 +664,9 @@ a:hover {
     font-size: .96154rem;
     line-height: 36.15385px;
     position: absolute;
-    left: 12px;
+    left: 0px;
     top: 2px;
+    width: 50%;
   }
   img {
     display: block;
