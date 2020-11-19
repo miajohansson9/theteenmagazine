@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     @has_submitted_first_draft = @user.posts.has_been_submitted.exists?
     @has_published = @user.posts.published.exists?
     @percent_complete = [@has_completed_onboarding, @has_submitted_profile, @has_claimed_pitch, @has_read_resources, @has_submitted_first_draft, @has_published].count(true) / 6.0 * 100.0
-    @show_onboarding = @user.last_saw_new_writer_dashboard.nil?
+    @show_onboarding = @user.last_saw_new_writer_dashboard.nil? && (current_user.id.eql? @user.id)
     if current_user.id.eql? @user.id
       current_user.update(last_saw_new_writer_dashboard: Time.now)
     end
