@@ -4,4 +4,3 @@
 //= link_directory ../stylesheets .css
 //= link mdbootstrap/css/bootstrap.min.css
 //= link mdbootstrap/css/mdb.min.css
-//= link mdbootstrap/css/style.css
