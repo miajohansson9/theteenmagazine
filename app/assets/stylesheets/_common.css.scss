@@ -956,9 +956,13 @@ footer {
     #name_wrapper {
       display: block;
       #name {
-        max-height: 83px;
+        height: 83px;
         margin: 0 auto;
         display: block;
+        background-image: image-url("teenmag.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
       }
     }
     .social-media, .fa-bars, #name_wrapper {
@@ -1293,6 +1297,15 @@ p, ul, ol {
     }
     .nav_article {
       display: flex;
+    }
+    #banner {
+      #name_wrapper {
+        min-width: 205px;
+        #name {
+          height: 60px !important;
+          background-image: image-url("teenmag_mobile.png");
+        }
+      }
     }
   }
 

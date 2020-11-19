@@ -99,7 +99,7 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $.fn.triggerCheck();
-    $("#site-wrapper").scroll(function(){
+    $(window).on('scroll',function(){
         $.fn.triggerCheck();
     });
   });

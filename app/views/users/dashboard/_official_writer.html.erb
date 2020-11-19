@@ -180,7 +180,7 @@
   $(document).ready(function(){
     loaded = [false, false, false];
     $.fn.triggerAnalytics();
-    $("#site-wrapper").scroll(function(){
+    $(window).on('scroll',function(){
         $.fn.triggerAnalytics();
     });
   });
