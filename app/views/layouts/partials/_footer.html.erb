@@ -27,16 +27,14 @@
           <li>
             <a href="/privacy-policy">Privacy Policy</a>
           </li>
-        </ul>
-      </div>
-      <!-- Grid column -->
-      <!-- Grid column -->
-      <div>
-        <!-- Links -->
-        <h6 class="font-weight-bold text-uppercase">Join the team</h6>
-        <ul class="list-unstyled">
           <li>
-            <a href="/apply">Write for The Teen Magazine</a>
+            <a href="/search?utf8=✓&filter=all+articles">Search in All Articles</a>
+          </li>
+          <li>
+            <a href="/search?utf8=✓&filter=writers">Search in Writers</a>
+          </li>
+          <li>
+            <a href="/login">Log in</a>
           </li>
         </ul>
       </div>
@@ -44,8 +42,30 @@
       <!-- Grid column -->
       <div>
         <!-- Links -->
-        <h6 class="font-weight-bold text-uppercase">Keep in Touch</h6>
+        <h6 class="font-weight-bold text-uppercase">Quick Links</h6>
         <ul class="list-unstyled">
+          <% if current_user.present? %>
+            <li><a href="/writers/<%= current_user.slug %>">My Profile</a></li>
+            <li><a href="/community">Community</a></li>
+          <% end %>
+          <li><a href="/categories/student-life">Student Life</a></li>
+          <li><a href="/categories/wellness">Wellness</a></li>
+          <li><a href="/categories/beauty-style">Beauty & Style</a></li>
+          <li><a href="/categories/culture">Culture</a></li>
+          <li><a href="/categories/relationships">Relationships</a></li>
+          <li><a href="/categories/lifestyle">Lifestyle</a></li>
+          <li><a href="/categories/op-ed">Op-Ed</a></li>
+        </ul>
+      </div>
+      <!-- Grid column -->
+      <!-- Grid column -->
+      <div>
+        <!-- Links -->
+        <h6 class="font-weight-bold text-uppercase">Get in Touch</h6>
+        <ul class="list-unstyled">
+          <li>
+            <a href="/apply">Write for The Teen Magazine</a>
+          </li>
           <li>
             <a href="/contact-us">Contact us</a>
           </li>

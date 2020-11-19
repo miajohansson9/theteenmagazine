@@ -1,6 +1,5 @@
-@import "mdbootstrap/css/bootstrap.min.css";
+@import "mdbootstrap/css/bootstrap.min";
 @import "mdbootstrap/css/mdb.min";
-@import "mdbootstrap/css/style";
 @import "common";
 @import 'normalize';
 @import 'welcome';
@@ -14,6 +13,15 @@
    .nav-title {
      display: inline-block !important;
    }
+}
+
+.popover-text {
+  font-size: 1em;
+}
+
+.badge-default {
+  background-color: #2bbbad !important;
+  padding: .25em .4em !important;
 }
 
 .theimages, .criteria, .privacy, .topics, .writing {
@@ -94,15 +102,6 @@
     max-width: 1300px;
     margin: 0 auto;
     padding: 0 30px;
-    .counter {
-      height: 10px;
-      width: 10px;
-      font-size: 10px;
-      padding: 2px;
-      left: 14px;
-      border-radius: 50%;
-      border: 2px white solid;
-    }
     .dropdown {
       height: 100%;
       .sec {
@@ -636,6 +635,44 @@ a:hover {
   margin: 0px 10px;
   color: white;
   background-color: black;
+}
+
+.dropdown-item {
+  font-size: 0.9em !important;
+}
+
+.btn-floating.btn-sm #dropdown-btn-content-wrapper {
+  position: relative;
+  width: 100% !important;
+  display: block;
+  line-height: 10px !important;
+  i {
+    font-size: .96154rem;
+    line-height: 36.15385px;
+    position: absolute;
+    left: 12px;
+    top: 2px;
+  }
+  img {
+    display: block;
+    position: absolute;
+    right: 4px;
+    top: 8px;
+  }
+  .counter {
+    position: relative;
+    height: 10px;
+    width: 10px;
+    font-size: 10px;
+    padding: 2px;
+    top: 0px;
+    border-radius: 50%;
+    border: 2px white solid;
+    background-color: #fe1212;
+    color: white;
+    margin-left: 62px;
+    line-height: 10px !important;
+  }
 }
 
 .writing {

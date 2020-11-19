@@ -29,6 +29,15 @@
   }
 }
 
+.claim_pitch_wrapper .card {
+  &:hover {
+    text-decoration: none !important;
+  }
+  .card-text {
+    color: black;
+  }
+}
+
 .selected_border {
   border: 1px solid #F0255E !important;
   box-shadow: 0 0 3px #F0255E !important;
@@ -261,13 +270,6 @@ html, body {
 * Uses Font Awesome and Bootstrap 3
 * Both aren't required for this demo
 */
-#site-wrapper {
-  position: relative;
-  max-width: 100%;
-  overflow-x: hidden;
-  width: 100%;
-  height: 100%;
-}
 
 #site-canvas, #site-menu {
   position: relative;

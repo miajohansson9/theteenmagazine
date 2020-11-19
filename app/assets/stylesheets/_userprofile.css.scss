@@ -128,10 +128,8 @@
 .guidelines {
   display: flex;
   flex-direction: row;
-  margin-right: -2px;
-  margin-left: -4px;
   .thelink {
-    width: 100%;
+    flex: 0 0 25%;
   }
   a {
     text-decoration: none;
@@ -139,8 +137,6 @@
   }
   .box {
     height: 200px;
-    margin-right: 2px;
-    margin-left: 2px;
     width: 100%;
     background-size: cover;
     background-position: center;
@@ -538,7 +534,7 @@
     flex-wrap: wrap;
     margin: 0;
     .thelink {
-      width: 50%;
+      flex: 0 0 50%;
       margin: 0;
       .box {
         margin: 0;
@@ -622,7 +618,7 @@
   }
   .guidelines {
     .thelink {
-      width: 100%;
+      flex: 0 0 100%;
     }
   }
   .review_items .inside--item {

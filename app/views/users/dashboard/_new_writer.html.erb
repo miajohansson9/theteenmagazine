@@ -24,11 +24,13 @@
       <div class="dashboard--articles--wrapper">
         <h1 id="page_title" class="pb-3" style="border-bottom: none !important;">Welcome to The Teen Magazine!</h1>
         <div class="padding_right_wrapper" style="padding-right: 30px;">
-          <h6 class="pb-3">Your profile is <b><%= @percent_complete.round %>%</b> done. Please complete the following steps.</h6>
-          <div class="progress md-progress">
-              <div class="progress-bar" role="progressbar" style="width: <%= @percent_complete.round %>%" aria-valuenow="<%= @percent_complete.round %>" aria-valuemin="0" aria-valuemax="100"></div>
+          <div class="pb-1 mb-2" data-step data-index="5" data-onboarding-content="This will walk you through setting up the rest of your profile. Once completed, you will unlock your public writer page on The Teen Magazine.">
+            <h6 class="pb-3">Your profile is <b><%= @percent_complete.round %>%</b> done. Please complete the following steps.</h6>
+            <div class="progress md-progress">
+                <div class="progress-bar" role="progressbar" style="width: <%= @percent_complete.round %>%" aria-valuenow="<%= @percent_complete.round %>" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
           </div>
-          <ol>
+          <ol class="mt-0">
             <li class="<% if @has_completed_onboarding %>strikethrough<% end %>">Complete the onboarding process.</li>
             <li class="<% if @has_submitted_profile %>strikethrough<% end %>">Submit your profile.</li>
             <li class="<% if @has_claimed_pitch %>strikethrough<% end %>">Claim your first article pitch.</li>
@@ -38,7 +40,7 @@
           </ol>
           <p>We're so happy you've joined The Teen Magazine! Our editors are looking forward to reading your first article submission.</p>
         </div>
-        <div class="dashboard--articles--wrapper">
+        <div data-step data-index="3" data-onboarding-content="You'll see all your started drafts here." class="dashboard--articles--wrapper">
           <% if @user_pitches.present? %>
             <h6 class="header_ttl">Your Pitches</h6>
             <%= render "/users/partials/dashboard_pitches", pitches: @user_pitches, image: "waiting.png" %>
@@ -62,7 +64,9 @@
           <h6 class="header_ttl">Articles In Progress</h6>
           <%= render "/users/partials/dashboard_articles", articles: @user_posts.draft, image: "saved.png" %>
         </div>
-        <div class="btn_cntnr"><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile" %></div>
+        <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4" role="button" data-step data-index="2" data-onboarding-content="If you have your own idea for an article, you can pitch it to our editor team here.">
+          <%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile mr-0" %>
+        </div>
       </div>
       <br/>
     </div>
@@ -73,7 +77,8 @@
     </div>
   </div>
 </div>
-<div class="guidelines">
+<button class="hide" id="click-event-trigger" type="button" name="button"></button>
+<div class="guidelines" role="button" data-step data-index="4" data-onboarding-content="Read the docs to know what our editor team is looking for in published articles.">
   <div class="thelink">
     <a href="/criteria">
     <div class="box foo G1 ">
@@ -103,3 +108,14 @@
     </a>
   </div>
 </div>
+
+<%= javascript_include_tag 'mdb.min' %>
+<%= javascript_include_tag 'plugins/onboarding.min' %>
+
+<% if @show_onboarding %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      document.getElementById("click-event-trigger").click();
+    });
+  </script>
+<% end %>

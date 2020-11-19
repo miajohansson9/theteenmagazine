@@ -23,112 +23,127 @@
     <% if @comment %>
       <%= render "posts/draft_feedback" %>
     <% end %>
+    <section
+      class="onboarding"
+      data-start-event="click"
+      data-start-trigger = "#click-event-trigger"
+      data-autoscroll="true"
+      data-backdrop="true"
+    >
     <div id="site-wrapper">
       <%= render "layouts/partials/slide-in-menu" %>
       <div id="site-canvas">
-        <!-- <div class="banner_stts_relative">
-<<<<<<< HEAD
-          <p class= "banner_stts" style="background-color: black;"><span style="font-family: 'Griffy', cursive;">All Treats, No Tricks: </span> Get in the <span style="font-family: 'Griffy', cursive;">Spirit of Halloween</span> <i class="fas fa-ghost"></i> by grabbing your FREE copy of The Teen Magazine's October issue <a target="_blank" class="link_white" href="/subscribe">here</a>!</p>
-=======
-          <p class= "banner_stts" style="background-color: #F0255E;">The Teen Magazine's September 2020 issue has been released! Download it for free <%= link_to("here", "/subscribe", class: "link_white", target: "_blank") %>.</p>
->>>>>>> b3412bcbdaef7bed91dd0ae024fd9e21814e28a0
-        </div> -->
-        <div class="bodywrapper">
-          <header id="main_navigation" class="clearfix">
-            <div id="banner">
-              <i class="fa fa-bars toggle-nav" onclick="toggleNav();"></i>
-              <a id="name_wrapper" href="/"><%= image_tag "teenmag.png", id: "name" %></a>
-              <div class="social-media">
-                <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
-                <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
-                <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-                <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-                <a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
-              </div>
-            </div>
-            <div class="border">
-              <div class="nav_wrapper">
-                <nav class="nav_article">
-                  <div class="nav-title-wrapper nav-title">
-                    <%= link_to "The Teen Magazine", root_path %>
+          <!-- <div class="banner_stts_relative">
+  <<<<<<< HEAD
+            <p class= "banner_stts" style="background-color: black;"><span style="font-family: 'Griffy', cursive;">All Treats, No Tricks: </span> Get in the <span style="font-family: 'Griffy', cursive;">Spirit of Halloween</span> <i class="fas fa-ghost"></i> by grabbing your FREE copy of The Teen Magazine's October issue <a target="_blank" class="link_white" href="/subscribe">here</a>!</p>
+  =======
+            <p class= "banner_stts" style="background-color: #F0255E;">The Teen Magazine's September 2020 issue has been released! Download it for free <%= link_to("here", "/subscribe", class: "link_white", target: "_blank") %>.</p>
+  >>>>>>> b3412bcbdaef7bed91dd0ae024fd9e21814e28a0
+          </div> -->
+          <div class="bodywrapper">
+              <header id="main_navigation" class="clearfix">
+                <div id="banner">
+                  <i class="fa fa-bars toggle-nav" onclick="toggleNav();"></i>
+                  <a id="name_wrapper" href="/"><%= image_tag "teenmag.png", id: "name" %></a>
+                  <div class="social-media">
+                    <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
+                    <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
+                    <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
+                    <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
+                    <a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
                   </div>
-                  <% if user_signed_in? %>
-                     <% if current_user.editor? %>
-                        <%= link_to "Start an Article", new_post_path, class: "pt-4" %>
-                     <% elsif !current_user.partner %>
-                        <%= link_to "Pitch an Article", new_pitch_path, class: "pt-4" %>
-                     <% end %>
-                     <div class="dropdown">
-                       <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image.jpg") %>
-                       <a class="mr-0 btn-floating btn-sm pt-0 dropdown-toggle btn-profile" type="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false"><span><i class="fa fa-bars"></i><%= @profile_img %><% if !(@notifications.eql? 0) %><span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 5px !important;" <% end %>><%= @notifications %></span><% end %></span></a>
-                        <div class="dropdown-menu">
-                          <%= link_to "My Profile", user_path(current_user), class: "dropdown-item" %>
-                          <% if !current_user.partner? %>
-                            <div class="dropdown-divider"></div>
-                          <% end %>
-                          <% if current_user.editor? %>
-                             <a href="/editors/<%= current_user.slug %>" class="dropdown-item">Editor Dashboard
-                               <% if @unseen_editor_dashboard_cnt > 0 %>
-                                <span class="sec counter counter-sm"></span><p><%= @unseen_editor_dashboard_cnt %> new</p>
-                               <% end %>
-                             </a>
-                          <% elsif (!current_user.partner? && (current_user.is_new?)) %>
-                              <a href="<%= pitches_path(user_id: current_user.id) %>" class="dropdown-item">My Pitches</a>
-                          <% end %>
-                          <% if !current_user.partner? %>
-                            <a href="/pitches" class="dropdown-item">Unclaimed Pitches
-                              <% if @unseen_pitches_cnt > 0 %>
-                                <span class="sec counter counter-sm"></span><p><%= @unseen_pitches_cnt %> new</p>
-                              <% end %>
+                </div>
+                <div class="border">
+                  <div class="nav_wrapper">
+                    <nav class="nav_article">
+                      <div class="nav-title-wrapper nav-title">
+                        <%= link_to "The Teen Magazine", root_path %>
+                      </div>
+                      <% if user_signed_in? %>
+                         <% if current_user.editor? %>
+                            <%= link_to "Start an Article", new_post_path, class: "pt-4" %>
+                         <% elsif !current_user.partner %>
+                            <%= link_to "Pitch an Article", new_pitch_path, class: "pt-4" %>
+                         <% end %>
+                         <div class="dropdown">
+                           <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image.jpg") %>
+                            <a class="mr-0 btn-floating btn-sm btn-block pt-0 dropdown-toggle btn-profile" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-dropdown-animation="off">
+                              <span id="dropdown-btn-content-wrapper" style="display: block; height: 100%;" data-step data-index="1" data-onboarding-content="This is where you can navigate to editor pitches, the community peer feedback page, change your password, and more." >
+                                <i class="fa fa-bars" ></i>
+                                <%= @profile_img %>
+                                <% if !(@notifications.eql? 0) %>
+                                  <span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 5px !important;" <% end %>><%= @notifications %></span>
+                                <% end %>
+                              </span>
                             </a>
-                            <a href="/community" class="dropdown-item">Community
-                              <% if @unseen_shared_drafts_cnt > 0 %>
-                                <span class="sec counter counter-sm"></span><p><%= @unseen_shared_drafts_cnt %> new</p>
+                            <div class="dropdown-menu">
+                              <%= link_to "My Profile", user_path(current_user), class: "dropdown-item" %>
+                              <% if !current_user.partner? %>
+                                <div class="dropdown-divider"></div>
                               <% end %>
-                            </a>
-                          <% end %>
-                          <% if current_user.admin? %>
-                            <a href="/applies" class="dropdown-item">Writer Applications
-                              <% if @unseen_applications_cnt > 0 %>
-                                <span class="sec counter counter-sm"></span><p><%= @unseen_applications_cnt %> new</p>
+                              <% if current_user.editor? %>
+                                 <a href="/editors/<%= current_user.slug %>" class="dropdown-item">Editor Dashboard
+                                   <% if @unseen_editor_dashboard_cnt > 0 %>
+                                    <span class="sec counter counter-sm"></span><p><%= @unseen_editor_dashboard_cnt %> new</p>
+                                   <% end %>
+                                 </a>
+                              <% elsif (!current_user.partner? && (current_user.is_new?)) %>
+                                  <a href="<%= pitches_path(user_id: current_user.id) %>" class="dropdown-item">My Pitches</a>
                               <% end %>
-                            </a>
-                          <% end %>
-                          <div class="dropdown-divider"></div>
-                          <% if current_user.editor? %>
-                            <%= link_to "Writers", users_path, class: "dropdown-item" %>
-                          <% elsif !current_user.partner? %>
-                            <%= link_to "Review Onboarding", onboarding_path(:step => "welcome"), class: "dropdown-item" %>
-                          <% end %>
-                          <% if current_user.admin? %>
-                            <%= link_to "Editors", "/editors", class: "dropdown-item" %>
-                            <%= link_to "Partners", "/partners", class: "dropdown-item" %>
-                          <% end %>
-                          <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>
-                          <%= link_to "Edit Profile", @edit_path, class: "dropdown-item" %>
-                          <%= link_to "Change Password", edit_user_registration_path, class: "dropdown-item" %>
-                          <div class="dropdown-divider"></div>
-                          <% if !current_user.partner? %>
-                            <a class="dropdown-item" target="_blank" href="https://www.facebook.com/groups/615063885673363">Writer Facebook Group <i class="fa fa-external-link"></i></a>
-                          <% end %>
-                          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+                              <% if !current_user.partner? %>
+                                <a href="/pitches" class="dropdown-item">Unclaimed Pitches
+                                  <% if @unseen_pitches_cnt > 0 %>
+                                    <span class="sec counter counter-sm"></span><p><%= @unseen_pitches_cnt %> new</p>
+                                  <% end %>
+                                </a>
+                                <a href="/community" class="dropdown-item">Community
+                                  <% if @unseen_shared_drafts_cnt > 0 %>
+                                    <span class="sec counter counter-sm"></span><p><%= @unseen_shared_drafts_cnt %> new</p>
+                                  <% end %>
+                                </a>
+                              <% end %>
+                              <% if current_user.admin? %>
+                                <a href="/applies" class="dropdown-item">Writer Applications
+                                  <% if @unseen_applications_cnt > 0 %>
+                                    <span class="sec counter counter-sm"></span><p><%= @unseen_applications_cnt %> new</p>
+                                  <% end %>
+                                </a>
+                              <% end %>
+                              <div class="dropdown-divider"></div>
+                              <% if current_user.editor? %>
+                                <%= link_to "Writers", users_path, class: "dropdown-item" %>
+                              <% elsif !current_user.partner? %>
+                                <%= link_to "Review Onboarding", onboarding_path(:step => "welcome"), class: "dropdown-item" %>
+                              <% end %>
+                              <% if current_user.admin? %>
+                                <%= link_to "Editors", "/editors", class: "dropdown-item" %>
+                                <%= link_to "Partners", "/partners", class: "dropdown-item" %>
+                              <% end %>
+                              <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>
+                              <%= link_to "Edit Profile", @edit_path, class: "dropdown-item" %>
+                              <%= link_to "Change Password", edit_user_registration_path, class: "dropdown-item" %>
+                              <div class="dropdown-divider"></div>
+                              <% if !current_user.partner? %>
+                                <a class="dropdown-item" target="_blank" href="https://www.facebook.com/groups/615063885673363">Writer Facebook Group <i class="fa fa-external-link"></i></a>
+                              <% end %>
+                              <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+                            </div>
                         </div>
-                    </div>
-                  <% else %>
-                      <a class="link" href="/contact-us">Contact</a>
-                      <a class="link" href="/apply">Apply</a>
-                  <% end %>
-                </nav>
-              </div>
-            </div>
-          </header>
-          <%= yield %>
+                      <% else %>
+                          <a class="link" href="/contact-us">Contact</a>
+                          <a class="link" href="/apply">Apply</a>
+                      <% end %>
+                    </nav>
+                  </div>
+                </div>
+              </header>
+              <%= yield %>
+          </div>
         </div>
+        <%= render "layouts/partials/footer" %>
       </div>
-      <div class="toggle-nav" onclick="toggleNav();" id="navigation_overlay"></div>
-      <%= render "layouts/partials/footer" %>
-    </div>
+    </section>
+
     <script type="text/javascript">
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
