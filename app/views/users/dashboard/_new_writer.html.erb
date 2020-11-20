@@ -77,7 +77,6 @@
     </div>
   </div>
 </div>
-<button class="hide" id="click-event-trigger" type="button" name="button"></button>
 <div class="guidelines" role="button" data-step data-index="4" data-onboarding-content="Read the docs to know what our editor team is looking for in published articles.">
   <div class="thelink">
     <a href="/criteria">
@@ -109,10 +108,9 @@
   </div>
 </div>
 
-<%= javascript_include_tag 'mdb.min' %>
-<%= javascript_include_tag 'plugins/onboarding.min' %>
-
 <% if @show_onboarding %>
+  <%= javascript_include_tag 'mdb.min' %>
+  <%= javascript_include_tag 'plugins/onboarding.min' %>
   <script type="text/javascript">
     $(document).ready(function(){
       document.getElementById("click-event-trigger").click();
