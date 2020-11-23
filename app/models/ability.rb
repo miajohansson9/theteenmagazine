@@ -16,7 +16,6 @@ class Ability
       can :create, Post
       can :read, Post
       can :manage, User, id: user.id
-
       can :read, Pitch
       can :manage, Review
       can :manage, Pitch

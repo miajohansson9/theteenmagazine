@@ -68,10 +68,10 @@ class PitchesController < ApplicationController
         @post.reviews.each do |review|
           review.destroy
         end
-        @slug = FriendlyId::Slug.where(slug: @post.slug).first
-        @slug&.destroy
         @post.title = "#{@post.title} (locked)"
         @post.save
+        @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: Post)
+        @slug&.destroy_all
       end
       if current_user.admin?
         @message = "Changes were successfully saved!"
