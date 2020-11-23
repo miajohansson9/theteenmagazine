@@ -113,7 +113,9 @@
   <%= javascript_include_tag 'plugins/onboarding.min' %>
   <script type="text/javascript">
     $(document).ready(function(){
-      document.getElementById("click-event-trigger").click();
+      setTimeout(function() {
+        document.getElementById("click-event-trigger").click();
+      }, 2000);
     });
   </script>
 <% end %>

@@ -1,0 +1,126 @@
+<h3>Pitching New Articles</h3>
+<p>Your teenage years can be some of the most confusing, exciting, and transformative years in your life. It is during this time you will learn what you think of yourself, what you think of others, and what you think of the world. The Teen Magazine aims to be with our teenage readers every step of the way and your articles should reflect some aspect of this journey.</p>
+<%= image_tag("friends_laughing.jpg", class: "image_fit_scrn mb-4") %>
+
+<p>Pitching a new topic as an editor is very similar to pitching one as a writer. First, go to the "Pitch an Article" button on the <%= link_to("Unclaimed Pitches", pitches_path, :target => "_blank")%> page.</p>
+<%= image_tag("editor_pitch_button.png", class: "image_fit_scrn mb-4") %>
+<p>Next, fill out the updated form as shown below. All article topics that you pitch will now show up in <%= link_to("Unclaimed Pitches", pitches_path, :target => "_blank") %> and will be able to be claimed/written by any writer at The Teen Magazine. Make sure you've read this entire doc in detail and watched the videos before pitching any new topic.</p>
+<%= link_to(image_tag("editor_pitching.png", class: "image_fit_scrn mb-4"), new_pitch_path, :target => "_blank") %>
+<h4 id="Topic">Thinking of a topic:</h4>
+<p>Any article that is pitched should be specifically made for a teenage audience. This means it addresses a topic, experience, and/or problem that is felt by, or of interest to, some or most teens. It is not enough for the article to be of interest to some teens just because the topic has such a broad audience already (see diagram).</p>
+<%= image_tag("specificity_diagram.png", class: "image_fit_scrn") %>
+<p>It can be helpful to keep some notes on your phone to jot down ideas for article topics. If you are currently in, or just graduated, high school, think about your daily life and the things that you are struggling with. What excites you? What scares you? What would you love to learn more about?
+  Chances are your daily life is made up of experiences similar to those of lots of other teens your age. What you wonder about, what sparks your curiosity, what worries you, what stresses you out, are common experiences and should be drawn upon when thinking of new topics. Keep in mind that any article topic you pitch should fall in one of these categories:</p>
+
+<div class="categories">
+  <% @categories.each do |category| %>
+    <p><%= link_to category.name, category, target: "_blank" %></p>
+  <% end %>
+</div>
+
+<p>If you are still struggling to think of new topic ideas and your own life and those of your friends aren't enough inspiration, take a look at this video which explains how you can find topic ideas via <a target="_blank" href="https://www.quora.com/"><b>Quora.com</b></a>. Of course, it isn't necessary to write a response post on Quora (as talked about in the video below), but questions on the platform asked about friendships, high school, self-worth and identity, studying, applying to colleges,
+  dealing with parental expectations, mental health in teenage years etc., can be very useful starting points. <a target="_blank" href="https://www.reddit.com/"><b>Reddit.com</b></a> can also be a great source of inspiration for article ideas when used in the same way.</p>
+
+<h5>How to Always Come Up With Topics to Write About - Tips for Finding Blog Post Ideas:</h5>
+<div class="responsive-iframe-container mb-4">
+  <iframe class="responsive-iframe" src="https://www.youtube.com/embed/zerxutoKcg0"></iframe>
+</div>
+
+<h4>Crafting a title:</h4>
+<p>Once you have an idea for your pitch, you need to choose a title. The title is one of the most important parts in determining how much an article will get read and has the ability to make or break an article. It affects what the reader expects the article to be about, whether or not they click, whether an article is shareable, and whether it will show up on Google. An article can be extremely well written and get completely overlooked if it doesn't have a title that will make people click. As such, it is a crucial detail that should never be brushed over.</p>
+<h5>Titles should be:</h5>
+<ol>
+  <li>Approximately 50 to 80 characters long</li>
+  <li><a href="#Shareable"><b>Shareable</b></a> <i>(sparking curiosity and/or some other emotion)</i> and/or <a href="#Searchable"><b>Searchable</b></a> <i>(consists of low-competition, long-tail keywords people are searching for)</i></li>
+</ol>
+
+<h5 id="Shareable">How to write shareable titles:</h5>
+<p>Shareable titles spark emotion, are intriguing, and make you want to find out more. </p>
+<p>Publications like BuzzFeed have mastered this. By just changing around certain words, you can make a huge difference in whether someone decides to read, and ultimately share, the article.</p>
+<p>While a title needs to correctly reflect the contents of the article, designing it to evoke curiosity is extremely important. This can often be done with the use of a few simple words like "actually", "you", "see", "happened", "every", "beautiful", etc. See the below graphic for why these types of words can be so powerful to grab your attention.</p>
+<%= image_tag("headlines_emotion.png", class: "image_fit_scrn") %>
+<p class="text-center"><small>Credit: <a href="https://neilpatel.com/blog/the-ultimate-guide-to-writing-irresistible-headlines-for-social-media/" target="_blank">Neil Patel</a></small></p>
+<p>Some of the most common forms of a shareable title can be:</p>
+<ul>
+  <li>Lists (ie. "27 Ways to Make a Thousand Dollars As a Teen You Hadn't Thought Of")</li>
+  <li>Using "This" or "These" in the title (ie. "This Positive Affirmation Playlist Makes Me Crush My Goals Every Time I Run")</li>
+  <li>What, Which, When and Why (ie. “What Happened When I Stopped Wearing a Bra,” “16 Legitimate Reasons Why Valentine’s Day Is The Worst”)</li>
+  <li>How to (ie. "How to Make Your IOS 14 Home Screen Super Aesthetic")</li>
+  <li>Ask a question using "You" or "Your" (ie. "Should You Stop Using Social Media?")</li>
+  <li>Dos and Don'ts (ie. "Dos and Don’ts for Incoming High School Freshmen")</li>
+</ul>
+<p>It's important that when you create a title using one of the above structures, you also use some emotionally charged adjectives and/or phrases. The diagram below shows the top headline phrases used in viral content. Many of these serve to stir curiosity and/or directly address the reader.</p>
+<%= image_tag("headlines.jpg", class: "image_fit_scrn") %>
+
+<p>In order to test if your title is emotional, you should type it into this free online tool: <a target="_blank" href="https://aminstitute.com/headline/">https://aminstitute.com/headline/</a>. <span style="background-color: #FCD04D;">Your headline should be anywhere above 30 on the scale for it to be considered shareable.</span></p>
+
+<h5 id="Searchable">How to write searchable titles:</h5>
+
+<p>The other way of attracting a lot of attention for an article is through organic search results. Searchability means that the headline includes a long-tail keyword that people are already searching for.</p>
+<p>What is a long-tail keyword?</p>
+<p>A long-tail keyword is a keyword phrase that aims to capture search traffic from a specific, often 4+ word search query. Long-tail keywords are used to target niche demographics rather than mass audiences. This makes the article more likely to rank on Google because there is less competition for that search term. The video below shows how to use Google autocomplete to see some long search phrases that people are searching for.</p>
+
+<div class="responsive-iframe-container mb-4">
+  <iframe class="responsive-iframe" src="https://www.youtube.com/embed/mGatSVaDi3g"></iframe>
+</div>
+
+<p>For example, if you want to pitch an article that talks about the best movies on netflix, it is unlikely that the article can rank high for the keyword "Best Netflix Movies." If you search for this term, you'll see that huge, authoritative publications like Rotten Tomatoes, Vulture, NYTimes, DigitalTrends, and more are ranking on the first page. While this article would get readers who are already on The Teen Magazine, it is unlikely that even a very well, in-depth article would bring in any traffic at all from Google. This search term is just too competitive.</p>
+
+<p>However, by simply narrowing the search term, the likelihood of ranking higher and bringing in new readers from Google is much better. Below is an example of how to do this.</p>
+
+<p>1. Type phrases into Google related to your original search idea ("Best Netflix Movies") until you find a long-tail keyword that might be a good candidate. Sometimes a bit of creativity is needed to do this. The one I've decided to go with is "best coming of age romance movies."</p>
+<%= image_tag("search_1.png", class: "image_fit_scrn mb-4") %>
+<p>2. Next, look at which articles show up first on Google already. Because there are already authoritative sites that pretty much answer the search query (with some minor keyword synonyms), it is unlikely that a new article on The Teen Magazine would rank on the first page.</p>
+<%= image_tag("search_2.png", class: "image_fit_scrn mb-4") %>
+<p>3. To find related, even more narrow search terms, you can go to "Searches related to..." Pick one you think might be promising.</p>
+<%= image_tag("search_3.png", class: "image_fit_scrn mb-4") %>
+<p>4. Now we see that the search results 1 and 3 are not articles (that's a good sign) and the second result doesn't have the keyword "High School" in it (also a good sign). Even though the second result is from an authoritative site (Seventeen Magazine), the article ranks "Teen" movies. While "Teen" is similar to "High School," it isn't a perfect synonym since a movie can be for teens but not take place in a high school. Therefore, a well-written article about this topic could rank higher than the existing results.</p>
+<%= image_tag("search_4.png", class: "image_fit_scrn mb-4") %>
+<p>5. To be sure that the differentiating keyword "High School" is important to the people searching for this topic, check that a couple of the related searches also include this term.</p>
+<%= image_tag("search_5.png", class: "image_fit_scrn mb-4") %>
+<p>6. We can also check with the <a href="https://trends.google.com/trends/?geo=US" target="_blank"><b>Google Trends</b></a> tool that this search term is getting traffic. As long as some results are showing, it is safe to assume this phrase is being searched regularly.</p>
+<%= image_tag("search_6.png", class: "image_fit_scrn mb-4") %>
+
+<p>Use the same process with your own topic.</p>
+
+<p>Once you think you've found a narrow-enough search term that The Teen Magazine can likely rank for, ask yourself these questions:</p>
+<ol>
+  <li>Does it make sense that this is something some teens would wonder/search about?</li>
+  <li>Is this topic relevant enough to The Teen Magazine's target demographic? See <a href="#Topic"><b>Thinking of a topic</b></a>.</li>
+  <li>Is the title phrased in a way that is SEO-friendly, as determined by the <a target="_blank" href="https://moz.com/learn/seo/title-tag"><b>Moz SEO Tool</b></a>? It should include the target search query.</li>
+  <li>Can someone from The Teen Magazine write a more relevant and in-depth article than the competition? If so, how?</li>
+</ol>
+
+<p>Once you are able to answer "yes" to all of these questions, you know that you've found a good search topic. Revisit the section on <a href="#Shareable"><b>Shareable titles</b></a> to craft an interesting title for the search topic. For this example, I might choose "Cutest High School Romance Movies That Will Make You Cry". Also see the video below for more info on how to do this.</p>
+<h5>Writing a title that is BOTH Shareable and Searchable:</h5>
+<p>The most successful articles have both a shareable and searchable title, meaning that it shows up high in search results and has an intriguing title that is likely to be clicked. The below video from Income School does a good job of explaining how to do exactly that.</p>
+<div class="responsive-iframe-container mb-4">
+  <iframe class="responsive-iframe" src="https://www.youtube.com/embed/o1HApYqYbfs"></iframe>
+</div>
+
+<h5>Final Note on Writing Titles:</h5>
+<p>You'll likely have to change around your title 5-10 times before you have one that is clear and concise, evokes curiosity, and is on a topic teens are searching. Of course, there are always exceptions to the rules but the majority of your pitched article titles should meet these criteria.</p>
+
+<h5>Choosing a thumbnail</h5>
+<p>IMPORTANT: Read <a target="_blank" href="/finding-images">Finding Images</a> first to make sure you are finding images safely!</p>
+<p>Once you've found some images that are royalty free, there are a few tricks to know for choosing a catchy thumbnail image. These are suggestions to keep in mind, not the rule. There are plenty of great thumbnail images that do not adhere to these observations.</p>
+<ul>
+  <li>BuzzFeed found that color images relay information faster than black and white ones and so they also perform better.</li>
+  <li>Images in which you can see the entire body perform worse than the ones where you can just see the upper body.</li>
+  <li>Images with a face are more likely to be paid attention to.</li>
+  <li>Light colors almost always do better than dark ones.</li>
+  <li>Pictures that look authentic and not staged almost always do better.</li>
+</ul>
+
+<p>Example of a likely, well-performing thumbnail image (taken from Pexels.com):</p>
+<%= image_tag("thumbnail_1.jpg", class: "image_fit_scrn") %>
+<p>Example of a thumbnail image that likely wouldn't do as well (taken from Pexels.com):</p>
+<%= image_tag("thumbnail_2.jpg", class: "image_fit_scrn mb-4") %>
+
+<h4>Writing a description:</h4>
+<p>The description should include enough information for anyone to know what you were thinking of for this article and why it is relevant for The Teen Magazine's target demographic. Include links to any places where you got the idea from (ie. Quora, Reddit, other blog articles etc.). If it's an advice article, specify the type of writer this topic is best suited for. For example, an article about how to write your college application should be written by a writer who is, or has already gone through, the process.</p>
+<p>If you did a search analysis for this article topic, include the target search term/phrase. Explain what the current search results are and what the writer who claims this topic needs to do to outperform existing articles (ie. list more examples, be more in-depth, more specific, better researched etc.).</p>
+<p>Be specific and in-depth. Your description should be around 60-120 words.</p>
+
+<h4>Conclusion:</h4>
+<p class="mb-0">Great job for completing this tutorial and watching the videos! You can now start <a target="_blank" href="/pitches/new">pitching article topics</a> that other writers can claim.</p>

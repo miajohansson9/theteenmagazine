@@ -2,11 +2,19 @@
   <div class="dashboard_wrapper">
     <div id="waiting--for--approval">
       <div class="dashboard--writer--flex--main">
-        <div class="flex--item">
+        <div class="flex--item"
+          <% if @show_editor_onboarding %>
+            data-step data-index="1" data-onboarding-content="Welcome to your editor account! Your profile has been updated with your Editor stats."
+          <% end %>
+        >
           <%= render :partial => 'profile', locals: {user: @user} %>
         </div>
         <div class="analytics card-group">
-          <div class="card" data-step data-index="1" data-onboarding-content="Your full writer profile has been unlocked! Access all your claimed pitches here.">
+          <div class="card"
+            <% if @show_onboarding_full %>
+              data-step data-index="1" data-onboarding-content="Your full writer profile has been unlocked! Access all your claimed pitches here."
+            <% end %>
+          >
             <div class="card-body dashboard-card-1 dashboard-card">
               <a href="<%= pitches_path(user_id: @user.id) %>">
                 <div class="stats_wrapper">
@@ -19,7 +27,11 @@
               </a>
             </div>
           </div>
-          <div class="card" data-step data-index="2" data-onboarding-content="View your public writer page here. Your published articles are also viewable at this url when you are not signed in.">
+          <div class="card"
+            <% if @show_onboarding_full %>
+              data-step data-index="2" data-onboarding-content="View your public writer page here. Your published articles are also viewable at this url when you are not signed in."
+            <% end %>
+          >
               <div class="card-body dashboard-card-2 dashboard-card">
                 <a href="<%= user_path(mode: "public") %>">
                   <div class="stats_wrapper">
@@ -32,7 +44,11 @@
                 </a>
               </div>
           </div>
-          <div class="card" data-step data-index="3" data-onboarding-content="Keep track of your published articles' views here.">
+          <div class="card"
+            <% if @show_onboarding_full %>
+              data-step data-index="3" data-onboarding-content="Keep track of your published articles' views here."
+            <% end %>
+          >
             <div class="card-body dashboard-card-3 dashboard-card">
               <a href="<%= analytics_path(user_id: @user.id) %>">
                 <div class="stats_wrapper">
@@ -47,11 +63,19 @@
           </div>
         </div>
         <% if @user.editor? %>
-          <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4">
+          <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4"
+            <% if @show_editor_onboarding %>
+              role="button" data-step data-index="2" data-onboarding-content="You are now able to start an article without first submitting a pitch. Ensure all your articles fit the topic requirements."
+            <% end %>
+          >
              <%= link_to "Start an Article", new_post_path, class: "newpost--new--profile mr-0" %>
           </div>
         <% else %>
-          <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4" role="button" data-step data-index="6" data-onboarding-content="Claim another pitch or pitch your own article topic. Make sure it meets all the criteria in Pitching an Article before submitting.">
+          <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4"
+            <% if @show_onboarding_full %>
+              role="button" data-step data-index="6" data-onboarding-content="Claim another pitch or pitch your own article topic. Make sure it meets all the criteria in Pitching an Article before submitting."
+            <% end %>
+          >
             <span><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile mr-0" %></span>
           </div>
         <% end %>
@@ -90,7 +114,11 @@
         <% end %>
         <%= render "/users/partials/featured_writers", users: @featured_writers %>
         <div>
-          <div class="card whats-new-wrapper mt-4" style="border-radius: 10px; overflow: hidden;" data-step data-index="4" data-onboarding-content="See what other writers are pitching here.">
+          <div class="card whats-new-wrapper mt-4" style="border-radius: 10px; overflow: hidden;"
+            <% if @show_onboarding_full %>
+              data-step data-index="4" data-onboarding-content="See what other writers are pitching here."
+            <% end %>
+          >
             <div class="card-header pt-3 pb-3" style="background-color: rgba(0,0,0,0.03);"><%= link_to "What's New...", pitches_path, style: "font-size: 0.9rem; font-weight: bold; text-decoration: none; line-height: 1.5; color: #212529;" %></div>
             <ul class="list-group list-group-flush whats-new">
               <% @pitches.each do |pitch| %>
@@ -106,7 +134,11 @@
           <i class="mt-4 d-block">See more pitches <%= link_to("here", pitches_path, class: "link_inline") %></i>
           <br>
         </div>
-        <div class="links" data-step data-index="5" data-onboarding-content="New applications have become open to you. If you want to apply to our editor team, we suggest having at four or more published articles on The Teen Magazine before applying.">
+        <div class="links"
+          <% if @show_onboarding_full %>
+            data-step data-index="5" data-onboarding-content="New applications have become open to you. If you want to apply to our editor team, we suggest having at four or more published articles on The Teen Magazine before applying to have the best chance."
+          <% end %>
+        >
           <div>
             <%= link_to("Interview Application", "https://forms.gle/eQyETofL6M1bxvqy5", target: "_blank") %><br>
             <%= link_to("Editor Application", "/applications/editor", target: "_blank") %><br>
@@ -188,7 +220,7 @@
   });
 </script>
 
-<% if @show_onboarding_full %>
+<% if @show_onboarding_full || @show_editor_onboarding %>
   <%= javascript_include_tag 'mdb.min' %>
   <%= javascript_include_tag 'plugins/onboarding.min' %>
   <script type="text/javascript">

@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
-  skip_before_action :onboarding_redirect, only: [:onboarding, :update]
   before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share, :redirect]
   before_action :authenticate_user!, except: [:index, :show, :redirect]
   before_action :is_editor?, only: [:show_users, :new]
+  before_action :onboarding_redirect, only: [:show]
   before_action :is_admin?, only: [:new, :partners, :share]
   layout :set_layout
 
@@ -50,6 +50,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def onboarding_redirect
+    if current_user.present? && (current_user.submitted_profile.eql? nil) && (!current_user.partner)
+      redirect_to "/onboarding", notice: "Please complete the onboarding process first."
+    end
+  end
+
   def new_writer
     @has_completed_onboarding = !@user.submitted_profile.nil?
     @has_submitted_profile = !@user.submitted_profile.nil?
@@ -59,6 +65,9 @@ class UsersController < ApplicationController
     @has_published = @user.posts.published.exists?
     @percent_complete = [@has_completed_onboarding, @has_submitted_profile, @has_claimed_pitch, @has_read_resources, @has_submitted_first_draft, @has_published].count(true) / 6.0 * 100.0
     @show_onboarding = @user.last_saw_new_writer_dashboard.nil? && (current_user.id.eql? @user.id)
+    if @show_onboarding
+      flash.now[:notice] = "Writer dashboard unlocked!"
+    end
     if current_user.id.eql? @user.id
       @user.last_saw_new_writer_dashboard = Time.now
       @user.save
@@ -67,9 +76,14 @@ class UsersController < ApplicationController
 
   def full_writer
     @show_onboarding_full = @user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
+    @show_editor_onboarding = @user.became_an_editor.nil? && @user.editor && (current_user.id.eql? @user.id) && !@show_onboarding_full
     if current_user.id.eql? @user.id
       @user.last_saw_writer_dashboard = Time.now
       @user.save
+      if @show_editor_onboarding
+        @user.became_an_editor = Time.now
+        @user.save
+      end
     end
   end
 
@@ -93,21 +107,24 @@ class UsersController < ApplicationController
   end
 
   def onboarding
+    set_meta_tags title: "Onboarding | The Teen Magazine", onboarding: "Turn off ads"
     @user = current_user
-    @partial = params[:step] || "welcome" || "your_profile" || "next_steps" || "final" || "done"
+    @partial = params[:step] || "welcome"
     @pitches = Pitch.is_approved.not_claimed.where(status: nil).paginate(page: params[:page], per_page: 9).order("updated_at desc")
     @pitch = Pitch.where(claimed_id: current_user.id).find_by(id: current_user.onboarding_claimed_pitch_id)
-    set_meta_tags onboarding: "Turn off ads"
+  end
+
+  def editor_onboarding
+    set_meta_tags title: "Editor Onboarding | The Teen Magazine", onboarding: "Turn off ads"
+    @user = current_user
+    @partial = params[:step] || "welcome"
+    @categories = Category.all
   end
 
   def onboarding_redirect
     if (current_user.submitted_profile.eql? nil) && (!current_user.partner)
       redirect_to "/onboarding"
     end
-  end
-
-  def editor_onboarding
-    @user = current_user
   end
 
   def index
@@ -263,7 +280,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :onboarding_claimed_pitch_id, :do_not_send_emails, :editor, :marketer, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community, :last_saw_new_writer_dashboard, :last_saw_writer_dashboard)
+    params.require(:user).permit(:email, :password, :onboarding_claimed_pitch_id, :do_not_send_emails, :editor, :marketer, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community, :last_saw_new_writer_dashboard, :last_saw_writer_dashboard, :became_an_editor, :completed_editor_onboarding)
   end
 
   def find_user

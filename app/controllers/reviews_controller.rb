@@ -9,10 +9,18 @@ class ReviewsController < ApplicationController
       @post = Post.friendly.find(params[:post])
       set_meta_tags :title => "Editor Feedback for #{@post.title}"
     elsif (current_user.admin?) || (current_user.editor?)
+      @user = User.find(params[:id])
+      if (params[:completed_onboarding].eql? "true") && current_user.completed_editor_onboarding.nil?
+        @show_editor_dashboard_onboarding = true
+        flash.now[:notice] = "You've unlocked your editor dashboard!"
+        @user.completed_editor_onboarding = true
+        @user.save
+      elsif current_user.completed_editor_onboarding.nil?
+        redirect_to "/editor-onboarding", notice: "Please complete the onboarding process first."
+      end
       if !(params[:id].eql? current_user.slug) && !current_user.admin
         redirect_to "/editors/#{current_user.slug}"
       end
-      @user = User.find(params[:id])
       @notifications = @notifications - @unseen_editor_dashboard_cnt
       @unseen_editor_dashboard_cnt = 0
       if current_user.admin?

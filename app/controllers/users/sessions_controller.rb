@@ -1,6 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
 # before_action :configure_sign_in_params, only: [:create]
-  skip_before_action :onboarding_redirect, only: [:destroy]
 
   def new
     set_meta_tags :title => 'Login',

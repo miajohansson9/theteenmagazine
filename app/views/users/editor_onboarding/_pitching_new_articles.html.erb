@@ -1,0 +1,22 @@
+<div class="stair_step">
+  <a href="/editor-onboarding?step=welcome" class="node">
+    <span class="progress_step">
+      &#x25cf;
+      <p>Welcome</p>
+    </span>
+  </a>
+  <span class="progress_step">&#x25CB;<p>Pitching New Articles</p></span>
+  <span class="progress_step">&#x25CB;<p>Reviewing Pitches</p></span>
+  <span class="progress_step">&#x25CB;<p>Reviewing Articles</p></span>
+  <div class="hr">
+    <hr />
+    <hr />
+    <hr />
+  </div>
+</div>
+<div class="onboarding_page_container">
+  <div id="onboarding_page">
+    <%= render "pages/editor_partials/pitching_new_articles_content" %>
+  </div>
+  <%= link_to "Next", editor_onboarding_path(step: "reviewing_pitches"), :id => "onboarding_button" %>
+</div>

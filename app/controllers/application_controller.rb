@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :notifications, if: :current_user?
-  before_action :onboarding_redirect, if: :current_user
   before_action :update_last_sign_in_at, if: :current_user?
 
   after_action :store_user_location!, if: :storable_location?, only: :authenticate_user
@@ -20,12 +19,6 @@ class ApplicationController < ActionController::Base
   # - The request is handled by a Devise controller such as Devise::SessionsController as that could cause an
   #    infinite redirect loop.
   # - The request is an Ajax request as this can lead to very unexpected behaviour.
-
-  def onboarding_redirect
-    if (current_user.submitted_profile.eql? nil) && (!current_user.partner)
-      redirect_to "/onboarding"
-    end
-  end
 
   def notifications
     initiate_last_seen

@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
     where(editor: true)
   }
 
+  scope :is_published, -> {
+    includes(:posts).where.not(:posts => {publish_at: nil })
+  }
+
   self.per_page = 24
 
   # Validate the attached image is image/jpg, image/png, etc

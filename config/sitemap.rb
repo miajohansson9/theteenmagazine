@@ -37,7 +37,7 @@ SitemapGenerator::Sitemap.create do
   add "/about-us", :priority => 0.8, :changefreq => 'monthly'
   add "/apply", :priority => 0.8, :changefreq => 'yearly'
   add "/contact-us", :priority => 0.8, :changefreq => 'yearly'
-  add "/login", :priority => 0.5, :changefreq => 'yearly'
+  add "/login", :priority => 0.8, :changefreq => 'yearly'
 
   Category.find_each do |category|
     add category_path(category), :lastmod => category.updated_at, :priority => 0.8

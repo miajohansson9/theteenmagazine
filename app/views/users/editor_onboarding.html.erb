@@ -1,6 +1,15 @@
-<%= image_tag "banner_onboarding.jpg", id: "banner_writing" %>
+<%= image_tag "reading_magazine_skinny.jpg", id: "banner_writing" %>
 <div class="skinny_wrapper onboarding">
-  <h1>Welcome to The Teen Magazine Writer Team!</h1>
-  <p>Please complete the onboarding process.</p>
-      <%= render "users/onboarding/#{@partial}" %>
+  <h1><%= current_user.first_name %>, Welcome to The Teen Magazine Editor Team!</h1>
+  <p>Please read through the editor training materials to unlock your editor dashboard.</p>
+      <%= render "users/editor_onboarding/#{@partial}" %>
 </div>
+
+<script type="text/javascript">
+  $('document').ready(function() {
+    $("#claim-pitch-modal-button").click(function() {
+      $('.spinner-button').removeClass("hide");
+      $('.submit_modal').addClass("disabled");
+    });
+  });
+</script>
