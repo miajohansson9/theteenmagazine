@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share, :redirect]
   before_action :authenticate_user!, except: [:index, :show, :redirect]
   before_action :is_editor?, only: [:show_users, :new]
-  before_action :onboarding_redirect, only: [:show]
+  before_action :onboarding_redirect, if: :current_user?, only: [:show]
   before_action :is_admin?, only: [:new, :partners, :share]
   layout :set_layout
 
@@ -261,6 +261,10 @@ class UsersController < ApplicationController
     else
       redirect_to current_user, notice: "You do not have access to this page."
     end
+  end
+
+  def current_user?
+    current_user.present?
   end
 
   def set_layout
