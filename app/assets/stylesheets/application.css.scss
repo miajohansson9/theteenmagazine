@@ -13,12 +13,6 @@
   min-height: 400px;
 }
 
-body, #site-wrapper, #site-canvas, .bodywrapper {
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-  word-break: break-word;
-}
-
 @media (max-width: 1080px) {
   .nav-title {
     display: none;

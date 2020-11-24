@@ -30,3 +30,11 @@ function toggleNav() {
       $('#site-wrapper').addClass('show-nav');
   }
 }
+
+$(window).on('scroll',function(){
+  if ($('.header-navigation').isOnScreen()) {
+    $(".header-mobile").removeClass("header-mobile-show");
+  } else {
+    $(".header-mobile").addClass("header-mobile-show");
+  }
+});

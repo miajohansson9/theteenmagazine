@@ -18,6 +18,13 @@
   src: font-url("HiddenMeanings.ttf");
 }
 
+body, #site-wrapper, #site-canvas, .bodywrapper {
+  max-width: 100% !important;
+  min-width: 100% !important;
+  // overflow-x: hidden !important;
+  word-break: break-word;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -170,9 +177,6 @@ iframe {
 
 body {
   font-family: 'Charter',Georgia,Times,Serif;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-  word-break: break-word;
 }
 
 .border {
@@ -271,7 +275,7 @@ html, body {
 * Both aren't required for this demo
 */
 
-#site-canvas, #site-menu {
+#site-menu {
   position: relative;
 
   -webkit-transform: translateX(0);
@@ -289,7 +293,7 @@ html, body {
 
 .show-nav {
   overflow: hidden;
-  #site-canvas, #site-menu {
+  #site-menu {
     -webkit-transform: translateX(320px);
     transform: translateX(320px);
 
@@ -313,9 +317,27 @@ html, body {
   width: 100%;
   visibility: hidden;
   height: 0;
-  z-index: 5002;
+  z-index: 1000004;
   opacity:0;
   transition: visibility 0.2s linear, opacity 0.2s linear;
+}
+
+.header-mobile {
+  background-color: white;
+  border-bottom: 1px solid whitesmoke;
+  transform: translateY(-100%);
+  transform-origin: top;
+  transition: transform .5s ease;
+  display: block;
+  position: fixed;
+  z-index: 1000002;
+  .border {
+    border: none !important;
+  }
+}
+
+.header-mobile-show {
+  transform: translateY(0%);
 }
 
 #site-menu {
@@ -326,7 +348,7 @@ html, body {
   background: white;
   position: fixed;
   padding: 25px;
-  z-index: 5003;
+  z-index: 1000005;
   a, h2 {
     width: fit-content;
   }
@@ -956,7 +978,7 @@ footer {
     #name_wrapper {
       display: block;
       #name {
-        height: 83px;
+        height: 70px;
         margin: 0 auto;
         display: block;
         background-image: image-url("teenmag.png");
@@ -1130,8 +1152,6 @@ p, ul, ol {
     .post_apply {
       padding: 0px !important;
       .ads_wrapper {
-        margin: 0 -10% !important;
-        max-width: 120% !important;
         background-color: transparent;
         iframe {
           max-width: 100%;

@@ -40,6 +40,7 @@
     </amp-auto-ads>
     <div id="site-wrapper">
       <%= render "layouts/partials/slide-in-menu" %>
+      <%= render "layouts/partials/header-mobile" %>
       <div id="site-canvas">
         <!-- <div class="banner_stts_relative">
 <<<<<<< HEAD
@@ -49,8 +50,8 @@
 >>>>>>> b3412bcbdaef7bed91dd0ae024fd9e21814e28a0
         </div> -->
         <div class="bodywrapper">
-          <header id="main_navigation" class="clearfix">
-            <div id="banner">
+          <header id="main_navigation" class="clearfix header-navigation">
+            <div id="banner" class="banner-relative">
               <i class="fa fa-bars toggle-nav" onclick="toggleNav();"></i>
               <a id="name_wrapper" href="/"><div id="name"></div></a>
               <div class="social-media">
@@ -96,6 +97,19 @@
       ga('send', 'pageview');
     </script>
     <script type="text/javascript">
+      $.fn.isOnScreen = function(){
+        var win = $(window);
+        var viewport = {
+            top : win.scrollTop(),
+            left : win.scrollLeft()
+        };
+        viewport.right = viewport.left + win.width();
+        viewport.bottom = viewport.top + win.height();
+        var bounds = this.offset();
+        bounds.right = bounds.left + this.outerWidth();
+        bounds.bottom = bounds.top + this.outerHeight();
+        return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+      };
       $('document').ready(function() {
         $('a[href^="https://"]').not('a[href*=localhost]').attr('target','_blank');
         $('a[href^="http://"]').not('a[href*=localhost]').attr('target','_blank');
