@@ -235,7 +235,7 @@
 }
 
 .post_apply {
-  padding: 15px;
+  padding: 15px 20px 15px 0px;
   .ads_wrapper {
     margin-bottom: 20px;
   }
@@ -509,6 +509,11 @@ iframe { margin: 1em auto;  display: block; }
 
     #content, .post_apply, .share_article_feedback {
       padding: 0 20px !important;
+    }
+    .post_apply {
+      h3, .contain_articles {
+        padding: 0 40px !important;
+      }
     }
 }
 
