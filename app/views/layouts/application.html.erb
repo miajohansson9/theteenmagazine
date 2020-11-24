@@ -39,9 +39,6 @@
       <%= render "layouts/partials/slide-in-menu" %>
       <%= render "layouts/partials/header-mobile" %>
       <div id="site-canvas">
-        <% if notice %>
-          <p class="notice"><%= notice %></p>
-        <% end %>
         <!-- <div class="banner_stts_relative">
 <<<<<<< HEAD
           <p class= "banner_stts" style="background-color: black;"><span style="font-family: 'Griffy', cursive;">All Treats, No Tricks: </span> Get in the <span style="font-family: 'Griffy', cursive;">Spirit of Halloween</span> <i class="fas fa-ghost"></i> by grabbing your FREE copy of The Teen Magazine's October issue <a target="_blank" class="link_white" href="/subscribe">here</a>!</p>
@@ -50,6 +47,9 @@
 >>>>>>> b3412bcbdaef7bed91dd0ae024fd9e21814e28a0
         </div> -->
         <div class="bodywrapper">
+          <% if notice %>
+            <p class="notice"><%= notice %></p>
+          <% end %>
           <header id="main_navigation" class="clearfix header-navigation">
             <div id="banner" class="banner-relative">
               <i class="fa fa-bars toggle-nav" onclick="toggleNav();"></i>

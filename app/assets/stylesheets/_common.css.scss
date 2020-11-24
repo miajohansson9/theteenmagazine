@@ -325,19 +325,11 @@ html, body {
 .header-mobile {
   background-color: white;
   border-bottom: 1px solid whitesmoke;
-  transform: translateY(-100%);
-  transform-origin: top;
-  transition: transform .5s ease;
-  display: block;
   position: fixed;
   z-index: 1000002;
   .border {
     border: none !important;
   }
-}
-
-.header-mobile-show {
-  transform: translateY(0%);
 }
 
 #site-menu {
@@ -575,6 +567,7 @@ hr {
   text-align: center;
   padding: 0.9em 0;
   border-bottom: 1px solid #E9E9E9;
+  border-top: 1px solid #E9E9E9;
   color: #212529;
   background-color: #C5B7B820;
   margin: 0;
@@ -977,8 +970,9 @@ footer {
     align-items: center;
     #name_wrapper {
       display: block;
+      padding: 10px 0;
       #name {
-        height: 70px;
+        height: 50px;
         margin: 0 auto;
         display: block;
         background-image: image-url("teenmag.png");
@@ -1274,8 +1268,24 @@ p, ul, ol {
   }
 }
 
+@media (min-width: 801px) {
+  .header-mobile {
+    transform: translateY(-100%);
+    transform-origin: top;
+    transition: transform .5s ease;
+  }
+
+  .header-mobile-show {
+    transform: translateY(0%);
+  }
+}
+
 @media (max-width: 800px) {
   body {
+    .notice {
+      margin-top: 0px;
+      border-top: 1px
+    }
     .parentflex {
       width: 100%;
       margin: 0;
@@ -1309,6 +1319,15 @@ p, ul, ol {
     }
   }
 
+  .bodywrapper {
+    padding-top: 56px !important;
+  }
+
+  .header-navigation #banner,
+  .header-navigation .border {
+    display: none !important;
+  }
+
   #main_navigation {
     background-image: none;
     margin: 0;
@@ -1321,8 +1340,9 @@ p, ul, ol {
     #banner {
       #name_wrapper {
         min-width: 205px;
+        padding: 0;
         #name {
-          height: 60px !important;
+          height: 56px !important;
           background-image: image-url("teenmag_mobile.png");
         }
       }
