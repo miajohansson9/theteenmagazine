@@ -153,7 +153,9 @@ iframe {
   z-index: 600000;
   max-width: 100%;
   display: block;
-  margin: 0 auto;
+  .adsbygoogle {
+    margin: 0 auto;
+  }
   ins, iframe {
     margin: 0 auto !important;
     display: block !important;
@@ -1143,6 +1145,7 @@ p, ul, ol {
     }
     .content_wrapper {
       max-width: inherit;
+      margin: 0 20px !important;
       .left_side_flex {
         max-width: 550px;
       }
@@ -1161,7 +1164,7 @@ p, ul, ol {
         margin-top: 20px;
       }
       h3, .contain_articles {
-        padding: 0 20px !important;
+        padding: 0 60px !important;
       }
     }
     .post_apply, .share_article_feedback {
