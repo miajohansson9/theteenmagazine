@@ -17,12 +17,6 @@
     <% end %>
   </head>
   <body>
-    <% if notice %>
-      <p class="notice"><%= notice %></p>
-    <% end %>
-    <% if @comment %>
-      <%= render "posts/draft_feedback" %>
-    <% end %>
     <section
       class="onboarding"
       data-start-event="click"
@@ -34,6 +28,12 @@
       <%= render "layouts/partials/slide-in-menu" %>
       <%= render "layouts/partials/header-writer-mobile" %>
       <div id="site-canvas">
+        <% if notice %>
+          <p class="notice"><%= notice %></p>
+        <% end %>
+        <% if @comment %>
+          <%= render "posts/draft_feedback" %>
+        <% end %>
           <!-- <div class="banner_stts_relative">
   <<<<<<< HEAD
             <p class= "banner_stts" style="background-color: black;"><span style="font-family: 'Griffy', cursive;">All Treats, No Tricks: </span> Get in the <span style="font-family: 'Griffy', cursive;">Spirit of Halloween</span> <i class="fas fa-ghost"></i> by grabbing your FREE copy of The Teen Magazine's October issue <a target="_blank" class="link_white" href="/subscribe">here</a>!</p>
