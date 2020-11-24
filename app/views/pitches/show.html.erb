@@ -5,9 +5,9 @@
   <% if @claimed_user.present? %>
     <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.created_at.strftime('%A, %B %d') %></p>
   <% elsif @pitch.status.eql? "Approved" %>
-    <p class="mb-3" style="background-color: #FCD04D; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>! You may claim it to start your draft.</p>
+    <p class="mb-3" style="background-color: #FCD04D; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.try(:full_name), @editor) %><% end %>! You may claim it to start your draft.</p>
   <% elsif @pitch.status.eql? "Rejected" %>
-    <p><span style="background-color: #FCD04D; padding: 5px 0;">This was pitch rejected<% if @pitch.editor_id.present?%> by <%= link_to(@editor.full_name, @editor) %><% end %>. Please <%= link_to "delete", pitch_path(@pitch), method: :delete, data: {confirm: "Are you sure you want to delete this pitch? This cannot be undone."} %> it and submit a new pitch that meets all the requirements as described <a target="_blank" href="/choosing-a-topic">here</a>.</span></p>
+    <p><span style="background-color: #FCD04D; padding: 5px 0;">This was pitch rejected<% if @pitch.editor_id.present?%> by <%= link_to(@editor.try(:full_name), @editor) %><% end %>. Please <%= link_to "delete", pitch_path(@pitch), method: :delete, data: {confirm: "Are you sure you want to delete this pitch? This cannot be undone."} %> it and submit a new pitch that meets all the requirements as described <a target="_blank" href="/choosing-a-topic">here</a>.</span></p>
     <p>Reason(s) for rejection:</p>
     <ul>
       <% if @pitch.rejected_topic %>
@@ -24,7 +24,7 @@
     <p><b><i>This pitch has not been reviewed yet.</i></b></p>
   <% end %>
   <% if @pitch.notes.present? %>
-    <p class="mt-0"><i><%= @editor.full_name %> left a comment:
+    <p class="mt-0"><i><%= @editor.try(:full_name) %> left a comment:
     <%= @pitch.notes %><br></i></p>
   <% end %>
   <%= image_tag(@pitch.thumbnail.url(:card), class: "image_fit_scrn mb-4") %>
