@@ -242,7 +242,10 @@
 }
 
 .share_article_feedback {
-  padding: 30px;
+  padding: 20px;
+  .newpost--new--profile {
+    margin: 0 !important;
+  }
 }
 
 .share_article_feedback {
