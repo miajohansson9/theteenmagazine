@@ -235,7 +235,7 @@
 }
 
 .post_apply {
-  padding: 15px 20px 15px 0px;
+  padding: 15px 0px;
   .ads_wrapper {
     margin-bottom: 20px;
   }
@@ -245,12 +245,15 @@
   padding: 30px;
 }
 
+.ads_wrapper, .share_article_feedback {
+  background-color: white;
+}
+
 .post_apply, .share_article_feedback {
-  min-width: 320px;
-  max-width: 320px;
+  min-width: 300px;
+  max-width: 300px;
   z-index: 30;
-  margin-top: 140px;
-  margin-left: 20px;
+  margin: 140px 20px 0 20px;
   img {
     width: 100%;
   }
@@ -504,8 +507,12 @@ iframe { margin: 1em auto;  display: block; }
       }
     }
 
-    #content, .post_apply, .share_article_feedback {
+    #content, .post_apply {
       padding: 0 15px !important;
+    }
+
+    .share_article_feedback {
+      padding: 0 40px !important;
     }
     .post_apply {
       h3, .contain_articles {
