@@ -25,6 +25,12 @@ body, #site-wrapper, #site-canvas, .bodywrapper {
   word-break: break-word;
 }
 
+.fa-angle-right, .fa-angle-left {
+  font-size: 40px !important;
+  margin-left: 10px !important;
+  font-weight: bolder !important;
+}
+
 * {
   box-sizing: border-box;
 }
