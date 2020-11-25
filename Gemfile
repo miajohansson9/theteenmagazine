@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby "2.6.3"
 
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 
 group :production do
   gem 'pg'
@@ -39,6 +39,7 @@ gem 'faraday', '>= 0.9.1'
 gem 'multi_json', '>= 1.11.0'
 gem 'font-awesome-rails'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'bootsnap', require: false
 
 group :development, :test do
   gem 'byebug', platform: :mri
