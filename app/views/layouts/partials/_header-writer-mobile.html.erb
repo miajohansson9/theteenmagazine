@@ -78,7 +78,7 @@
                 <%= link_to "Change Password", edit_user_registration_path, class: "dropdown-item" %>
                 <div class="dropdown-divider"></div>
                 <% if !current_user.partner? %>
-                  <a class="dropdown-item" target="_blank" href="https://www.facebook.com/groups/615063885673363">Writer Facebook Group <i class="fa fa-external-link"></i></a>
+                  <a class="dropdown-item" target="_blank" href="https://www.facebook.com/groups/615063885673363">Writer Facebook Group <i class="fas fa-external-link-alt"></i></a>
                 <% end %>
                 <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
               </div>
