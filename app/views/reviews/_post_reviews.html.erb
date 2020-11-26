@@ -20,7 +20,7 @@
         <% @requested_changes.each do |requested_change| %>
           <% @feedback = Feedback.find(requested_change.feedback_id) %>
           <h5 class="card-title">✎ <%= @feedback.try(:editor_descr) %></h5>
-          <p class="card-text"><%= @feedback.try(:review_descr) %></p>
+          <p class="card-text"><%= markdown @feedback.try(:review_descr) %></p>
         <% end %>
       </div>
      </div>

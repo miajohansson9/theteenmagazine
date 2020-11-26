@@ -52,6 +52,21 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.action_mailer.default_url_options = { :host => "http://localhost:3000" }
+  config.action_mailer.delivery_method = :smtp
+
+  ActionMailer::Base.smtp_settings = {
+    :address             => 'smtp.sendgrid.net',
+    :port               => '587',
+    :authentication     => :plain,
+    :user_name          => ENV['SENDGRID_USERNAME'],
+    :password           => ENV['SENDGRID_PASSWORD'],
+    :domain             => 'heroku.com',
+    :enable_starttls_auto  => true
+  }
+
   config.paperclip_defaults = {
     storage: :s3,
     s3_region: 'us-east-1',
@@ -67,5 +82,4 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end

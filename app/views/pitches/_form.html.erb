@@ -26,7 +26,7 @@
     </div>
 
     <% if @pitch.try(:thumbnail).present? %>
-      <%= image_tag(@pitch.thumbnail, class: "thumbnail_img") %>
+      <%= image_tag(@pitch.thumbnail.url(:card), class: "thumbnail_img") %>
     <% end %>
 
     <div class="margin_flds">
