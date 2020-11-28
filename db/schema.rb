@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_27_222146) do
+ActiveRecord::Schema.define(version: 2020_11_28_020511) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2020_11_27_222146) do
     t.text "editor_revision"
     t.text "editor_feedback"
     t.text "editor_pitches"
-    t.text "kind"
+    t.string "kind"
     t.string "rejected_writer_at"
     t.string "rejected_editor_at"
   end
