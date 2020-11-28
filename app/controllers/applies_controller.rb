@@ -103,6 +103,12 @@ class AppliesController < ApplicationController
     @user = User.find_by(id: @application.user_id) || User.new
   end
 
+  def destroy
+    @application = Apply.find(params[:id])
+    @application.destroy
+    redirect_to applies_path, "Application deleted. No email was sent."
+  end
+
   private
 
   def apply_params

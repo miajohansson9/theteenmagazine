@@ -3,7 +3,7 @@
   <h2>Apply to The Teen Magazine Editor Team</h2>
   <% if current_user.posts.published.count >= 4 %>
     <div class="alert alert-success" role="alert">
-      <i class="fas fa-check-circle"></i>  You have published <%= current_user.posts.published.count %> articles on The Teen Magazine.
+      <i class="fas fa-check-circle"></i>  You have <%= current_user.posts.published.count %> published articles on The Teen Magazine.
     </div>
   <% else %>
     <div class="alert alert-danger" role="alert">
