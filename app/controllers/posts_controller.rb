@@ -256,7 +256,7 @@ class PostsController < ApplicationController
         ApplicationMailer.article_has_requested_changes(@post.user, @post).deliver
       end
       if post_params[:promoting_until].present?
-        @post.user.points = @post.user.points - 300
+        @post.user.points = @post.user.points - 200
         @post.user.save
         redirect_to "/community", notice: "Your draft is now being promoted!"
       elsif (post_params[:partner_id].present? && post_params[:partner_id] != false)

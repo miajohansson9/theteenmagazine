@@ -1,9 +1,9 @@
 <div class="flex--profile profile-minimal">
   <div class="position-relative" style="width: 120px; margin: 0 auto;">
     <% if user.try(:profile)&.exists? %>
-      <%= image_tag(user.profile.url(:square), :class => "profile_img") %><% if user.editor %><span class="badge badge-default editor_label" style="top: 5px;">Editor</span><% end %>
+      <%= image_tag(user.profile.url(:square), :class => "profile_img") %><% if user.try(:editor) %><span class="badge badge-default editor_label" style="top: 5px;">Editor</span><% end %>
     <% else %>
-      <%= image_tag("profile_image.jpg", :class => "profile_img") %><% if user.editor %><span class="badge badge-default editor_label" style="top: 5px;">Editor</span><% end %>
+      <%= image_tag("profile_image.jpg", :class => "profile_img") %><% if user.try(:editor) %><span class="badge badge-default editor_label" style="top: 5px;">Editor</span><% end %>
     <% end %>
   </div>
   <div class="info">

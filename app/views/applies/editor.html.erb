@@ -1,11 +1,104 @@
-<div id="apply_image">
-</div>
+<div id="banner_writing" class="editor G7"></div>
 <div class="apply_wrapper">
-  <h2 style="text-align: center;">Apply to The Teen Magazine Editor Team</h2>
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSelLjDEk0OLaoDqsifns73d33gmX4baW9O78MSVV_gnbnqGjg/viewform?embedded=true"
-  width="100%" height="2272" frameborder="0" marginheight="0" marginwidth="0">
-  Loading…
-  </iframe>
-  <br>
-  <p style="text-align: center;">View application in separate tab <a target="_blank" class="link_nrml" href="https://forms.gle/czCwRZnczyBZzBZY9">here</a>.</p>
+  <h2>Apply to The Teen Magazine Editor Team</h2>
+  <% if current_user.posts.published.count >= 4 %>
+    <div class="alert alert-success" role="alert">
+      <i class="fas fa-check-circle"></i>  You have published <%= current_user.posts.published.count %> articles on The Teen Magazine.
+    </div>
+  <% else %>
+    <div class="alert alert-danger" role="alert">
+      <i class="fas fa-exclamation-triangle"></i>  You have <%= current_user.posts.published.count %> published on The Teen Magazine. We recommend having at least 4 published articles before applying to our editor team to have the best chance of being accepted.
+    </div>
+  <% end %>
+  <p>
+    Our editor team is in charge of pitching new article topics, publishing/giving feedback to articles, and responding to pitch submissions.
+    If accepted, you will be required to pitch and review pitches/articles every month. Consecutively missing your editor assignments will result in your removal from the editor team.
+    Our editor team is active on Slack, and we support each other to ultimately help our writer team succeed at The Teen Magazine.
+  </p>
+<p>If you have already been published on The Teen Magazine and are confident in your ability to give helpful feedback, please fill out the application and we will get back to you within 3-4 business days. If you have not heard a response by then, please email editors@theteenmagazine.com.</p>
+<p><b>You have applied to The Teen Magazine editor team <%= @applied_num_times %> time(s) before.</b></p>
+
+<% if (@application.kind.eql? "Editor") && (@application.created_at.present?) && !current_user.editor %>
+  <div style="font-weight: bolder !important; font-style: italics !important;">
+    <p>Your editor application was submitted on <%= @application.updated_at.strftime("%D") %> and is being reviewed by an admin.</p>
+    <p><%= @application.first_name %> <%= @application.last_name %></p>
+    <p><%= @application.email %></p>
+    <p><%= @application.grade %></p>
+    <% if @application.resume.present? %>
+      <span>Resume:</span>
+      <iframe style="width: 100%; height: 600px;" src="<%= @application.resume %>"></iframe>
+    <% end %>
+    <% if @application.editor_feedback.present? %>
+      <span>Editor Feedback:</span>
+      <p>1. <%= link_to "Is Private School Or Public School Better for You?", "https://www.theteenmagazine.com/is-private-school-or-public-school-better-for-you", target: "_blank" %></p>
+      <p>2. <%= link_to "Rejection Sensitivity: Causes and How to Cope, for Teenagers", "https://www.theteenmagazine.com/rejection-sensitivity-causes-and-how-to-cope-for-teenagers", target: "_blank" %></p>
+      <p>3. <%= link_to "Fall Fashion Staples You Must Have in Your Wardrobe", "https://www.theteenmagazine.com/fall-fashion-staples-you-must-have-in-your-wardrobe", target: "_blank" %></p>
+      <p style="margin: 10px 0 0 0;"><%= markdown @application.editor_feedback %></p>
+    <% end %>
+    <% if @application.editor_revision.present? %>
+      <span>Editor Revision:</span>
+      <p style="margin: 10px 0 0 0;"><%= markdown @application.editor_revision %></p>
+    <% end %>
+    <% if @application.editor_pitches.present? %>
+      <span>Editor Pitches:</span>
+      <p style="margin: 10px 0 0 0;"><%= markdown @application.editor_pitches %></p>
+    <% end %>
+  </div>
+<% else %>
+  <%= form_for @application do |f| %>
+    <% if @application.errors.any? %>
+      <h2><%= pluralize(@application.errors.count, "error")%> prevented this application from submitting:</h2>
+      <ul>
+        <% @application.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <span>First Name</span>
+    <%= f.text_field :first_name, required: true, placeholder: "First", value: current_user.first_name %>
+    <br />
+    <span>Last Name</span>
+    <%= f.text_field :last_name, required: true, placeholder: "Last", value: current_user.last_name %>
+    <br />
+    <span>Email Address</span>
+    <%= f.email_field :email, required: true, placeholder: "Email", value: current_user.email %>
+    <span>Grade Level</span>
+    <%= f.select :grade, options_for_select(["College", "12th grade", "11th grade", "10th grade", "9th grade"]), :prompt => "Select a grade", value: @application.grade %>
+    <br />
+    <% if @application.resume.present? %>
+      <span>Resume:</span>
+      <iframe style="width: 100%; height: 600px;" src="<%= @application.resume %>"></iframe>
+      <span class="d-block">Upload an updated resume (optional):</span>
+      <%= f.file_field :resume %>
+    <% else %>
+      <span class="d-block mb-3 mt-3">Upload your resume (pdf):</span>
+      <%= f.file_field :resume %>
+    <% end %>
+    <p>Give one piece of feedback for each of the published articles below. What, if anything, is the writer missing from <a target="_blank" href="/writing-the-perfect-article#article-requirements">these questions</a>?</p>
+    <p>1. <%= link_to "Is Private School Or Public School Better for You?", "https://www.theteenmagazine.com/is-private-school-or-public-school-better-for-you", target: "_blank" %></p>
+    <p>2. <%= link_to "Rejection Sensitivity: Causes and How to Cope, for Teenagers", "https://www.theteenmagazine.com/rejection-sensitivity-causes-and-how-to-cope-for-teenagers", target: "_blank" %></p>
+    <p>3. <%= link_to "Fall Fashion Staples You Must Have in Your Wardrobe", "https://www.theteenmagazine.com/fall-fashion-staples-you-must-have-in-your-wardrobe", target: "_blank" %></p>
+    <%= f.text_area :editor_feedback, required: true, placeholder: "Write your feedback here..." %>
+
+    <p>Choose one or two paragraphs from one of the articles above to edit. Revise the paragraph(s) to the best of your ability. Do not worry about making too many changes; the purpose of this exercise is to see what you notice can be improved in other's writing. Paste the unedited paragraph(s) above your revision.</p>
+    <%= f.text_area :editor_revision, required: true, placeholder: "Write your revision here..." %>
+
+    <p>Finally, pitch three new topics that would fit The Teen Magazine's audience as described <a target="_blank" href="/choosing-a-topic">here</a>. Include the title and description you would use.</p>
+    <i>Example:</i><br>
+    <i>Pitch 1 Title: The Stages of All High School Relationships from an Outsider</i><br>
+    <i>Pitch 1 Description: Are you always the friend that gives advice but are never in the relationship? Share your perspective from the outside-in. What do you notice in all your friends' relationships in high school? Do they have a similar pattern? How long do they last and what are those stages? Have fun with it!</i>
+    <%= f.text_area :editor_pitches, required: true, placeholder: "Write your pitches here...", class: "mt-4" %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.hidden_field :kind, value: "Editor" %>
+    <% @disabled = current_user.editor ? "disabled" : "" %>
+    <div class="btn_cntnr pb-0 mt-4 pt-2" style="float: none !important;">
+      <span data-toggle="tooltip" title="<% if current_user.editor %>You are already an editor<% end %>">
+        <%= f.submit 'Submit Application', class: "newpost--new--profile mr-0 #{@disabled}" %>
+      </span>
+    </div>
+  <% end %>
+<% end %>
+  <i style="opacity: 50%;" class="d-block">
+    Keep in mind that we will also be reviewing your published articles. To have the best chance of being accepted, ensure all your articles are done to the best of your ability. If you have any questions, please reach out to our editors at editors@theteenmagazine.com.
+  </i>
 </div>

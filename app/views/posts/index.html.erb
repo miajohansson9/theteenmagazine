@@ -2,7 +2,7 @@
   <h3>Welcome to the community, <%= current_user.first_name %>!</h3>
   <h4>Your available points: <%= @points %></h4>
   <div class="progress mt-3">
-    <div class="progress-bar" role="progressbar" style="width: <%= @points / 3 %>%" aria-valuenow="<%= @points %>" aria-valuemin="0" aria-valuemax="300"></div>
+    <div class="progress-bar" role="progressbar" style="width: <%= @points / 2 %>%" aria-valuenow="<%= @points %>" aria-valuemin="0" aria-valuemax="200"></div>
   </div>
   <p>You can use your points to promote your shared drafts and get more feedback from other writers. Earn points by commenting and giving constructive criticism on other writers' shared drafts below.</p>
   <% if @my_shared_drafts.count.eql? 0 %>
@@ -23,14 +23,14 @@
               </div>
             <% else %>
               <div class="rounded-bottom lighten-3 text-right p-1">
-                <% @class = @points < 300 ? "disabled" : "" %>
+                <% @class = @points < 200 ? "disabled" : "" %>
                   <%= form_for draft do |f| %>
                     <% @initial = (draft.promoting_until.present? && draft.promoting_until > Time.now) ? draft.promoting_until : Time.now %>
                     <%= f.hidden_field :promoting_until, value: @initial + 3.day %>
                     <div class="btn_cntnr mb-0 pb-0">
-                      <span data-toggle="tooltip" title="<% if @points < 300 %>Give feedback on more articles<% end %>">
-                        <%= f.submit 'Promote (300 points)',
-                          data: {confirm: "This draft will be featured for three days on the community page. You are using 300 points out of your available #{@points} points to do this. Do you want to continue?"},
+                      <span data-toggle="tooltip" title="<% if @points < 200 %>Give feedback on more articles<% end %>">
+                        <%= f.submit 'Promote (200 points)',
+                          data: {confirm: "This draft will be featured for three days on the community page. You are using 200 points out of your available #{@points} points to do this. Do you want to continue?"},
                           class: "newpost--new--profile #{@class}" %>
                       </span>
                     </div>

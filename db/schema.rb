@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_23_172446) do
+ActiveRecord::Schema.define(version: 2020_11_27_222146) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -45,13 +45,20 @@ ActiveRecord::Schema.define(version: 2020_11_23_172446) do
     t.datetime "updated_at", null: false
     t.string "resume_file_name"
     t.string "resume_content_type"
-    t.bigint "resume_file_size"
+    t.integer "resume_file_size"
     t.datetime "resume_updated_at"
     t.string "sample_writing_file_name"
     t.string "sample_writing_content_type"
-    t.bigint "sample_writing_file_size"
+    t.integer "sample_writing_file_size"
     t.datetime "sample_writing_updated_at"
     t.string "grade"
+    t.integer "user_id"
+    t.text "editor_revision"
+    t.text "editor_feedback"
+    t.text "editor_pitches"
+    t.text "kind"
+    t.string "rejected_writer_at"
+    t.string "rejected_editor_at"
   end
 
   create_table "categories", force: :cascade do |t|

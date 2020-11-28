@@ -14,7 +14,8 @@ class UsersController < ApplicationController
       redirect_to "/partners/#{@user.slug}"
     end
     @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).order("updated_at desc")
-    @user_posts_approved = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.paginate(page: params[:page], per_page: 10).order("publish_at desc")
+    @user_posts_approved_records = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.order("publish_at desc")
+    @user_posts_approved= @user_posts_approved_records.paginate(page: params[:page], per_page: 10)
     if !@user.editor? && current_user.present?
       @user_pitches = @user.pitches.not_claimed.order("updated_at desc")
     elsif @user.editor?
@@ -37,12 +38,12 @@ class UsersController < ApplicationController
       @featured_writers = Post.where(publish_at: (Time.now - 7.days)..Time.now).order("updated_at desc").map{|p| p.user}.uniq
       @claimed_pitches_cnt =  Pitch.where(claimed_id: @user.id).present? ? Pitch.where(claimed_id: @user.id).count : 0;
       @pageviews = 0
-      @user_posts_approved.each do |post|
+      @user_posts_approved_records.each do |post|
         if !post.post_impressions.nil?
           @pageviews += post.post_impressions
         end
       end
-      if @user_posts_approved.length < 1
+      if @user_posts_approved_records.length < 1
         new_writer
       else
         full_writer
@@ -120,12 +121,6 @@ class UsersController < ApplicationController
     @categories = Category.all
   end
 
-  def onboarding_redirect
-    if (current_user.submitted_profile.eql? nil) && (!current_user.partner)
-      redirect_to "/onboarding"
-    end
-  end
-
   def index
     if params[:commit].eql? "Send reset link"
       reset_email
@@ -200,16 +195,40 @@ class UsersController < ApplicationController
     if @user.update user_params
       if @user.first_name.present? && @user.last_name.present?
         @user.full_name = "#{@user.first_name} #{@user.last_name}"
+        if !@user.editor
+          @user.became_an_editor = nil
+          @user.completed_editor_onboarding = nil
+        end
         @user.save
       end
       if params[:redirect] != nil
         redirect_to onboarding_path(step: params[:redirect])
+      elsif params[:decision].present?
+        respond_to_editor_app
+        redirect_to applies_path, notice: "Editor application #{params[:decision].downcase}ed."
       else
         add_to_list(@user)
         redirect_to @user, notice: "Your profile has been updated."
       end
     else
       render 'edit', notice: "Changes were unable to be saved."
+    end
+  end
+
+  def respond_to_editor_app
+    if params[:decision].eql? "Accept"
+      ApplicationMailer.accepted_editor_email(@user).deliver
+      @user.editor = true
+      @user.save
+    elsif params[:decision].eql? "Reject"
+      ApplicationMailer.rejected_editor_email(@user).deliver
+      @app = Apply.where(rejected_editor_at: nil, user_id: @user.id)
+      @app.each do |app|
+        if app.rejected_editor_at.nil?
+          app.rejected_editor_at = Time.now
+          app.save
+        end
+      end
     end
   end
 

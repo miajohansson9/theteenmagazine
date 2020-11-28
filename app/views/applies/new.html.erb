@@ -53,6 +53,7 @@ pintrk('track', 'pagevisit');
     <span class="d-block mt-4">Upload a sample of your writing that demonstrates your writing proficiency and style. This should be a previously-written essay, blog post, or other published work. Poems and fictional stories will not be considered (pdf):</span>
     <%= f.file_field :sample_writing %>
     <%= f.hidden_field :nickname %>
+    <%= f.hidden_field :kind, value: "Writer" %>
     <div class="btn_cntnr pb-0 mt-4 pt-2" style="float: none !important;"><%= f.submit 'Submit Application', class: "newpost--new--profile mr-0" %></div>
   <% end %>
   <i style="opacity: 50%;" class="d-block">

@@ -21,7 +21,6 @@
 body, #site-wrapper, #site-canvas, .bodywrapper {
   max-width: 100% !important;
   min-width: 100% !important;
-  // overflow-x: hidden !important;
   word-break: break-word;
 }
 
@@ -892,6 +891,7 @@ body {
     white-space: nowrap;
   }
   .author {
+    display: flex;
     margin: 3px 0;
   }
   .author_name {
@@ -1158,6 +1158,9 @@ p, ul, ol {
 }
 
 @media (max-width: 1030px) {
+  body, #site-wrapper, #site-canvas, .bodywrapper {
+    overflow-x: hidden !important;
+  }
   .flex_wrapper_columns {
     flex-direction: column !important;
     .share_article_feedback {

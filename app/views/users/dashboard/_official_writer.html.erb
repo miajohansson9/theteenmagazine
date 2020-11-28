@@ -4,7 +4,7 @@
       <div class="dashboard--writer--flex--main">
         <div class="flex--item"
           <% if @show_editor_onboarding %>
-            data-step data-index="1" data-onboarding-content="Welcome to your editor account! Your profile has been updated with your Editor stats."
+            data-step data-index="1" data-onboarding-content="Welcome to your editor account! Your profile has been updated with your editor stats."
           <% end %>
         >
           <%= render :partial => 'profile', locals: {user: @user} %>
@@ -141,7 +141,7 @@
         >
           <div>
             <%= link_to("Interview Application", "https://forms.gle/eQyETofL6M1bxvqy5", target: "_blank") %><br>
-            <%= link_to("Editor Application", "/applications/editor", target: "_blank") %><br>
+            <%= link_to("Editor Application", "/applications/editor") %><br>
           </div>
         </div>
         <br>

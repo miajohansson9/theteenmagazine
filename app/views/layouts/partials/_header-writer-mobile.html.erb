@@ -17,11 +17,6 @@
                 <span
                   id="dropdown-btn-content-wrapper"
                   style="display: block; height: 100%;"
-                  <% if @show_onboarding %>
-                    data-step data-index="1" data-onboarding-content="Click here to change your password, navigate to editor pitches, the community peer feedback page, and more."
-                  <% elsif @show_editor_onboarding %>
-                    data-step data-index="3" data-onboarding-content="New options have been added. Navigate to your editor dashboard here."
-                  <% end %>
                 >
                   <i class="fa fa-bars" ></i>
                   <%= @profile_img %>

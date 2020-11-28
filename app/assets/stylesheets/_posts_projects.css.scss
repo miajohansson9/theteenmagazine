@@ -325,16 +325,18 @@ iframe { margin: 1em auto;  display: block; }
   z-index: 0;
   padding: 10px 40px 0 40px;
 
-  #category_title a {
-    font-family: "Roboto Condensed Light";
-    color: #212529;
-    margin-bottom: .5rem !important;
-    &:hover {
-      text-decoration: none;
-      color: inherit;
+  #category_title {
+    font-size: inherit;
+    a {
+      font-family: "Roboto Condensed Light";
+      color: #212529;
+      margin-bottom: .5rem !important;
+      &:hover {
+        text-decoration: none;
+        color: inherit;
+      }
     }
   }
-
   .authors {
     display: flex;
     flex-direction: row;

@@ -6,6 +6,21 @@ class ApplicationMailer < ActionMailer::Base
     mail(to: user.email, subject: "#{user.first_name}, Welcome to The Teen Magazine!")
   end
 
+  def rejection_email(user)
+    @user = user
+    mail(to: user.email, subject: "Your Application to The Teen Magazine Writer Team")
+  end
+
+  def accepted_editor_email(user)
+    @user = user
+    mail(to: user.email, subject: "#{user.first_name}, Welcome to The Teen Magazine Editor Team!")
+  end
+
+  def rejected_editor_email(user)
+    @user = user
+    mail(to: user.email, subject: "Your Application to The Teen Magazine Editor Team")
+  end
+
   def profile_approved(user)
     @user = user
     unless @user.do_not_send_emails

@@ -7,7 +7,7 @@ class AppliesController < ApplicationController
   def index
     @notifications = @notifications - @unseen_applications_cnt
     @unseen_applications_cnt = 0
-    @applies = Apply.all.paginate(page: params[:page]).order("created_at desc")
+    @applies = Apply.where(rejected_writer_at: nil, rejected_editor_at: nil).order("updated_at desc").paginate(page: params[:page])
     current_user.last_saw_writer_applications = Time.now
     current_user.save
     set_meta_tags :title => "Writer Applications | The Teen Magazine"
@@ -42,20 +42,45 @@ class AppliesController < ApplicationController
                   }
   end
 
+  def update
+    @application = Apply.find(params[:id])
+    if @application.update(apply_params)
+      app_submitted
+    end
+  end
+
   #send submitted application
   def create
     @application = Apply.new(apply_params)
+    app_submitted
+  end
+
+  def app_submitted
     set_meta_tags title: "Application Submitted"
-    @application.request = request
-    if @application.deliver
-      flash.now[:error] = nil
+    if apply_params[:user_id].present?
+      @editor_app = true
+      @application.request = request
+      if @application.deliver
+        flash.now[:error] = nil
+      else
+        flash.now[:error] = "An error occured. Please check that you've filled out all the fields."
+        render :editor
+      end
     else
-      flash.now[:error] = "An error occured. Please check that you've filled out all the fields."
-      render :new
+      @editor_app = false
+      @application.request = request
+      if @application.deliver
+        flash.now[:error] = nil
+      else
+        flash.now[:error] = "An error occured. Please check that you've filled out all the fields."
+        render :new
+      end
     end
   end
 
   def editor
+    @application = Apply.where(rejected_editor_at: nil).find_by(user_id: current_user.id) || Apply.new
+    @applied_num_times = Apply.where(user_id: current_user.id, kind: "Editor").count
     set_meta_tags title: "Editor Application | The Teen Magazine",
                   description: "Our editor team is in charge of pitching new article topics, publishing/giving feedback to articles, and responding to profile submissions. We are active on Slack and support each other in helping our writer team succeed at The Teen Magazine."
   end
@@ -75,12 +100,12 @@ class AppliesController < ApplicationController
     @application = Apply.find(params[:id])
     # form for new user
     # when submit form, goes to registrations_controller
-    @user = User.new
+    @user = User.find_by(id: @application.user_id) || User.new
   end
 
   private
 
   def apply_params
-    params.require(:apply).permit(:email, :first_name, :last_name, :nickname, :description, :sample_writing, :resume, :grade)
+    params.require(:apply).permit(:email, :first_name, :last_name, :nickname, :description, :sample_writing, :resume, :grade, :user_id, :editor_revision, :editor_feedback, :editor_pitches, :kind, :rejected_writer_at, :rejected_editor_at)
   end
 end

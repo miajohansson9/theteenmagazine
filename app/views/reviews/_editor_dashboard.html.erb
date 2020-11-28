@@ -109,7 +109,7 @@
               <div class="alert alert-success" role="alert">
                 <i class="fas fa-check-circle"></i> You have completed the required <%= @assigned_reviews %> reviews and <%= @assigned_pitches %> pitched articles this month. Great job!
               </div>
-            <% elsif Date.today.end_of_month.day - Date.today.day < 16 && ((@assigned_pitches / 2) > @editor_pitches_cnt || (@assigned_reviews / 2) > @editor_reviews_cnt) %>
+            <% elsif Date.today.end_of_month.day - Date.today.day < 16 && (@editor_pitches_cnt + @editor_reviews_cnt < (@assigned_reviews + @assigned_pitches) / 2) && (@user.created_at < (Time.now - 30.days)) %>
               <div class="alert alert-danger" role="alert">
                 <i class="fas fa-exclamation-triangle"></i> You are not on track for completing the editor assignments by <b><%= Date.today.end_of_month.strftime("%B %d") %></b>.
                 Missing a deadline may result in your removal from the editor team.
@@ -130,7 +130,7 @@
                 <%= image_tag("profile_image.jpg", :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Editor</span>
               <% end %>
             </div>
-            <h5>Welcome back,</h5>
+            <h5>Welcome<% if !@show_editor_dashboard_onboarding %> back<% end %>,</h5>
             <div class="info">
               <h2 style="max-width: 80%; margin: 0 auto; font-weight: bold;">
                 <%= link_to(@user.try(:full_name), @user) %>

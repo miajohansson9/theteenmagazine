@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
       @notifications = @notifications + @unseen_editor_dashboard_cnt
     end
     if current_user.admin?
-      @unseen_applications = Apply.where('created_at > ?', current_user.last_saw_writer_applications)
+      @unseen_applications = Apply.where('created_at > ?', current_user.last_saw_writer_applications).or(Apply.where(kind: "Editor", rejected_editor_at: nil).where('updated_at > ?', current_user.last_saw_writer_applications))
       @unseen_applications_cnt = @unseen_applications.size
       @notifications = @notifications + @unseen_applications_cnt
     end
@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:email, :admin, :first_name, :last_name, :image, :password, :description) }
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:email, :admin, :first_name, :last_name, :image, :password, :description, :editor) }
   end
 
   def after_sign_in_path_for(resource)
