@@ -106,7 +106,7 @@ class AppliesController < ApplicationController
   def destroy
     @application = Apply.find(params[:id])
     @application.destroy
-    redirect_to applies_path, "Application deleted. No email was sent."
+    redirect_to applies_path, notice: "Application deleted. No email was sent."
   end
 
   private
