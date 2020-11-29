@@ -125,9 +125,13 @@
     flex-grow: 1;
     flex-shrink: 1;
     width: 300px;
+    h6 {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
     h1 {
       margin-left: 0;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       margin-top: -5px;
       border-bottom: none;
       padding: 0;
