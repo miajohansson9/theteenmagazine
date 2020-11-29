@@ -4,8 +4,6 @@
     <meta name="p:domain_verify" content="b07db16852ac484ab4d32324394040a1"/>
     <%= favicon_link_tag 'logo.png' %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
-    <script src="https://kit.fontawesome.com/f816369528.js" crossorigin="anonymous"></script>
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
@@ -94,6 +92,7 @@
       ga('create', 'UA-89987071-1', 'auto');
       ga('send', 'pageview');
     </script>
+    <script src="https://kit.fontawesome.com/f816369528.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
       $.fn.isOnScreen = function(){
         var win = $(window);
@@ -109,8 +108,8 @@
         return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
       };
       $('document').ready(function() {
-        $('a[href^="https://"]').not('a[href*=localhost]').attr('target','_blank');
-        $('a[href^="http://"]').not('a[href*=localhost]').attr('target','_blank');
+        $('a[href^="https://"]').not('a[href*=theteenmagazine]').attr('target','_blank');
+        $('a[href^="http://"]').not('a[href*=theteenmagazine]').attr('target','_blank');
         setTimeout(function() {
           $('.notice').slideUp();
         }, 1500);

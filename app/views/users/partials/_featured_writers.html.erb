@@ -7,7 +7,7 @@
       <% users.each_with_index do |user, index| %>
         <div class="carousel-item <% if index.eql? 0 %> active <% end %>">
           <div>
-            <%= render :partial => 'profile_minimal', locals: {user: user} %>
+            <%= render :partial => 'users/profile_minimal', locals: {user: user} %>
           </div>
         </div>
       <% end %>

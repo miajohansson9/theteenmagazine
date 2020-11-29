@@ -247,21 +247,18 @@ $gray:  #2a2a2a;
 }
 
 @media (max-width: 1270px) {
-  #disqus_thread {
-    margin: 0 20px;
-  }
-   .skinny {
-     margin: 0px !important;
-     #post_title_show {
-       h1 {
-         font-size: 45px;
-       }
-     }
-     .content_wrapper {
-       max-width: 100%;
-       margin: 0 0 0 20px;
+ .skinny {
+   margin: 0px !important;
+   #post_title_show {
+     h1 {
+       font-size: 45px;
      }
    }
+   .content_wrapper {
+     max-width: 100%;
+     margin: 0 0 0 20px;
+   }
+ }
 }
 
 @media (max-width: 550px) {
