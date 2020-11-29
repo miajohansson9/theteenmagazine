@@ -1,5 +1,4 @@
 @import "mdbootstrap/css/bootstrap.min";
-@import "mdbootstrap/css/mdb";
 @import "mdbootstrap/css/mdb.min";
 @import "common";
 @import 'normalize';
@@ -37,6 +36,9 @@ a {
   -webkit-transition:.5s;
   /* ...and now for the proper property */
   transition:.5s;
+  &:hover {
+    text-decoration: none !important;
+  }
 }
 
 .tooltip-inner {
@@ -674,7 +676,7 @@ a:hover {
     font-size: .96154rem;
     line-height: 36.15385px;
     position: absolute;
-    left: 0px;
+    left: 10px;
     top: 2px;
     width: 50%;
   }

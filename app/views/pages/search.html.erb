@@ -3,7 +3,7 @@
      <div class="other--articles">
        <div class="flex">
           <div class="container">
-            <div class="flex_horizontal">
+            <div class="flex_horizontal search_wrapper">
               <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
                 <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Searching in #{@filter.titleize}" %>
                 <%= f.hidden_field :filter, value: @filter %>

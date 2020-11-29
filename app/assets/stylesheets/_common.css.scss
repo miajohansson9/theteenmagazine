@@ -677,6 +677,15 @@ hr {
   }
 }
 
+.search_wrapper {
+  #search_query {
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-radius: 0px;
+  }
+}
+
 .flex_horizontal {
   display: flex;
   flex-direction: row;
