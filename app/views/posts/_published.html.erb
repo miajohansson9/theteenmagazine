@@ -1,6 +1,13 @@
 <style>
-.post_image {
-  background-image: url(<%= @post.thumbnail.url(:large2) %>);
+@media(min-width: 800px) {
+  .post_image {
+    background-image: url(<%= @post.thumbnail.url(:large2) %>);
+  }
+}
+@media(max-width: 800px) {
+  .post_image {
+    background-image: url(<%= @post.thumbnail.url(:medium) %>);
+  }
 }
 blockquote {
   margin: 1em 0;
