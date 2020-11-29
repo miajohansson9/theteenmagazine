@@ -51,6 +51,9 @@
     display: flex;
     flex-direction: column;
     background-color: white;
+    h3 {
+      margin: 10px 0;
+    }
     .ctgry_article {
       display: flex;
       flex-direction: row;

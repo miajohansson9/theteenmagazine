@@ -19,7 +19,7 @@ blockquote {
 <div class="flex_wrapper_posts">
   <div class="skinny wrapper_padding" id="post_show_content">
     <div class="flex_wrapper_columns">
-      <div class="content_wrapper mb-4">
+      <div class="content_wrapper">
         <header id="post_title_show">
           <h1 class="title_article_show"><%= @post.title %></h1>
           <h3 id="category_title"><%= link_to(@post.category.name, @post.category) %></h3>
@@ -107,7 +107,7 @@ blockquote {
                   <% end %>
                 </div>
               <% end %>
-              <div id= "background">
+              <div id= "background" class="mb-4">
                <%= render :partial => 'users/profile', locals: {user: @user} %>
                <% @collabs.each do |collab| %>
                 <%= render :partial => 'users/profile', locals: {user: collab} %>
@@ -117,7 +117,7 @@ blockquote {
         </div>
       </div>
   </div>
-  <div class="post_apply">
+  <div class="post_apply mb-4">
     <div class="articles">
       <div class="flex_other_articles">
         <div class="ads_wrapper">

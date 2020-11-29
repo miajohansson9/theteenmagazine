@@ -6,6 +6,7 @@ gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+  gem 'heroku-deflater'
 end
 
 group :development do
