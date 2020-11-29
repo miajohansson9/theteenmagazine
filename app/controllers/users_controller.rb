@@ -110,7 +110,7 @@ class UsersController < ApplicationController
     set_meta_tags title: "Onboarding | The Teen Magazine", onboarding: "Turn off ads"
     @user = current_user
     @partial = params[:step] || "welcome"
-    @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc"), page: params[:page], items: 1)
+    @pitches = Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc").paginate(page: params[:page], per_page: 9)
     @pitch = Pitch.where(claimed_id: current_user.id).find_by(id: current_user.onboarding_claimed_pitch_id)
   end
 

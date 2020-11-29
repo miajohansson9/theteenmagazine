@@ -412,6 +412,12 @@ html, body {
   }
 }
 
+.will_paginate_container {
+  a {
+    padding: 0 10px 20px 0;
+  }
+}
+
 .pagination {
   justify-content: center;
   em, span {

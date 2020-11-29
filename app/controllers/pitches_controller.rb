@@ -148,7 +148,7 @@ class PitchesController < ApplicationController
       @pitch.posts.where(publish_at: nil, user_id: current_user.id).destroy_all
       current_user.update(onboarding_claimed_pitch_id: nil)
       if @pitch.update(pitch_params)
-        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc"), page: params[:page], items: 12)
+        @pitches = Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc").paginate(page: params[:page], per_page: 9)
         respond_to do |format|
           format.html { redirect_to "/onboarding?step=next_steps"}
           format.js
