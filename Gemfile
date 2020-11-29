@@ -6,7 +6,6 @@ gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 group :production do
   gem 'pg'
   gem 'rails_12factor'
-  gem 'heroku-deflater'
 end
 
 group :development do
@@ -41,6 +40,7 @@ gem 'multi_json', '>= 1.11.0'
 gem 'font-awesome-rails'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'bootsnap', require: false
+gem 'heroku-deflater', git: 'https://github.com/romanbsd/heroku-deflater.git'
 
 group :development, :test do
   gem 'byebug', platform: :mri

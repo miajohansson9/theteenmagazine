@@ -6,6 +6,12 @@ GIT
       faraday (>= 0.16.0)
       multi_json (>= 1.11.0)
 
+GIT
+  remote: https://github.com/romanbsd/heroku-deflater.git
+  revision: 586830958163f5fe8f19ace2c75077a6053e10f2
+  specs:
+    heroku-deflater (0.7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -1083,8 +1089,6 @@ GEM
       activerecord (>= 4.0.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    heroku-deflater (0.6.3)
-      rack (>= 1.4.5)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     ipaddress (0.8.3)
@@ -1244,7 +1248,7 @@ DEPENDENCIES
   font-awesome-rails
   friendly_id (~> 5.1)
   gibbon!
-  heroku-deflater
+  heroku-deflater!
   jbuilder (~> 2.5)
   jquery-rails
   kramdown (~> 1.9)

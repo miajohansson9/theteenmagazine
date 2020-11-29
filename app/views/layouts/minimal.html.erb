@@ -157,8 +157,6 @@
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-89987071-1', 'auto');
       ga('send', 'pageview');
-    </script>
-    <script type="text/javascript">
       $.fn.isOnScreen = function(){
         var win = $(window);
         var viewport = {
@@ -180,6 +178,7 @@
         }
       };
       $('document').ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
         setTimeout(function() {
           $('.notice').slideUp();
         }, 1500);
@@ -187,9 +186,6 @@
           $("#submit-comment-modal-button").addClass("disabled");
           $(".spinner-button").removeClass("hide");
         });
-      });
-      $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
       });
     </script>
     <script src="https://kit.fontawesome.com/f816369528.js" crossorigin="anonymous"></script>
