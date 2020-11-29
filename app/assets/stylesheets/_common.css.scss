@@ -1,21 +1,19 @@
 @font-face {
   font-family: "Roboto Condensed Bold";
   src: font-url("RobotoCondensedBoldItalic.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Roboto Condensed Light";
   src: font-url("RobotoCondensedLightItalic.ttf");
+  font-display: swap;
 }
 
 @font-face {
-  font-family: "justwaitandsee";
+  font-family: "Morva";
   src: font-url("MORVA.otf");
-}
-
-@font-face {
-  font-family: "Kristi";
-  src: font-url("HiddenMeanings.ttf");
+  font-display: swap;
 }
 
 body, #site-wrapper, #site-canvas, .bodywrapper {
@@ -366,7 +364,7 @@ html, body {
   h2 {
     margin: 0;
     a {
-      font-family: "justwaitandsee";
+      font-family: "Morva", sans-serif;
       font-size: 50px;
       padding: 0;
       line-height: 1;
@@ -591,7 +589,7 @@ hr {
 }
 
 #main_title {
-  font-family: "justwaitandsee";
+  font-family: "Morva", sans-serif;
   font-size: 80px;
   text-align: left;
   margin-bottom: -2px;
@@ -897,7 +895,7 @@ footer {
     }
   }
   h1 a {
-    font-family: "justwaitandsee", "serif";
+    font-family: "Morva", "serif";
     font-size: 1em;
     display: inline;
   }
@@ -1003,7 +1001,7 @@ footer {
   }
 
   .nav-title-wrapper a, .nav-title {
-    font-family: 'justwaitandsee';
+    font-family: 'Morva';
     font-size: 1.4rem;
     font-style: italic;
     color: #4ABEB6;
