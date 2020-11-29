@@ -6,12 +6,6 @@ GIT
       faraday (>= 0.16.0)
       multi_json (>= 1.11.0)
 
-GIT
-  remote: https://github.com/romanbsd/heroku-deflater.git
-  revision: 586830958163f5fe8f19ace2c75077a6053e10f2
-  specs:
-    heroku-deflater (0.7.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -57,7 +51,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
-    autoprefixer-rails (10.0.2.0)
+    autoprefixer-rails (10.0.3.0)
       execjs
     aws-eventstream (1.1.0)
     aws-partitions (1.399.0)
@@ -1103,7 +1097,7 @@ GEM
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    loofah (2.7.0)
+    loofah (2.8.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -1249,7 +1243,6 @@ DEPENDENCIES
   font-awesome-rails
   friendly_id (~> 5.1)
   gibbon!
-  heroku-deflater!
   jbuilder (~> 2.5)
   jquery-rails
   kramdown (~> 1.9)

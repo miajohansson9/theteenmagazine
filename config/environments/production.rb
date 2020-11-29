@@ -119,6 +119,4 @@ Rails.application.configure do
     }
     # Secret key base for non-existent secrets.yml file
     config.secret_key_base = ENV["SECRET_KEY_BASE"]
-
-    config.middleware.use Rack::Deflater
 end
