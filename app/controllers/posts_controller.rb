@@ -346,6 +346,7 @@ class PostsController < ApplicationController
     @post.content.gsub!("<pre>", "<p>")
     @post.content.gsub!("</pre>", "</p>")
     @post.content.gsub!("<hr />", "")
+    @post.content.gsub!("<p><iframe", "<p class='responsive-iframe-container'><iframe class='responsive-iframe'")
     @post.content.gsub!("s3.amazonaws.com/media.theteenmagazine.com", "media.theteenmagazine.com")
     @post.content.gsub!("s3.amazonaws.com/theteenmagazine", "media.theteenmagazine.com")
   end
