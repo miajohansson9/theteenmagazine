@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :find_category, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
-  
+
   def index
     redirect_to root_path
   end
@@ -37,7 +37,7 @@ class CategoriesController < ApplicationController
                     :image => @category.image,
                     :domain => "https://www.theteenmagazine.com/"
                   }
-    @category_posts = Post.where(category_id: @category.id).published.all.paginate(page: params[:page], per_page: 15).order("publish_at desc")
+    @pagy, @category_posts = pagy(Post.where(category_id: @category.id).published.order("publish_at desc"), page: params[:page], items: 15)
   end
 
   def edit

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include CanCan::ControllerAdditions
+  include Pagy::Backend
 
   protect_from_forgery with: :exception
 

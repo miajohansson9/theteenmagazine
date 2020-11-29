@@ -27,7 +27,7 @@
         </div>
       <% end %>
   <% end %>
-  <%= will_paginate @partners %>
+  <%== pagy_nav(@pagy).html_safe %>
   <div class="btn_cntnr">
     <%= link_to "New Partner Profile", new_user_path, class: "newpost--new--profile" %>
   </div>

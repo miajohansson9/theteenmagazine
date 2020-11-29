@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_28_020511) do
+ActiveRecord::Schema.define(version: 2020_11_29_195942) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(version: 2020_11_28_020511) do
     t.boolean "rejected_topic"
     t.boolean "rejected_thumbnail"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
+    t.index ["updated_at"], name: "index_pitches_on_updated_at"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -218,6 +219,8 @@ ActiveRecord::Schema.define(version: 2020_11_28_020511) do
     t.integer "partner_id"
     t.boolean "featured"
     t.boolean "newsletter"
+    t.index ["post_impressions"], name: "index_posts_on_post_impressions"
+    t.index ["publish_at"], name: "index_posts_on_publish_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
@@ -304,7 +307,9 @@ ActiveRecord::Schema.define(version: 2020_11_28_020511) do
     t.string "became_an_editor"
     t.boolean "completed_editor_onboarding"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["full_name"], name: "index_users_on_full_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end

@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     end
     @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).order("updated_at desc")
     @user_posts_approved_records = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.order("publish_at desc")
-    @user_posts_approved= @user_posts_approved_records.paginate(page: params[:page], per_page: 10)
+    @pagy, @user_posts_approved = pagy(@user_posts_approved_records, page: params[:page], items: 10)
     if !@user.editor? && current_user.present?
       @user_pitches = @user.pitches.not_claimed.order("updated_at desc")
     elsif @user.editor?
@@ -110,7 +110,7 @@ class UsersController < ApplicationController
     set_meta_tags title: "Onboarding | The Teen Magazine", onboarding: "Turn off ads"
     @user = current_user
     @partial = params[:step] || "welcome"
-    @pitches = Pitch.is_approved.not_claimed.where(status: nil).paginate(page: params[:page], per_page: 9).order("updated_at desc")
+    @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc"), page: params[:page], items: 1)
     @pitch = Pitch.where(claimed_id: current_user.id).find_by(id: current_user.onboarding_claimed_pitch_id)
   end
 
@@ -136,18 +136,18 @@ class UsersController < ApplicationController
   end
 
   def show_users
-    @users = User.where(partner: [nil, false]).all.paginate(page: params[:page], per_page: 25).order("created_at desc")
+    @pagy, @users = pagy(User.where(partner: [nil, false]).order("created_at desc"), page: params[:page], items: 25)
     @users_waiting = User.all.review_profile
   end
 
   def partners
     set_meta_tags title: "Partners | The Teen Magazine"
-    @partners = User.where(partner: true).all.paginate(page: params[:page], per_page: 25).order("created_at desc")
+    @pagy, @partners = pagy(User.where(partner: true).order("created_at desc").order("created_at desc"), page: params[:page], items: 25)
   end
 
   def editors
     set_meta_tags title: "Editors | The Teen Magazine"
-    @editors = User.where(editor: true).all.paginate(page: params[:page], per_page: 25).order("created_at desc")
+    @pagy, @editors = pagy(User.where(editor: true).order("created_at desc").order("created_at desc"), page: params[:page], items: 25)
   end
 
   def reset_email
@@ -260,9 +260,9 @@ class UsersController < ApplicationController
     set_meta_tags title: "Add Partner to Article | The Teen Magazine"
     if params[:search].present?
       @query = params[:search][:query]
-      @posts = Post.draft.where(partner_id: nil).where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc").paginate(page: params[:page], per_page: 15)
+      @pagy, @posts = pagy(Post.draft.where(partner_id: nil).where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc"), page: params[:page], items: 15)
     else
-      @posts = Post.draft.where(partner_id: nil).paginate(page: params[:page], per_page: 15).order("publish_at desc")
+      @pagy, @posts = pagy(Post.draft.where(partner_id: nil).order("publish_at desc"), page: params[:page], items: 15)
     end
   end
 

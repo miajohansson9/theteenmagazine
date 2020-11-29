@@ -48,7 +48,7 @@ class PostsController < ApplicationController
     end
     @points = current_user.points
     @my_shared_drafts = current_user.posts.where(sharing: true, publish_at: nil).draft.order("updated_at desc")
-    @shared_drafts = Post.where(sharing: true).draft.order("updated_at desc").paginate(page: params[:page], per_page: 15)
+    @pagy, @shared_drafts = pagy(Post.where(sharing: true).draft.order("updated_at desc"), page: params[:page], items: 12)
     @replies  = current_user.comments.map{|c| c.comments.where.not(user_id: current_user.id)}.flatten.reject(&:blank?)
     @comments_following  = current_user.comments.where.not(comment_id: nil).map{ |c| @parent = Comment.find_by(id: c.comment_id)
                                                                                  if @parent.try(:comments).present?

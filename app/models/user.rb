@@ -24,8 +24,6 @@ class User < ActiveRecord::Base
     includes(:posts).where.not(:posts => {publish_at: nil })
   }
 
-  self.per_page = 24
-
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :profile, :content_type => /\Aimage\/.*\Z/
 

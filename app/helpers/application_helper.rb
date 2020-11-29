@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def markdown(content)
     renderer = Redcarpet::Render::HTML.new(hard_wrap: true,
     autolink: true,

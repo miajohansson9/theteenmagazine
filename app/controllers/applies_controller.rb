@@ -7,7 +7,7 @@ class AppliesController < ApplicationController
   def index
     @notifications = @notifications - @unseen_applications_cnt
     @unseen_applications_cnt = 0
-    @applies = Apply.where(rejected_writer_at: nil, rejected_editor_at: nil).order("updated_at desc").paginate(page: params[:page])
+    @pagy, @applies = pagy(Apply.where(rejected_writer_at: nil, rejected_editor_at: nil).order("updated_at desc"), page: params[:page], items: 20)
     current_user.last_saw_writer_applications = Time.now
     current_user.save
     set_meta_tags :title => "Writer Applications | The Teen Magazine"

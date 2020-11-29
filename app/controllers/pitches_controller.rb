@@ -16,12 +16,12 @@ class PitchesController < ApplicationController
       if params[:pitch].nil?
         @pitch = Pitch.new
         @categories = Category.all
-        @pitches = Pitch.is_approved.not_claimed.where(status: nil).paginate(page: params[:page]).order("updated_at desc")
+        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc"), page: params[:page], items: 12)
       else
         @categories = Category.all
         @category_id = (params[:pitch][:category_id].blank?) ? @categories.map {|category| category.id} : params[:pitch][:category_id]
         @pitch = Pitch.new(category_id: params[:pitch][:category_id])
-        @pitches = Pitch.is_approved.not_claimed.where(category_id: @category_id, status: nil).paginate(page: params[:page]).order("updated_at desc")
+        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(category_id: @category_id, status: nil).order("updated_at desc"), page: params[:page], items: 12)
       end
       @desc = true
       @message = "There are no unclaimed pitches. Check back in a few days!"
@@ -33,7 +33,7 @@ class PitchesController < ApplicationController
       set_meta_tags :title => @title
       @button_text = "View Pitch"
       @message = "You don't have any claimed pitches. :("
-      @pitches = Pitch.all.where(claimed_id: params[:user_id]).paginate(page: params[:page]).order("updated_at desc")
+      @pagy, @pitches = pagy(Pitch.all.where(claimed_id: params[:user_id]).order("updated_at desc"), page: params[:page], items: 12)
     end
   end
 
@@ -70,7 +70,7 @@ class PitchesController < ApplicationController
         end
         @post.title = "#{@post.title} (locked)"
         @post.save
-        @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: Post)
+        @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: "Post")
         @slug&.destroy_all
       end
       if current_user.admin?
@@ -148,7 +148,7 @@ class PitchesController < ApplicationController
       @pitch.posts.where(publish_at: nil, user_id: current_user.id).destroy_all
       current_user.update(onboarding_claimed_pitch_id: nil)
       if @pitch.update(pitch_params)
-        @pitches = Pitch.is_approved.not_claimed.where(status: nil).paginate(page: params[:page], per_page: 9).order("updated_at desc")
+        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc"), page: params[:page], items: 12)
         respond_to do |format|
           format.html { redirect_to "/onboarding?step=next_steps"}
           format.js

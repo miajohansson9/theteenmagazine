@@ -9,8 +9,6 @@ class Pitch < ApplicationRecord
   validates :thumbnail, :presence => true
   validates_length_of :title, minimum: 30, maximum: 70
 
-  self.per_page = 18
-
   scope :is_submitted, -> {
     where(status: "Ready for Review")
   }

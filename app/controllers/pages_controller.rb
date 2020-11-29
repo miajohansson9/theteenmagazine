@@ -80,21 +80,21 @@ class PagesController < ApplicationController
       @query = params[:search][:query]
       @filter = params[:search][:filter]
       if @filter.eql? "writers"
-        @users = User.where(partner: [false, nil]).is_published.where("lower(full_name) LIKE ?", "%#{@query.downcase}%").order("full_name asc").paginate(page: params[:page], per_page: 15)
+        @pagy, @users = pagy(User.where(partner: [false, nil]).is_published.where("lower(full_name) LIKE ?", "%#{@query.downcase}%").order("full_name asc"), page: params[:page], items: 15)
       else
-        @posts = Post.published.where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc").paginate(page: params[:page], per_page: 15)
+        @pagy, @posts = pagy(Post.published.where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc"), page: params[:page], items: 15)
       end
     else
       if params[:filter].present?
         @filter = params[:filter]
         if @filter.eql? "writers"
-          @users = User.where(partner: [false, nil]).is_published.order("full_name asc").paginate(page: params[:page], per_page: 15)
+          @pagy, @users = pagy(User.where(partner: [false, nil]).is_published.order("full_name asc"), page: params[:page], items: 15)
         else
-          @posts = Post.published.all.paginate(page: params[:page], per_page: 15).order("publish_at desc")
+          @pagy, @posts = pagy(Post.published.order("publish_at desc"), page: params[:page], items: 15)
         end
       else
         @filter = "all articles"
-        @posts = Post.published.all.paginate(page: params[:page], per_page: 15).order("publish_at desc")
+        @pagy, @posts = pagy(Post.published.order("publish_at desc"), page: params[:page], items: 15)
       end
     end
     @next = (@filter.eql? "writers") ? "all articles" : "writers"

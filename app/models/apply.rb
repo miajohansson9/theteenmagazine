@@ -13,8 +13,6 @@ class Apply < ActiveRecord::Base
   attributes :editor_revision, presence: true, if: -> {current_user.present?}
   attributes :editor_pitches, presence: true, if: -> {current_user.present?}
 
-  self.per_page = 25
-
   has_attached_file :resume
   validates_attachment_content_type :resume, content_type: ['application/pdf']
 

@@ -31,7 +31,7 @@
                    </div>
                  </div>
                <% end %>
-               <%= will_paginate @posts %>
+               <%== pagy_nav(@pagy).html_safe %>
               <% elsif @users.present? %>
                 <% @users.each do | user | %>
                     <div class="flex--profile" style="padding-left: 0; padding-right: 0;">
@@ -53,7 +53,7 @@
                       </div>
                     </div>
                   <% end %>
-                <%= will_paginate @users %>
+                <%== pagy_nav(@pagy).html_safe %>
                 <% else %>
                   <p style="margin-top: -10px;">Your search did not have any results.</p>
               <% end %>

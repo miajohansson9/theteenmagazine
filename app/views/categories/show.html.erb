@@ -24,7 +24,7 @@
        <a class="apply" href="/apply" target="blank">
        </a>
      </div>
-     <%= will_paginate @category_posts %>
+     <%== pagy_nav(@pagy).html_safe %>
    </div>
   </div>
 </div>

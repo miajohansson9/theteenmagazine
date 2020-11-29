@@ -274,7 +274,7 @@ html, body {
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 /*
@@ -414,7 +414,7 @@ html, body {
 
 .pagination {
   justify-content: center;
-  em, a, span {
+  em, span {
     padding: 0 10px 20px 0;
     text-decoration: none;
   }

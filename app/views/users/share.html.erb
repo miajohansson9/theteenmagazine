@@ -46,7 +46,7 @@
                  </div>
                 <% end %>
               </div>
-              <%= will_paginate @posts %>
+              <%== pagy_nav(@pagy).html_safe %>
             <% else %>
               <p style="margin-top: -10px;">Your search did not have any results.</p>
             <% end %>
