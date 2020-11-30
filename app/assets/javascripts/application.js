@@ -16,6 +16,9 @@
 //= require bootstrap
 //= require ckeditor/init
 //= require dashboard
+//= require plugins/snap.svg-min
+//= require plugins/onboarding.min
+//= require index_bundle
 
 /*========================================
 =            CUSTOM FUNCTIONS            =
