@@ -9,11 +9,6 @@
   <a href="/categories/relationships">Relationships</a>
   <a href="/categories/lifestyle">Lifestyle</a>
   <a href="/categories/op-ed">Op-Ed</a>
-  <% if user_signed_in? %>
-     <%= link_to "My Profile", user_path(current_user) %>
-     <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-  <% else %>
-    <a href="/apply">Apply</a>
-    <a href="/login">Log in</a>
-  <% end %>
+  <a href="/apply">Apply</a>
+  <%= link_to "My Profile", get_profile_path %>
 </div>

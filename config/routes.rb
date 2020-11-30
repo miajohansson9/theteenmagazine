@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
   get :get_trending_posts_in_category, controller: :posts
 
+  get :get_profile, controller: :users
+
   get 'welcome/index'
   root 'welcome#index'
 

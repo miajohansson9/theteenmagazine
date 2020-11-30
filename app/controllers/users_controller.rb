@@ -51,6 +51,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_profile
+    @user = User.friendly.find(params[:id]) unless params[:id].nil?
+    redirect_to "/writers/#{@user.slug}" unless @user.nil?
+    redirect_to "/login"
+  end
+
   def onboarding_redirect
     if current_user.present? && (current_user.submitted_profile.eql? nil) && (!current_user.partner)
       redirect_to "/onboarding", notice: "Please complete the onboarding process first."
