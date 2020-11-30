@@ -7,11 +7,6 @@ class WelcomeController < ApplicationController
     @posts_approved_1 = Post.published.limit(3).where(category_id: Category.find('student-life').id)
   end
 
-  def get_trending_posts
-    @trending = Post.published.trending.limit(7)
-    render partial: "welcome/partials/trending"
-  end
-
   def get_category_2_welcome
     @posts_approved_2 = Post.published.limit(3).where(category_id: Category.find('opinion').id)
     render partial: "welcome/categories/category_2"
@@ -25,6 +20,11 @@ class WelcomeController < ApplicationController
   def get_category_4_welcome
     @posts_approved_4 = Post.published.limit(6).where(category_id: Category.find('lifestyle').id)
     render partial: "welcome/categories/category_4"
+  end
+
+  def get_trending_posts
+    @trending = Post.published.trending.limit(7)
+    render partial: "welcome/partials/trending"
   end
 
   def get_recent_posts
