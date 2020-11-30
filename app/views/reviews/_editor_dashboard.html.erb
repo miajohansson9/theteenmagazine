@@ -200,6 +200,8 @@
 </script>
 
 <% if @show_editor_dashboard_onboarding %>
+  <%= javascript_include_tag "plugins/mdb.min" %>
+  <%= javascript_include_tag "plugins/onboarding.min" %>
   <script type="text/javascript">
     $(document).ready(function(){
       setTimeout(function() {
@@ -208,3 +210,5 @@
     });
   </script>
 <% end %>
+
+<%= javascript_include_tag "plugins/snap.svg-min" %>

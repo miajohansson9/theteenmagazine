@@ -107,3 +107,7 @@ blockquote {
     <% end %>
   };
 </script>
+
+<% if @post.sharing || @post.partner_id.present? %>
+  <%= javascript_include_tag "plugins/index_bundle" %>
+<% end %>
