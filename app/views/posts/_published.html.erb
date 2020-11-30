@@ -142,14 +142,16 @@ blockquote {
         </div>
         <h3>Trending in <%= link_to(@post.category.name, @post.category, :class => "category_title_trending") %></h3>
         <div class="contain_articles">
-          <% @trending.each do |post| %>
-            <div class="ctgry_article">
-               <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
-              <div class="paragraph">
-                <p><%= link_to(post.title.truncate_words(12), post) %></p>
+          <% cache(@trending) do %>
+            <% @trending.each do |post| %>
+              <div class="ctgry_article">
+                 <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
+                <div class="paragraph">
+                  <p><%= link_to(post.title.truncate_words(12), post) %></p>
+                </div>
               </div>
-            </div>
-        <% end %>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>

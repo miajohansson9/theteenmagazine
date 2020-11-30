@@ -25,43 +25,7 @@
           <% if notice %>
             <p class="notice"><%= notice %></p>
           <% end %>
-          <header id="main_navigation" class="clearfix header-navigation">
-            <div id="banner" class="banner-relative">
-              <i class="fa fa-bars toggle-nav" onclick="toggleNav();"></i>
-              <a id="name_wrapper" href="/">
-                <picture>
-                  <source srcset="<%= image_url('teenmag.png') %>" media="(min-width: 800px)">
-                  <%= image_tag("teenmag_mobile.png", :data => {"loading" => "lazy"}, :id => "name") %>
-                </picture>
-              </a>
-              <div class="social-media">
-                <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fa fa-facebook-official" aria-hidden="false"></i></a>
-                <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fa fa-pinterest" aria-hidden="false"></i></a>
-                <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fa fa-twitter" aria-hidden="false"></i></a>
-                <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fa fa-instagram" aria-hidden="false"></i></a>
-                <a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
-              </div>
-            </div>
-            <div class="border">
-              <nav class="nav_article">
-                <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
-                <a class="link" href="/categories/student-life">Student Life</a>
-                <a class="link" href="/categories/wellness">Wellness</a>
-                <a class="link" href="/categories/beauty-style">Beauty & Style</a>
-                <a class="link" href="/categories/culture">Culture</a>
-                <a class="link" href="/categories/relationships">Relationships</a>
-                <a class="link" href="/categories/lifestyle">Lifestyle</a>
-                <a class="link" href="/categories/op-ed">Op-Ed</a>
-                <% if user_signed_in? %>
-                  <%= link_to "Create", pitches_path, class: "link" %>
-                  <%= link_to "Dashboard", user_path(current_user), class: "link" %>
-                <% else %>
-                    <a class="link" href="/apply">Apply</a>
-                    <a class="link" href="/login">Log in</a>
-                <% end %>
-              </nav>
-            </div>
-          </header>
+          <%= render "layouts/partials/header" %>
           <%= yield %>
         </div>
       </div>
@@ -115,6 +79,5 @@
     <!-- End Facebook Pixel Code -->
     <script defer src="https://kit.fontawesome.com/f816369528.js" crossorigin="anonymous"></script>
     <%= javascript_include_tag 'mdb.min' %>
-    <%= javascript_include_tag 'plugins/src_js_pro_lazyLoad' %>
   </body>
 </html>
