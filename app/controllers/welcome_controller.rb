@@ -6,10 +6,10 @@ class WelcomeController < ApplicationController
     @featured = @featured.nil? ? Post.published.order("publish_at desc").first : @featured
     @posts_approved = Post.published.order("publish_at desc").limit(30)
     @posts_approved_0 = @posts_approved[0..4]
-    @posts_approved_1 = @posts_approved.where(category_id: Category.find("student-life").id).reject{|p| @posts_approved_0.include? p}.slice(0, 3)
-    @posts_approved_2 = @posts_approved.where(category_id: Category.find("opinion").id).reject{|p| @posts_approved_0.include? p}.slice(0, 3)
-    @posts_approved_3 = @posts_approved.where(category_id: Category.find("culture").id).reject{|p| @posts_approved_0.include? p}.slice(0, 3)
-    @posts_approved_4 = @posts_approved.where(category_id: Category.find("lifestyle").id).reject{|p| @posts_approved_0.include? p}.slice(0, 6)
+    @posts_approved_1 = @posts_approved.limit(3).where(category_id: Category.find("student-life").id)
+    @posts_approved_2 = @posts_approved.limit(3).where(category_id: Category.find("opinion").id)
+    @posts_approved_3 = @posts_approved.limit(3).where(category_id: Category.find("culture").id)
+    @posts_approved_4 = @posts_approved.limit(6).where(category_id: Category.find("lifestyle").id)
     @featured_posts = @posts_approved_0 + @posts_approved_1 + @posts_approved_2 + @posts_approved_3 + @posts_approved_4
     @posts_approved_last = @posts_approved.reject{|p| @featured_posts.include? p}
     @postsranking = Post.published.where(:publish_at => (Time.now - 1.months)..Time.now).limit(7).order("post_impressions desc")
