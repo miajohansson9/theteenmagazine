@@ -17,8 +17,8 @@
 //= require ckeditor/init
 //= require dashboard
 //= require mdb.min
-//= require plugins/snap.svg-min
-//= require plugins/onboarding.min
+//= require snap.svg-min
+//= require onboarding.min
 //= require index_bundle
 
 /*========================================
