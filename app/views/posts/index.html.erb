@@ -18,7 +18,7 @@
               <p class="card-text">Sharing has been turned on for your draft <%= link_to(draft.title, draft) %>.</p>
             </div>
             <% if draft.promoting_until.present? && draft.promoting_until > Time.now %>
-              <div class="rounded-bottom rgba-red-strong lighten-3 text-right p-3">
+              <div class="rounded-bottom lighten-3 text-right p-3" style="background-color: #FA8075">
                 <p class="list-inline-item pr-2 white-text"><i class="fas fa-fire"></i> Promoting ends in <%= time_ago_in_words(draft.promoting_until) %></p>
               </div>
             <% else %>
@@ -62,7 +62,7 @@
   <div class="flex-wrapper flex-drafts">
     <% @shared_drafts.each do |draft| %>
       <% @featured = draft.promoting_until.present? && draft.promoting_until > Time.now %>
-      <% @color = @featured ? "rgba-red-strong" : "mdb-color" %>
+      <% @color = @featured ? "#FA8075" : "#91A0BA" %>
       <a href="<%= post_path(draft)%>">
         <div class="card" style="width: 32%; <% if @unseen_shared_drafts.to_a.include? draft %>background-color: #E6F6FF;<% end %>">
           <%= image_tag(draft.thumbnail.url(:large2), :class => "card-img-top") %>
@@ -72,7 +72,7 @@
               <p class="card-text"><i class="fas fa-fire"></i> This draft is being promoted. All feedback given will be rewarded twice as many points.</p>
             <% end %>
           </div>
-          <div class="rounded-bottom <%= @color %> lighten-3 text-left p-3">
+          <div class="rounded-bottom lighten-3 text-left p-3" style="background-color: <%= @color %>">
             <p class="list-inline-item pr-2 white-text"><%= link_to("Give Feedback", post_path(draft), style: "color: white !important;")%></p>
             <p class="list-inline-item pr-2 white-text"><i class="fa fa-comments" aria-hidden="true"></i> <%= draft.comments.count %> comments</p>
           </div>
