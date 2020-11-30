@@ -6,6 +6,7 @@
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'onboarding', media: 'all' %>
+    <%= preload_link_tag 'bootstrap.min'%>
     <%= javascript_include_tag 'application'%>
     <% if current_user.partner %>
       <meta name="partner" content="Turn off ads">
