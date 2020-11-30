@@ -6,10 +6,10 @@
           <div class="featured divfeatured">
             <div class="featured individual">
               <div class="featured_img">
-                <%=link_to(image_tag(@posts_approved_0[0].thumbnail.url(:large2), alt: @posts_approved_0[0].title, :id => "image_thumbnail"), @posts_approved_0[0] )%>
+                <%=link_to(image_tag(@featured.thumbnail.url(:large2), alt: @featured.title, :id => "image_thumbnail"), @featured )%>
               </div>
-              <h3 class="article_title"><%= link_to @posts_approved_0[0].title, @posts_approved_0[0] %></h3>
-              <p class="date"><%= @posts_approved_0[0].publish_at.strftime("%A, %b %d")%>, Featured article</p>
+              <h3 class="article_title"><%= link_to @posts_approved_0[0].title, @featured %></h3>
+              <p class="date"><%= @featured.publish_at.strftime("%A, %b %d")%>, Featured article</p>
             </div>
           </div>
           <div class="articles2-6">
@@ -141,26 +141,14 @@
   </div>
   <h1 id="recent_title" class="section--title">Recent Articles</h1>
   <div class="ctgry_section">
-    <% @posts_approved_last.each_with_index do |post, index| %>
-      <% if index < 3 %>
-        <div style="margin-bottom: 20px;" class="ctgry_article recent">
-          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title, class: "image_recent_articles"), post )%>
-          <h1><%= link_to post.title, post %></h1>
-          <p class="category"><%= link_to(post.category.name, post.category) %></p>
-          <p><%= post.publish_at.strftime("%A, %b %d")%></p>
-          <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
-        </div>
-      <% else %>
-        <div class="rcnt_article">
-          <div class="article_description">
-            <h1><%= link_to post.title, post %></h1>
-            <p class="category"><%= link_to(post.category.name, post.category) %></p>
-            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
-          </div>
-          <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title), post )%>
-        </div>
-      <% end %>
+    <% @posts_approved_last.each do |post| %>
+      <div style="margin-bottom: 20px;" class="ctgry_article recent">
+        <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title, class: "image_recent_articles"), post )%>
+        <h1><%= link_to post.title, post %></h1>
+        <p class="category"><%= link_to(post.category.name, post.category) %></p>
+        <p><%= post.publish_at.strftime("%A, %b %d")%></p>
+        <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
+      </div>
     <% end %>
   </div>
 </div>

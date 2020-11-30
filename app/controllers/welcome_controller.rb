@@ -2,17 +2,27 @@ class WelcomeController < ApplicationController
   before_action :show
 
   def index
-    @featured = Post.published.where(featured: true).order("publish_at desc").first
-    @featured = @featured.nil? ? Post.published.order("publish_at desc").first : @featured
-    @posts_approved = Post.published.order("publish_at desc").limit(30)
-    @posts_approved_0 = @posts_approved[0..4].insert(0, @featured).uniq[0..4]
-    @posts_approved_1 = @posts_approved.limit(3).where(category_id: Category.find("student-life").id)
-    @posts_approved_2 = @posts_approved.limit(3).where(category_id: Category.find("opinion").id)
-    @posts_approved_3 = @posts_approved.limit(3).where(category_id: Category.find("culture").id)
-    @posts_approved_4 = @posts_approved.limit(6).where(category_id: Category.find("lifestyle").id)
-    @featured_posts = @posts_approved_0 + @posts_approved_1 + @posts_approved_2 + @posts_approved_3 + @posts_approved_4
-    @posts_approved_last = @posts_approved.reject{|p| @featured_posts.include? p}
-    @postsranking = Post.published.where(:publish_at => (Time.now - 1.months)..Time.now).limit(7).order("post_impressions desc")
+    @featured = Post.find_by(featured: true)
+    @posts_approved_0 = Post.published.first(5).insert(0, @featured).compact.uniq[0..4]
+    @category_ids = [Category.find('student-life').id, Category.find('opinion').id, Category.find('culture').id, Category.find('lifestyle').id]
+    get_category_posts
+    get_trending_posts
+    get_recent_posts
+  end
+
+  def get_category_posts
+    @posts_approved_1 = Post.published.limit(3).where(category_id: @category_ids[0])
+    @posts_approved_2 = Post.published.limit(3).where(category_id: @category_ids[1])
+    @posts_approved_3 = Post.published.limit(3).where(category_id: @category_ids[2])
+    @posts_approved_4 = Post.published.limit(6).where(category_id: @category_ids[3])
+  end
+
+  def get_trending_posts
+    @postsranking = Post.published.trending.limit(7)
+  end
+
+  def get_recent_posts
+    @posts_approved_last = Post.published.where.not(category_id: @category_ids).limit(9)
   end
 
   def show

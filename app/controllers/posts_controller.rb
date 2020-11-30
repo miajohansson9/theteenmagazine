@@ -138,7 +138,7 @@ class PostsController < ApplicationController
           @comment_parent_from_notifications = Comment.find(params[:comment_id]).comment_id
         end
       else
-        @trending = @post.category.posts.published.where(:publish_at => (Time.now - 2.months)..Time.now).order("post_impressions desc").limit(7)
+        @trending = @post.category.posts.published.trending.limit(7)
       end
       set_meta_tags :title => @post.title,
                     :description => @post.meta_description,

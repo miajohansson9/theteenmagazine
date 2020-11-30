@@ -32,6 +32,12 @@ class Post < ApplicationRecord
     joins(:reviews).where(:reviews => {:status => ["Rejected", "Ready for Review", "In Review", "Approved for Publishing"]})
   }
 
+  scope :trending, -> {
+    where(:publish_at => (Time.now - 2.months)..Time.now).order("post_impressions desc")
+  }
+
+  default_scope { order(publish_at: :desc) }
+
   def is_published?
     @published = publish_at.present? ? (publish_at < Time.now) : false
   end
