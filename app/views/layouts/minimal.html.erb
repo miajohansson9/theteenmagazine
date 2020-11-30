@@ -6,15 +6,6 @@
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'onboarding', media: 'all' %>
-    <script type="text/javascript">
-      $(window).on('scroll',function(){
-        if ($('.header-navigation').isOnScreen()) {
-          $(".header-mobile").removeClass("header-mobile-show");
-        } else {
-          $(".header-mobile").addClass("header-mobile-show");
-        }
-      });
-    </script>
     <%= javascript_include_tag 'application'%>
     <%= javascript_include_tag 'mdb.min'%>
     <%= javascript_include_tag 'snap.svg-min'%>
@@ -130,6 +121,15 @@
           $("#submit-comment-modal-button").addClass("disabled");
           $(".spinner-button").removeClass("hide");
         });
+      });
+    </script>
+    <script type="text/javascript">
+      $(window).on('scroll',function(){
+        if ($('.header-navigation').isOnScreen()) {
+          $(".header-mobile").removeClass("header-mobile-show");
+        } else {
+          $(".header-mobile").addClass("header-mobile-show");
+        }
       });
     </script>
   </body>

@@ -184,16 +184,6 @@
   </div>
 </div>
 
-<% if @show_editor_dashboard_onboarding %>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      setTimeout(function() {
-        document.getElementById("click-event-trigger").click();
-      }, 2000);
-    });
-  </script>
-<% end %>
-
 <script type="text/javascript">
   var pitches = <%= @editor_pitches_cnt %>;
   var reviews = <%= @editor_reviews_cnt %>;
@@ -208,3 +198,13 @@
     animateEditorStats(percent);
   });
 </script>
+
+<% if @show_editor_dashboard_onboarding %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      setTimeout(function() {
+        document.getElementById("click-event-trigger").click();
+      }, 2000);
+    });
+  </script>
+<% end %>
