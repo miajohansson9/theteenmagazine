@@ -4,13 +4,13 @@ class WelcomeController < ApplicationController
   def index
     @featured = Post.published.where(featured: true).order("publish_at desc").first
     @featured = @featured.nil? ? Post.published.order("publish_at desc").first : @featured
-    @posts_approved_0 = Post.published.limit(4).order("publish_at desc").reject{|p| p.id.eql? @featured.id}.insert(0, @featured)
-    @posts_approved_1 = Category.find("student-life").posts.published.limit(3).order("publish_at desc").reject{|p| @posts_approved_0.include? p}
-    @posts_approved_2 = Category.find("opinion").posts.published.limit(3).order("publish_at desc").reject{|p| @posts_approved_0.include? p}
-    @posts_approved_3 = Category.find("culture").posts.published.limit(3).order("publish_at desc").reject{|p| @posts_approved_0.include? p}
-    @posts_approved_4 = Category.find("lifestyle").posts.published.limit(6).order("publish_at desc").reject{|p| @posts_approved_0.include? p}
+    @posts_approved_0 = Post.published.order("publish_at desc").to_a.insert(0, @featured).uniq.slice(0, 5)
+    @posts_approved_1 = Category.find("student-life").posts.published.order("publish_at desc").reject{|p| @posts_approved_0.include? p}.slice(0, 3)
+    @posts_approved_2 = Category.find("opinion").posts.published.order("publish_at desc").reject{|p| @posts_approved_0.include? p}.slice(0, 3)
+    @posts_approved_3 = Category.find("culture").posts.published.order("publish_at desc").reject{|p| @posts_approved_0.include? p}.slice(0, 3)
+    @posts_approved_4 = Category.find("lifestyle").posts.published.order("publish_at desc").reject{|p| @posts_approved_0.include? p}.slice(0, 6)
     @featured_posts = @posts_approved_0 + @posts_approved_1 + @posts_approved_3 + @posts_approved_4
-    @posts_approved_last = Post.published.limit(15).order("publish_at desc").reject{|p| @featured_posts.include? p}
+    @posts_approved_last = Post.published.order("publish_at desc").reject{|p| @featured_posts.include? p}.slice(0, 15)
     @postsranking = Post.published.where(:publish_at => (Time.now - 1.months)..Time.now).limit(7).order("post_impressions desc")
   end
 
