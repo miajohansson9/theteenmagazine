@@ -5,7 +5,7 @@ class WelcomeController < ApplicationController
     @featured = Post.published.where(featured: true).order("publish_at desc").first
     @featured = @featured.nil? ? Post.published.order("publish_at desc").first : @featured
     @posts_approved = Post.published.order("publish_at desc").limit(30)
-    @posts_approved_0 = @posts_approved[0..4]
+    @posts_approved_0 = @posts_approved.to_a.insert(0, @featured).uniq[0..4]
     @posts_approved_1 = @posts_approved.limit(3).where(category_id: Category.find("student-life").id)
     @posts_approved_2 = @posts_approved.limit(3).where(category_id: Category.find("opinion").id)
     @posts_approved_3 = @posts_approved.limit(3).where(category_id: Category.find("culture").id)
