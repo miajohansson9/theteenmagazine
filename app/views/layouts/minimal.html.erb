@@ -6,7 +6,6 @@
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'onboarding', media: 'all' %>
-    <%= preload_link_tag 'bootstrap.min'%>
     <%= javascript_include_tag 'application'%>
     <% if current_user.partner %>
       <meta name="partner" content="Turn off ads">
@@ -67,84 +66,14 @@
                        <% elsif !current_user.partner %>
                           <%= link_to "Pitch an Article", new_pitch_path, class: "pt-4" %>
                        <% end %>
-                       <div class="dropdown">
-                         <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image.jpg") %>
-                          <a class="mr-0 btn-floating btn-sm btn-block pt-0 dropdown-toggle btn-profile" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-dropdown-animation="off">
-                            <span
-                              id="dropdown-btn-content-wrapper"
-                              style="display: block; height: 100%;"
-                              <% if @show_onboarding %>
-                                data-step data-index="1" data-onboarding-content="Click here to change your password, navigate to editor pitches, the community peer feedback page, and more."
-                              <% elsif @show_editor_onboarding %>
-                                data-step data-index="3" data-onboarding-content="New options have been added. Navigate to your editor dashboard here."
-                              <% end %>
-                            >
-                              <i class="fa fa-bars" ></i>
-                              <%= @profile_img %>
-                              <% if !(@notifications.eql? 0) %>
-                                <span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 5px !important;" <% end %>><%= @notifications %></span>
-                              <% end %>
-                            </span>
-                          </a>
-                          <div class="dropdown-menu">
-                            <%= link_to "My Profile", user_path(current_user), class: "dropdown-item" %>
-                            <% if !current_user.partner? %>
-                              <div class="dropdown-divider"></div>
-                            <% end %>
-                            <% if current_user.editor? %>
-                               <a href="/editors/<%= current_user.slug %>" class="dropdown-item">Editor Dashboard
-                                 <% if @unseen_editor_dashboard_cnt > 0 %>
-                                  <span class="sec counter counter-sm"></span><p><%= @unseen_editor_dashboard_cnt %> new</p>
-                                 <% end %>
-                               </a>
-                            <% elsif (!current_user.partner? && (current_user.is_new?)) %>
-                                <a href="<%= pitches_path(user_id: current_user.id) %>" class="dropdown-item">My Pitches</a>
-                            <% end %>
-                            <% if !current_user.partner? %>
-                              <a href="/pitches" class="dropdown-item">Unclaimed Pitches
-                                <% if @unseen_pitches_cnt > 0 %>
-                                  <span class="sec counter counter-sm"></span><p><%= @unseen_pitches_cnt %> new</p>
-                                <% end %>
-                              </a>
-                              <a href="/community" class="dropdown-item">Community
-                                <% if @unseen_shared_drafts_cnt > 0 %>
-                                  <span class="sec counter counter-sm"></span><p><%= @unseen_shared_drafts_cnt %> new</p>
-                                <% end %>
-                              </a>
-                            <% end %>
-                            <% if current_user.admin? %>
-                              <a href="/applies" class="dropdown-item">Writer Applications
-                                <% if @unseen_applications_cnt > 0 %>
-                                  <span class="sec counter counter-sm"></span><p><%= @unseen_applications_cnt %> new</p>
-                                <% end %>
-                              </a>
-                            <% end %>
-                            <div class="dropdown-divider"></div>
-                            <% if current_user.editor? %>
-                              <%= link_to "Writers", users_path, class: "dropdown-item" %>
-                            <% elsif !current_user.partner? %>
-                              <%= link_to "Review Onboarding", onboarding_path(:step => "welcome"), class: "dropdown-item" %>
-                            <% end %>
-                            <% if current_user.admin? %>
-                              <%= link_to "Editors", "/editors", class: "dropdown-item" %>
-                              <%= link_to "Partners", "/partners", class: "dropdown-item" %>
-                            <% end %>
-                            <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>
-                            <%= link_to "Edit Profile", @edit_path, class: "dropdown-item" %>
-                            <%= link_to "Change Password", edit_user_registration_path, class: "dropdown-item" %>
-                            <div class="dropdown-divider"></div>
-                            <% if !current_user.partner? %>
-                              <a class="dropdown-item" target="_blank" href="https://www.facebook.com/groups/615063885673363">Writer Facebook Group <i class="fas fa-external-link-alt"></i></a>
-                            <% end %>
-                            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-                          </div>
-                      </div>
+                       <%= render "layouts/partials/writer-dropdown-menu" %>
                     </nav>
                   </div>
                 </div>
               </header>
               <button class="hide" id="click-event-trigger" type="button" name="button"></button>
               <%= yield %>
+              <%= content_for :render_async %>
           </div>
         </div>
         <div class="toggle-nav" onclick="toggleNav();" id="navigation_overlay"></div>

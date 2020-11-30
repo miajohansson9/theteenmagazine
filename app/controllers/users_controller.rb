@@ -5,6 +5,8 @@ class UsersController < ApplicationController
   before_action :is_editor?, only: [:show_users, :new]
   before_action :onboarding_redirect, if: :current_user?, only: [:show]
   before_action :is_admin?, only: [:new, :partners, :share]
+  after_action :update_last_sign_in_at, if: :current_user?
+
   layout :set_layout
 
   def show
@@ -303,6 +305,11 @@ class UsersController < ApplicationController
     rescue
       puts "Error: Failed to subscribe to mailchimp list"
     end
+  end
+
+  def update_last_sign_in_at
+    current_user.last_sign_in_at = Time.now
+    current_user.save
   end
 
   private

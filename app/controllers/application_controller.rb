@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :notifications, if: :current_user?
-  before_action :update_last_sign_in_at, if: :current_user?
 
   after_action :store_user_location!, if: :storable_location?, only: :authenticate_user
   # The callback which stores the current location must be added before you authenticate the user
@@ -41,11 +40,6 @@ class ApplicationController < ActionController::Base
       @unseen_applications_cnt = @unseen_applications.size
       @notifications = @notifications + @unseen_applications_cnt
     end
-  end
-
-  def update_last_sign_in_at
-    current_user.last_sign_in_at = Time.now
-    current_user.save
   end
 
   def current_user?
