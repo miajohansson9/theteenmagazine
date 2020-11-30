@@ -139,10 +139,10 @@
       <br>
     </div>
   </div>
-  <h1 id="recent_title" class="section--title">Recent Articles</h1>
+  <h1 id="recent_title" class="section--title mb-0">Recent Articles</h1>
   <div class="ctgry_section">
     <% @posts_approved_last.each do |post| %>
-      <div style="margin-bottom: 20px;" class="ctgry_article recent">
+      <div class="ctgry_article recent mt-4 mb-4">
         <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title, class: "image_recent_articles"), post )%>
         <h1><%= link_to post.title, post %></h1>
         <p class="category"><%= link_to(post.category.name, post.category) %></p>
