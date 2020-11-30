@@ -29,6 +29,7 @@
           <% end %>
           <%= render "layouts/partials/header" %>
           <%= yield %>
+          <%= content_for :render_async %>
         </div>
       </div>
       <div class="toggle-nav" onclick="toggleNav();" id="navigation_overlay"></div>

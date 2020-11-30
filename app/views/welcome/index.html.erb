@@ -46,38 +46,11 @@
   <h1 class="section--title"><a href="/categories/student-life">Student Life</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
-      <div class="ctgry_section">
-        <% @posts_approved_1.each do |post| %>
-          <div class="ctgry_article">
-            <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
-            <h1><%= link_to post.title, post %></h1>
-            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
-          </div>
-        <% end %>
-      </div>
+      <%= render "welcome/categories/category_1", posts: @posts_approved_1 %>
       <h1 class="section--title"><a href="/categories/opinion">Op-ed</a></h1>
-      <div class="ctgry_section">
-        <% @posts_approved_2.each do |post| %>
-          <div class="ctgry_article">
-            <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
-            <h1><%= link_to post.title, post %></h1>
-            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
-          </div>
-        <% end %>
-      </div>
+      <%= render_async get_category_2_welcome_path %>
       <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
-      <div class="ctgry_section">
-        <% @posts_approved_3.each do |post| %>
-          <div class="ctgry_article">
-            <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
-            <h1><%= link_to post.title, post %></h1>
-            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
-          </div>
-        <% end %>
-      </div>
+      <%= render_async get_category_3_welcome_path %>
     </div>
     <div class="most_read contain_articles">
       <div class="ads_wrapper">
@@ -97,28 +70,13 @@
       </div>
       <br>
       <h1 class="section--title">Trending Articles</h1>
-      <% cache(@postsranking) do %>
-        <% @postsranking.each_with_index do |post, index| %>
-          <div class="ctgry_article" style="margin-bottom: 10px;">
-            <h6 class="number"><%= index + 1 %>.</h6><h6 class="trending_title"><i><%=link_to(post.title.truncate_words(20), post )%></i> by <%= link_to(post.user.try(:full_name), post.user) %></h6>
-          </div>
-        <% end %>
-      <% end %>
+      <%= render_async get_trending_posts_path %>
     </div>
   </div>
   <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
-      <div class="ctgry_section big_block">
-        <% @posts_approved_4.each do |post| %>
-          <div class="ctgry_article">
-            <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title, class: "image_recent_articles"), post )%>
-            <h1><%= link_to post.title, post %></h1>
-            <p><%= post.publish_at.strftime("%A, %b %d")%></p>
-            <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
-          </div>
-        <% end %>
-      </div>
+      <%= render_async get_category_4_welcome_path %>
     </div>
     <div class="most_read contain_articles">
       <div class="ads_wrapper">
@@ -139,16 +97,6 @@
       <br>
     </div>
   </div>
-  <h1 id="recent_title" class="section--title mb-0">Recent Articles</h1>
-  <div class="ctgry_section">
-    <% @posts_approved_last.each do |post| %>
-      <div class="ctgry_article recent mt-4 mb-4">
-        <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title, class: "image_recent_articles"), post )%>
-        <h1><%= link_to post.title, post %></h1>
-        <p class="category"><%= link_to(post.category.name, post.category) %></p>
-        <p><%= post.publish_at.strftime("%A, %b %d")%></p>
-        <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
-      </div>
-    <% end %>
-  </div>
+  <h1 class="section--title mb-0"><a href="/search">Recent Articles</a></h1>
+  <%= render_async get_recent_posts_path %>
 </div>

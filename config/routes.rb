@@ -22,6 +22,16 @@ Rails.application.routes.draw do
   resources :comments
   resources :outreaches
 
+  #asynchronously fetched
+  get :get_trending_posts, controller: :welcome
+  # get :get_category_1_welcome, controller: :welcome
+  get :get_category_2_welcome, controller: :welcome
+  get :get_category_3_welcome, controller: :welcome
+  get :get_category_4_welcome, controller: :welcome
+  get :get_recent_posts, controller: :welcome
+
+  get :get_trending_posts_in_category, controller: :posts
+
   get 'welcome/index'
   root 'welcome#index'
 

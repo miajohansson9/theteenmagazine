@@ -141,18 +141,7 @@ blockquote {
           </div>
         </div>
         <h3>Trending in <%= link_to(@post.category.name, @post.category, :class => "category_title_trending") %></h3>
-        <div class="contain_articles">
-          <% cache(@trending) do %>
-            <% @trending.each do |post| %>
-              <div class="ctgry_article">
-                 <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
-                <div class="paragraph">
-                  <p><%= link_to(post.title.truncate_words(12), post) %></p>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
+        <%= render_async get_trending_posts_in_category_path(id: @post.id) %>
       </div>
     </div>
     <div class="fixed_ads ads_wrapper">

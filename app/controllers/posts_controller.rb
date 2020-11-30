@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
   before_action :find_post_history, only: [:show]
   before_action :find_post, only: [:edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:show, :get_trending_posts_in_category]
   before_action :load_user,  only: [:show]
   before_action :create,  only: [:unapprove]
-  before_action :log_impression, :only=> [:show]
+  after_action :log_impression, :only=> [:show]
   before_action :is_admin?, :only => [:new]
   before_action :is_partner?, :only => [:index, :edit]
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:get_trending_posts_in_category]
 
   layout :set_layout
 
@@ -137,8 +137,6 @@ class PostsController < ApplicationController
           @comment_from_notifications = Comment.find(params[:comment_id]).id
           @comment_parent_from_notifications = Comment.find(params[:comment_id]).comment_id
         end
-      else
-        @trending = @post.category.posts.published.trending.limit(7)
       end
       set_meta_tags :title => @post.title,
                     :description => @post.meta_description,
@@ -175,6 +173,12 @@ class PostsController < ApplicationController
       redirect_to new_user_session_path, notice: "You must sign in to continue."
       store_location_for(:user, request.fullpath)
     end
+  end
+
+  def get_trending_posts_in_category
+    @post = Post.find(params[:id])
+    @trending = @post.category.posts.published.trending.limit(7)
+    render partial: "posts/partials/trending"
   end
 
   def unapprove
