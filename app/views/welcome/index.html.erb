@@ -4,19 +4,18 @@
       <div class="parentflex">
         <div class="flexbox">
           <div class="featured divfeatured">
-            <% publishedPosts = @posts_approved %>
             <div class="featured individual">
               <div class="featured_img">
-                <%=link_to(image_tag(@featured.thumbnail.url(:large2), data: {"loading" => "lazy"}, alt: @featured.title, :id => "image_thumbnail"), @featured )%>
+                <%=link_to(image_tag(@posts_approved_0[0].thumbnail.url(:large2), alt: @posts_approved_0[0].title, :id => "image_thumbnail"), @posts_approved_0[0] )%>
               </div>
-              <h3 class="article_title"><%= link_to @featured.title, @featured %></h3>
-              <p class="date"><%= @featured.publish_at.strftime("%A, %b %d")%>, Featured article</p>
+              <h3 class="article_title"><%= link_to @posts_approved_0[0].title, @posts_approved_0[0] %></h3>
+              <p class="date"><%= @posts_approved_0[0].publish_at.strftime("%A, %b %d")%>, Featured article</p>
             </div>
           </div>
           <div class="articles2-6">
-            <% publishedPosts[0..3].each do |post| %>
+            <% @posts_approved_0[1..4].each do |post| %>
               <div class="thumbnail">
-                <%=link_to(image_tag(post.thumbnail.url(:medium), data: {"loading" => "lazy"}, alt: post.title, :class => "image_thumbnail"), post )%>
+                <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title, :class => "image_thumbnail"), post )%>
                 <div class="thumbnail--container">
                   <h3 class="article_title"><%= link_to post.title.truncate_words(14), post %></h3>
                   <p class="date"><%= post.publish_at.strftime("%A, %b %d")%></p>
@@ -43,15 +42,12 @@
       </div>
     </div>
   </div>
-  <% publishedPosts = Post.where(id: @posts_approved.drop(4).map(&:id))%>
-  <% featuredPostIds = [] %>
   <div class="wrapper_home">
   <h1 class="section--title"><a href="/categories/student-life">Student Life</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
       <div class="ctgry_section">
-        <% publishedPosts.where(:category_id => Category.friendly.find("student-life").id).all.order("publish_at desc")[0..2].each do |post| %>
-          <% featuredPostIds << post.id %>
+        <% @posts_approved_1.each do |post| %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
@@ -62,8 +58,7 @@
       </div>
       <h1 class="section--title"><a href="/categories/opinion">Op-ed</a></h1>
       <div class="ctgry_section">
-        <% publishedPosts.where(:category_id => Category.friendly.find("opinion").id).all.order("publish_at desc")[0..2].each do |post| %>
-          <% featuredPostIds << post.id %>
+        <% @posts_approved_2.each do |post| %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
@@ -74,8 +69,7 @@
       </div>
       <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
       <div class="ctgry_section">
-        <% publishedPosts.where(:category_id => Category.friendly.find("culture").id).all.order("publish_at desc")[0..2].each do |post| %>
-          <% featuredPostIds << post.id %>
+        <% @posts_approved_3.each do |post| %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
             <h1><%= link_to post.title, post %></h1>
@@ -116,8 +110,7 @@
   <div class="flex--welcome">
     <div class="flex-1">
       <div class="ctgry_section big_block">
-        <% publishedPosts.where(:category_id => Category.friendly.find("lifestyle").id).all.order("publish_at desc")[0..5].each do |post| %>
-          <% featuredPostIds << post.id %>
+        <% @posts_approved_4.each do |post| %>
           <div class="ctgry_article">
             <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title, class: "image_recent_articles"), post )%>
             <h1><%= link_to post.title, post %></h1>
@@ -148,8 +141,7 @@
   </div>
   <h1 id="recent_title" class="section--title">Recent Articles</h1>
   <div class="ctgry_section">
-    <% publishedPosts = publishedPosts.where.not(id: featuredPostIds).order("publish_at desc")%>
-    <% publishedPosts.each_with_index do |post, index| %>
+    <% @posts_approved_last.each_with_index do |post, index| %>
       <% if index < 3 %>
         <div style="margin-bottom: 20px;" class="ctgry_article recent">
           <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title, class: "image_recent_articles"), post )%>
