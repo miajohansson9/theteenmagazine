@@ -12,6 +12,7 @@
 //
 //= require jquery3
 //= require jquery_ujs
+//= require ckeditor/init
 //= require custom_functions
 
 /*========================================
