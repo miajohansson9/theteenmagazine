@@ -11,7 +11,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += Ckeditor.assets
-Rails.application.config.assets.precompile += %w( ckeditor/* )
-Rails.application.config.autoload_paths += %W(#{Rails.application.config.root}/app/models/ckeditor)
 Rails.application.config.assets.precompile += %w( plugins.js )
