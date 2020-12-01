@@ -14,8 +14,9 @@
 //= require jquery_ujs
 //= require popper
 //= require bootstrap
-//= require ckeditor/ckeditor
 //= require custom_functions
+//= require ckeditor/ckeditor
+//= require ckeditor/lang/en
 
 /*========================================
 =            CUSTOM FUNCTIONS            =
