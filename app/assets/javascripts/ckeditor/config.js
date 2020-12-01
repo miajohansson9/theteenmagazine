@@ -22,8 +22,9 @@ CKEDITOR.editorConfig = function (config) {
   config.filebrowserImageBrowseUrl = '/ckeditor/pictures';
   config.filebrowserImageUploadUrl = '/ckeditor/pictures';
   config.pasteFilter = 'p; a[!href];';
-  
+
   config.language = 'en';
+  config.defaultLanguage = 'en';
 }
 
 CKEDITOR.config.allowedContent = true;
