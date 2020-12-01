@@ -38,9 +38,10 @@
       <%= f.file_field :thumbnail %>
     <% end %>
     <br>
-    <%= f.label "Category:" %>
-    <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form") %>
-    <br>
+    <div class="mb-4 mt-4">
+      <%= f.label "Category:" %>
+      <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form") %>
+    </div>
     <%= f.label "Grab your ideal reader's interest in 1-2 sentences for Google search." %>
     <%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
     <br>

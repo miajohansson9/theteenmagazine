@@ -12,9 +12,6 @@
 //
 //= require jquery3
 //= require jquery_ujs
-//= require popper
-//= require bootstrap
-//= require ckeditor/init
 //= require custom_functions
 
 /*========================================
