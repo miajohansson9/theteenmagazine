@@ -66,6 +66,7 @@ class PostsController < ApplicationController
     @service_id = ENV['WEBSPELLCHECKER_ID']
     @post = current_user.posts.build
     @review = @post.reviews.build(status: "In Progress", active: true)
+    set_meta_tags :title => "Edit Article", editing: "Turn off ads"
   end
 
   def create
@@ -194,7 +195,7 @@ class PostsController < ApplicationController
     @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.feedback_givens) : @post.reviews.last
     @feedbacks = Feedback.all
     @feedbacks_editor_frm = Feedback.active.order('created_at asc')
-    set_meta_tags :title => "Edit Article"
+    set_meta_tags :title => "Edit Article", editing: "Turn off ads"
   end
 
   def update
