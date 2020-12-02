@@ -31,7 +31,8 @@ gem 'will_paginate', '~> 3.3'
 gem 'mail_form', '~> 1.5', '>= 1.5.1'
 gem "devise", ">= 4.7.1"
 gem "paperclip", ">= 5.2.0"
-gem 'ckeditor', "~> 4.2.4"
+gem 'ckeditor'
+gem 'terrapin'
 gem "bootstrap", ">= 4.3.1"
 gem 'meta-tags', '~> 2.1'
 gem 'cancancan'

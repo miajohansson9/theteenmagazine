@@ -25,6 +25,8 @@ CKEDITOR.editorConfig = function (config) {
 
   config.language = 'en'
   config.defaultLanguage = 'en'
+
+  config.filebrowserUploadMethod = 'form';
 }
 
 CKEDITOR.config.allowedContent = true;
