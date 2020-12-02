@@ -2,4 +2,4 @@
 //= link_directory ../javascripts .js
 //= link_directory ../stylesheets .css
 //= link_directory ../javascripts/plugins .js
-//= link_tree ../ckeditor
+//= link_tree ../javascripts/ckeditor
