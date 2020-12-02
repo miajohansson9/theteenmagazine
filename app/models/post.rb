@@ -36,7 +36,9 @@ class Post < ApplicationRecord
     where(:publish_at => (Time.now - 2.months)..Time.now).order("post_impressions desc")
   }
 
-  default_scope { order(publish_at: :desc) }
+  scope :by_published_date, -> {
+    order(publish_at: :desc)
+  }
 
   def is_published?
     @published = publish_at.present? ? (publish_at < Time.now) : false

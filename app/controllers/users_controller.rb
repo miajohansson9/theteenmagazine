@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       redirect_to "/partners/#{@user.slug}"
     end
     @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).order("updated_at desc")
-    @user_posts_approved_records = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.order("publish_at desc")
+    @user_posts_approved_records = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.by_published_date
     @pagy, @user_posts_approved = pagy(@user_posts_approved_records, page: params[:page], items: 10)
     if !@user.editor? && current_user.present?
       @user_pitches = @user.pitches.not_claimed.order("updated_at desc")

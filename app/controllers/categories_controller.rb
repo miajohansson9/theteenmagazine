@@ -38,7 +38,7 @@ class CategoriesController < ApplicationController
                     :image => @category.image,
                     :domain => "https://www.theteenmagazine.com/"
                   }
-    @pagy, @category_posts = pagy(Post.where(category_id: @category.id).published.order("publish_at desc"), page: params[:page], items: 15)
+    @pagy, @category_posts = pagy(Post.where(category_id: @category.id).published.by_published_date, page: params[:page], items: 15)
   end
 
   def edit
