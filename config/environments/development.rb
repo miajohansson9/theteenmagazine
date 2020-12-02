@@ -60,6 +60,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => "http://localhost:3000" }
   config.action_mailer.delivery_method = :smtp
 
+  config.assets.raise_production_errors = false
+
   ActionMailer::Base.smtp_settings = {
     :address             => 'smtp.sendgrid.net',
     :port               => '587',
