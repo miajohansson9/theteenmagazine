@@ -1,5 +1,4 @@
 //= link_tree ../images
-//= link_tree ../fonts
 //= link_directory ../javascripts .js
 //= link_directory ../stylesheets .css
 //= link_directory ../javascripts/plugins .js
@@ -8,3 +7,4 @@
 //= link_directory ../javascripts/ckeditor/skins/moono-lisa
 //= link_directory ../javascripts/ckeditor/plugins/tableselection/styles
 //= link_directory ../javascripts/ckeditor/plugins/dialog/styles
+//= link_directory ../javascripts/ckeditor/plugins/image/dialogs
