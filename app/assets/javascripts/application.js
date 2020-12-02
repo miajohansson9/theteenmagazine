@@ -16,7 +16,6 @@
 //= require bootstrap
 //= require custom_functions
 //= require ckeditor/ckeditor
-//= require ckeditor/lang/en
 
 /*========================================
 =            CUSTOM FUNCTIONS            =
