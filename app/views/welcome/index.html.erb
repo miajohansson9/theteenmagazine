@@ -6,10 +6,10 @@
           <div class="featured divfeatured">
             <div class="featured individual">
               <div class="featured_img">
-                <%=link_to(image_tag(@featured.thumbnail.url(:large2), alt: @featured.title, :id => "image_thumbnail"), @featured )%>
+                <%= link_to (image_tag(@posts_approved_0[0].thumbnail.url(:large2), @posts_approved_0[0] )%>
               </div>
-              <h3 class="article_title"><%= link_to @posts_approved_0[0].title, @featured %></h3>
-              <p class="date"><%= @featured.publish_at.strftime("%A, %b %d")%>, Featured article</p>
+              <h3 class="article_title"><%= link_to @posts_approved_0[0].title, @posts_approved_0[0] %></h3>
+              <p class="date"><%= @posts_approved_0[0].publish_at.strftime("%A, %b %d")%>, Featured article</p>
             </div>
           </div>
           <div class="articles2-6">
