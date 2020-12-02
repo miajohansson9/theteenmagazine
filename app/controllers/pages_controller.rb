@@ -82,7 +82,7 @@ class PagesController < ApplicationController
       if @filter.eql? "writers"
         @pagy, @users = pagy(User.where(partner: [false, nil]).is_published.where("lower(full_name) LIKE ?", "%#{@query.downcase}%").order("full_name asc"), page: params[:page], items: 15)
       else
-        @pagy, @posts = pagy(Post.published.where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc"), page: params[:page], items: 15)
+        @pagy, @posts = pagy(Post.published.where("lower(title) LIKE ?", "%#{@query.downcase}%").by_published_date, page: params[:page], items: 15)
       end
     else
       if params[:filter].present?
@@ -90,11 +90,11 @@ class PagesController < ApplicationController
         if @filter.eql? "writers"
           @pagy, @users = pagy(User.where(partner: [false, nil]).is_published.order("full_name asc"), page: params[:page], items: 15)
         else
-          @pagy, @posts = pagy(Post.published.order("publish_at desc"), page: params[:page], items: 15)
+          @pagy, @posts = pagy(Post.published.by_published_date, page: params[:page], items: 15)
         end
       else
         @filter = "all articles"
-        @pagy, @posts = pagy(Post.published.order("publish_at desc"), page: params[:page], items: 15)
+        @pagy, @posts = pagy(Post.published.by_published_date, page: params[:page], items: 15)
       end
     end
     @next = (@filter.eql? "writers") ? "all articles" : "writers"

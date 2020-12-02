@@ -268,9 +268,9 @@ class UsersController < ApplicationController
     set_meta_tags title: "Add Partner to Article | The Teen Magazine"
     if params[:search].present?
       @query = params[:search][:query]
-      @pagy, @posts = pagy(Post.draft.where(partner_id: nil).where("lower(title) LIKE ?", "%#{@query.downcase}%").order("publish_at desc"), page: params[:page], items: 15)
+      @pagy, @posts = pagy(Post.draft.where(partner_id: nil).where("lower(title) LIKE ?", "%#{@query.downcase}%").by_published_date, page: params[:page], items: 15)
     else
-      @pagy, @posts = pagy(Post.draft.where(partner_id: nil).order("publish_at desc"), page: params[:page], items: 15)
+      @pagy, @posts = pagy(Post.draft.where(partner_id: nil).by_published_date, page: params[:page], items: 15)
     end
   end
 
