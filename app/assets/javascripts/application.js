@@ -15,7 +15,6 @@
 //= require popper
 //= require bootstrap
 //= require custom_functions
-//= require ckeditor/ckeditor
 
 /*========================================
 =            CUSTOM FUNCTIONS            =
