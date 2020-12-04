@@ -19,7 +19,7 @@
   max-width: 285px !important;
 }
 
-svg {
+#animated {
   width:120px;margin: 0 auto;
   display: block;
   font-family: 'Open Sans'
@@ -192,9 +192,10 @@ a {
         box-shadow: 0 2px 5px 0 rgba(0,0,0,0.18), 0 2px 5px 0 rgba(0,0,0,0.15);
         transition: box-shadow 0.2s ease !important;
       }
-      .fa {
+      svg {
         color: #212529 !important;
-        margin-left: 4px;
+        margin-left: 12px;
+        margin-top: 10px;
       }
       img {
         border-radius: 50%;
@@ -223,9 +224,11 @@ a {
     }
     .left-control {
       float: left;
+      color: #e0e0e0;
     }
     .right-control {
       float: right;
+      color: #e0e0e0;
     }
   }
 }
@@ -698,12 +701,12 @@ a:hover {
     width: 10px;
     font-size: 10px;
     padding: 2px;
-    top: 0px;
+    top: -5px;
     border-radius: 50%;
     border: 2px white solid;
     background-color: #fe1212;
     color: white;
-    margin-left: 62px;
+    margin-left: 28px;
     line-height: 10px !important;
   }
 }

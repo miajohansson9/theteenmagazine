@@ -55,12 +55,6 @@ body, #site-wrapper, #site-canvas, .bodywrapper {
   word-break: break-word;
 }
 
-.fa-angle-right, .fa-angle-left {
-  font-size: 40px !important;
-  margin-left: 10px !important;
-  font-weight: bolder !important;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -380,7 +374,7 @@ html, body {
   left: -320px;
   background: white;
   position: fixed;
-  padding: 25px;
+  padding: 18px 30px;
   z-index: 1000005;
   a, h2 {
     width: fit-content;
@@ -566,9 +560,10 @@ hr {
 }
 
 .wrapper_home {
-  width: 95%;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1260px;
   margin: 0 auto 20px auto;
+  padding: 0 30px;
 }
 
 .articles2-6 {
@@ -712,6 +707,9 @@ hr {
 }
 
 .search_wrapper {
+  svg {
+    color: #4ABEB6;
+  }
   #search_query {
     border-left: none;
     border-top: none;
@@ -763,9 +761,10 @@ hr {
 }
 
 .parentflex {
-  width: 95%;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1260px;
   margin: 20px auto 0 auto;
+  padding: 0 30px;
   display: flex;
   flex-direction: row;
   .flexbox {
@@ -834,9 +833,10 @@ body {
     }
   }
 
-  i {
+  svg {
     color: white;
     margin-top: 12px;
+    font-size: 18px;
   }
 }
 
@@ -948,9 +948,8 @@ footer {
     font-size: 12px;
   }
   .social-media-footer {
-    .fab {
-      margin: 12px 0 0 0;
-      font-size: 22px;
+    .fa-search {
+      display: none;
     }
   }
   .row {
@@ -972,15 +971,8 @@ footer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  z-index: 100;
-  a {
-    height: fit-content;
-    .fa, .fab {
-      font-size: 18px;
-    }
-    .fab {
-      margin: 0 15px 0 0;
-    }
+  svg {
+    margin: 0 0 0 15px;
   }
 }
 
@@ -994,9 +986,8 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 0 30px;
     margin: 0 auto;
-    width: 95%;
-    align-items: center;
     #name_wrapper {
       display: block;
       padding: 10px 0;
@@ -1006,9 +997,10 @@ footer {
         display: block;
       }
     }
-    .social-media, .fa-bars, .fab, #name_wrapper {
-      flex-grow: 1;
-      flex-basis: 0;
+    .social-media, .flex-1 {
+      flex: 1;
+      display: flex;
+      align-items: center;
     }
     .fa-bars:hover {
       cursor: pointer;
@@ -1274,6 +1266,7 @@ p, ul, ol {
     }
     .parentflex {
       width: 100%;
+      padding: 0;
       margin: 0;
       .divfeatured {
         margin-bottom: 15px;

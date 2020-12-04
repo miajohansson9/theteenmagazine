@@ -19,7 +19,7 @@
             </div>
             <% if draft.promoting_until.present? && draft.promoting_until > Time.now %>
               <div class="rounded-bottom lighten-3 text-right p-3" style="background-color: #FA8075">
-                <p class="list-inline-item pr-2 white-text"><i class="fas fa-fire"></i> Promoting ends in <%= time_ago_in_words(draft.promoting_until) %></p>
+                <p class="list-inline-item pr-2 white-text"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="fire" class="mb-1 svg-inline--fa fa-fire fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M216 23.86c0-23.8-30.65-32.77-44.15-13.04C48 191.85 224 200 224 288c0 35.63-29.11 64.46-64.85 63.99-35.17-.45-63.15-29.77-63.15-64.94v-85.51c0-21.7-26.47-32.23-41.43-16.5C27.8 213.16 0 261.33 0 320c0 105.87 86.13 192 192 192s192-86.13 192-192c0-170.29-168-193-168-296.14z"></path></svg> Promoting ends in <%= time_ago_in_words(draft.promoting_until) %></p>
               </div>
             <% else %>
               <div class="rounded-bottom lighten-3 text-right p-1">
@@ -69,12 +69,13 @@
           <div class="card-body">
             <p class="card-text"><%= link_to(draft.user.try(:full_name), draft.user) %> is asking for peer feedback on <%= link_to draft.title, draft %></p>
             <% if @featured %>
-              <p class="card-text"><i class="fas fa-fire"></i> This draft is being promoted. All feedback given will be rewarded twice as many points.</p>
+              <p class="card-text"><svg width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="fire" class="mb-1 svg-inline--fa fa-fire fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M216 23.86c0-23.8-30.65-32.77-44.15-13.04C48 191.85 224 200 224 288c0 35.63-29.11 64.46-64.85 63.99-35.17-.45-63.15-29.77-63.15-64.94v-85.51c0-21.7-26.47-32.23-41.43-16.5C27.8 213.16 0 261.33 0 320c0 105.87 86.13 192 192 192s192-86.13 192-192c0-170.29-168-193-168-296.14z"></path></svg> This draft is being promoted. All feedback given will be rewarded twice as many points.</p>
             <% end %>
           </div>
           <div class="rounded-bottom lighten-3 text-left p-3" style="background-color: <%= @color %>">
             <p class="list-inline-item pr-2 white-text"><%= link_to("Give Feedback", post_path(draft), style: "color: white !important;")%></p>
-            <p class="list-inline-item pr-2 white-text"><i class="fa fa-comments" aria-hidden="true"></i> <%= draft.comments.count %> comments</p>
+            <p class="list-inline-item pr-2 white-text">
+              <svg width="20px" height="20px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="comments" class="mb-1 svg-inline--fa fa-comments fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"></path></svg> <%= draft.comments.count %> comments</p>
           </div>
         </div>
       </a>

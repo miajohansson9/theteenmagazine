@@ -15,7 +15,6 @@
     <% if current_user.partner %>
       <meta name="partner" content="Turn off ads">
     <% end %>
-    <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-9ZfPnbegQSumzaE7mks2IYgHoayLtuto3AS6ieArECeaR8nCfliJVuLh/GaQ1gyM" crossorigin="anonymous" media="none" onload="if(media!='all')media='all'"> -->
   </head>
   <body>
     <section
@@ -44,22 +43,7 @@
               <%= render "posts/draft_feedback" %>
             <% end %>
               <header id="main_navigation" class="clearfix header-navigation">
-                <div id="banner">
-                  <i class="fa fa-bars toggle-nav" onclick="toggleNav();"></i>
-                  <a id="name_wrapper" href="/">
-                    <picture>
-                      <source srcset="<%= image_url('teenmag.png') %>" media="(min-width: 800px)">
-                      <%= image_tag("teenmag.png", :data => {"loading" => "lazy"}, :id => "name") %>
-                    </picture>
-                  </a>
-                  <div class="social-media">
-                    <a class="link" href="https://www.facebook.com/theteenmagazinee/" target="_blank"><i class="fab fa-sm fa-facebook-f"></i></a>
-                    <a class="link" href="https://www.pinterest.com/theteenmagazine_/" target="_blank"><i class="fab fa-sm fa-pinterest"></i></a>
-                    <a class="link" href="https://twitter.com/TheTeenMagazin_" target="_blank"><i class="fab fa-sm fa-twitter"></i></a>
-                    <a class="link" href="https://www.instagram.com/theteenmagazine_" target="_blank"><i class="fab fa-sm fa-instagram"></i></a>
-                    <a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
-                  </div>
-                </div>
+                <%= render "layouts/partials/header-mobile" %>
                 <div class="border">
                   <div class="nav_wrapper">
                     <nav class="nav_article">
@@ -83,7 +67,7 @@
                                 data-step data-index="3" data-onboarding-content="New options have been added. Navigate to your editor dashboard here."
                               <% end %>
                             >
-                              <i class="fa fa-bars" ></i>
+                              <svg width="20px" height="20px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
                               <%= @profile_img %>
                               <% if !(@notifications.eql? 0) %>
                                 <span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 5px !important;" <% end %>><%= @notifications %></span>
