@@ -16,12 +16,12 @@ class PitchesController < ApplicationController
       if params[:pitch].nil?
         @pitch = Pitch.new
         @categories = Category.all
-        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc"), page: params[:page], items: 12)
+        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc"), page: params[:page], items: 20)
       else
         @categories = Category.all
         @category_id = (params[:pitch][:category_id].blank?) ? @categories.map {|category| category.id} : params[:pitch][:category_id]
         @pitch = Pitch.new(category_id: params[:pitch][:category_id])
-        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(category_id: @category_id, status: nil).order("updated_at desc"), page: params[:page], items: 12)
+        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(category_id: @category_id, status: nil).order("updated_at desc"), page: params[:page], items: 20)
       end
       @desc = true
       @message = "There are no unclaimed pitches. Check back in a few days!"
@@ -33,7 +33,7 @@ class PitchesController < ApplicationController
       set_meta_tags :title => @title
       @button_text = "View Pitch"
       @message = "You don't have any claimed pitches. :("
-      @pagy, @pitches = pagy(Pitch.all.where(claimed_id: params[:user_id]).order("updated_at desc"), page: params[:page], items: 12)
+      @pagy, @pitches = pagy(Pitch.all.where(claimed_id: params[:user_id]).order("updated_at desc"), page: params[:page], items: 20)
     end
   end
 
