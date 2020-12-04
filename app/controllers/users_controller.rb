@@ -84,7 +84,7 @@ class UsersController < ApplicationController
   end
 
   def full_writer
-    @show_onboarding_full = true #@user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
+    @show_onboarding_full = @user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
     @show_editor_onboarding = @user.became_an_editor.nil? && @user.editor && (current_user.id.eql? @user.id) && !@show_onboarding_full
     if @show_editor_onboarding
       @user.became_an_editor = Time.now
