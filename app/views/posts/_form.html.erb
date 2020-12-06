@@ -1,4 +1,4 @@
-<% if !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (@post.collaboration&.include? current_user.email) || (current_user.admin?) %>
+<% if !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (@post.collaboration&.include? current_user.email) || (current_user.admin?) || (@post.reviews.last.editor_id.eql? current_user.id) %>
 <div id="edit_post">
   <%= form_for @post do |f| %>
     <% if @post.errors.any? %>
@@ -13,7 +13,7 @@
     <%= f.label :title %>
     <%= f.text_field :title %>
     <br>
-    <%= f.label :content, "Write your article here. Make sure you are saving often." %><br>
+    <%= f.label :content, "Write your article here and make sure you are saving often. Saving can also help fix formatting problems." %><br>
     <%= f.text_area :content, class: "ckeditor" %>
     <br>
     <% if @post.thumbnail.present? %>

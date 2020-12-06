@@ -318,6 +318,13 @@ class PostsController < ApplicationController
     @post.title.gsub!(" With ", " with ")
     @post.title.gsub!(" In ", " in ")
     loop do
+      if @post.content[/style="line-height(.*?)"/m, 0].present?
+        @post.content.gsub!(@post.content[/style="line-height(.*?)"/m, 0], "")
+      else
+        break
+      end
+    end
+    loop do
       if @post.content[/style="margin(.*?)"/m, 0].present?
         @post.content.gsub!(@post.content[/style="margin(.*?)"/m, 0], "")
       else
@@ -331,18 +338,18 @@ class PostsController < ApplicationController
         break
       end
     end
-    # loop do
-    #   if @post.content[/<span(.*?)>/m, 0].present?
-    #     @post.content.gsub!(@post.content[/<span(.*?)>/m, 0], "")
-    #   else
-    #     break
-    #   end
-    # end
+    loop do
+      if @post.content[/<span(.*?)>/m, 0].present?
+        @post.content.gsub!(@post.content[/<span(.*?)>/m, 0], "")
+      else
+        break
+      end
+    end
     @post.content.gsub!('dir="ltr"', "")
     @post.content.gsub!("h1", "h2")
     @post.content.gsub!("&nbsp;", " ")
     @post.content.gsub!('<p> </p>', "")
-    # @post.content.gsub!("</span>", "")
+    @post.content.gsub!("</span>", "")
     @post.content.gsub!("<b>", "")
     @post.content.gsub!("</b>", "")
     @post.content.gsub!('<p><meta charset="utf-8" /></p>', "")

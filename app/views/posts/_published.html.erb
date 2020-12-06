@@ -64,7 +64,7 @@ blockquote {
               <div class="social_icons social_icons_full">
                 <%= render "posts/partials/share_social" %>
               </div>
-              <% if current_user && (current_user.id == @post.user_id || (@post.collaboration&.include? current_user.email) || current_user.admin?) %>
+              <% if current_user && (current_user.id == @post.user_id || (@post.collaboration&.include? current_user.email) || current_user.admin? || (@post.reviews.last.editor_id.eql? current_user.id)) %>
                 <div id="admin_links">
                   <%= link_to "Edit Article", edit_post_path(@post) %>
                   <% if current_user && (current_user.id == @post.user_id || current_user.admin) %>
