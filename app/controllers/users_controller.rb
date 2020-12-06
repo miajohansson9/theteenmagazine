@@ -127,6 +127,9 @@ class UsersController < ApplicationController
     @user = current_user
     @partial = params[:step] || "welcome"
     @categories = Category.all
+    @reviews_requirement = Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value)
+    @pitches_requirement = Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value)
+    @max_reviews = Constant.find_by(name: "max # of reviews per month for editors").try(:value)
   end
 
   def index

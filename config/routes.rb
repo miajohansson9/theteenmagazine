@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :pitches
   resources :reviews
   resources :feedbacks
+  resources :constants
   resources :analytics
   resources :comments
   resources :outreaches

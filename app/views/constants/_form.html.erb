@@ -1,0 +1,13 @@
+<%= form_for @constant do |f| %>
+  <%= f.label "Give a name to your constant" %>
+  <%= f.text_field :name %>
+
+  <%= f.label "Value" %>
+  <%= f.text_field :value %>
+  <br><br>
+  <% if @constant.id.nil? %>
+    <%= f.submit "Add constant field" %>
+  <% else %>
+    <%= f.submit "Save Changes" %>
+  <% end %>
+<% end %>

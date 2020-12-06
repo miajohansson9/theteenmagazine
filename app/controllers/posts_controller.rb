@@ -2,26 +2,14 @@ class PostsController < ApplicationController
   before_action :find_post_history, only: [:show]
   before_action :find_post, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, except: [:show, :get_trending_posts_in_category]
-  before_action :load_user,  only: [:show]
+  before_action :load_author,  only: [:show]
   before_action :create,  only: [:unapprove]
-  after_action :log_impression, :only=> [:show]
   before_action :is_admin?, :only => [:new]
   before_action :is_partner?, :only => [:index, :edit]
+  after_action :log_impression, :only=> [:show]
   load_and_authorize_resource :except => [:get_trending_posts_in_category]
 
   layout :set_layout
-
-  def load_user
-    if @post.user != nil
-      @user = @post.user
-      if @user.editor?
-        @editor_pitches_cnt =  @user.pitches.count
-        @editor_reviews = Review.where(editor_id: @user.id)
-        @editor_reviews_cnt = @editor_reviews.count
-        @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
-      end
-    end
-  end
 
   def log_impression
     if @post.is_published?
@@ -295,28 +283,6 @@ class PostsController < ApplicationController
   private
 
   def fix_formatting
-    @post.title = @post.title.split.map{|s| s.slice(0,1).capitalize + s.slice(1..-1)}.join(' ')
-    @post.title.gsub!(" A ", " a ")
-    @post.title.gsub!(" Is ", " is ")
-    @post.title.gsub!(" The ", " the ")
-    @post.title.gsub!(" For ", " for ")
-    @post.title.gsub!(" An ", " an ")
-    @post.title.gsub!(" And ", " and ")
-    @post.title.gsub!(" Nor ", " nor ")
-    @post.title.gsub!(" Yet ", " yet ")
-    @post.title.gsub!(" So ", " so ")
-    @post.title.gsub!(" At ", " at ")
-    @post.title.gsub!(" Around ", " around ")
-    @post.title.gsub!(" But ", " but ")
-    @post.title.gsub!(" By ", " by ")
-    @post.title.gsub!(" After ", " after ")
-    @post.title.gsub!(" Along ", " along ")
-    @post.title.gsub!(" From ", " from ")
-    @post.title.gsub!(" Of ", " of ")
-    @post.title.gsub!(" On ", " on ")
-    @post.title.gsub!(" To ", " to ")
-    @post.title.gsub!(" With ", " with ")
-    @post.title.gsub!(" In ", " in ")
     loop do
       if @post.content[/style="line-height(.*?)"/m, 0].present?
         @post.content.gsub!(@post.content[/style="line-height(.*?)"/m, 0], "")
@@ -361,6 +327,28 @@ class PostsController < ApplicationController
     @post.content.gsub!("<p><iframe", "<p class='responsive-iframe-container'><iframe class='responsive-iframe'")
     @post.content.gsub!("s3.amazonaws.com/media.theteenmagazine.com", "media.theteenmagazine.com")
     @post.content.gsub!("s3.amazonaws.com/theteenmagazine", "media.theteenmagazine.com")
+    @post.title = @post.title.split.map{|s| s.slice(0,1).capitalize + s.slice(1..-1)}.join(' ')
+    @post.title.gsub!(" A ", " a ")
+    @post.title.gsub!(" Is ", " is ")
+    @post.title.gsub!(" The ", " the ")
+    @post.title.gsub!(" For ", " for ")
+    @post.title.gsub!(" An ", " an ")
+    @post.title.gsub!(" And ", " and ")
+    @post.title.gsub!(" Nor ", " nor ")
+    @post.title.gsub!(" Yet ", " yet ")
+    @post.title.gsub!(" So ", " so ")
+    @post.title.gsub!(" At ", " at ")
+    @post.title.gsub!(" Around ", " around ")
+    @post.title.gsub!(" But ", " but ")
+    @post.title.gsub!(" By ", " by ")
+    @post.title.gsub!(" After ", " after ")
+    @post.title.gsub!(" Along ", " along ")
+    @post.title.gsub!(" From ", " from ")
+    @post.title.gsub!(" Of ", " of ")
+    @post.title.gsub!(" On ", " on ")
+    @post.title.gsub!(" To ", " to ")
+    @post.title.gsub!(" With ", " with ")
+    @post.title.gsub!(" In ", " in ")
   end
 
   def post_params
@@ -399,6 +387,18 @@ class PostsController < ApplicationController
       @post = Post.friendly.find params[:id]
     rescue
       redirect_to root_path
+    end
+  end
+
+  def load_author
+    if @post.user != nil
+      @user = @post.user
+      if @user.editor?
+        @editor_pitches_cnt =  @user.pitches.count
+        @editor_reviews = Review.where(editor_id: @user.id)
+        @editor_reviews_cnt = @editor_reviews.count
+        @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
+      end
     end
   end
 

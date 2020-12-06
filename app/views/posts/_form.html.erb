@@ -92,7 +92,7 @@
                 </p>
               <% end %>
               <div class="rejected-reason hide">
-                <%= rv.text_field :notes, placeholder: "Explain other reason for rejection..." %>
+                <%= rv.text_area :notes, placeholder: "Explain other reason for rejection..." %>
                 <%= rv.hidden_field :editor_id, value: current_user.id %>
                 <br>
                 <%= link_to("View feedback descriptions", feedbacks_path, class: "link_nrml float_right", target: "_blank") %>

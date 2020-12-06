@@ -26,6 +26,9 @@ class ReviewsController < ApplicationController
       if current_user.admin?
         @all_reviews = Post.all.in_review.order("updated_at desc")
       end
+      @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
+      @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
+      @max_reviews = Integer(Constant.find_by(name: "max # of reviews per month for editors").try(:value) || '0')
       @editor_pitches_cnt =  @user.pitches.where("created_at > ?", Date.today.beginning_of_month).count
       @editor_reviews_cnt = Review.where(editor_id: @user.id).where("created_at > ?", Date.today.beginning_of_month).count
       @editors_reviews = Post.all.in_review.where(:reviews => {editor_id: @user.id}).order("updated_at desc")

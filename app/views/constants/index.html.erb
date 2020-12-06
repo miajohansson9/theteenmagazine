@@ -1,0 +1,17 @@
+<div class="skinny_wrapper wrapper_padding">
+  <br>
+  <div class="card review_frm">
+    <div class="card-header">
+      <h6>Admin Constants</h6>
+    </div>
+    <div class="card-body">
+      <% @constants.each_with_index do |constant| %>
+        <h6><%= constant.name%> <i><%= link_to("(Edit)", edit_constant_path(constant), class: "link_pink") %></i></h6>
+        <i><%= constant.value %></i>
+        <hr>
+      <% end %>
+    </div>
+  </div>
+  <div class="btn_cntnr"><%= link_to "New Constant", new_constant_path, class: "newpost--new--profile", style: "margin-right: 0px;" %></div>
+  <br><br><br>
+</div>

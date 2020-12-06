@@ -72,6 +72,9 @@ class PagesController < ApplicationController
   end
 
   def start
+    @reviews_requirement = Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value)
+    @pitches_requirement = Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value)
+    @max_reviews = Constant.find_by(name: "max # of reviews per month for editors").try(:value)
     set_meta_tags :title => "Editor Onboarding | The Teen Magazine"
   end
 
