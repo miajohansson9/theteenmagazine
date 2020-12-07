@@ -47,6 +47,13 @@ a {
   }
 }
 
+.underline {
+  text-decoration: underline !important;
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
 .tooltip-inner {
   background-color: black !important;
 }
