@@ -30,7 +30,7 @@ class ReviewsController < ApplicationController
       @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
       @max_reviews = Integer(Constant.find_by(name: "max # of reviews per month for editors").try(:value) || '0')
       @editor_pitches_cnt =  @user.pitches.where("created_at > ?", Date.today.beginning_of_month).count
-      @editor_reviews_cnt = Review.where(editor_id: @user.id).where("created_at > ?", Date.today.beginning_of_month).count
+      @editor_reviews_cnt = Review.where(editor_id: @user.id).where("updated_at > ?", Date.today.beginning_of_month).count
       @editors_reviews = Post.all.in_review.where(:reviews => {editor_id: @user.id}).order("updated_at desc")
       @submitted_for_review = Post.all.submitted.order("updated_at desc")
       @submitted_pitches = Pitch.is_submitted.order("updated_at desc")
