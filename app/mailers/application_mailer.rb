@@ -100,18 +100,74 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
-  def remind_editors_to_add_pitches(user)
+  def remind_editors_of_assigments(user)
     @user = user
+    @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
+    @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
+    @month = Date.today.strftime("%B")
+    @gifs = [
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy.gif",
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-5.gif",
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-17.gif",
+      "http://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-13.gif",
+      "http://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-12.gif",
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-9.gif",
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-8.gif",
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-10.gif",
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-3.gif",
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-4.gif",
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-16.gif",
+      "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-1.gif",
+    ]
     unless @user.do_not_send_emails
-      mail(to: user.email, subject: "Requesting editors to add pitches for this week!", from: "Mia from The Teen Magazine <miajohansson@college.harvard.edu>")
+      mail(to: user.email, subject: "#{user.first_name}, here are the editor assignments for #{Date.today.strftime("%B")}", from: "Mia from The Teen Magazine <mia@theteenmagazine.com>")
     end
   end
 
-  def request_editors_to_edit_articles(user, submitted)
+  def editor_warning_deadline_1(user, reviews_requirement, pitches_requirement, editor_pitches_cnt, editor_reviews_cnt)
     @user = user
-    @submitted = submitted
+    @month = Date.today.strftime("%B")
+    @reviews_requirement = reviews_requirement
+    @pitches_requirement = pitches_requirement
+    @editor_pitches_cnt = editor_pitches_cnt
+    @editor_reviews_cnt = editor_reviews_cnt
     unless @user.do_not_send_emails
-      mail(to: user.email, subject: "There are #{@submitted} articles waiting to be reviewed", from: "Mia from The Teen Magazine <miajohansson@college.harvard.edu>")
+      mail(to: user.email, subject: "#{user.first_name}, you are not on track to completing your editor assignments", from: "Mia from The Teen Magazine <mia@theteenmagazine.com>")
+    end
+  end
+
+  def editor_warning_deadline_2(user, reviews_requirement, pitches_requirement, editor_pitches_cnt, editor_reviews_cnt)
+    @user = user
+    @month = Date.today.strftime("%B")
+    @reviews_requirement = reviews_requirement
+    @pitches_requirement = pitches_requirement
+    @editor_pitches_cnt = editor_pitches_cnt
+    @editor_reviews_cnt = editor_reviews_cnt
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "#{user.first_name}, you are not on track to completing your editor assignments", from: "Mia from The Teen Magazine <mia@theteenmagazine.com>")
+    end
+  end
+
+  def editor_missed_deadline_1(user, reviews_requirement, pitches_requirement, editor_pitches_cnt, editor_reviews_cnt)
+    @user = user
+    @month = Date.today.strftime("%B")
+    @reviews_requirement = reviews_requirement
+    @pitches_requirement = pitches_requirement
+    @editor_pitches_cnt = editor_pitches_cnt
+    @editor_reviews_cnt = editor_reviews_cnt
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "#{user.first_name}, you missed the editor deadline for #{@month}", from: "Mia from The Teen Magazine <mia@theteenmagazine.com>")
+    end
+  end
+
+  def removed_editor_from_team(user)
+    @user = user
+    @editor_pitches_cnt =  @user.pitches.count
+    @editor_reviews = Review.where(editor_id: @user.id)
+    @editor_reviews_cnt = @editor_reviews.count
+    @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "#{user.first_name}, you were removed from the editor team", from: "Mia from The Teen Magazine <mia@theteenmagazine.com>")
     end
   end
 

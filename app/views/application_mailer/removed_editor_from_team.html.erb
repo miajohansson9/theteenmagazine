@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+    <p>
+      This is an automated email letting you know that have not completed the editor assignments for two months in a row. As a result, you have been removed from the editor team at The Teen Magazine.
+      We are sorry to see you go, and we are grateful for all that you have contributed to The Teen Magazine and our writer team.
+    </p>
+    <p>Your impact at The Teen Magazine:</p>
+    <ul>
+      <li><%= @editor_pitches_cnt %> pitched articles</li>
+      <li><%= @editor_reviews_cnt %> reviewed articles</li>
+      <li><%= @writers_helped_cnt %> writers helped</li>
+    </ul>
+    <p>
+      We wish you the best in your writing career and hope that you will stay an active member of our writer team.
+      If you think this was a mistake, please reply to this email explaining why.
+    </p>
+    <p>
+      Editor Team
+      <br>
+      The Teen Magazine
+    </p>
+  </body>
+</html>

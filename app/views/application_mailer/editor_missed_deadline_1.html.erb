@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+    <p>
+      This is an automated email letting you know that have not completed the editor assignments for <%= @month %>.
+      You currently have completed <%= @editor_pitches_cnt %>/<%= @pitches_requirement %> pitches and <%= @editor_reviews_cnt %>/<%= @reviews_requirement %> reviews.
+      Missing two deadlines in a row will result in your removal from the editor team.
+      Please do not ask for an extension as no exceptions will be made, but it is okay if you needed to skip this month if your workload was too overwhelming (if this is the case, there is no need to reply to this email).
+      As long as you meet the editor assignments for next month, no action will be taken.
+    </p>
+    <p>If you would no longer like to be an editor and receive these emails, please reply to this email and we can take you off the editor list.</p>
+    <p>Best,<br>
+       Mia
+    </p>
+    <p>
+      The Teen Magazine
+    </p>
+  </body>
+</html>

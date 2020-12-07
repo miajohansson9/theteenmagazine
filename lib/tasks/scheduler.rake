@@ -22,15 +22,49 @@ task :run_all_tasks => :environment do
     end
   end
 
-  if ((Date.today.wednesday?) && (Pitch.is_approved.not_claimed.where(status: nil).count <= 50))
+  if (Date.today.day.eql? 1)
     User.editor do |editor|
-      ApplicationMailer.remind_editors_to_add_pitches(editor).deliver
+      ApplicationMailer.remind_editors_of_assigments(editor).deliver
     end
   end
 
-  if (Post.submitted.count >= 8)
+  if (Date.today.end_of_month.day - Date.today.day < 16)
+    @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
+    @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
     User.editor do |editor|
-      ApplicationMailer.request_editors_to_edit_articles(editor, Post.submitted.count).deliver
+      @editor_pitches_cnt =  @user.pitches.where("created_at > ?", Date.today.beginning_of_month).count
+      @editor_reviews_cnt = Review.where(editor_id: @user.id).where("updated_at > ?", Date.today.beginning_of_month).count
+      @is_not_on_track = (@editor_pitches_cnt + @editor_reviews_cnt < (@reviews_requirement + @pitches_requirement) / 2) && (@user.created_at < (Time.now - 30.days))
+      if @is_not_on_track
+        if @user.missed_editor_deadline.try(:month) === (Date.today - 1.month).month
+          ApplicationMailer.editor_warning_deadline_2(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
+        else
+          ApplicationMailer.editor_warning_deadline_1(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
+        end
+      end
+    end
+  end
+
+  if (Date.today.end_of_month.day.eql? Date.today.day)
+    @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
+    @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
+    User.editor do |editor|
+      @editor_pitches_cnt =  @user.pitches.where("created_at > ?", Date.today.beginning_of_month).count
+      @editor_reviews_cnt = Review.where(editor_id: @user.id).where("updated_at > ?", Date.today.beginning_of_month).count
+      @missed_deadline = ((@editor_pitches_cnt < @pitches_requirement) || (@editor_reviews_cnt < @reviews_requirement)) && (@user.created_at < (Time.now - 30.days))
+      if @missed_deadline
+        if (@user.missed_editor_deadline.try(:month) === (Date.today - 1.month).month) && !@user.admin
+          ApplicationMailer.removed_editor_from_team(editor).deliver
+          @user.editor = false
+          @user.became_an_editor = nil
+          @user.completed_editor_onboarding = nil
+          @user.save
+        else
+          ApplicationMailer.editor_missed_deadline_1(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
+          @user.missed_editor_deadline = Time.now
+          @user.save
+        end
+      end
     end
   end
 

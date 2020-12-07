@@ -16,7 +16,7 @@ class PitchesController < ApplicationController
       if params[:pitch].nil?
         @pitch = Pitch.new
         @categories = Category.all
-        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc"), page: params[:page], items: 20)
+        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).where("updated_at > ?", Time.now - 40.days).order("updated_at desc"), page: params[:page], items: 20)
       else
         @categories = Category.all
         @category_id = (params[:pitch][:category_id].blank?) ? @categories.map {|category| category.id} : params[:pitch][:category_id]
@@ -148,7 +148,7 @@ class PitchesController < ApplicationController
       @pitch.posts.where(publish_at: nil, user_id: current_user.id).destroy_all
       current_user.update(onboarding_claimed_pitch_id: nil)
       if @pitch.update(pitch_params)
-        @pitches = Pitch.is_approved.not_claimed.where(status: nil).order("updated_at desc").paginate(page: params[:page], per_page: 9)
+        @pitches = Pitch.is_approved.not_claimed.where(status: nil).where("updated_at > ?", Time.now - 40.days).order("updated_at desc").paginate(page: params[:page], per_page: 9)
         respond_to do |format|
           format.html { redirect_to "/onboarding?step=next_steps"}
           format.js
