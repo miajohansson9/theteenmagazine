@@ -92,11 +92,10 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
-  def send_pitches(user, pitches)
-    @user = user
+  def send_pitches(email, pitches)
     @pitches = pitches
     unless @user.do_not_send_emails
-      mail(to: user.email, subject: "Get Inspired by These Topic Ideas")
+      mail(to: email, subject: "Get Inspired by These Topic Ideas")
     end
   end
 
