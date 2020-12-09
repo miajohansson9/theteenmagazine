@@ -9,3 +9,4 @@
 //= link_directory ../javascripts/ckeditor/plugins/tableselection/styles
 //= link_directory ../javascripts/ckeditor/plugins/dialog/styles
 //= link_directory ../javascripts/ckeditor/plugins/image/dialogs
+//= link_directory ../javascripts/ckeditor/plugins/justify
