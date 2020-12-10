@@ -202,7 +202,7 @@
       loaded[0] = true;
     }
     if (($('#value2').isOnScreen()) && (!loaded[1])) {
-      animateValue('value2', 0, <%= @user_posts_approved.count %>, 500);
+      animateValue('value2', 0, <%= @user_posts_approved_records.count %>, 500);
       loaded[1] = true;
     }
     if (($('#value3').isOnScreen()) && (!loaded[2])) {
