@@ -49,14 +49,16 @@ class ReviewsController < ApplicationController
 
     @editor_reviewed_article.each do |review|
       @post = Post.find_by(id: review.post_id)
-      if review.status.eql? "Rejected"
-        @action = "<b>Rejected</b> <a target='_blank' href='/#{@post.slug}/edit'>#{@post.try(:title)}</a>"
-      elsif review.status.eql? "Approved for Publishing"
-        @action = "<b>Published</b> the article <a target='_blank' href='/#{@post.slug}'>#{@post.try(:title)}</a>"
-      else
-        @action = "moved the article <a target='_blank' href='/#{@post.slug}'>#{@post.try(:title)}</a> to <b>#{review.status}</b></a>"
+      if @post.exists?
+        if review.status.eql? "Rejected"
+          @action = "<b>Rejected</b> <a target='_blank' href='/#{@post.slug}/edit'>#{@post.try(:title)}</a>"
+        elsif review.status.eql? "Approved for Publishing"
+          @action = "<b>Published</b> the article <a target='_blank' href='/#{@post.slug}'>#{@post.try(:title)}</a>"
+        else
+          @action = "moved the article <a target='_blank' href='/#{@post.slug}'>#{@post.try(:title)}</a> to <b>#{review.status}</b></a>"
+        end
+        Activity.create(action: @action, action_at: review.updated_at, kind: review.class.name, kind_id: review.id, user_id: review.editor_id)
       end
-      Activity.create(action: @action, action_at: review.updated_at, kind: review.class.name, kind_id: review.id, user_id: review.editor_id)
     end
     @editor_reviewed_pitch.each do |pitch|
       Activity.create(action: "changed the status of the pitch <a target='_blank' href='/pitches/#{pitch.slug}'>#{pitch.try(:title)}</a> to <b>#{pitch.try(:status)}</b>", action_at: pitch.updated_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.editor_id)
