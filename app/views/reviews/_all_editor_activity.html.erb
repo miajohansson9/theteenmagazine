@@ -5,7 +5,7 @@
       <%= link_to(@profile_img, activity.user, target: "_blank") %>
       <div class="li-content ml-3">
         <span>
-          <%= link_to activity.user.try(:full_name), activity.user, class: "link_nrml" %> <%= markdown activity.action %>
+          <%= link_to activity.user.try(:full_name), "/editors/#{activity.user.slug}", class: "link_nrml", target: "_blank" %> <%= markdown activity.action %>
           <%= time_ago_in_words(activity.action_at) %> ago.
           <% if current_user.admin %>
             <%= mail_to activity.user.try(:email), subject: "Your editor activity on The Teen Magazine", body: "Responding to #{activity.user.try(:full_name)} #{activity.action.gsub(/<\/?[^>]*>/, "")}:", target: "_blank" do %>
