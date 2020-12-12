@@ -67,7 +67,7 @@ class ReviewsController < ApplicationController
       Activity.create(action: "pitched <a target='_blank' href='/pitches/#{pitch.slug}'>#{pitch.try(:title)}</a>", action_at: pitch.created_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.user_id)
     end
 
-    @pagy, @editor_activity = pagy(Activity.where("action_at > ?", Time.now - 2.months), page: params[:page], items: 20)
+    @pagy, @editor_activity = pagy(Activity.where("action_at > ?", Time.now - 2.months), page: params[:page], items: 15)
     render partial: "reviews/all_editor_activity"
   end
 
