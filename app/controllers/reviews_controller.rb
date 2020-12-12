@@ -56,13 +56,16 @@ class ReviewsController < ApplicationController
       else
         @action = "moved the article <a target='_blank' href='#{post_url(@post.slug)}'>#{@post.try(:title)}</a> to <b>#{review.status}</b></a>"
       end
-      Activity.create(action: @action, action_at: review.updated_at, kind: review.class.name, kind_id: review.id, user_id: review.editor_id)
+      @activity = Activity.new(action: @action, action_at: review.updated_at, kind: review.class.name, kind_id: review.id, user_id: review.editor_id)
+      @activity.save
     end
     @editor_reviewed_pitch.each do |pitch|
-      Activity.create(action: "changed the status of the pitch <a target='_blank' href='#{pitch_url(pitch)}'>#{pitch.try(:title)}</a> to <b>#{pitch.try(:status)}</b>", action_at: pitch.updated_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.editor_id)
+      @activity = Activity.create(action: "changed the status of the pitch <a target='_blank' href='#{pitch_url(pitch)}'>#{pitch.try(:title)}</a> to <b>#{pitch.try(:status)}</b>", action_at: pitch.updated_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.editor_id)
+      @activity.save
     end
     @editor_pitched_new_article.each do |pitch|
-      Activity.create(action: "pitched <a target='_blank' href='#{pitch_url(pitch)}'>#{pitch.try(:title)}</a>", action_at: pitch.created_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.user_id)
+      @activity = Activity.create(action: "pitched <a target='_blank' href='#{pitch_url(pitch)}'>#{pitch.try(:title)}</a>", action_at: pitch.created_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.user_id)
+      @activity.save
     end
 
     @pagy, @editor_activity = pagy(Activity.where("action_at > ?", (Time.now - 2.months)), page: params[:page], items: 20)
