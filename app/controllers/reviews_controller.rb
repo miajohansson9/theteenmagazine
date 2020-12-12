@@ -49,7 +49,7 @@ class ReviewsController < ApplicationController
 
     @editor_reviewed_article.each do |review|
       @post = Post.find_by(id: review.post_id)
-      if @post.exists?
+      if @post.present?
         if review.status.eql? "Rejected"
           @action = "<b>Rejected</b> <a target='_blank' href='/#{@post.slug}/edit'>#{@post.try(:title)}</a>"
         elsif review.status.eql? "Approved for Publishing"
