@@ -65,10 +65,10 @@ blockquote {
                 <%= render "posts/partials/share_social" %>
               </div>
               <% if current_user && (current_user.id == @post.user_id || (@post.collaboration&.include? current_user.email) || current_user.admin? || (@post.reviews.last.editor_id.eql? current_user.id)) %>
-                <div id="admin_links">
-                  <%= link_to "Edit Article", edit_post_path(@post) %>
+                <div id="admin_links" style="border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;text-align: center;padding: 1em 0;margin: 1em 0;margin-top: 0;">
+                  <%= link_to "Edit Article", edit_post_path(@post), style: "text-decoration: none;color: #9a9da4;margin: 0 1em;font-weight: 700;font-size: .8em;text-transform: uppercase;font-family: inherit;" %>
                   <% if current_user && (current_user.id == @post.user_id || current_user.admin) %>
-                  <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete this article?"} %>
+                    <%= link_to "Delete", post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete this article?"}, style: "text-decoration: none;color: #9a9da4;margin: 0 1em;font-weight: 700;font-size: .8em;text-transform: uppercase;font-family: inherit;" %>
                   <% end %>
                 </div>
               <% end %>
@@ -99,7 +99,7 @@ blockquote {
           </div>
         </div>
         <h3>Trending in <%= link_to(@post.category.name, @post.category, :class => "category_title_trending") %></h3>
-        <%= render_async get_trending_posts_in_category_path(id: @post.id) %>
+        <%= render_async_cache get_trending_posts_in_category_path(id: @post.id) %>
       </div>
     </div>
     <div class="fixed_ads ads_wrapper">

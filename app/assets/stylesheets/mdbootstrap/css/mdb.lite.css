@@ -9654,15 +9654,6 @@ ul.stepper li.completed a .label {
     height: 500px
 }
 
-button,
-html [type="button"],
-[type="reset"],
-[type="submit"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none
-}
-
 .btn-rounded {
     border-radius: 10em
 }

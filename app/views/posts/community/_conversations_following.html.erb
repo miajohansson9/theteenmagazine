@@ -1,0 +1,16 @@
+<div class="comments mb-4">
+  <ul class="list-group list-group-flush" id="list-group-comments">
+    <% @all.each do |comment| %>
+      <% if @replies.include? comment %>
+        <%= render :partial => 'comments/comment_reply', locals: {comment: comment} %>
+      <% elsif @post_comments.include? comment %>
+        <%= render :partial => 'comments/comment_on_post', locals: {comment: comment} %>
+      <% else %>
+        <%= render :partial => 'comments/comment_following', locals: {comment: comment} %>
+      <% end %>
+    <% end %>
+  </ul>
+  <% if @all.count.eql? 0 %>
+    <p><i>You aren't following any conversations. Comment on some articles to get involved in the community.</i></p>
+  <% end %>
+</div>

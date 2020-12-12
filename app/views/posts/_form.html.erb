@@ -9,7 +9,6 @@
         <% end %>
       </ul>
     <% end %>
-
     <%= f.label :title %>
     <%= f.text_field :title %>
     <br>
@@ -88,7 +87,7 @@
             <div class="small-text-wrapper">
               <% @feedbacks_editor_frm.each_with_index do |feedback, index| %>
                 <p class="rejected-reason hide">
-                  <%= f.check_box :feedback_list, { :multiple => true, checked: !(@review.try(:feedback_givens).where(feedback_id: feedback.id).blank?), class: "rejected-reason hide mb-1 mt-0" }, feedback.id, nil %> <%= index + 1 %>. <%= feedback.editor_descr %>
+                  <%= f.check_box :feedback_list, { :multiple => true, checked: !(@review.try(:feedback_givens).where(feedback_id: feedback.id).blank?), class: "rejected-reason hide mb-1 mt-0"}, feedback.id, nil %> <%= index + 1 %>. <%= feedback.editor_descr %>
                 </p>
               <% end %>
               <div class="rejected-reason hide">

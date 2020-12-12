@@ -32,8 +32,11 @@ Rails.application.routes.draw do
   get :get_recent_posts, controller: :welcome
 
   get :get_trending_posts_in_category, controller: :posts
+  get :get_conversations_following, controller: :posts
 
   get :get_profile, controller: :users
+
+  get :get_editor_activity, controller: :reviews
 
   get 'welcome/index'
   root 'welcome#index'

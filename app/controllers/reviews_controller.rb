@@ -23,9 +23,6 @@ class ReviewsController < ApplicationController
       end
       @notifications = @notifications - @unseen_editor_dashboard_cnt
       @unseen_editor_dashboard_cnt = 0
-      if current_user.admin?
-        @all_reviews = Post.all.in_review.order("updated_at desc")
-      end
       @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
       @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
       @max_reviews = Integer(Constant.find_by(name: "max # of reviews per month for editors").try(:value) || '0')
@@ -42,6 +39,34 @@ class ReviewsController < ApplicationController
     else
       redirect_to user_path(current_user), notice: "You are not allowed access to the editor reviews."
     end
+  end
+
+  def get_editor_activity
+    @update_since = Activity.first.try(:action_at) || Time.now - 7.days
+    @editor_reviewed_article = Review.where.not(editor_id: nil).where("updated_at > ?", @update_since)
+    @editor_reviewed_pitch = Pitch.where.not(status: nil, editor_id: nil, claimed_id: nil).where("updated_at > ?", @update_since)
+    @editor_pitched_new_article = Pitch.is_approved.not_claimed.where("created_at > ?", @update_since)
+
+    @editor_reviewed_article.each do |review|
+      @post = Post.find_by(id: review.post_id)
+      if review.status.eql? "Rejected"
+        @action = "<b>Rejected</b> <a target='_blank' href='#{edit_post_url(@post.slug)}'>#{@post.try(:title)}</a>"
+      elsif review.status.eql? "Approved for Publishing"
+        @action = "<b>Published</b> the article <a target='_blank' href='#{post_url(@post.slug)}'>#{@post.try(:title)}</a>"
+      else
+        @action = "moved the article <a target='_blank' href='#{post_url(@post.slug)}'>#{@post.try(:title)}</a> to <b>#{review.status}</b></a>"
+      end
+      @activity = Activity.create(action: @action, action_at: review.updated_at, kind: review.class.name, kind_id: review.id, user_id: review.editor_id)
+    end
+    @editor_reviewed_pitch.each do |pitch|
+      @activity = Activity.create(action: "changed the status of the pitch <a target='_blank' href='#{pitch_url(pitch)}'>#{pitch.try(:title)}</a> to <b>#{pitch.try(:status)}</b>", action_at: pitch.updated_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.editor_id)
+    end
+    @editor_pitched_new_article.each do |pitch|
+      @activity = Activity.create(action: "pitched <a target='_blank' href='#{pitch_url(pitch)}'>#{pitch.try(:title)}</a>", action_at: pitch.created_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.user_id)
+    end
+
+    @pagy, @editor_activity = pagy(Activity.where("action_at > ?", (Time.now - 2.months)), page: params[:page], items: 20)
+    render partial: "reviews/all_editor_activity"
   end
 
   def update

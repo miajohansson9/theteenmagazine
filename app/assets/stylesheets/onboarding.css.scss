@@ -1,5 +1,6 @@
 @import "mdbootstrap/css/bootstrap.min";
 @import "mdbootstrap/css/mdb.min";
+@import "mdbootstrap/css/mdb.lite.min";
 @import "common";
 @import 'normalize';
 @import 'welcome';
@@ -13,6 +14,42 @@
    .nav-title {
      display: inline-block !important;
    }
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  opacity: 100 !important;
+  position: relative !important;
+  pointer-events: all !important;
+}
+
+.feed_wrapper {
+  .list-group-item {
+    display: flex;
+    flex-direction: row;
+  }
+  p, span {
+    font-size: 16px;
+    display: inline;
+  }
+}
+
+.classic-tabs .nav li a.active {
+  border-radius: 30px !important;
+  border-width: 0px;
+  background-color: #FED6DF;
+}
+
+.tab-custom {
+  margin-left: 0px !important;
+  border-radius: 30px !important;
+  a {
+    color: #F0255E !important;
+    font-family: verdana;
+    font-weight: 800;
+    text-transform: none !important;
+    font-size: 0.8em;
+    padding: 15px 30px !important;
+  }
 }
 
 .popover {

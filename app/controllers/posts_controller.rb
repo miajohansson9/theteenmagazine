@@ -35,16 +35,8 @@ class PostsController < ApplicationController
       current_user.save
     end
     @points = current_user.points
-    @my_shared_drafts = current_user.posts.where(sharing: true, publish_at: nil).draft.order("updated_at desc")
+    @my_shared_drafts = Post.where("collaboration like ?", "%#{current_user.email}%").or(Post.where(user_id: current_user.id)).where(sharing: true, publish_at: nil).draft.order("updated_at desc")
     @pagy, @shared_drafts = pagy(Post.where(sharing: true).draft.order("updated_at desc"), page: params[:page], items: 12)
-    @replies  = current_user.comments.map{|c| c.comments.where.not(user_id: current_user.id)}.flatten.reject(&:blank?)
-    @comments_following  = current_user.comments.where.not(comment_id: nil).map{ |c| @parent = Comment.find_by(id: c.comment_id)
-                                                                                 if @parent.try(:comments).present?
-                                                                                   @parent.comments.where('created_at > ?', c.created_at)
-                                                                                 end
-                                                                               }.flatten.reject(&:blank?).delete_if{|c| c.user_id.eql? current_user.id}
-    @post_comments = current_user.posts.draft.map{|p| p.comments.where.not(user_id: current_user.id)}.flatten
-    @all = (@comments_following + @post_comments + @replies).uniq.sort_by(&:created_at).reverse.take(8)
     current_user.last_saw_community = Time.now
     current_user.save
   end
@@ -168,6 +160,18 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @trending = @post.category.posts.published.trending.limit(7)
     render partial: "posts/partials/trending"
+  end
+
+  def get_conversations_following
+    @replies  = current_user.comments.map{|c| c.comments.where.not(user_id: current_user.id)}.flatten.reject(&:blank?)
+    @comments_following  = current_user.comments.where.not(comment_id: nil).map{ |c| @parent = Comment.find_by(id: c.comment_id)
+                                                                                 if @parent.try(:comments).present?
+                                                                                   @parent.comments.where('created_at > ?', c.created_at)
+                                                                                 end
+                                                                               }.flatten.reject(&:blank?).delete_if{|c| c.user_id.eql? current_user.id}
+    @post_comments = current_user.posts.draft.map{|p| p.comments.where.not(user_id: current_user.id)}.flatten
+    @all = (@comments_following + @post_comments + @replies).uniq.sort_by(&:created_at).reverse.take(20)
+    render partial: "posts/community/conversations_following"
   end
 
   def unapprove
@@ -323,9 +327,9 @@ class PostsController < ApplicationController
     @post.content.gsub!("<br>", "")
     @post.content.gsub!("<pre>", "<p>")
     @post.content.gsub!("</pre>", "</p>")
-    @post.content.gsub!("<div>", "<p>")
+    @post.content.gsub!("<div", "<p")
     @post.content.gsub!("</div>", "</p>")
-    @post.content.gsub!("<address>", "<p>")
+    @post.content.gsub!("<address", "<p")
     @post.content.gsub!("</address>", "</p>")
     @post.content.gsub!("<hr />", "")
     @post.content.gsub!("<p><iframe", "<p class='responsive-iframe-container'><iframe class='responsive-iframe'")

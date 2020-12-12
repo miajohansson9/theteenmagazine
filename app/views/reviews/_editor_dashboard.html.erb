@@ -2,99 +2,107 @@
   <div class="dashboard_wrapper">
     <div id="waiting--for--approval">
       <div class="dashboard--writer--flex--main pr-3">
-        <div data-step data-index="1" data-onboarding-content="Welcome to your editor dashboard! Articles you're reviewing will show up here.">
-          <h5 class="pitch_ttl">Drafts You're Reviewing</h5>
-          <% @editors_reviews.each do |draft| %>
-            <div class="flex--postlist--item review_items pl-0">
-              <div class="inside--item">
-                <%= link_to (image_tag draft.thumbnail(:medium)), post_path(draft) %>
-                <div>
-                  <h4><%= link_to draft.title, post_path(draft), class: "link_nrml"%></h4>
-                  <p class="edited_dt"><%= "Last edited by you " + time_ago_in_words(draft.reviews.last.updated_at) %> ago</p>
-                  <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
-                  <p class="edit_lnk"><%= link_to "Edit Article", edit_post_path(draft) %></p>
+        <!-- Classic tabs -->
+        <div class="classic-tabs">
+          <ul class="nav" id="myClassicTab" role="tablist">
+            <li class="nav-item tab-custom">
+              <a class="tab-custom active show" id="home-tab-classic" data-toggle="tab" href="#profile-classic"
+                role="tab" aria-controls="profile-classic" aria-selected="true">Home</a>
+            </li>
+            <li class="nav-item tab-custom">
+              <a class="tab-custom" id="activity-tab-classic" data-toggle="tab" href="#follow-classic" role="tab"
+                aria-controls="follow-classic" aria-selected="false">All Activity</a>
+            </li>
+          </ul>
+        </div>
+        <!-- Classic tabs -->
+        <div class="tab-content p-0" id="myClassicTabContent">
+          <div class="tab-pane fade active show" id="profile-classic" role="tabpanel" aria-labelledby="home-tab-classic" data-step data-index="1" data-onboarding-content="Welcome to your editor dashboard! Articles you're reviewing will show up here.">
+            <h5 class="pitch_ttl">Drafts You're Reviewing</h5>
+            <% @editors_reviews.each do |draft| %>
+              <div class="flex--postlist--item review_items pl-0">
+                <div class="inside--item">
+                  <%= link_to (image_tag draft.thumbnail(:medium)), post_path(draft) %>
+                  <div>
+                    <h4><%= link_to draft.title, post_path(draft), class: "link_nrml"%></h4>
+                    <p class="edited_dt"><%= "Last edited by you " + time_ago_in_words(draft.reviews.last.updated_at) %> ago</p>
+                    <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
+                    <p class="edit_lnk"><%= link_to "Edit Article", edit_post_path(draft) %></p>
+                  </div>
                 </div>
               </div>
+            <% end %>
+            <% if @editors_reviews.count.eql? 0 %>
+              <i>You don't have any articles that you're editing right now.</i>
+            <% end %>
+          <div data-step data-index="2" data-onboarding-content= "Articles waiting to be reviewed by an editor will show up here. You can start claiming and reviewing articles once you've finished reading &ldquo;Reviewing Articles.&rdquo;">
+            <h5 class="pitch_ttl">Articles Ready for Review</h5>
+            <div class="flex-wrapper">
+              <% if @editor_reviews_cnt < @max_reviews %>
+                <% @submitted_for_review.each do |draft| %>
+                  <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
+                    <div class="card-bottom-flex p-2">
+                      <% if draft.user.try(:profile)&.exists? %>
+                        <%= image_tag draft.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
+                      <% else %>
+                        <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
+                      <% end %>
+                      <div>
+                        <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
+                        <% if !draft.pitch.blank? %>
+                          <p class="card-text"> <%= draft.pitch.description.truncate_words(20) %></p>
+                        <% end %>
+                        <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> on <%= draft.reviews.last.updated_at.strftime("%A, %b %d") %> </p>
+                        <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <% if @submitted_for_review.count.eql? 0 %>
+                  <i>There are no submitted articles right now. Check back in a few days!</i>
+                <% end %>
+              <% else %>
+                <i>You have reached the maximum number of reviews this month. Check the <a href="/community">Community Page</a> to continue giving feedback to articles.</i>
+              <% end %>
             </div>
-          <% end %>
-          <% if @editors_reviews.count.eql? 0 %>
-            <i>You don't have any articles that you're editing right now.</i>
-          <% end %>
-        </div>
-        <div data-step data-index="2" data-onboarding-content= "Articles waiting to be reviewed by an editor will show up here. You can start claiming and reviewing articles once you've finished reading &ldquo;Reviewing Articles.&rdquo;">
-          <h5 class="pitch_ttl">Articles Ready for Review</h5>
-          <div class="flex-wrapper">
-            <% if @editor_reviews_cnt < @max_reviews %>
-              <% @submitted_for_review.each do |draft| %>
-                <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
+          </div>
+          <div data-step data-index="3" data-onboarding-content='Newly pitched articles will show up here. You may accept/reject pitches as explained in "Reviewing Pitches."'>
+            <h5 class="pitch_ttl">New Pitched Articles</h5>
+            <div class="flex-wrapper">
+              <% @submitted_pitches.each do |pitch| %>
+              <div class="card card-review <% if @unseen_submitted_pitches.include? pitch %> unread <% end %>" style="width: 100%;">
                   <div class="card-bottom-flex p-2">
-                    <% if draft.user.try(:profile)&.exists? %>
-                      <%= image_tag draft.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
+                    <% if pitch.user.try(:profile)&.exists? %>
+                      <%= image_tag pitch.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
                     <% else %>
                       <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
                     <% end %>
                     <div>
-                      <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
-                      <% if !draft.pitch.blank? %>
-                        <p class="card-text"> <%= draft.pitch.description.truncate_words(20) %></p>
-                      <% end %>
-                      <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> on <%= draft.reviews.last.updated_at.strftime("%A, %b %d") %> </p>
-                      <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
+                      <h4 class="card-title"><%= link_to pitch.title, pitch, class: "link_nrml" %></h4>
+                      <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
+                      <p class="card-text"> Submitted by <%= link_to pitch.user.try(:full_name), pitch.user, class: "link_nrml" %> on <%= pitch.updated_at.strftime("%A, %b %d") %> </p>
+                      <%= link_to "Review Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
                     </div>
                   </div>
                 </div>
               <% end %>
-              <% if @submitted_for_review.count.eql? 0 %>
-                <i>There are no submitted articles right now. Check back in a few days!</i>
+              <% if @submitted_pitches.count.eql? 0 %>
+                <i>There are no submitted pitches right now. Check back in a few days!</i>
               <% end %>
-            <% else %>
-              <i>You have reached the maximum number of reviews this month. Check the <a href="/community">Community Page</a> to continue giving feedback to articles.</i>
-            <% end %>
-          </div>
-        </div>
-        <div data-step data-index="3" data-onboarding-content='Newly pitched articles will show up here. You may accept/reject pitches as explained in "Reviewing Pitches."'>
-          <h5 class="pitch_ttl">New Pitched Articles</h5>
-          <div class="flex-wrapper">
-            <% @submitted_pitches.each do |pitch| %>
-            <div class="card card-review <% if @unseen_submitted_pitches.include? pitch %> unread <% end %>" style="width: 100%;">
-                <div class="card-bottom-flex p-2">
-                  <% if pitch.user.try(:profile)&.exists? %>
-                    <%= image_tag pitch.user.profile.url(:square), :class => "profile_img", :id => "review_img" %>
-                  <% else %>
-                    <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
-                  <% end %>
-                  <div>
-                    <h4 class="card-title"><%= link_to pitch.title, pitch, class: "link_nrml" %></h4>
-                    <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
-                    <p class="card-text"> Submitted by <%= link_to pitch.user.try(:full_name), pitch.user, class: "link_nrml" %> on <%= pitch.updated_at.strftime("%A, %b %d") %> </p>
-                    <%= link_to "Review Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-            <% if @submitted_pitches.count.eql? 0 %>
-              <i>There are no submitted pitches right now. Check back in a few days!</i>
-            <% end %>
-          </div>
-        </div>
-        <% if @user.admin? %>
-          <h5 class="pitch_ttl">All articles under review</h5>
-          <% @all_reviews.each do |draft| %>
-            <div class="flex--postlist--item review_items" style="padding-left: 0;">
-              <div class="inside--item">
-                <div>
-                  <h4 style="padding: 0px;"><%= link_to draft.title, edit_post_path(draft), class: "link_nrml"%></h4>
-                  <% @editor = User.find(draft.reviews.last.editor_id) %>
-                  <p class="edited_dt" style="padding: 0px;"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) + " ago and is being reviewed by " %><%= link_to(@editor.full_name, @editor, style: "vertical-align: baseline;", class: "link_nrml") %></p>
-                </div>
-              </div>
             </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="activity-tab-classic">
+          <h5 class="pitch_ttl">All Editor Activity</h5>
+          <%= render_async get_editor_activity_path, toggle: { selector: '#activity-tab-classic', event: :click } do %>
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
           <% end %>
-          <% if @all_reviews.count.eql? 0 %>
-            <i>There are no articles in review right now.</i>
-            <br>
-          <% end %>
-        <% end %>
+        </div>
+      </div>
         <br>
       </div>
       <div class="dashboard--writer--flex--two dashboard--editor" style="width: 30rem;">
@@ -106,7 +114,7 @@
               </div>
             <% elsif (@user.missed_editor_deadline.try(:month) === (Date.today - 1.month).month) %>
               <div class="alert alert-danger" role="alert">
-                <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="exclamation-triangle" class="mb-1 svg-inline--fa fa-exclamation-triangle fa-w-18" role="img" viewBox="0 0 576 512"><path fill="currentColor" d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg> You did not meet last month's editor deadline. Missing this month will result in your removal from the editor team. Please make sure to complete your editor assignments early.
+                <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="exclamation-triangle" class="mb-1 svg-inline--fa fa-exclamation-triangle fa-w-18" role="img" viewBox="0 0 576 512"><path fill="currentColor" d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path></svg> You did not meet last month's editor deadline. Missing this month will result in your removal from the editor team.
               </div>
             <% elsif Date.today.end_of_month.day - Date.today.day < 16 && (@editor_pitches_cnt + @editor_reviews_cnt < (@reviews_requirement + @pitches_requirement) / 2) && (@user.created_at < (Time.now - 30.days)) %>
               <div class="alert alert-danger" role="alert">

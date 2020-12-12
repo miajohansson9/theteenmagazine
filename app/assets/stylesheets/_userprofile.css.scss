@@ -353,7 +353,6 @@
     .flex--item {
       position: relative;
       max-width: 1000px;
-      margin-top: 10px;
       .flex--profile {
         z-index:1;
         opacity: 0.4;
@@ -400,6 +399,7 @@
     }
     .dashboard--writer--flex--main {
       width: 100%;
+      padding-top: 15px;
     }
   }
 }
@@ -566,6 +566,8 @@
         }
         .dashboard--writer--flex--two {
           padding: 0 !important;
+          margin-top: 10px !important;
+          margin-bottom: 0px !important;
           border-left: none;
           max-width: 100%;
           margin: 0 auto;

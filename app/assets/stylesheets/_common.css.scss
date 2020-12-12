@@ -17,23 +17,8 @@
 }
 
 #admin_links {
-  border-top: 1px solid #E9E9E9;
-  border-bottom: 1px solid #E9E9E9;
-  text-align: center;
-  padding: 1em 0;
-  margin: 1em 0;
-  margin-top: 0;
-  a {
-    text-decoration: none;
-    color: #9a9da4;
-    margin: 0 1em;
-    font-weight: 700;
-    font-size: .8em;
-    text-transform: uppercase;
-    font-family: inherit;
-    &:hover {
-      color: #4ABEB6;
-    }
+  a:hover {
+    color: #4ABEB6 !important;
   }
 }
 
