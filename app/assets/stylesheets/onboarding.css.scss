@@ -33,7 +33,7 @@
   }
 }
 
-.classic-tabs .nav li a.active {
+.classic-tabs .nav li a.active, .tab-custom .active {
   border-radius: 30px !important;
   border-width: 0px;
   background-color: #FED6DF;

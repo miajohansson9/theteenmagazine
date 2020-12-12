@@ -8,6 +8,11 @@ function toggleNav() {
   }
 }
 
+function clickedLoadMoreButton() {
+  $("#load-more-button").addClass("disabled");
+  $(".spinner-button").removeClass("hide");
+}
+
 function animateEditorStats(decimal) {
   var s = Snap('#animated');
   var progress = s.select('#progress');

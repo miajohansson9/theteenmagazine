@@ -1,0 +1,8 @@
+<div class="mx-auto mb-3" style="width: fit-content">
+  <div style="margin-top: 0px;" class="hide spinner-button spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <li class="nav-item tab-custom d-inline">
+    <%= link_to "Load More", get_editor_activity_path(page: @page), remote: true, class: "tab-custom tab-custom active show", id: "load-more-button", onclick: "clickedLoadMoreButton();" %>
+  </li>
+</div>

@@ -66,9 +66,17 @@ class ReviewsController < ApplicationController
     @editor_pitched_new_article.each do |pitch|
       Activity.create(action: "pitched <a target='_blank' href='/pitches/#{pitch.slug}'>#{pitch.try(:title)}</a>", action_at: pitch.created_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.user_id)
     end
-
-    @pagy, @editor_activity = pagy(Activity.where("action_at > ?", Time.now - 2.months), page: params[:page], items: 15)
-    render partial: "reviews/all_editor_activity"
+    @per_page = 20
+    @last_page = Activity.all.count / @per_page
+    @page = params[:page].nil? ? 1 : Integer(params[:page]) + 1
+    @pagy, @editor_activity = pagy_countless(Activity.all, page: params[:page], items: @per_page, link_extra: 'data-remote="true"')
+    if params[:page].present?
+      respond_to do |format|
+        format.js
+      end
+    else
+      render partial: "reviews/all_editor_activity"
+    end
   end
 
   def update
