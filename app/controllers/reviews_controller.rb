@@ -42,7 +42,7 @@ class ReviewsController < ApplicationController
   end
 
   def get_editor_activity
-    @update_since = Activity.first.try(:action_at) || Time.now - 7.days
+    @update_since = Activity.first.try(:action_at) || Time.now - 30.days
     @editor_reviewed_article = Review.where.not(editor_id: nil).where("updated_at > ?", @update_since)
     @editor_reviewed_pitch = Pitch.where.not(status: nil, editor_id: nil, claimed_id: nil).where("updated_at > ?", @update_since)
     @editor_pitched_new_article = Pitch.is_approved.not_claimed.where("created_at > ?", @update_since)
@@ -57,7 +57,10 @@ class ReviewsController < ApplicationController
         else
           @action = "moved the article <a target='_blank' href='/#{@post.slug}'>#{@post.try(:title)}</a> to <b>#{review.status}</b></a>"
         end
-        Activity.create(action: @action, action_at: review.updated_at, kind: review.class.name, kind_id: review.id, user_id: review.editor_id)
+        @activity_does_not_exist = Activity.where(action: @action, kind: review.class.name, kind_id: review.id, user_id: review.editor_id).count.eql? 0
+        if @activity_does_not_exist
+          Activity.create(action: @action, action_at: review.updated_at, kind: review.class.name, kind_id: review.id, user_id: review.editor_id)
+        end
       end
     end
     @editor_reviewed_pitch.each do |pitch|
