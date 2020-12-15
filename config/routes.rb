@@ -75,8 +75,8 @@ Rails.application.routes.draw do
   get '/editors', to: 'users#editors'
   get '/partners/:id/share', to: 'users#share'
   get '/partners/:id/published', to: 'users#sponsored'
-  get '/october_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
-  post '/october_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
+  get '/december_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
+  post '/december_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
 
   patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
   post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim
