@@ -18,7 +18,7 @@ CKEDITOR.editorConfig = function( config ) {
   config.removeButtons = 'Save,NewPage,ExportPdf,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Find,SelectAll,Scayt,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Form,Subscript,Superscript,CopyFormatting,Outdent,Indent,CreateDiv,BidiLtr,BidiRtl,Language,Anchor,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Styles,Font,FontSize,TextColor,BGColor,ShowBlocks,About,Iframe,JustifyRight,JustifyBlock';
   config.disableNativeSpellChecker = false;
   config.removePlugins = 'scayt,wsc';
-  config.extraPlugins = 'justify';
+  config.extraPlugins = 'justify,link';
   config.filebrowserImageBrowseUrl = '/ckeditor/pictures';
   config.filebrowserImageUploadUrl = "/ckeditor/pictures?CKEditor=post_content&CKEditorFuncNum=0&langCode=en";
   config.pasteFilter = 'p; a[!href];';
