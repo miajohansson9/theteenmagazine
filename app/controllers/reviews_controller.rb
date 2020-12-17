@@ -44,8 +44,8 @@ class ReviewsController < ApplicationController
   def get_editor_activity
     @update_since = Activity.first.try(:action_at) || Time.now - 30.days
     @editor_reviewed_article = Review.where.not(editor_id: nil).where("updated_at > ?", @update_since)
-    @editor_reviewed_pitch = Pitch.where.not(status: nil, editor_id: nil, claimed_id: nil).where("updated_at > ?", @update_since)
-    @editor_pitched_new_article = Pitch.is_approved.not_claimed.where("created_at > ?", @update_since)
+    @editor_reviewed_pitch = Pitch.where(claimed_id: nil).where.not(status: nil, editor_id: nil).where("updated_at > ?", @update_since)
+    @editor_pitched_new_article = Pitch.is_approved.not_claimed.where(status: nil).where("created_at > ?", @update_since)
 
     @editor_reviewed_article.each do |review|
       @post = Post.find_by(id: review.post_id)
