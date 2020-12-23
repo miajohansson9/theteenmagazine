@@ -178,6 +178,14 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
+  def editor_missed_review_deadline(user, post)
+    @user = user
+    @post = post
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "Your review is overdue")
+    end
+  end
+
   def partner_login_details(user, partner)
     @user = user
     @partner = partner

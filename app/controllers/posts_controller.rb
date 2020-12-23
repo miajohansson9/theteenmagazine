@@ -262,7 +262,7 @@ class PostsController < ApplicationController
       elsif (@new_status.eql? "In Review") && (current_user.editor?)
         @notice = (@prev_review.editor_id == current_user.id) ? "Your changes were saved." : "Great job, You've claimed editing this article!"
         if !(@prev_status.eql? "In Review")
-          ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
+          editor_claimed_review
         end
         redirect_to "/editors/#{current_user.slug}", notice: @notice
       else
@@ -270,6 +270,14 @@ class PostsController < ApplicationController
       end
     else
       render 'edit', notice: "Changes were unable to be saved."
+    end
+  end
+
+  def editor_claimed_review
+    @rev = @post.reviews.last
+    @rev.update_column('editor_claimed_review_at', Time.now)
+    Thread.new do
+      ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
     end
   end
 

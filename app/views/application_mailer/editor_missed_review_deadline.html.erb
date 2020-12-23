@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+    <p>
+      This is an email notifying you did not complete <%= @post.title %>'s review in time.
+      It has been unclaimed and will not be counted toward your monthly required reviews.
+      Please only claim reviews in the future that you have time to complete within the two-day deadline.
+      Thank you.
+    </p>
+    <p>The Teen Magazine</p>
+  </body>
+</html>

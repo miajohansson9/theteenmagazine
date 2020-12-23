@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_23_210017) do
+ActiveRecord::Schema.define(version: 2020_12_23_225124) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 2020_12_23_210017) do
     t.integer "editor_id"
     t.text "notes"
     t.integer "feedback", default: 0
+    t.datetime "editor_claimed_review_at"
   end
 
   create_table "users", force: :cascade do |t|

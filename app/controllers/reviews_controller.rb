@@ -113,7 +113,7 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:review).permit(:created_at, :updated_at, :status, :post_id, :editor_id, :active, :notes)
+    params.require(:review).permit(:created_at, :updated_at, :editor_claimed_review_at, :status, :post_id, :editor_id, :active, :notes)
   end
 
   def find_review
