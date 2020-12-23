@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_12_201004) do
+ActiveRecord::Schema.define(version: 2020_12_23_210017) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -325,6 +325,7 @@ ActiveRecord::Schema.define(version: 2020_12_12_201004) do
     t.string "became_an_editor"
     t.boolean "completed_editor_onboarding"
     t.datetime "missed_editor_deadline"
+    t.boolean "notify_of_new_review"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true

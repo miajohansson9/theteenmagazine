@@ -37,6 +37,8 @@ Rails.application.routes.draw do
   get :get_profile, controller: :users
 
   get :get_editor_activity, controller: :reviews
+  get :enable_notify_of_new_review, controller: :reviews
+  get :disable_notify_of_new_review, controller: :reviews
 
   get 'welcome/index'
   root 'welcome#index'

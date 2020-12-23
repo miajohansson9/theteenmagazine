@@ -76,6 +76,14 @@ task :run_all_tasks => :environment do
     end
   end
 
+  if (Date.today.end_of_month.day.eql? Date.today.day)
+    @editors = User.editor.where(notify_of_new_review: true)
+    @editors.each do |editor|
+      editor.notify_of_new_review = false
+      editor.save
+    end
+  end
+
   if (Date.today.monday?)
     Rake::Task["sitemap:refresh"].invoke
   end

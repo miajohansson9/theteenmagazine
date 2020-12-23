@@ -450,6 +450,9 @@
       font-size: 16px;
       color: #4ABEB6 !important;
       text-decoration: underline;
+      &:hover {
+        text-decoration: underline !important;
+      }
     }
   }
 }

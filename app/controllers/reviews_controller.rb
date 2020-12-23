@@ -86,9 +86,28 @@ class ReviewsController < ApplicationController
     @review.update(review_params)
   end
 
+  def enable_notify_of_new_review
+    @user = User.find(params[:user_id])
+    @user.notify_of_new_review = true
+    @user.save
+    redirect_to "/editors/#{@user.slug}", notice: "Notifications turned on."
+  end
+
+  def disable_notify_of_new_review
+    @user = User.find(params[:user_id])
+    @user.notify_of_new_review = false
+    @user.save
+    redirect_to "/editors/#{@user.slug}", notice: "Notifications turned off."
+  end
+
   def destroy
+    @post = @review.post
     @review.destroy
-    redirect_to :back, notice: "The review was successfully deleted."
+    if !@post.reviews.exists?
+      @rev = @post.reviews.build(active: true, status: "In Progress")
+      @rev.save
+    end
+    redirect_to post_path(@post), notice: "The review was successfully deleted."
   end
 
   private

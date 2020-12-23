@@ -170,6 +170,14 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
+  def notify_editor_that_article_moved_to_review(user, post)
+    @user = user
+    @post = post
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "A new article was submitted for review on The Teen Magazine")
+    end
+  end
+
   def partner_login_details(user, partner)
     @user = user
     @partner = partner

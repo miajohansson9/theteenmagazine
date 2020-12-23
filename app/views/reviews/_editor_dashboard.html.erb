@@ -59,7 +59,17 @@
                   </div>
                 <% end %>
                 <% if @submitted_for_review.count.eql? 0 %>
-                  <i>There are no submitted articles right now. Check back in a few days!</i>
+                  <i>There are no submitted articles right now.
+                    <% if @user.notify_of_new_review && (@editor_reviews_cnt < @reviews_requirement) %>
+                      You will be notified via email when a review becomes available. Turn off notifications
+                      <%= link_to "here", {:controller => "reviews", :action => "disable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "You are turning off notifications."} %>.
+                    <% elsif @editor_reviews_cnt < @reviews_requirement %>
+                      Be notified via email when a new review becomes available
+                      <%= link_to "here", {:controller => "reviews", :action => "enable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "Notifications will only be enabled for the month of #{Date.today.strftime("%B")} and will be turned off once you've finished this month's reviews."} %>.
+                    <% else %>
+                      Check back in a few days!
+                    <% end %>
+                  </i>
                 <% end %>
               <% else %>
                 <i>You have reached the maximum number of reviews this month. Check the <a href="/community">Community Page</a> to continue giving feedback to articles.</i>

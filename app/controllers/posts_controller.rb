@@ -244,7 +244,7 @@ class PostsController < ApplicationController
       if (@new_status.eql? "In Progress") && ((@prev_status.eql? "Ready for Review") || (@prev_status.eql? "In Review"))
         @notice = "Your article was withdrawn from review."
       elsif ((@prev_status.eql? "In Progress") || (@prev_status.blank?)) && (@new_status.eql? "Ready for Review")
-        ApplicationMailer.article_moved_to_submitted(@post.user, @post).deliver
+        deliver_submitted_article_emails
         @notice = "Great job! Your article was submitted for review."
       else
         @notice = "Your changes were saved."
@@ -270,6 +270,24 @@ class PostsController < ApplicationController
       end
     else
       render 'edit', notice: "Changes were unable to be saved."
+    end
+  end
+
+  def deliver_submitted_article_emails
+    Thread.new do
+      ApplicationMailer.article_moved_to_submitted(@post.user, @post).deliver
+      Thread.new do
+        if !@post.user.editor
+          @editors_to_notify_of_new_review = User.where(editor: true, notify_of_new_review: true)
+          @editors_to_notify_of_new_review.each do |editor|
+            @editor_reviews_cnt = Review.where(editor_id: editor.id).where("updated_at > ?", Date.today.beginning_of_month).count
+            @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
+            if @editor_reviews_cnt < @reviews_requirement
+              ApplicationMailer.notify_editor_that_article_moved_to_review(editor, @post).deliver
+            end
+          end
+        end
+      end
     end
   end
 
