@@ -13,14 +13,15 @@ class PostsController < ApplicationController
 
   def log_impression
     if @post.is_published?
-      if user_signed_in? && ((@post.user.id == current_user.id) || (current_user.admin == true) || (current_user.editor == true) || (current_user.full_name == @post.collaboration))
-      else
-        if @post.post_impressions == nil
-          @post.post_impressions = 1
-          @post.save
-        else
-          @post.increment(:post_impressions, by = 1)
-          @post.save
+      Thread.new do
+        if !(user_signed_in? && ((@post.user.id == current_user.id) || (current_user.admin == true) || (current_user.editor == true) || (current_user.full_name == @post.collaboration)))
+          if @post.post_impressions == nil
+            @post.post_impressions = 1
+            @post.save
+          else
+            @post.increment(:post_impressions, by = 1)
+            @post.save
+          end
         end
       end
     end
