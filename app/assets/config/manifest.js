@@ -6,7 +6,6 @@
 //= link_directory ../javascripts/ckeditor
 //= link_directory ../javascripts/ckeditor/lang en.js
 //= link_directory ../javascripts/ckeditor/skins/moono-lisa
-//= link_directory ../javascripts/ckeditor/skins/moono-lisa/images/hidpi
 //= link_directory ../javascripts/ckeditor/plugins/tableselection/styles
 //= link_directory ../javascripts/ckeditor/plugins/dialog/styles
 //= link_directory ../javascripts/ckeditor/plugins/image/dialogs
