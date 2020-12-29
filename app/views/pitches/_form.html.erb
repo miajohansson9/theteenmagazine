@@ -1,9 +1,9 @@
 <%= form_for @pitch do |f| %>
   <% if @pitch.errors.any? %>
-    <h2><%= pluralize(@pitch.errors.count, "error")%> prevented this pitch from saving:</h2>
+    <h6 class="mt-3 text-danger"><%= pluralize(@pitch.errors.count, "error")%> prevented this pitch from saving:</h6>
     <ul>
       <% @pitch.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
+      <li class="text-danger"><h6><%= msg %></h6></li>
       <% end %>
     </ul>
   <% end %>
@@ -29,14 +29,18 @@
       <%= image_tag(@pitch.thumbnail.url(:card), class: "thumbnail_img") %>
     <% end %>
 
+    <% if current_user.editor? %>
+      <div class="margin_flds">
+        <%= f.select(:weeks_given, options_for_select(["2 weeks", "4 weeks"], [2, 4]), {prompt: "Select a Deadline"}) %>
+      </div>
+    <% end %>
+
     <div class="margin_flds">
-      <p>Upload a <a target="_blank" href="/choosing-a-topic#thumbnail-requirements">royalty free and eye catching</a> thumbnail image</p>
+      <p>Upload a <a target="_blank" href="/choosing-a-topic#thumbnail-requirements">royalty free and eye catching</a> thumbnail image:</p>
       <%= f.file_field :thumbnail %>
     </div>
 
-    <% if current_user.editor? && @pitch.title.nil? %>
-      <%= f.check_box :assign_if_not_claimed, style: "display: inline;" %>
-      <span>Automatically assign this pitch to a writer if it's not claimed in two weeks.</span><br>
+    <% if current_user.editor? %>
       <p class="mb-0">Note: If this pitch does not fit The Teen Magazine's audience as described in <a target="_blank" href="/pitching-new-articles">Pitching New Articles</a>, an admin reserves the right to delete the pitch from Editor Pitches within 48 hours of it being created. Deleted pitches will not be counted toward your 10 required pitches every month.</p>
     <% end %>
 
@@ -48,6 +52,12 @@
     <% else %>
       <% @button_text = "Save Changes" %>
     <% end %>
-    <div class="btn_cntnr pb-0 mt-4 pt-2" style="float: none !important;"><%= f.submit @button_text, class: "newpost--new--profile mr-0" %></div>
+
+    <div class="btn_cntnr mb-0 pb-0 pt-3" style="float: none; position: relative;">
+      <div class="spinner-button spinner-border hide" style="margin-left: 38%;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <%= f.button @button_text, class: "newpost--new--profile mr-0 pl-4 pr-4 mb-0 submit_modal", id: "submit-comment-modal-button" %>
+    </div>
   </div>
 <% end %>

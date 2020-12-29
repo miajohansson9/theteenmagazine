@@ -9,30 +9,30 @@
         <% end %>
       </ul>
     <% end %>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-    <br>
-    <%= f.label :content, "Write your article here and make sure you are saving often. Saving can also help fix formatting problems." %><br>
-    <%= f.text_area :content, class: "ckeditor" %>
-    <br>
-    <% if @post.thumbnail.present? %>
-      <%= f.label "Thumbnail Preview:" %>
-      <%= image_tag(@post.thumbnail.url(:large2), :class => "image_max_400") %>
-      <br>
-      <%= f.label "Upload different thumbnail image:" %>
-      <%= f.file_field :thumbnail %>
-    <% else %>
-      <%= f.label "Upload thumbnail image:" %>
-      <%= f.file_field :thumbnail %>
+    <% if @post.pitch.try(:claimed_id).present? && @post.pitch.try(:deadline_at).present? %>
+      <%= render "pitches/deadline_warning_msg", pitch: @post.pitch, post: @post %>
     <% end %>
-    <br>
-    <div class="mb-4 mt-4">
-      <%= f.label "Category:" %>
-      <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form") %>
-    </div>
-    <%= f.label "Grab your ideal reader's interest in 1-2 sentences for Google search." %>
+    <p class="mb-0">Title</p>
+    <%= f.text_field :title %>
+    <p class="mt-0">Write your article here and make sure you are saving often. Saving can also help fix formatting problems.</p>
+    <%= f.text_area :content, class: "ckeditor" %>
+    <% if @post.thumbnail.present? %>
+      <p>Thumbnail Preview</p>
+      <%= image_tag(@post.thumbnail.url(:large2), :class => "image_max_400") %>
+      <div class="mt-4 mb-2 d-block">
+        <p class="d-inline">Upload different thumbnail image:</p>
+        <%= f.file_field :thumbnail %>
+      </div>
+    <% else %>
+      <div class="mt-4 mb-2 d-block">
+        <p class="d-inline">Upload thumbnail image:</p>
+        <%= f.file_field :thumbnail %>
+      </div>
+    <% end %>
+    <p class="d-inline">Category:</p>
+    <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-3") %>
+    <p>Grab your ideal reader's interest in 1-2 sentences for Google search.</p>
     <%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
-    <br>
     <span>If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</span>
     <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
 
@@ -42,19 +42,21 @@
       <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
       <% if (current_user.id == @post.reviews.last.editor_id) && (@post.reviews.last.try(:status).eql? "In Review") %>
       <% if @post.editor_can_make_changes %>
-        <i>
-          The writer has given permission for you to make changes to this article.
-          These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
-          Larger edits should be sent back for changes.
-        </i>
+        <p>
+          <i>
+            The writer has given permission for you to make changes to this article.
+            These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
+            Larger edits should be sent back for changes.
+          </i>
+        </p>
       <% else %>
-        <i style="background-color: #FCD04D;">
-          The writer has not given permission for you to make changes to this article.
-          Please only fill out the feedback form below, and do not make any changes directly to the article.
-        </i>
+        <p>
+          <i style="background-color: #FCD04D;">
+            The writer has not given permission for you to make changes to this article.
+            Please only fill out the feedback form below, and do not make any changes directly to the article.
+          </i>
+        </p>
       <% end %>
-        <br>
-        <br>
         <div class="card review_frm">
           <div class="card-header">
             <h6>Editor Review Form</h6>
@@ -93,7 +95,6 @@
               <div class="rejected-reason hide">
                 <%= rv.text_area :notes, placeholder: "Explain other reason for rejection..." %>
                 <%= rv.hidden_field :editor_id, value: current_user.id %>
-                <br>
                 <%= link_to("View feedback descriptions", feedbacks_path, class: "link_nrml float_right", target: "_blank") %>
               </div>
             </div>
@@ -105,34 +106,37 @@
       <% if (@reviews.count >= 5) && !(@post.is_published?) %>
         <%= rv.hidden_field :status, :value => "In Progress" %>
       <% elsif  %>
-        <%= f.label "Article Status:" %>
+        <p class="d-inline">Article Status:</p>
         <% @rejected_cnt = @post.reviews.where(status: "Rejected").count %>
         <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
         <% if current_user.admin && @post.is_published? %>
           <div style="float:right; text-align: right;">
-            <%= f.label "Featured on homepage:" %>
-            <%= f.check_box :featured %><br>
-            <%= f.label "Feature in next newsletter:" %>
-            <%= f.check_box :newsletter %>
+            <p>Featured on homepage: <%= f.check_box :featured %>
+            </p>
+            <p>Feature in next newsletter: <%= f.check_box :newsletter %></p>
           </div>
         <% end %>
         <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
-          <br>
+        <p>
           <%= f.check_box :editor_can_make_changes %>
-          <i>
-            I give permission for an editor to make changes to my article when I submit. These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
-            I understand I am still able to alter these once my article is published. Large edits will always be sent back for changes.
-          </i>
+            <i>
+              I give permission for an editor to make changes to my article when I submit. These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
+              I understand I am still able to alter these once my article is published. Large edits will always be sent back for changes.
+            </i>
+          </p>
         <% end %>
-        <br>
-        <br>
       <% end %>
       <% end %>
     <% end %>
     <% if (@reviews.count >= 5) && !(@post.is_published?) %>
       <p class="mb-4 mt-0" style="font-style: italic;"><span class="highlight">You have reached the maximum amount of times you can submit this article for review.</span></p>
     <% end %>
-    <%= f.submit "Save Changes" %>
+    <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
+      <div class="hide spinner-button spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <%= f.button "Save Changes", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
+    </div>
   <% end %>
 </div>
 <% else %>

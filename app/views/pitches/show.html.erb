@@ -1,9 +1,12 @@
 <div id="banner_writing" class="editor"></div>
 <div class="apply_wrapper pitch_form_wrapper">
+  <% if @claimed_user.present? && @pitch.deadline_at.present? %>
+    <%= render "pitches/deadline_warning_msg", pitch: @pitch, post: @pitch.posts.find_by(user_id: @pitch.claimed_id) %>
+  <% end %>
   <h3 class="pitch_ttl"><%= @title %> <i><%= @pitch.title %></i></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
   <% if @claimed_user.present? %>
-    <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.created_at.strftime('%A, %B %d') %></p>
+    <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %> on <%= @article.try(:created_at)&.strftime('%A, %B %d') %></p>
   <% elsif @pitch.status.eql? "Approved" %>
     <p class="mb-3" style="background-color: #FCD04D; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.try(:full_name), @editor) %><% end %>! You may claim it to start your draft.</p>
   <% elsif @pitch.status.eql? "Rejected" %>
@@ -34,6 +37,10 @@
     <%= markdown @pitch.requirements %>
   <% end %>
 
+  <% if @pitch.weeks_given.present? %>
+    <p class="pitch_usr"><b>This pitch has a <%= @pitch.weeks_given %> week deadline. Read more about deadlines <a href="#">here</a>.</b></p>
+  <% end %>
+
   <% if @claimed_user.nil? %>
     <%= form_for @post do |f| %>
       <%= f.hidden_field :title, value: @pitch.title %>
@@ -47,7 +54,7 @@
       <br>
     <% end %>
     <% else %>
-      <% if !@article.is_published? %>
+      <% if !@article&.is_published? %>
         <%= form_for @pitch do |f| %>
           <%= f.hidden_field :claimed_id, value: nil %>
           <p class="pitch_usr mb-4">If you unclaim this pitch, the associated article will become locked unless you claim the pitch again. If this pitch was created by an editor, the topic will become available to any writer at TTM. Go to your started <%= link_to("draft", @article, class: "pitch_btn", target: "_blank") %>.</p>

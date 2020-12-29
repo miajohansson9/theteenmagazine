@@ -1,14 +1,21 @@
 <% articles.each do |post| %>
-<div class="flex--postlist--item">
-  <div class="inside--item">
-    <%= image_tag image, class: "icon" %>
-    <div>
-      <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
-      <p class="edited_dt"><%= "Last edited " + time_ago_in_words(post.updated_at) + " ago" %></p>
-      <% if (post.reviews.last.try(:status).eql? "Approved for Publishing") %>
-        <p><%= "Great job! This article will be published on " + post.publish_at.localtime.strftime("%D at %I:%M %p") + "." %></p>
-      <% end %>
+  <div class="flex--postlist--item">
+    <div class="inside--item">
+      <%= image_tag image, class: "icon" %>
+      <div>
+        <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
+        <p class="edited_dt"><%= "Last edited " + time_ago_in_words(post.updated_at) + " ago" %></p>
+        <% if post.pitch.try(:claimed_id).present? && post.pitch.try(:deadline_at).present? && (post.reviews.last.status.eql? "In Progress") %>
+          <% @class = post.pitch.deadline_at < Date.today + 7.days ? "text-danger" : "" %>
+          <p class="<%= @class %>">
+            You have <%= distance_of_time_in_words(Time.now, post.pitch.deadline_at) %> left to submit this article for review
+            <% if @class.present? %> or <a target="_blank" href="#" class="alert-link">use an extention</a>.<% end %>
+          </p>
+        <% end %>
+        <% if (post.reviews.last.try(:status).eql? "Approved for Publishing") %>
+          <p><%= "Great job! This article will be published on " + post.publish_at.localtime.strftime("%D at %I:%M %p") + "." %></p>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
 <% end %>

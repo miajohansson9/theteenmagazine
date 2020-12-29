@@ -55,33 +55,41 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
     @prev_post_pitch = current_user.posts.where(pitch_id: post_params[:pitch_id]).last
     if !(@prev_post_pitch.try(:pitch).nil?)
-      @prev_post_pitch.pitch.claimed_id = current_user.id
-      @prev_post_pitch.pitch.save
       @prev_post_pitch.reviews.destroy
-      @prev_post_pitch.reviews.build(status: "In Progress", active: true)
+      @rev = @prev_post_pitch.reviews.build(status: "In Progress", active: true)
+      @rev.save
       @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
       @prev_post_pitch.save
+      @post.pitch.update_column('claimed_id', current_user.id)
       redirect_to @prev_post_pitch, notice: "You've reclaimed this pitch!"
     else
       fix_formatting
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
-          @post.content = @post.content << "<script>instgrm.Embeds.process()</script>"
+        @post.content = @post.content << "<script>instgrm.Embeds.process()</script>"
       end
       if @post.save && @post.is_published?
         redirect_to @post, notice: "Congrats! Your post was successfully published on The Teen Magazine!"
       elsif @post.save && !@post.pitch.nil? && @post.pitch.claimed_id.nil?
-        @post.thumbnail = @post.pitch.thumbnail
-        @post.save
-        @post.pitch.claimed_id = current_user.id
-        @post.pitch.save
-        @post.reviews.build(status: "In Progress", active: true)
-        @post.save
+        claim_pitch
         redirect_to @post, notice: "You've claimed this pitch!"
       elsif @post.save
         redirect_to @post, notice: "Changes were successfully saved!"
       else
         render 'new', notice: "Oh no! Your post was not able to be saved!"
       end
+    end
+  end
+
+  def claim_pitch
+    @post.pitch.update_column('claimed_id', current_user.id)
+    if @post.pitch.weeks_given.present?
+      @post.pitch.update_column('deadline_at', Time.now + (@post.pitch.weeks_given).weeks)
+    end
+    @rev = @post.reviews.build(status: "In Progress", active: true)
+    @rev.save
+    Thread.new do
+      @post.thumbnail = @post.pitch.thumbnail
+      @post.save
     end
   end
 
@@ -303,8 +311,7 @@ class PostsController < ApplicationController
   def destroy
     if !@post.pitch.nil?
       if @post.pitch.claimed_id.eql? @post.user.id
-        @post.pitch.claimed_id = nil
-        @post.pitch.save
+        @post.pitch.update_column('claimed_id', nil)
       end
     end
     @post.destroy

@@ -52,6 +52,10 @@
         setTimeout(function() {
           $('.notice').slideUp();
         }, 1500);
+        $("#submit-comment-modal-button").click(function() {
+          $("#submit-comment-modal-button").addClass("disabled");
+          $(".spinner-button").removeClass("hide");
+        });
       });
       $(window).on('scroll',function(){
         if ($('.header-navigation').isOnScreen()) {

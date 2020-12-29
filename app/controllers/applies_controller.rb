@@ -1,16 +1,22 @@
 class AppliesController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create]
-  before_action :is_admin?, only: [:show, :index]
+  before_action :authenticate_user!, except: [:index, :new, :create]
+  before_action :is_admin?, only: [:show]
   layout 'minimal', only: [:editor, :index, :show]
 
   #show all applications
   def index
-    @notifications = @notifications - @unseen_applications_cnt
-    @unseen_applications_cnt = 0
-    @pagy, @applies = pagy(Apply.where(rejected_writer_at: nil, rejected_editor_at: nil).order("updated_at desc"), page: params[:page], items: 20)
-    current_user.last_saw_writer_applications = Time.now
-    current_user.save
-    set_meta_tags :title => "Writer Applications | The Teen Magazine"
+    if (current_user && current_user.admin?)
+      @notifications = @notifications - @unseen_applications_cnt
+      @unseen_applications_cnt = 0
+      @pagy, @applies = pagy(Apply.where(rejected_writer_at: nil, rejected_editor_at: nil).order("updated_at desc"), page: params[:page], items: 20)
+      current_user.last_saw_writer_applications = Time.now
+      current_user.save
+      set_meta_tags :title => "Writer Applications | The Teen Magazine"
+    elsif current_user
+      redirect_to "/applications/editor"
+    else
+      redirect_to "/apply"
+    end
   end
 
   #create a new application

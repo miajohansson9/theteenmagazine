@@ -254,6 +254,10 @@ class UsersController < ApplicationController
       post.user = User.where(email: "anonymous@theteenmagazine.com").first
       post.save
     end
+    Pitch.where(claimed_id: @user.id).where.not(editor_id: nil).each do |pitch|
+      pitch.claimed_id = nil
+      pitch.save
+    end
     @user.comments.destroy_all
     @user.destroy
     redirect_to users_path, notice: "The writer account was deleted."

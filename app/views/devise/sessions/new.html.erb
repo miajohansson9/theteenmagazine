@@ -20,10 +20,11 @@
     </div>
   <% end -%>
 
-  <br />
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="btn_cntnr mb-0 pt-3" style="float: none; position: relative;">
+    <div class="hide spinner-button spinner-border" style="margin-left: 39%;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <%= f.button "Log in", class: "mb-2 newpost--new--profile mr-0 pl-5 pr-5 submit_modal", id: "submit-comment-modal-button" %>
   </div>
 <% end %>
   <p style="margin-top: 0;"><i>If you forgot your password, you can reset your password <a href="/reset-password" class="link_nrml underline">here</a>. If you do not have a writer account, you can

@@ -24,43 +24,91 @@ pintrk('track', 'pagevisit');
 <p><i>"When I became a writer for The Teen Magazine, I was just hoping for a simple activity. However, over the course of my experience here, it has become way more than that. To be able to have a role in the Entertainment industry and write articles that appear first on Google is amazing. I've gotten to meet and collaborate with young women all over the world and learn about their experiences and opinions. I would never change my experience at The Teen Magazine."</i></p>
 
 <h4>We hope you apply to our team, and we can’t wait to read your submission!</h4>
-<br>
-  <%= form_for @application do |f| %>
-    <% if @application.errors.any? %>
-      <h2><%= pluralize(@application.errors.count, "error")%> prevented this application from submitting:</h2>
-      <ul>
-        <% @application.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-        <% end %>
-      </ul>
+  <div id="submit-application-form">
+    <%= form_for @application do |f| %>
+      <% if @application.errors.any? %>
+        <h6 class="pt-3 text-danger"><%= pluralize(@application.errors.count, "error")%> prevented this application from submitting:</h6>
+        <ul class="mb-4">
+          <% @application.errors.full_messages.each do |msg| %>
+          <li class="text-danger"><h6><%= msg %></h6></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <p class="mb-0 mt-4">First Name:</p>
+      <%= f.text_field :first_name, placeholder: "First" %>
+      <p class="mb-0 mt-0">Last Name:</p>
+      <%= f.text_field :last_name, placeholder: "Last" %>
+      <p class="mb-0 mt-0">Email Address:</p>
+      <%= f.email_field :email, placeholder: "Email" %>
+      <p class="mt-0">Grade Level: <%= f.select :grade, options_for_select(["College", "12th grade", "11th grade", "10th grade", "9th grade"]), :prompt => "Select a grade" %></p>
+      <p>Please submit a cover letter describing why you want to join The Teen Magazine and what you hope to gain from being a part of, and contributing to, our writer community. Include links to any previously published articles if applicable (150-250 words).</p>
+      <%= f.text_area :description, placeholder: "Write your cover letter here...", class: "required" %>
+      <p class="d-block mt-0">Upload your resume (pdf):</p>
+      <%= f.file_field :resume, id: "pdf-file-resume" %>
+      <p class="d-block mt-4">Upload a sample of your writing that demonstrates your writing proficiency and style. This should be a previously-written essay, blog post, or other published work. Poems and fictional stories will not be considered (pdf):</p>
+      <%= f.file_field :sample_writing, id: "pdf-file-writing" %>
+      <%= f.hidden_field :nickname %>
+      <%= f.hidden_field :kind, value: "Writer" %>
+      <div class="btn_cntnr mb-0 mt-4 pt-2" style="float: none; position: relative;">
+        <div class="hide spinner-button spinner-border" style="margin-left: 40%" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <%= f.button "Submit Application", class: "newpost--new--profile mr-0 mb-0 pl-4 pr-4 submit_modal", id: "submit-application" %>
+      </div>
     <% end %>
-    <span>First Name</span>
-    <%= f.text_field :first_name, required: true, placeholder: "First" %>
-    <br />
-    <span>Last Name</span>
-    <%= f.text_field :last_name, required: true, placeholder: "Last" %>
-    <br />
-    <span>Email Address</span>
-    <%= f.email_field :email, required: true, placeholder: "Email" %>
-    <span>Grade Level</span>
-    <%= f.select :grade, options_for_select(["College", "12th grade", "11th grade", "10th grade", "9th grade"]), :prompt => "Select a grade" %>
-    <p>Please submit a cover letter describing why you want to join The Teen Magazine and what you hope to gain from being a part of, and contributing to, our writer community. Include links to any previously published articles if applicable (150-250 words).</p>
-    <%= f.text_area :description, required: true, placeholder: "Write your cover letter here..." %>
-    <br />
-    <span class="d-block">Upload your resume (pdf):</span>
-    <%= f.file_field :resume %>
-    <span class="d-block mt-4">Upload a sample of your writing that demonstrates your writing proficiency and style. This should be a previously-written essay, blog post, or other published work. Poems and fictional stories will not be considered (pdf):</span>
-    <%= f.file_field :sample_writing %>
-    <%= f.hidden_field :nickname %>
-    <%= f.hidden_field :kind, value: "Writer" %>
-    <div class="btn_cntnr pb-0 mt-4 pt-2" style="float: none !important;"><%= f.submit 'Submit Application', class: "newpost--new--profile mr-0" %></div>
-  <% end %>
+  </div>
   <i style="opacity: 50%;" class="d-block">
     Applications are accepted on a rolling basis. If accepted, you will receive an email from our team of editors within 72 hours. Please note that writers and editors are not paid and instead write for us
     to gain applicable experience and mentorship in the editorial industry. Read more about us <%= link_to("here", "/about-us", :class => "link_nrml underline") %>.
   </i>
-  <br>
 </div>
+
+<script type="text/javascript">
+  $('#pdf-file-resume').bind('change', function() {
+    var size = this.files[0].size/1024/1024;
+    if (size > 1) {
+      alert('The maximum file size is 1 MiB. This file size is: ' + size + " MiB.");
+      $('#pdf-file-resume').val("");
+    }
+  });
+
+  $('#pdf-file-writing').bind('change', function() {
+    var size = this.files[0].size/1024/1024;
+    if (size > 1) {
+      alert('The maximum file size is 1 MiB. This file size is: ' + size + " MiB.");
+      $('#pdf-file-writing').val("");
+    }
+  });
+
+  $("#submit-application-form").on("submit", function(event) {
+    unsaved = false;
+  });
+
+  $("#submit-application").click(function() {
+    var $nonempty = $('.required').filter(function() {
+      return this.value != ''
+    });
+    if ($nonempty.length == 0) {
+      alert('There are empty required fields.');
+      return false;
+    } else {
+      $("#submit-application").addClass("disabled");
+      $(".spinner-button").removeClass("hide");
+      return true;
+    }
+  });
+
+  $(":input").change(function(){ //triggers change in all input fields including text type
+    unsaved = true;
+  });
+
+  function unloadPage(){
+    if(unsaved){
+      return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+    }
+  }
+  window.onbeforeunload = unloadPage;
+</script>
 
 <!-- Facebook Pixel Code -->
 <script>

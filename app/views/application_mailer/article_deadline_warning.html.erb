@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+      <% if @posts.count.eql? 1 %>
+        <p>
+          This is an email notifying you that your draft <%= link_to(@posts.last.title, @posts.last) %> is due in <%= distance_of_time_in_words(Time.now, @posts.last.pitch.deadline_at) %>.
+          If you need more time on this pitch, you can use an extension. Find out more about deadlines and extensions <a href="#">here</a>.
+        </p>
+        <% else %>
+        <p>
+          This is an email notifying you that you have <%= @posts.count %> drafts that are due soon:
+        </p>
+        <ol>
+          <% @posts.each do |post| %>
+            <li><%= link_to(post.title, post) %> (Due in <%= distance_of_time_in_words(Time.now, @posts.last.pitch.deadline_at) %>)</li>
+          <% end %>
+        </ol>
+        <p>
+          If you need more time on this pitch, you can use an extension. Find out more about deadlines and extensions <a href="#">here</a>.
+        </p>
+      <% end %>
+    <p>Best,<br/>
+       Editor Team
+    </p>
+  </body>
+</html>

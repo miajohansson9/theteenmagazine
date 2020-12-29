@@ -16,17 +16,23 @@ task :run_all_tasks => :environment do
     end
   end
 
-  if (Date.today.tuesday?)
-    User.all.each do |user|
-      @posts = []
-      user.posts.draft.where(updated_at: (Time.now - 1.month)..(Time.now - 1.week)).each do |post|
-        if post.pitch.present?
-          @posts << post
+  User.all.each do |user|
+    @posts = []
+    @pitches = Pitch.where(claimed_id: user.id).where.not(deadline_at: nil)
+    @pitches.each do |pitch|
+      @post = pitch.posts.draft.find_by(user_id: pitch.claimed_id)
+      if @post.present? && @post.try(:pitch).try(:deadline_at)&.present?
+        if @post.pitch.deadline_at < (Time.now + 1.days)
+          @posts << @post
+        elsif ((Time.now + 3.days)..(Time.now + 4.days)).include? @post.pitch.deadline_at
+          @posts << @post
+        elsif ((Time.now + 6.days)..(Time.now + 7.days)).include? @post.pitch.deadline_at
+          @posts << @post
         end
       end
-      if @posts.present?
-        ApplicationMailer.articles_in_progress_reminder(user, @posts).deliver
-      end
+    end
+    if @posts.present?
+      ApplicationMailer.article_deadline_warning(user, @posts).deliver
     end
   end
 

@@ -1,5 +1,5 @@
 class PitchesController < ApplicationController
-  before_action :find_pitch, only: [:show, :edit, :update, :destroy]
+  before_action :find_pitch, only: [:show, :update, :edit, :destroy]
   before_action :can_edit?, only: [:edit]
   before_action :is_partner?, only: [:index, :new, :show]
   before_action :authenticate_user!
@@ -33,7 +33,7 @@ class PitchesController < ApplicationController
       set_meta_tags :title => @title
       @button_text = "View Pitch"
       @message = "You don't have any claimed pitches. :("
-      @pagy, @pitches = pagy(Pitch.all.where(claimed_id: params[:user_id]).order("updated_at desc"), page: params[:page], items: 20)
+      @pagy, @pitches = pagy(Pitch.where(claimed_id: params[:user_id]).order("updated_at desc"), page: params[:page], items: 20)
     end
   end
 
@@ -47,10 +47,11 @@ class PitchesController < ApplicationController
   def create
     @categories = Category.all
     @pitch = current_user.pitches.build(pitch_params)
-    fix_title
     if @pitch.save && current_user.editor?
+      fix_title
       redirect_to "/pitches", notice: "Your pitch was successfully added!"
     elsif @pitch.save
+      fix_title
       redirect_to @pitch, notice: "Your pitch was successfully submitted!"
     else
       render 'new', notice: "Oh no! Your changes were not able to be saved!"
@@ -59,33 +60,33 @@ class PitchesController < ApplicationController
 
   def update
     @categories = Category.all
-    if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
-      ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
-    end
-    if (@pitch.claimed_id == current_user.id || current_user.admin?) && pitch_params[:claimed_id].blank?
-      @post = Post.where(user_id: @pitch.claimed_id, pitch_id: @pitch.id).last
-      if @post.present?
-        @post.reviews.each do |review|
-          review.destroy
-        end
-        @post.title = "#{@post.title} (locked)"
-        @post.save
-        @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: "Post")
-        @slug&.destroy_all
-      end
-      if current_user.admin?
-        @message = "Changes were successfully saved!"
-      else
-        @message = "You've unclaimed this pitch."
-      end
-    else
-      @message = "Changes were successfully saved!"
-    end
     if @pitch.update pitch_params
+      if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
+        ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
+      end
+      if (@pitch.claimed_id == current_user.id || current_user.admin?) && pitch_params[:claimed_id].blank?
+        @post = Post.where(user_id: @pitch.claimed_id, pitch_id: @pitch.id).last
+        if @post.present?
+          @post.reviews.each do |review|
+            review.destroy
+          end
+          @post.title = "#{@post.title} (locked)"
+          @post.save
+          @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: "Post")
+          @slug&.destroy_all
+        end
+        if current_user.admin?
+          @message = "Changes were successfully saved!"
+        else
+          @message = "You've unclaimed this pitch."
+        end
+      else
+        @message = "Changes were successfully saved!"
+      end
       fix_title
       redirect_to @pitch, notice: @message
     else
-      render 'edit', notice: "Oops, something went wrong."
+      render 'edit'
     end
   end
 
@@ -172,7 +173,7 @@ class PitchesController < ApplicationController
     @post = current_user.posts.build
     @post.title = @pitch.title
     @post.content = "<i>" + @pitch.description + "</i>"
-    @claimed_user = @pitch.claimed_id.present? ? User.find(@pitch.claimed_id) : nil
+    @claimed_user = @pitch.claimed_id.present? ? User.find_by(id: @pitch.claimed_id) : nil
     @article = @claimed_user ? @claimed_user.posts.where(pitch_id: @pitch.id).last : nil
     if @pitch.status.eql? "Ready for Review"
       @title =  "Pitch Submitted"
@@ -205,6 +206,7 @@ class PitchesController < ApplicationController
 
   def edit
     @categories = Category.all
+    @pitch_errors = params[:errors]
     set_meta_tags :title => "Edit Pitch | The Teen Magazine"
   end
 
@@ -245,7 +247,7 @@ class PitchesController < ApplicationController
   end
 
   def pitch_params
-    params.require(:pitch).permit(:created_at, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :category_id, :user_id, :editor_id)
+    params.require(:pitch).permit(:created_at, :deadline_at, :weeks_given, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :category_id, :user_id, :editor_id)
   end
 
   def post_params
@@ -253,6 +255,6 @@ class PitchesController < ApplicationController
   end
 
   def find_pitch
-    @pitch = Pitch.friendly.find(params[:id])
+    @pitch = Pitch.find(params[:id])
   end
 end

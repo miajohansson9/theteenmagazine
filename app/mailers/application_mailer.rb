@@ -84,11 +84,11 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
-  def articles_in_progress_reminder(user, posts)
+  def article_deadline_warning(user, posts)
     @user = user
     @posts = posts
     unless @user.do_not_send_emails
-      mail(to: user.email, subject: "You have drafts started on your profile.")
+      mail(to: user.email, subject: "You have drafts due soon")
     end
   end
 
