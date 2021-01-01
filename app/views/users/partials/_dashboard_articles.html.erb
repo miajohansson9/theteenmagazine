@@ -8,8 +8,12 @@
         <% if post.pitch.try(:claimed_id).present? && post.pitch.try(:deadline_at).present? && (post.reviews.last.status.eql? "In Progress") %>
           <% @class = post.pitch.deadline_at < Date.today + 7.days ? "text-danger" : "" %>
           <p class="<%= @class %>">
-            You have <%= distance_of_time_in_words(Time.now, post.pitch.deadline_at) %> left to submit this article for review
-            <% if @class.present? %> or <a target="_blank" href="#" class="alert-link">use an extention</a>.<% end %>
+            <% if post.pitch.deadline_at > Time.now %>
+              You have <%= distance_of_time_in_words(Time.now, post.pitch.deadline_at) %> left to submit this article for review
+              <% if @class.present? %> or <a target="_blank" href="#" class="alert-link">use an extention</a>.<% end %>
+            <% else %>
+              You have passed the deadline. This article's pitch will be automatically unclaimed.
+            <% end %>
           </p>
         <% end %>
         <% if (post.reviews.last.try(:status).eql? "Approved for Publishing") %>

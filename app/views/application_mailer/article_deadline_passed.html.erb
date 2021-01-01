@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+  <body>
+    <p>Hi <%= @user.first_name %>,</p>
+    <p>
+      Your draft <i><%= @post.title %></i> has passed its due date and the pitch has been unclaimed.
+      You are still able to view your article <%= link_to "here", @post %>, but it has been removed from your writer dashboard and is no longer editable.
+      Find out more about deadlines and extensions <a href="#">here</a>.
+    </p>
+    <p>Best,<br/>
+       Editor Team
+    </p>
+  </body>
+</html>

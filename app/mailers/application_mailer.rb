@@ -92,6 +92,14 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
+  def article_deadline_passed(user, post)
+    @user = user
+    @post = post
+    unless @user.do_not_send_emails
+      mail(to: user.email, subject: "Your article has passed its due date")
+    end
+  end
+
   def send_pitches(email, pitches)
     @pitches = pitches
     unless @user.do_not_send_emails
@@ -125,7 +133,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def editor_warning_deadline_1(user, reviews_requirement, pitches_requirement, editor_pitches_cnt, editor_reviews_cnt)
     @user = user
-    @month = Date.today.strftime("%B")
+    @month = Date.yesterday.strftime("%B")
     @reviews_requirement = reviews_requirement
     @pitches_requirement = pitches_requirement
     @editor_pitches_cnt = editor_pitches_cnt
@@ -137,7 +145,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def editor_warning_deadline_2(user, reviews_requirement, pitches_requirement, editor_pitches_cnt, editor_reviews_cnt)
     @user = user
-    @month = Date.today.strftime("%B")
+    @month = Date.yesterday.strftime("%B")
     @reviews_requirement = reviews_requirement
     @pitches_requirement = pitches_requirement
     @editor_pitches_cnt = editor_pitches_cnt
@@ -149,7 +157,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def editor_missed_deadline_1(user, reviews_requirement, pitches_requirement, editor_pitches_cnt, editor_reviews_cnt)
     @user = user
-    @month = Date.today.strftime("%B")
+    @month = Date.yesterday.strftime("%B")
     @reviews_requirement = reviews_requirement
     @pitches_requirement = pitches_requirement
     @editor_pitches_cnt = editor_pitches_cnt

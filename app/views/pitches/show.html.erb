@@ -49,7 +49,8 @@
       <%= f.hidden_field :pitch_id, value: @pitch.id %>
       <i class="d-block pb-4 mb-2">When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
       <div class="btn_cntnr" style="margin-top: -1rem;">
-        <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Claim Article Pitch", data: { confirm: "When you claim this pitch, your draft will be started." }, class: "newpost--new--profile mb-0 mr-0 #{@class}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
+        <% @confirm = @pitch.weeks_given.nil? ? "When you claim this pitch, your draft will be started." : "When you claim this pitch, you will have #{@pitch.weeks_given} weeks to submit the associated draft for review." %>
+        <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Claim Article Pitch", data: { confirm: @confirm }, class: "newpost--new--profile mb-0 mr-0 #{@class}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
       </div>
       <br>
     <% end %>

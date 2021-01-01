@@ -189,6 +189,10 @@ class PostsController < ApplicationController
   end
 
   def edit
+    if @post.title.include? " (locked)"
+      redirect_to @post, notice: "You can no longer work on this article."
+      return
+    end
     @categories = Category.all
     @service_id = ENV['WEBSPELLCHECKER_ID']
     #create new review if no current review or last review was rejected
