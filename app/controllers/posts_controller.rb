@@ -38,8 +38,9 @@ class PostsController < ApplicationController
     @points = current_user.points
     @my_shared_drafts = Post.where("collaboration like ?", "%#{current_user.email}%").or(Post.where(user_id: current_user.id)).where(sharing: true, publish_at: nil).draft.order("updated_at desc")
     @pagy, @shared_drafts = pagy(Post.where(sharing: true).draft.order("updated_at desc"), page: params[:page], items: 12)
-    current_user.last_saw_community = Time.now
-    current_user.save
+    Thread.new do
+      current_user.update_column('last_saw_community', Time.now)
+    end
   end
 
   def new
@@ -83,7 +84,7 @@ class PostsController < ApplicationController
   def claim_pitch
     @post.pitch.update_column('claimed_id', current_user.id)
     if @post.pitch.weeks_given.present?
-      @post.pitch.update_column('deadline_at', Time.now + (@post.pitch.weeks_given).weeks)
+      @post.update_column('deadline_at', Time.now + (@post.pitch.weeks_given).weeks)
     end
     @rev = @post.reviews.build(status: "In Progress", active: true)
     @rev.save

@@ -40,6 +40,11 @@
     <% if @user.approved_profile == nil %>
       <%= f.hidden_field :approved_profile, :value => false %>
     <% end %>
-    <%= f.submit "Submit & Continue", :id => "onboarding_button" %>
+    <div style="position: relative; float: right;">
+      <div class="hide spinner-button spinner-border" style="margin-left: 60px; margin-top: 27px;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <%= f.button "Submit & Continue", class: "onboarding_button", id: "submit-comment-modal-button" %>
+    </div>
   <% end %>
 </div>

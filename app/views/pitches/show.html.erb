@@ -1,7 +1,7 @@
 <div id="banner_writing" class="editor"></div>
 <div class="apply_wrapper pitch_form_wrapper">
-  <% if @claimed_user.present? && @pitch.deadline_at.present? %>
-    <%= render "pitches/deadline_warning_msg", pitch: @pitch, post: @pitch.posts.find_by(user_id: @pitch.claimed_id) %>
+  <% if @claimed_user.present? && @post.deadline_at.present? %>
+    <%= render "pitches/deadline_warning_msg", post: @post %>
   <% end %>
   <h3 class="pitch_ttl"><%= @title %> <i><%= @pitch.title %></i></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>

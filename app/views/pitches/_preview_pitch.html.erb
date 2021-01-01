@@ -8,8 +8,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <i id="response_text"></i>
+      <div class="modal-body pb-0">
+        <% if (intent.eql? "Unclaim") && post.deadline_at.present? %>
+          <%= render "pitches/deadline_warning_msg", post: post %>
+        <% end %>
       </div>
       <div class="comment_form_wrapper mt-0 pl-4 pr-4">
         <div class="pitch_preview_wrapper pl-3 pr-3">
@@ -20,6 +22,9 @@
             <% if pitch.requirements.present? %>
               <i>Notes:</i>
               <%= markdown pitch.requirements %>
+            <% end %>
+            <% if @pitch.weeks_given.present? %>
+              <p class="pitch_usr"><b>This pitch has a <%= @pitch.weeks_given %> week deadline. Read more about deadlines <a href="#">here</a>.</b></p>
             <% end %>
           </div>
           <div class="flex_child">

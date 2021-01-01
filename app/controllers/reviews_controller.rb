@@ -32,8 +32,9 @@ class ReviewsController < ApplicationController
       @submitted_for_review = Post.all.submitted.order("updated_at desc")
       @submitted_pitches = Pitch.is_submitted.order("updated_at desc")
       if (params[:id].eql? current_user.slug)
-        current_user.last_saw_editor_dashboard = Time.now
-        current_user.save
+        Thread.new do
+          current_user.update_column('last_saw_editor_dashboard', Time.now)
+        end
       end
       set_meta_tags :title => "Edit | The Teen Magazine"
     else

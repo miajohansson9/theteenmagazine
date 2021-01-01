@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     if @user.partner
       redirect_to "/partners/#{@user.slug}"
     end
-    @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).order("updated_at desc")
+    @user_posts = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).distinct.order("updated_at desc")
     @user_posts_approved_records = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.by_published_date
     @pagy, @user_posts_approved = pagy(@user_posts_approved_records, page: params[:page], items: 10)
     if !@user.editor? && current_user.present?
@@ -315,8 +315,9 @@ class UsersController < ApplicationController
   end
 
   def update_last_sign_in_at
-    current_user.last_sign_in_at = Time.now
-    current_user.save
+    Thread.new do
+      current_user.update_column('last_sign_in_at', Time.now)
+    end
   end
 
   private

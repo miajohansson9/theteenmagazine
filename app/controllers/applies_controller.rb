@@ -6,12 +6,13 @@ class AppliesController < ApplicationController
   #show all applications
   def index
     if (current_user && current_user.admin?)
+      set_meta_tags :title => "Writer Applications | The Teen Magazine"
       @notifications = @notifications - @unseen_applications_cnt
       @unseen_applications_cnt = 0
       @pagy, @applies = pagy(Apply.where(rejected_writer_at: nil, rejected_editor_at: nil).order("updated_at desc"), page: params[:page], items: 20)
-      current_user.last_saw_writer_applications = Time.now
-      current_user.save
-      set_meta_tags :title => "Writer Applications | The Teen Magazine"
+      Thread.new do
+        current_user.update_column('last_saw_writer_applications', Time.now)
+      end
     elsif current_user
       redirect_to "/applications/editor"
     else

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_25_223538) do
+ActiveRecord::Schema.define(version: 2021_01_01_033017) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -200,7 +200,6 @@ ActiveRecord::Schema.define(version: 2020_12_25_223538) do
     t.boolean "rejected_title"
     t.boolean "rejected_topic"
     t.boolean "rejected_thumbnail"
-    t.datetime "deadline_at"
     t.integer "weeks_given"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
     t.index ["updated_at"], name: "index_pitches_on_updated_at"
@@ -239,6 +238,7 @@ ActiveRecord::Schema.define(version: 2020_12_25_223538) do
     t.integer "partner_id"
     t.boolean "featured"
     t.boolean "newsletter"
+    t.datetime "deadline_at"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
     t.index ["publish_at"], name: "index_posts_on_publish_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true

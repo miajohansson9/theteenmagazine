@@ -29,8 +29,8 @@
     <h3>Your profile was submitted!</h3>
     <p style="margin-top: 10px;">Great job! One of our editors will review your profile as soon as possible.
       You will be notified <b>via email</b> within 48 hours.</p>
-    <p>To get started writing your first article, select the topic you feel you know a lot about. A draft will automatically be started for you and will show up under your dashboard. If you change your mind later, you can
-      always unclaim the pitch.</p>
+    <p>To get started writing your first article, <b>select the topic you feel you know a lot about</b>. A draft will automatically be started for you and will show up under your dashboard. Some articles have a two week or four week deadline, however if you decide you don't have time to complete the article or change your mind about the topic altogether, <b>you can
+      unclaim the pitch at any time</b>.</p>
     <div class="pitches_wrapper">
       <div class="flex_container_mobile_reverse_order">
         <div>
@@ -49,10 +49,10 @@
       </div>
     </div>
   </div>
-  <div class="position-relative">
+  <div style="position: relative;">
     <% @disabled = @pitch.nil? ? "disabled" : "" %>
     <% @hidden = @pitch.present? ? "hide" : "" %>
     <span data-toggle="tooltip" class="<%= @hidden %>" id="tooltip" style="position: absolute; width: 150px; height: 45px; right: 0; top: 20px;" title="Select a pitch first"></span>
-    <%= link_to "Go to Profile", user_path(current_user), :class => "#{@disabled}", :id => "onboarding_button" %>
+    <%= link_to "Go to Profile", user_path(current_user), class: "#{@disabled}", id: "onboarding_button" %>
   </div>
 </div>

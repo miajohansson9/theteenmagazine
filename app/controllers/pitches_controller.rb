@@ -26,8 +26,9 @@ class PitchesController < ApplicationController
       @desc = true
       @message = "There are no unclaimed pitches. Check back in a few days!"
       @button_text = "Claim Pitch"
-      current_user.last_saw_pitches = Time.now
-      current_user.save
+      Thread.new do
+        current_user.update_column('last_saw_pitches', Time.now)
+      end
     else
       @title = "Your Claimed Pitches"
       set_meta_tags :title => @title
@@ -60,22 +61,24 @@ class PitchesController < ApplicationController
 
   def update
     @categories = Category.all
+    @post = Post.find_by(user_id: @pitch.claimed_id, pitch_id: @pitch.id)
     if @pitch.update pitch_params
       if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
         ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
       end
       if (@pitch.claimed_id == current_user.id || current_user.admin?) && pitch_params[:claimed_id].blank?
-        @post = Post.where(user_id: @pitch.claimed_id, pitch_id: @pitch.id).last
         if @post.present?
           @post.reviews.each do |review|
             review.destroy
           end
-          @post.title = "#{@post.title} (locked)"
-          @post.save
-          @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: "Post")
-          @slug&.destroy_all
+          Thread.new do
+            @post.title = "#{@post.title} (locked)"
+            @post.save
+            @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: "Post")
+            @slug&.destroy_all
+          end
         end
-        if current_user.admin?
+        if User.first.admin?
           @message = "Changes were successfully saved!"
         else
           @message = "You've unclaimed this pitch."
@@ -106,7 +109,7 @@ class PitchesController < ApplicationController
 
   def pitch_modal
     @pitch = Pitch.find(params[:id])
-    @post = current_user.posts.build
+    @post = @pitch.posts.find_by(user_id: @pitch.claimed_id) || current_user.posts.build
     @intent = params[:intent]
     respond_to do |format|
       format.html { redirect_to "/onboarding?step=next_steps"}
@@ -127,16 +130,23 @@ class PitchesController < ApplicationController
       @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
       @prev_post_pitch.save
     elsif @post.save && @post.pitch.claimed_id.nil?
-      @post.thumbnail = @post.pitch.thumbnail
-      @post.pitch.claimed_id = current_user.id
-      @post.pitch.save
-      @post.reviews.build(status: "In Progress", active: true)
-      @post.save
+      claim_pitch
     end
     respond_to do |format|
       format.html { redirect_to "/onboarding?step=next_steps"}
       format.js
     end
+  end
+
+  def claim_pitch
+    @post.pitch.update_column('claimed_id', current_user.id)
+    if @post.pitch.weeks_given.present?
+      @post.update_column('deadline_at', Time.now + (@post.pitch.weeks_given).weeks)
+    end
+    @rev = @post.reviews.build(status: "In Progress", active: true)
+    @rev.save
+    @post.thumbnail = @post.pitch.thumbnail
+    @post.save
   end
 
   def pitch_onboarding_unclaim
@@ -170,7 +180,7 @@ class PitchesController < ApplicationController
   end
 
   def show
-    @post = current_user.posts.build
+    @post = @pitch.posts.find_by(user_id: @pitch.claimed_id) || current_user.posts.build
     @post.title = @pitch.title
     @post.content = "<i>" + @pitch.description + "</i>"
     @claimed_user = @pitch.claimed_id.present? ? User.find_by(id: @pitch.claimed_id) : nil
@@ -247,7 +257,7 @@ class PitchesController < ApplicationController
   end
 
   def pitch_params
-    params.require(:pitch).permit(:created_at, :deadline_at, :weeks_given, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :category_id, :user_id, :editor_id)
+    params.require(:pitch).permit(:created_at, :weeks_given, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :category_id, :user_id, :editor_id)
   end
 
   def post_params

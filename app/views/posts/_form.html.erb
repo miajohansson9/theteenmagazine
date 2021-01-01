@@ -9,8 +9,8 @@
         <% end %>
       </ul>
     <% end %>
-    <% if @post.pitch.try(:claimed_id).present? && @post.pitch.try(:deadline_at).present? %>
-      <%= render "pitches/deadline_warning_msg", pitch: @post.pitch, post: @post %>
+    <% if @post.pitch.try(:claimed_id).present? && @post.try(:deadline_at).present? %>
+      <%= render "pitches/deadline_warning_msg", post: @post %>
     <% end %>
     <p class="mb-0">Title</p>
     <%= f.text_field :title %>

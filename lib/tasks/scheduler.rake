@@ -96,11 +96,11 @@ task :run_nightly_tasks => :environment do
   # Writer is close to article deadline/or missed it
   User.all.each do |user|
     @posts = []
-    @pitches = Pitch.where(claimed_id: user.id).where.not(deadline_at: nil)
+    @pitches = Pitch.where(claimed_id: user.id).where.not(weeks_given: nil)
     @pitches.each do |pitch|
       @post = pitch.posts.draft.find_by(user_id: pitch.claimed_id)
-      if @post.present? && @post.try(:pitch).try(:deadline_at)&.present?
-        if @post.pitch.deadline_at < Time.now
+      if @post.present? && @post.try(:deadline_at)&.present?
+        if @post.deadline_at < Time.now
           @post.reviews.each do |review|
             review.destroy
           end
@@ -110,11 +110,11 @@ task :run_nightly_tasks => :environment do
           @slug = FriendlyId::Slug.where(slug: @post.pitch.slug, sluggable_type: "Post")
           @slug&.destroy_all
           ApplicationMailer.article_deadline_passed(user, @post).deliver
-        elsif @post.pitch.deadline_at < (Time.now + 1.days)
+        elsif @post.deadline_at < (Time.now + 1.days)
           @posts << @post
-        elsif ((Time.now + 3.days)..(Time.now + 4.days)).include? @post.pitch.deadline_at
+        elsif ((Time.now + 3.days)..(Time.now + 4.days)).include? @post.deadline_at
           @posts << @post
-        elsif ((Time.now + 6.days)..(Time.now + 7.days)).include? @post.pitch.deadline_at
+        elsif ((Time.now + 10.days)..(Time.now + 50.days)).include? @post.deadline_at
           @posts << @post
         end
       end

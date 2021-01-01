@@ -27,8 +27,9 @@
           <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn")%>
         <% end %>
         <div class="card-body">
-          <% if pitch.claimed_id.present? && pitch.deadline_at.present? && (pitch.posts.find_by(user_id: pitch.claimed_id).try(:reviews).try(:last).try(:status)&.eql? "In Progress") %>
-            <%= render "pitches/deadline_warning_msg", pitch: pitch, post: pitch.posts.find_by(user_id: pitch.claimed_id) %>
+          <% @post = pitch.posts.find_by(user_id: pitch.claimed_id) %>
+          <% if pitch.claimed_id.present? && @post.deadline_at.present? && (pitch.posts.find_by(user_id: pitch.claimed_id).try(:reviews).try(:last).try(:status)&.eql? "In Progress") %>
+            <%= render "pitches/deadline_warning_msg", post: @post %>
           <% end %>
           <h4 class="pitch_ttl"><%= link_to pitch.title, pitch, style: "color: black; text-decoration: none;" %></h4>
           <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
