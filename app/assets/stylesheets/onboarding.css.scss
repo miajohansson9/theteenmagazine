@@ -123,8 +123,12 @@ a {
 .alert-link {
   line-height: inherit !important;
   vertical-align: inherit !important;
-  font-weight: bold;
-  color: #df0031 !important;
+  font-weight: normal !important;
+  color: inherit !important;
+  text-decoration: underline !important;
+  &:hover {
+    text-decoration: underline !important;
+  }
 }
 
 .pitch_ttl {

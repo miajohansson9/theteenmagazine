@@ -38,7 +38,7 @@
   <% end %>
 
   <% if @pitch.weeks_given.present? %>
-    <p class="pitch_usr"><b>This pitch has a <%= @pitch.weeks_given %> week deadline. Read more about deadlines <a href="#">here</a>.</b></p>
+    <p class="pitch_usr"><b>This pitch has a <%= @pitch.weeks_given %> week deadline. Read more about deadlines <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</b></p>
   <% end %>
 
   <% if @claimed_user.nil? %>
@@ -50,7 +50,7 @@
       <i class="d-block pb-4 mb-2">When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
       <div class="btn_cntnr" style="margin-top: -1rem;">
         <% @confirm = @pitch.weeks_given.nil? ? "When you claim this pitch, your draft will be started." : "When you claim this pitch, you will have #{@pitch.weeks_given} weeks to submit the associated draft for review." %>
-        <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Claim Article Pitch", data: { confirm: @confirm }, class: "newpost--new--profile mb-0 mr-0 #{@class}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
+        <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Claim Article Pitch", data: { confirm: @confirm }, class: "newpost--new--profile mb-0 mr-0 #{@disabled}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
       </div>
       <br>
     <% end %>
@@ -60,7 +60,7 @@
           <%= f.hidden_field :claimed_id, value: nil %>
           <p class="pitch_usr mb-4">If you unclaim this pitch, the associated article will become locked unless you claim the pitch again. If this pitch was created by an editor, the topic will become available to any writer at TTM. Go to your started <%= link_to("draft", @article, class: "pitch_btn", target: "_blank") %>.</p>
           <div class="btn_cntnr" style="margin-top: -1rem;">
-            <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }, class: "newpost--new--profile mb-0 mr-0 #{@class}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
+            <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }, class: "newpost--new--profile mb-0 mr-0 #{@disabled}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
           </div>
           <br>
         <% end %>

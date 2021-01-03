@@ -44,7 +44,23 @@ class Post < ApplicationRecord
     @published = publish_at.present? ? (publish_at < Time.now) : false
   end
 
-  accepts_nested_attributes_for :reviews
+  def is_locked?
+    if deadline_at.nil? && !(title.include? " (locked)")
+      false
+    else
+      (title.include? " (locked)") || (deadline_at < Time.now) && (reviews.last.eql? "In Progress")
+    end
+  end
+
+  def can_reclaim_pitch?
+    if deadline_at.nil?
+      true
+    else
+      deadline_at > Time.now
+    end
+  end
+
+  accepts_nested_attributes_for :reviews, :user
 
   has_attached_file :thumbnail, styles: {
       medium: '150x100#',

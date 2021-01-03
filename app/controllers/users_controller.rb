@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     if current_user.present?
       @pitches = Pitch.not_rejected.all.order("created_at desc").limit(4)
       @featured_writers = Post.where(publish_at: (Time.now - 7.days)..Time.now).order("updated_at desc").map{|p| p.user}.uniq
-      @claimed_pitches_cnt =  Pitch.where(claimed_id: @user.id).present? ? Pitch.where(claimed_id: @user.id).count : 0;
+      @claimed_pitches_cnt = Pitch.where(claimed_id: @user.id)&.count || 0
       @pageviews = 0
       @user_posts_approved_records.each do |post|
         if !post.post_impressions.nil?
@@ -281,6 +281,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def extensions
+    set_meta_tags title: "Use an Extension | The Teen Magazine"
+    @user = User.find(params[:id])
+    if current_user.admin || (current_user.id.eql? @user.id)
+      @extensions = @user.extensions || 0
+      if params[:search].present?
+        @query = params[:search][:query]
+        @pagy, @posts = pagy(@user.posts.draft.distinct.where("lower(title) LIKE ?", "%#{@query.downcase}%").where.not(deadline_at: nil, pitch_id: nil), page: params[:page], items: 15).order("updated_at desc")
+      else
+        @pagy, @posts = pagy(@user.posts.draft.distinct.where.not(deadline_at: nil, pitch_id: nil).order("updated_at desc"), page: params[:page], items: 15)
+      end
+    else
+      redirect_to "/writers/#{current_user.slug}/extensions"
+    end
+  end
+
   def is_admin?
     if (current_user && current_user.admin?)
       true
@@ -323,7 +339,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :onboarding_claimed_pitch_id, :do_not_send_emails, :editor, :marketer, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community, :last_saw_new_writer_dashboard, :last_saw_writer_dashboard, :became_an_editor, :completed_editor_onboarding, :missed_editor_deadline, :notify_of_new_review)
+    params.require(:user).permit(:email, :password, :onboarding_claimed_pitch_id, :do_not_send_emails, :editor, :marketer, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :extensions, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community, :last_saw_new_writer_dashboard, :last_saw_writer_dashboard, :became_an_editor, :completed_editor_onboarding, :missed_editor_deadline, :notify_of_new_review)
   end
 
   def find_user

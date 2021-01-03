@@ -41,20 +41,15 @@ task :run_weekly_tasks => :environment do
   end
 
   if (Date.today.day.eql? 1)
-    User.editor do |editor|
+    User.editor.each do |editor|
       ApplicationMailer.remind_editors_of_assigments(editor).deliver
-    end
-    @users = User.where(notify_of_new_review: true)
-    @users.each do |user|
-      user.notify_of_new_review = false
-      user.save
     end
   end
 
   if (Date.today.end_of_month.day - Date.today.day < 16)
     @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
     @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
-    User.editor do |editor|
+    User.editor.each do |editor|
       @editor_pitches_cnt =  @user.pitches.where("created_at > ?", Date.today.beginning_of_month).count
       @editor_reviews_cnt = Review.where(editor_id: @user.id).where("updated_at > ?", Date.today.beginning_of_month).count
       @is_not_on_track = (@editor_pitches_cnt + @editor_reviews_cnt < (@reviews_requirement + @pitches_requirement) / 2) && (@user.created_at < (Time.now - 30.days))
@@ -93,7 +88,24 @@ task :run_nightly_tasks => :environment do
     end
   end
 
-  # Writer is close to article deadline/or missed it
+  if (Date.today.day.eql? Date.today.end_of_month.day)
+    # Disable opted-in editor notifications for previous month
+    @users = User.where(notify_of_new_review: true)
+    @users.each do |user|
+      user.notify_of_new_review = false
+      user.save
+    end
+    # Update monthly extensions for active writers
+    User.active.each do |user|
+      begin
+        user.update_column('extensions', user.extensions + 1)
+      rescue
+        next
+      end
+    end
+  end
+
+  # Writer is close to article deadline or missed it
   User.all.each do |user|
     @posts = []
     @pitches = Pitch.where(claimed_id: user.id).where.not(weeks_given: nil)
@@ -114,7 +126,7 @@ task :run_nightly_tasks => :environment do
           @posts << @post
         elsif ((Time.now + 3.days)..(Time.now + 4.days)).include? @post.deadline_at
           @posts << @post
-        elsif ((Time.now + 10.days)..(Time.now + 50.days)).include? @post.deadline_at
+        elsif ((Time.now + 6.days)..(Time.now + 7.days)).include? @post.deadline_at
           @posts << @post
         end
       end

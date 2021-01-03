@@ -2,7 +2,7 @@
   <h1 id="page_title">Writing The Perfect Article</h1>
   <h3>Starting a Draft</h3>
   <p>
-    To start an article, either pitch your own topic (follow the guidelines <a href="/choosing-a-topic" target="_blank">Here</a>), or choose from the existing editor pitches <a href="/pitches" target="_blank">Here</a>. Once your pitch gets approved and/or you claim an article pitch, a new draft will be started and become reachable through your writer dashboard under “Articles In Progress.” If you start the draft from an editor pitch, you will have a two week deadline to submit for review.
+    To start an article, either pitch your own topic (follow the guidelines <a href="/choosing-a-topic" target="_blank">Here</a>), or choose from the existing editor pitches <a href="/pitches" target="_blank">Here</a>. Once your pitch gets approved and/or you claim an article pitch, a new draft will be started and become reachable through your writer dashboard under “Articles In Progress.” Most editor pitches have a deadline associated with it. Read more about deadlines <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.
   </p>
 
   <h3>Working on a Draft</h3>
@@ -47,6 +47,39 @@
   <p>Once you are confident that your article meets all the <a href="#article-requirements">Article Requirements for Publication</a>, change your article's status to <b>Ready for Review</b> and <b>Save Changes</b>.
     An editor should claim the review and you should get an email within 5 days notifying you if your article has requested changes or is approved for publishing. On average, an article will receive three rounds of
     reviews before it will be approved for publishing. Requested changes will show up on the edit form of your article.
+  </p>
+
+  <h3 id="deadlines-and-extensions">Deadlines and Extensions</h3>
+  <p>
+    Some editor pitches have deadlines associated with them that are anywhere from 2-4 weeks.
+    Deadlines will show up at the bottom of the pitch and will become active immediately after you've claim a pitch.
+    The due date will show up on the pitch itself and the Edit page of your draft.
+
+  </p>
+  <p>
+    Pitches that you pitch yourself do not have a deadline associated with them by default, however, you can choose to add one if you need the extra accountability.
+  </p>
+
+  <b><i>You currently have <%= current_user.extensions %> extension credit(s) available.</i></b>
+
+  <p>
+    We know that as a student, you are very busy and have a lot of commitments, so extensions are given to help you manage your time as needed.
+    You earn one extension credit for every month you're active on The Teen Magazine, and each credit can be used to extend an article deadline by two weeks.
+    To use an extension on an article, go to the <a target="_blank" href="/writers/<%= current_user.slug %>/extensions">Extensions Page</a> and find the draft on which you want more time.
+    If you have extension credits available, you can click on the <i>Use Extension</i> button next to the desired draft to extend the deadline by two weeks.
+    Please note that this cannot be undone and extensions do not apply to overdue articles.
+  </p>
+
+  <p>
+    If you do not submit a draft in time for its deadline, the pitch will be automatically unclaimed. The draft will also become locked and you will no longer be able to work on it.
+    You will receive an email if this happens with the link to your locked article, but the draft will no longer show up on your writer dashboard.
+    You will receive many warning emails before this happens.
+    Of course, if you ever change your mind about an article or decide that you can no longer work on it, unclaiming the article's pitch is always an option too.
+  </p>
+
+  <p>
+    If you submit an article in time for its deadline and it's sent back with changes, you will be given an additional 1 week to work on the article.
+    Do not submit drafts that are clearly not ready for review as this is cause to be removed from the writer team.
   </p>
 
   <h3>Using the Text Editor</h3>
@@ -99,7 +132,7 @@
   that all formatting, besides adding links, lists, and header sizes, should be done automatically. Do not try to move around images, change font families, font sizes, etc. by changing the source code. These articles will not be approved for publishing and will get sent back with requested changes.</p>
 
   <p>
-    If you're confused about any of the requirements in this document, or want more clarification, you can send an email to <b>editors@theteenmagazine.com</b>
+    If you're confused about any of the requirements in this document, or want more clarification, you can send an email to <a target="_blank" href="mailto:editors@theteenmagazine.com">editors@theteenmagazine.com</a>.
   </p>
 
   <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">

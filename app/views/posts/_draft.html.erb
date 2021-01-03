@@ -23,6 +23,8 @@ blockquote {
   <% @most_recent_review = @post.reviews.last %>
   <% if !@most_recent_review.nil? && !(@most_recent_review.try(:status).eql? "In Progress") %>
     <%= render '/posts/banner_status' %>
+  <% elsif @post.is_locked? %>
+    <p class= "banner_stts">Locked</p>
   <% elsif @post.pitch.present? %>
     <p class= "banner_stts">In Progress | Review this draft's pitch <%= link_to("here", @post.pitch, target: "_blank", class: "link_white") %></p>
   <% else %>
@@ -67,7 +69,7 @@ blockquote {
               </div>
               <% if current_user && (current_user.id == @post.user_id || (@post.collaboration&.include? current_user.email) || current_user.admin?) %>
                 <div id="admin_links" style="border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;text-align: center;padding: 1em 0;margin: 1em 0;margin-top: 0;">
-                  <% if !(@post.title.include? " (locked)") %>
+                  <% if !(@post.is_locked?) %>
                     <%= link_to "Edit Article", edit_post_path(@post), style: "text-decoration: none;color: #9a9da4;margin: 0 1em;font-weight: 700;font-size: .8em;text-transform: uppercase;font-family: inherit;" %>
                   <% end %>
                   <% if current_user && (current_user.id == @post.user_id || current_user.admin) %>

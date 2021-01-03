@@ -7,7 +7,7 @@
   <body>
     <p>Hi <%= @user.first_name %>,</p>
     <p>This is an email notifying you that <%= @post.title %> was just moved to In Review. Check your editor dashboard <a href="theteenmagazine.com/editors/<%= @user.slug %>">here</a> to be the first to claim the review.</p>
-    <p>You are receiving this email because you have turned on review notifications for the month of <%= Date.today.strftime("%B") %>. If you would like to turn these notifications off, you can do so <a href="http://localhost:3000/disable_notify_of_new_review?user_id=<%= @user.id %>">here</a>.</p>
+    <p>You are receiving this email because you have turned on review notifications for the month of <%= Date.today.strftime("%B") %>. If you would like to turn these notifications off, you can do so <a href="https://www.theteenmagazine.com/disable_notify_of_new_review?user_id=<%= @user.id %>">here</a>.</p>
     <p>The Teen Magazine</p>
   </body>
 </html>

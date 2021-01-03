@@ -54,15 +54,22 @@ class PostsController < ApplicationController
   def create
     @categories = Category.all
     @post = current_user.posts.build(post_params)
-    @prev_post_pitch = current_user.posts.where(pitch_id: post_params[:pitch_id]).last
+    @prev_post_pitch = current_user.posts.find_by(pitch_id: post_params[:pitch_id])
     if !(@prev_post_pitch.try(:pitch).nil?)
-      @prev_post_pitch.reviews.destroy
-      @rev = @prev_post_pitch.reviews.build(status: "In Progress", active: true)
-      @rev.save
-      @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
-      @prev_post_pitch.save
-      @post.pitch.update_column('claimed_id', current_user.id)
-      redirect_to @prev_post_pitch, notice: "You've reclaimed this pitch!"
+      if @prev_post_pitch.can_reclaim_pitch?
+        @prev_post_pitch.reviews.destroy
+        @rev = @prev_post_pitch.reviews.build(status: "In Progress", active: true)
+        @rev.save
+        @post.pitch.update_column('claimed_id', current_user.id)
+        @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
+        if @prev_post_pitch.deadline_at.nil? && @post.pitch.weeks_given.present?
+          @prev_post_pitch.deadline_at = Time.now + (@post.pitch.weeks_given).weeks
+        end
+        @prev_post_pitch.save!
+        redirect_to @prev_post_pitch, notice: "You've reclaimed this pitch!"
+      else
+        redirect_to @prev_post_pitch.pitch, notice: "Oops you've missed the deadline for this pitch previously."
+      end
     else
       fix_formatting
       if (@post.content.include? "instagram.com/p/") && !(@post.content.include? "instgrm.Embeds.process()")
@@ -190,7 +197,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-    if @post.title.include? " (locked)"
+    if @post.is_locked?
       redirect_to @post, notice: "You can no longer work on this article."
       return
     end
@@ -264,12 +271,18 @@ class PostsController < ApplicationController
         @notice = "Your changes were saved."
       end
       if @new_status.eql? "Rejected"
+        if @post.deadline_at.present?
+          @new_deadline = @post.reviews.last.updated_at > @post.deadline_at ? @post.reviews.last.updated_at + 7.days : @post.deadline_at + 7.days
+          @post.update_column('deadline_at', @new_deadline)
+        end
         ApplicationMailer.article_has_requested_changes(@post.user, @post).deliver
       end
       if post_params[:promoting_until].present?
         @post.user.points = @post.user.points - 200
         @post.user.save
         redirect_to "/community", notice: "Your draft is now being promoted!"
+      elsif post_params[:deadline_at].present?
+        redirect_to "/writers/#{@post.user.slug}/extensions", notice: "Extension applied."
       elsif (post_params[:partner_id].present? && post_params[:partner_id] != false)
         @partner = User.find(post_params[:partner_id])
         redirect_to @partner, notice: "This article was successfully shared with #{@partner.full_name}."
@@ -399,7 +412,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :featured, :newsletter, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes])
+    params.require(:post).permit(:title, :featured, :newsletter, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes], :user_attributes => [:extensions, :id])
   end
 
   def find_post_history

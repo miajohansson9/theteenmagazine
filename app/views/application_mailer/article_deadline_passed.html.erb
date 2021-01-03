@@ -9,9 +9,10 @@
   <body>
     <p>Hi <%= @user.first_name %>,</p>
     <p>
-      Your draft <i><%= @post.title %></i> has passed its due date and the pitch has been unclaimed.
+      This is an automated email notifying you that your draft <i><%= @post.title %></i> has passed its due date and the pitch has been unclaimed.
       You are still able to view your article <%= link_to "here", @post %>, but it has been removed from your writer dashboard and is no longer editable.
-      Find out more about deadlines and extensions <a href="#">here</a>.
+      Find out more about deadlines and extensions <a href="https://www.theteenmagazine.com/writing-the-perfect-article#deadlines-and-extensions">here</a>.
+      Please do not reply to this email as no exceptions will be made.
     </p>
     <p>Best,<br/>
        Editor Team

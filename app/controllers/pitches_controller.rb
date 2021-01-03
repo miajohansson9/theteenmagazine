@@ -66,25 +66,19 @@ class PitchesController < ApplicationController
       if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
         ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
       end
-      if (@pitch.claimed_id == current_user.id || current_user.admin?) && pitch_params[:claimed_id].blank?
+      if pitch_params[:claimed_id].eql? ""
         if @post.present?
           @post.reviews.each do |review|
             review.destroy
           end
-          Thread.new do
-            @post.title = "#{@post.title} (locked)"
-            @post.save
-            @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: "Post")
-            @slug&.destroy_all
-          end
+          @post.title = "#{@post.title} (locked)"
+          @post.save!
+          @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: "Post")
+          @slug&.destroy_all
         end
-        if User.first.admin?
-          @message = "Changes were successfully saved!"
-        else
-          @message = "You've unclaimed this pitch."
-        end
+        @message = "This pitch was unclaimed."
       else
-        @message = "Changes were successfully saved!"
+        @message = "Changes were successfully saved."
       end
       fix_title
       redirect_to @pitch, notice: @message
@@ -96,6 +90,9 @@ class PitchesController < ApplicationController
   def destroy
     if current_user.admin? && !(@pitch.user_id.eql? current_user.id)
       ApplicationMailer.pitch_deleted(@pitch.user, @pitch).deliver
+    end
+    @pitch.posts.each do |p|
+      p.update_column('pitch_id', nil)
     end
     if @pitch&.destroy
       redirect_to pitches_path, notice: "Your pitch was deleted."
@@ -187,25 +184,25 @@ class PitchesController < ApplicationController
     @article = @claimed_user ? @claimed_user.posts.where(pitch_id: @pitch.id).last : nil
     if @pitch.status.eql? "Ready for Review"
       @title =  "Pitch Submitted"
-      @class = "disabled"
+      @disabled = "disabled"
       @tooltip = "This pitch has not been reviewed yet"
     elsif @pitch.status.eql? "Rejected"
       @title =  "Pitch Rejected"
-      @class = "disabled"
+      @disabled = "disabled"
       @tooltip = "This pitch was rejected"
     elsif @claimed_user.nil?
       if @pitch.user.editor || (@pitch.user.id.eql? current_user.id)
         @title = "Claim Article Pitch"
-        @class = ""
+        @disabled = ""
         @tooltip = ""
       else
         @title = "#{@pitch.user.full_name} pitched"
-        @class = "disabled"
+        @disabled = "disabled"
         @tooltip = "This pitch isn't yours"
       end
     elsif @claimed_user.id != current_user.id
       @title = "#{@claimed_user.try(:full_name)} claimed the pitch"
-      @class = "disabled"
+      @disabled = "disabled"
       @tooltip = "This pitch isn't yours"
     else
       @title = "You've claimed the pitch"

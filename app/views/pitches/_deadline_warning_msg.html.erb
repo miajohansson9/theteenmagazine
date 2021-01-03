@@ -1,10 +1,17 @@
 <% @class = post.deadline_at < Date.today + 4.days ? "alert-danger" : "alert-info" %>
-<div class="alert <%= @class %>" role="alert">
-  <% if post.deadline_at > Time.now %>
-    <p class="m-0">You have <%= distance_of_time_in_words(Time.now, post.deadline_at) %> left to submit <%= link_to(post.title, post) %> for review
-    <a data-toggle="tooltip" title="More info" class="ml-1 position-absolute" target="_blank" href="#"><svg width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></p>
-  <% else %>
-    <p class="m-0">You have passed the deadline. This article's pitch will be automatically unclaimed.
-    <a data-toggle="tooltip" title="More info" class="ml-1 position-absolute" target="_blank" href="#"><svg width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></p>
-  <% end %>
-</div>
+<% @status = post.reviews.where.not(created_at: nil).last.try(:status) %>
+<% if (@status&.eql? "In Progress") || (@status&.eql? "Rejected") %>
+  <div class="alert <%= @class %>" role="alert">
+    <% @perspective = (current_user.id.eql? post.user.id) ? "You have" : "#{post.user.full_name} has" %>
+    <% if post.deadline_at > Time.now %>
+      <p class="m-0"><%= @perspective %> <%= distance_of_time_in_words(Time.now, post.deadline_at) %> left to submit <%= link_to(post.title, post) %> for review.
+      <% if (post.deadline_at < (Time.now + 7.days)) && (current_user.extensions > 0) %>
+        Use an extension <a target="_blank" href="/writers/<%= post.user.slug %>/extensions">here</a>.
+      <% end %>
+      <a data-toggle="tooltip" title="More info" class="ml-1 position-absolute" target="_blank" href="/writing-the-perfect-article#deadlines-and-extensions"><svg width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></p>
+    <% else %>
+      <p class="m-0"><%= @perspective %> passed the deadline. This article's pitch will be automatically unclaimed.
+      <a data-toggle="tooltip" title="More info" class="ml-1 position-absolute" target="_blank" href="/writing-the-perfect-article#deadlines-and-extensions"><svg width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></p>
+    <% end %>
+  </div>
+<% end %>

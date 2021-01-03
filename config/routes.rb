@@ -76,6 +76,7 @@ Rails.application.routes.draw do
   get '/partners', to: 'users#partners'
   get '/editors', to: 'users#editors'
   get '/partners/:id/share', to: 'users#share'
+  get '/writers/:id/extensions', to: 'users#extensions'
   get '/partners/:id/published', to: 'users#sponsored'
   get '/december_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
   post '/december_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'

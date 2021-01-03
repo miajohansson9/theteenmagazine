@@ -2,6 +2,8 @@
 <% @review_banner_soft = @post.reviews.where.not(status: nil).last %>
 <% if !@most_recent_review.nil? && !(@review_banner_soft.status.eql? "In Progress") %>
   <div class="banner_stts_relative"><%= render '/posts/banner_status' %></div>
+<% elsif @post.is_locked? %>
+  <p class= "banner_stts">Locked</p>
 <% elsif @post.pitch.present? %>
   <div class="banner_stts_relative"><p class= "banner_stts">In Progress | Review this draft's pitch <%= link_to("here", @post.pitch, target: "_blank", class: "link_white") %></p></div>
 <% else %>
