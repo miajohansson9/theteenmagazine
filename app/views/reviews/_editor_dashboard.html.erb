@@ -25,7 +25,7 @@
                   <%= link_to (image_tag draft.thumbnail(:medium)), post_path(draft) %>
                   <div>
                     <h4><%= link_to draft.title, post_path(draft), class: "link_nrml"%></h4>
-                    <p class="edited_dt"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.editor_claimed_review_at) %></p>
+                    <p class="edited_dt"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.editor_claimed_review_at) unless draft.reviews.last.editor_claimed_review_at.blank? %></p>
                     <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
                     <p class="edit_lnk"><%= link_to "Edit Article", edit_post_path(draft) %></p>
                   </div>
