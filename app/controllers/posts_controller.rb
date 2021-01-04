@@ -201,6 +201,7 @@ class PostsController < ApplicationController
       redirect_to @post, notice: "You can no longer work on this article."
       return
     end
+    @can_edit = !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (@post.collaboration&.include? current_user.email) || (current_user.admin?) || (@post.reviews.last.editor_id.eql? current_user.id)
     @categories = Category.all
     @service_id = ENV['WEBSPELLCHECKER_ID']
     #create new review if no current review or last review was rejected
@@ -208,6 +209,13 @@ class PostsController < ApplicationController
     @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.feedback_givens) : @post.reviews.last
     @feedbacks = Feedback.all
     @feedbacks_editor_frm = Feedback.active.order('created_at asc')
+    @editor_options = ((@post.reviews.last.status.eql? "In Review") || (@post.reviews.last.status.eql? "Approved for Publishing")) ? ["Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review", "In Review"]
+    @statuses = current_user.editor? ? @editor_options : ["In Progress", "Ready for Review"]
+    @should_show_editor_form = (current_user.id == @post.reviews.last.editor_id) && (@post.reviews.last.try(:status).eql? "In Review")
+    @reviews_rejected = @post.reviews.where(status: "Rejected")
+    if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)
+      @statuses << @post.reviews.last.status
+    end
     set_meta_tags :title => "Edit Article", editing: "Turn off ads"
   end
 

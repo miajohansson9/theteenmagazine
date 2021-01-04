@@ -1,144 +1,77 @@
-<% if !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (@post.collaboration&.include? current_user.email) || (current_user.admin?) || (@post.reviews.last.editor_id.eql? current_user.id) %>
-<div id="edit_post">
-  <%= form_for @post do |f| %>
-    <% if @post.errors.any? %>
-      <h6 class="mt-3 text-danger"><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h6>
-      <ul>
-        <% @post.errors.full_messages.each do |msg| %>
-        <li class="text-danger"><h6><%= msg %></h6></li>
-        <% end %>
-      </ul>
-    <% end %>
-    <% if @post.pitch.try(:claimed_id).present? && @post.try(:deadline_at).present? %>
-      <%= render "pitches/deadline_warning_msg", post: @post %>
-    <% end %>
-    <p class="mb-0">Title</p>
-    <%= f.text_field :title %>
-    <p class="mt-0">Write your article here and make sure you are saving often. Saving can also help fix formatting problems.</p>
-    <%= f.text_area :content, class: "ckeditor" %>
-    <% if @post.thumbnail.present? %>
-      <p>Thumbnail Preview</p>
-      <%= image_tag(@post.thumbnail.url(:large2), :class => "image_max_400") %>
-      <div class="mt-4 mb-2 d-block">
-        <p class="d-inline">Upload different thumbnail image:</p>
-        <%= f.file_field :thumbnail %>
-      </div>
-    <% else %>
-      <div class="mt-4 mb-2 d-block">
-        <p class="d-inline">Upload thumbnail image:</p>
-        <%= f.file_field :thumbnail %>
-      </div>
-    <% end %>
-    <p class="d-inline">Category:</p>
-    <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-3") %>
-    <p>Grab your ideal reader's interest in 1-2 sentences for Google search.</p>
-    <%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
-    <span>If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</span>
-    <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
-
-    <%= f.fields_for :reviews, @review do |rv| %>
-      <% @editor_options = ((@post.reviews.last.status.eql? "In Review") || (@post.reviews.last.status.eql? "Approved for Publishing")) ? ["Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review", "In Review"] %>
-      <% @statuses = current_user.editor? ? @editor_options : ["In Progress", "Ready for Review"] %>
-      <% if !(current_user.editor?) && !(@statuses.include? @post.reviews.last.status)%><% @statuses << @post.reviews.last.status %><% end %>
-      <% if (current_user.id == @post.reviews.last.editor_id) && (@post.reviews.last.try(:status).eql? "In Review") %>
-      <% if @post.editor_can_make_changes %>
-        <p>
-          <i>
-            The writer has given permission for you to make changes to this article.
-            These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
-            Larger edits should be sent back for changes.
-          </i>
-        </p>
-      <% else %>
-        <p>
-          <i style="background-color: #FCD04D;">
-            The writer has not given permission for you to make changes to this article.
-            Please only fill out the feedback form below, and do not make any changes directly to the article.
-          </i>
-        </p>
+<% if @can_edit %>
+  <div id="edit_post">
+    <%= form_for @post do |f| %>
+      <% if @post.errors.any? %>
+        <h6 class="mt-3 text-danger"><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h6>
+        <ul>
+          <% @post.errors.full_messages.each do |msg| %>
+          <li class="text-danger"><h6><%= msg %></h6></li>
+          <% end %>
+        </ul>
       <% end %>
-        <div class="card review_frm">
-          <div class="card-header">
-            <h6>Editor Review Form</h6>
-          </div>
-          <div class="card-body">
-            <div class="small-text-wrapper">
-              <p>Prerequisite: Before reviewing any pitch, make sure you have read all of <a target="_blank" href="/article-requirements">Reviewing Articles</a>.</p>
-              <p>Article Checklist:</p>
-              <ol>
-                <li>Is the topic relevant to The Teen Magazine's audience?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#first-question"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></li>
-                <li>Is the title searchable and/or shareable?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#second-question"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></li>
-                <li>Does the thumbnail image fit the criteria?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#third-question"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></li>
-                <li>Is the main point of the article clear in the introduction?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#fourth-question"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></li>
-                <li>Does the writer provide a unique perspective and/or information?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#fifth-question"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></li>
-                <li>Does the most important information jump out of the page?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#sixth-question"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></li>
-                <li>Is the article entirely free from grammar and spelling mistakes?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#seventh-question"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></li>
-                <li>Is the article in-depth enough for this topic?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#eighth-question"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></li>
-                <li>Do all the images fit the criteria?<a data-toggle="tooltip" title="See article requirements" class="ml-1 position-absolute" target="_blank" href="/article-requirements#ninth-question"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a></li>
-              </ol>
-              <p>If you answered yes to all these questions, you may choose "Approved for Publishing" from the dropdown menu and save. If you answered no to at least one of the questions, select "Rejected," and mark the reason(s) why. If you are unsure, either move this article back into "Ready for Review" or contact mia@theteenmagazine.com to ask a clarifying question about the article requirements.</p>
-            </div>
-            <div class="pb-1">
-              <p class="d-inline">Reject or Approve:</p>
-              <%= rv.select :status, options_for_select(@statuses, @review.try(:status)), {}, {:onChange => "select_article_status();"} %>
-            </div>
-            <div class="small-text-wrapper">
-              <p class="accepted-descr hide">Make sure you've answered yes to all the above questions before publishing this article.</p>
-            </div>
-            <p class="rejected-reason hide mb-1 mt-1">*Select reason(s) for rejecting:</p>
-            <div class="small-text-wrapper">
-              <% @feedbacks_editor_frm.each_with_index do |feedback, index| %>
-                <p class="rejected-reason hide">
-                  <%= f.check_box :feedback_list, { :multiple => true, checked: !(@review.try(:feedback_givens).where(feedback_id: feedback.id).blank?), class: "rejected-reason hide mb-1 mt-0"}, feedback.id, nil %> <%= index + 1 %>. <%= feedback.editor_descr %>
-                </p>
-              <% end %>
-              <div class="rejected-reason hide">
-                <%= rv.text_area :notes, placeholder: "Explain other reason for rejection..." %>
-                <%= rv.hidden_field :editor_id, value: current_user.id %>
-                <%= link_to("View feedback descriptions", feedbacks_path, class: "link_nrml float_right", target: "_blank") %>
-              </div>
-            </div>
-            <%= f.hidden_field :editor_id, value: current_user.id %>
-          </div>
+      <% if @post.pitch.try(:claimed_id).present? && @post.try(:deadline_at).present? %>
+        <%= render "pitches/deadline_warning_msg", post: @post %>
+      <% end %>
+      <p class="mb-0">Title</p>
+      <%= f.text_field :title %>
+      <p class="mt-0">Write your article here and make sure you are saving often. Saving can also help fix formatting problems.</p>
+      <%= f.text_area :content, class: "ckeditor" %>
+      <% if @post.thumbnail.present? %>
+        <p>Thumbnail Preview</p>
+        <%= image_tag(@post.thumbnail.url(:large2), :class => "image_max_400") %>
+        <div class="mt-4 mb-2 d-block">
+          <p class="d-inline">Upload different thumbnail image:</p>
+          <%= f.file_field :thumbnail %>
         </div>
       <% else %>
-      <% @reviews = @post.reviews.where(status: "Rejected") %>
-      <% if (@reviews.count >= 5) && !(@post.is_published?) %>
-        <%= rv.hidden_field :status, :value => "In Progress" %>
-      <% elsif  %>
-        <p class="d-inline">Article Status:</p>
-        <% @rejected_cnt = @post.reviews.where(status: "Rejected").count %>
-        <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
-        <% if current_user.admin && @post.is_published? %>
-          <div style="float:right; text-align: right;">
-            <p>Featured on homepage: <%= f.check_box :featured %>
-            </p>
-            <p>Feature in next newsletter: <%= f.check_box :newsletter %></p>
-          </div>
-        <% end %>
-        <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
-        <p>
-          <%= f.check_box :editor_can_make_changes %>
-            <i>
-              I give permission for an editor to make changes to my article when I submit. These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
-              I understand I am still able to alter these once my article is published. Large edits will always be sent back for changes.
-            </i>
-          </p>
+        <div class="mt-4 mb-2 d-block">
+          <p class="d-inline">Upload thumbnail image:</p>
+          <%= f.file_field :thumbnail %>
+        </div>
+      <% end %>
+      <p class="d-inline">Category:</p>
+      <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-3") %>
+      <p>Grab your ideal reader's interest in 1-2 sentences for Google search.</p>
+      <%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
+      <span>If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</span>
+      <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
+      <%= f.fields_for :reviews, @review do |rv| %>
+        <% if @should_show_editor_form %>
+          <%= render "posts/editor_review_form", rv: rv, f: f, post: @post %>
+        <% else %>
+          <% if (@reviews_rejected.count >= -1) && !(@post.is_published?) %>
+            <%= rv.hidden_field :status, :value => "In Progress" %>
+            <p class="mb-2 mt-0" style="font-style: italic;"><span class="highlight">You have reached the maximum amount of times you can submit this article for review.</span></p>
+          <% else %>
+            <p class="d-inline">Article Status:</p>
+            <% @rejected_cnt = @post.reviews.where(status: "Rejected").count %>
+            <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
+            <% if current_user.admin && @post.is_published? %>
+              <div style="float:right; text-align: right;">
+                <p>Featured on homepage: <%= f.check_box :featured %></p>
+                <p>Feature in next newsletter: <%= f.check_box :newsletter %></p>
+              </div>
+            <% end %>
+            <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
+              <p>
+                <%= f.check_box :editor_can_make_changes %>
+                <i>
+                  I give permission for an editor to make changes to my article when I submit. These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
+                  I understand I am still able to alter these once my article is published. Large edits will always be sent back for changes.
+                </i>
+              </p>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
-      <% end %>
-    <% end %>
-    <% if (@reviews.count >= 5) && !(@post.is_published?) %>
-      <p class="mb-4 mt-0" style="font-style: italic;"><span class="highlight">You have reached the maximum amount of times you can submit this article for review.</span></p>
-    <% end %>
-    <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
-      <div class="hide spinner-button spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+      <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
+        <div class="hide spinner-button spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <%= f.button "Save Changes", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
       </div>
-      <%= f.button "Save Changes", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
 <% else %>
   <h1 class="title">This article has already been published and can only be edited by the author(s) and admins.</h1>
 <% end %>
