@@ -39,7 +39,7 @@
         <% if @should_show_editor_form %>
           <%= render "posts/editor_review_form", rv: rv, f: f, post: @post %>
         <% else %>
-          <% if (@reviews_rejected.count >= -1) && !(@post.is_published?) %>
+          <% if (@reviews_rejected.count >= 5) && !(@post.is_published?) %>
             <%= rv.hidden_field :status, :value => "In Progress" %>
             <p class="mb-2 mt-0" style="font-style: italic;"><span class="highlight">You have reached the maximum amount of times you can submit this article for review.</span></p>
           <% else %>
