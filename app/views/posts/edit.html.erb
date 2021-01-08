@@ -10,8 +10,7 @@
   <div class="banner_stts_relative"><p class="banner_stts">In Progress</p></div>
 <% end %>
 <div class="skinny_wrapper wrapper_padding">
-  <% @reviews = @post.reviews.where(status: "Rejected") %>
-  <p style="margin-bottom: 0;"><i>This article has been given feedback <%= @reviews.count %> time(s).
+  <p style="margin-bottom: 0;"><i>This article has been reviewed <%= @reviews.count %> time(s).
      View all past reviews <%= link_to("here", reviews_path(post: @post), target: "_blank", :class => "link_nrml underline") %>.
   </i></p>
   <% if @most_recent_review.try(:status).eql? "Rejected" %>

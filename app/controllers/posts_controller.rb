@@ -208,6 +208,7 @@ class PostsController < ApplicationController
     #create new review if no current review or last review was rejected
     @requested_changes = @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
     @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.feedback_givens) : @post.reviews.last
+    @reviews = @post.reviews.where(status: ["Rejected", "Approved for Publishing"])
     @feedbacks = Feedback.all
     @feedbacks_editor_frm = Feedback.active.order('created_at asc')
     @editor_options = ((@post.reviews.last.status.eql? "In Review") || (@post.reviews.last.status.eql? "Approved for Publishing")) ? ["Ready for Review", "In Review", "Rejected", "Approved for Publishing"] : ["In Progress", "Ready for Review", "In Review"]
