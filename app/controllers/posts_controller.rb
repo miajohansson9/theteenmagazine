@@ -48,6 +48,7 @@ class PostsController < ApplicationController
     @service_id = ENV['WEBSPELLCHECKER_ID']
     @post = current_user.posts.build
     @review = @post.reviews.build(status: "In Progress", active: true)
+    @statuses = ["In Progress"]
     set_meta_tags :title => "Edit Article", editing: "Turn off ads"
   end
 
