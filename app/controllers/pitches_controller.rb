@@ -61,12 +61,12 @@ class PitchesController < ApplicationController
 
   def update
     @categories = Category.all
-    @post = Post.find_by(user_id: @pitch.claimed_id, pitch_id: @pitch.id)
     if @pitch.update pitch_params
       if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
         ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
       end
       if pitch_params[:claimed_id].eql? ""
+        @post = Post.find_by(user_id: @pitch.claimed_id, pitch_id: @pitch.id)
         if @post.present?
           @post.reviews.each do |review|
             review.destroy
@@ -214,6 +214,8 @@ class PitchesController < ApplicationController
   def edit
     @categories = Category.all
     @pitch_errors = params[:errors]
+    @archive_button = @pitch.archive ? "Undo Archive" : "Archive"
+    @archive_msg = @pitch.archive ? "" : "Are you sure you want to archive this pitch? It will no longer show up under Editor Pitches."
     set_meta_tags :title => "Edit Pitch | The Teen Magazine"
   end
 
@@ -254,11 +256,11 @@ class PitchesController < ApplicationController
   end
 
   def pitch_params
-    params.require(:pitch).permit(:created_at, :weeks_given, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :category_id, :user_id, :editor_id)
+    params.require(:pitch).permit(:created_at, :weeks_given, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :category_id, :user_id, :editor_id, :archive)
   end
 
   def post_params
-    params.require(:post).permit(:title, :featured, :newsletter, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes])
+    params.require(:post).permit(:title, :featured, :newsletter, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes], :user_attributes => [:extensions, :id])
   end
 
   def find_pitch

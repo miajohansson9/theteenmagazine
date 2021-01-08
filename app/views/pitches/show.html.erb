@@ -25,6 +25,8 @@
     </ul>
   <% elsif @claimed_user.nil? && (@pitch.status.eql? "Ready for Review") %>
     <p><b><i>This pitch has not been reviewed yet.</i></b></p>
+  <% elsif @pitch.archive %>
+    <p class="mb-3" style="background-color: #FCD04D; display: inline-block;">This pitch has been archived and will not show up under Editor Pitches.</p>
   <% end %>
   <% if @pitch.notes.present? %>
     <p class="mt-0"><i><%= @editor.try(:full_name) %> left a comment:

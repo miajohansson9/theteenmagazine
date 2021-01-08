@@ -19,7 +19,7 @@ class Pitch < ApplicationRecord
   }
 
   scope :is_approved, -> {
-    where(status: ["Approved", nil])
+    where(status: ["Approved", nil], archive: [false, nil])
   }
 
   scope :not_claimed, -> {
