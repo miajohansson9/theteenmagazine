@@ -61,7 +61,7 @@ class PostsController < ApplicationController
         @prev_post_pitch.reviews.destroy
         @rev = @prev_post_pitch.reviews.build(status: "In Progress", active: true)
         @rev.save
-        @post.pitch.update_column('claimed_id', current_user.id)
+        @post.pitch.update_columns({:claimed_id => current_user.id, :claimed_at => Time.now})
         @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
         if @prev_post_pitch.deadline_at.nil? && @post.pitch.weeks_given.present?
           @prev_post_pitch.deadline_at = Time.now + (@post.pitch.weeks_given).weeks
@@ -90,7 +90,7 @@ class PostsController < ApplicationController
   end
 
   def claim_pitch
-    @post.pitch.update_column('claimed_id', current_user.id)
+    @post.pitch.update_columns({:claimed_id => current_user.id, :claimed_at => Time.now})
     if @post.pitch.weeks_given.present?
       @post.update_column('deadline_at', Time.now + (@post.pitch.weeks_given).weeks)
     end

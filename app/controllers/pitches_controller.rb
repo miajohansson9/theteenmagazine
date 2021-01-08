@@ -99,11 +99,6 @@ class PitchesController < ApplicationController
     end
   end
 
-  def claim
-    @pitch.user_id = current_user.id
-    @pitch.save
-  end
-
   def pitch_modal
     @pitch = Pitch.find(params[:id])
     @post = @pitch.posts.find_by(user_id: @pitch.claimed_id) || current_user.posts.build
@@ -136,7 +131,7 @@ class PitchesController < ApplicationController
   end
 
   def claim_pitch
-    @post.pitch.update_column('claimed_id', current_user.id)
+    @post.pitch.update_columns({:claimed_id => current_user.id, :claimed_at => Time.now})
     if @post.pitch.weeks_given.present?
       @post.update_column('deadline_at', Time.now + (@post.pitch.weeks_given).weeks)
     end
@@ -256,7 +251,7 @@ class PitchesController < ApplicationController
   end
 
   def pitch_params
-    params.require(:pitch).permit(:created_at, :weeks_given, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :category_id, :user_id, :editor_id, :archive)
+    params.require(:pitch).permit(:created_at, :weeks_given, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :claimed_at, :category_id, :user_id, :editor_id, :archive)
   end
 
   def post_params

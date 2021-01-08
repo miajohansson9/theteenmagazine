@@ -47,6 +47,7 @@ class ReviewsController < ApplicationController
     @editor_reviewed_article = Review.where.not(editor_id: nil).where("updated_at > ?", @update_since)
     @editor_reviewed_pitch = Pitch.where(claimed_id: nil).where.not(status: nil, editor_id: nil).where("updated_at > ?", @update_since)
     @editor_pitched_new_article = Pitch.is_approved.not_claimed.where(status: nil).where("created_at > ?", @update_since)
+    @writer_claimed_editor_pitch = Pitch.is_approved.where(status: nil).where("claimed_at > ?", @update_since).where.not(claimed_id: nil)
 
     @editor_reviewed_article.each do |review|
       @post = Post.find_by(id: review.post_id)
@@ -69,6 +70,10 @@ class ReviewsController < ApplicationController
     end
     @editor_pitched_new_article.each do |pitch|
       Activity.create(action: "pitched <a target='_blank' href='/pitches/#{pitch.slug}'>#{pitch.try(:title)}</a>", action_at: pitch.created_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.user_id)
+    end
+    @writer_claimed_editor_pitch.each do |pitch|
+      @writer = User.find_by(id: pitch.claimed_id)
+      Activity.create(action: "<span style='margin-left: -5px;'>'s</span> pitch <a target='_blank' href='/pitches/#{pitch.slug}'>#{pitch.try(:title)}</a> was claimed by <a target='_blank' href='/writers/#{@writer.try(:slug)}'>#{@writer.try(:full_name)}</a>", action_at: pitch.claimed_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.user_id)
     end
     @per_page = 20
     @last_page = Activity.all.count / @per_page
