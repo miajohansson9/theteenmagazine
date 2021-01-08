@@ -132,8 +132,8 @@ class PitchesController < ApplicationController
 
   def claim_pitch
     @post.pitch.update_columns({:claimed_id => current_user.id, :claimed_at => Time.now})
-    if @post.pitch.weeks_given.present?
-      @post.update_column('deadline_at', Time.now + (@post.pitch.weeks_given).weeks)
+    if @post.pitch.deadline.present?
+      @post.update_column('deadline_at', Time.now + (@post.pitch.deadline).weeks)
     end
     @rev = @post.reviews.build(status: "In Progress", active: true)
     @rev.save
@@ -251,7 +251,7 @@ class PitchesController < ApplicationController
   end
 
   def pitch_params
-    params.require(:pitch).permit(:created_at, :weeks_given, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :claimed_at, :category_id, :user_id, :editor_id, :archive)
+    params.require(:pitch).permit(:created_at, :deadline, :title, :description, :slug, :thumbnail, :requirements, :notes, :status, :rejected_title, :rejected_topic, :rejected_thumbnail, :claimed_id, :claimed_at, :category_id, :user_id, :editor_id, :archive)
   end
 
   def post_params

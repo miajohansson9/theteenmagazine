@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_08_211750) do
+ActiveRecord::Schema.define(version: 2021_01_08_220703) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -200,7 +200,7 @@ ActiveRecord::Schema.define(version: 2021_01_08_211750) do
     t.boolean "rejected_title"
     t.boolean "rejected_topic"
     t.boolean "rejected_thumbnail"
-    t.integer "weeks_given"
+    t.integer "deadline"
     t.boolean "archive"
     t.datetime "claimed_at"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true

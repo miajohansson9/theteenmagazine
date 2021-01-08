@@ -63,8 +63,8 @@ class PostsController < ApplicationController
         @rev.save
         @post.pitch.update_columns({:claimed_id => current_user.id, :claimed_at => Time.now})
         @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
-        if @prev_post_pitch.deadline_at.nil? && @post.pitch.weeks_given.present?
-          @prev_post_pitch.deadline_at = Time.now + (@post.pitch.weeks_given).weeks
+        if @prev_post_pitch.deadline_at.nil? && @post.pitch.deadline.present?
+          @prev_post_pitch.deadline_at = Time.now + (@post.pitch.deadline).weeks
         end
         @prev_post_pitch.save!
         redirect_to @prev_post_pitch, notice: "You've reclaimed this pitch!"
@@ -91,8 +91,8 @@ class PostsController < ApplicationController
 
   def claim_pitch
     @post.pitch.update_columns({:claimed_id => current_user.id, :claimed_at => Time.now})
-    if @post.pitch.weeks_given.present?
-      @post.update_column('deadline_at', Time.now + (@post.pitch.weeks_given).weeks)
+    if @post.pitch.deadline.present?
+      @post.update_column('deadline_at', Time.now + (@post.pitch.deadline).weeks)
     end
     @rev = @post.reviews.build(status: "In Progress", active: true)
     @rev.save

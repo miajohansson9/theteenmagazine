@@ -8,7 +8,7 @@ class Pitch < ApplicationRecord
   validates :description, :presence => true
   validates :category_id, :presence => true
   validates :thumbnail, :presence => true
-  validates :weeks_given, :presence => true, if: :is_editor?
+  validates :deadline, :presence => true, if: :is_editor?
 
   scope :is_submitted, -> {
     where(status: "Ready for Review")

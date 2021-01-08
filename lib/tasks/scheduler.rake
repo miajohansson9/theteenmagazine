@@ -108,7 +108,7 @@ task :run_nightly_tasks => :environment do
   # Writer is close to article deadline or missed it
   User.all.each do |user|
     @posts = []
-    @pitches = Pitch.where(claimed_id: user.id).where.not(weeks_given: nil)
+    @pitches = Pitch.where(claimed_id: user.id).where.not(deadline: nil)
     @pitches.each do |pitch|
       @post = pitch.posts.draft.find_by(user_id: pitch.claimed_id)
       if @post.present? && @post.try(:deadline_at)&.present?

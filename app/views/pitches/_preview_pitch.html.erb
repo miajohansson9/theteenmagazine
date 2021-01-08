@@ -23,8 +23,8 @@
               <i>Notes:</i>
               <%= markdown pitch.requirements %>
             <% end %>
-            <% if @pitch.weeks_given.present? %>
-              <p class="pitch_usr"><b>This pitch has a <%= @pitch.weeks_given %> week deadline. Read more about deadlines <a target="_blank" href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</b></p>
+            <% if @pitch.deadline.present? %>
+              <p class="pitch_usr"><b>This pitch has a <%= @pitch.deadline %> week deadline. Read more about deadlines <a target="_blank" href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</b></p>
             <% end %>
           </div>
           <div class="flex_child">
