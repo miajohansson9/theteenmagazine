@@ -31,7 +31,7 @@ class Pitch < ApplicationRecord
   }
 
   def is_editor?
-    self.user.editor?
+    self.user.editor? && self.id.nil?
   end
 
   has_attached_file :thumbnail, styles: {
