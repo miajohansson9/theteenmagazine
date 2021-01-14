@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag 'onboarding' %>
+    <%= stylesheet_link_tag params[:controller] %>
+    <%= stylesheet_link_tag 'writer' %>
     <script type="text/javascript">
       window.CKEDITOR_BASEPATH = '/assets/ckeditor/';
     </script>

@@ -12,7 +12,17 @@ class ApplicationController < ActionController::Base
   # as `authenticate_user!` (or whatever your resource is) will halt the filter chain and redirect
   # before the location can be stored.
 
+  layout :set_layout
+
   protected
+
+  def set_layout
+    if current_user
+      'writer'
+    else
+      'application'
+    end
+  end
 
   # Its important that the location is NOT stored if:
   # - The request method is not GET (non idempotent)

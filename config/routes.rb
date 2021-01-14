@@ -44,6 +44,8 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get 'community' => 'posts#index'
+  get '/drafts/:id' => 'posts#preview_draft'
+  get '/drafts/:id/edit' => 'posts#edit'
   get 'criteria' => 'pages#criteria'
   get 'about-us' => 'pages#team'
   get 'contact-us' => 'pages#contact'

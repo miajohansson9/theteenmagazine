@@ -7,8 +7,6 @@ class UsersController < ApplicationController
   before_action :is_admin?, only: [:new, :partners, :share]
   after_action :update_last_sign_in_at, if: :current_user?
 
-  layout :set_layout
-
   def show
     set_meta_tags title: "#{@user.full_name} | The Teen Magazine",
                   description: @user.description
@@ -318,7 +316,7 @@ class UsersController < ApplicationController
   end
 
   def set_layout
-    current_user ? "minimal" : "application"
+    current_user ? "writer" : "application"
   end
 
   def add_to_list(user)

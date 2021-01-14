@@ -1,7 +1,6 @@
 @import "mdbootstrap/css/bootstrap.min";
 @import "mdbootstrap/css/mdb.min";
 @import "mdbootstrap/css/mdb.lite.min";
-@import "common";
 @import 'normalize';
 @import 'welcome';
 @import "category";
@@ -9,17 +8,12 @@
 @import "pages";
 @import "analytics";
 @import "posts_projects";
+@import "common";
 
 @media (max-width: 980px) {
    .nav-title {
      display: inline-block !important;
    }
-}
-
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-  opacity: 100 !important;
-  position: relative !important;
-  pointer-events: all !important;
 }
 
 .feed_wrapper {
@@ -440,12 +434,6 @@ a {
   width: 100%;
 }
 
-.thumbnail--container {
-  .article_title {
-    font-size: 20px;
-  }
-}
-
 .delete_btn {
   display: block;
   color: #F0255E;
@@ -571,14 +559,6 @@ a {
 
 .add_margin_left {
   margin-left: 31px;
-}
-
-a {
-  color: #4ABEB6;
-}
-
-a:hover {
-  color: #4ABEB6;
 }
 
 .node {

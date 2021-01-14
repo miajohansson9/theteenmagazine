@@ -9,8 +9,6 @@ class PostsController < ApplicationController
   after_action :log_impression, :only=> [:show]
   load_and_authorize_resource :except => [:get_trending_posts_in_category]
 
-  layout :set_layout
-
   def log_impression
     if @post.is_published?
       Thread.new do
@@ -48,7 +46,6 @@ class PostsController < ApplicationController
     @service_id = ENV['WEBSPELLCHECKER_ID']
     @post = current_user.posts.build
     @review = @post.reviews.build(status: "In Progress", active: true)
-    @statuses = ["In Progress"]
     set_meta_tags :title => "Edit Article", editing: "Turn off ads"
   end
 
@@ -104,7 +101,33 @@ class PostsController < ApplicationController
 
   def show
     @date = @post.is_published? ? @post.publish_at : @post.created_at
-    if (@post.is_published? || (current_user && (@post.sharing || @post.user_id == current_user.id || @post.partner_id == current_user.id || (@post.collaboration&.include? current_user.email) || current_user.admin? || current_user.editor?)))
+    if @post.is_published?
+      @collabs = []
+      if @post.collaboration.present?
+        @emails = @post.collaboration.delete(' ').split(",")
+        @emails.each do |email|
+          @writer = User.where(email: email).first
+          if @writer.present?
+            @collabs.push @writer
+          end
+        end
+      end
+      if (@post.sharing || @post.partner_id.present?) && !current_user.nil?
+        @comment = current_user.comments.build(post_id: @post.id)
+        @partner = User.find_by(id: @post.partner_id)
+      end
+      set_post_meta_tags
+    elsif current_user.present?
+      preview_draft
+    else
+      redirect_to new_user_session_path, notice: "You must sign in to continue."
+      store_location_for(:user, request.fullpath)
+    end
+  end
+
+  def preview_draft
+    @date = @post.created_at
+    if (current_user && (@post.sharing || @post.user_id == current_user.id || @post.partner_id == current_user.id || (@post.collaboration&.include? current_user.email) || current_user.admin? || current_user.editor?))
       @collabs = []
       if @post.collaboration.present?
         @emails = @post.collaboration.delete(' ').split(",")
@@ -137,35 +160,7 @@ class PostsController < ApplicationController
           @comment_parent_from_notifications = Comment.find(params[:comment_id]).comment_id
         end
       end
-      set_meta_tags :title => @post.title,
-                    :description => @post.meta_description,
-                    :image => "https:" + @post.thumbnail.url(:large2),
-                    :fb => {
-                      :app_id => "1190455601051741"
-                    },
-                    :og => {
-                      :url => "https://www.theteenmagazine.com/#{@post.slug}",
-                      :type => "article",
-                      :title => @post.title,
-                      :description => @post.meta_description,
-                      :image => {
-                        :url => "https:" + @post.thumbnail.url(:large2),
-                        :alt => @post.title,
-                      },
-                      :site_name => "The Teen Magazine",
-                    },
-                    :article => {
-                      :publisher => "https://www.facebook.com/theteenmagazinee"
-                    },
-                    :twitter => {
-                      :card => "summary_large_image",
-                      :site => "@theteenmagazin_",
-                      :title => @post.title,
-                      :description => @post.meta_description,
-                      :creator => @post.user.full_name,
-                      :image => "https:" + @post.thumbnail.url(:large),
-                      :domain => "https://www.theteenmagazine.com/"
-                    }
+      set_post_meta_tags
     elsif current_user.present?
       redirect_to current_user, notice: "This draft does not have sharing turned on."
     else
@@ -348,6 +343,38 @@ class PostsController < ApplicationController
 
   private
 
+  def set_post_meta_tags
+    set_meta_tags :title => @post.title,
+                  :description => @post.meta_description,
+                  :image => "https:" + @post.thumbnail.url(:large2),
+                  :fb => {
+                    :app_id => "1190455601051741"
+                  },
+                  :og => {
+                    :url => "https://www.theteenmagazine.com/#{@post.slug}",
+                    :type => "article",
+                    :title => @post.title,
+                    :description => @post.meta_description,
+                    :image => {
+                      :url => "https:" + @post.thumbnail.url(:large2),
+                      :alt => @post.title,
+                    },
+                    :site_name => "The Teen Magazine",
+                  },
+                  :article => {
+                    :publisher => "https://www.facebook.com/theteenmagazinee"
+                  },
+                  :twitter => {
+                    :card => "summary_large_image",
+                    :site => "@theteenmagazin_",
+                    :title => @post.title,
+                    :description => @post.meta_description,
+                    :creator => @post.user.full_name,
+                    :image => "https:" + @post.thumbnail.url(:large),
+                    :domain => "https://www.theteenmagazine.com/"
+                  }
+  end
+
   def fix_formatting
     loop do
       if @post.content[/style="line-height(.*?)"/m, 0].present?
@@ -469,16 +496,6 @@ class PostsController < ApplicationController
         @editor_reviews_cnt = @editor_reviews.count
         @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
       end
-    end
-  end
-
-  def set_layout
-    if @post.nil?
-      "minimal"
-    elsif @post.is_published? && @review.nil?
-      "application"
-    else
-      "minimal"
     end
   end
 end

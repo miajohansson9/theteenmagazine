@@ -1,7 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_action :verify_authenticity_token
   skip_before_action :require_no_authentication, only: [:new, :create]
-  layout "minimal"
 
   # All users should first have an application
   def new

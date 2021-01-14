@@ -4,7 +4,6 @@ class PitchesController < ApplicationController
   before_action :is_partner?, only: [:index, :new, :show]
   before_action :authenticate_user!
   load_and_authorize_resource
-  layout "minimal"
 
   #show all pitches
   def index

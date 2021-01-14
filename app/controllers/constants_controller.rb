@@ -3,7 +3,6 @@ class ConstantsController < ApplicationController
   before_action :is_admin?
   before_action :authenticate_user!
   load_and_authorize_resource
-  layout "minimal"
 
   def new
     @constant = Constant.new

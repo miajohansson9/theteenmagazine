@@ -1,0 +1,84 @@
+// lists
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+// text styles
+
+.text-center {
+  text-align: center !important;
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.font-small {
+  font-size: .9rem;
+}
+
+// margins
+
+.mt-4 {
+  margin-top: 1.5rem !important;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+// padding
+
+.pt-4 {
+  padding-top: 1.5rem !important;
+}
+
+.pb-3 {
+  padding-bottom: 1.5rem !important;
+}
+
+.py-3 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+// footer
+
+footer.page-footer {
+    bottom: 0;
+    color: #fff
+}
+
+footer.page-footer .container-fluid {
+    width: auto
+}
+
+footer.page-footer .footer-copyright {
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(0, 0, 0, 0.2)
+}
+
+footer.page-footer a {
+  color: #fff
+}
+
+// responsive
+
+@media (min-width: 768px) {
+  .text-md-left {
+    text-align: left !important;
+  }
+  .text-md-right {
+    text-align: right !important;
+  }
+  .text-md-center {
+    text-align: center !important;
+  }
+}

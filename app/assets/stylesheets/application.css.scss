@@ -1,4 +1,3 @@
-@import "mdbootstrap/css/mdb.min";
 @import 'normalize';
 @import 'common';
 @import "userprofile";
@@ -7,6 +6,7 @@
 @import "welcome";
 @import "category";
 @import "newlayout";
+@import "used_bootstrap";
 
 #apply_description {
   min-height: 400px;

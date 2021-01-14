@@ -44,8 +44,7 @@
             <p class="mb-2 mt-0" style="font-style: italic;"><span class="highlight">You have reached the maximum amount of times you can submit this article for review.</span></p>
           <% else %>
             <p class="d-inline">Article Status:</p>
-            <% @rejected_cnt = @post.reviews.where(status: "Rejected").count %>
-            <%= rv.select :status, options_for_select(@statuses, @review.try(:status)) %>
+            <%= rv.select :status, options_for_select(@statuses || ["In Progress"], @review.try(:status)) %>
             <% if current_user.admin && @post.is_published? %>
               <div style="float:right; text-align: right;">
                 <p>Featured on homepage: <%= f.check_box :featured %></p>

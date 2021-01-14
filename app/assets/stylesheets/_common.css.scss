@@ -1,3 +1,32 @@
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  opacity: 100 !important;
+  position: relative !important;
+  pointer-events: all !important;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: .5rem;
+}
+
+a {
+  text-decoration: none;
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  transition:.5s;
+}
+a:hover {
+  color: #979797 !important;
+}
+
+footer a:hover {
+  color: inherit !important;
+}
+
 @font-face {
   font-family: "Roboto Condensed Bold";
   src: font-url("RobotoCondensedBoldItalic.ttf");
@@ -622,7 +651,7 @@ hr {
 }
 
 .section--title {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   margin-top: 0;
   margin-left: auto;
   margin-right: auto;

@@ -1,6 +1,5 @@
 class WelcomeController < ApplicationController
   before_action :show
-  skip_before_action :notifications, if: :current_user?
 
   def index
     @featured = Post.where.not(publish_at: nil).find_by(featured: true)

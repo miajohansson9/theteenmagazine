@@ -2,7 +2,6 @@ class ReviewsController < ApplicationController
   before_action :find_review, only: [:update, :destroy]
   before_action :authenticate_user!
   load_and_authorize_resource
-  layout "minimal"
 
   def index
     if params[:post].present?

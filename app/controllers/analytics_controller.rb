@@ -2,7 +2,6 @@ class AnalyticsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :find_user
   before_action :authenticate_user!
-  layout "minimal"
 
   def find_user
     @user = User.find(params[:user_id])
