@@ -1,6 +1,6 @@
 <%= image_tag "subscribe_background.jpg", id: "banner_writing" %>
 <div class="apply_wrapper">
-  <h2>The Teen Magazine · December 2020 Issue</h2>
+  <h2>The Teen Magazine · January Issue</h2>
     <br>
   <h4><i>A special thanks to this month's magazine issue writers and designers:</i></h4>
   <span>
@@ -14,18 +14,18 @@
   </span>
   <br>
   <br>
-  <%= image_tag("December_2020_Issue_cover.png", :class => "image_fit_scrn") %>
+  <%= image_tag("january_2021_issue_ttm_cover.png", :class => "image_fit_scrn") %>
   <br>
   <br>
   <h4><i>Enter your email to receive this month's magazine issue:</i></h4>
 
 <!--End mc_embed_signup-->
-  <%= form_for(:pages, url:"/december_2020_MCDVRcgNpmrhXWo") do |f| %>
+  <%= form_for(:pages, url:"/january_2021_773ae935-d06c-4ed2-b939-4aaee072bfd4") do |f| %>
     <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 10px;", required: true %>
     <%= f.check_box :sub, :checked => true %>
     <span>Subscribe to The Teen Magazine newsletter and receive all future monthly issues. We value your privacy and will never sell your info or spam your inbox. Unsubscribe anytime.</span>
     <br>
     <br>
-    <%= f.submit "Get December Issue", class: "submit_btn" %>
+    <%= f.submit "Get January Issue", class: "submit_btn" %>
   <% end %>
 </div>

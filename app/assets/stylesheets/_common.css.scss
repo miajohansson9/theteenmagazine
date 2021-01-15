@@ -18,6 +18,7 @@ a {
   -moz-transition:.5s;
   -webkit-transition:.5s;
   transition:.5s;
+  font-family: "Playfair Display";
 }
 a:hover {
   color: #979797 !important;
@@ -137,6 +138,9 @@ br {
 .strikethrough, .strikethrough a {
   text-decoration: line-through;
   color: black !important;
+  &:hover {
+    color: black !important;
+  }
 }
 
 .disabled {
@@ -165,6 +169,9 @@ br {
   padding: 10px 20px;
   text-transform: capitalize;
   margin: 10px 0 0 0;
+  &:hover {
+    color: white !important;
+  }
 }
 
 iframe {
@@ -488,7 +495,7 @@ hr {
   font-weight: bold;
   font-family: "Playfair Display";
   &:hover {
-    color: white;
+    color: white !important;
     text-decoration: none;
   }
 }
@@ -1086,9 +1093,18 @@ footer {
       -o-transition: color .4s ease-out;
       transition: color .4s ease-out;
       &:hover {
-        color: #2B6860;
+        color: #2B6860 !important;
       }
     }
+  }
+}
+
+.post_apply h3, .post_apply a, .trending_title a, #site-menu a {
+  font-family: "Playfair Display";
+  color: black;
+  &:hover {
+    color: black !important;
+    opacity: 0.8 !important;
   }
 }
 

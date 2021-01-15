@@ -33,6 +33,18 @@
   margin-bottom: 1.5rem !important;
 }
 
+.mr-1 {
+  margin-right: 0.25rem !important;
+}
+
+.mb-1, .my-1 {
+  margin-bottom: 0.25rem !important;
+}
+
+svg, img {
+  vertical-align: middle;
+}
+
 // padding
 
 .pt-4 {

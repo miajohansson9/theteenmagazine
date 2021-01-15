@@ -16,6 +16,13 @@
    }
 }
 
+a {
+  color: #4ABEB6;
+  &:hover {
+    color: #4ABEB6 !important;
+  }
+}
+
 .feed_wrapper {
   .list-group-item {
     display: flex;

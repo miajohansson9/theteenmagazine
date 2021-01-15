@@ -80,8 +80,8 @@ Rails.application.routes.draw do
   get '/partners/:id/share', to: 'users#share'
   get '/writers/:id/extensions', to: 'users#extensions'
   get '/partners/:id/published', to: 'users#sponsored'
-  get '/december_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
-  post '/december_2020_MCDVRcgNpmrhXWo', to: 'pages#issue'
+  get '/january_2021_773ae935-d06c-4ed2-b939-4aaee072bfd4', to: 'pages#issue'
+  post '/january_2021_773ae935-d06c-4ed2-b939-4aaee072bfd4', to: 'pages#issue'
 
   patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
   post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim

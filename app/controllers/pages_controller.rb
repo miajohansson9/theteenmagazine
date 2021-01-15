@@ -104,15 +104,15 @@ class PagesController < ApplicationController
   end
 
   def subscribe
-    set_meta_tags :title => "The Teen Magazine | 2020 December Issue",
-                  :description => "Subscribe to download our December Issue.",
-                  :image => "https://s3.amazonaws.com/media.theteenmagazine.com/December_2020_Issue.png",
+    set_meta_tags :title => "The Teen Magazine | 2021 January Issue",
+                  :description => "Subscribe to download our January Issue.",
+                  :image => "https://s3.amazonaws.com/media.theteenmagazine.com/january_2021_issue_ttm_cover.png",
                   :fb => {
                     :app_id => "1190455601051741"
                   },
                   :og => {
                     :image => {
-                      :url => "https://s3.amazonaws.com/media.theteenmagazine.com/December_2020_Issue.png",
+                      :url => "https://s3.amazonaws.com/media.theteenmagazine.com/january_2021_issue_ttm_cover.png",
                       :alt => 'The Teen Magazine',
                     },
                     :site_name => "The Teen Magazine",
@@ -124,8 +124,8 @@ class PagesController < ApplicationController
                     :card => "summary_large_image",
                     :site => "@theteenmagazin_",
                     :title => "The Teen Magazine",
-                    description: "Subscribe to download our December Issue.",
-                    :image => "https://s3.amazonaws.com/media.theteenmagazine.com/December_2020_Issue.png",
+                    description: "Subscribe to download our January Issue.",
+                    :image => "https://s3.amazonaws.com/media.theteenmagazine.com/january_2021_issue_ttm_cover.png",
                     :domain => "https://www.theteenmagazine.com/"
                   }
   end
