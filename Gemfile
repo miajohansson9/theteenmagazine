@@ -23,7 +23,7 @@ gem "puma", ">= 3.12.2"
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
-gem 'redcarpet', '~> 3.3', '>= 3.3.4'
+gem 'redcarpet', '~> 3.5'
 gem 'friendly_id', '~> 5.1'
 gem 'pagy'
 gem 'will_paginate', '~> 3.3'
