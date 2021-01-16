@@ -58,10 +58,6 @@ class UsersController < ApplicationController
     render partial: "users/partials/editor_stats"
   end
 
-  def get_writer_guidelines
-    render partial: "users/asynchronous/writer_guidelines"
-  end
-
   def onboarding_redirect
     if current_user.present? && (current_user.submitted_profile.eql? nil) && (!current_user.partner)
       redirect_to "/onboarding", notice: "Please complete the onboarding process first."
