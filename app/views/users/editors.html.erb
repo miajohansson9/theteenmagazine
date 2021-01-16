@@ -15,9 +15,7 @@
             <%= link_to(user.full_name, "/editors/#{user.slug}") %>
           </h2>
           <% if user.editor? %>
-            <span class="editor_status">
-              Editor
-            </span>
+            <%= render_async_cache get_editor_stats_path(id: user) %>
           <% end %>
             <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
             <% if current_user.admin? %>

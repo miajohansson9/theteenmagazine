@@ -9,9 +9,7 @@
       <%= @user.full_name %>
     </h2>
     <% if @user.editor? %>
-      <span class="editor_status">
-        Editor
-      </span>
+      <%= render_async_cache get_editor_stats_path(id: user) %>
     <% end %>
     <% if (@user.description != "" && @user.description != nil) %>
       <p class="description_user" style="margin-top: 5px;"><%= @user.description %></p>

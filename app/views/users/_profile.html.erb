@@ -9,7 +9,7 @@
       <%= link_to(user.full_name, user) %>
     </h2>
     <% if user.editor? %>
-      <span class="editor_status">Editor · <%= @editor_reviews_cnt %> edited articles · <%= @editor_pitches_cnt %> pitched topics · <%= @writers_helped_cnt %> writers helped  </span>
+      <%= render_async_cache get_editor_stats_path(id: user) %>
     <% elsif user.partner? %>
       <span class="editor_status">Partner Account with The Teen Magazine</span>
     <% end %>

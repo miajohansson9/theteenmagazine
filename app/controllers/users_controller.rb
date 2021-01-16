@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share, :redirect]
+  before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share, :redirect, :get_editor_stats]
   before_action :authenticate_user!, except: [:index, :show, :redirect]
   before_action :is_editor?, only: [:show_users, :new]
   before_action :onboarding_redirect, if: :current_user?, only: [:show]
@@ -36,13 +36,6 @@ class UsersController < ApplicationController
     if current_user.present?
       @pitches = Pitch.not_rejected.all.order("created_at desc").limit(4)
       @featured_writers = Post.where(publish_at: (Time.now - 7.days)..Time.now).order("updated_at desc").map{|p| p.user}.uniq
-      @claimed_pitches_cnt = Pitch.where(claimed_id: @user.id)&.count || 0
-      @pageviews = 0
-      @user_posts_approved_records.each do |post|
-        if !post.post_impressions.nil?
-          @pageviews += post.post_impressions
-        end
-      end
       if @user_posts_approved_records.length < 1
         new_writer
       else
@@ -55,6 +48,14 @@ class UsersController < ApplicationController
     @user = User.friendly.find(params[:id]) unless params[:id].nil?
     redirect_to "/writers/#{@user.slug}" unless @user.nil?
     redirect_to "/login"
+  end
+
+  def get_editor_stats
+    @editor_pitches_cnt =  @user.pitches.count
+    @editor_reviews = Review.where(editor_id: @user.id)
+    @editor_reviews_cnt = @editor_reviews.count
+    @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
+    render partial: "users/partials/editor_stats"
   end
 
   def onboarding_redirect
@@ -82,6 +83,9 @@ class UsersController < ApplicationController
   end
 
   def full_writer
+    @claimed_pitches_cnt = Pitch.where(claimed_id: @user.id)&.count || 0
+    @pageviews = 0
+    @user_posts_approved_records.map {|p| @pageviews += p.post_impressions }
     @show_onboarding_full = @user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
     @show_editor_onboarding = @user.became_an_editor.nil? && @user.editor && (current_user.id.eql? @user.id) && !@show_onboarding_full
     if @show_editor_onboarding
@@ -99,11 +103,7 @@ class UsersController < ApplicationController
     @posts = Post.where(partner_id: @partner.id).where(publish_at: nil)
     @published = Post.published.where(partner_id: @partner.id)
     @pageviews = 0
-    @published.each do |post|
-      if !post.post_impressions.nil?
-        @pageviews += post.post_impressions
-      end
-    end
+    @published.map {|p| @pageviews += p.post_impressions }
   end
 
   def sponsored

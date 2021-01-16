@@ -490,12 +490,6 @@ class PostsController < ApplicationController
   def load_author
     if @post.user != nil
       @user = @post.user
-      if @user.editor?
-        @editor_pitches_cnt =  @user.pitches.count
-        @editor_reviews = Review.where(editor_id: @user.id)
-        @editor_reviews_cnt = @editor_reviews.count
-        @writers_helped_cnt = @editor_reviews.map{|r| r.post.try(:user_id)}.uniq.count
-      end
     end
   end
 end
