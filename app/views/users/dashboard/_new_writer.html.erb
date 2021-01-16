@@ -77,35 +77,8 @@
     </div>
   </div>
 </div>
-<div class="guidelines" role="button" data-step data-index="4" data-onboarding-content="Read the docs to know what our editor team is looking for in published articles.">
-  <div class="thelink">
-    <a href="/criteria">
-    <div class="box foo G1 ">
-      <p>Criteria & FAQ</p>
-    </div>
-    </a>
-  </div>
-  <div class="thelink">
-    <a href="/choosing-a-topic">
-      <div class="G2 box foo">
-        <p>Pitching an Article</p>
-      </div>
-    </a>
-  </div>
-  <div class="thelink">
-    <a href="/writing-the-perfect-article">
-      <div class="G3 box foo">
-        <p>Writing The Perfect Article</p>
-      </div>
-    </a>
-  </div>
-  <div class="thelink">
-    <a href="/finding-images">
-      <div class="G5 box foo">
-        <p>Finding Images</p>
-      </div>
-    </a>
-  </div>
+<div role="button" data-step data-index="4" data-onboarding-content="Read the docs to know what our editor team is looking for in published articles.">
+  <%= render_async_cache get_writer_guidelines_path %>
 </div>
 
 <% if @show_onboarding %>

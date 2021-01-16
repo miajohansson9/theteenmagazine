@@ -87,6 +87,10 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def get_editor_guidelines
+    render partial: "reviews/asynchronous/editor_guidelines"
+  end
+
   def update
     @review.update(review_params)
   end
