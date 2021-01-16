@@ -4,7 +4,11 @@ class WelcomeController < ApplicationController
   def index
     @featured = Post.where.not(publish_at: nil).find_by(featured: true)
     @posts_approved_0 = Post.published.by_published_date.first(5).insert(0, @featured).compact.uniq[0..4]
+  end
+
+  def get_category_1_welcome
     @posts_approved_1 = Post.published.by_published_date.limit(3).where(category_id: Category.find('student-life').id)
+    render partial: "welcome/categories/category_1"
   end
 
   def get_category_2_welcome

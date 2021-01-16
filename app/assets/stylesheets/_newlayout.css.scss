@@ -272,7 +272,7 @@
   }
   .ctgry_section {
     flex-direction: column !important;
-    .ctgry_article {
+    .ctgry_article, .ctgry_article_placeholder {
       width: 100% !important;
     }
   }
