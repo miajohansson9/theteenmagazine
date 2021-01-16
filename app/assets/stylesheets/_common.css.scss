@@ -11,6 +11,14 @@
   margin-bottom: .5rem;
 }
 
+.link_grn {
+  color: #4ABEB6 !important;
+  &:hover {
+    color: #4ABEB6 !important;
+    text-decoration: none;
+  }
+}
+
 a {
   text-decoration: none;
   -o-transition:.5s;
@@ -19,9 +27,6 @@ a {
   -webkit-transition:.5s;
   transition:.5s;
   font-family: "Playfair Display";
-}
-a:hover {
-  color: #979797 !important;
 }
 
 footer a:hover {

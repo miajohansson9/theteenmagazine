@@ -17,9 +17,17 @@
 }
 
 a {
-  color: #4ABEB6;
+  color: black;
+  &:hover {
+    color: black;
+  }
+}
+
+#inner_link_grn a {
+  color: #4ABEB6 !important;
   &:hover {
     color: #4ABEB6 !important;
+    text-decoration: none;
   }
 }
 

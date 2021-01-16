@@ -18,7 +18,7 @@
     <% end %>
     <div class="website">
       <% if (user.website != "" && user.website !=  nil) %>
-         <p class="website_link"><span>Website: </span><a href="https://www.<%= user.website %>" target="_blank"><%= user.website %></a></p>
+         <p class="website_link"><span>Website: </span><a class="link_grn" href="https://www.<%= user.website %>" target="_blank"><%= user.website %></a></p>
       <% end %>
       <% if (user.twitter != "" && user.twitter !=  nil) %>
          <p class="website_link"><a href="https://www.twitter.com/<%= user.twitter %>" target="_blank">
