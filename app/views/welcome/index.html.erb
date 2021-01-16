@@ -48,9 +48,9 @@
     <div class="flex-1">
       <%= render "welcome/categories/category_1", posts: @posts_approved_1 %>
       <h1 class="section--title"><a href="/categories/opinion">Op-ed</a></h1>
-      <%= render "welcome/categories/category_2", posts: @posts_approved_2 %>
+      <%= render_async get_category_2_welcome_path %>
       <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
-      <%= render "welcome/categories/category_3", posts: @posts_approved_3 %>
+      <%= render_async get_category_3_welcome_path %>
     </div>
     <div class="most_read contain_articles">
       <div class="ads_wrapper">
@@ -75,7 +75,7 @@
   <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
   <div class="flex--welcome">
     <div class="flex-1">
-      <%= render "welcome/categories/category_4", posts: @posts_approved_4 %>
+      <%= render_async get_category_4_welcome_path %>
     </div>
     <div class="most_read contain_articles">
       <div class="ads_wrapper">
@@ -97,5 +97,5 @@
     </div>
   </div>
   <h1 class="section--title mb-0"><a href="/search">Recent Articles</a></h1>
-  <%= render "welcome/partials/recents", posts: @posts_approved_last %>
+  <%= render_async get_recent_posts_path %>
 </div>
