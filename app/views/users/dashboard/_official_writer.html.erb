@@ -7,7 +7,7 @@
             data-step data-index="1" data-onboarding-content="Welcome to your editor account! Your profile has been updated with your editor stats."
           <% end %>
         >
-          <%= render :partial => 'profile', locals: {user: @user} %>
+          <%= render :partial => 'profile', locals: {user: @user}, cached: true %>
         </div>
         <div class="analytics card-group">
           <div class="card"
@@ -112,7 +112,7 @@
             Great job, you're a part of this list!
           </div>
         <% end %>
-        <%= render "/users/partials/featured_writers", users: @featured_writers %>
+        <%= render "/users/partials/featured_writers", users: @featured_writers, cached: true %>
         <div>
           <div class="card whats-new-wrapper mt-4" style="border-radius: 10px; overflow: hidden;"
             <% if @show_onboarding_full %>

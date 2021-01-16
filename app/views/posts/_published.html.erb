@@ -73,9 +73,9 @@ blockquote {
                 </div>
               <% end %>
               <div id= "background" class="mb-4">
-               <%= render :partial => 'users/profile', locals: {user: @user} %>
+               <%= render :partial => 'users/profile', locals: {user: @user}, cached: true %>
                <% @collabs.each do |collab| %>
-                <%= render :partial => 'users/profile', locals: {user: collab} %>
+                <%= render :partial => 'users/profile', locals: {user: collab}, cached: true %>
                <% end %>
               </div>
             </div>

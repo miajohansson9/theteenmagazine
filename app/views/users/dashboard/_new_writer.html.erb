@@ -71,7 +71,7 @@
       <br/>
     </div>
     <div class="dashboard--writer--flex--two" style="width: 30rem;">
-      <%= render "/users/partials/featured_writers", users: @featured_writers %>
+      <%= render "/users/partials/featured_writers", users: @featured_writers, cached: true %>
       <p class="pl-3 pr-3 mt-2 pb-3 text-center" style="width: 100%; color: gray;">This is a new writer account. Your public writer account will be activated
             once you publish your first article.</p>
     </div>
