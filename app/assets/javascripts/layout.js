@@ -27,7 +27,8 @@ $(document).ready(function() {
   });
   $('a[href^="https://"]').not('a[href*=theteenmagazine]').attr('target','_blank');
   $('a[href^="http://"]').not('a[href*=theteenmagazine]').attr('target','_blank');
-  $('[data-toggle="tooltip"]').tooltip();
+  $('a[href^="https://"]').not('a[href*=theteenmagazine]').attr('rel','noopener');
+  $('a[href^="http://"]').not('a[href*=theteenmagazine]').attr('rel','noopener');
   $.fn.triggerCheck = function(){
     if ($('.checkmark').isOnScreen()) {
       $('.checkmark').addClass("checkmark");
