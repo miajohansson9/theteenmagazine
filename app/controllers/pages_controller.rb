@@ -134,14 +134,22 @@ class PagesController < ApplicationController
     if params[:pages].present?
       if params[:pages][:sub].eql? "1"
         begin
-          @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
-          @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.create(body: {email_address: params[:pages][:email], status: "subscribed"})
-          flash.now[:notice] = "Subscribed to newsletter."
+          if isEmail(params[:pages][:email])
+            @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+            @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.create(body: {email_address: params[:pages][:email], status: "subscribed"})
+            flash.now[:notice] = "You're subscribed to The Teen Magazine's newsletter!"
+          else
+            redirect_to "/subscribe", notice: "Please enter a valid email address."
+          end
         rescue
           puts "Error: Failed to subscribe to mailchimp list"
         end
       end
     end
+  end
+
+  def isEmail(str)
+    return str.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i)
   end
 
   def reset

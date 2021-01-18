@@ -21,11 +21,17 @@
 
 <!--End mc_embed_signup-->
   <%= form_for(:pages, url:"/january_2021_773ae935-d06c-4ed2-b939-4aaee072bfd4") do |f| %>
-    <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 10px;", required: true %>
-    <%= f.check_box :sub, :checked => true %>
-    <span>Subscribe to The Teen Magazine newsletter and receive all future monthly issues. We value your privacy and will never sell your info or spam your inbox. Unsubscribe anytime.</span>
     <br>
+    <%= f.check_box :sub, :checked => true %>
+    <span>Subscribe to The Teen Magazine newsletter and receive all future monthly issues.</span>
+    <br>
+    <br>
+    <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 25px;", required: true %>
     <br>
     <%= f.submit "Get January Issue", class: "submit_btn" %>
   <% end %>
+
+  <i style="opacity: 50%;" class="d-block">
+    This magazine issue is currently only available in pdf form.
+  </i>
 </div>
