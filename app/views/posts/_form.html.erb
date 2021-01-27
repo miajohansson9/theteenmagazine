@@ -47,8 +47,7 @@
             <%= rv.select :status, options_for_select(@statuses || ["In Progress"], @review.try(:status)) %>
             <% if current_user.admin && @post.is_published? %>
               <div style="float:right; text-align: right;">
-                <p>Featured on homepage: <%= f.check_box :featured %></p>
-                <p>Feature in next newsletter: <%= f.check_box :newsletter %></p>
+                <p class="mt-0">Featured on homepage: <%= f.check_box :featured %></p>
               </div>
             <% end %>
             <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>

@@ -10,11 +10,6 @@ Rails.application.routes.draw do
     post "/partners" => "users#create"
   end
 
-  resources :posts do
-    member do
-      patch :update_newsletter
-    end
-  end
   resources :users, path: "writers", except: [:new]
   resources :users, path: "partners", only: [:new]
   resources :contacts, only: [:new, :create]
@@ -98,4 +93,10 @@ Rails.application.routes.draw do
   get '/community', to: 'posts#index'
   post '/community', to: 'posts#index'
 
+  resources :posts, only: [:new, :create, :index] do
+    member do
+      patch :update_newsletter
+    end
+  end
+  resources :posts, path: "", except: [:new, :create]
 end
