@@ -10,6 +10,11 @@ Rails.application.routes.draw do
     post "/partners" => "users#create"
   end
 
+  resources :posts do
+    member do
+      patch :update_newsletter
+    end
+  end
   resources :users, path: "writers", except: [:new]
   resources :users, path: "partners", only: [:new]
   resources :contacts, only: [:new, :create]
@@ -22,6 +27,7 @@ Rails.application.routes.draw do
   resources :analytics
   resources :comments
   resources :outreaches
+  resources :newsletters
 
   #asynchronously fetched
   get :get_trending_posts, controller: :welcome
@@ -44,7 +50,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   root 'welcome#index'
 
-  get 'community' => 'posts#index'
+  get '/community' => 'posts#index'
   get '/drafts/:id' => 'posts#preview_draft'
   get '/drafts/:id/edit' => 'posts#edit'
   get 'criteria' => 'pages#criteria'
@@ -64,8 +70,9 @@ Rails.application.routes.draw do
   get 'ranking' => 'pages#ranking'
   get 'privacy-policy' => 'pages#privacy'
   get 'subscribe' => 'pages#subscribe'
+  get 'trending' => 'pages#trending'
+  get 'newsletters/:id/featured-posts' => 'newsletters#featured'
   get 'reviews:post_id' => 'pages#reviews'
-  get 'newsletter' => 'pages#newsletter'
   get "/apply" => "applies#new"
   get '/applications/editor', to: 'applies#editor'
   get "/submitted" => "applies#create"
@@ -90,8 +97,5 @@ Rails.application.routes.draw do
 
   get '/community', to: 'posts#index'
   post '/community', to: 'posts#index'
-
-  resources :posts, only: [:new, :create, :index]
-  resources :posts, path: "", except: [:new, :create]
 
 end

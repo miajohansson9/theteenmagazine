@@ -1,6 +1,6 @@
 class OutreachesController < ApplicationController
   before_action :authenticate_user!
-  before_action :is_marketer?
+  before_action :is_admin?
 
   #show all applications
   def index
@@ -20,8 +20,8 @@ class OutreachesController < ApplicationController
   end
 
   #only allow admin and editors to see submitted applications
-  def is_marketer?
-    if (current_user && (current_user.admin? || current_user.marketer?))
+  def is_admin?
+    if (current_user && (current_user.admin?))
       true
     else
       redirect_to current_user, notice: "You do not have access to this page."

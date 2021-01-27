@@ -1,0 +1,17 @@
+<%= form_for @newsletter do |f| %>
+  <% @hero_image_src = @newsletter.hero_image.present? ? @newsletter.hero_image.url(:card) : "https://s3.amazonaws.com/media.theteenmagazine.com/newsletter_hero_0.png" %>
+  <img style="width: 100%;" src="<%= @hero_image_src %>"/>
+  <p class="mb-4 mt-3">Upload New Image (800x335) <%= f.file_field :hero_image %></p>
+  <p class="mb-0 mt-0">Message (80 - 150 words)</p>
+  <%= f.text_area :message, value: (@newsletter.message || "Every week we're choosing 5 articles to promote in our newsletter. These articles have been written by some of our talented student journalists and were carefully selected for their unique perspectives, creativity, and writing style.") %>
+  <br />
+  <p class="mb-0 mt-0">Select featured posts for this newsletter <%= link_to("here", "/newsletters/#{@newsletter.id}/featured-posts", target: "_blank") %>.</p>
+  <br />
+  <p class="mb-0 mt-0">Background hex color (view hex colors here: <%= link_to "https://htmlcolorcodes.com/", "https://htmlcolorcodes.com/" %>)</p>
+  <%= f.text_field :background_color, value: (@newsletter.background_color || "#F1E4E7") %>
+  <br />
+  <p class="mb-2 mt-0"><%= f.check_box :ready, disabled: @disabled %> Schedule send on next available Thursday.</p>
+  <i class="d-block">Note: You must have all fields filled out and at least five featured posts to schedule send.</i>
+  <%= f.hidden_field :kind, value: "Weekly Editor's Pick" %>
+  <%= f.submit 'Save Newsletter', class: "mt-4" %>
+<% end %>

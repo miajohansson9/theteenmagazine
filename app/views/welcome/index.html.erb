@@ -36,7 +36,7 @@
           </script>
         </div>
       </div>
-      <h1 class="section--title">Trending Articles</h1>
+      <h1 class="section--title"><%= link_to "Trending Articles", "/trending" %></h1>
       <%= render_async_cache get_trending_posts_path, retry_count: 3 %>
     </div>
   </div>

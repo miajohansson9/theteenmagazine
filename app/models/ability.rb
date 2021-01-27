@@ -13,6 +13,9 @@ class Ability
       can :destroy, Post do |post|
         post.user == user
       end
+      can :update_newsletter, Post do |post|
+        user.has_newsletter_permissions
+      end
       can :create, Post
       can :read, Post
       can :manage, User, id: user.id

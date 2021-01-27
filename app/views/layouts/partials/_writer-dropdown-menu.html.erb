@@ -24,6 +24,9 @@
       <% end %>
     </a>
   <% end %>
+  <% if current_user.has_newsletter_permissions %>
+    <a href="/newsletters" class="dropdown-item">Newsletters</a>
+  <% end %>
   <% if current_user.admin? %>
     <a href="/applies" class="dropdown-item">Writer Applications
       <% if @unseen_applications_cnt > 0 %>

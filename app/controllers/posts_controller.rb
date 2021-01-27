@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :find_post_history, only: [:show]
-  before_action :find_post, only: [:edit, :update, :destroy]
+  before_action :find_post, only: [:edit, :update, :destroy, :update_newsletter]
   before_action :authenticate_user!, except: [:show, :get_trending_posts_in_category]
   before_action :load_author,  only: [:show]
   before_action :create,  only: [:unapprove]
@@ -214,6 +214,14 @@ class PostsController < ApplicationController
       @statuses << @post.reviews.last.status
     end
     set_meta_tags :title => "Edit Article", editing: "Turn off ads"
+  end
+
+  def update_newsletter
+    @newsletter_id = post_params[:newsletter_id].present? ? post_params[:newsletter_id] : @post.newsletter_id
+    if @post.update post_params
+      @message = post_params[:newsletter_id].present? ? "Article added to newsletter." : "Article removed from newsletter."
+      redirect_to "/newsletters/#{@newsletter_id}/featured-posts", notice: @message
+    end
   end
 
   def update
@@ -449,7 +457,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :featured, :newsletter, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes], :user_attributes => [:extensions, :id])
+    params.require(:post).permit(:title, :featured, :newsletter_id, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes], :user_attributes => [:extensions, :id])
   end
 
   def find_post_history

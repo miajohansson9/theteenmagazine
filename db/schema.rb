@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_08_220703) do
+ActiveRecord::Schema.define(version: 2021_01_23_160941) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -153,6 +153,21 @@ ActiveRecord::Schema.define(version: 2021_01_08_220703) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "newsletters", force: :cascade do |t|
+    t.text "message"
+    t.string "kind"
+    t.string "background_color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "ready"
+    t.datetime "sent_at"
+    t.integer "user_id"
+    t.string "hero_image_file_name"
+    t.string "hero_image_content_type"
+    t.bigint "hero_image_file_size"
+    t.datetime "hero_image_updated_at"
+  end
+
   create_table "outreaches", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -239,8 +254,8 @@ ActiveRecord::Schema.define(version: 2021_01_08_220703) do
     t.datetime "promoting_until"
     t.integer "partner_id"
     t.boolean "featured"
-    t.boolean "newsletter"
     t.datetime "deadline_at"
+    t.integer "newsletter_id"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
     t.index ["publish_at"], name: "index_posts_on_publish_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
@@ -312,7 +327,6 @@ ActiveRecord::Schema.define(version: 2021_01_08_220703) do
     t.boolean "approved_profile"
     t.boolean "bi_monthly_assignment"
     t.boolean "do_not_send_emails"
-    t.boolean "marketer"
     t.datetime "last_saw_pitches"
     t.datetime "last_saw_peer_feedback"
     t.datetime "last_saw_writer_applications"
@@ -332,6 +346,7 @@ ActiveRecord::Schema.define(version: 2021_01_08_220703) do
     t.datetime "missed_editor_deadline"
     t.boolean "notify_of_new_review"
     t.integer "extensions", default: 1
+    t.boolean "has_newsletter_permissions"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true

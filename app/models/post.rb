@@ -1,6 +1,7 @@
 class Post < ApplicationRecord
   belongs_to :user, counter_cache: true
   belongs_to :pitch, optional: true
+  belongs_to :newsletter, optional: true
   belongs_to :category
   has_many :impressions
   has_many :reviews

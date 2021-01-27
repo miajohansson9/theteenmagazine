@@ -50,8 +50,32 @@ class PagesController < ApplicationController
   def about
   end
 
-  def newsletter
-    @posts = Post.published.where(newsletter: true)
+  def trending
+    @pagy, @trending = pagy(Post.published.trending, page: params[:page], items: 15)
+    set_meta_tags title: "Trending | The Teen Magazine",
+                  image: @trending.first.thumbnail.url(:large2),
+                  description: "See what's trending on The Teen Magazine",
+                  :fb => {
+                    :app_id => "1190455601051741"
+                  },
+                  :og => {
+                    :image => {
+                      :url => @trending.first.thumbnail.url(:large2),
+                      :alt => 'The Teen Magazine',
+                    },
+                    :site_name => "The Teen Magazine",
+                  },
+                  :article => {
+                    :publisher => "https://www.facebook.com/theteenmagazinee"
+                  },
+                  :twitter => {
+                    :card => "summary_large_image",
+                    :site => "@theteenmagazin_",
+                    :title => "The Teen Magazine",
+                    :description => "See what's trending on The Teen Magazine",
+                    :image => @trending.first.thumbnail.url(:large2),
+                    :domain => "https://www.theteenmagazine.com/"
+                  }
   end
 
   def submitted

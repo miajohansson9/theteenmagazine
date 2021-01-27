@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :pitches
   has_many :comments
+  has_many :newsletters
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

@@ -1,0 +1,6 @@
+<div id="banner_writing" class="editor"></div>
+<div class="apply_wrapper newsletter_form_wrapper">
+  <h1 class="mb-4">Edit Newsletter #<%= @newsletter.id %></h1>
+  <%= render "newsletters/form" %>
+  <%= link_to "Delete", newsletter_path(@newsletter), method: :delete, data: {confirm: "Are you sure you want to delete this newsletter?"}, :class => "link_theme delete_btn mb-0", :style => "margin-top: -70px;" %>
+</div>
