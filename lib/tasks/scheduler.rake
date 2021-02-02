@@ -82,7 +82,7 @@ task :run_nightly_tasks => :environment do
           editor.save
         else
           ApplicationMailer.editor_missed_deadline_1(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
-          editor.missed_editor_deadline = Time.now
+          editor.missed_editor_deadline = (Time.now - 1.day)
           editor.save
         end
       end
