@@ -70,8 +70,8 @@ task :run_nightly_tasks => :environment do
     @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
     @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
     User.editor.each do |editor|
-      @editor_pitches_cnt =  user.pitches.where("created_at > ?", Date.yesterday.beginning_of_month).count
-      @editor_reviews_cnt = Review.where(editor_id: user.id).where("updated_at > ?", Date.yesterday.beginning_of_month).count
+      @editor_pitches_cnt =  editor.pitches.where("created_at > ?", Date.yesterday.beginning_of_month).count
+      @editor_reviews_cnt = Review.where(editor_id: editor.id).where("updated_at > ?", Date.yesterday.beginning_of_month).count
       @missed_deadline = ((@editor_pitches_cnt < @pitches_requirement) || (@editor_reviews_cnt < @reviews_requirement)) && (editor.created_at < (Time.now - 31.days))
       if @missed_deadline
         if (editor.missed_editor_deadline.try(:month) === Date.yesterday.month) && !editor.admin
