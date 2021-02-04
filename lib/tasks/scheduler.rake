@@ -15,7 +15,7 @@ task :run_weekly_tasks => :environment do
         @offset = @offset + 1000
         @emails = @members.body["members"].map{|x| x["email_address"]}
         @emails.each do |email|
-          ApplicationMailer.weekly_newsletter(email, newsletter).deliver
+          ApplicationMailer.weekly_newsletter(email, @newsletter).deliver
         end
         break if @emails.count.eql? 0
       end
