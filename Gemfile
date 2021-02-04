@@ -43,5 +43,6 @@ gem 'gibbon', git: 'git://github.com/amro/gibbon.git'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'bootsnap', require: false
 gem 'render_async'
+gem 'sendgrid-ruby'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

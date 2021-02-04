@@ -1194,6 +1194,7 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     ruby2_keywords (0.0.2)
+    ruby_http_client (3.5.2)
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -1202,6 +1203,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    sendgrid-ruby (6.3.9)
+      ruby_http_client (~> 3.4)
     sitemap_generator (6.1.2)
       builder (~> 3.0)
     spring (2.1.1)
@@ -1268,6 +1271,7 @@ DEPENDENCIES
   rails_12factor
   redcarpet (~> 3.5)
   render_async
+  sendgrid-ruby
   sitemap_generator
   spring
   spring-watcher-listen (~> 2.0.0)
