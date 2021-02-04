@@ -145,18 +145,33 @@ class UsersController < ApplicationController
   end
 
   def show_users
-    @pagy, @users = pagy(User.where(partner: [nil, false]).order("created_at desc"), page: params[:page], items: 25)
+    if params[:search].present?
+      @query = params[:search][:query]
+      @pagy, @users = pagy(User.where(partner: [nil, false]).where("lower(full_name) LIKE ?", "%#{@query.downcase}%"), page: params[:page], items: 25)
+    else
+      @pagy, @users = pagy(User.where(partner: [nil, false]).order("created_at desc"), page: params[:page], items: 25)
+    end
     @users_waiting = User.all.review_profile
   end
 
   def partners
     set_meta_tags title: "Partners | The Teen Magazine"
-    @pagy, @partners = pagy(User.where(partner: true).order("created_at desc").order("created_at desc"), page: params[:page], items: 25)
+    if params[:search].present?
+      @query = params[:search][:query]
+      @pagy, @partners = pagy(User.where(partner: true).where("lower(full_name) LIKE ?", "%#{@query.downcase}%"), page: params[:page], items: 25)
+    else
+      @pagy, @partners = pagy(User.where(partner: true).order("created_at desc").order("created_at desc"), page: params[:page], items: 25)
+    end
   end
 
   def editors
     set_meta_tags title: "Editors | The Teen Magazine"
-    @pagy, @editors = pagy(User.where(editor: true).order("created_at desc").order("created_at desc"), page: params[:page], items: 25)
+    if params[:search].present?
+      @query = params[:search][:query]
+      @pagy, @editors = pagy(User.where(editor: true).order("created_at desc").where("lower(full_name) LIKE ?", "%#{@query.downcase}%"), page: params[:page], items: 25)
+    else
+      @pagy, @editors = pagy(User.where(editor: true).order("created_at desc").order("created_at desc"), page: params[:page], items: 25)
+    end
   end
 
   def reset_email

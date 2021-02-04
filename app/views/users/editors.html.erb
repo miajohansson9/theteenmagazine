@@ -2,6 +2,14 @@
   <h1 id="page_title" style="margin-bottom: -20px; border-bottom: none;">Editors</h1>
 </div>
 <div id="posts_wrapper" class="skinny_wrapper mb-4">
+  <div class="flex_horizontal">
+    <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
+      <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Search for an editor" %>
+    <% end %>
+  </div>
+  <% if @query.present? %>
+    <h2>Searching for editor... <span style="background-color: #FCD04D"><%= @query %></span></h2>
+  <% end %>
   <% @editors.each do | user | %>
       <% if user != nil %>
         <div class="flex--profile">
@@ -20,6 +28,13 @@
             <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
             <% if current_user.admin? %>
               <h6 style="margin: 0;"><%= user.email %></h6>
+              <h6 class="mt-2" style="margin: 0; opacity: 50%;">
+                <% if user.last_sign_in_at.nil? %>
+                  Never signed in
+                <% else %>
+                  Last active <%= time_ago_in_words(user.last_sign_in_at) %> ago
+                <% end %>
+              </h6>
             <% end %>
           </div>
         </div>
