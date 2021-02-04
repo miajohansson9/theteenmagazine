@@ -4,7 +4,7 @@
      <div class="flex">
         <div class="container mb-4">
           <h3 class="mt-4 mb-2">Newsletter #<%= @newsletter.id %> <%= link_to "(Edit)", edit_newsletter_path(@newsletter) %></h3>
-          <i>Go back to <%= link_to "all newsletters", newsletters_path %></i>
+          <i>Go back to <%= link_to "all newsletters", newsletters_path %> or <%= link_to "send a test email", {:controller => "newsletters", :action => "send_test_newsletter", :user_id => current_user.id, :id => @newsletter.id}, :data => {:confirm => "Sending a test email to #{current_user.email}"} %>.</i>
           <div class="mt-2">
             <% if @newsletter.sent_at.present? %>
               <div class="alert alert-success" role="alert">

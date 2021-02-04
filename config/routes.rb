@@ -42,6 +42,8 @@ Rails.application.routes.draw do
   get :enable_notify_of_new_review, controller: :reviews
   get :disable_notify_of_new_review, controller: :reviews
 
+  get :send_test_newsletter, controller: :newsletters
+
   get 'welcome/index'
   root 'welcome#index'
 

@@ -73,6 +73,13 @@ class NewslettersController < ApplicationController
     @posts = @newsletter.posts
   end
 
+  def send_test_newsletter
+    @user = User.find(params[:user_id])
+    @newsletter = Newsletter.find(params[:id])
+    ApplicationMailer.weekly_newsletter(@user.email, @newsletter).deliver
+    redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
+  end
+
   private
 
   def newsletter_params
