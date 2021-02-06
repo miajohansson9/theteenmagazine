@@ -14,10 +14,10 @@ class PitchesController < ApplicationController
       set_meta_tags :title => @title
       if params[:pitch].nil?
         @pitch = Pitch.new
-        @categories = Category.all
+        @categories = Category.active
         @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).where("updated_at > ?", Time.now - 40.days).order("updated_at desc"), page: params[:page], items: 20)
       else
-        @categories = Category.all
+        @categories = Category.active
         @category_id = (params[:pitch][:category_id].blank?) ? @categories.map {|category| category.id} : params[:pitch][:category_id]
         @pitch = Pitch.new(category_id: params[:pitch][:category_id])
         @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(category_id: @category_id, status: nil).order("updated_at desc"), page: params[:page], items: 20)
@@ -40,12 +40,12 @@ class PitchesController < ApplicationController
   #create a new pitch
   def new
     @pitch = current_user.pitches.build
-    @categories = Category.all
+    @categories = Category.active
     set_meta_tags :title => "New Pitch | The Teen Magazine"
   end
 
   def create
-    @categories = Category.all
+    @categories = Category.active
     @pitch = current_user.pitches.build(pitch_params)
     if @pitch.save && current_user.editor?
       fix_title
@@ -59,7 +59,7 @@ class PitchesController < ApplicationController
   end
 
   def update
-    @categories = Category.all
+    @categories = Category.active.or(Category.where(id: @pitch.category_id))
     if @pitch.update pitch_params
       if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
         ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
@@ -206,7 +206,7 @@ class PitchesController < ApplicationController
   end
 
   def edit
-    @categories = Category.all
+    @categories = Category.active.or(Category.where(id: @pitch.category_id))
     @pitch_errors = params[:errors]
     @archive_button = @pitch.archive ? "Undo Archive" : "Archive"
     @archive_msg = @pitch.archive ? "" : "Are you sure you want to archive this pitch? It will no longer show up under Editor Pitches."

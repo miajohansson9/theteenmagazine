@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_23_160941) do
+ActiveRecord::Schema.define(version: 2021_02_06_225135) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2021_01_23_160941) do
     t.bigint "image_file_size"
     t.datetime "image_updated_at"
     t.string "description"
+    t.boolean "archive"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 

@@ -41,6 +41,8 @@ class CategoriesController < ApplicationController
   end
 
   def edit
+    @archive_button = @category.archive ? "Undo Archive" : "Archive"
+    @archive_msg = @category.archive ? "" : "Are you sure you want to archive this category? Writers will no longer be able to select this category."
   end
 
   def update
@@ -73,7 +75,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :image, :created_at, :description, :slug)
+    params.require(:category).permit(:name, :image, :created_at, :description, :slug, :archive)
   end
 
   def find_category

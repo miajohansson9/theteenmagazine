@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :find_user, only: [:show, :edit, :update, :destroy, :pageviews, :share, :redirect, :get_editor_stats]
-  before_action :authenticate_user!, except: [:index, :show, :redirect]
+  before_action :authenticate_user!, except: [:index, :show, :redirect, :get_editor_stats]
   before_action :is_editor?, only: [:show_users, :new]
   before_action :onboarding_redirect, if: :current_user?, only: [:show]
   before_action :is_admin?, only: [:new, :partners, :share]
@@ -124,7 +124,7 @@ class UsersController < ApplicationController
     set_meta_tags title: "Editor Onboarding | The Teen Magazine", onboarding: "Turn off ads"
     @user = current_user
     @partial = params[:step] || "welcome"
-    @categories = Category.all
+    @categories = Category.active
     @reviews_requirement = Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value)
     @pitches_requirement = Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value)
     @max_reviews = Constant.find_by(name: "max # of reviews per month for editors").try(:value)

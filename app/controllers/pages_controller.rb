@@ -17,7 +17,7 @@ class PagesController < ApplicationController
 
   def topics
     @pitch = Pitch.new
-    @categories = Category.all
+    @categories = Category.active
     set_meta_tags :title => "Pitching an Article | The Teen Magazine"
     current_user.update(read_pitches: true)
   end
@@ -91,7 +91,7 @@ class PagesController < ApplicationController
 
   def pitching_new_articles
     set_meta_tags :title => "Pitching New Articles | The Teen Magazine"
-    @categories = Category.all
+    @categories = Category.active
   end
 
   def start

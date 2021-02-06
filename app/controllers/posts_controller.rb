@@ -42,7 +42,7 @@ class PostsController < ApplicationController
   end
 
   def new
-    @categories = Category.all
+    @categories = Category.active
     @service_id = ENV['WEBSPELLCHECKER_ID']
     @post = current_user.posts.build
     @review = @post.reviews.build(status: "In Progress", active: true)
@@ -50,7 +50,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @categories = Category.all
+    @categories = Category.active
     @post = current_user.posts.build(post_params)
     @prev_post_pitch = current_user.posts.find_by(pitch_id: post_params[:pitch_id])
     if !(@prev_post_pitch.try(:pitch).nil?)
@@ -198,7 +198,7 @@ class PostsController < ApplicationController
       return
     end
     @can_edit = !(@post.reviews.last.try(:status).eql? "Approved for Publishing") || (current_user.id == @post.user_id) || (@post.collaboration&.include? current_user.email) || (current_user.admin?) || (@post.reviews.last.editor_id.eql? current_user.id)
-    @categories = Category.all
+    @categories = Category.active.or(Category.where(id: @post.category_id))
     @service_id = ENV['WEBSPELLCHECKER_ID']
     #create new review if no current review or last review was rejected
     @requested_changes = @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
