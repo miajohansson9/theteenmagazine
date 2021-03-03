@@ -498,6 +498,15 @@ class PostsController < ApplicationController
   def load_author
     if @post.user != nil
       @user = @post.user
+      set_badges
+    end
+  end
+
+  def set_badges
+    if @user.badges.where(level: "50+").present?
+      @badge = @user.badges.find_by(level: "50+")
+    elsif (@pageviews > 50) && (@user.badges.where(level: "50+").count.eql? 0) && (current_user.id.eql? @user.id)
+      @badge = @user.badges.build(level: "50+")
     end
   end
 end

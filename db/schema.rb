@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_06_225135) do
+ActiveRecord::Schema.define(version: 2021_02_28_004549) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -69,6 +69,16 @@ ActiveRecord::Schema.define(version: 2021_02_06_225135) do
     t.string "kind"
     t.string "rejected_writer_at"
     t.string "rejected_editor_at"
+  end
+
+  create_table "badges", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "level"
+    t.string "color"
+    t.integer "user_id"
+    t.boolean "activated"
   end
 
   create_table "categories", force: :cascade do |t|

@@ -202,3 +202,11 @@
     });
   </script>
 <% end %>
+
+<% if @show_badge_popup %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#newBadgeModal').modal();
+    });
+  </script>
+<% end %>
