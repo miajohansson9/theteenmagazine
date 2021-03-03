@@ -1,5 +1,5 @@
 <%= image_tag "banner_onboarding.jpg", id: "banner_writing" %>
-<div class="skinny_wrapper onboarding">
+<div class="skinny_wrapper onboarding pt-4">
   <h1><%= current_user.first_name %>, Welcome to The Teen Magazine Writer Team!</h1>
   <p>Please complete the onboarding process to unlock your writer dashboard.</p>
       <%= render "users/onboarding/#{@partial}" %>
