@@ -74,9 +74,10 @@
   <h1 class="title">This article has already been published and can only be edited by the author(s) and admins.</h1>
 <% end %>
 
+<%= javascript_include_tag 'ckeditor/ckeditor', :defer => "defer" %>
 <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
 <script type="text/javascript">
-  $('document').ready(function(){
+  window.onload(function(){
     var unsaved = false;
     $("#edit_post").on("submit", function(event){
       unsaved = false;
@@ -131,16 +132,17 @@
     }
 
     window.onbeforeunload = unloadPage;
+
+    CKEDITOR.addCss('img{width: 55% !important; height: auto !important;margin-left: auto !important;margin-right: auto !important;display: block;}');
+    CKEDITOR.addCss('iframe, .instagram-media{margin: 1em auto !important;}');
+    CKEDITOR.addCss('h1,h2,h3,p{font-size: 1.3em;}a{color: #4ABEB6 !important;}');
+    CKEDITOR.addCss('h1 {font-size: 1.7rem; text-transform: capitalize;} h2 {font-size: 1.5rem; text-transform: capitalize;} h3 {font-size: 1.3rem; text-transform: capitalize;} h4 {font-size: 1.1rem;} h5 {font-size: 0.9rem;} h1, h2, h3, h4, h5, h6, span {margin: 10px 0;}');
+    CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #4ABEB6;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
+    window.WEBSPELLCHECKER_CONFIG = {
+      autoSearch: true,
+      serviceId: "<%= @service_id %>"
+    };
   });
-  CKEDITOR.addCss('img{width: 55% !important; height: auto !important;margin-left: auto !important;margin-right: auto !important;display: block;}');
-  CKEDITOR.addCss('iframe, .instagram-media{margin: 1em auto !important;}');
-  CKEDITOR.addCss('h1,h2,h3,p{font-size: 1.3em;}a{color: #4ABEB6 !important;}');
-  CKEDITOR.addCss('h1 {font-size: 1.7rem; text-transform: capitalize;} h2 {font-size: 1.5rem; text-transform: capitalize;} h3 {font-size: 1.3rem; text-transform: capitalize;} h4 {font-size: 1.1rem;} h5 {font-size: 0.9rem;} h1, h2, h3, h4, h5, h6, span {margin: 10px 0;}');
-  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #4ABEB6;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
-  window.WEBSPELLCHECKER_CONFIG = {
-    autoSearch: true,
-    serviceId: "<%= @service_id %>"
-  };
 </script>
 
 <style>
