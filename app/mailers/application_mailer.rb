@@ -127,7 +127,7 @@ class ApplicationMailer < ActionMailer::Base
       "https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy-1.gif",
     ]
     unless @user.do_not_send_emails
-      mail(to: user.email, subject: "#{user.first_name}, here are the editor assignments for #{Date.today.strftime("%B")}", from: "Mia from The Teen Magazine <mia@theteenmagazine.com>")
+      mail(to: user.email, subject: "#{user.first_name}, here are the editor assignments for #{Date.today.in_time_zone.strftime("%B")}", from: "Mia from The Teen Magazine <mia@theteenmagazine.com>")
     end
   end
 

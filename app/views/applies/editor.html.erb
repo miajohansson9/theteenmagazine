@@ -19,7 +19,7 @@
 
 <% if (@application.kind&.eql? "Editor") && (@application.created_at.present?) && !current_user.editor %>
   <div style="font-weight: bolder !important; font-style: italics !important;">
-    <p>Your editor application was submitted on <%= @application.updated_at.strftime("%D") %> and is being reviewed by an admin.</p>
+    <p>Your editor application was submitted on <%= @application.updated_at.in_time_zone.strftime("%D") %> and is being reviewed by an admin.</p>
     <p><%= @application.first_name %> <%= @application.last_name %></p>
     <p><%= @application.email %></p>
     <p><%= @application.grade %></p>

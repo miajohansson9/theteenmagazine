@@ -27,7 +27,7 @@
                    <div class="thumbnail--container">
                      <p class="date_post_preview"><%= post.category.name %></p>
                      <h3 class="article_title"><%= link_to post.title, post %></h3>
-                     <p class="date_post_preview"><%= post.publish_at.strftime("%A, %b %d")%></p>
+                     <p class="date_post_preview"><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
                    </div>
                  </div>
                <% end %>

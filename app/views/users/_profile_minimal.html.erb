@@ -11,6 +11,6 @@
       <%= link_to(user.try(:first_name), user) %><br>
       <%= link_to(user.try(:last_name), user) %>
     </h2>
-    <span>Writer since <%= user.try(:created_at)&.strftime("%B %d, %Y") %></span>
+    <span>Writer since <%= user.try(:created_at)&.in_time_zone.strftime("%B %d, %Y") %></span>
   </div>
 </div>
