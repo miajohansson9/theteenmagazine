@@ -3,7 +3,7 @@ class Pitch < ApplicationRecord
   belongs_to :category
   has_many :posts
 
-  validates_length_of :title, minimum: 30, maximum: 70
+  validates_length_of :title, minimum: 30, maximum: 80
   validates :title, :presence => true
   validates :description, :presence => true
   validates :category_id, :presence => true
