@@ -60,22 +60,14 @@ class PitchesController < ApplicationController
 
   def update
     @categories = Category.active.or(Category.where(id: @pitch.category_id))
+    @post = Post.find_by(user_id: @pitch.claimed_id, pitch_id: @pitch.id)
     if @pitch.update pitch_params
       if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
         ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
       end
+      lock_post
       if pitch_params[:claimed_id].eql? ""
-        @post = Post.find_by(user_id: @pitch.claimed_id, pitch_id: @pitch.id)
-        if @post.present?
-          @post.reviews.each do |review|
-            review.destroy
-          end
-          @post.title = "#{@post.title} (locked)"
-          @post.save!
-          @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: "Post")
-          @slug&.destroy_all
-        end
-        @message = "This pitch was unclaimed."
+        @message = "This pitch was unclaimed. To access your article, reclaim this pitch."
       else
         @message = "Changes were successfully saved."
       end
@@ -83,6 +75,18 @@ class PitchesController < ApplicationController
       redirect_to @pitch, notice: @message
     else
       render 'edit'
+    end
+  end
+
+  def lock_post
+    if @post.present?
+      @post.reviews.each do |review|
+        review.destroy
+      end
+      @post.title = "#{@post.title} (locked)"
+      @post.save!
+      @slug = FriendlyId::Slug.where(slug: @pitch.slug, sluggable_type: "Post")
+      @slug&.destroy_all
     end
   end
 
