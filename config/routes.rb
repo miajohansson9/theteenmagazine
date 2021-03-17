@@ -85,8 +85,8 @@ Rails.application.routes.draw do
   get '/partners/:id/share', to: 'users#share'
   get '/writers/:id/extensions', to: 'users#extensions'
   get '/partners/:id/published', to: 'users#sponsored'
-  get '/january_2021_773ae935-d06c-4ed2-b939-4aaee072bfd4', to: 'pages#issue'
-  post '/january_2021_773ae935-d06c-4ed2-b939-4aaee072bfd4', to: 'pages#issue'
+  get '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
+  post '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
 
   patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
   post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim
