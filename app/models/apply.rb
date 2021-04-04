@@ -5,10 +5,10 @@ class Apply < ActiveRecord::Base
   attributes :last_name,  :validate => true
   attributes :email, :validate => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
   attributes :description, presence: true, if: -> {!current_user.present?}
-  attributes :grade,  :validate => true
+  attributes :grade,  :validate => true, if: -> {!current_user.present?}
   attributes :nickname,   :captcha => true
-  attributes :resume,  :validate => true
-  attributes :sample_writing, presence: true, if: -> {!current_user.present?}
+  attributes :resume,  :validate => true, if: -> {!current_user.present?}
+  attributes :sample_writing, validate: true, if: -> {!current_user.present?}
   attributes :editor_feedback, presence: true, if: -> {current_user.present?}
   attributes :editor_revision, presence: true, if: -> {current_user.present?}
   attributes :editor_pitches, presence: true, if: -> {current_user.present?}
