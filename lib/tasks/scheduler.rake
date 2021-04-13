@@ -41,6 +41,25 @@ task :run_weekly_tasks => :environment do
     end
   end
 
+  if (Date.today.monday?)
+    @badges = Badge.all
+    User.all.each do |user|
+      @pageviews = 0
+      user.posts.map{|p| @pageviews = @pageviews + p.post_impressions}
+      if (@pageviews > 5000) && (@user.badges.where(level: "5,000+").count.eql? 0)
+        @badge = @user.badges.build(level: "50+", activated: false)
+      elsif (@pageviews > 20000) && (@user.badges.where(level: "20,000+").count.eql? 0)
+        @badge = @user.badges.build(level: "50+", activated: false)
+      elsif (@pageviews > 50000) && (@user.badges.where(level: "50,000+").count.eql? 0)
+        @badge = @user.badges.build(level: "50+", activated: false)
+      elsif (@pageviews > 50000) && (@user.badges.where(level: "50,000+").count.eql? 0)
+        @badge = @user.badges.build(level: "50+", activated: false)
+      end
+    end
+
+    @show_badge_popup = true
+  end
+
   if (Date.today.day.eql? 1)
     User.editor.each do |editor|
       ApplicationMailer.remind_editors_of_assigments(editor).deliver
@@ -158,4 +177,10 @@ task :run_nightly_tasks => :environment do
     review.status = "Ready for Review"
     review.save
   end
+
+  # Writer reached new badge
+  # Loop through all writers who haven't logged in in the past month and see if any of them have earned a new badge
+  # Tell them to log in to accept their badge and get it to show up under their profile
+  # Mention % of writers who have that badge
+  # ** genius **
 end

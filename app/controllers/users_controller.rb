@@ -86,6 +86,7 @@ class UsersController < ApplicationController
     @claimed_pitches_cnt = Pitch.where(claimed_id: @user.id)&.count || 0
     @pageviews = 0
     @user_posts_approved_records.map {|p| @pageviews += p.post_impressions }
+    set_badges
     @show_onboarding_full = @user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
     @show_editor_onboarding = @user.became_an_editor.nil? && @user.editor && (current_user.id.eql? @user.id) && !@show_onboarding_full
     if @show_editor_onboarding
@@ -110,6 +111,15 @@ class UsersController < ApplicationController
     @partner = User.where(partner: true).find(params[:id])
     set_meta_tags title: "#{@partner.full_name} Published Articles | The Teen Magazine"
     @published = Post.published.where(partner_id: @partner.id)
+  end
+
+  def set_badges
+    if @user.badges.where(level: "50+").present?
+      @badge = @user.badges.find_by(level: "50+")
+    elsif (@pageviews > 50) && (@user.badges.where(level: "50+").count.eql? 0) && (current_user.id.eql? @user.id)
+      @badge = @user.badges.build(level: "50+")
+    end
+    @show_badge_popup = true
   end
 
   def onboarding
