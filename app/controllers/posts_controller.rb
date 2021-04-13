@@ -503,10 +503,11 @@ class PostsController < ApplicationController
   end
 
   def set_badges
-    if @user.badges.where(level: "50+").present?
-      @badge = @user.badges.find_by(level: "50+")
-    elsif (@pageviews > 50) && (@user.badges.where(level: "50+").count.eql? 0) && (current_user.id.eql? @user.id)
-      @badge = @user.badges.build(level: "50+")
+    @levels = [["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000]]
+    @levels.each do |level|
+      if @user.badges.where(level: level[0]).present?
+        @badge = @user.badges.find_by(level: level[0])
+      end
     end
   end
 end

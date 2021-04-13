@@ -144,6 +144,34 @@ a {
   margin-top: 1em;
 }
 
+#newBadgeModal {
+  .modal-content, svg {
+    border-radius: 20px !important;
+  }
+}
+
+#modal-body-badges {
+  h2, p {
+    text-align: center;
+  }
+  h2 {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    width: 100%;
+    font-weight: 900;
+    top: 40px;
+    font-size: 3em;
+    color: white;
+  }
+  p {
+    margin: 0;
+    margin-top: -10px;
+    background-color: white;
+    padding: 0 20px;
+    color: #98a0ab;
+  }
+}
+
 #selectable_content {
   #response_to_text_0 {
     background-color: #FCD04D;
@@ -832,6 +860,10 @@ a {
 }
 
 @media (max-width: 600px) {
+  #newBadgeModal h2 {
+    font-size: 2em;
+    top: 15px;
+  }
   #banner {
     display: none !important;
   }

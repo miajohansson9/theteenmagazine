@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_28_004549) do
+ActiveRecord::Schema.define(version: 2021_04_13_163715) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2021_02_28_004549) do
     t.string "color"
     t.integer "user_id"
     t.boolean "activated"
+    t.string "kind"
   end
 
   create_table "categories", force: :cascade do |t|

@@ -22,6 +22,6 @@ class BadgesController < ApplicationController
   end
 
   def badge_params
-    params.require(:badge).permit(:created_at, :id, :level, :user_id, :activated)
+    params.require(:badge).permit(:created_at, :id, :level, :kind, :color, :user_id, :activated)
   end
 end

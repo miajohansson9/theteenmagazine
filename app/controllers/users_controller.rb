@@ -114,12 +114,23 @@ class UsersController < ApplicationController
   end
 
   def set_badges
-    if @user.badges.where(level: "50+").present?
-      @badge = @user.badges.find_by(level: "50+")
-    elsif (@pageviews > 50) && (@user.badges.where(level: "50+").count.eql? 0) && (current_user.id.eql? @user.id)
-      @badge = @user.badges.build(level: "50+")
+    # if you want to change a badge color, you must update all the already created badges
+    # to match the new color
+    @levels = [["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000]]
+    @levels.each do |level|
+      if @user.badges.where(level: level[0]).present?
+        @badge = @user.badges.find_by(level: level[0])
+        break
+      elsif (@pageviews > level[2]) && (@user.badges.where(level: level[0]).count.eql? 0) && (current_user.id.eql? @user.id)
+        @badge = @user.badges.build(level: level[0], kind: "pageviews", color: level[1])
+        @badge.save
+        @users_who_have_badge = User.includes(:badges).where(:badges => { :level => level[0] }).count
+        @percentile = (@users_who_have_badge.to_f / (User.all.count - @users_who_have_badge).to_f * 100).round(1)
+        @percentile = (@percentile < 0.1 ) ? "< 0.1" : @percentile
+        @show_badge_popup = true
+        break
+      end
     end
-    @show_badge_popup = true
   end
 
   def onboarding
