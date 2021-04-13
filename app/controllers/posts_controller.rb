@@ -498,16 +498,6 @@ class PostsController < ApplicationController
   def load_author
     if @post.user != nil
       @user = @post.user
-      set_badges
-    end
-  end
-
-  def set_badges
-    @levels = [["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000]]
-    @levels.each do |level|
-      if @user.badges.where(level: level[0]).present?
-        @badge = @user.badges.find_by(level: level[0])
-      end
     end
   end
 end
