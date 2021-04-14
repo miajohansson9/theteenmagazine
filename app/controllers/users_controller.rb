@@ -169,9 +169,9 @@ class UsersController < ApplicationController
   def show_users
     if params[:search].present?
       @query = params[:search][:query]
-      @pagy, @users = pagy(User.where(partner: [nil, false]).where("lower(full_name) LIKE ?", "%#{@query.downcase}%").order("last_sign_in_at desc"), page: params[:page], items: 25)
+      @pagy, @users = pagy(User.where(partner: [nil, false]).where("lower(full_name) LIKE ?", "%#{@query.downcase}%").order("last_sign_in_at IS NULL, last_sign_in_at desc"), page: params[:page], items: 25)
     else
-      @pagy, @users = pagy(User.where(partner: [nil, false]).order("last_sign_in_at desc"), page: params[:page], items: 25)
+      @pagy, @users = pagy(User.where(partner: [nil, false]).order("last_sign_in_at IS NULL, last_sign_in_at desc"), page: params[:page], items: 25)
     end
     @users_waiting = User.all.review_profile
   end
@@ -190,9 +190,9 @@ class UsersController < ApplicationController
     set_meta_tags title: "Editors | The Teen Magazine"
     if params[:search].present?
       @query = params[:search][:query]
-      @pagy, @editors = pagy(User.where(editor: true).order("last_sign_in_at desc").where("lower(full_name) LIKE ?", "%#{@query.downcase}%"), page: params[:page], items: 25)
+      @pagy, @editors = pagy(User.where(editor: true).order("last_sign_in_at IS NULL, last_sign_in_at desc").where("lower(full_name) LIKE ?", "%#{@query.downcase}%"), page: params[:page], items: 25)
     else
-      @pagy, @editors = pagy(User.where(editor: true).order("last_sign_in_at desc"), page: params[:page], items: 25)
+      @pagy, @editors = pagy(User.where(editor: true).order("last_sign_in_at IS NULL, last_sign_in_at desc"), page: params[:page], items: 25)
     end
   end
 
