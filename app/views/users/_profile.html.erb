@@ -55,12 +55,11 @@
     </div>
     <% if current_user.admin? %>
       <div class="mt-2">
-        <h6 style="margin: 0;"><%= user.email %></h6>
         <h6 class="mt-2" style="margin: 0; opacity: 50%;">
           <% if user.last_sign_in_at.nil? %>
             Never signed in
           <% else %>
-            Last active <%= time_ago_in_words(user.last_sign_in_at) %> ago
+            Last active <%= time_ago_in_words(user.last_sign_in_at) %> ago (admin only)
           <% end %>
         </h6>
       </div>
