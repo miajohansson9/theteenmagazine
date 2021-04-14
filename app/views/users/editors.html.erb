@@ -19,9 +19,15 @@
             <%= image_tag("profile_image.jpg", :class => "profile_img") %>
           <% end %>
           <div class="info">
-          <h2 style="margin-bottom: 5px;">
+          <h2 style="margin-bottom: 5px; display: inline;">
             <%= link_to(user.full_name, "/editors/#{user.slug}") %>
           </h2>
+          <% if user.badges.present? %>
+            <div class="badge_wrapper">
+              <svg widht="22px" height="22px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="badge-check" class="svg-inline--fa fa-badge-check fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill=<%= user.badges.last.color %> d="M512 256a88 88 0 0 0-57.1-82.4A88 88 0 0 0 338.4 57.1a88 88 0 0 0-164.8 0A88 88 0 0 0 57.1 173.6a88 88 0 0 0 0 164.8 88 88 0 0 0 116.5 116.5 88 88 0 0 0 164.8 0 88 88 0 0 0 116.5-116.5A88 88 0 0 0 512 256zm-144.8-44.25l-131 130a11 11 0 0 1-15.55-.06l-75.72-76.33a11 11 0 0 1 .06-15.56L171 224a11 11 0 0 1 15.56.06l42.15 42.49 97.2-96.42a11 11 0 0 1 15.55.06l25.82 26a11 11 0 0 1-.08 15.56z" opacity="0.4"></path><path class="fa-primary" fill=<%= user.badges.last.color %> d="M367.2 211.75l-131 130a11 11 0 0 1-15.55-.06l-75.72-76.33a11 11 0 0 1 .06-15.56L171 224a11 11 0 0 1 15.56.06l42.15 42.49 97.2-96.42a11 11 0 0 1 15.55.06l25.82 26a11 11 0 0 1-.06 15.56z"></path></g></svg>
+              <span class="editor_status"><%= user.badges.last.level %> <%= user.badges.last.kind %></span>
+            </div>
+          <% end %>
           <% if user.editor? %>
             <%= render_async_cache get_editor_stats_path(id: user) %>
           <% end %>
