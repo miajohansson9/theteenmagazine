@@ -36,7 +36,7 @@
               <div>
                 <h6 class="mt-2" style="margin: 0; opacity: 50%;">
                   <% if user.last_sign_in_at.nil? %>
-                    Never signed in
+                    Never signed in (admin only)
                   <% else %>
                     Last active <%= time_ago_in_words(user.last_sign_in_at) %> ago (admin only)
                   <% end %>
