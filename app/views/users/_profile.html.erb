@@ -53,7 +53,7 @@
          </p>
       <% end %>
     </div>
-    <% if current_user.admin? %>
+    <% if current_user.try(:admin) %>
       <div class="mt-2">
         <h6 class="mt-2" style="margin: 0; opacity: 50%;">
           <% if user.last_sign_in_at.nil? %>

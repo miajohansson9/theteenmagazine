@@ -116,7 +116,7 @@ class UsersController < ApplicationController
   def set_badges
     # if you want to change a badge color, you must update all the already created badges
     # to match the new color
-    @levels = [["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000]]
+    @levels = [["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000], ["1,000+", "#4ABEB6", 1000]]
     @levels.each_with_index do |level, index|
       if @user.badges.where(level: level[0]).present?
         @badge = @user.badges.find_by(level: level[0])
