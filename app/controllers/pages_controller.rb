@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:ads, :issue, :privacy, :subscribe, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation, :search]
+  before_action :authenticate_user!, except: [:ads, :issue, :privacy, :subscribe, :unsubscribe, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation, :search]
   before_action :is_admin?, only: :featured
 
   def team
@@ -152,6 +152,23 @@ class PagesController < ApplicationController
                     :image => "https://s3.amazonaws.com/media.theteenmagazine.com/march_2021_issue_cover.png",
                     :domain => "https://www.theteenmagazine.com/"
                   }
+  end
+
+  def unsubscribe
+  end
+
+  def unsubscribed
+    if params[:pages].present?
+      if params[:pages][:newsletter].eql? "1"
+        begin
+          @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+          @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.update(body: {email_address: params[:pages][:email], status: "unsubscribed"})
+          flash.now[:notice] = "You've unsubscribed"
+        rescue
+          flash.now[:notice] = "Error: Failed to unsubscribe"
+        end
+      end
+    end
   end
 
   def issue

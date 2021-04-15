@@ -159,6 +159,26 @@ task :run_nightly_tasks => :environment do
     review.save
   end
 
+  if (Date.today.day.eql? Date.today.end_of_month.day)
+    User.includes(:posts).where.not(:posts => { :id => nil }).each do |user|
+      @user_posts_approved_records = Post.where("collaboration like ?", "%#{user.email}%").or(Post.where(user_id: user.id)).published.by_published_date
+      @pageviews = 0
+      @user_posts_approved_records.map {|p| @pageviews += p.post_impressions }
+      # if you want to change a badge color, you must update all the already created badges
+      # to match the new color
+      @levels = [["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000], ["1,000+", "#4ABEB6", 1000]]
+      @levels.each_with_index do |level, index|
+        if user.badges.where(level: level[0]).present?
+          break
+        elsif (@pageviews > level[2]) && (user.badges.where(level: level[0]).count.eql? 0)
+          @badge = user.badges.build(level: level[0], kind: "pageviews", color: level[1])
+          ApplicationMailer.new_badge_earned(user, @badge).deliver
+          break
+        end
+      end
+    end
+  end
+
   # TODO
   # Writer reached new badge
   # Loop through all writers who haven't logged in in the past month and see if any of them have earned a new badge

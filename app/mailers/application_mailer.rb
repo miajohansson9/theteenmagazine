@@ -102,8 +102,13 @@ class ApplicationMailer < ActionMailer::Base
 
   def send_pitches(email, pitches)
     @pitches = pitches
-    unless @user.do_not_send_emails
-      mail(to: email, subject: "Get Inspired by These Topic Ideas")
+    mail(to: email, subject: "Get Inspired by These Topic Ideas")
+  end
+
+  def new_badge_earned(user, badge)
+    @badge = badge
+    unless user.do_not_send_emails
+      mail(to: user.email, subject: "You have an unclaimed badge!")
     end
   end
 
