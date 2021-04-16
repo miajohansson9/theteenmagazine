@@ -8,11 +8,11 @@
   </head>
 
   <body>
-    <% images = ["https://theteenmagazine.s3.amazonaws.com/giphy.gif", "http://s3.amazonaws.com/theteenmagazine/Users/miajohansson/Desktop/ttm/blog/public/ckeditor_assets/pictures/2/content_3ZJ5ZIO.gif", "http://s3.amazonaws.com/theteenmagazine/Users/miajohansson/Desktop/ttm/blog/public/ckeditor_assets/pictures/1/content_giphy-1.gif"] %>
+    <% images = ["https://media.giphy.com/media/l46C5r7CiQN5ox7MI/giphy.gif", "https://media.giphy.com/media/cMJsqeSvw4nTx7YXRg/giphy.gif", "https://media.giphy.com/media/YT81tFiZtpwZkAOyaj/giphy.gif"] %>
     <p>Congratulations, you've reached <%= @badge.level %> <%= @badge.kind %> on The Teen Magazine!</p>
     <img style="display: block; max-width: 100%; width: 400px; margin: 0 auto;" src=<%= images[rand(0..2)] %>>
     <p>To claim your badge, please log into your writer profile <a href="https://www.theteenmagazine.com/login" style="color: #4ABEB6;">here</a>. If you have trouble logging in, you can <a href="https://www.theteenmagazine.com/reset-password" style="color: #4ABEB6;">reset your password</a> or respond to this email and we will help you get back in. Amazing job!</p>
     <p>Best Regards,<br/>Editor Team</p>
-    <i>If you would like to no longer receive these emails, you can <b><a href="#">unsubscribe<a></b> from all lists.</i>
+    <i>If you would like to no longer receive these emails, you can <a href="https://www.theteenmagazine.com/email-preferences?email=<%= @user.email %>&id=<%= @user.id %>" style="color: #4ABEB6;">unsubscribe<a> from all lists.</i>
   </body>
 </html>

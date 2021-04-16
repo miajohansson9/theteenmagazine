@@ -107,6 +107,7 @@ class ApplicationMailer < ActionMailer::Base
 
   def new_badge_earned(user, badge)
     @badge = badge
+    @user = user
     unless user.do_not_send_emails
       mail(to: user.email, subject: "You have an unclaimed badge!")
     end

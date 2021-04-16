@@ -67,7 +67,8 @@ Rails.application.routes.draw do
   get 'ranking' => 'pages#ranking'
   get 'privacy-policy' => 'pages#privacy'
   get 'subscribe' => 'pages#subscribe'
-  get 'unsubscribe' => 'pages#unsubscribe'
+  get 'email-preferences' => 'pages#email_preferences'
+  post 'email-preferences', to: 'pages#email_preferences'
   get 'trending' => 'pages#trending'
   get 'newsletters/:id/featured-posts' => 'newsletters#featured'
   get 'reviews:post_id' => 'pages#reviews'
@@ -88,8 +89,6 @@ Rails.application.routes.draw do
   get '/partners/:id/published', to: 'users#sponsored'
   get '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
   post '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
-  get '/unsubscribed', to: 'pages#unsubscribed'
-  post '/unsubscribed', to: 'pages#unsubscribed'
 
   patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
   post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim

@@ -159,7 +159,7 @@ task :run_nightly_tasks => :environment do
     review.save
   end
 
-  if (Date.today.day.eql? Date.today.end_of_month.day)
+  if Date.today.day.eql? 16
     User.includes(:posts).where.not(:posts => { :id => nil }).each do |user|
       @user_posts_approved_records = Post.where("collaboration like ?", "%#{user.email}%").or(Post.where(user_id: user.id)).published.by_published_date
       @pageviews = 0
@@ -178,10 +178,4 @@ task :run_nightly_tasks => :environment do
       end
     end
   end
-
-  # TODO
-  # Writer reached new badge
-  # Loop through all writers who haven't logged in in the past month and see if any of them have earned a new badge
-  # Tell them to log in to accept their badge and get it to show up under their profile
-  # Mention % of writers who have that badge
 end

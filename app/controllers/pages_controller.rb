@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:ads, :issue, :privacy, :subscribe, :unsubscribe, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation, :search]
+  before_action :authenticate_user!, except: [:ads, :issue, :privacy, :subscribe, :email_preferences, :update_email_preferences, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation, :search]
   before_action :is_admin?, only: :featured
 
   def team
@@ -154,19 +154,62 @@ class PagesController < ApplicationController
                   }
   end
 
-  def unsubscribe
+  def email_preferences
+    @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+    update_email_preferences
+    begin
+      @subscribed_to_readers = @gb.lists(ENV['MAILCHIMP_LIST_ID']).members(params[:email]).retrieve(params: {"fields": "status"}).body["status"].eql? "subscribed"
+    rescue
+      @subscribed_to_readers = false
+    end
+    @user = User.find_by(email: params[:email])
+    begin
+      @subscribed_to_writers = @gb.lists(ENV['MAILCHIMP_WRITER_LIST_ID']).members(params[:email]).retrieve(params: {"fields": "status"}).body["status"].eql? "subscribed" || !@user.try(:do_not_send_emails)
+    rescue
+      @subscribed_to_writers = false
+    end
   end
 
-  def unsubscribed
+  def update_email_preferences
+    @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
     if params[:pages].present?
+      @user = User.find_by(email: params[:pages][:email])
       if params[:pages][:newsletter].eql? "1"
         begin
-          @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
-          @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.update(body: {email_address: params[:pages][:email], status: "unsubscribed"})
-          flash.now[:notice] = "You've unsubscribed"
+          @gb.lists(ENV['MAILCHIMP_LIST_ID']).members(params[:pages][:email]).update(body: {status: "subscribed"})
         rescue
-          flash.now[:notice] = "Error: Failed to unsubscribe"
+          @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.create(body: {email_address: params[:pages][:email], status: "subscribed"})
         end
+      else
+        begin
+          @gb.lists(ENV['MAILCHIMP_LIST_ID']).members(params[:pages][:email]).update(body: {status: "unsubscribed"})
+        rescue
+          @errors = true
+        end
+      end
+      if @user != nil && (@user.id.to_s.eql? params[:pages][:id])
+        if params[:pages][:writer].eql? "1"
+          @user.update_column('do_not_send_emails', false)
+          begin
+            @gb.lists(ENV['MAILCHIMP_WRITER_LIST_ID']).members(params[:pages][:email]).update(body: {status: "subscribed"})
+          rescue
+            @gb.lists(ENV['MAILCHIMP_WRITER_LIST_ID']).members.create(body: {email_address: params[:pages][:email], status: "subscribed"})
+          end
+        else
+          begin
+            @gb.lists(ENV['MAILCHIMP_WRITER_LIST_ID']).members(params[:pages][:email]).update(body: {status: "unsubscribed"})
+            @user.update_column('do_not_send_emails', true)
+          rescue
+            @errors = true
+          end
+        end
+      else
+        @errors = true
+      end
+      if @errors
+        flash.now[:notice] = "There was an error saving your preferences"
+      else
+        flash.now[:notice] = "Updated #{params[:pages][:email]} email preferences successfully"
       end
     end
   end
