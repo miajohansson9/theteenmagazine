@@ -47,6 +47,7 @@
           <% else %>
             <%= form_for pitch, url: pitch_onboarding_unclaim_path(:id => pitch.id), remote: true do |f| %>
               <%= f.hidden_field :claimed_id, value: nil %>
+              <%= f.hidden_field :archive, value: !pitch.user.editor %>
               <%= f.button "Cancel", class: "newpost--new--profile mr-2 pl-5 pr-5", id: "dismiss-modal", "data-dismiss" => "modal" %>
               <div class="hide spinner-button spinner-border" style="margin-left: 78px !important;" role="status">
                 <span class="sr-only">Loading...</span>

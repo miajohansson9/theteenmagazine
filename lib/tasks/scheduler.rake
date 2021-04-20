@@ -46,16 +46,19 @@ task :run_weekly_tasks => :environment do
       ApplicationMailer.remind_editors_of_assigments(editor).deliver
     end
   end
+end
 
-  if (Date.today.end_of_month.day - Date.today.day < 16)
+task :run_nightly_tasks => :environment do
+  ## Send warning emails if editor is not on track to complete assignments
+  if (Date.today.day.eql? 18)
     @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
     @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
     User.editor.each do |editor|
-      @editor_pitches_cnt =  @user.pitches.where("created_at > ?", Date.today.beginning_of_month).count
-      @editor_reviews_cnt = Review.where(editor_id: @user.id).where("updated_at > ?", Date.today.beginning_of_month).count
-      @is_not_on_track = (@editor_pitches_cnt + @editor_reviews_cnt < (@reviews_requirement + @pitches_requirement) / 2) && (@user.created_at < (Time.now - 30.days))
+      @editor_pitches_cnt =  editor.pitches.where("created_at > ?", Date.today.beginning_of_month).count
+      @editor_reviews_cnt = Review.where(editor_id: editor.id).where("updated_at > ?", Date.today.beginning_of_month).count
+      @is_not_on_track = (@editor_pitches_cnt + @editor_reviews_cnt < (@reviews_requirement + @pitches_requirement) / 2) && (editor.created_at < (Time.now - 30.days))
       if @is_not_on_track
-        if @user.missed_editor_deadline.try(:month) === (Date.today - 1.month).month
+        if editor.missed_editor_deadline.try(:month) === (Date.today - 1.month).month
           ApplicationMailer.editor_warning_deadline_2(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
         else
           ApplicationMailer.editor_warning_deadline_1(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
@@ -63,9 +66,7 @@ task :run_weekly_tasks => :environment do
       end
     end
   end
-end
 
-task :run_nightly_tasks => :environment do
   if (Date.today.day.eql? 1)
     @reviews_requirement = Integer(Constant.find_by(name: "# of monthly reviews editors need to complete").try(:value) || '0')
     @pitches_requirement = Integer(Constant.find_by(name: "# of monthly pitches editors need to complete").try(:value) || '0')
@@ -76,14 +77,12 @@ task :run_nightly_tasks => :environment do
       if @missed_deadline
         if (editor.missed_editor_deadline.try(:month) === Date.yesterday.month) && !editor.admin
           ApplicationMailer.removed_editor_from_team(editor).deliver
-          editor.editor = false
-          editor.became_an_editor = nil
-          editor.completed_editor_onboarding = nil
-          editor.save
+          editor.update_column('editor', false)
+          editor.update_column('became_an_editor', nil)
+          editor.update_column('completed_editor_onboarding', nil)
         else
           ApplicationMailer.editor_missed_deadline_1(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
-          editor.missed_editor_deadline = (Time.now - 1.day)
-          editor.save
+          editor.update_column('missed_editor_deadline', Time.now - 1.day)
         end
       end
     end
@@ -120,6 +119,7 @@ task :run_nightly_tasks => :environment do
           @post.title = "#{@post.title} (locked)"
           @post.save
           @post.pitch.update_column('claimed_id', nil)
+          @post.pitch.update_column('archive', !@post.pitch.user.editor)
           @slug = FriendlyId::Slug.where(slug: @post.pitch.slug, sluggable_type: "Post")
           @slug&.destroy_all
           ApplicationMailer.article_deadline_passed(user, @post).deliver
@@ -159,6 +159,7 @@ task :run_nightly_tasks => :environment do
     review.save
   end
 
+  # Notify writers of new badge earned
   if Date.today.day.eql? 16
     User.includes(:posts).where.not(:posts => { :id => nil }).each do |user|
       @user_posts_approved_records = Post.where("collaboration like ?", "%#{user.email}%").or(Post.where(user_id: user.id)).published.by_published_date

@@ -66,16 +66,16 @@ pintrk('track', 'pagevisit');
 <script type="text/javascript">
   $('#pdf-file-resume').bind('change', function() {
     var size = this.files[0].size/1024/1024;
-    if (size > 1) {
-      alert('The maximum file size is 1 MiB. This file size is: ' + size + " MiB.");
+    if (size > 5) {
+      alert('The maximum file size is 5 MiB. This file size is: ' + size + " MiB.");
       $('#pdf-file-resume').val("");
     }
   });
 
   $('#pdf-file-writing').bind('change', function() {
     var size = this.files[0].size/1024/1024;
-    if (size > 1) {
-      alert('The maximum file size is 1 MiB. This file size is: ' + size + " MiB.");
+    if (size > 5) {
+      alert('The maximum file size is 5 MiB. This file size is: ' + size + " MiB.");
       $('#pdf-file-writing').val("");
     }
   });
