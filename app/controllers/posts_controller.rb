@@ -202,7 +202,7 @@ class PostsController < ApplicationController
     @service_id = ENV['WEBSPELLCHECKER_ID']
     #create new review if no current review or last review was rejected
     @requested_changes = @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
-    @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.feedback_givens) : @post.reviews.last
+    @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") || (@post.reviews.last.try(:status).eql? "Approved for Publishing") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.try(:feedback_givens)) : @post.reviews.last
     @reviews = @post.reviews.where(status: ["Rejected", "Approved for Publishing"])
     @feedbacks = Feedback.all
     @feedbacks_editor_frm = Feedback.active.order('created_at asc')
