@@ -8,6 +8,8 @@
 //= link_directory ../javascripts/ckeditor/lang en.js
 //= link_directory ../javascripts/ckeditor/skins/moono-lisa
 //= link_directory ../javascripts/ckeditor/plugins/tableselection/styles
+//= link_directory ../javascripts/ckeditor/plugins/dialogui
+//= link_directory ../javascripts/ckeditor/plugins/dialog
 //= link_directory ../javascripts/ckeditor/plugins/dialog/styles
 //= link_directory ../javascripts/ckeditor/plugins/image/dialogs
 //= link_directory ../javascripts/ckeditor/plugins/justify
