@@ -11,6 +11,7 @@
 //= link_directory ../javascripts/ckeditor/plugins/dialog/styles
 //= link_directory ../javascripts/ckeditor/plugins/image/dialogs
 //= link_directory ../javascripts/ckeditor/plugins/justify
+//= link_directory ../javascripts/ckeditor/plugins/find
 //= link_directory ../javascripts/ckeditor/plugins/link/dialogs
 //= link_directory ../javascripts/ckeditor/plugins/pastefromgdocs/filter
 //= link_directory ../javascripts/ckeditor/plugins/pastefromword/filter
