@@ -8,14 +8,9 @@
 //= link_directory ../javascripts/ckeditor/lang en.js
 //= link_directory ../javascripts/ckeditor/skins/moono-lisa
 //= link_directory ../javascripts/ckeditor/plugins/tableselection/styles
-//= link_directory ../javascripts/ckeditor/plugins/dialogui
-//= link_directory ../javascripts/ckeditor/plugins/dialog
 //= link_directory ../javascripts/ckeditor/plugins/dialog/styles
 //= link_directory ../javascripts/ckeditor/plugins/image/dialogs
 //= link_directory ../javascripts/ckeditor/plugins/justify
-//= link_directory ../javascripts/ckeditor/plugins/find
-//= link_directory ../javascripts/ckeditor/plugins/find/lang
-//= link_directory ../javascripts/ckeditor/plugins/find/dialogs
 //= link_directory ../javascripts/ckeditor/plugins/link/dialogs
 //= link_directory ../javascripts/ckeditor/plugins/pastefromgdocs/filter
 //= link_directory ../javascripts/ckeditor/plugins/pastefromword/filter
