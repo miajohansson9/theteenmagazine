@@ -241,7 +241,7 @@ body {
   font-family: 'Charter',Georgia,Times,Serif;
 }
 
-.border {
+.border, .header-writer-mobile {
   border: none !important;
   border-bottom: 1px solid rgba(0,0,0,0.1) !important;
   border-top: 1px solid rgba(0,0,0,0.1) !important;
@@ -389,7 +389,7 @@ html, body {
   border-bottom: 1px solid whitesmoke;
   position: fixed;
   z-index: 1000002;
-  .border {
+  .border, .header-writer-mobile {
     border: none !important;
   }
 }
@@ -1352,7 +1352,7 @@ p, ul, ol {
   }
 
   .header-navigation #banner,
-  .header-navigation .border {
+  .header-navigation .hide-on-mobile {
     display: none !important;
   }
 
