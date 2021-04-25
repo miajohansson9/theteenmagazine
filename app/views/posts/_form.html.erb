@@ -45,6 +45,7 @@
           <% else %>
             <p class="d-inline">Article Status:</p>
             <%= rv.select :status, options_for_select(@statuses || ["In Progress"], @review.try(:status)) %>
+            <%= rv.hidden_field :editor_id, value: @review.try(:editor_id) %>
             <% if current_user.admin && @post.is_published? %>
               <div style="float:right; text-align: right;">
                 <p class="mt-0">Featured on homepage: <%= f.check_box :featured %></p>
@@ -93,7 +94,7 @@
         }
       } else if (selected == "Approved for Publishing") {
         <% if !(@post.reviews.last.status.eql? "Approved for Publishing") && (@post.user_id != current_user.id) %>
-          reply=confirm("You will not be able to edit this article once you approve it for publishing. Are you sure you want to continue?");
+          reply=confirm("This article will be published to the homepage. Are you sure you want to continue?");
         <% end %>
       } else if (selected == "In Review") {
         <% if !(@post.reviews.last.status.eql? "In Review") %>

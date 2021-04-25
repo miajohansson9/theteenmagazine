@@ -202,7 +202,18 @@ class PostsController < ApplicationController
     @service_id = ENV['WEBSPELLCHECKER_ID']
     #create new review if no current review or last review was rejected
     @requested_changes = @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
-    @review = (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected") || (@post.reviews.last.try(:status).eql? "Approved for Publishing") ? @post.reviews.build(active: true, feedback_givens: @post.reviews.last.try(:feedback_givens)) : @post.reviews.last
+    #create a new review if the last review is either nil or rejected
+    if (@post.reviews.last.nil?) || (@post.reviews.last.try(:status).eql? "Rejected")
+      @review = @post.reviews.build(active: true, feedback_givens: @post.reviews.last.try(:feedback_givens))
+    #create a new review for an already published article that is updated by a different editor
+    elsif (@post.reviews.last.try(:status).eql? "Approved for Publishing") && !(@post.reviews.last.try(:editor_id).eql? current_user.id) && (current_user.id != @post.user_id)
+      @review = @post.reviews.build(active: true, status: "Approved for Publishing", editor_id: current_user.id)
+      puts "LKDSJFLKSDJF"
+      puts @review
+      puts @review.editor_id
+    else
+      @review = @post.reviews.last
+    end
     @reviews = @post.reviews.where(status: ["Rejected", "Approved for Publishing"])
     @feedbacks = Feedback.all
     @feedbacks_editor_frm = Feedback.active.order('created_at asc')
@@ -267,6 +278,8 @@ class PostsController < ApplicationController
         end
         @post.publish_at = Time.now
       end
+      puts "LKSDJFLSKDJF"
+      puts @rev.editor_id
       if @rev.present?
         @post.reviews.each do |review|
           review.update_column('active', false)
@@ -457,7 +470,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :featured, :newsletter_id, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes], :user_attributes => [:extensions, :id])
+    params.require(:post).permit(:title, :featured, :newsletter_id, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :editor_id, :created_at, :status, :notes], :user_attributes => [:extensions, :id])
   end
 
   def find_post_history
