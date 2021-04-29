@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     @unseen_pitches = Pitch.is_approved.not_claimed.where(status: nil).where.not(user_id: current_user.id).where('updated_at > ?', current_user.last_saw_pitches)
     @unseen_pitches_cnt = @unseen_pitches.size
 
-    @unseen_shared_drafts  = Post.where(sharing: true, publish_at: nil).draft.where('posts.updated_at > ?', current_user.last_saw_community)
+    @unseen_shared_drafts  = Post.where(sharing: true, publish_at: nil).draft.where('posts.shared_at > ?', current_user.last_saw_community)
     @unseen_shared_drafts_cnt  = @unseen_shared_drafts.size
 
     @notifications = @unseen_pitches_cnt + @unseen_shared_drafts_cnt

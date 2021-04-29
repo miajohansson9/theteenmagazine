@@ -258,7 +258,7 @@ class PitchesController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :featured, :newsletter, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes, :editor_id], :user_attributes => [:extensions, :id])
+    params.require(:post).permit(:title, :featured, :newsletter, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :shared_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :created_at, :status, :notes, :editor_id], :user_attributes => [:extensions, :id])
   end
 
   def find_pitch

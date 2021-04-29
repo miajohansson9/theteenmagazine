@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_13_163715) do
+ActiveRecord::Schema.define(version: 2021_04_29_212640) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -268,6 +268,7 @@ ActiveRecord::Schema.define(version: 2021_04_13_163715) do
     t.boolean "featured"
     t.datetime "deadline_at"
     t.integer "newsletter_id"
+    t.datetime "shared_at"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
     t.index ["publish_at"], name: "index_posts_on_publish_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true

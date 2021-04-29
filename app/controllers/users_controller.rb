@@ -121,7 +121,7 @@ class UsersController < ApplicationController
       if @user.badges.where(level: level[0]).present?
         @badge = @user.badges.find_by(level: level[0])
         break
-      elsif (@pageviews > level[2]) && (@user.badges.where(level: level[0]).count.eql? 0) && (current_user.id.eql? @user.id)
+      elsif (@pageviews >= level[2]) && (@user.badges.where(level: level[0]).count.eql? 0) && (current_user.id.eql? @user.id)
         @badge = @user.badges.build(level: level[0], kind: "pageviews", color: level[1])
         @badge.save
         @badges_above = @levels[0..index].map{|l| l[0]}

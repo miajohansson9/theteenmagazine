@@ -171,7 +171,7 @@ task :run_nightly_tasks => :environment do
       @levels.each_with_index do |level, index|
         if user.badges.where(level: level[0]).present?
           break
-        elsif (@pageviews > level[2]) && (user.badges.where(level: level[0]).count.eql? 0)
+        elsif (@pageviews >= level[2]) && (user.badges.where(level: level[0]).count.eql? 0)
           @badge = user.badges.build(level: level[0], kind: "pageviews", color: level[1])
           ApplicationMailer.new_badge_earned(user, @badge).deliver
           break

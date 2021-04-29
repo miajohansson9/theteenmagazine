@@ -145,6 +145,7 @@ class PostsController < ApplicationController
         redirect_to @post, notice: "Partner sharing turned off for this article"
       elsif !params[:sharing].nil? && (current_user.id = @post.id || current_user.admin || current_user.editor)
         @post.sharing = params[:sharing]
+        @post.shared_at = params[:sharing] ? Time.now : nil
         @post.save
         @message = @post.sharing ? "Peer sharing is turned on!" : "Peer sharing is turned off."
         redirect_to @post, notice: @message
@@ -470,7 +471,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :featured, :newsletter_id, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :editor_id, :created_at, :status, :notes], :user_attributes => [:extensions, :id])
+    params.require(:post).permit(:title, :featured, :newsletter_id, :editor_can_make_changes, :thumbnail, :ranking, :content, :image, :category_id, :partner_id, :post_impressions, :meta_description, :keywords, :user_id, :admin_id, :pitch_id, :waiting_for_approval, :approved, :sharing, :collaboration, :after_approved, :created_at, :publish_at, :deadline_at, :shared_at, :promoting_until, :slug, :feedback_list => [], :reviews_attributes => [:id, :post_id, :editor_id, :created_at, :status, :notes], :user_attributes => [:extensions, :id])
   end
 
   def find_post_history
