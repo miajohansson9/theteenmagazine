@@ -45,14 +45,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
         redirect_to "/writers/", notice: 'Something went wrong.'
       end
     else
-      ApplicationMailer.rejection_email(resource).deliver
       @application = Apply.find_by('lower(email) = ?', resource.email.downcase)
-      @application.rejected_writer_at = Time.now
-      @application.save
+      @application.update_attribute("rejected_writer_at", Time.now)
       if @application.invitation.present?
-        @application.invitation.status = "Not accepted"
-        @application.invitation.save
+        @application.invitation.update_attribute("status","Not accepted")
       end
+      ApplicationMailer.rejection_email(resource).deliver
       redirect_to applies_path, notice: 'Application was rejected.'
     end
   end
