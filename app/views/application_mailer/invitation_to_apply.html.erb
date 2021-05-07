@@ -424,7 +424,7 @@
                         <div style="text-align: center; padding: 40px 20px;">
                           <div class="position-relative" style="width: 120px; margin: 0 auto;">
                             <% if @user.try(:profile)&.exists? %>
-                              <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
+                              <img src="http:<%= @user.profile.url(:square) %>" alt="<%= @user.profile.url(:square) %>">
                             <% else %>
                               <%= image_tag("https://www.theteenmagazine.com/assets/profile_image-d8facbb469f1bc2077639f9d92f2c56bbf1b5c7e144045d67a2aa0f80364ba41.jpg", :class => "profile_img") %>
                             <% end %>
