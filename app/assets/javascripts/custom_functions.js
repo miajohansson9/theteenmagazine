@@ -117,3 +117,12 @@ function isDisabled(id) {
     $('.submit_' + id).addClass("disabled");
   }
 };
+
+function isFormButtonDisabled(input) {
+  var input = $(input).val();
+  if (input.includes('@')) {
+    $('#submit-comment-modal-button').removeClass("disabled");
+  } else {
+    $('#submit-comment-modal-button').addClass("disabled");
+  }
+};

@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :newsletters
   has_many :badges
+  has_many :invitations
+  has_many :applies
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

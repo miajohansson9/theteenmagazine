@@ -35,7 +35,7 @@ class PostsController < ApplicationController
     end
     @points = current_user.points
     @my_shared_drafts = Post.where("collaboration like ?", "%#{current_user.email}%").or(Post.where(user_id: current_user.id)).where(sharing: true, publish_at: nil).draft.order("updated_at desc")
-    @pagy, @shared_drafts = pagy(Post.where(sharing: true).draft.order("updated_at desc"), page: params[:page], items: 12)
+    @pagy, @shared_drafts = pagy(Post.where(sharing: true).draft.order("shared_at desc"), page: params[:page], items: 12)
     Thread.new do
       current_user.update_column('last_saw_community', Time.now)
     end
@@ -209,9 +209,6 @@ class PostsController < ApplicationController
     #create a new review for an already published article that is updated by a different editor
     elsif (@post.reviews.last.try(:status).eql? "Approved for Publishing") && !(@post.reviews.last.try(:editor_id).eql? current_user.id) && (current_user.id != @post.user_id)
       @review = @post.reviews.build(active: true, status: "Approved for Publishing", editor_id: current_user.id)
-      puts "LKDSJFLKSDJF"
-      puts @review
-      puts @review.editor_id
     else
       @review = @post.reviews.last
     end
@@ -279,7 +276,6 @@ class PostsController < ApplicationController
         end
         @post.publish_at = Time.now
       end
-      puts "LKSDJFLSKDJF"
       puts @rev.editor_id
       if @rev.present?
         @post.reviews.each do |review|
@@ -305,8 +301,8 @@ class PostsController < ApplicationController
         ApplicationMailer.article_has_requested_changes(@post.user, @post).deliver
       end
       if post_params[:promoting_until].present?
-        @post.user.points = @post.user.points - 200
-        @post.user.save
+        @post.user.update_column("points", @post.user.points - 200)
+        @post.update_column("shared_at", Time.now)
         redirect_to "/community", notice: "Your draft is now being promoted!"
       elsif post_params[:deadline_at].present?
         redirect_to "/writers/#{@post.user.slug}/extensions", notice: "Extension applied."

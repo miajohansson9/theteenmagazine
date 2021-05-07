@@ -1,10 +1,26 @@
 <div class="skinny_wrapper" id="comments_feed">
-  <h3>Welcome to the community, <%= current_user.first_name %>!</h3>
-  <h4>Your available points: <%= @points %></h4>
-  <div class="progress mt-3">
-    <div class="progress-bar" role="progressbar" style="width: <%= @points / 2 %>%" aria-valuenow="<%= @points %>" aria-valuemin="0" aria-valuemax="200"></div>
+  <div class="flex--profile profile-minimal mt-4">
+    <div class="position-relative" style="width: 120px; margin: 0 auto;">
+      <% if @user.try(:profile)&.exists? %>
+        <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
+      <% else %>
+        <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+        <% if @user.try(:editor) %>
+          <span class="badge badge-default editor_label" style="top: 5px;">Editor</span>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-  <p>You can use your points to promote your shared drafts and get more feedback from other writers. Earn points by commenting and giving constructive criticism on other writers' shared drafts below.</p>
+  <h3 class="text-center mt-0">Welcome to the community, <%= current_user.first_name %>!</h3>
+  <p class="text-center">You've earned <b><%= @points %></b> community points</p>
+  <div class="progress mt-3">
+    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <p>You can use your points to promote your shared drafts and get more feedback from other writers.</p>
+  <p>
+    Earn points by commenting on other writers' shared drafts or by
+    <%= link_to "inviting your friends to The Teen Magazine", "/writers/#{current_user.slug}/invitations", class: "link_grn" %>.
+  </p>
   <% if @my_shared_drafts.count.eql? 0 %>
     <p class="mb-0"><i>You don't have any drafts that have sharing turned on.</i></p>
   <% else %>
@@ -92,3 +108,19 @@
     </div>
   </div>
 </div>
+
+<% @fraction = @points.to_f / 200.0 %>
+<% @progress = @fraction >= 1 ? 1 : @fraction %>
+
+<style media="screen">
+  .complete {
+    width: <%= @progress * 100 %>% !important;
+    transition-duration: 2s;
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.progress-bar').addClass("complete");
+  });
+</script>

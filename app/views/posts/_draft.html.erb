@@ -94,7 +94,7 @@ blockquote {
           <%= render :partial => 'posts/partials/partner_comments', locals: {partner: @partner, post: @post, comments: @comments, comment: @comment} %>
         <% elsif @post.sharing %>
           <%= render :partial => 'posts/partials/sharing_on', locals: {user: @user, post: @post, comments: @comments, comment: @comment}  %>
-        <% else %>
+        <% elsif (current_user.admin? || current_user.id == @post.user_id) %>
           <%= render :partial => 'posts/partials/sharing_off', locals: {post: @post} %>
         <% end %>
       </div>

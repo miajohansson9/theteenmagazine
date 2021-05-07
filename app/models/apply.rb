@@ -1,4 +1,7 @@
 class Apply < ActiveRecord::Base
+  belongs_to :invitation, optional: true
+  belongs_to :user, optional: true
+
   include MailForm::Delivery
 
   attributes :first_name,  :validate => true
@@ -21,9 +24,9 @@ class Apply < ActiveRecord::Base
 
   def headers
   {
-    :subject => "Application ##{id}: theteenmagazine.com/applies/#{id}",
-    :to => "editors@theteenmagazine.com",
-    :from => %("#{first_name} #{last_name}" <#{email}>)
+    :subject => "Your application to The Teen Magazine was submitted successfully",
+    :to => "#{email}",
+    :from => %("The Teen Magazine Editor Team" <editors@theteenmagazine.com>)
   }
   end
 end

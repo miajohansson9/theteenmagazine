@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :comments
   resources :outreaches
   resources :newsletters
+  resources :invitations
 
   #asynchronously fetched
   get :get_trending_posts, controller: :welcome
@@ -34,6 +35,9 @@ Rails.application.routes.draw do
 
   get :get_trending_posts_in_category, controller: :posts
   get :get_conversations_following, controller: :posts
+
+  get :get_sent_invitations, controller: :invitations
+  get :get_sent_invitations_admin, controller: :invitations
 
   get :get_profile, controller: :users
   get :get_editor_stats, controller: :users
@@ -86,6 +90,8 @@ Rails.application.routes.draw do
   get '/editors', to: 'users#editors'
   get '/partners/:id/share', to: 'users#share'
   get '/writers/:id/extensions', to: 'users#extensions'
+  get '/writers/:id/invitations', to: 'invitations#index'
+  get '/writers/:slug/invitations/:token', to: 'invitations#show'
   get '/partners/:id/published', to: 'users#sponsored'
   get '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
   post '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
@@ -93,6 +99,8 @@ Rails.application.routes.draw do
   patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
   post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim
   patch 'pitches/:id/unclaim' => 'pitches#pitch_onboarding_unclaim', as: :pitch_onboarding_unclaim
+
+  post 'writers/:slug/invitations/:token/apply_through_invitation' => 'invitations#apply_through_invitation', as: :apply_through_invitation
 
   get '/community', to: 'posts#index'
   post '/community', to: 'posts#index'

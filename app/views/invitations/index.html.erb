@@ -1,0 +1,64 @@
+<div id="banner_writing" class="invite"></div>
+<div class="apply_wrapper pitch_form_wrapper">
+  <div class="flex--profile profile-minimal">
+    <div class="position-relative" style="width: 120px; margin: 0 auto;">
+      <% if @user.try(:profile)&.exists? %>
+        <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
+      <% else %>
+        <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+        <% if @user.try(:editor) %>
+          <span class="badge badge-default editor_label" style="top: 5px;">Editor</span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <h3 class="text-center">Share your love of writing</h3>
+  <p class="text-center">You've invited <span id="invite-count"><b><%= @user.invitations.count %></b> friend<% if !(@user.invitations.count.eql? 1) %>s<% end %></span></p>
+  <!-- Classic tabs -->
+  <div class="classic-tabs mb-4">
+    <ul class="nav" id="myClassicTab" role="tablist">
+      <li class="nav-item tab-custom">
+        <a class="tab-custom active show" id="home-tab-classic" data-toggle="tab" href="#home-classic"
+          role="tab" aria-controls="home-classic" aria-selected="true">Home</a>
+      </li>
+      <li class="nav-item tab-custom">
+        <a class="tab-custom" id="your-invites-tab-classic" data-toggle="tab" href="#your-invites-classic" role="tab"
+          aria-controls="your-invites-classic" aria-selected="false">Your Invites</a>
+      </li>
+      <% if @user.admin? %>
+        <li class="nav-item tab-custom">
+          <a class="tab-custom" id="admin-invites-tab-classic" data-toggle="tab" href="#admin-invites-classic" role="tab"
+            aria-controls="admin-invites-classic" aria-selected="false">Admin</a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <!-- Classic tabs -->
+  <div class="tab-content p-0" id="myClassicTabContent">
+    <div class="tab-pane fade active show" id="home-classic" role="tabpanel" aria-labelledby="hometab-classic">
+      <div id="form-invite">
+        <%= render "/invitations/partials/home/form", invitation: @invitation %>
+      </div>
+    </div>
+    <div class="tab-pane activity_wrapper fade" id="your-invites-classic" role="tabpanel" aria-labelledby="your-invites-tab-classic">
+      <%= render_async get_sent_invitations_path(user: @user), toggle: { selector: '#your-invites-tab-classic', event: :click } do %>
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border mb-4" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <% if @user.admin? %>
+      <div class="tab-pane activity_wrapper fade" id="admin-invites-classic" role="tabpanel" aria-labelledby="admin-invites-tab-classic">
+        <%= render_async get_sent_invitations_admin_path, toggle: { selector: '#admin-invites-tab-classic', event: :click } do %>
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border mb-4" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

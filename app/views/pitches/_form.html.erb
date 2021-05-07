@@ -15,13 +15,13 @@
       <p>Don't know what to write about? Visit <a target="_blank" href="/choosing-a-topic#topic-requirements">Topic Requirements</a> for some inspiration.</p>
     <% end %>
 
-    <p>Write a <a target="_blank" href="/choosing-a-topic#title-requirements">Shareable and/or Searchable</a> title here:</p>
+    <p>Write a <a target="_blank" class="link_grn" href="/choosing-a-topic#title-requirements">Shareable and/or Searchable</a> title here:</p>
     <%= f.text_field :title, placeholder: "Title" %>
 
-    <p>Explain your idea and why the article topic fits <a target="_blank" href="/choosing-a-topic#topic-requirements">The Teen Magazine's audience</a>:</p>
+    <p>Explain your idea and why the article topic fits <a target="_blank" class="link_grn" href="/choosing-a-topic#topic-requirements">The Teen Magazine's audience</a>:</p>
     <%= f.text_area :description, placeholder: "Your idea..." %>
 
-    <div class="margin_flds">
+    <div class="margin_flds mt-0">
       <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}) %>
     </div>
 

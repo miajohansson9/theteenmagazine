@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_212640) do
+ActiveRecord::Schema.define(version: 2021_05_07_170632) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2021_04_29_212640) do
     t.string "kind"
     t.string "rejected_writer_at"
     t.string "rejected_editor_at"
+    t.integer "invitation_id"
   end
 
   create_table "badges", force: :cascade do |t|
@@ -158,6 +159,17 @@ ActiveRecord::Schema.define(version: 2021_04_29_212640) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "Impression_count"
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.integer "impressions", default: 0
+    t.string "status"
+    t.integer "user_id"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "apply_id"
+    t.string "token"
   end
 
   create_table "mailers", force: :cascade do |t|

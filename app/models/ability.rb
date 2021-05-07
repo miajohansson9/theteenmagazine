@@ -16,6 +16,7 @@ class Ability
       can :update_newsletter, Post do |post|
         user.has_newsletter_permissions
       end
+      can :manage, Invitation, user_id: user.id
       can :create, Post
       can :read, Post
       can :manage, User, id: user.id

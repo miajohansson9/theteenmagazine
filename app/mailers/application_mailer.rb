@@ -105,6 +105,12 @@ class ApplicationMailer < ActionMailer::Base
     mail(to: email, subject: "Get Inspired by These Topic Ideas")
   end
 
+  def invitation_to_apply(email, user, invite)
+    @user = user
+    @invitation = invite
+    mail(to: email, subject: "#{@user.first_name} recommended you to join The Teen Magazine")
+  end
+
   def new_badge_earned(user, badge)
     @badge = badge
     @user = user

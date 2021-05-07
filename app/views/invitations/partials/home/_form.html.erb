@@ -1,0 +1,37 @@
+<p>
+  Our writer community becomes better with more talented writers like you. That's why we want to make it as easy as possible for you to invite your friends to The Teen Magazine and earn community points at the same time.
+</p>
+<p>
+  Simply enter your friends' emails and we will take care of the rest!
+</p>
+<%= form_for invitation, :remote=>true do |f| %>
+  <% if @invitation.errors.any? %>
+    <h6 class="mt-3 text-danger"><%= pluralize(@invitation.errors.count, "error")%> prevented this invitation from sending:</h6>
+    <ul>
+      <% @invitation.errors.full_messages.each do |msg| %>
+      <li class="text-danger"><h6><%= msg %></h6></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="pitch_flds mb-3 mt-4">
+    <%= f.text_field :email, placeholder: "Enter Email Address", onkeyup: "isFormButtonDisabled('#invitation_email')" %>
+    <%= f.hidden_field :status, value: "Not viewed" %>
+    <%= f.hidden_field :token, value: [*('A'..'Z'),*('a'..'z')].shuffle[0,31].join %>
+    <div class="btn_cntnr mt-0 mb-0 pb-0 pt-2" style="float: none; position: relative;">
+      <div class="spinner-button spinner-border hide" style="margin-left: 38%;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <%= f.button "Send Invite!", class: "newpost--new--profile mr-0 pl-4 pr-4 mb-0 submit_modal disabled", id: "submit-comment-modal-button" %>
+    </div>
+  </div>
+  <small>
+    When you click <i>Send Invite</i>, we will send an email inviting your friend(s) to apply to The Teen Magazine. The email will include a special apply link from you that will waive the cover letter and prioritize their application for review.
+    The referral link will expire in 1 week so they must apply before then to benefit from the easier application.
+  </small>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    isFormButtonDisabled('#invitation_email');
+  });
+</script>

@@ -94,7 +94,6 @@
       <%= f.hidden_field :user_id, value: current_user.id %>
       <%= f.hidden_field :kind, value: "Editor" %>
       <% @disabled = current_user.editor ? "disabled" : "" %>
-
       <div class="btn_cntnr mb-0 pt-2" style="float: none; position: relative;">
         <div class="hide spinner-button spinner-border" style="margin-left: 40%" role="status">
           <span class="sr-only">Loading...</span>

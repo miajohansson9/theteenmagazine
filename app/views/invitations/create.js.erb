@@ -1,0 +1,20 @@
+<% if @active_user_already_exists %>
+  document.querySelector('#banner').insertAdjacentHTML('beforebegin', "<p class='notice'>Oops, a writer with this email already exists.</p>");
+  setTimeout(function() {
+    $('.notice').slideUp();
+  }, 1500);
+  window.scrollTo(0, 0);
+  $('.spinner-button').addClass('hide');
+  $('#invitation_email').val("");
+<% elsif @active_invite_already_exists %>
+  document.querySelector('#banner').insertAdjacentHTML('beforebegin', "<p class='notice'>Oops, you've already sent an invitation to this email.</p>");
+  setTimeout(function() {
+    $('.notice').slideUp();
+  }, 1500);
+  window.scrollTo(0, 0);
+  $('.spinner-button').addClass('hide');
+  $('#invitation_email').val("");
+<% else %>
+  $('#form-invite').html("<%= j(render partial: 'invitations/partials/home/confirmation_invite_sent', locals: {invites_left_to_earn_points: @invites_left_to_earn_points}) %>");
+  $('#invite-count').html("<b><%= current_user.invitations.count %></b> friend<% if !(current_user.invitations.count.eql? 1) %>s<% end %>");
+<% end %>

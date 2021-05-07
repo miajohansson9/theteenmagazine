@@ -1,0 +1,111 @@
+<div id="banner_writing" class="invite"></div>
+<div class="apply_wrapper pitch_form_wrapper">
+  <div class="alert alert-info" role="alert">
+    <svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" class="mr-1 mb-1 svg-inline--fa fa-clock fa-w-16" role="img" viewBox="0 0 512 512">
+      <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path>
+    </svg>
+    This invite will expire in <%= time_ago_in_words(@invitation.created_at + 7.days) %>.
+  </div>
+  <div class="flex--profile profile-minimal mt-4">
+    <div class="position-relative" style="width: 120px; margin: 0 auto;">
+      <% if @user.try(:profile)&.exists? %>
+        <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
+      <% else %>
+        <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+      <% end %>
+    </div>
+  </div>
+  <h3 class="text-center" style="max-width: 500px; margin: 0 auto;">You've been invited to apply to The Teen Magazine by <%= link_to @user.full_name, @user, :target => "_blank", :class => "link_nrml" %>.</h3>
+  <p>We've asked our writers to invite friends who they think would be a great fit at The Teen Magazine, and you were recommended by <%= link_to @user.full_name, @user, :target => "_blank", :class => "link_grn" %>.</p>
+  <p>
+    <b>To make it as easy as possible for you to apply, we've waived the regular cover letter and will prioritize reviewing your application within 24 hours of submission</b>.
+    If accepted, you will have the opportunity to claim article topics at your own pace, build your writing portfolio, and connect with our writer community to ultimately grow as a writer.
+  </p>
+  <p>We hope you apply to our team, and we can’t wait to read your submission! Read more about The Teen Magazine <a href="/about-us" class="link_grn" target="_blank">here</a>.</p>
+    <div id="submit-application-form">
+      <%= form_for @application, url: apply_through_invitation_path(:token => @invitation.token) do |f| %>
+        <% if @application.errors.any? %>
+          <h6 class="pt-3 text-danger"><%= pluralize(@application.errors.count, "error")%> prevented this application from submitting:</h6>
+          <ul class="mb-4">
+            <% @application.errors.full_messages.each do |msg| %>
+            <li class="text-danger"><h6><%= msg %></h6></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <p class="mb-0 mt-4">*First Name:</p>
+        <%= f.text_field :first_name, placeholder: "First", value: @application.first_name %>
+        <p class="mb-0 mt-0">*Last Name:</p>
+        <%= f.text_field :last_name, placeholder: "Last", value: @application.last_name %>
+        <p class="mb-0 mt-0">*Email Address:</p>
+        <%= f.email_field :email, placeholder: "Email", value: @application.email || @invitation.email %>
+        <p class="mt-0">*Grade Level: <%= f.select :grade, options_for_select(["College", "12th grade", "11th grade", "10th grade", "9th grade"]), :prompt => "Select a grade" %></p>
+        <p>Cover letter: Your cover letter can describe why you think you'd be a good fit for The Teen Magazine and what you hope to gain from being a part of the writer community. <b>Because you were referred by a writer for The Teen Magazine, this part of the application is optional.</b></p>
+        <%= f.text_area :description, placeholder: "Write your cover letter here (optional)", style: "min-height: 150px !important;"  %>
+        <% if @application.resume.present? %>
+          <p class="d-block mt-0">Attached resume:</p>
+          <p><%= link_to "#{@application.resume}", "#{@application.resume}", target: "_blank", class: "link_nrml" %></p>
+        <% else %>
+          <p class="d-block mt-0">*Upload your resume (pdf):</p>
+          <%= f.file_field :resume, id: "pdf-file-resume" %>
+        <% end %>
+        <% if @application.sample_writing.present? %>
+          <p class="d-block mt-0">Attached sample writing:</p>
+          <p><%= link_to "#{@application.sample_writing}", "#{@application.sample_writing}", target: "_blank", class: "link_nrml" %></p>
+        <% else %>
+          <p class="d-block mt-4">*Upload a sample of your writing that demonstrates your writing proficiency and style. This should be a previously-written essay, blog post, or other published work. Poems and fictional stories will not be considered (pdf):</p>
+          <%= f.file_field :sample_writing, id: "pdf-file-writing" %>
+        <% end %>
+        <%= f.hidden_field :nickname %>
+        <%= f.hidden_field :kind, value: "Writer" %>
+        <div class="btn_cntnr mb-0 mt-4 pt-2" style="float: none; position: relative;">
+          <div class="hide spinner-button spinner-border" style="margin-left: 40%" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <span data-toggle="tooltip" title="You have already submitted an application through this link">
+            <%= f.button "Submit Application", class: "newpost--new--profile mb-0 mr-0 pl-4 pr-4 submit_modal #{@disabled}", id: "submit-application" %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+    <i style="opacity: 50%;" class="d-block mb-3">
+      Applications are accepted on a rolling basis. If accepted, you will receive an email from our team of editors within 24 hours. Please note that writers and editors are not paid and instead write for us
+      to gain applicable experience and mentorship in the editorial industry. Read more about us <%= link_to("here", "/about-us", :class => "link_nrml underline") %>.
+    </i>
+</div>
+
+<script type="text/javascript">
+  $('#pdf-file-resume').bind('change', function() {
+    var size = this.files[0].size/1024/1024;
+    if (size > 5) {
+      alert('The maximum file size is 5 MiB. This file size is: ' + size + " MiB.");
+      $('#pdf-file-resume').val("");
+    }
+  });
+
+  $('#pdf-file-writing').bind('change', function() {
+    var size = this.files[0].size/1024/1024;
+    if (size > 5) {
+      alert('The maximum file size is 5 MiB. This file size is: ' + size + " MiB.");
+      $('#pdf-file-writing').val("");
+    }
+  });
+
+  $("#submit-application-form").on("submit", function(event) {
+    unsaved = false;
+  });
+
+  $(":input").change(function(){ //triggers change in all input fields including text type
+    unsaved = true;
+  });
+
+  function unloadPage(){
+    if(unsaved){
+      return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+    }
+  }
+  window.onbeforeunload = unloadPage;
+</script>
+
+<% if @disabled.eql? "disabled" %>
+  <%= javascript_include_tag 'writer' %>
+<% end %>

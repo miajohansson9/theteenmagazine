@@ -34,18 +34,18 @@ pintrk('track', 'pagevisit');
           <% end %>
         </ul>
       <% end %>
-      <p class="mb-0 mt-4">First Name:</p>
+      <p class="mb-0 mt-4">*First Name:</p>
       <%= f.text_field :first_name, placeholder: "First" %>
-      <p class="mb-0 mt-0">Last Name:</p>
+      <p class="mb-0 mt-0">*Last Name:</p>
       <%= f.text_field :last_name, placeholder: "Last" %>
-      <p class="mb-0 mt-0">Email Address:</p>
+      <p class="mb-0 mt-0">*Email Address:</p>
       <%= f.email_field :email, placeholder: "Email" %>
-      <p class="mt-0">Grade Level: <%= f.select :grade, options_for_select(["College", "12th grade", "11th grade", "10th grade", "9th grade"]), :prompt => "Select a grade" %></p>
-      <p>Please submit a cover letter describing why you want to join The Teen Magazine and what you hope to gain from being a part of, and contributing to, our writer community. Include links to any previously published articles if applicable (150-250 words).</p>
+      <p class="mt-0">*Grade Level: <%= f.select :grade, options_for_select(["College", "12th grade", "11th grade", "10th grade", "9th grade"]), :prompt => "Select a grade" %></p>
+      <p>*Cover letter: Please submit a cover letter describing why you want to join The Teen Magazine and what you hope to gain from being a part of, and contributing to, our writer community. Include links to any previously published articles if applicable (150-250 words).</p>
       <%= f.text_area :description, placeholder: "Write your cover letter here...", class: "required" %>
-      <p class="d-block mt-0">Upload your resume (pdf):</p>
+      <p class="d-block mt-0">*Upload your resume (pdf):</p>
       <%= f.file_field :resume, id: "pdf-file-resume" %>
-      <p class="d-block mt-4">Upload a sample of your writing that demonstrates your writing proficiency and style. This should be a previously-written essay, blog post, or other published work. Poems and fictional stories will not be considered (pdf):</p>
+      <p class="d-block mt-4">*Upload a sample of your writing that demonstrates your writing proficiency and style. This should be a previously-written essay, blog post, or other published work. Poems and fictional stories will not be considered (pdf):</p>
       <%= f.file_field :sample_writing, id: "pdf-file-writing" %>
       <%= f.hidden_field :nickname %>
       <%= f.hidden_field :kind, value: "Writer" %>

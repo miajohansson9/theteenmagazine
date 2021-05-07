@@ -104,6 +104,7 @@ class AppliesController < ApplicationController
   #form for creating a new user already filled out
   def show
     @application = Apply.find(params[:id])
+    @invitation = @application.invitation
     # form for new user
     # when submit form, goes to registrations_controller
     @user = User.find_by(id: @application.user_id) || User.new
@@ -118,6 +119,6 @@ class AppliesController < ApplicationController
   private
 
   def apply_params
-    params.require(:apply).permit(:email, :first_name, :last_name, :nickname, :description, :sample_writing, :resume, :grade, :user_id, :editor_revision, :editor_feedback, :editor_pitches, :kind, :rejected_writer_at, :rejected_editor_at)
+    params.require(:apply).permit(:email, :first_name, :last_name, :nickname, :description, :sample_writing, :resume, :grade, :user_id, :editor_revision, :editor_feedback, :editor_pitches, :kind, :rejected_writer_at, :rejected_editor_at, :invitation_id)
   end
 end

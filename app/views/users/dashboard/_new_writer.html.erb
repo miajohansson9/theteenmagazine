@@ -24,10 +24,10 @@
       <div class="dashboard--articles--wrapper">
         <h1 id="page_title" class="pb-3" style="border-bottom: none !important;">Welcome to The Teen Magazine!</h1>
         <div class="padding_right_wrapper" style="padding-right: 30px;">
-          <div class="pb-1 mb-2" data-step data-index="5" data-onboarding-content="This will walk you through setting up the rest of your profile. Once completed, you will unlock your public writer page on The Teen Magazine.">
-            <h6 class="pb-3">Your profile is <b><%= @percent_complete.round %>%</b> done. Please complete the following steps.</h6>
+          <div class="pb-1 mb-2" data-step data-index="6" data-onboarding-content="This will walk you through setting up the rest of your profile. Once completed, you will unlock your public writer page on The Teen Magazine.">
+            <h6 class="pb-3">Your profile is <b><%= @percent_complete.round %>%</b> done. Please complete the remaining steps.</h6>
             <div class="progress md-progress">
-                <div class="progress-bar" role="progressbar" style="width: <%= @percent_complete.round %>%" aria-valuenow="<%= @percent_complete.round %>" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="<%= @percent_complete.round %>" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
           <ol class="mt-0">
@@ -72,8 +72,16 @@
     </div>
     <div class="dashboard--writer--flex--two" style="width: 30rem;">
       <%= render "/users/partials/featured_writers", users: @featured_writers, cached: true %>
-      <p class="pl-3 pr-3 mt-2 pb-3 text-center" style="width: 100%; color: gray;">This is a new writer account. Your public writer account will be activated
-            once you publish your first article.</p>
+      <p class="pl-3 pr-3 mt-2 pb-3" style="width: 100%; color: gray;">This is a new writer account. Your public writer account will be activated
+            once you publish your first article.
+      </p>
+      <div class="links mb-4"
+        <% if @show_onboarding %>
+          data-step data-index="5" data-onboarding-content="Invite a friend to The Teen Magazine here."
+        <% end %>
+      >
+        <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn pl-3 pr-3 mt-2") %>
+      </div>
     </div>
   </div>
 </div>
@@ -92,3 +100,16 @@
     });
   </script>
 <% end %>
+
+<style media="screen">
+  .complete {
+    width: <%= @percent_complete.round %>% !important;
+    transition-duration: 2s;
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.progress-bar').addClass("complete");
+  });
+</script>

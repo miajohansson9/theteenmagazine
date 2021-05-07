@@ -3,6 +3,11 @@
 <h1 id="page_title"><%= @application.kind || "Writer" %> Application <%= @application.id %></h1>
 <br>
 <div class="form_wrapper wrapper_padding">
+  <% if @invitation.present? %>
+    <div class="alert alert-info" role="alert">
+      This application was sent through an invitation by <%= link_to @invitation.user.try(:full_name), "/writers/#{@invitation.user.slug}/invitations", target: "_blank" %> .
+    </div>
+  <% end %>
   <%= form_for @user do |f| %>
     <span>First Name</span>
     <%= f.text_field :first_name, required: true, value: @application.first_name %>
