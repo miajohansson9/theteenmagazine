@@ -32,7 +32,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           puts "Error: Failed to subscribe to mailchimp list"
         end
         @application = Apply.find_by(email: @user.email.downcase)
-        @application.update(user_id:  resource.id)
+        @application.update(user_id: resource.id)
         if @application.invitation.present?
           @application.invitation.update_column("status", "Accepted")
         end
@@ -46,14 +46,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     else
       @application = Apply.find_by(email: @user.email.downcase)
-      @application.update_attribute("rejected_writer_at", Time.now)
+      @application.update(rejected_writer_at: Time.now)
       if @application.invitation.present?
-        @application.invitation.update_attribute("status", "Accepted")
+        @application.invitation.update_column("status", "Not accepted")
       end
-      puts @application.errors.full_messages
-      puts @application.invitation.errors.full_messages
-      Rails.logger.info(@application.errors.full_messages)
-      Rails.logger.info(@application.invitation.errors.full_messages)
       ApplicationMailer.rejection_email(resource).deliver
       redirect_to applies_path, notice: 'Application was rejected.'
     end
