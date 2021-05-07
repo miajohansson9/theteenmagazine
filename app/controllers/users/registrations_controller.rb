@@ -46,11 +46,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     else
       @application = Apply.find_by(email: @user.email.downcase)
-      @application.rejected_writer_at = Time.now
-      @application.save!
+      @application.update_attribute("rejected_writer_at", Time.now)
       if @application.invitation.present?
-        @application.invitation.status = "Not accepted"
-        @application.invitation.save!
+        @application.invitation.update_attribute("status", "Accepted")
       end
       puts @application.errors.full_messages
       puts @application.invitation.errors.full_messages
