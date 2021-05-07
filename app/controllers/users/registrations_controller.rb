@@ -46,10 +46,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     else
       @application = Apply.find_by(email: @user.email.downcase)
-      @application.update(rejected_writer_at: Time.now)
+      @application.rejected_writer_at = Time.now
+      @application.save!
       if @application.invitation.present?
-        @application.invitation.update_column("status","Not accepted")
+        @application.invitation.status = "Not accepted"
+        @application.invitation.save!
       end
+      puts @application.errors.full_messages
+      puts @application.invitation.errors.full_messages
+      Rails.logger.info(@application.errors.full_messages)
+      Rails.logger.info(@application.invitation.errors.full_messages)
       ApplicationMailer.rejection_email(resource).deliver
       redirect_to applies_path, notice: 'Application was rejected.'
     end
