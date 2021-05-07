@@ -24,7 +24,7 @@ class InvitationsController < ApplicationController
         ApplicationMailer.invitation_to_apply(invitation_params[:email], current_user, @invitation).deliver
         @invites_left_to_earn_points = 5 - current_user.invitations.count % 5
         if @invites_left_to_earn_points.eql? 5
-          current_user.update_column('points', current_user.points + 100)
+          current_user.update_column('points', current_user.points + 250)
         end
       else
         redirect_to "/writers/#{current_user.slug}/invitations", notice: "Oh no, something went wrong!"

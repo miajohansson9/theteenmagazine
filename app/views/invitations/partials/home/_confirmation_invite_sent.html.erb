@@ -47,10 +47,10 @@
 
 <% if invites_left_to_earn_points.eql? 5 %>
   <h3 class="text-center">Woo hoo!</h3>
-  <p>You've just earned 100 points in the community. You now have <b><%= current_user.points %></b> total points and you can use these to promote your shared drafts in the community and receive more peer feedback.</p>
-  <p>Send 5 more invitations to earn another 100 points.</p>
+  <p>You've just earned 250 points in the community. You now have <b><%= current_user.points %></b> total points and you can use these to promote your shared drafts in the community and receive more peer feedback.</p>
+  <p>Send 5 more invitations to earn another 250 points.</p>
 <% else %>
-  <p class="text-center">You're <%= invites_left_to_earn_points %> invite<% if !(invites_left_to_earn_points.eql? 1) %>s<% end %> away from earning 100 community points.</p>
+  <p class="text-center">You're <%= invites_left_to_earn_points %> invite<% if !(invites_left_to_earn_points.eql? 1) %>s<% end %> away from earning 250 community points.</p>
   <div class="progress md-progress">
     <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
   </div>
