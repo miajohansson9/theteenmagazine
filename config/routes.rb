@@ -38,9 +38,12 @@ Rails.application.routes.draw do
 
   get :get_sent_invitations, controller: :invitations
   get :get_sent_invitations_admin, controller: :invitations
+  get :dismissed_notification, controller: :invitations
 
   get :get_profile, controller: :users
   get :get_editor_stats, controller: :users
+  get :get_past_invites, controller: :users
+  get :get_published_articles, controller: :users
 
   get :get_editor_activity, controller: :reviews
   get :enable_notify_of_new_review, controller: :reviews

@@ -15,7 +15,7 @@ class PitchesController < ApplicationController
       if params[:pitch].nil?
         @pitch = Pitch.new
         @categories = Category.active
-        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).where("updated_at > ?", Time.now - 40.days).order("updated_at desc"), page: params[:page], items: 20)
+        @pagy, @pitches = pagy(Pitch.is_approved.not_claimed.where(status: nil).where("updated_at > ?", Time.now - 90.days).order("updated_at desc"), page: params[:page], items: 20)
       else
         @categories = Category.active
         @category_id = (params[:pitch][:category_id].blank?) ? @categories.map {|category| category.id} : params[:pitch][:category_id]
@@ -65,8 +65,8 @@ class PitchesController < ApplicationController
       if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
         ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
       end
-      lock_post
       if pitch_params[:claimed_id].eql? ""
+        lock_post
         @message = "This pitch was unclaimed. To access your article, reclaim this pitch."
       else
         @message = "Changes were successfully saved."
@@ -154,7 +154,7 @@ class PitchesController < ApplicationController
       @pitch.posts.where(publish_at: nil, user_id: current_user.id).destroy_all
       current_user.update(onboarding_claimed_pitch_id: nil)
       if @pitch.update(pitch_params)
-        @pitches = Pitch.is_approved.not_claimed.where(status: nil).where("updated_at > ?", Time.now - 40.days).order("updated_at desc").paginate(page: params[:page], per_page: 9)
+        @pitches = Pitch.is_approved.not_claimed.where(status: nil).where("updated_at > ?", Time.now - 90.days).order("updated_at desc").paginate(page: params[:page], per_page: 9)
         respond_to do |format|
           format.html { redirect_to "/onboarding?step=next_steps"}
           format.js

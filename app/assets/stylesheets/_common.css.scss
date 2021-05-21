@@ -29,6 +29,17 @@ a {
   font-family: "Playfair Display";
 }
 
+.vertical-align-container {
+  position: relative;
+}
+
+.vertical-center {
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
 footer a:hover {
   color: inherit !important;
 }

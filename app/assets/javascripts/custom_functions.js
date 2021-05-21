@@ -8,8 +8,8 @@ function toggleNav() {
   }
 }
 
-function clickedLoadMoreButton() {
-  $("#load-more-button").addClass("disabled");
+function clickedLoadMoreButton(id) {
+  $(id).addClass("disabled");
   $(".spinner-button").removeClass("hide");
 }
 

@@ -1,0 +1,12 @@
+<div class="p-0 mb-3">
+  <div class="p-3" style="border: 1px solid #E5E5E5; border-radius: 10px; background-color: #F7F7F7">
+    <ul class="feed_wrapper list-group list-group-flush p-0" id="list-group-comments">
+      <%= render partial: 'users/dashboard/tabs/invites/past_invites_page' %>
+    </ul>
+    <% if @user.invitations.count > @per_page  %>
+      <div id="div_next_link_invites">
+        <%= render partial: 'users/dashboard/tabs/invites/next_link' %>
+      </div>
+    <% end %>
+  </div>,
+</div>
