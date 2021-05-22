@@ -93,8 +93,8 @@ Rails.application.routes.draw do
   get '/writers/:id/invitations', to: 'invitations#index'
   get '/writers/:slug/invitations/:token', to: 'invitations#show'
   get '/partners/:id/published', to: 'users#sponsored'
-  get '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
-  post '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
+  get '/may_2021_tlGBoVMpUl-plNiPQNtMe-vGpXaueoqO-sNXaXqCOzW', to: 'pages#issue'
+  post '/may_2021_tlGBoVMpUl-plNiPQNtMe-vGpXaueoqO-sNXaXqCOzW', to: 'pages#issue'
 
   patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
   post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim
