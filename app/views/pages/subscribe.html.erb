@@ -26,12 +26,29 @@
     <span>Subscribe to The Teen Magazine newsletter and receive all future monthly issues.</span>
     <br>
     <br>
-    <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 25px;", required: true %>
+    <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 25px;", required: true, id: "email", onkeyup: "isFormButtonDisabled('#email')"%>
     <br>
-    <%= f.submit "Get May Issue", class: "submit_btn" %>
+    <div class="btn_cntnr mt-0 mb-0 pb-0 pt-2" style="float: none; position: relative;">
+      <%= f.button "Get May Issue", class: "newpost--new--profile mr-0 pl-4 pr-4 mb-0 submit_modal disabled", id: "submit-comment-modal-button" %>
+    </div>
   <% end %>
 
   <i style="opacity: 50%;" class="d-block">
     This magazine issue is currently only available in pdf form.
   </i>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    isFormButtonDisabled('#email');
+  });
+
+  function isFormButtonDisabled(input) {
+    var input = $(input).val();
+    if (input.includes('@')) {
+      $('#submit-comment-modal-button').removeClass("disabled");
+    } else {
+      $('#submit-comment-modal-button').addClass("disabled");
+    }
+  };
+</script>
