@@ -28,12 +28,12 @@
     <br>
     <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 25px;", required: true, id: "email", onkeyup: "isFormButtonDisabled('#email')"%>
     <br>
-    <div class="btn_cntnr mt-0 mb-0 pb-0 pt-2" style="float: none; position: relative;">
-      <%= f.button "Get May Issue", class: "newpost--new--profile mr-0 pl-4 pr-4 mb-0 submit_modal disabled", id: "submit-comment-modal-button" %>
+    <div class="btn_cntnr" style="float: none; position: relative; padding-bottom: 0;">
+      <%= f.button "Get May Issue", class: "newpost--new--profile submit_modal disabled", id: "submit-comment-modal-button" %>
     </div>
   <% end %>
 
-  <i style="opacity: 50%;" class="d-block">
+  <i style="opacity: 50%;">
     This magazine issue is currently only available in pdf form.
   </i>
 </div>
