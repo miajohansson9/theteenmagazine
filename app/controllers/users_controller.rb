@@ -90,6 +90,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def post_modal
+    @post = Post.find(params[:post_id])
+    respond_to do |format|
+      format.html { redirect_to "/users/#{@post.user.slug}"}
+      format.js
+    end
+  end
+
   def onboarding_redirect
     if current_user.present? && (current_user.submitted_profile.eql? nil) && (!current_user.partner)
       redirect_to "/onboarding", notice: "Please complete the onboarding process first."

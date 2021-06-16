@@ -99,6 +99,8 @@ Rails.application.routes.draw do
   get '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
   post '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
 
+  patch 'users/:id/:post_id/modal' => 'users#post_modal', as: :post_modal
+
   patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
   post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim
   patch 'pitches/:id/unclaim' => 'pitches#pitch_onboarding_unclaim', as: :pitch_onboarding_unclaim

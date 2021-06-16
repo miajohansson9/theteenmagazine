@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_user!, except: [:ads, :issue, :privacy, :subscribe, :email_preferences, :update_email_preferences, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation, :search]
+  before_action :authenticate_user!, except: [:trending, :ads, :issue, :privacy, :subscribe, :email_preferences, :update_email_preferences, :sitemap, :contact, :team, :submitted, :reset, :reset_confirmation, :search]
   before_action :is_admin?, only: :featured
 
   def team
