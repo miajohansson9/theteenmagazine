@@ -82,7 +82,6 @@ Rails.application.routes.draw do
   get "/reset-password" => "pages#reset"
   get "/search" => "pages#search"
   get '/sitemap.xml', to: 'pages#sitemap'
-  get '/ads.txt', to: 'pages#ads'
   get '/users/:id', to: 'users#redirect'
   get '/partners/:id', to: 'users#partner'
   get '/partners/:id/edit', to: 'users#edit'
