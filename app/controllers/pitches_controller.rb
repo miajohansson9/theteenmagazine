@@ -65,8 +65,8 @@ class PitchesController < ApplicationController
       if (@pitch.status.eql? "Ready for Review") && !(pitch_params[:status].eql? "Ready for Review")
         ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
       end
-      lock_post
       if pitch_params[:claimed_id].eql? ""
+        lock_post
         @message = "This pitch was unclaimed. To access your article, reclaim this pitch."
       else
         @message = "Changes were successfully saved."
@@ -79,7 +79,7 @@ class PitchesController < ApplicationController
   end
 
   def lock_post
-    if @post.present?
+    if @post.present? && !@post.title.include(" (locked)")
       @post.reviews.each do |review|
         review.destroy
       end
