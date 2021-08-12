@@ -300,7 +300,10 @@ class PostsController < ApplicationController
         end
         ApplicationMailer.article_has_requested_changes(@post.user, @post).deliver
       end
-      if post_params[:promoting_until].present?
+      if post_params[:promoting_until].present? && @post.is_published?
+        @post.user.update_column("promotions", @post.user.promotions - 1)
+        flash.now[:notice] = "Great job your article is being boosted!"
+      elsif post_params[:promoting_until].present?
         @post.user.update_column("points", @post.user.points - 200)
         @post.update_column("shared_at", Time.now)
         redirect_to "/community", notice: "Your draft is now being promoted!"
