@@ -1,10 +1,8 @@
 <div id="form-invite">
-  <div class="pitch_form_wrapper pt-0">
+  <div class="pitch_form_wrapper pt-4">
+    <h3 class="mb-3">Invite a friend to earn credits.</h3>
     <p>
-      When a friend you invite submits an application, you get to promote one published article across the entire website <b>for a full week</b>.
-    </p>
-    <p>
-      Send your invite link to a friend:
+      Earn <b>1</b> promotion credit for every accepted friend you invite.
     </p>
     <%= form_for invitation, :remote=>true do |f| %>
       <% if invitation.errors.any? %>
@@ -28,7 +26,7 @@
       </div>
       <small>
         When you click <i>Send Invite</i>, we will send an email inviting your friend(s) to apply to The Teen Magazine. The email will include a special apply link from you that will waive the cover letter and prioritize their application for review.
-        The referral link will expire in 1 week so they must apply before then to benefit from the easier application. We will send follow up emails before then, but we encourage you to reach out to them as well.
+        The referral link will expire in 1 week so they must apply before then to benefit from the easier application.
       </small>
     <% end %>
   </div>

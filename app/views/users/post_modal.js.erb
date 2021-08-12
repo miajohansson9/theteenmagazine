@@ -1,3 +1,3 @@
-$('body').append('<%= j render partial: "users/dashboard/tabs/articles/preview_post", locals: {post: @post} %>');
+$('body').append('<%= j render partial: "users/dashboard/tabs/articles/preview_post", locals: {post: @post, user: @user} %>');
 $('#basicExampleModal').modal();
 $(document).on('hidden.bs.modal', '.modal', function () { $("#basicExampleModal").remove(); $(".modal-dialog").remove(); });

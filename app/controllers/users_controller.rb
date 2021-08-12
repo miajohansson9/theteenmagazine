@@ -91,6 +91,7 @@ class UsersController < ApplicationController
   end
 
   def post_modal
+    @user = User.find(params[:id])
     @post = Post.find(params[:post_id])
     respond_to do |format|
       format.html { redirect_to "/users/#{@post.user.slug}"}
