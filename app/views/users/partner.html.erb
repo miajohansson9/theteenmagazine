@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <% if current_user.admin? %>
+        <% if current_user.admin? || current_user.editor? %>
           <div class="btn_cntnr">
             <%= link_to "Share Article with #{@partner.full_name}", "/partners/#{@partner.slug}/share", class: "newpost--new--profile" %>
           </div>

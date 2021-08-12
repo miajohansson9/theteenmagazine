@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :redirect, :get_editor_stats]
   before_action :is_editor?, only: [:show_users, :new]
   before_action :onboarding_redirect, if: :current_user?, only: [:show]
-  before_action :is_admin?, only: [:new, :partners, :share]
+  before_action :is_admin?, only: [:new, :partners]
   after_action :update_last_sign_in_at, if: :current_user?
 
   def show
@@ -365,11 +365,12 @@ class UsersController < ApplicationController
 
   def share
     set_meta_tags title: "Add Partner to Article | The Teen Magazine"
+    @filtered_posts = current_user.admin? ? Post.draft : current_user.posts.draft
     if params[:search].present?
       @query = params[:search][:query]
-      @pagy, @posts = pagy(Post.draft.where(partner_id: nil).where("lower(title) LIKE ?", "%#{@query.downcase}%").by_published_date, page: params[:page], items: 15)
+      @pagy, @posts = pagy(@filtered_posts.where(partner_id: nil).where("lower(title) LIKE ?", "%#{@query.downcase}%").by_published_date, page: params[:page], items: 15)
     else
-      @pagy, @posts = pagy(Post.draft.where(partner_id: nil).by_published_date, page: params[:page], items: 15)
+      @pagy, @posts = pagy(@filtered_posts.where(partner_id: nil).by_published_date, page: params[:page], items: 15)
     end
   end
 

@@ -85,7 +85,6 @@ Rails.application.routes.draw do
   get "/reset-password" => "pages#reset"
   get "/search" => "pages#search"
   get '/sitemap.xml', to: 'pages#sitemap'
-  get '/ads.txt', to: 'pages#ads'
   get '/users/:id', to: 'users#redirect'
   get '/partners/:id', to: 'users#partner'
   get '/partners/:id/edit', to: 'users#edit'
@@ -96,8 +95,8 @@ Rails.application.routes.draw do
   get '/writers/:id/invitations', to: 'invitations#index'
   get '/writers/:slug/invitations/:token', to: 'invitations#show'
   get '/partners/:id/published', to: 'users#sponsored'
-  get '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
-  post '/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs', to: 'pages#issue'
+  get '/may_2021_tlGBoVMpUl-plNiPQNtMe-vGpXaueoqO-sNXaXqCOzW', to: 'pages#issue'
+  post '/may_2021_tlGBoVMpUl-plNiPQNtMe-vGpXaueoqO-sNXaXqCOzW', to: 'pages#issue'
 
   patch 'users/:id/:post_id/modal' => 'users#post_modal', as: :post_modal
 

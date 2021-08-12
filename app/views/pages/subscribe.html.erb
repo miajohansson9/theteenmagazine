@@ -1,6 +1,6 @@
 <%= image_tag "subscribe_background.jpg", id: "banner_writing" %>
 <div class="apply_wrapper">
-  <h2>The Teen Magazine · March Issue</h2>
+  <h2>The Teen Magazine · May Issue</h2>
     <br>
   <h4><i>A special thanks to this month's magazine issue writers and designers:</i></h4>
   <span>
@@ -14,24 +14,41 @@
   </span>
   <br>
   <br>
-  <%= image_tag("march_2021_issue_cover.png", :class => "image_fit_scrn") %>
+  <%= image_tag("may_2021_cover.png", :class => "image_fit_scrn") %>
   <br>
   <br>
   <h4><i>Enter your email to receive this month's magazine issue:</i></h4>
 
 <!--End mc_embed_signup-->
-  <%= form_for(:pages, url:"/march_2021_hBc1jS0OHV-4xIiXi-4ed2-b939-VT5aBZqVKs") do |f| %>
+  <%= form_for(:pages, url:"/may_2021_tlGBoVMpUl-plNiPQNtMe-vGpXaueoqO-sNXaXqCOzW") do |f| %>
     <br>
     <%= f.check_box :sub, :checked => true %>
     <span>Subscribe to The Teen Magazine newsletter and receive all future monthly issues.</span>
     <br>
     <br>
-    <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 25px;", required: true %>
+    <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 25px;", required: true, id: "email", onkeyup: "isFormButtonDisabled('#email')"%>
     <br>
-    <%= f.submit "Get March Issue", class: "submit_btn" %>
+    <div class="btn_cntnr" style="float: none; position: relative; padding-bottom: 0;">
+      <%= f.button "Get May Issue", class: "newpost--new--profile submit_modal disabled", id: "submit-comment-modal-button" %>
+    </div>
   <% end %>
 
-  <i style="opacity: 50%;" class="d-block">
+  <i style="opacity: 50%;">
     This magazine issue is currently only available in pdf form.
   </i>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    isFormButtonDisabled('#email');
+  });
+
+  function isFormButtonDisabled(input) {
+    var input = $(input).val();
+    if (input.includes('@')) {
+      $('#submit-comment-modal-button').removeClass("disabled");
+    } else {
+      $('#submit-comment-modal-button').addClass("disabled");
+    }
+  };
+</script>
