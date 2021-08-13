@@ -8,7 +8,7 @@
     </div>
   <% end %>
   <h3 class="mb-3">Use credits to boost published articles.</h3>
-  <p class="mb-3 d-block">You have <b><%= @user.promotions %></b> promotion credit<% if !(@user.promotions.eql? 1) %>s<% end %> available. Articles you promote will show up under every published article on The Teen Magazine for <b>1</b> week.</p>
+  <p class="mb-3 d-block">You have <b id="promotion_points"><%= @user.promotions %></b> promotion credit<% if !(@user.promotions.eql? 1) %>s<% end %> available. Articles you promote will show up under every published article on The Teen Magazine for <b>1</b> week.</p>
   <p class="d-inline">You're <b><%= @pageviews_away_from_new_badge %></b> pageviews away from a new badge</p>
   <div class="badge_wrapper d-inline">
     <svg widht="22px" height="22px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="badge-check" class="svg-inline--fa fa-badge-check fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill=<%= @next_badge_to_earn[1] %> d="M512 256a88 88 0 0 0-57.1-82.4A88 88 0 0 0 338.4 57.1a88 88 0 0 0-164.8 0A88 88 0 0 0 57.1 173.6a88 88 0 0 0 0 164.8 88 88 0 0 0 116.5 116.5 88 88 0 0 0 164.8 0 88 88 0 0 0 116.5-116.5A88 88 0 0 0 512 256zm-144.8-44.25l-131 130a11 11 0 0 1-15.55-.06l-75.72-76.33a11 11 0 0 1 .06-15.56L171 224a11 11 0 0 1 15.56.06l42.15 42.49 97.2-96.42a11 11 0 0 1 15.55.06l25.82 26a11 11 0 0 1-.08 15.56z" opacity="0.4"></path><path class="fa-primary" fill=<%= @next_badge_to_earn[1] %> d="M367.2 211.75l-131 130a11 11 0 0 1-15.55-.06l-75.72-76.33a11 11 0 0 1 .06-15.56L171 224a11 11 0 0 1 15.56.06l42.15 42.49 97.2-96.42a11 11 0 0 1 15.55.06l25.82 26a11 11 0 0 1-.06 15.56z"></path></g></svg>

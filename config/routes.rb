@@ -99,6 +99,7 @@ Rails.application.routes.draw do
   post '/may_2021_tlGBoVMpUl-plNiPQNtMe-vGpXaueoqO-sNXaXqCOzW', to: 'pages#issue'
 
   patch 'users/:id/:post_id/modal' => 'users#post_modal', as: :post_modal
+  patch 'users/:id/:post_id/promote' => 'users#promote_post', as: :promote_post
 
   patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
   post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim

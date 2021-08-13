@@ -99,6 +99,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def promote_post
+    @user = User.find(params[:id])
+    @post = Post.find(params[:post_id])
+    if @post.user.promotions > 0
+      @initial = @post.promoting_until || Time.now
+      @post.update_column("promoting_until", @initial + 7.days)
+      respond_to do |format|
+        format.html { redirect_to "/users/#{@post.user.slug}"}
+        format.js
+      end
+      @post.user.update_column("promotions", @post.user.promotions - 1)
+    end
+  end
+
   def onboarding_redirect
     if current_user.present? && (current_user.submitted_profile.eql? nil) && (!current_user.partner)
       redirect_to "/onboarding", notice: "Please complete the onboarding process first."
