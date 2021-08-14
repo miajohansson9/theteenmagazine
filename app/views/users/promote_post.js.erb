@@ -1,2 +1,6 @@
-$("#basicExampleModal").modal('toggle');
+$("#TTM-Modal").modal('toggle');
 $("#promotion_points").text("<%= @user.promotions - 1 %>");
+var container = document.getElementById('published-articles');
+var event = new Event('refresh');
+// Dispatch 'refresh' on the render_async_cache container
+container.dispatchEvent(event)

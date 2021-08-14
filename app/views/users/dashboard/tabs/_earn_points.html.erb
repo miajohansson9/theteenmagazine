@@ -29,6 +29,18 @@
         The referral link will expire in 1 week so they must apply before then to benefit from the easier application.
       </small>
     <% end %>
+    <h5 class="mb-3 font-weight-bold mt-4 pt-2">Past Invites</h5>
+    <% if @user.invitations.count.eql? 0 %>
+      <p>You haven't sent any invitations yet. Visit the "Earn Credits" tab to send your first invite.</p>
+    <% else %>
+      <%= render_async_cache get_past_invites_path(id: @user.id), container_class: "pl-0", toggle: { selector: '#earn-points-tab-classic', event: :click } do %>
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </div>
 

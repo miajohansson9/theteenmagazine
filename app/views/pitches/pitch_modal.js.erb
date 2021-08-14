@@ -1,8 +1,8 @@
 <% if @pitch.claimed_id.nil? %>
   $('body').append('<%= j render partial: "pitches/preview_pitch", locals: {pitch: @pitch, post: @post, intent: "Claim"} %>');
-  $('#basicExampleModal').modal();
+  $('#TTM-Modal').modal();
 <% else %>
   $('body').append('<%= j render partial: "pitches/preview_pitch", locals: {pitch: @pitch, post: @post, intent: "Unclaim"} %>');
-  $('#basicExampleModal').modal();
+  $('#TTM-Modal').modal();
 <% end %>
-$(document).on('hidden.bs.modal', '.modal', function () { $("#basicExampleModal").remove(); $(".modal-dialog").remove(); });
+$(document).on('hidden.bs.modal', '.modal', function () { $("#TTM-Modal").remove(); $(".modal-dialog").remove(); });

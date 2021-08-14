@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
   get :get_trending_posts_in_category, controller: :posts
   get :get_conversations_following, controller: :posts
+  get :get_promoted_posts, controller: :posts
 
   get :get_sent_invitations, controller: :invitations
   get :get_sent_invitations_admin, controller: :invitations

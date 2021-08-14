@@ -170,6 +170,13 @@ class PostsController < ApplicationController
     end
   end
 
+  def get_promoted_posts
+    @posts_promoted = Post.all.promoted
+    puts @posts_promoted
+    puts "laksjdflksjd"
+    render partial: "posts/partials/promoted", posts: @posts_promoted
+  end
+
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
     @trending = @post.category.posts.published.trending.limit(7)

@@ -40,8 +40,12 @@ class Post < ApplicationRecord
     order(publish_at: :desc)
   }
 
-  scope :by_updated_date, -> {
-    order(updated_at: :desc)
+  scope :promoted, -> {
+    where.not(:promoting_until => nil).order(updated_at: :desc)
+  }
+
+  scope :by_promoted_then_updated_date, -> {
+    order(promoting_until: :desc, updated_at: :desc)
   }
 
   def is_published?

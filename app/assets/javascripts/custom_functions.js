@@ -38,7 +38,7 @@ function select_article_status() {
 }
 
 function showPopup() {
-  $('#basicExampleModal').modal();
+  $('#TTM-Modal').modal();
   $(document).off('focusin.modal');
 }
 

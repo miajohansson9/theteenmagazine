@@ -17,6 +17,37 @@
   font-size: 0.8em !important;
 }
 
+.ctgry_section {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: space-between;
+  p {
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #545454;
+  }
+  .ctgry_article {
+    width: 31%;
+    img {
+      width: 100%;
+    }
+    h1 {
+      margin: 0;
+      margin-top: 10px;
+      font-size: 34px;
+      font-family: 'Lucitana';
+      font-weight: 400;
+      a {
+        color: black;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 .flex--welcome {
   display: flex;
   flex-direction: row;
