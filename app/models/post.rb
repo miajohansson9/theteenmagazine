@@ -41,7 +41,7 @@ class Post < ApplicationRecord
   }
 
   scope :promoted, -> {
-    where.not(:promoting_until => nil).order(updated_at: :desc)
+    where.not(promoting_until: nil)
   }
 
   scope :by_promoted_then_updated_date, -> {

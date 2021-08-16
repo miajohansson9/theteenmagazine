@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
   before_action :find_post_history, only: [:show]
   before_action :find_post, only: [:edit, :update, :destroy, :update_newsletter]
-  before_action :authenticate_user!, except: [:show, :get_trending_posts_in_category]
+  before_action :authenticate_user!, except: [:show, :get_trending_posts_in_category, :get_promoted_posts]
   before_action :load_author,  only: [:show]
   before_action :create,  only: [:unapprove]
   before_action :is_admin?, :only => [:new]
   before_action :is_partner?, :only => [:index, :edit]
   after_action :log_impression, :only=> [:show]
-  load_and_authorize_resource :except => [:get_trending_posts_in_category]
+  load_and_authorize_resource :except => [:get_trending_posts_in_category, :get_promoted_posts]
 
   def log_impression
     if @post.is_published?
@@ -171,10 +171,8 @@ class PostsController < ApplicationController
   end
 
   def get_promoted_posts
-    @posts_promoted = Post.all.promoted
-    puts @posts_promoted
-    puts "laksjdflksjd"
-    render partial: "posts/partials/promoted", posts: @posts_promoted
+    @posts_promoted = Post.promoted.published
+    render partial: "posts/partials/promoted"
   end
 
   def get_trending_posts_in_category

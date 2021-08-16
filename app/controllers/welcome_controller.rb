@@ -26,11 +26,6 @@ class WelcomeController < ApplicationController
     render partial: "welcome/categories/category_4"
   end
 
-  def get_trending_posts
-    @trending = Post.published.trending.limit(7)
-    render partial: "welcome/partials/trending"
-  end
-
   def get_recent_posts
     @category_ids = [Category.find('student-life').id, Category.find('opinion').id, Category.find('culture').id, Category.find('lifestyle').id]
     @posts_approved_last = Post.published.by_published_date.where.not(category_id: @category_ids).limit(9)
