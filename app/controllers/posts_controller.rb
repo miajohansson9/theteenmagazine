@@ -187,7 +187,7 @@ class PostsController < ApplicationController
 
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
-    @trending = @post.category.posts.published.trending.limit(5)
+    @trending = @post.category.posts.published.trending.limit(4)
     render partial: "posts/partials/trending"
   end
 
