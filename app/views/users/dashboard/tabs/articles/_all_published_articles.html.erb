@@ -1,0 +1,16 @@
+<div class="p-0 mb-3">
+  <div class="p-3" style="border: 1px solid #E5E5E5; border-radius: 10px; background-color: #F7F7F7">
+    <div class="p-0">
+      <div class="pitches_wrapper p-0">
+        <div class="flex-wrapper w-100 p-0 m-0" id="published-articles-page">
+          <%= render partial: 'users/dashboard/tabs/articles/published_articles_page' %>
+        </div>
+      </div>
+      <% if @user_posts_approved_records.count > @per_page  %>
+        <div id="div_next_link_articles">
+          <%= render partial: 'users/dashboard/tabs/articles/next_link' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

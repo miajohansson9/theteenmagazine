@@ -1,0 +1,16 @@
+<div class="modal fade" id="TTM-Modal" tabindex="-1" role="dialog"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Promote this article</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="preview-post-to-promote" class="comment_form_wrapper">
+        <%= render partial: "users/dashboard/tabs/articles/preview_post_content", locals: {post: @post, user: @user} %>
+      </div>
+    </div>
+  </div>
+</div>

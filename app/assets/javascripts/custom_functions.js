@@ -8,8 +8,8 @@ function toggleNav() {
   }
 }
 
-function clickedLoadMoreButton() {
-  $("#load-more-button").addClass("disabled");
+function clickedLoadMoreButton(id) {
+  $(id).addClass("disabled");
   $(".spinner-button").removeClass("hide");
 }
 
@@ -38,7 +38,7 @@ function select_article_status() {
 }
 
 function showPopup() {
-  $('#basicExampleModal').modal();
+  $('#TTM-Modal').modal();
   $(document).off('focusin.modal');
 }
 

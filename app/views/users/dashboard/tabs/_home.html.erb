@@ -1,0 +1,105 @@
+<div class="dashboard--writer--flex--main pt-0">
+  <div class="flex--item"
+    <% if @show_editor_onboarding %>
+      data-step data-index="1" data-onboarding-content="Welcome to your editor account! Your profile has been updated with your editor stats."
+    <% end %>
+  >
+    <%= render :partial => 'profile', locals: {user: @user}, cached: true %>
+  </div>
+  <div class="analytics card-group">
+    <div class="card"
+      <% if @show_onboarding_full %>
+        data-step data-index="1" data-onboarding-content="Your full writer profile has been unlocked! Access all your claimed pitches here."
+      <% end %>
+    >
+      <div class="card-body dashboard-card-1 dashboard-card">
+        <a href="<%= pitches_path(user_id: @user.id) %>">
+          <div class="stats_wrapper">
+            <div class="value" id="value1"></div>
+            <div class="text-wrapper">
+              <span>Claimed</span>
+              <span>Pitches</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="card"
+      <% if @show_onboarding_full %>
+        data-step data-index="2" data-onboarding-content="View your public writer page here. Your published articles are also viewable at this url when you are not signed in."
+      <% end %>
+    >
+        <div class="card-body dashboard-card-2 dashboard-card">
+          <a href="<%= user_path(mode: "public") %>">
+            <div class="stats_wrapper">
+              <div class="value" id="value2"></div>
+              <div class="text-wrapper">
+                <span>Published</span>
+                <span>Articles</span>
+              </div>
+            </div>
+          </a>
+        </div>
+    </div>
+    <div class="card"
+      <% if @show_onboarding_full %>
+        data-step data-index="3" data-onboarding-content="Keep track of your published articles' views here."
+      <% end %>
+    >
+      <div class="card-body dashboard-card-3 dashboard-card">
+        <a href="<%= analytics_path(user_id: @user.id) %>">
+          <div class="stats_wrapper">
+            <div class="value" id="value3"></div>
+            <div class="text-wrapper">
+              <span>Total</span>
+              <span>Pageviews</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <% if @user.editor? %>
+    <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4"
+      <% if @show_editor_onboarding %>
+        role="button" data-step data-index="2" data-onboarding-content="You are now able to start an article without first submitting a pitch. Ensure all your articles fit the topic requirements."
+      <% end %>
+    >
+       <%= link_to "Start an Article", new_post_path, class: "newpost--new--profile mr-0" %>
+    </div>
+  <% else %>
+    <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4"
+      <% if @show_onboarding_full %>
+        role="button" data-step data-index="6" data-onboarding-content="Claim another pitch or pitch your own article topic. Make sure it meets all the criteria in Pitching an Article before submitting."
+      <% end %>
+    >
+      <span><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile mr-0" %></span>
+    </div>
+  <% end %>
+  <br>
+  <div class="dashboard--articles--wrapper">
+    <% if @user_pitches.present? %>
+      <h6 class="header_ttl">Your Pitches</h6>
+      <%= render "/users/partials/dashboard_pitches", pitches: @user_pitches, image: "waiting.png" %>
+    <% end %>
+    <% if @user_posts.rejected.present? %>
+      <h6 class="header_ttl">Changes Requested</h6>
+      <%= render "/users/partials/dashboard_articles", articles: @user_posts.rejected, image: "changes_requested.png" %>
+    <% end %>
+    <% if @user_posts.scheduled_for_publishing.present? %>
+      <h6 class="header_ttl">Pending Publication</h6>
+      <%= render "/users/partials/dashboard_articles", articles: @user_posts.scheduled_for_publishing, image: "published.png" %>
+    <% end %>
+    <% if @user_posts.in_review.present? %>
+      <h6 class="header_ttl">Articles In Review</h6>
+      <%= render "/users/partials/dashboard_articles", articles: @user_posts.in_review, image: "in_review.png" %>
+    <% end %>
+    <% if @user_posts.submitted.present? %>
+      <h6 class="header_ttl">Pending Review</h6>
+      <%= render "/users/partials/dashboard_articles", articles: @user_posts.submitted, image: "waiting.png" %>
+    <% end %>
+    <h6 class="header_ttl">Articles In Progress</h6>
+    <%= render "/users/partials/dashboard_articles", articles: @user_posts.draft, image: "saved.png" %>
+  </div>
+  <br>
+</div>

@@ -1,110 +1,70 @@
 <div class="official--writer--wrapper">
   <div class="dashboard_wrapper">
     <div id="waiting--for--approval">
-      <div class="dashboard--writer--flex--main">
-        <div class="flex--item"
-          <% if @show_editor_onboarding %>
-            data-step data-index="1" data-onboarding-content="Welcome to your editor account! Your profile has been updated with your editor stats."
-          <% end %>
-        >
-          <%= render :partial => 'profile', locals: {user: @user}, cached: true %>
-        </div>
-        <div class="analytics card-group">
-          <div class="card"
-            <% if @show_onboarding_full %>
-              data-step data-index="1" data-onboarding-content="Your full writer profile has been unlocked! Access all your claimed pitches here."
-            <% end %>
-          >
-            <div class="card-body dashboard-card-1 dashboard-card">
-              <a href="<%= pitches_path(user_id: @user.id) %>">
-                <div class="stats_wrapper">
-                  <div class="value" id="value1"></div>
-                  <div class="text-wrapper">
-                    <span>Claimed</span>
-                    <span>Pitches</span>
-                  </div>
-                </div>
+      <div class="w-100">
+        <!-- Classic tabs -->
+        <div class="classic-tabs" style="padding-top: 30px;">
+          <ul class="nav mt-0" id="myClassicTab" role="tablist">
+            <li class="nav-item tab-custom">
+              <a class="tab-custom active show" id="home-tab-classic" data-toggle="tab" href="#home-classic"
+                role="tab" aria-controls="home-classic" aria-selected="true">Home</a>
+            </li>
+            <li class="nav-item tab-custom">
+              <a class="tab-custom" id="be-promoted-tab-classic" data-toggle="tab" href="#be-promoted-classic" role="tab"
+                aria-controls="be-promoted-classic" aria-selected="false">Boost an Article
               </a>
-            </div>
-          </div>
-          <div class="card"
-            <% if @show_onboarding_full %>
-              data-step data-index="2" data-onboarding-content="View your public writer page here. Your published articles are also viewable at this url when you are not signed in."
+            </li>
+            <li class="nav-item tab-custom">
+              <a class="tab-custom" id="earn-points-tab-classic" data-toggle="tab" href="#earn-points-classic" role="tab"
+                aria-controls="earn-points-classic" aria-selected="false">Earn Credits</a>
+            </li>
+            <% if false %>
+              <li class="nav-item tab-custom">
+                <a class="tab-custom" id="admin-invites-tab-classic" data-toggle="tab" href="#admin-invites-classic" role="tab"
+                  aria-controls="admin-invites-classic" aria-selected="false">Admin</a>
+              </li>
             <% end %>
-          >
-              <div class="card-body dashboard-card-2 dashboard-card">
-                <a href="<%= user_path(mode: "public") %>">
-                  <div class="stats_wrapper">
-                    <div class="value" id="value2"></div>
-                    <div class="text-wrapper">
-                      <span>Published</span>
-                      <span>Articles</span>
+          </ul>
+        </div>
+        <!-- Classic tabs -->
+        <div class="tab-content p-0" id="myClassicTabContent">
+          <div class="tab-pane fade active show" id="home-classic" role="tabpanel" aria-labelledby="hometab-classic">
+            <%= render 'users/dashboard/tabs/home' %>
+          </div>
+          <div class="tab-pane fade" id="be-promoted-classic" role="tabpanel" aria-labelledby="be-promoted-tab-classic">
+            <%= render 'users/dashboard/tabs/be_promoted' %>
+          </div>
+          <div class="tab-pane activity_wrapper fade" id="earn-points-classic" role="tabpanel" aria-labelledby="earn-points-tab-classic">
+            <%= render 'users/dashboard/tabs/earn_points', invitation: @invitation %>
+            <div id="past-invites">
+              <div class="mr-4 mb-4" style="margin-top: -30px;">
+                <h5 class="mb-3 font-weight-bold mt-4 pt-2">Past Invites</h5>
+                <% if @user.invitations.count.eql? 0 %>
+                  <p>You haven't sent any invitations yet. Visit the "Earn Credits" tab to send your first invite.</p>
+                <% else %>
+                  <%= render_async_cache get_past_invites_path(id: @user.id), container_class: "pl-0", toggle: { selector: '#earn-points-tab-classic', event: :click } do %>
+                    <div class="d-flex justify-content-center">
+                      <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
                     </div>
-                  </div>
-                </a>
+                  <% end %>
+                <% end %>
               </div>
-          </div>
-          <div class="card"
-            <% if @show_onboarding_full %>
-              data-step data-index="3" data-onboarding-content="Keep track of your published articles' views here."
-            <% end %>
-          >
-            <div class="card-body dashboard-card-3 dashboard-card">
-              <a href="<%= analytics_path(user_id: @user.id) %>">
-                <div class="stats_wrapper">
-                  <div class="value" id="value3"></div>
-                  <div class="text-wrapper">
-                    <span>Total</span>
-                    <span>Pageviews</span>
-                  </div>
-                </div>
-              </a>
             </div>
           </div>
+          <% if @user.admin? %>
+            <div class="tab-pane activity_wrapper fade" id="admin-invites-classic" role="tabpanel" aria-labelledby="admin-invites-tab-classic">
+              <%= render_async get_sent_invitations_admin_path, toggle: { selector: '#admin-invites-tab-classic', event: :click } do %>
+                <div class="d-flex justify-content-center">
+                  <div class="spinner-border mb-4" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
         </div>
-        <% if @user.editor? %>
-          <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4"
-            <% if @show_editor_onboarding %>
-              role="button" data-step data-index="2" data-onboarding-content="You are now able to start an article without first submitting a pitch. Ensure all your articles fit the topic requirements."
-            <% end %>
-          >
-             <%= link_to "Start an Article", new_post_path, class: "newpost--new--profile mr-0" %>
-          </div>
-        <% else %>
-          <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4"
-            <% if @show_onboarding_full %>
-              role="button" data-step data-index="6" data-onboarding-content="Claim another pitch or pitch your own article topic. Make sure it meets all the criteria in Pitching an Article before submitting."
-            <% end %>
-          >
-            <span><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile mr-0" %></span>
-          </div>
-        <% end %>
-        <br>
-        <div class="dashboard--articles--wrapper">
-          <% if @user_pitches.present? %>
-            <h6 class="header_ttl">Your Pitches</h6>
-            <%= render "/users/partials/dashboard_pitches", pitches: @user_pitches, image: "waiting.png" %>
-          <% end %>
-          <% if @user_posts.rejected.present? %>
-            <h6 class="header_ttl">Changes Requested</h6>
-            <%= render "/users/partials/dashboard_articles", articles: @user_posts.rejected, image: "changes_requested.png" %>
-          <% end %>
-          <% if @user_posts.scheduled_for_publishing.present? %>
-            <h6 class="header_ttl">Pending Publication</h6>
-            <%= render "/users/partials/dashboard_articles", articles: @user_posts.scheduled_for_publishing, image: "published.png" %>
-          <% end %>
-          <% if @user_posts.in_review.present? %>
-            <h6 class="header_ttl">Articles In Review</h6>
-            <%= render "/users/partials/dashboard_articles", articles: @user_posts.in_review, image: "in_review.png" %>
-          <% end %>
-          <% if @user_posts.submitted.present? %>
-            <h6 class="header_ttl">Pending Review</h6>
-            <%= render "/users/partials/dashboard_articles", articles: @user_posts.submitted, image: "waiting.png" %>
-          <% end %>
-          <h6 class="header_ttl">Articles In Progress</h6>
-          <%= render "/users/partials/dashboard_articles", articles: @user_posts.draft, image: "saved.png" %>
-        </div>
-        <br>
       </div>
       <div class="dashboard--writer--flex--two" style="width: 30rem;">
         <% if @featured_writers.include? @user %>
@@ -134,7 +94,7 @@
           <i class="mt-4 d-block">See more pitches <%= link_to("here", pitches_path, class: "link_inline link_grn") %></i>
           <br>
         </div>
-        <%= link_to("Recommend a friend", "/writers/#{@user.slug}/invitations", class: "link_grn") %><br>
+        <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn") %><br>
         <div class="links"
           <% if @show_onboarding_full %>
             data-step data-index="5" data-onboarding-content="New applications have become open to you. If you want to apply to our editor team, we suggest having at four or more published articles on The Teen Magazine before applying to have the best chance."

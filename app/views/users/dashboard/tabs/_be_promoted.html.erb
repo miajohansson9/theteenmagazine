@@ -1,0 +1,42 @@
+<div class="onboarding pl-4 pt-4" style="margin-right: 20px;">
+  <% @invitations_from_notice.each do |invitation| %>
+    <div class="alert alert-info vertical-align-container" role="alert">
+      <p class="m-0 pr-4">
+        Your invitation link to <b><%= invitation.email %></b> has been used and you've received a new promotion credit! 🎉
+        <u><%= link_to "Close", {:controller => "invitations", :action => "dismissed_notification", :id => invitation.id, :remote => true}, "data-dismiss" => "alert" %></u>
+      </p>
+    </div>
+  <% end %>
+  <h3 class="mb-3">Use credits to boost published articles.</h3>
+  <p class="mb-3 d-block">You have <b id="promotion_points"><%= @user.promotions %></b> promotion credit<% if !(@user.promotions.eql? 1) %>s<% end %> available. Articles you promote will show up under every published article on The Teen Magazine for <b>1</b> week.</p>
+  <p class="d-inline">You're <b><%= @pageviews_away_from_new_badge %></b> pageviews away from a new badge</p>
+  <div class="badge_wrapper d-inline">
+    <svg widht="22px" height="22px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="badge-check" class="svg-inline--fa fa-badge-check fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill=<%= @next_badge_to_earn[1] %> d="M512 256a88 88 0 0 0-57.1-82.4A88 88 0 0 0 338.4 57.1a88 88 0 0 0-164.8 0A88 88 0 0 0 57.1 173.6a88 88 0 0 0 0 164.8 88 88 0 0 0 116.5 116.5 88 88 0 0 0 164.8 0 88 88 0 0 0 116.5-116.5A88 88 0 0 0 512 256zm-144.8-44.25l-131 130a11 11 0 0 1-15.55-.06l-75.72-76.33a11 11 0 0 1 .06-15.56L171 224a11 11 0 0 1 15.56.06l42.15 42.49 97.2-96.42a11 11 0 0 1 15.55.06l25.82 26a11 11 0 0 1-.08 15.56z" opacity="0.4"></path><path class="fa-primary" fill=<%= @next_badge_to_earn[1] %> d="M367.2 211.75l-131 130a11 11 0 0 1-15.55-.06l-75.72-76.33a11 11 0 0 1 .06-15.56L171 224a11 11 0 0 1 15.56.06l42.15 42.49 97.2-96.42a11 11 0 0 1 15.55.06l25.82 26a11 11 0 0 1-.06 15.56z"></path></g></svg>
+  </div>
+  <div class="progress mt-3 pl-0 mb-4">
+    <div class="progress-bar progress-bar-badges pl-0" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <%= render_async_cache get_published_articles_path(id: @user.id), container_id: 'published-articles', container_class: "p-0", toggle: { selector: '#be-promoted-tab-classic', event: :click } do %><
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<style media="screen">
+  .complete {
+    width: <%= @percent_to_next_level %>% !important;
+    transition-duration: 2s;
+  }
+</style>
+
+<script type="text/javascript">
+  document.getElementById("be-promoted-tab-classic").addEventListener("click", actionOnViewed);
+  function actionOnViewed(event) {
+    setTimeout(function() {
+      $('.progress-bar-badges').addClass("complete");
+    }, 200);
+  }
+</script>

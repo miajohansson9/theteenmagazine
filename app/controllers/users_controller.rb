@@ -58,6 +58,61 @@ class UsersController < ApplicationController
     render partial: "users/partials/editor_stats"
   end
 
+  def get_past_invites
+    @user = User.find(params[:id])
+    @per_page = 3
+    @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
+    @is_last_page = (@user.invitations.count - (@page - 2) * @per_page) <= @per_page
+    @pagy, @invitations = pagy_countless(@user.invitations.order("created_at desc"), page: params[:page], items: @per_page, link_extra: 'data-remote="true"')
+    if params[:page].present?
+      respond_to do |format|
+        format.js
+      end
+    else
+      render partial: "users/dashboard/tabs/invites/all_past_invites"
+    end
+  end
+
+  def get_published_articles
+    @user = User.find(params[:id])
+    @promotions = @user.promotions
+    @per_page = 6
+    @user_posts_approved_records = Post.where("collaboration like ?", "%#{@user.email}%").or(Post.where(user_id: @user.id)).published.by_promoted_then_updated_date
+    @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
+    @is_last_page = (@user_posts_approved_records.count - (@page - 2) * @per_page) <= @per_page
+    @pagy, @posts = pagy_countless(@user_posts_approved_records, page: params[:page], items: @per_page, link_extra: 'data-remote="true"')
+    if params[:page].present?
+      respond_to do |format|
+        format.js
+      end
+    else
+      render partial: "users/dashboard/tabs/articles/all_published_articles"
+    end
+  end
+
+  def post_modal
+    @user = User.find(params[:id])
+    @post = Post.find(params[:post_id])
+    respond_to do |format|
+      format.html { redirect_to "/users/#{@post.user.slug}"}
+      format.js
+    end
+  end
+
+  def promote_post
+    @user = User.find(params[:id])
+    @post = Post.find(params[:post_id])
+    if @post.user.promotions > 0
+      @initial = @post.promoting_until || Time.now
+      @post.update_column("promoting_until", @initial + 7.days)
+      respond_to do |format|
+        format.html { redirect_to "/users/#{@post.user.slug}"}
+        format.js
+      end
+      @post.user.update_column("promotions", @post.user.promotions - 1)
+    end
+  end
+
   def onboarding_redirect
     if current_user.present? && (current_user.submitted_profile.eql? nil) && (!current_user.partner)
       redirect_to "/onboarding", notice: "Please complete the onboarding process first."
@@ -83,6 +138,8 @@ class UsersController < ApplicationController
   end
 
   def full_writer
+    @invitation = Invitation.new
+    @invitations_from_notice = @user.invitations.where(alert_viewed_at: nil, status: "Applied")
     @claimed_pitches_cnt = Pitch.where(claimed_id: @user.id)&.count || 0
     @pageviews = 0
     @user_posts_approved_records.map {|p| @pageviews += p.post_impressions }
@@ -116,7 +173,7 @@ class UsersController < ApplicationController
   def set_badges
     # if you want to change a badge color, you must update all the already created badges
     # to match the new color
-    @levels = [["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000], ["1,000+", "#4ABEB6", 1000]]
+    @levels = [["500k+", "#940128", 500000], ["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000], ["1,000+", "#4ABEB6", 1000]]
     @levels.each_with_index do |level, index|
       if @user.badges.where(level: level[0]).present?
         @badge = @user.badges.find_by(level: level[0])
@@ -131,6 +188,20 @@ class UsersController < ApplicationController
         @show_badge_popup = true
         break
       end
+    end
+    if !@badge.nil?
+      @match = @levels.find {|b| b[0] == @badge.level}
+      if @levels.index(@match) > 0
+        @next_badge_to_earn = @levels[@levels.index(@match) - 1]
+        @pageviews_away_from_new_badge = @next_badge_to_earn[2] - @pageviews
+        @percent_to_next_level = (@match[2] - @pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2] - @match[2]).to_f * 100
+      else
+        @next_badge_to_earn = @levels.first
+        @pageviews_away_from_new_badge = 0
+      end
+    else
+      @next_badge_to_earn = @levels.last
+      @pageviews_away_from_new_badge = @pageviews - @next_badge_to_earn[2]
     end
   end
 
@@ -375,7 +446,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :onboarding_claimed_pitch_id, :do_not_send_emails, :editor, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :extensions, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community, :last_saw_new_writer_dashboard, :last_saw_writer_dashboard, :became_an_editor, :completed_editor_onboarding, :missed_editor_deadline, :notify_of_new_review, :has_newsletter_permissions)
+    params.require(:user).permit(:email, :password, :onboarding_claimed_pitch_id, :do_not_send_emails, :editor, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :extensions, :promotions, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community, :last_saw_new_writer_dashboard, :last_saw_writer_dashboard, :became_an_editor, :completed_editor_onboarding, :missed_editor_deadline, :notify_of_new_review, :has_newsletter_permissions)
   end
 
   def find_user

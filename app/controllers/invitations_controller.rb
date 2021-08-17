@@ -46,12 +46,12 @@ class InvitationsController < ApplicationController
   def get_sent_invitations
     @user = User.find(params[:user])
     @invitations = @user.invitations.order('created_at desc')
-    render partial: "invitations/partials/invites/past_invites"
+    render partial: "invitations/partials/invites/past_invites_page"
   end
 
   def get_sent_invitations_admin
     @invitations = Invitation.all.order('created_at desc')
-    render partial: "invitations/partials/invites/past_invites"
+    render partial: "invitations/partials/invites/past_invites_page"
   end
 
   def show
@@ -68,6 +68,13 @@ class InvitationsController < ApplicationController
     set_meta_tags :title => "Invite from #{@invitation.user.first_name} | The Teen Magazine"
   end
 
+  def dismissed_notification
+    @invitation = Invitation.find(params[:id])
+    if @invitation.user_id.eql? current_user.id
+      @invitation.update_column("alert_viewed_at", Time.now)
+    end
+  end
+
   def apply_through_invitation
     @invitation = Invitation.find_by(token: params[:token])
     @user = @invitation.user
@@ -75,7 +82,12 @@ class InvitationsController < ApplicationController
     @application.request = request
     if @application.deliver
       flash.now[:error] = nil
-      @invitation.update_column("status", "Applied")
+      begin
+        @invitation.update_column("status", "Applied")
+        @user.update_column("promotions", @user.promotions + 1)
+      rescue e
+        puts e
+      end
     else
       flash.now[:error] = "An error occured. Please check that you've filled out all the fields."
       render :show
@@ -85,7 +97,7 @@ class InvitationsController < ApplicationController
   private
 
   def invitation_params
-    params.require(:invitation).permit(:id, :status, :user_id, :email, :apply_id, :impressions, :token)
+    params.require(:invitation).permit(:id, :status, :user_id, :email, :apply_id, :impressions, :token, :alert_viewed_at)
   end
 
   def apply_params

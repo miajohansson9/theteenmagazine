@@ -75,8 +75,8 @@ class ReviewsController < ApplicationController
       Activity.create(action: "<span style='margin-left: -5px;'>'s</span> pitch <a target='_blank' href='/pitches/#{pitch.slug}'>#{pitch.try(:title)}</a> was claimed by <a target='_blank' href='/writers/#{@writer.try(:slug)}'>#{@writer.try(:full_name)}</a>", action_at: pitch.claimed_at, kind: pitch.class.name, kind_id: pitch.id, user_id: pitch.user_id)
     end
     @per_page = 20
-    @last_page = Activity.all.count / @per_page
-    @page = params[:page].nil? ? 1 : Integer(params[:page]) + 1
+    @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
+    @is_last_page = (Activity.all.count - (@page - 2) * @per_page) <= @per_page
     @pagy, @editor_activity = pagy_countless(Activity.all, page: params[:page], items: @per_page, link_extra: 'data-remote="true"')
     if params[:page].present?
       respond_to do |format|

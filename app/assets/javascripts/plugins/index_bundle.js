@@ -20,7 +20,7 @@ function selectionPopup(items, callbacks, options) {
 
   const parsedItems = _parseItems(items, callbacks);
 
-  document.body.innerHTML += `<popup data-toggle="modal" data-target="#basicExampleModal" class='popup'>
+  document.body.innerHTML += `<popup data-toggle="modal" data-target="#TTM-Modal" class='popup'>
   <div class='popupContentWrapper'>
     ${parsedItems}
   </div>
@@ -96,7 +96,7 @@ var pop = require('selection-popup');
 function share(e) {
   $('#response_text').text(e);
   $('#response_text_form').val(e);
-  $('#basicExampleModal').modal({
+  $('#TTM-Modal').modal({
     keyboard: true
   });
   $(document).off('focusin.modal');
@@ -143,7 +143,7 @@ function selectionPopup(items, callbacks, options) {
 
   var parsedItems = _parseItems(items, callbacks);
 
-  document.body.innerHTML += '<popup data-toggle="modal" data-target="#basicExampleModal" class=\'popup\'>\n  <div class=\'popupContentWrapper\'>\n    ' + parsedItems + '\n  </div>\n  <div class=\'pointer\'></div></div>';
+  document.body.innerHTML += '<popup data-toggle="modal" data-target="#TTM-Modal" class=\'popup\'>\n  <div class=\'popupContentWrapper\'>\n    ' + parsedItems + '\n  </div>\n  <div class=\'pointer\'></div></div>';
 
   if (!callbacks.push) callbacks = [callbacks];
   actions = callbacks;

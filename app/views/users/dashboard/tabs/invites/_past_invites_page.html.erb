@@ -1,0 +1,38 @@
+<% @invitations.each do |invitation| %>
+  <li class="list-group-item comment pl-0 pr-0" style="background: transparent">
+    <div class="d-flex w-100">
+      <% @profile_img = invitation.user.try(:profile)&.exists? ? image_tag(invitation.user.profile.url(:square), :class => "profile_img_small mr-2") : image_tag("profile_image.jpg", :class => "profile_img_small mr-2") %>
+      <%= link_to(@profile_img, invitation.user, target: "_blank") %>
+      <div class="li-content0 w-100">
+        <p class="m-0">
+          <% if current_user.id.eql? invitation.user.try(:id) %>
+            You
+          <% else %>
+            <%= link_to(invitation.user.try(:full_name), "/writers/#{invitation.user.try(:slug)}/invitations", :target => "_blank") %>
+          <% end %>
+          sent an invite to <b><%= invitation.email %></b> <%= time_ago_in_words(invitation.created_at) %> ago
+        </p>
+        <div class="progress md-progress mt-3 pl-0">
+          <% if (invitation.status.eql? "Accepted") %>
+            <% @width = "100%" %>
+          <% elsif (invitation.status.eql? "Not viewed") %>
+            <% @width = "25%" %>
+          <% elsif (invitation.status.eql? "Viewed") %>
+            <% @width = "50%" %>
+          <% elsif (invitation.status.eql? "Applied") %>
+            <% @width = "75%" %>
+          <% else %>
+            <% @width = "0%" %>
+          <% end %>
+          <div class="progress-bar pl-0" role="progressbar" style="width: <%= @width %>" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <p>Progress: <b><%= invitation.status %></b>
+          <% if invitation.status.eql? "Accepted"%> 🎉
+          <% elsif invitation.status.eql? "Viewed" %> <%= invitation.impressions %> time<% if !(invitation.impressions.eql? 1) %>s<% end %>
+          <% elsif invitation.status.eql? "Applied" %> on <%= invitation.applies.last.updated_at.in_time_zone.strftime("%D") %>
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </li>
+<% end %>

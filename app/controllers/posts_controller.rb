@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
   before_action :find_post_history, only: [:show]
   before_action :find_post, only: [:edit, :update, :destroy, :update_newsletter]
-  before_action :authenticate_user!, except: [:show, :get_trending_posts_in_category]
+  before_action :authenticate_user!, except: [:show, :get_trending_posts_in_category, :get_promoted_posts]
   before_action :load_author,  only: [:show]
   before_action :create,  only: [:unapprove]
   before_action :is_admin?, :only => [:new]
   before_action :is_partner?, :only => [:index, :edit]
   after_action :log_impression, :only=> [:show]
-  load_and_authorize_resource :except => [:get_trending_posts_in_category]
+  load_and_authorize_resource :except => [:get_trending_posts_in_category, :get_promoted_posts]
 
   def log_impression
     if @post.is_published?
@@ -170,9 +170,24 @@ class PostsController < ApplicationController
     end
   end
 
+  def get_promoted_posts
+    @per_page = 9
+    @posts_promoted_records = Post.published.by_promoted_then_updated_date.limit(30)
+    @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
+    @is_last_page = (@posts_promoted_records.count - (@page - 2) * @per_page) <= @per_page
+    @pagy, @posts_promoted = pagy_countless(@posts_promoted_records, page: params[:page], items: @per_page, link_extra: 'data-remote="true"')
+    if params[:page].present?
+      respond_to do |format|
+        format.js
+      end
+    else
+      render partial: "posts/partials/promoted/all_promoted_articles"
+    end
+  end
+
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
-    @trending = @post.category.posts.published.trending.limit(3)
+    @trending = @post.category.posts.published.trending.limit(7)
     render partial: "posts/partials/trending"
   end
 

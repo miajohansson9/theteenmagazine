@@ -3,3 +3,7 @@
 <% else %>
   <%= render "posts/draft" %>
 <% end %>
+<div class="">
+
+</div>
+<%= render_async_cache get_promoted_posts_path, retry_count: 3 %>
