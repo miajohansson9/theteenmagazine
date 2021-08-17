@@ -289,6 +289,7 @@ class PostsController < ApplicationController
         else
           ApplicationMailer.article_published(@post.user, @post).deliver
         end
+        @post.promoting_until = nil
         @post.publish_at = Time.now
       end
       puts @rev.editor_id
