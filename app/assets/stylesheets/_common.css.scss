@@ -1249,7 +1249,7 @@ p, ul, ol {
     }
     .content_wrapper {
       max-width: inherit;
-      margin: 0 20px !important;
+      margin: 0px !important;
       .left_side_flex {
         max-width: 550px;
       }
@@ -1405,6 +1405,9 @@ p, ul, ol {
           height: 56px !important;
         }
       }
+    }
+    .svg-nav-search {
+      margin: 0 !important;
     }
   }
 

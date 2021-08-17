@@ -509,6 +509,12 @@
   }
 }
 
+@media(min-width: 1030px) {
+  .flex_wrapper_columns {
+    margin-left: 20px !important;
+  }
+}
+
 @media (max-width: 448px) {
     .skinny {
       #post_title_show {
