@@ -41,12 +41,7 @@ class Post < ApplicationRecord
   }
 
   scope :by_promoted_then_updated_date, -> {
-    order('
-      CASE WHEN promoting_until IS NOT NULL
-        THEN promoting_until
-        ELSE posts.updated_at
-      END DESC
-    ')
+    order('CASE WHEN promoting_until IS NULL THEN 1 ELSE 0 END, posts.updated_at DESC')
   }
 
   def is_published?
