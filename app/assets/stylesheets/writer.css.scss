@@ -9,6 +9,7 @@
 @import "analytics";
 @import "posts_projects";
 @import "common";
+@import "newlayout";
 
 @media (max-width: 980px) {
    .nav-title {
@@ -39,25 +40,6 @@ a {
   p, span {
     font-size: 16px;
     display: inline;
-  }
-}
-
-.classic-tabs .nav li a.active, .tab-custom .active {
-  border-radius: 30px !important;
-  border-width: 0px;
-  background-color: #FED6DF;
-}
-
-.tab-custom {
-  margin-left: 0px !important;
-  border-radius: 30px !important;
-  a {
-    color: #F0255E !important;
-    font-family: verdana;
-    font-weight: 800;
-    text-transform: none !important;
-    font-size: 0.8em;
-    padding: 15px 30px !important;
   }
 }
 
@@ -852,6 +834,15 @@ a {
 @media (max-width: 450px) {
   .nav_article .pt-4 {
     display: none;
+  }
+}
+
+@media (max-width: 670px) {
+  .published-article-modal {
+    flex-direction: column !important;
+    .flex_child {
+      width: 100%;
+    }
   }
 }
 

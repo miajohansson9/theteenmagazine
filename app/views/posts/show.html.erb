@@ -3,5 +3,7 @@
 <% else %>
   <%= render "posts/draft" %>
 <% end %>
-<h1 class="section--title mb-0"><a href="/search">Also on The Teen Magazine</a></h1>
+<div class="">
+
+</div>
 <%= render_async_cache get_promoted_posts_path, retry_count: 3 %>

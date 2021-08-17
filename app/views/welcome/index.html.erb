@@ -5,63 +5,64 @@
     </div>
   </div>
   <div class="wrapper_home">
-  <h1 class="section--title"><a href="/categories/student-life">Student Life</a></h1>
-  <div class="flex--welcome">
-    <div class="flex-1">
-      <%= render_async_cache get_category_1_welcome_path, retry_count: 3 do %>
-        <%= render "welcome/placeholders/category_row_placeholder" %>
-      <% end %>
-      <h1 class="section--title"><a href="/categories/opinion">Op-ed</a></h1>
-      <%= render_async_cache get_category_2_welcome_path, retry_count: 3 do %>
-        <%= render "welcome/placeholders/category_row_placeholder" %>
-      <% end %>
-      <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
-      <%= render_async_cache get_category_3_welcome_path, retry_count: 3 do %>
-        <%= render "welcome/placeholders/category_row_placeholder" %>
-      <% end %>
-    </div>
-    <div class="most_read contain_articles">
-      <div class="ads_wrapper">
-        <div class="content_hint"></div>
-          <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-          <!-- homepage-0 -->
-          <!-- <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="ca-pub-4566416931763342"
-               data-ad-slot="8120207605"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
-          <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
-          </script> -->
+    <h1 class="section--title"><a href="/categories/student-life">Student Life</a></h1>
+    <div class="flex--welcome">
+      <div class="flex-1">
+        <%= render_async_cache get_category_1_welcome_path, retry_count: 3 do %>
+          <%= render "welcome/placeholders/category_row_placeholder" %>
+        <% end %>
+        <h1 class="section--title"><a href="/categories/opinion">Op-ed</a></h1>
+        <%= render_async_cache get_category_2_welcome_path, retry_count: 3 do %>
+          <%= render "welcome/placeholders/category_row_placeholder" %>
+        <% end %>
+        <h1 class="section--title"><a href="/categories/culture">Culture</a></h1>
+        <%= render_async_cache get_category_3_welcome_path, retry_count: 3 do %>
+          <%= render "welcome/placeholders/category_row_placeholder" %>
+        <% end %>
       </div>
-      <h1 class="section--title"><%= link_to "Trending Articles", "/trending" %></h1>
-      <%= render_async_cache get_trending_posts_path, retry_count: 3 %>
-    </div>
-  </div>
-  <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
-  <div class="flex--welcome">
-    <div class="flex-1">
-      <%= render_async_cache get_category_4_welcome_path %>
-    </div>
-    <div class="most_read contain_articles">
-      <div class="ads_wrapper">
-        <div class="content_hint"></div>
-          <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-          <!-- Homepage 1 -->
-          <!-- <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="ca-pub-4566416931763342"
-               data-ad-slot="2546543885"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins> -->
-          <!-- <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
-          </script> -->
+      <div class="most_read contain_articles">
+        <div class="ads_wrapper">
+          <div class="content_hint"></div>
+            <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+            <!-- homepage-0 -->
+            <!-- <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4566416931763342"
+                 data-ad-slot="8120207605"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script> -->
+        </div>
+        <h1 class="section--title"><%= link_to "Trending Articles", "/trending" %></h1>
+        <%= render_async_cache get_trending_posts_path, retry_count: 3 %>
       </div>
-      <br>
     </div>
+    <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
+    <div class="flex--welcome">
+      <div class="flex-1">
+        <%= render_async_cache get_category_4_welcome_path %>
+      </div>
+      <div class="most_read contain_articles">
+        <div class="ads_wrapper">
+          <div class="content_hint"></div>
+            <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+            <!-- Homepage 1 -->
+            <!-- <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4566416931763342"
+                 data-ad-slot="2546543885"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins> -->
+            <!-- <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script> -->
+        </div>
+        <br>
+      </div>
+    </div>
+    <h1 class="section--title mb-0"><a href="/search">Recent Articles</a></h1>
+    <%= render_async_cache get_recent_posts_path, retry_count: 3 %>
   </div>
-  <h1 class="section--title mb-0"><a href="/search">Recent Articles</a></h1>
-  <%= render_async_cache get_recent_posts_path, retry_count: 3 %>
 </div>

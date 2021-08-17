@@ -1,0 +1,13 @@
+<div class="body welcome">
+  <div class="wrapper_home">
+    <h1 id="promoted-posts-title" class="section--title"><a href="/">Also on The Teen Magazine</a></h1>
+    <div id="promoted-posts" class="ctgry_section">
+      <%= render partial: 'posts/partials/promoted/promoted_page' %>
+    </div>
+    <% if @posts_promoted_records.count > @per_page  %>
+      <div id="div_next_link_articles">
+        <%= render partial: 'posts/partials/promoted/next_link' %>
+      </div>
+    <% end %>
+  </div>
+</div>

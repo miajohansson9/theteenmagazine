@@ -1757,7 +1757,7 @@ ul.stepper li.warning a .circle {
 }
 
 a {
-    color: #007bff;
+    color: #F0255E;
     text-decoration: none;
     cursor: pointer;
     -webkit-transition: all 0.2s ease-in-out;
@@ -1773,7 +1773,7 @@ a:hover {
 
 a.disabled:hover,
 a:disabled:hover {
-    color: #007bff
+    color: #F0255E
 }
 
 a:not([href]):not([tabindex]),
@@ -1899,7 +1899,7 @@ a:not([href]):not([tabindex]):hover {
 }
 
 .bg-primary {
-    background-color: #4285f4 !important
+    background-color: #F0255E !important
 }
 
 a.bg-primary:hover,
@@ -16930,11 +16930,11 @@ label.btn input[type="checkbox"]:disabled:checked+label:after {
 
 .select-wrapper.active span.caret,
 .select-wrapper.active label.mdb-main-label {
-    color: #007bff
+    color: #F0255E
 }
 
 .select-wrapper.active+label {
-    color: #007bff
+    color: #F0255E
 }
 
 .select-wrapper input.select-dropdown {
@@ -17807,7 +17807,7 @@ select:disabled {
 }
 
 .mdb-autocomplete:focus~label {
-    color: #007bff
+    color: #F0255E
 }
 
 button:focus {
