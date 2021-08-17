@@ -3,28 +3,34 @@
     <div id="waiting--for--approval">
       <div class="w-100">
         <!-- Classic tabs -->
-        <div class="classic-tabs" style="padding-top: 30px;">
-          <ul class="nav mt-0" id="myClassicTab" role="tablist">
-            <li class="nav-item tab-custom">
-              <a class="tab-custom active show" id="home-tab-classic" data-toggle="tab" href="#home-classic"
-                role="tab" aria-controls="home-classic" aria-selected="true">Home</a>
-            </li>
-            <li class="nav-item tab-custom">
-              <a class="tab-custom" id="be-promoted-tab-classic" data-toggle="tab" href="#be-promoted-classic" role="tab"
-                aria-controls="be-promoted-classic" aria-selected="false">Boost an Article
-              </a>
-            </li>
-            <li class="nav-item tab-custom">
-              <a class="tab-custom" id="earn-points-tab-classic" data-toggle="tab" href="#earn-points-classic" role="tab"
-                aria-controls="earn-points-classic" aria-selected="false">Earn Credits</a>
-            </li>
-            <% if false %>
-              <li class="nav-item tab-custom">
-                <a class="tab-custom" id="admin-invites-tab-classic" data-toggle="tab" href="#admin-invites-classic" role="tab"
-                  aria-controls="admin-invites-classic" aria-selected="false">Admin</a>
-              </li>
+        <div style="padding-top: 30px;">
+          <div class="classic-tabs"
+            <% if @show_onboarding_full %>
+              data-step data-index="7" data-onboarding-content="Earn credits and boost your published articles to reach a wider audience."
             <% end %>
-          </ul>
+          >
+            <ul class="nav mt-0" id="myClassicTab" role="tablist">
+              <li class="nav-item tab-custom">
+                <a class="tab-custom active show" id="home-tab-classic" data-toggle="tab" href="#home-classic"
+                  role="tab" aria-controls="home-classic" aria-selected="true">Home</a>
+              </li>
+              <li class="nav-item tab-custom">
+                <a class="tab-custom" id="be-promoted-tab-classic" data-toggle="tab" href="#be-promoted-classic" role="tab"
+                  aria-controls="be-promoted-classic" aria-selected="false">Boost an Article
+                </a>
+              </li>
+              <li class="nav-item tab-custom">
+                <a class="tab-custom" id="earn-points-tab-classic" data-toggle="tab" href="#earn-points-classic" role="tab"
+                  aria-controls="earn-points-classic" aria-selected="false">Earn Credits</a>
+              </li>
+              <% if false %>
+                <li class="nav-item tab-custom">
+                  <a class="tab-custom" id="admin-invites-tab-classic" data-toggle="tab" href="#admin-invites-classic" role="tab"
+                    aria-controls="admin-invites-classic" aria-selected="false">Admin</a>
+                </li>
+              <% end %>
+            </ul>
+          </div>
         </div>
         <!-- Classic tabs -->
         <div class="tab-content p-0" id="myClassicTabContent">
