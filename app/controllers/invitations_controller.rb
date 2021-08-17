@@ -46,12 +46,12 @@ class InvitationsController < ApplicationController
   def get_sent_invitations
     @user = User.find(params[:user])
     @invitations = @user.invitations.order('created_at desc')
-    render partial: "invitations/partials/invites/past_invites_page"
+    render partial: "invitations/partials/invites/past_invites"
   end
 
   def get_sent_invitations_admin
     @invitations = Invitation.all.order('created_at desc')
-    render partial: "invitations/partials/invites/past_invites_page"
+    render partial: "invitations/partials/invites/past_invites"
   end
 
   def show
