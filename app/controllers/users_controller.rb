@@ -173,7 +173,7 @@ class UsersController < ApplicationController
   def set_badges
     # if you want to change a badge color, you must update all the already created badges
     # to match the new color
-    @levels = [["500k+", "#940128", 500000], ["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000], ["1,000+", "#4ABEB6", 1000]]
+    @levels = [["500k+", "#1F2955", 500000],["300k+", "#6A198E", 300000], ["100k+", "#a88beb", 100000], ["50k+", "#a88beb", 50000], ["20k+", "#00acee", 20000], ["10k+", "#EF265F", 10000], ["5,000+", "#4ABEB6", 5000], ["1,000+", "#4ABEB6", 1000]]
     @levels.each_with_index do |level, index|
       if @user.badges.where(level: level[0]).present?
         @badge = @user.badges.find_by(level: level[0])
@@ -193,7 +193,7 @@ class UsersController < ApplicationController
       @match = @levels.find {|b| b[0] == @badge.level}
       if @levels.index(@match) > 0
         @next_badge_to_earn = @levels[@levels.index(@match) - 1]
-        @pageviews_away_from_new_badge = @next_badge_to_earn[2] - @pageviews
+        @pageviews_away_from_new_badge = (@next_badge_to_earn[2] - @pageviews).abs()
         @percent_to_next_level = (@match[2] - @pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2] - @match[2]).to_f * 100
       else
         @next_badge_to_earn = @levels.first
@@ -201,7 +201,7 @@ class UsersController < ApplicationController
       end
     else
       @next_badge_to_earn = @levels.last
-      @pageviews_away_from_new_badge = @pageviews - @next_badge_to_earn[2]
+      @pageviews_away_from_new_badge = (@next_badge_to_earn[2] - @pageviews).abs()
     end
   end
 
