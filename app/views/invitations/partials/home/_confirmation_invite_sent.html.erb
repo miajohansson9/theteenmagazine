@@ -1,5 +1,5 @@
 <div class="pr-4">
-  <h3 class="text-center mt-4">Your invite is on its way!</h3>
+  <h3 class="text-center">Your invite is on its way!</h3>
   <p class="text-center">You can check the progress of your invitation under "Your invites". Remember that your friend must be accepted for you to get a promotion point.</p>
   <div style="max-width: 500px; margin: 0 auto;">
     <?xml version="1.0" encoding="UTF-8"?>
@@ -78,6 +78,10 @@
     $('#past-invites').removeClass('hide');
     $(".spinner-button").addClass("hide");
     $('#form-invite').html("<%= j(render partial: 'users/dashboard/tabs/earn_points', locals: {invitation: Invitation.new}) %>");
+    var container = document.getElementById('past-invites-render-container');
+    var event = new Event('refresh');
+    // Dispatch 'refresh' on the render_async_cache container
+    container.dispatchEvent(event)
   }
   $(document).ready(function() {
     $('.progress-bar').addClass("complete");

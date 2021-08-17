@@ -16,7 +16,7 @@
         You have <b><%= user.promotions %> promotion credit<% if !(user.promotions.eql? 1) %>s<% end %></b> available
       <% end %>
     </div>
-    <p>When you promote an article, your article will be shown under "Also on The Teen Magazine" section under every article on The Teen Magazine.</p>
+    <p>When you promote an article, your article will be shown under "More on The Teen Magazine" section under every article on The Teen Magazine.</p>
     <div style="margin: 0 0 40px auto;" class="rounded-bottom lighten-3 text-right">
       <% @is_promoted = post.promoting_until.present? && post.promoting_until > Time.now %>
       <% @class = @user.promotions < 1 ? "disabled" : "" %>

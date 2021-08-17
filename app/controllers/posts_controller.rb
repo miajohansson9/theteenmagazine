@@ -171,7 +171,7 @@ class PostsController < ApplicationController
   end
 
   def get_promoted_posts
-    @per_page = 9
+    @per_page = 6
     @posts_promoted_records = Post.published.by_promoted_then_updated_date.limit(30)
     @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
     @is_last_page = (@posts_promoted_records.count - (@page - 2) * @per_page) <= @per_page
@@ -187,7 +187,7 @@ class PostsController < ApplicationController
 
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
-    @trending = @post.category.posts.published.trending.limit(7)
+    @trending = @post.category.posts.published.trending.limit(3)
     render partial: "posts/partials/trending"
   end
 
