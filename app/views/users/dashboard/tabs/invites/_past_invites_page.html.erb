@@ -29,7 +29,7 @@
         <p>Progress: <b><%= invitation.status %></b>
           <% if invitation.status.eql? "Accepted"%> 🎉
           <% elsif invitation.status.eql? "Viewed" %> <%= invitation.impressions %> time<% if !(invitation.impressions.eql? 1) %>s<% end %>
-          <% elsif invitation.status.eql? "Applied" %> on <%= invitation.applies.last.updated_at.in_time_zone.strftime("%D") %>
+          <% elsif invitation.status.eql? "Applied" && invitation.applies.last.present? %> on <%= invitation.applies.last.created_at.in_time_zone.strftime("%D") %>
           <% end %>
         </p>
       </div>
