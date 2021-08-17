@@ -33,7 +33,7 @@ class Post < ApplicationRecord
   }
 
   scope :trending, -> {
-    where(:publish_at => (Time.now - 20.months)..Time.now).order("post_impressions desc")
+    where(:publish_at => (Time.now - 2.months)..Time.now).order("post_impressions desc")
   }
 
   scope :by_published_date, -> {
