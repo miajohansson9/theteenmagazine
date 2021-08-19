@@ -59,11 +59,10 @@ class PostsController < ApplicationController
         @rev = @prev_post_pitch.reviews.build(status: "In Progress", active: true)
         @rev.save
         @post.pitch.update_columns({:claimed_id => current_user.id, :claimed_at => Time.now})
-        @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
+        @prev_post_pitch.update_column(:title, Pitch.find(post_params[:pitch_id]).title)
         if @prev_post_pitch.deadline_at.nil? && @post.pitch.deadline.present?
-          @prev_post_pitch.deadline_at = Time.now + (@post.pitch.deadline).weeks
+          @prev_post_pitch.update_column(:deadline_at, Time.now + (@post.pitch.deadline).weeks)
         end
-        @prev_post_pitch.save!
         redirect_to @prev_post_pitch, notice: "You've reclaimed this pitch!"
       else
         redirect_to @prev_post_pitch.pitch, notice: "Oops you've missed the deadline for this pitch previously."

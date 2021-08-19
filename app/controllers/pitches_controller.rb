@@ -79,7 +79,7 @@ class PitchesController < ApplicationController
   end
 
   def lock_post
-    if @post.present? && !@post.title.include(" (locked)")
+    if @post.present? && !(@post.title.include? " (locked)")
       @post.reviews.each do |review|
         review.destroy
       end
