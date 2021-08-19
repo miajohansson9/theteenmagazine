@@ -66,7 +66,7 @@ class AppliesController < ApplicationController
     if apply_params[:user_id].present?
       @editor_app = true
       @application.request = request
-      if @application.deliver
+      if @application.validate && @application.deliver
         flash.now[:error] = nil
       else
         flash.now[:error] = "An error occured. Please check that you've filled out all the fields."
@@ -75,7 +75,7 @@ class AppliesController < ApplicationController
     else
       @editor_app = false
       @application.request = request
-      if @application.deliver
+      if @application.validate && @application.deliver
         flash.now[:error] = nil
       else
         flash.now[:error] = "An error occured. Please check that you've filled out all the fields."
@@ -85,7 +85,7 @@ class AppliesController < ApplicationController
   end
 
   def editor
-    @application = Apply.where(rejected_editor_at: nil).find_by(user_id: current_user.id) || Apply.new
+    @application = Apply.where(rejected_editor_at: nil).find_by(user_id: current_user.id) || current_user.applies.build
     @applied_num_times = Apply.where(user_id: current_user.id, kind: "Editor").count
     set_meta_tags title: "Editor Application | The Teen Magazine",
                   description: "Our editor team is in charge of pitching new article topics, publishing/giving feedback to articles, and responding to profile submissions. We are active on Slack and support each other in helping our writer team succeed at The Teen Magazine."

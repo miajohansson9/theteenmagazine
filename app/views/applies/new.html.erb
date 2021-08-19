@@ -85,17 +85,9 @@ pintrk('track', 'pagevisit');
   });
 
   $("#submit-application").click(function() {
-    var $nonempty = $('.required').filter(function() {
-      return this.value != ''
-    });
-    if ($nonempty.length == 0) {
-      alert('There are empty required fields.');
-      return false;
-    } else {
-      $("#submit-application").addClass("disabled");
-      $(".spinner-button").removeClass("hide");
-      return true;
-    }
+    $("#submit-application").addClass("disabled");
+    $(".spinner-button").removeClass("hide");
+    return true;
   });
 
   $(":input").change(function(){ //triggers change in all input fields including text type
