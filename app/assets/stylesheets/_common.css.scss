@@ -1239,6 +1239,15 @@ p, ul, ol {
   body, #site-wrapper, #site-canvas, .bodywrapper {
     overflow-x: hidden !important;
   }
+  .div {
+    height: 200px !important;
+    .post_image {
+      height: 220px !important;
+    }
+  }
+  #post_title_show {
+    margin-top: 160px !important;
+  }
   .flex_other_articles {
     padding: 0 !important;
   }
