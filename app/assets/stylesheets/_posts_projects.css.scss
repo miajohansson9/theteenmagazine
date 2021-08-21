@@ -1,5 +1,5 @@
 .div {
-  height: 200px;
+  height: 300px;
   width: 100%;
   overflow: hidden;
   z-index: 0;
@@ -7,7 +7,7 @@
 }
 
 .post_image {
-  height: 220px;
+  height: 320px;
   position: absolute;
   background-position: center;
   width: 105%;
@@ -248,7 +248,7 @@
   min-width: 330px;
   max-width: 330px;
   z-index: 30;
-  margin: 140px 20px 0 20px;
+  margin: 240px 20px 0 20px;
   img {
     width: 100%;
   }
@@ -305,7 +305,7 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 100px;
+  margin-top: 200px;
   display: block;
   position: relative;
   z-index: 0;
