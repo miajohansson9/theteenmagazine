@@ -11,8 +11,8 @@
         <%= render_async_cache get_category_1_welcome_path, retry_count: 3 do %>
           <%= render "welcome/placeholders/category_row_placeholder" %>
         <% end %>
-        <div class="content_hint"></div>
         <h1 class="section--title"><a href="/categories/opinion">Op-ed</a></h1>
+        <div class="content_hint"></div>
         <%= render_async_cache get_category_2_welcome_path, retry_count: 3 do %>
           <%= render "welcome/placeholders/category_row_placeholder" %>
         <% end %>
@@ -41,7 +41,6 @@
         <div class="content_hint"></div>
       </div>
     </div>
-    <div class="content_hint"></div>
     <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
     <div class="flex--welcome">
       <div class="flex-1">
