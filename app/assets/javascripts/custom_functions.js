@@ -120,6 +120,7 @@ function isDisabled(id) {
 
 function isFormButtonDisabled(input) {
   var input = $(input).val();
+  $('#result-text').text("")
   if (input.includes('@')) {
     $('#submit-comment-modal-button').removeClass("disabled");
   } else {

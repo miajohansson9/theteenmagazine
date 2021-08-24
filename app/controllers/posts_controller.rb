@@ -1,13 +1,13 @@
 class PostsController < ApplicationController
   before_action :find_post_history, only: [:show]
   before_action :find_post, only: [:edit, :update, :destroy, :update_newsletter]
-  before_action :authenticate_user!, except: [:show, :get_trending_posts_in_category, :get_promoted_posts]
+  before_action :authenticate_user!, except: [:show, :get_trending_posts_in_category, :subscribe, :is_email, :get_promoted_posts]
   before_action :load_author,  only: [:show]
   before_action :create,  only: [:unapprove]
   before_action :is_admin?, :only => [:new]
   before_action :is_partner?, :only => [:index, :edit]
   after_action :log_impression, :only=> [:show]
-  load_and_authorize_resource :except => [:get_trending_posts_in_category, :get_promoted_posts]
+  load_and_authorize_resource :except => [:get_trending_posts_in_category, :subscribe, :is_email, :get_promoted_posts]
 
   def log_impression
     if @post.is_published?
@@ -187,6 +187,9 @@ class PostsController < ApplicationController
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
     @trending = @post.category.posts.published.trending.limit(4)
+    if @trending.length < 4
+      @trending = @post.category.posts.published.order("created_at desc").limit(4)
+    end
     render partial: "posts/partials/trending"
   end
 
@@ -200,6 +203,28 @@ class PostsController < ApplicationController
     @post_comments = current_user.posts.draft.map{|p| p.comments.where.not(user_id: current_user.id)}.flatten
     @all = (@comments_following + @post_comments + @replies).uniq.sort_by(&:created_at).reverse.take(20)
     render partial: "posts/community/conversations_following"
+  end
+
+  def subscribe
+    @failed = true
+    begin
+      if isEmail(params[:posts][:email])
+        @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+        @gb.lists(ENV['MAILCHIMP_LIST_ID']).members.create(body: {email_address: params[:posts][:email], status: "subscribed"})
+        @failed = false
+      else
+        redirect_to "/subscribe", notice: "Please enter a valid email address."
+      end
+    rescue => error
+      puts error
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def isEmail(str)
+    return str.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i)
   end
 
   def unapprove

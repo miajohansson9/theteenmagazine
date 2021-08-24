@@ -1,0 +1,7 @@
+<% if @failed %>
+document.getElementById("result-text").className = "failure-text"
+$('#result-text').text("An error occurred.")
+<% else %>
+document.getElementById("result-text").className = "success-text"
+$('#result-text').text("Successfully subscribed to The Teen Magazine!")
+<% end %>

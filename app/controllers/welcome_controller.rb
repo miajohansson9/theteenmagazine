@@ -33,7 +33,7 @@ class WelcomeController < ApplicationController
   end
 
   def get_trending_posts
-    @trending = Post.published.trending.limit(4)
+    @trending = Post.published.trending.limit(9)
     render partial: "welcome/partials/trending"
   end
 

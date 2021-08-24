@@ -1,11 +1,9 @@
-<div class="contain_articles">
-  <% @trending.each do |post| %>
-    <div class="ctgry_article">
-      <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
-      <div class="paragraph">
-        <p><%= link_to(post.title.truncate_words(12), post) %></p>
-      </div>
+<% @trending.each do |post| %>
+  <div class="ctgry_article">
+    <%= link_to(image_tag(post.thumbnail.url(:medium)), post) %>
+    <div class="paragraph">
+      <p><%= link_to(post.title.truncate_words(12), post) %></p>
     </div>
-  <% end %>
-  <h6 style="margin-right: 20px; margin-top: -15px; margin-bottom: 25px; text-align: right;" class="trending_title"><i><%=link_to "See More", @trending.first.category %></i></h6>
-</div>
+  </div>
+<% end %>
+<h6 style="margin-right: 20px; margin-top: -15px; margin-bottom: 25px; text-align: right;" class="trending_title"><i><%=link_to "See More", @trending.first.category %></i></h6>

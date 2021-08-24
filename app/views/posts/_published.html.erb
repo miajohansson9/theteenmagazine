@@ -82,8 +82,21 @@ blockquote {
       <div class="post_apply">
         <div class="articles">
           <div class="flex_other_articles">
-            <h3>Recommended in <%= link_to(@post.category.name, @post.category, :class => "category_title_trending") %></h3>
-            <%= render_async_cache get_trending_posts_in_category_path(id: @post.id) %>
+            <div class="contain_articles">
+              <h3>Recommended in <%= link_to(@post.category.name, @post.category, :class => "category_title_trending") %></h3>
+              <%= render_async_cache get_trending_posts_in_category_path(id: @post.id) %>
+              <div id="subscribe-widget">
+                <h4>Subscribe to our weekly newsletter</h4>
+                <small class="sub-text">Get notified of the top trending articles every week!</small>
+                <small id="result-text"></small>
+                <%= form_for(:posts, url:"/posts/#{@post.id}/subscribe", remote: true, :html => {:id => "subscribe-form"}) do |f| %>
+                  <%= f.text_field :email, placeholder: "Your Email", required: true, id: "email", onkeyup: "isFormButtonDisabled('#email')"%>
+                  <div class="btn_cntnr">
+                    <%= f.button "Sign Up", class: "mr-0 newpost--new--profile submit_modal", id: "submit-comment-modal-button" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -98,6 +98,7 @@ Rails.application.routes.draw do
   get '/partners/:id/published', to: 'users#sponsored'
   get '/august-2021-bexesyjj-bxducjpuj-hrhhqug-xqkoktbve', to: 'pages#issue'
   post '/august-2021-bexesyjj-bxducjpuj-hrhhqug-xqkoktbve', to: 'pages#issue'
+  post '/posts/:id/subscribe', to: 'posts#subscribe'
 
   patch 'users/:id/:post_id/modal' => 'users#post_modal', as: :post_modal
   patch 'users/:id/:post_id/promote' => 'users#promote_post', as: :promote_post

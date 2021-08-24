@@ -54,7 +54,7 @@
     padding: 15px 0 5px 15px;
     h3 {
       margin: 10px 0;
-      padding: 0 20px 0 5px;
+      padding: 0 20px 0 0px;
     }
     .ctgry_article {
       display: flex;
@@ -363,7 +363,7 @@
 }
 
 #content {
-   padding: 0 40px;
+   padding: 0 30px;
    .post_content {
      br {
        display: none;
@@ -488,8 +488,8 @@
       padding: 0 40px !important;
     }
     .post_apply {
-      h3, .contain_articles {
-        padding: 0 35px !important;
+      .contain_articles {
+        padding: 0 15px !important;
       }
     }
 }
