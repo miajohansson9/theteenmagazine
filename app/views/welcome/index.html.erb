@@ -11,6 +11,7 @@
         <%= render_async_cache get_category_1_welcome_path, retry_count: 3 do %>
           <%= render "welcome/placeholders/category_row_placeholder" %>
         <% end %>
+        <div class="content_hint"></div>
         <h1 class="section--title"><a href="/categories/opinion">Op-ed</a></h1>
         <%= render_async_cache get_category_2_welcome_path, retry_count: 3 do %>
           <%= render "welcome/placeholders/category_row_placeholder" %>
@@ -19,7 +20,6 @@
         <%= render_async_cache get_category_3_welcome_path, retry_count: 3 do %>
           <%= render "welcome/placeholders/category_row_placeholder" %>
         <% end %>
-        <div class="content_hint"></div>
       </div>
       <div class="most_read contain_articles">
         <div class="ads_wrapper">
@@ -36,10 +36,12 @@
                  (adsbygoogle = window.adsbygoogle || []).push({});
             </script> -->
         </div>
-        <h1 class="section--title"><%= link_to "Trending Articles", "/trending" %></h1>
+        <h1 class="mt-4 section--title"><%= link_to "Trending Articles", "/trending" %></h1>
         <%= render_async_cache get_trending_posts_path, retry_count: 3 %>
+        <div class="content_hint"></div>
       </div>
     </div>
+    <div class="content_hint"></div>
     <h1 class="section--title"><a href="/categories/lifestyle">Lifestyle</a></h1>
     <div class="flex--welcome">
       <div class="flex-1">
