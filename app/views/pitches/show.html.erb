@@ -1,5 +1,5 @@
 <div id="banner_writing" class="editor"></div>
-<div class="apply_wrapper pitch_form_wrapper">
+<div class="apply_wrapper pitch_form_wrapper mb-4">
   <% if @claimed_user.present? && @post.deadline_at.present? %>
     <%= render "pitches/deadline_warning_msg", post: @post %>
   <% end %>
@@ -50,7 +50,8 @@
       <%= f.hidden_field :category_id, value: @pitch.category_id %>
       <%= f.hidden_field :pitch_id, value: @pitch.id %>
       <i class="d-block pb-4 mb-2">When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
-      <div class="btn_cntnr" style="margin-top: -1rem;">
+      <div class="content_hint"></div>
+      <div class="btn_cntnr">
         <% @confirm = @pitch.deadline.nil? ? "When you claim this pitch, your draft will be started." : "When you claim this pitch, you will have #{@pitch.deadline} weeks to submit the associated draft for review." %>
         <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Claim Article Pitch", data: { confirm: @confirm }, class: "newpost--new--profile mb-0 mr-0 #{@disabled}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
       </div>
@@ -61,7 +62,8 @@
         <%= form_for @pitch do |f| %>
           <%= f.hidden_field :claimed_id, value: nil %>
           <p class="pitch_usr mb-4">If you unclaim this pitch, the associated article will become locked unless you claim the pitch again. If this pitch was created by an editor, the topic will become available to any writer at TTM. Go to your started <%= link_to("draft", @article, class: "pitch_btn", target: "_blank") %>.</p>
-          <div class="btn_cntnr" style="margin-top: -1rem;">
+          <div class="content_hint"></div>
+          <div class="btn_cntnr">
             <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }, class: "newpost--new--profile mb-0 mr-0 #{@disabled}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
           </div>
           <br>
@@ -71,6 +73,6 @@
       <% end %>
     <% end %>
     <% if ((current_user.id.eql? @pitch.user.id) || current_user.admin) && !@article&.is_published? %>
-      <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme edit_btn_rel", style: "float: left; margin-top: -1.5rem;" %>
+      <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme edit_btn_rel", style: "float: left; margin-top: -0.5rem;" %>
     <% end %>
 </div>
