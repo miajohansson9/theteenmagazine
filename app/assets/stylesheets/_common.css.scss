@@ -642,7 +642,7 @@ hr {
 #subscribe-widget {
   background-color: whitesmoke;
   padding: 20px 10px;
-  margin: 0 15px 20px 0px;
+  margin: 0 0px 20px 0px;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   h4 {
@@ -1291,12 +1291,6 @@ p, ul, ol {
 }
 
 @media (max-width: 1030px) {
-  .image_max_100_prcnt {
-    padding-right: 0px !important;
-  }
-  #subscribe-widget {
-    margin-right: 0px !important;
-  }
   body, #site-wrapper, #site-canvas, .bodywrapper {
     overflow-x: hidden !important;
   }
