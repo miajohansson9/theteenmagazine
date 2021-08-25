@@ -248,6 +248,9 @@ $gray:  #2a2a2a;
 }
 
 @media (max-width: 550px) {
+  .image_max_100_prcnt {
+    min-width: 100%;
+  }
   .contain_articles {
     padding: 0 !important;
     img {
