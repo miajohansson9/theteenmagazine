@@ -1,6 +1,6 @@
 <div class="ctgry_section">
   <% @posts_approved_last.each do |post| %>
-    <div class="ctgry_article recent mt-4 mb-4">
+    <div class="ctgry_article recent mb-4">
       <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title, class: "image_recent_articles"), post )%>
       <h1><%= link_to post.title, post %></h1>
       <p class="category"><%= link_to(post.category.name, post.category) %></p>
