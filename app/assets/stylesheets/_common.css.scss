@@ -1291,6 +1291,12 @@ p, ul, ol {
 }
 
 @media (max-width: 1030px) {
+  .image_max_100_prcnt {
+    padding-right: 0px !important;
+  }
+  #subscribe-widget {
+    margin-right: 0px !important;
+  }
   body, #site-wrapper, #site-canvas, .bodywrapper {
     overflow-x: hidden !important;
   }
