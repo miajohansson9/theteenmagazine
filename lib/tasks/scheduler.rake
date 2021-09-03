@@ -40,15 +40,15 @@ task :run_weekly_tasks => :environment do
       break if @emails.count.eql? 0
     end
   end
-end
 
-if (Date.today.friday?)
-  Post.draft.each do |post|
-    if post.sharing
-      if post.shared_at.nil?
-        post.update_attributes("sharing" => false)
-      elsif post.shared_at < Time.now - 1.month
-        post.update_attributes("shared_at" => nil, "sharing" => false)
+  if (Date.today.friday?)
+    Post.draft.each do |post|
+      if post.sharing
+        if post.shared_at.nil?
+          post.update_attributes("sharing" => false)
+        elsif post.shared_at < Time.now - 1.month
+          post.update_attributes("shared_at" => nil, "sharing" => false)
+        end
       end
     end
   end
