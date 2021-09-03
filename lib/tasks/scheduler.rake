@@ -22,7 +22,7 @@ task :run_weekly_tasks => :environment do
       @newsletter.posts.each do |post|
         ApplicationMailer.featured_in_newsletter(post.user, post).deliver
       end
-      @newsletter.update_column(:sent_at, Time.now)
+      @newsletter.update_attributes(:sent_at => Time.now)
     end
   end
 
@@ -83,7 +83,7 @@ task :run_nightly_tasks => :environment do
       if @missed_deadline
         if (editor.missed_editor_deadline.try(:month) === Date.yesterday.month) && !editor.admin
           ApplicationMailer.removed_editor_from_team(editor).deliver
-          editor.update_attributes('editor' => false, 'became_an_editor' => nil, 'completed_editor_onboarding', nil)
+          editor.update_attributes('editor' => false, 'became_an_editor' => nil, 'completed_editor_onboarding' => nil)
         else
           ApplicationMailer.editor_missed_deadline_1(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
           editor.update_attributes('missed_editor_deadline' => Time.now - 1.day)
@@ -108,7 +108,7 @@ task :run_nightly_tasks => :environment do
     # Update monthly extensions for active writers
     User.active.each do |user|
       begin
-        user.update_column('extensions', user.extensions + 1)
+        user.update_attributes('extensions' => user.extensions + 1)
       rescue
         next
       end
@@ -128,8 +128,8 @@ task :run_nightly_tasks => :environment do
           end
           @post.title = "#{@post.title} (locked)"
           @post.save
-          @post.pitch.update_column('claimed_id', nil)
-          @post.pitch.update_column('archive', !@post.pitch.user.editor)
+          @post.pitch.update_attributes('claimed_id' => nil)
+          @post.pitch.update_attributes('archive' => !@post.pitch.user.editor)
           @slug = FriendlyId::Slug.where(slug: @post.pitch.slug, sluggable_type: "Post")
           @slug&.destroy_all
           ApplicationMailer.article_deadline_passed(user, @post).deliver
