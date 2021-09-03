@@ -146,8 +146,13 @@ class UsersController < ApplicationController
     set_badges
     @show_onboarding_full = @user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
     @show_editor_onboarding = @user.became_an_editor.nil? && @user.editor && (current_user.id.eql? @user.id) && !@show_onboarding_full
+    if @show_onboarding_full
+      @user.promotions = @user.promotions + 1
+      @user.save
+    end
     if @show_editor_onboarding
       @user.became_an_editor = Time.now
+      @user.promotions = @user.promotions + 1
       @user.save
     elsif current_user.id.eql? @user.id
       @user.last_saw_writer_dashboard = Time.now

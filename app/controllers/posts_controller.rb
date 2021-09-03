@@ -35,7 +35,7 @@ class PostsController < ApplicationController
     end
     @points = current_user.points
     @my_shared_drafts = Post.where("collaboration like ?", "%#{current_user.email}%").or(Post.where(user_id: current_user.id)).where(sharing: true, publish_at: nil).draft.order("updated_at desc")
-    @pagy, @shared_drafts = pagy(Post.where(sharing: true).draft.order("shared_at desc"), page: params[:page], items: 12)
+    @pagy, @shared_drafts = pagy(Post.where(sharing: true).draft.order(:shared_at).reverse_order, page: params[:page], items: 12)
     Thread.new do
       current_user.update_column('last_saw_community', Time.now)
     end

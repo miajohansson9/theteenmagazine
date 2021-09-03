@@ -40,10 +40,16 @@ task :run_weekly_tasks => :environment do
       break if @emails.count.eql? 0
     end
   end
+end
 
-  if (Date.today.day.eql? 1)
-    User.editor.each do |editor|
-      ApplicationMailer.remind_editors_of_assigments(editor).deliver
+if (Date.today.friday?)
+  Post.draft.each do |post|
+    if post.sharing
+      if post.shared_at.nil?
+        post.update_attributes("sharing" => false)
+      elsif post.shared_at < Time.now - 1.month
+        post.update_attributes("shared_at" => nil, "sharing" => false)
+      end
     end
   end
 end
@@ -77,14 +83,18 @@ task :run_nightly_tasks => :environment do
       if @missed_deadline
         if (editor.missed_editor_deadline.try(:month) === Date.yesterday.month) && !editor.admin
           ApplicationMailer.removed_editor_from_team(editor).deliver
-          editor.update_column('editor', false)
-          editor.update_column('became_an_editor', nil)
-          editor.update_column('completed_editor_onboarding', nil)
+          editor.update_attributes('editor' => false, 'became_an_editor' => nil, 'completed_editor_onboarding', nil)
         else
           ApplicationMailer.editor_missed_deadline_1(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
-          editor.update_column('missed_editor_deadline', Time.now - 1.day)
+          editor.update_attributes('missed_editor_deadline' => Time.now - 1.day)
         end
       end
+    end
+  end
+
+  if (Date.today.day.eql? 1)
+    User.editor.each do |editor|
+      ApplicationMailer.remind_editors_of_assigments(editor).deliver
     end
   end
 
