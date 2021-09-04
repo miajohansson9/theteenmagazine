@@ -18,6 +18,9 @@ class Apply < ActiveRecord::Base
   validates_attachment_content_type :sample_writing, content_type: ['application/pdf']
 
   def validate
+    if grade.blank?
+      errors.add(:grade, "can't be blank")
+    end
     if user.blank?
       if sample_writing.blank?
         errors.add(:sample_writing, "can't be blank")

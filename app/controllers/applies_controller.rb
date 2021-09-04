@@ -50,15 +50,23 @@ class AppliesController < ApplicationController
 
   def update
     @application = Apply.find(params[:id])
-    if @application.update(apply_params)
+    if @application.validate && @application.update(apply_params)
       app_submitted
+    else
+      render 'editor', notice: "Oh no! Your changes were not able to be saved!"
     end
   end
 
   #send submitted application
   def create
     @application = Apply.new(apply_params)
-    app_submitted
+    if @application.validate && @application.save
+      app_submitted
+    elsif apply_params[:user_id].present?
+      render 'editor', notice: "Oh no! Your changes were not able to be saved!"
+    else
+      render 'new', notice: "Oh no! Your changes were not able to be saved!"
+    end
   end
 
   def app_submitted
