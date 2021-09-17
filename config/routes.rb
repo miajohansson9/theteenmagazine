@@ -96,8 +96,8 @@ Rails.application.routes.draw do
   get '/writers/:id/invitations', to: 'invitations#index'
   get '/writers/:slug/invitations/:token', to: 'invitations#show'
   get '/partners/:id/published', to: 'users#sponsored'
-  get '/august-2021-bexesyjj-bxducjpuj-hrhhqug-xqkoktbve', to: 'pages#issue'
-  post '/august-2021-bexesyjj-bxducjpuj-hrhhqug-xqkoktbve', to: 'pages#issue'
+  get '/september-2021-bexesyjj-bxducjpuj-hrhhqug-xqkoktbve', to: 'pages#issue'
+  post '/september-2021-bexesyjj-bxducjpuj-hrhhqug-xqkoktbve', to: 'pages#issue'
   post '/posts/:id/subscribe', to: 'posts#subscribe'
 
   patch 'users/:id/:post_id/modal' => 'users#post_modal', as: :post_modal
