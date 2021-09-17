@@ -77,14 +77,13 @@ class ApplicationController < ActionController::Base
 
   def initiate_last_seen
     if current_user.last_saw_pitches.nil? && !(current_user.partner)
-      current_user.update_column('last_saw_pitches', Time.now)
-      current_user.update_column('last_saw_pitches', Time.now)
+      current_user.update_attributes('last_saw_pitches' => Time.now, 'last_saw_pitches' => Time.now)
     end
     if current_user.admin && current_user.last_saw_writer_applications.nil?
-      current_user.update_column('last_saw_writer_applications', Time.now)
+      current_user.update_attributes('last_saw_writer_applications' => Time.now)
     end
     if current_user.editor && current_user.last_saw_editor_dashboard.nil?
-      current_user.update_column('last_saw_editor_dashboard', Time.now)
+      current_user.update_attributes('last_saw_editor_dashboard' => Time.now)
     end
   end
 end

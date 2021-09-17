@@ -86,9 +86,9 @@ class PostsController < ApplicationController
   end
 
   def claim_pitch
-    @post.pitch.update_columns({:claimed_id => current_user.id, :claimed_at => Time.now})
+    @post.pitch.update_attributes(:claimed_id => current_user.id, :claimed_at => Time.now)
     if @post.pitch.deadline.present?
-      @post.update_column('deadline_at', Time.now + (@post.pitch.deadline).weeks)
+      @post.update_attributes('deadline_at' => Time.now + (@post.pitch.deadline).weeks)
     end
     @rev = @post.reviews.build(status: "In Progress", active: true)
     @rev.save
