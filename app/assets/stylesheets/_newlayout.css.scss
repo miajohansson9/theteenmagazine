@@ -7,7 +7,7 @@
   margin-bottom: 30px;
   padding-bottom: 20px;
   border-bottom: 3px solid #222;
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
   font-size: 30px;
   width: 100%;
 }
@@ -38,7 +38,7 @@
       margin: 0;
       margin-top: 10px;
       font-size: 34px;
-      font-family: 'Lucitana';
+      font-family: "Lucitana";
       font-weight: 400;
       a {
         color: black;
@@ -73,7 +73,7 @@
         margin: 0;
         margin-top: 10px;
         font-size: 22px;
-        font-family: 'Lucitana';
+        font-family: "Lucitana";
         font-weight: 400;
         a {
           color: black;
@@ -85,7 +85,7 @@
   p {
     font-size: 12px;
     margin: 4px 0 5px 0;
-    color: #545454
+    color: #545454;
   }
   .ctgry_section {
     .ctgry_grid {
@@ -104,7 +104,7 @@
         margin: 0;
         margin-top: 10px;
         font-size: 22px;
-        font-family: 'Lucitana';
+        font-family: "Lucitana";
         font-weight: 400;
         a {
           color: black;
@@ -140,7 +140,7 @@
           margin: 0;
           margin-top: 10px;
           font-size: 20px;
-          font-family: 'Lucitana';
+          font-family: "Lucitana";
           font-weight: 400;
           a {
             color: black;
@@ -181,7 +181,7 @@
         margin: 0;
         margin-left: 10px;
         line-height: 18px;
-        font-family: 'Roboto Condensed Bold', sans-serif;
+        font-family: "Roboto Condensed Bold", sans-serif;
         font-style: italic;
         a {
           color: #191919;
@@ -213,7 +213,7 @@
       margin: 0;
       margin-top: 10px;
       font-size: 34px;
-      font-family: 'Lucitana';
+      font-family: "Lucitana";
       font-weight: 400;
       a {
         color: black;
@@ -225,7 +225,7 @@
 
 .category {
   a {
-    color: #4ABEB6;
+    color: #4abeb6;
     margin-bottom: -20px;
     margin: 0;
     text-decoration: none;
@@ -249,7 +249,8 @@
 
 @media (max-width: 900px) {
   .ctgry_section {
-    .ctgry_article, .rcnt_article {
+    .ctgry_article,
+    .rcnt_article {
       h1 {
         font-size: 24px !important;
       }
@@ -303,7 +304,8 @@
   }
   .ctgry_section {
     flex-direction: column !important;
-    .ctgry_article, .ctgry_article_placeholder {
+    .ctgry_article,
+    .ctgry_article_placeholder {
       width: 100% !important;
     }
   }
@@ -315,11 +317,11 @@
         width: 70%;
         margin-bottom: 20px;
       }
-      }
-      .ctgry_grid {
-        width: 100% !important;
-      }
     }
+    .ctgry_grid {
+      width: 100% !important;
+    }
+  }
 }
 
 @media (max-width: 500px) {

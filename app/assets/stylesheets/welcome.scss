@@ -1,4 +1,4 @@
-$gray:  #2a2a2a;
+$gray: #2a2a2a;
 
 #apply_link {
   margin-bottom: 20px;
@@ -12,8 +12,12 @@ $gray:  #2a2a2a;
   z-index: 100000000000;
 }
 
-.page, .contact {
-  h3, h4, h5, h6 {
+.page,
+.contact {
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: "Playfair Display";
     line-height: 1.5;
     margin: 30px auto 0 auto;
@@ -23,7 +27,7 @@ $gray:  #2a2a2a;
 
 .number {
   font-size: 1.7em;
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
   white-space: nowrap;
   margin-right: 10px;
   color: #545454;
@@ -42,8 +46,8 @@ $gray:  #2a2a2a;
   img:hover {
     opacity: 0.7;
   }
-  .section--title, .paragraph
-    a:hover {
+  .section--title,
+  .paragraph a:hover {
     color: #333 !important;
   }
 }
@@ -52,7 +56,8 @@ $gray:  #2a2a2a;
   display: none !important;
 }
 
-.col-1, .col-3 {
+.col-1,
+.col-3 {
   float: left;
 }
 
@@ -86,35 +91,35 @@ $gray:  #2a2a2a;
       height: 230px;
       overflow: hidden;
     }
-      .image_thumbnail {
-        width: 100%;
-        height: 100px;
-        object-fit: cover;
-        z-index: 1;
-        position: relative;
-        -moz-transition: all 0.3s;
-        -webkit-transition: all 0.3s;
-        transition: all 0.3s;
+    .image_thumbnail {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      z-index: 1;
+      position: relative;
+      -moz-transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+    }
+    .article_title {
+      z-index: 5;
+      position: relative;
+      width: 100%;
+      font-size: 18px;
+      padding-left: 5px;
+      padding-right: 5px;
+      overflow: hidden;
+      a {
+        color: #191919;
+        font-family: "Univers-CnUlt", Arial, Sans-serif;
+        letter-spacing: 0.05rem;
+        line-height: 1;
+        font-size: 0.9rem;
+        text-decoration: none;
+        font-weight: 600;
+        font-style: italic;
       }
-      .article_title {
-        z-index: 5;
-        position: relative;
-        width: 100%;
-        font-size: 18px;
-        padding-left: 5px;
-        padding-right: 5px;
-        overflow: hidden;
-        a {
-          color: #191919;
-          font-family: 'Univers-CnUlt', Arial, Sans-serif;
-          letter-spacing: 0.05rem;
-          line-height: 1;
-          font-size: 0.9rem;
-          text-decoration: none;
-          font-weight: 600;
-          font-style: italic;
-        }
-      }
+    }
   }
 }
 
@@ -149,10 +154,10 @@ $gray:  #2a2a2a;
     .article_title {
       margin: 0;
       text-align: center;
-      font-family: 'Roboto Condensed', sans-serif;
+      font-family: "Roboto Condensed", sans-serif;
       font-size: 30px;
       a {
-        color: #4ABEB6;
+        color: #4abeb6;
         text-decoration: none;
       }
     }
@@ -201,10 +206,10 @@ $gray:  #2a2a2a;
       margin-left: auto;
       margin-right: auto;
       a {
-        color: #4ABEB6;
+        color: #4abeb6;
         text-decoration: none;
         &:hover {
-          opacity: .55;
+          opacity: 0.55;
         }
       }
     }
@@ -217,34 +222,34 @@ $gray:  #2a2a2a;
     hr {
       border-color: black;
     }
-
   }
 }
 
 // Search bar
 
-.active-theme-2 input.form-control[type=text]:focus:not([readonly]) {
-  border-bottom: 1px solid #4ABEB6;
-  box-shadow: 0 1px 0 0 #4ABEB6;
+.active-theme-2 input.form-control[type="text"]:focus:not([readonly]) {
+  border-bottom: 1px solid #4abeb6;
+  box-shadow: 0 1px 0 0 #4abeb6;
 }
 
-.active-theme .fa, .active-theme-2 .fa {
-  color: #4ABEB6;
+.active-theme .fa,
+.active-theme-2 .fa {
+  color: #4abeb6;
 }
 
 @media (max-width: 1270px) {
- .skinny {
-   margin: 0px !important;
-   #post_title_show {
-     h1 {
-       font-size: 45px;
-     }
-   }
-   .content_wrapper {
-     max-width: 100%;
-     margin: 0 0 0 20px;
-   }
- }
+  .skinny {
+    margin: 0px !important;
+    #post_title_show {
+      h1 {
+        font-size: 45px;
+      }
+    }
+    .content_wrapper {
+      max-width: 100%;
+      margin: 0 0 0 20px;
+    }
+  }
 }
 
 @media (max-width: 375px) {
@@ -291,7 +296,7 @@ $gray:  #2a2a2a;
     display: flex;
     flex-direction: row;
     min-width: fit-content;
-    justify-content:flex-end;
+    justify-content: flex-end;
     align-items: center;
     .social_icons {
       margin: 0.5em;
@@ -445,7 +450,8 @@ $gray:  #2a2a2a;
 
 @media (max-width: 550px) {
   .post_info {
-    p, i {
+    p,
+    i {
       font-size: 14px !important;
     }
     .right_side_wrapper {
@@ -504,7 +510,7 @@ $gray:  #2a2a2a;
 }
 
 .trending_title {
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
   font-size: 1.1em;
   a:hover {
     text-decoration: none;
@@ -520,7 +526,7 @@ $gray:  #2a2a2a;
   margin-bottom: 30px;
   padding-bottom: 20px;
   border-bottom: 3px solid #222;
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
   font-size: 30px;
   width: 100%;
 }
@@ -555,7 +561,7 @@ $gray:  #2a2a2a;
         margin: 0;
         margin-top: 10px;
         font-size: 22px;
-        font-family: 'Lucitana';
+        font-family: "Lucitana";
         font-weight: 400;
         a {
           color: black;
@@ -567,7 +573,7 @@ $gray:  #2a2a2a;
   p {
     font-size: 12px;
     margin: 4px 0 5px 0;
-    color: #545454
+    color: #545454;
   }
   .ctgry_section {
     .ctgry_grid {
@@ -586,7 +592,7 @@ $gray:  #2a2a2a;
         margin: 0;
         margin-top: 10px;
         font-size: 22px;
-        font-family: 'Lucitana';
+        font-family: "Lucitana";
         font-weight: 400;
         a {
           color: black;
@@ -622,7 +628,7 @@ $gray:  #2a2a2a;
           margin: 0;
           margin-top: 10px;
           font-size: 20px;
-          font-family: 'Lucitana';
+          font-family: "Lucitana";
           font-weight: 400;
           a {
             color: black;
@@ -663,7 +669,7 @@ $gray:  #2a2a2a;
         margin: 0;
         margin-left: 10px;
         line-height: 18px;
-        font-family: 'Roboto Condensed Bold', sans-serif;
+        font-family: "Roboto Condensed Bold", sans-serif;
         font-style: italic;
         a {
           color: #191919;
@@ -676,7 +682,7 @@ $gray:  #2a2a2a;
 
 .category {
   a {
-    color: #4ABEB6;
+    color: #4abeb6;
     margin-bottom: -20px;
     margin: 0;
     text-decoration: none;
@@ -700,7 +706,8 @@ $gray:  #2a2a2a;
 
 @media (max-width: 900px) {
   .ctgry_section {
-    .ctgry_article, .rcnt_article {
+    .ctgry_article,
+    .rcnt_article {
       h1 {
         font-size: 24px !important;
       }
@@ -766,11 +773,11 @@ $gray:  #2a2a2a;
         width: 70%;
         margin-bottom: 20px;
       }
-      }
-      .ctgry_grid {
-        width: 100% !important;
-      }
     }
+    .ctgry_grid {
+      width: 100% !important;
+    }
+  }
 }
 
 @media (max-width: 500px) {

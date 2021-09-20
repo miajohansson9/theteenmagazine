@@ -1,5 +1,5 @@
-@import 'normalize';
-@import 'common';
+@import "normalize";
+@import "common";
 @import "userprofile";
 @import "pages";
 @import "posts_projects";
@@ -23,7 +23,7 @@
   }
 }
 
-@media (max-width: 800px)  {
+@media (max-width: 800px) {
   .hide-on-mobile {
     display: none;
   }
