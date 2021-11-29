@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_134216) do
+ActiveRecord::Schema.define(version: 2021_11_29_180600) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -287,16 +287,6 @@ ActiveRecord::Schema.define(version: 2021_05_18_134216) do
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
-  create_table "projects", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.string "link"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "slug"
-    t.index ["slug"], name: "index_projects_on_slug", unique: true
-  end
-
   create_table "reviews", force: :cascade do |t|
     t.integer "post_id"
     t.datetime "created_at", null: false
@@ -374,6 +364,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_134216) do
     t.integer "extensions", default: 1
     t.boolean "has_newsletter_permissions"
     t.integer "promotions", default: 0
+    t.boolean "skip_assignment"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true

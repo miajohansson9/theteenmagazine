@@ -451,7 +451,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :onboarding_claimed_pitch_id, :do_not_send_emails, :editor, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :extensions, :promotions, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community, :last_saw_new_writer_dashboard, :last_saw_writer_dashboard, :became_an_editor, :completed_editor_onboarding, :missed_editor_deadline, :notify_of_new_review, :has_newsletter_permissions)
+    params.require(:user).permit(:email, :password, :onboarding_claimed_pitch_id, :do_not_send_emails, :editor, :partner, :full_name, :admin, :first_name, :last_name, :category, :points, :extensions, :promotions, :submitted_profile, :approved_profile, :nickname, :posts_count, :image, :description, :slug, :website, :unconfirmed_email, :monthly_views, :profile, :insta, :twitter, :facebook, :pintrest, :youtube, :snap, :bi_monthly_assignment, :last_saw_pitches, :last_saw_writer_applications, :last_saw_editor_dashboard, :last_saw_peer_feedback, :last_saw_community, :last_saw_new_writer_dashboard, :last_saw_writer_dashboard, :became_an_editor, :completed_editor_onboarding, :missed_editor_deadline, :notify_of_new_review, :has_newsletter_permissions, :skip_assignment)
   end
 
   def find_user

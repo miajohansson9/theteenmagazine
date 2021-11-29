@@ -81,10 +81,10 @@ task :run_nightly_tasks => :environment do
       @editor_reviews_cnt = Review.where(editor_id: editor.id).where("updated_at > ?", Date.yesterday.beginning_of_month).count
       @missed_deadline = ((@editor_pitches_cnt < @pitches_requirement) || (@editor_reviews_cnt < @reviews_requirement)) && (editor.created_at < (Time.now - 31.days))
       if @missed_deadline
-        if (editor.missed_editor_deadline.try(:month) === Date.yesterday.month) && !editor.admin
+        if (editor.missed_editor_deadline.try(:month) === (Time.now - 1.week).month) && !(editor.admin || editor.skip_assignment)
           ApplicationMailer.removed_editor_from_team(editor).deliver
           editor.update_attributes('editor' => false, 'became_an_editor' => nil, 'completed_editor_onboarding' => nil)
-        else
+        elsif !editor.skip_assignment
           ApplicationMailer.editor_missed_deadline_1(editor, @reviews_requirement, @pitches_requirement, @editor_pitches_cnt, @editor_reviews_cnt).deliver
           editor.update_attributes('missed_editor_deadline' => Time.now - 1.day)
         end
@@ -95,6 +95,10 @@ task :run_nightly_tasks => :environment do
   if (Date.today.day.eql? 1)
     User.editor.each do |editor|
       ApplicationMailer.remind_editors_of_assigments(editor).deliver
+    end
+    @editors_with_passes = User.where(skip_assignment: true)
+    @editors_with_passes.each do |editor|
+      editor.update_column("skip_assignment", false)
     end
   end
 
