@@ -21,7 +21,7 @@
 
   <% if current_user.admin? && @user.editor && !@user.admin %>
     <%= f.label "Skip assignment", :class => "ml-2" %>
-    <%= f.check_box :skip_assignment, value: @user.skip_assignment %>
+    <%= f.check_box :skip_assignment %>
   <% end %>
 
   <br>
