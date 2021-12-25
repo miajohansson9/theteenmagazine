@@ -139,8 +139,9 @@
         var pop = require("selection-popup");
 
         function comment(e) {
-          $("#response_text").text(e);
-          $("#response_text_form").text(e);
+          // $("#response_text").text(e);
+          // $("#response_text_form").text(e);
+          console.log("triggered");
           $("#TTM-Modal").modal({
             keyboard: true,
           });
