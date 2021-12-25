@@ -15,9 +15,9 @@
         <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
         <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
         <%= form_for(@comment, id: "submit-comment-modal") do |f| %>
+          <%= f.text_area :response_to, id: "response_text_form" %>
           <%= f.text_area :text, :placeholder => "Share your thoughts on this text", id: "comment_field", class: "comment_field_modal", onkeyup: "isDisabled('modal')" %>
           <%= f.hidden_field :post_id, :post_id => @post.id %>
-          <%= f.hidden_field :response_to, id: "response_text_form" %>
           <div class="btn_cntnr mb-0 pb-0">
             <%= f.button "Cancel", class: "newpost--new--profile mr-2 pl-5 pr-5", id: "dismiss-modal", "data-dismiss" => "modal" %>
             <div class="hide spinner-button spinner-border" role="status">
