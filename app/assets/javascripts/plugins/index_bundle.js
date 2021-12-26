@@ -134,14 +134,11 @@
       function (require, module, exports) {
         "use strict";
 
-        // all seems working
-
         var pop = require("selection-popup");
 
         function comment(e) {
-          // $("#response_text").text(e);
-          // $("#response_text_form").text(e);
-          console.log("triggered");
+          $("#response_text").text(e);
+          $("#response_text_form").val(e);
           $("#TTM-Modal").modal({
             keyboard: true,
           });
