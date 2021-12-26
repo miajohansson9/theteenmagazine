@@ -137,8 +137,10 @@
         // all seems working
 
         var pop = require("selection-popup");
+        console.log("pop");
 
         function comment(e) {
+          console.log("comment function");
           $("#response_text").text(e);
           $("#response_text_form").text(e);
           $("#TTM-Modal").modal({
@@ -148,6 +150,7 @@
         }
 
         $("document").ready(function () {
+          console.log("document ready");
           var popup = require("./selectionPopup");
           popup(
             [
@@ -235,6 +238,7 @@
         }
 
         function _processSelection(e) {
+          console.log("process selection");
           if (e.target.classList.contains("popupItem")) {
             actions[e.target.dataset.action](document.getSelection());
             _hidePopup();
@@ -245,6 +249,7 @@
           _hidePopup();
         }
         function _parentNodeCheck(node, className) {
+          console.log("parent node check");
           var parent = node.parentNode;
           if (!parent) return undefined;
           if (parent.tagName !== "BODY") {
@@ -256,12 +261,16 @@
         }
 
         function _hidePopup() {
+          console.log("hide popup");
           document.querySelector("popup").classList.remove("popupVisible");
         }
 
         function _selectionEndText(e) {
+          console.log("_selectionEndText");
           var t = document.getSelection();
           if (t.toString().length !== 0) {
+            console.log(t);
+            console.log("t is not length 0");
             var popup = document.querySelector("popup");
             var rangeT = t.getRangeAt(0);
             var rectT = rangeT.getBoundingClientRect();
