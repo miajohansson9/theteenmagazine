@@ -83,7 +83,8 @@ class InvitationsController < ApplicationController
     if @application.deliver
       flash.now[:error] = nil
       begin
-        @invitation.update_attributes("status" => "Applied", "promotions" => @user.promotions + 1)
+        @invitation.update_column("status", "Applied")
+        @user.update_column("promotions", @user.promotions + 1)
       rescue e
         puts e
       end
