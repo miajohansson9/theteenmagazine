@@ -4,49 +4,39 @@ class Apply < ActiveRecord::Base
 
   include MailForm::Delivery
 
-  attributes :first_name,  :validate => true
-  attributes :last_name,  :validate => true
-  attributes :email, :validate => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
+  attributes :first_name, validate: true
+  attributes :last_name, validate: true
+  attributes :email, validate: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
   attributes :description, presence: true
-  attributes :grade,  :validate => true
-  attributes :nickname, :captcha => true
+  attributes :grade, validate: true
+  attributes :nickname, captcha: true
 
   has_attached_file :resume
   validates_attachment_content_type :resume, content_type: ['application/pdf']
 
   has_attached_file :sample_writing
-  validates_attachment_content_type :sample_writing, content_type: ['application/pdf']
+  validates_attachment_content_type :sample_writing,
+                                    content_type: ['application/pdf']
 
   def validate
-    if grade.blank?
-      errors.add(:grade, "can't be blank")
-    end
+    errors.add(:grade, "can't be blank") if grade.blank?
     if user.blank?
-      if sample_writing.blank?
-        errors.add(:sample_writing, "can't be blank")
-      end
-      if resume.blank?
-        errors.add(:resume, "can't be blank")
-      end
+      errors.add(:sample_writing, "can't be blank") if sample_writing.blank?
+      errors.add(:resume, "can't be blank") if resume.blank?
     else
-      if editor_feedback.blank?
-        errors.add(:editor_feedback, "can't be blank")
-      end
-      if editor_revision.blank?
-        errors.add(:editor_revision, "can't be blank")
-      end
-      if editor_pitches.blank?
-        errors.add(:editor_pitches, "can't be blank")
-      end
+      errors.add(:editor_feedback, "can't be blank") if editor_feedback.blank?
+      errors.add(:editor_revision, "can't be blank") if editor_revision.blank?
+      errors.add(:editor_pitches, "can't be blank") if editor_pitches.blank?
     end
     return errors.blank?
   end
 
   def headers
-  {
-    :subject => "Your application to The Teen Magazine was submitted successfully",
-    :to => "#{email}",
-    :from => %("The Teen Magazine Editor Team" <editors@theteenmagazine.com>)
-  }
+    {
+      subject:
+        'Your application to The Teen Magazine was submitted successfully',
+      to: "#{email}",
+      from: '"The Teen Magazine Editor Team" <editors@theteenmagazine.com>'
+    }
   end
 end

@@ -229,7 +229,7 @@
           }
 
           li {
-            transition: all .7s ease-in-out;
+            transition: all 0.7s ease-in-out;
           }
         }
 
@@ -325,10 +325,12 @@
               }
 
               &.hoverable {
-                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+                  0 2px 10px 0 rgba(0, 0, 0, 0.12);
 
                 &:hover {
-                  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+                  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+                    0 6px 20px 0 rgba(0, 0, 0, 0.19);
                 }
               }
             }
@@ -387,7 +389,7 @@
                   width: 30px;
                   height: 30px;
                   margin-left: -35px;
-                  font-size: .9em;
+                  font-size: 0.9em;
                   line-height: 30px;
                 }
               }
@@ -462,13 +464,13 @@
 
       .timeline-light-item-content {
         height: 2em;
-        padding-top: .2em;
+        padding-top: 0.2em;
         margin-left: 30px;
         line-height: 3em;
       }
     }
 
-    @each $color_name, $color in $mdb-colors{
+    @each $color_name, $color in $mdb-colors {
       .timeline-light-item-#{$color_name} {
         .timeline-light-item-head {
           border-color: $color;
@@ -503,7 +505,6 @@
         left: 14px;
         height: 100%;
       }
-
     }
 
     .timeline-light-item-dashed {
@@ -513,7 +514,6 @@
     }
 
     li:first-child.timeline-light-item {
-
       .timeline-light-item-tail {
         height: 0;
       }
@@ -521,7 +521,6 @@
 
     @keyframes tl-v2-loadingCircle {
       0% {
-
         transform: translate(-50%, 0) rotate(0deg);
       }
 

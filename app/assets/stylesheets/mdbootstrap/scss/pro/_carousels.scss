@@ -22,7 +22,7 @@
   .carousel-inner.v-2 .carousel-item-right.active,
   .carousel-inner.v-2 .carousel-item-next {
     transform: translateX(100%);
-    @include media-breakpoint-up ('md') {
+    @include media-breakpoint-up("md") {
       transform: translateX(33%);
     }
   }
@@ -30,7 +30,7 @@
   .carousel-inner.v-2 .carousel-item-left.active,
   .carousel-inner.v-2 .carousel-item-prev {
     transform: translateX(-100%);
-    @include media-breakpoint-up ('md') {
+    @include media-breakpoint-up("md") {
       transform: translateX(-33%);
     }
   }
@@ -116,10 +116,9 @@
 
 // Fix for testimontials (class use in bs js)
 .wrapper-carousel-fix .carousel-fade .active {
-
   &.carousel-item-left,
   &.carousel-item-right {
-    transition: transform .6s ease;
+    transition: transform 0.6s ease;
     transition-property: opacity;
   }
 }

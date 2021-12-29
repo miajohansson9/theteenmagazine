@@ -9,19 +9,17 @@ div.picker.datepicker {
   .picker__holder.inline {
     position: unset;
     .picker__header {
-      padding-top: 10px
+      padding-top: 10px;
     }
   }
 }
-
-
 
 div.picker.datepicker .picker__box {
   border: none;
   border-radius: 5px;
   .picker__header.datepicker__box {
     text-align: left;
-    .picker__date-display{
+    .picker__date-display {
       height: 115px;
       justify-content: left;
       padding: 0;
@@ -30,7 +28,7 @@ div.picker.datepicker .picker__box {
         position: absolute;
         margin-top: 15px;
         margin-left: 20px;
-        font-size: .7rem;
+        font-size: 0.7rem;
       }
       .picker__date-container {
         display: flex;
@@ -91,7 +89,7 @@ div.picker.datepicker .picker__box {
           content: "\f053";
         }
       }
-  
+
       .picker__nav--next {
         right: 0.5rem;
         padding: 0;
@@ -113,8 +111,8 @@ div.picker.datepicker .picker__box {
   }
   .picker__table {
     min-height: 267px;
-    padding: .5rem;
-    
+    padding: 0.5rem;
+
     .picker__day.picker__day--infocus {
       border-radius: 50%;
       &:hover:not(.picker__day--selected) {
@@ -140,11 +138,11 @@ div.picker.datepicker .picker__box {
       margin: 0;
       margin-top: 1rem;
       padding: 6px 8px;
-      font-size: .8rem;
+      font-size: 0.8rem;
       min-width: 64px;
       &:hover {
         background: #eee;
-    }
+      }
     }
     button.picker__picker-button--clear {
       margin-right: auto;
@@ -185,34 +183,34 @@ div.picker.datepicker .picker__box {
     .picker__date-display {
       display: flex;
       justify-content: center;
-      padding-bottom: .3125rem;
+      padding-bottom: 0.3125rem;
       font-weight: 400;
       background-color: $datepicker-date-bg;
       // color: #fff !important;
       @extend .white-text !optional;
 
       .picker__weekday-display {
-        padding: .875rem .4375rem .3125rem .5rem;
+        padding: 0.875rem 0.4375rem 0.3125rem 0.5rem;
         margin-top: 1.25rem;
         font-size: 2.1rem;
         letter-spacing: $datepicker-weekday-display-letter-spacing;
       }
 
       .picker__month-display {
-        padding: .875rem .3125rem .25rem;
+        padding: 0.875rem 0.3125rem 0.25rem;
         margin-top: 1.25rem;
         font-size: 2.1rem;
       }
 
       .picker__day-display {
-        padding: .875rem .3125rem .25rem;
+        padding: 0.875rem 0.3125rem 0.25rem;
         margin-top: 1.25rem;
         font-size: 2.1rem;
       }
 
       .picker__year-display {
         position: absolute;
-        top: .625rem;
+        top: 0.625rem;
         left: 45%;
         font-size: 1.1rem;
         color: $datepicker-year;
@@ -275,7 +273,7 @@ div.picker.datepicker .picker__box {
     .picker__nav--next {
       position: absolute;
       box-sizing: content-box;
-      padding: .1875rem .625rem;
+      padding: 0.1875rem 0.625rem;
 
       &:hover {
         color: $black-base;
@@ -290,7 +288,7 @@ div.picker.datepicker .picker__box {
     }
 
     .picker__nav--prev {
-      left: -.5em;
+      left: -0.5em;
       padding-right: $datepicker-nav-prev-pr;
 
       &:before {
@@ -299,7 +297,7 @@ div.picker.datepicker .picker__box {
     }
 
     .picker__nav--next {
-      right: -.2em;
+      right: -0.2em;
       padding-left: $datepicker-nav-next-pf;
 
       &:before {
@@ -316,7 +314,6 @@ div.picker.datepicker .picker__box {
       border-right-color: $grey-lighten-4;
       border-left-color: $grey-lighten-4;
     }
-
   }
 
   /**
@@ -441,7 +438,6 @@ div.picker.datepicker .picker__box {
     .picker__day--highlighted.picker__day--disabled:hover {
       background: $datepicker-table-day-higlighted-color;
     }
-
   }
 
   /**
@@ -502,7 +498,8 @@ div.picker.datepicker .picker__box {
       &:before {
         top: $datepicker-footer-today-button-before-top;
         width: 0;
-        border-top: $datepicker-footer-today-button-before-bt solid $datepicker-footer-today-button-before-bt-color;
+        border-top: $datepicker-footer-today-button-before-bt solid
+          $datepicker-footer-today-button-before-bt-color;
         border-left: $datepicker-footer-today-button-before-bl solid transparent;
       }
     }
@@ -511,7 +508,8 @@ div.picker.datepicker .picker__box {
       &:before {
         top: $datepicker-footer-clear-button-before-top;
         width: $datepicker-footer-clear-button-before-width;
-        border-top: $datepicker-footer-clear-button-before-bl solid $datepicker-footer-clear-button-before-bt-color;
+        border-top: $datepicker-footer-clear-button-before-bl solid
+          $datepicker-footer-clear-button-before-bt-color;
       }
     }
 
@@ -538,7 +536,6 @@ div.picker.datepicker .picker__box {
       border-top-color: #aaa;
     }
   }
-
 }
 
 /* ==========================================================================
@@ -556,7 +553,7 @@ div.picker.datepicker .picker__box {
 div.datepicker input {
   cursor: auto;
   ~ i.input-prefix {
-    cursor: pointer; 
+    cursor: pointer;
     pointer-events: all;
   }
 }

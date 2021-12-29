@@ -4,8 +4,8 @@ class OutreachesController < ApplicationController
 
   #show all applications
   def index
-    @outreaches_sent = Outreach.where(sent: true).order("created_at desc")
-    @outreaches_drafts = Outreach.where(sent: false).order("created_at desc")
+    @outreaches_sent = Outreach.where(sent: true).order('created_at desc')
+    @outreaches_drafts = Outreach.where(sent: false).order('created_at desc')
   end
 
   #create a new application
@@ -24,18 +24,19 @@ class OutreachesController < ApplicationController
     if (current_user && (current_user.admin?))
       true
     else
-      redirect_to current_user, notice: "You do not have access to this page."
+      redirect_to current_user, notice: 'You do not have access to this page.'
     end
   end
 
   #show application to editor
   #form for creating a new user already filled out
-  def show
-  end
+  def show; end
 
   private
 
   def outreach_params
-    params.require(:outreach).permit(:partner_email, :partner_name, :user_id, :email_draft, :sent)
+    params
+      .require(:outreach)
+      .permit(:partner_email, :partner_name, :user_id, :email_draft, :sent)
   end
 end

@@ -75,7 +75,6 @@
  * @property {Number} [minHeight=400]
  */
 
-
 /**
  * The initial width of the dialog, in pixels.
  *
@@ -509,7 +508,6 @@
  *
  * @property {String} labelStyle
  */
-
 
 /**
  * Specify the inline style of the input element.
@@ -997,22 +995,22 @@
  *
  * For a complete example of dialog definition, please check {@link CKEDITOR.dialog#add}.
  *
-* 		// There is no constructor for this class, the user just has to define an
-* 		// object with the appropriate properties.
-*
-* 		// Example:
-* 		{
-* 			type: 'textarea',
-* 			id: 'message',
-* 			label: 'Your comment',
-* 			'default': '',
-* 			validate: function() {
-* 				if ( this.getValue().length < 5 ) {
-* 					api.openMsgDialog( 'The comment is too short.' );
-* 					return false;
-* 				}
-* 			}
-* 		}
+ * 		// There is no constructor for this class, the user just has to define an
+ * 		// object with the appropriate properties.
+ *
+ * 		// Example:
+ * 		{
+ * 			type: 'textarea',
+ * 			id: 'message',
+ * 			label: 'Your comment',
+ * 			'default': '',
+ * 			validate: function() {
+ * 				if ( this.getValue().length < 5 ) {
+ * 					api.openMsgDialog( 'The comment is too short.' );
+ * 					return false;
+ * 				}
+ * 			}
+ * 		}
  *
  * @class CKEDITOR.dialog.definition.textarea
  * @extends CKEDITOR.dialog.definition.labeledElement

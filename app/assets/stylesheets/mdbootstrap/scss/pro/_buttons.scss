@@ -24,7 +24,12 @@
   border-radius: $btn-floating-border-radius;
   box-shadow: $z-depth-1-half;
   transition: $btn-floating-transtion;
-  @include make-btn-floating($btn-floating-width, $btn-floating-height, $btn-floating-icon-size, $btn-floating-line-height);
+  @include make-btn-floating(
+    $btn-floating-width,
+    $btn-floating-height,
+    $btn-floating-icon-size,
+    $btn-floating-line-height
+  );
   i {
     display: inline-block;
     width: inherit;
@@ -38,10 +43,20 @@
     border-radius: 0;
   }
   &.btn-sm {
-    @include make-btn-floating($btn-floating-width-sm, $btn-floating-height-sm, $btn-floating-icon-size-sm, $btn-floating-line-height-sm);
+    @include make-btn-floating(
+      $btn-floating-width-sm,
+      $btn-floating-height-sm,
+      $btn-floating-icon-size-sm,
+      $btn-floating-line-height-sm
+    );
   }
   &.btn-lg {
-    @include make-btn-floating($btn-floating-width-lg, $btn-floating-height-lg, $btn-floating-icon-size-lg, $btn-floating-line-height-lg);
+    @include make-btn-floating(
+      $btn-floating-width-lg,
+      $btn-floating-height-lg,
+      $btn-floating-icon-size-lg,
+      $btn-floating-line-height-lg
+    );
   }
 }
 
@@ -85,8 +100,8 @@
     a {
       &.btn-floating {
         opacity: 0;
-        transition-duration: .4s;
-        transform: scale(.4) translate(0);
+        transition-duration: 0.4s;
+        transform: scale(0.4) translate(0);
         &.shown {
           opacity: 1;
           transform: scale(1) translate(0);
@@ -104,7 +119,10 @@
   }
 }
 
-button, html [type="button"], [type="reset"], [type="submit"] {
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
   appearance: none;
 }
 

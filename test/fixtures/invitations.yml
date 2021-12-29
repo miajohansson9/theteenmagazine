@@ -3,11 +3,11 @@
 one:
   impressions: 1
   status: MyString
-  user_id: 
+  user_id:
   email: MyString
 
 two:
   impressions: 1
   status: MyString
-  user_id: 
+  user_id:
   email: MyString

@@ -21,7 +21,7 @@
   &.wide {
     width: $sidenav-width;
     transition-timing-function: linear, linear, ease;
-    transition-duration: .5s, .5s, .55s;
+    transition-duration: 0.5s, 0.5s, 0.55s;
     transition-property: top, bottom, width;
 
     .logo-wrapper {
@@ -36,7 +36,7 @@
           color: #fff;
 
           span {
-            padding-left: .7rem;
+            padding-left: 0.7rem;
             margin-top: -1rem;
           }
 
@@ -51,27 +51,27 @@
     .collapsible {
       a {
         padding-left: 23px;
-        transition: all .3s ease-in-out;
+        transition: all 0.3s ease-in-out;
 
         .sv-normal {
           opacity: 1;
-          transition: all .1s linear;
+          transition: all 0.1s linear;
         }
 
         .sv-slim {
           display: none;
           opacity: 0;
-          transition: all .1s linear;
+          transition: all 0.1s linear;
         }
 
         .link-text {
-            display: block;
-            position: absolute;
-            margin-left: 37px;
-            max-width: 60%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+          display: block;
+          position: absolute;
+          margin-left: 37px;
+          max-width: 60%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
 
@@ -102,23 +102,23 @@
       right: 3.75rem;
       width: 3.75rem !important;
       transition-timing-function: linear, linear, ease;
-      transition-duration: .5s, .5s, .55s;
+      transition-duration: 0.5s, 0.5s, 0.55s;
       transition-property: top, bottom, width;
 
       .collapsible {
         a {
           padding-left: 23px;
-          transition: all .3s ease-in-out;
+          transition: all 0.3s ease-in-out;
 
           .sv-normal {
             opacity: 0;
-            transition: all .1s linear;
+            transition: all 0.1s linear;
           }
 
           .sv-slim {
             display: block;
             opacity: 1;
-            transition: all .1s linear;
+            transition: all 0.1s linear;
           }
         }
 

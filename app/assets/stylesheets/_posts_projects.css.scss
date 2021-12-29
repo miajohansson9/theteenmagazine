@@ -339,9 +339,12 @@
     flex-direction: row;
   }
 
-  h1 {
+  .title_wrapper {
     margin-top: 30px;
     margin-bottom: 15px;
+  }
+
+  h1 {
     color: #4abeb6;
     text-shadow: 1px 1px #191919;
     font-size: 50px;
@@ -527,7 +530,7 @@
   .skinny {
     #post_title_show {
       padding: 0px 15px;
-      h1 {
+      .title_wrapper {
         padding-top: 20px;
       }
     }

@@ -1,18 +1,22 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
-  devise_for :users, controllers: {:registrations => "users/registrations", :sessions => "users/sessions"}
+  devise_for :users,
+             controllers: {
+               registrations: 'users/registrations',
+               sessions: 'users/sessions'
+             }
 
   devise_scope :user do
-    get "/login" => "users/sessions#new"
-    get "/onboarding" => "users#onboarding"
-    get "/editor-onboarding" => "users#editor_onboarding"
-    post "/writers" => "users/registrations#create"
-    post "/partners" => "users#create"
+    get '/login' => 'users/sessions#new'
+    get '/onboarding' => 'users#onboarding'
+    get '/editor-onboarding' => 'users#editor_onboarding'
+    post '/writers' => 'users/registrations#create'
+    post '/partners' => 'users#create'
   end
 
-  resources :users, path: "writers", except: [:new]
-  resources :users, path: "partners", only: [:new]
-  resources :contacts, only: [:new, :create]
+  resources :users, path: 'writers', except: [:new]
+  resources :users, path: 'partners', only: [:new]
+  resources :contacts, only: %i[new create]
   resources :applies
   resources :categories
   resources :pitches
@@ -80,11 +84,11 @@ Rails.application.routes.draw do
   get 'trending' => 'pages#trending'
   get 'newsletters/:id/featured-posts' => 'newsletters#featured'
   get 'reviews:post_id' => 'pages#reviews'
-  get "/apply" => "applies#new"
+  get '/apply' => 'applies#new'
   get '/applications/editor', to: 'applies#editor'
-  get "/submitted" => "applies#create"
-  get "/reset-password" => "pages#reset"
-  get "/search" => "pages#search"
+  get '/submitted' => 'applies#create'
+  get '/reset-password' => 'pages#reset'
+  get '/search' => 'pages#search'
   get '/sitemap.xml', to: 'pages#sitemap'
   get '/users/:id', to: 'users#redirect'
   get '/partners/:id', to: 'users#partner'
@@ -100,22 +104,25 @@ Rails.application.routes.draw do
   post '/september-2021-bexesyjj-bxducjpuj-hrhhqug-xqkoktbve', to: 'pages#issue'
   post '/posts/:id/subscribe', to: 'posts#subscribe'
 
-  patch 'users/:id/:post_id/modal' => 'users#post_modal', as: :post_modal
-  patch 'users/:id/:post_id/promote' => 'users#promote_post', as: :promote_post
+  patch 'users/:id/:post_id/modal' => 'users#post_modal', :as => :post_modal
+  patch 'users/:id/:post_id/promote' => 'users#promote_post',
+        :as => :promote_post
 
-  patch 'pitches/:id/modal' => 'pitches#pitch_modal', as: :pitch_modal
-  post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim', as: :pitch_onboarding_claim
-  patch 'pitches/:id/unclaim' => 'pitches#pitch_onboarding_unclaim', as: :pitch_onboarding_unclaim
+  patch 'pitches/:id/modal' => 'pitches#pitch_modal', :as => :pitch_modal
+  post 'pitches/:id/claim' => 'pitches#pitch_onboarding_claim',
+       :as => :pitch_onboarding_claim
+  patch 'pitches/:id/unclaim' => 'pitches#pitch_onboarding_unclaim',
+        :as => :pitch_onboarding_unclaim
 
-  post 'writers/:slug/invitations/:token/apply_through_invitation' => 'invitations#apply_through_invitation', as: :apply_through_invitation
+  post 'writers/:slug/invitations/:token/apply_through_invitation' =>
+         'invitations#apply_through_invitation',
+       :as => :apply_through_invitation
 
   get '/community', to: 'posts#index'
   post '/community', to: 'posts#index'
 
-  resources :posts, only: [:new, :create, :index] do
-    member do
-      patch :update_newsletter
-    end
+  resources :posts, only: %i[new create index] do
+    member { patch :update_newsletter }
   end
-  resources :posts, path: "", except: [:new, :create]
+  resources :posts, path: '', except: %i[new create]
 end

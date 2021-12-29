@@ -1,5 +1,4 @@
-@mixin range () {
-
+@mixin range() {
   position: relative;
 
   input[type="range"] {
@@ -44,7 +43,8 @@
       }
 
       &.active {
-        border-radius: $border-radius-circle $border-radius-circle $border-radius-circle 0;
+        border-radius: $border-radius-circle $border-radius-circle
+          $border-radius-circle 0;
 
         .value {
           margin-top: $input-range-active-value-mt;

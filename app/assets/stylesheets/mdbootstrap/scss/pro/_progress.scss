@@ -73,11 +73,9 @@
   }
 }
 
-
 /*********************
   CIRCLE
 **********************/
-
 
 /*
     @license
@@ -89,15 +87,11 @@
     subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-
 /*************************   */
-
 
 /* STYLES FOR THE SPINNER */
 
-
 /*************************   */
-
 
 /*
  * Constants:
@@ -131,7 +125,7 @@
     /* duration: 360 * ARCTIME / (ARCSTARTROT + (360-ARCSIZE)) */
     animation: $progress-preloader-active-animation;
   }
-  &.crazy{
+  &.crazy {
     animation-duration: $progress-preloader-crazy-animation;
   }
   .spinner-layer {
@@ -192,7 +186,6 @@
         transform: $progress-spinner-circle-clipper-right-circle-transform;
       }
     }
-
   }
   .spinner-blue,
   .spinner-blue-only {
@@ -215,8 +208,8 @@
   }
 }
 
-@include keyframes(container-rotate){
-  to{
+@include keyframes(container-rotate) {
+  to {
     transform: rotate(360deg);
   }
 }
@@ -239,19 +232,31 @@
   .spinner-layer {
     &.spinner-blue {
       /* durations: 4 * ARCTIME */
-      @include progress-animation-default($progress-active-spinner-main, $progress-active-spinner-blue);
+      @include progress-animation-default(
+        $progress-active-spinner-main,
+        $progress-active-spinner-blue
+      );
     }
     &.spinner-red {
       /* durations: 4 * ARCTIME */
-      @include progress-animation-default($progress-active-spinner-main, $progress-active-spinner-red);
+      @include progress-animation-default(
+        $progress-active-spinner-main,
+        $progress-active-spinner-red
+      );
     }
     &.spinner-yellow {
       /* durations: 4 * ARCTIME */
-      @include progress-animation-default($progress-active-spinner-main, $progress-active-spinner-yellow);
+      @include progress-animation-default(
+        $progress-active-spinner-main,
+        $progress-active-spinner-yellow
+      );
     }
     &.spinner-green {
       /* durations: 4 * ARCTIME */
-      @include progress-animation-default($progress-active-spinner-main, $progress-active-spinner-green);
+      @include progress-animation-default(
+        $progress-active-spinner-main,
+        $progress-active-spinner-green
+      );
     }
     &.spinner-blue-only,
     &.spinner-red-only,
@@ -273,7 +278,7 @@
   }
 }
 
-@include keyframes(fill-unfill-rotate){
+@include keyframes(fill-unfill-rotate) {
   12.5% {
     transform: rotate(135deg);
   }
@@ -355,7 +360,7 @@
   }
 }
 
-@include keyframes (yellow-fade-in-out) {
+@include keyframes(yellow-fade-in-out) {
   from {
     opacity: 0;
   }
@@ -373,7 +378,7 @@
   }
 }
 
-@include keyframes (green-fade-in-out) {
+@include keyframes(green-fade-in-out) {
   from {
     opacity: 0;
   }
@@ -417,14 +422,17 @@
 
 #spinnerContainer.cooldown {
   /* duration: SHRINK_TIME */
-  @include progress-animation-default($progress-spinner-container-animation-rotate, $progress-spinner-container-animation-fade);
+  @include progress-animation-default(
+    $progress-spinner-container-animation-rotate,
+    $progress-spinner-container-animation-fade
+  );
 }
 
-@include keyframes(fade-out){
-  from{
+@include keyframes(fade-out) {
+  from {
     opacity: 1;
   }
-  to{
+  to {
     opacity: 0;
   }
 }

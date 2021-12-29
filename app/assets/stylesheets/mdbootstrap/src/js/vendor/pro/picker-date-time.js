@@ -1,7 +1,5 @@
 jQuery(($) => {
-
-  $.fn.dateTimePicker = function(delimiter = ', ') {
-
+  $.fn.dateTimePicker = function (delimiter = ", ") {
     const $this = $(this)[0];
 
     let result = $(`.picker-opener[data-open='${$this.dataset.open}']`);
@@ -10,31 +8,32 @@ jQuery(($) => {
 
     $datePicker.pickadate({
       onClose: function () {
-
         const input = $timePicker.pickatime({
           afterHide: () => {
             $timePicker.trigger("change");
-          }
+          },
         });
-        const picker = input.pickatime('picker');
-        picker.data('clockpicker').show();
+        const picker = input.pickatime("picker");
+        picker.data("clockpicker").show();
       },
-      format: 'yyyy/mm/dd',
-      formatSubmit: 'yyyy/mm/dd',
+      format: "yyyy/mm/dd",
+      formatSubmit: "yyyy/mm/dd",
     });
 
-    $datePicker.on('change', () => {
+    $datePicker.on("change", () => {
       let timeValue = $timePicker.val();
       let dateValue = $datePicker.val();
-      result[0].value = `${dateValue}${timeValue !=='' && dateValue !=='' ? delimiter : ''}${timeValue}`;
+      result[0].value = `${dateValue}${
+        timeValue !== "" && dateValue !== "" ? delimiter : ""
+      }${timeValue}`;
     });
 
-    $timePicker.on('change', () => {
+    $timePicker.on("change", () => {
       let timeValue = $timePicker.val();
       let dateValue = $datePicker.val();
-      result[0].value = `${dateValue}${timeValue !=='' && dateValue !=='' ? delimiter : ''}${timeValue}`;
+      result[0].value = `${dateValue}${
+        timeValue !== "" && dateValue !== "" ? delimiter : ""
+      }${timeValue}`;
     });
-
   };
-
 });

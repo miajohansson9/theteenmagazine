@@ -15,7 +15,7 @@
         .sub-menu {
           .news-title {
             font-size: 1.1rem;
-            transition: .2s;
+            transition: 0.2s;
             &.smaller {
               font-size: 1rem;
               font-weight: 400;
@@ -29,10 +29,10 @@
             li {
               a {
                 width: 100%;
-                transition: .3s;
+                transition: 0.3s;
                 &:hover {
-                  background-color: rgba(0, 0, 0, .2);
-                  transition: .3s;
+                  background-color: rgba(0, 0, 0, 0.2);
+                  transition: 0.3s;
                 }
               }
             }
@@ -51,7 +51,7 @@
             }
             .m-sm {
               margin-bottom: -6px;
-              font-size: .9rem;
+              font-size: 0.9rem;
               color: #2196f3;
               &:hover {
                 color: #2196f3;
@@ -126,12 +126,12 @@
         }
         .dropdown-item {
           width: 100%;
-          transition: .3s;
+          transition: 0.3s;
           &:hover {
-            background-color: rgba(0, 0, 0, .2);
+            background-color: rgba(0, 0, 0, 0.2);
             border-radius: 0;
             box-shadow: none;
-            transition: .3s;
+            transition: 0.3s;
           }
         }
       }
