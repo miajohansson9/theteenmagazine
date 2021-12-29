@@ -200,8 +200,7 @@ class UsersController < ApplicationController
     @invitation = Invitation.new
     @invitations_from_notice = @user.invitations.where(alert_viewed_at: nil, status: ["Accepted", "Applied"])
     @claimed_pitches_cnt = Pitch.where(claimed_id: @user.id)&.count || 0
-    @pageviews = 0
-    @user_posts_approved_records.map { |p| @pageviews += p.post_impressions }
+    @pageviews = @user_posts_approved_records.sum(&:post_impressions)
     set_badges
     @show_onboarding_full =
       @user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
@@ -227,8 +226,7 @@ class UsersController < ApplicationController
     set_meta_tags title: "#{@partner.full_name} | The Teen Magazine"
     @posts = Post.where(partner_id: @partner.id).where(publish_at: nil)
     @published = Post.published.where(partner_id: @partner.id)
-    @pageviews = 0
-    @published.map { |p| @pageviews += p.post_impressions }
+    @pageviews = @published.sum(&:post_impressions)
   end
 
   def sponsored

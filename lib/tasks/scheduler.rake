@@ -305,10 +305,7 @@ task run_nightly_tasks: :environment do
             .or(Post.where(user_id: user.id))
             .published
             .by_published_date
-        @pageviews = 0
-        @user_posts_approved_records.map do |p|
-          @pageviews += p.post_impressions
-        end
+        @pageviews = @user_posts_approved_records.sum(&:post_impressions)
 
         # if you want to change a badge color, you must update all the already created badges
         # to match the new color
