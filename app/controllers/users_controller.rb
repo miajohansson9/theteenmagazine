@@ -269,8 +269,7 @@ class UsersController < ApplicationController
         @percentile =
           (
             (
-              @users_who_have_badge.to_f /
-                (User.all.count - @users_who_have_badge)
+              @users_who_have_badge.to_f / (User.all.count - @users_who_have_badge)
             ) * 100
           ).round(1)
         @percentile = (@percentile < 0.1) ? '< 0.1' : @percentile
@@ -285,8 +284,7 @@ class UsersController < ApplicationController
         @pageviews_away_from_new_badge =
           (@next_badge_to_earn[2] - @pageviews).abs
         @percent_to_next_level =
-          (@match[2] - @pageviews_away_from_new_badge).abs.to_f /
-            (@next_badge_to_earn[2] - @match[2]).to_f * 100
+          (@match[2] - @pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2] - @match[2]).to_f * 100
       else
         @next_badge_to_earn = @levels.first
         @pageviews_away_from_new_badge = 0

@@ -151,7 +151,7 @@ class PostsController < ApplicationController
 
   def show
     @date = @post.is_published? ? @post.publish_at : @post.created_at
-    if @post.thumbnail_credits
+    if @post.thumbnail_credits.present?
       @thumbanil_credits =
         (@post.thumbnail_credits.include? ',') ? @post.thumbnail_credits.split(',') : [@post.thumbnail_credits.upcase]
     end
