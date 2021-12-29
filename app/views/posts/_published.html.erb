@@ -48,6 +48,10 @@ blockquote {
                   <%= @partner_name.upcase %>
                 <% end %>
               </div>
+            <% elsif @post.show_disclosure %>
+              <div class="chip">
+                SPONSORED POST
+              </div>
             <% end %>
             <h1 class="title_article_show"><%= @post.title %></h1>
           </div>
