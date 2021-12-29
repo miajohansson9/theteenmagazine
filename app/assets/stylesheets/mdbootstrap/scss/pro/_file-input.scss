@@ -20,7 +20,6 @@
     cursor: pointer;
   }
   input[type="file"] {
-
     // Needed to override webkit button
     &::-webkit-file-upload-button {
       display: none;

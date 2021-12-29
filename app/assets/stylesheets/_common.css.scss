@@ -604,6 +604,16 @@ hr {
   }
 }
 
+.chip a {
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: underline;
+  &:hover {
+    text-decoration: underline !important;
+    color: black;
+  }
+}
+
 .divfeatured {
   width: 70%;
 }

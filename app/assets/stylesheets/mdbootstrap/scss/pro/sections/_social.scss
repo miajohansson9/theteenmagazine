@@ -24,7 +24,7 @@
       margin: 0 0 1.2rem 1.2rem;
       word-wrap: break-word;
       .brief {
-        padding-bottom: .5rem;
+        padding-bottom: 0.5rem;
         font-weight: 500;
         a {
           color: $primary-color;
@@ -36,27 +36,27 @@
         .date {
           display: inline-block;
           float: none;
-          padding-left: .7rem;
-          font-size: .86rem;
+          padding-left: 0.7rem;
+          font-size: 0.86rem;
           font-weight: 300;
           color: $grey-base;
         }
       }
       .added-images {
-        margin-bottom: .6rem;
+        margin-bottom: 0.6rem;
         img {
           display: inline-block;
           width: 7rem;
-          margin-right: .3rem;
+          margin-right: 0.3rem;
         }
       }
       .added-text {
         max-width: 450px;
-        margin-bottom: .6rem;
+        margin-bottom: 0.6rem;
       }
       .feed-footer {
         .like {
-          font-size: .86rem;
+          font-size: 0.86rem;
           font-weight: 300;
           color: $grey-base;
           &:hover {
@@ -64,21 +64,21 @@
             .fab,
             .far {
               color: $red-base;
-              transition: .4s;
+              transition: 0.4s;
             }
             span {
               color: $black-base;
-              transition: .4s;
+              transition: 0.4s;
             }
           }
           .fas,
           .fab,
           .far {
-            padding-right: .5rem;
+            padding-right: 0.5rem;
           }
         }
         span a {
-          padding-right: .3rem;
+          padding-right: 0.3rem;
           color: $primary-color;
           cursor: default;
         }
@@ -87,13 +87,13 @@
           .fab,
           .far {
             color: $grey-base;
-            transition: .4s;
+            transition: 0.4s;
             &:hover {
               color: $grey-darken-1;
             }
           }
           .fa-thumbs-up {
-            padding-right: .3rem;
+            padding-right: 0.3rem;
           }
         }
         .comment {
@@ -108,27 +108,27 @@
 .card-personal {
   .card-body {
     .card-title {
-      margin-bottom: .3rem;
+      margin-bottom: 0.3rem;
       font-weight: 400;
       &.title-one {
-        transition: .4s;
+        transition: 0.4s;
         &:hover {
           color: $primary-color;
         }
       }
     }
     .card-meta {
-      font-size: .86rem;
+      font-size: 0.86rem;
       font-weight: 300;
       color: $grey-darken-1;
       .fas,
       .fab,
       .far {
-        padding-right: .5rem;
+        padding-right: 0.5rem;
       }
     }
     span {
-      transition: .5s;
+      transition: 0.5s;
       &:hover {
         color: $primary-color;
       }
@@ -141,7 +141,7 @@
   .content {
     .right-side-meta {
       float: right;
-      margin-top: .3rem;
+      margin-top: 0.3rem;
       font-weight: 300;
       color: $grey-base;
     }
@@ -160,12 +160,12 @@
     .fas,
     .fab,
     .far {
-      padding-right: .6rem;
+      padding-right: 0.6rem;
     }
     .fa-heart-o {
-      color: rgba($black-base, .4);
+      color: rgba($black-base, 0.4);
       cursor: pointer;
-      transition: .53s;
+      transition: 0.53s;
       &:hover {
         color: $red-base;
       }
@@ -176,26 +176,26 @@
   }
   .md-form {
     margin-top: 1.3rem;
-    margin-bottom: .3rem;
+    margin-bottom: 0.3rem;
     .prefix {
-      margin-left: .2rem;
+      margin-left: 0.2rem;
       font-size: 1.5rem;
-      color: rgba($black-base, .4);
+      color: rgba($black-base, 0.4);
       ~ input,
       .md-form .prefix ~ textarea {
         width: calc(100% - 4rem);
       }
     }
     .prefix.active {
-      color: rgba($black-base, .4);
+      color: rgba($black-base, 0.4);
     }
     .form-control {
       height: 1.3rem;
       padding-top: 0;
-      padding-bottom: .5rem;
+      padding-bottom: 0.5rem;
       margin-bottom: 0;
       margin-left: 3rem;
-      border-bottom: 1px solid rgba($black-base, .1);
+      border-bottom: 1px solid rgba($black-base, 0.1);
     }
   }
 }

@@ -1,10 +1,13 @@
 // Skins
-@each $skin,
-  $data in $skins {
+@each $skin, $data in $skins {
   .#{$skin}-skin {
     .gradient {
       background: map-get($data, skin-gradient-start);
-      background: linear-gradient(135deg, map-get($data, skin-gradient-start) 0%, map-get($data, skin-gradient-end) 100%);
+      background: linear-gradient(
+        135deg,
+        map-get($data, skin-gradient-start) 0%,
+        map-get($data, skin-gradient-end) 100%
+      );
     }
 
     .primary-color {
@@ -27,7 +30,7 @@
             }
           }
 
-          @if $skin=="white" {
+          @if $skin== "white" {
             a {
               color: map-get($data, skin-text);
             }
@@ -58,7 +61,7 @@
         form {
           .md-form {
             .form-control {
-              @if $skin=="white" {
+              @if $skin== "white" {
                 color: map-get($data, skin-navbar);
 
                 &::placeholder {
@@ -92,8 +95,7 @@
         border-bottom: 1px solid $skins-border-color;
 
         a {
-          @if $skin=="white" {
-
+          @if $skin== "white" {
             .fas,
             .fab,
             .far {
@@ -102,7 +104,6 @@
           }
 
           &:hover {
-
             .fas,
             .fab,
             .far {
@@ -113,13 +114,15 @@
         }
       }
 
-      @if $skin=="white" {
+      @if $skin== "white" {
         .search-form .md-form input {
           color: map-get($data, skin-text) !important;
-          border-bottom: $skins-white-search-border-bottom solid $skins-border-color;
+          border-bottom: $skins-white-search-border-bottom
+            solid
+            $skins-border-color;
 
           @include placeholder {
-            color: rgba(map-get($data, skin-text), .5) !important;
+            color: rgba(map-get($data, skin-text), 0.5) !important;
           }
         }
       }
@@ -127,7 +130,7 @@
       .collapsible li {
         background-color: transparent;
 
-        @if $skin=="white" {
+        @if $skin== "white" {
           a {
             font-weight: 400;
           }
@@ -138,12 +141,10 @@
           transition: $skins-side-nav-hover-transition;
 
           &.active {
-            @if $skin=="white" {
+            @if $skin== "white" {
               color: map-get($data, skin-sidenav-item);
               background-color: transparent;
-            }
-
-            @else {
+            } @else {
               background-color: map-get($data, skin-sidenav-item-hover);
             }
           }
@@ -184,7 +185,6 @@
       }
 
       .sidenav-bg {
-
         &:after,
         &.mask-strong:after {
           background: map-get($data, skin-mask-strong);
@@ -204,7 +204,10 @@
     @include make-button("secondary", map-get($data, skin-btn-secondary));
     @include make-button("default", map-get($data, skin-btn-default));
     @include make-outline-button("primary", map-get($data, skin-btn-primary));
-    @include make-outline-button("secondary", map-get($data, skin-btn-secondary));
+    @include make-outline-button(
+      "secondary",
+      map-get($data, skin-btn-secondary)
+    );
     @include make-outline-button("default", map-get($data, skin-btn-default));
 
     .card .btn-action {
@@ -212,17 +215,22 @@
 
       &:hover,
       &:focus {
-        background-color: lighten(map-get($data, skin-btn-default), 5%) !important;
+        background-color: lighten(
+          map-get($data, skin-btn-default),
+          5%
+        ) !important;
       }
 
       &.active {
-        background-color: darken(map-get($data, skin-btn-default), 20%) !important;
+        background-color: darken(
+          map-get($data, skin-btn-default),
+          20%
+        ) !important;
       }
     }
 
     // Outline inputs
     .md-outline {
-
       input[type="text"],
       input[type="password"],
       input[type="email"],
@@ -248,7 +256,6 @@
     }
 
     .md-bg {
-
       input[type="text"],
       input[type="password"],
       input[type="email"],
@@ -261,7 +268,12 @@
       input[type="search-md"],
       input[type="search"],
       textarea.md-textarea {
-        background-image: linear-gradient(to bottom, map-get($data, skin-accent), map-get($data, skin-accent)), linear-gradient(to bottom, $input-border-color, $input-border-color);
+        background-image: linear-gradient(
+            to bottom,
+            map-get($data, skin-accent),
+            map-get($data, skin-accent)
+          ),
+          linear-gradient(to bottom, $input-border-color, $input-border-color);
       }
     }
 
@@ -356,7 +368,6 @@
     }
 
     .carousel-multi-item {
-
       .controls-top > a,
       .carousel-indicators li,
       .carousel-indicators li.active {
@@ -376,7 +387,6 @@
     }
 
     .pagination-primary-color {
-
       .page-item.active .page-link,
       .page-item.active .page-link:focus,
       .page-item.active .page-link:hover {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_180600) do
+ActiveRecord::Schema.define(version: 2021_12_29_171715) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -95,6 +95,13 @@ ActiveRecord::Schema.define(version: 2021_11_29_180600) do
     t.string "description"
     t.boolean "archive"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.text "message"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ckeditor_assets", force: :cascade do |t|
@@ -282,6 +289,8 @@ ActiveRecord::Schema.define(version: 2021_11_29_180600) do
     t.datetime "deadline_at"
     t.integer "newsletter_id"
     t.datetime "shared_at"
+    t.string "thumbnail_credits"
+    t.boolean "show_disclosure"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
     t.index ["publish_at"], name: "index_posts_on_publish_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true

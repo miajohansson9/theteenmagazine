@@ -16,11 +16,17 @@
     }
 
     &:checked:not(:disabled) ~ .lever:active:after {
-      @include box-shadows($switch-lever-after-box-shadow-darker, $switch-lever-after-box-shadow-transp);
+      @include box-shadows(
+        $switch-lever-after-box-shadow-darker,
+        $switch-lever-after-box-shadow-transp
+      );
     }
 
     &:not(:disabled) ~ .lever:active:after {
-      @include box-shadows($switch-lever-after-box-shadow-darker, $switch-lever-after-box-shadow-lighter);
+      @include box-shadows(
+        $switch-lever-after-box-shadow-darker,
+        $switch-lever-after-box-shadow-lighter
+      );
     }
 
     &:disabled + .lever {
@@ -42,7 +48,7 @@
     content: "";
     background-color: map-get($switch-colors, "unchecked-lever-bg");
     border-radius: $switch-lever-border-radius-small;
-    @include switch-width-height(2.5rem, .9375rem);
+    @include switch-width-height(2.5rem, 0.9375rem);
     @include transition-main($switch-lever-after-transition-bg);
 
     &:after {
@@ -55,7 +61,11 @@
       border-radius: $switch-lever-after-border-radius-high;
       @include box-shadows($switch-lever-after-box-shadow-darker);
       @include switch-width-height(1.3125rem, 1.3125rem);
-      @include transition-main($switch-lever-after-transition-left, $switch-lever-after-transition-bg, $switch-lever-after-transition-box);
+      @include transition-main(
+        $switch-lever-after-transition-left,
+        $switch-lever-after-transition-bg,
+        $switch-lever-after-transition-box
+      );
     }
   }
 }

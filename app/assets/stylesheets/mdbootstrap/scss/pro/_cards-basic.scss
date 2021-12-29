@@ -15,7 +15,8 @@
         border-radius: $md-card-border-radius;
         box-shadow: $z-depth-1-half;
         &.gradient-card-header {
-          padding: $card-cascade-header-gradient-py $card-cascade-header-gradient-px;
+          padding: $card-cascade-header-gradient-py
+            $card-cascade-header-gradient-px;
           color: $white-base;
           text-align: center;
           .card-header-title {
@@ -155,7 +156,7 @@
   }
   .card-rotating {
     height: 100%;
-    transition: .5s;
+    transition: 0.5s;
     transform-style: preserve-3d;
     .face {
       position: absolute;

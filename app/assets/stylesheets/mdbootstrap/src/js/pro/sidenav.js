@@ -1,41 +1,41 @@
 jQuery(($) => {
-
   class SideNav {
-
     constructor(element, options) {
-
       this.settings = {
         menuLeftMinBorder: 0.3,
         menuLeftMaxBorder: -0.5,
         menuRightMinBorder: -0.3,
         menuRightMaxBorder: 0.5,
-        menuVelocityOffset: 10
+        menuVelocityOffset: 10,
       };
 
       this.defaults = {
         menuWidth: 240,
-        edge: 'left',
+        edge: "left",
         closeOnClick: false,
         breakpoint: 1440,
         timeDurationOpen: 500,
         timeDurationClose: 500,
         timeDurationOverlayOpen: 200,
         timeDurationOverlayClose: 200,
-        easingOpen: 'easeInOutQuad',
-        easingClose: 'easeInOutQuad',
+        easingOpen: "easeInOutQuad",
+        easingClose: "easeInOutQuad",
         showOverlay: true,
         showCloseButton: false,
         slim: false,
         onOpen: null,
-        onClose: null
+        onClose: null,
       };
 
       this.$element = element;
 
-      this.$elementCloned = element.clone().css({
-        display: 'inline-block',
-        lineHeight: '24px'
-      }).html('<i class="fas fa-times"></i>');
+      this.$elementCloned = element
+        .clone()
+        .css({
+          display: "inline-block",
+          lineHeight: "24px",
+        })
+        .html('<i class="fas fa-times"></i>');
 
       this.options = this.assignOptions(options);
 
@@ -45,21 +45,19 @@ jQuery(($) => {
           startPosition: 0,
           startTime: 0,
           endPosition: 0,
-          endTime: 0
-        }
+          endTime: 0,
+        },
       };
 
-      this.$body = $('body');
-      this.$menu = $(`#${this.$element.attr('data-activates')}`);
-      this.$sidenavOverlay = $('#sidenav-overlay');
+      this.$body = $("body");
+      this.$menu = $(`#${this.$element.attr("data-activates")}`);
+      this.$sidenavOverlay = $("#sidenav-overlay");
       this.$dragTarget = $('<div class="drag-target"></div>');
-      this.isTouchDevice = 'ontouchstart' in document.documentElement;
+      this.isTouchDevice = "ontouchstart" in document.documentElement;
       this.$body.append(this.$dragTarget);
-
     }
 
     assignOptions(newOptions) {
-
       return $.extend({}, this.defaults, newOptions);
     }
 
@@ -76,138 +74,141 @@ jQuery(($) => {
       }
       this.onOpen();
       this.onClose();
-      if(this.options[0] + this.options[1] + this.options[2] + this.options[3] === 'show' && this.menuOut === false) {
-        this.$element.trigger('click')
+      if (
+        this.options[0] +
+          this.options[1] +
+          this.options[2] +
+          this.options[3] ===
+          "show" &&
+        this.menuOut === false
+      ) {
+        this.$element.trigger("click");
       }
-      if(this.options[0] + this.options[1] + this.options[2] + this.options[3] === 'hide' && this.menuOut === true) {
+      if (
+        this.options[0] +
+          this.options[1] +
+          this.options[2] +
+          this.options[3] ===
+          "hide" &&
+        this.menuOut === true
+      ) {
         this.removeMenu();
       }
     }
 
     setMenuWidth() {
+      const $sidenavBg = $(`#${this.$menu.attr("id")}`).find("> .sidenav-bg");
 
-      const $sidenavBg = $(`#${this.$menu.attr('id')}`).find('> .sidenav-bg');
-
-      this.$menu.css('width', this.options.menuWidth);
-      $sidenavBg.css('width', this.options.menuWidth);
-
+      this.$menu.css("width", this.options.menuWidth);
+      $sidenavBg.css("width", this.options.menuWidth);
     }
 
     setMenuTranslation() {
-
-      if (this.options.edge === 'left') {
-
-        this.$menu.css('transform', 'translateX(-100%)');
+      if (this.options.edge === "left") {
+        this.$menu.css("transform", "translateX(-100%)");
         this.$dragTarget.css({
-          left: 0
+          left: 0,
         });
-
       } else {
-
-        this.$menu.addClass('right-aligned').css('transform', 'translateX(100%)');
+        this.$menu
+          .addClass("right-aligned")
+          .css("transform", "translateX(100%)");
         this.$dragTarget.css({
-          right: 0
+          right: 0,
         });
       }
 
-      if (!this.$menu.hasClass('fixed')) {
+      if (!this.$menu.hasClass("fixed")) {
         return;
       }
 
       if (window.innerWidth > this.options.breakpoint) {
-
-        this.menuOut = true; 
-        this.$menu.css('transform', 'translateX(0)');
+        this.menuOut = true;
+        this.$menu.css("transform", "translateX(0)");
       } else {
-
-        this.menuOut = false; 
+        this.menuOut = false;
       }
 
-      this.$menu.find('input[type=text]').on('touchstart', () => {
-
-        this.$menu.addClass('transform-fix-input');
+      this.$menu.find("input[type=text]").on("touchstart", () => {
+        this.$menu.addClass("transform-fix-input");
       });
 
-      $(window).on('resize', () => {
-
+      $(window).on("resize", () => {
         if (!this.isTouchDevice) {
-          $('.fixed-sn main, .fixed-sn footer').css('padding-left', this.options.menuWidth);
+          $(".fixed-sn main, .fixed-sn footer").css(
+            "padding-left",
+            this.options.menuWidth
+          );
         }
         if (window.innerWidth > this.options.breakpoint) {
-          
           if (this.$sidenavOverlay.length) {
-            
             this.removeMenu(true);
-            $('.fixed-sn main, .fixed-sn footer').css('padding-left', this.options.menuWidth);
+            $(".fixed-sn main, .fixed-sn footer").css(
+              "padding-left",
+              this.options.menuWidth
+            );
           } else {
+            if (this.menuOut === false) {
+              $(this).trigger("sidenav_open", [this.options.onOpen]);
+            }
 
-            if(this.menuOut === false) { $(this).trigger('sidenav_open', [this.options.onOpen]) }
-
-            this.$menu.css('transform', 'translateX(0%)');
-            this.menuOut = true; 
+            this.$menu.css("transform", "translateX(0%)");
+            this.menuOut = true;
           }
         } else if (this.menuOut === false && !this.isTouchDevice) {
-          
-          const xValue = this.options.edge === 'left' ? '-100' : '100';
-          this.$menu.css('transform', `translateX(${xValue}%)`);
+          const xValue = this.options.edge === "left" ? "-100" : "100";
+          this.$menu.css("transform", `translateX(${xValue}%)`);
           this.removeMenu(true);
         } else if (!this.isTouchDevice) {
-          this.menuOut = false; 
+          this.menuOut = false;
           this.removeMenu(true);
         }
       });
-
     }
 
     closeOnClick() {
-
       if (this.options.closeOnClick === true) {
+        this.$menu.on("click", "a:not(.collapsible-header)", () =>
+          this.removeMenu()
+        );
 
-        this.$menu.on('click', 'a:not(.collapsible-header)', () => this.removeMenu());
-
-        if (this.$menu.css('transform') === 'translateX(0)') {
-          this.$menu.on('click', () => this.removeMenu());
+        if (this.$menu.css("transform") === "translateX(0)") {
+          this.$menu.on("click", () => this.removeMenu());
         }
       }
     }
 
     onOpen(callback) {
-
-      $(this).on('sidenav_open', (event, callback) => {
-        if (typeof callback === 'function') {
-
+      $(this).on("sidenav_open", (event, callback) => {
+        if (typeof callback === "function") {
           callback();
         }
       });
     }
 
     onClose(callback) {
-
-      $(this).on('sidenav_close', (event, callback) => {
-        if (typeof callback === 'function') {
-
+      $(this).on("sidenav_close", (event, callback) => {
+        if (typeof callback === "function") {
           callback();
         }
       });
     }
 
     openOnClick() {
-      
       // eslint-disable-next-line consistent-return
-      this.$element.on('click', e => {
+      this.$element.on("click", (e) => {
         e.preventDefault();
 
         if (this.menuOut === true) {
           return this.removeMenu();
         } else {
-          $(this).trigger('sidenav_open', [this.options.onOpen]);
+          $(this).trigger("sidenav_open", [this.options.onOpen]);
           this.menuOut = true;
         }
 
         if (this.options.showOverlay === true) {
-          if (!$('#sidenav-overlay').length) {
-            
-            this.showSidenavOverlay()
+          if (!$("#sidenav-overlay").length) {
+            this.showSidenavOverlay();
           }
         } else {
           this.showCloseButton();
@@ -215,139 +216,137 @@ jQuery(($) => {
 
         let translateX = [];
 
-        if (this.options.edge === 'left') {
-
+        if (this.options.edge === "left") {
           translateX = [0, -1 * this.options.menuWidth];
         } else {
-
           translateX = [0, this.options.menuWidth];
         }
-        if (this.$menu.css('transform') !== 'matrix(1, 0, 0, 1, 0, 0)') {
-          this.$menu.velocity({
-            translateX
-          }, {
-            duration: this.options.timeDurationOpen,
-            queue: false,
-            easing: this.options.easingOpen
-          });
+        if (this.$menu.css("transform") !== "matrix(1, 0, 0, 1, 0, 0)") {
+          this.$menu.velocity(
+            {
+              translateX,
+            },
+            {
+              duration: this.options.timeDurationOpen,
+              queue: false,
+              easing: this.options.easingOpen,
+            }
+          );
         }
         // this.$sidenavOverlay.on('click', () => this.removeMenu());
 
-        this.$sidenavOverlay.on('touchmove', this.touchmoveEventHandler.bind(this));
-        this.$menu.on('touchmove', e => {
-
+        this.$sidenavOverlay.on(
+          "touchmove",
+          this.touchmoveEventHandler.bind(this)
+        );
+        this.$menu.on("touchmove", (e) => {
           e.preventDefault();
 
-          this.$menu.find('.custom-scrollbar').css('padding-bottom', '30px');
-
+          this.$menu.find(".custom-scrollbar").css("padding-bottom", "30px");
         });
 
-        if(this.options.showOverlay === false) {
-          
+        if (this.options.showOverlay === false) {
           this.menuOut = true;
         }
       });
     }
 
     bindTouchEvents() {
-
-      this.$dragTarget.on('click', () => {
-        
+      this.$dragTarget.on("click", () => {
         if (this.menuOut) {
           this.removeMenu();
-        }       
-      } );
+        }
+      });
 
-      this.$dragTarget.on('touchstart', e => {
-
+      this.$dragTarget.on("touchstart", (e) => {
         this.lastTouchVelocity.x.startPosition = e.touches[0].clientX;
         this.lastTouchVelocity.x.startTime = Date.now();
       });
-      this.$dragTarget.on('touchmove', this.touchmoveEventHandler.bind(this));
-      this.$dragTarget.on('touchend', this.touchendEventHandler.bind(this));
+      this.$dragTarget.on("touchmove", this.touchmoveEventHandler.bind(this));
+      this.$dragTarget.on("touchend", this.touchendEventHandler.bind(this));
     }
 
     showCloseButton() {
-
       if (this.options.showCloseButton === true) {
-
         this.$menu.prepend(this.$elementCloned);
-        this.$menu.find('.logo-wrapper').css({
-          borderTop: '1px solid rgba(153,153,153,.3)'
+        this.$menu.find(".logo-wrapper").css({
+          borderTop: "1px solid rgba(153,153,153,.3)",
         });
       }
     }
 
     inputOnClick() {
-
-      this.$menu.find('input[type=text]').on('touchstart', () => this.$menu.css('transform', 'translateX(0)'));
+      this.$menu
+        .find("input[type=text]")
+        .on("touchstart", () => this.$menu.css("transform", "translateX(0)"));
     }
 
     removeMenu(restoreMenu) {
-
       this.$body.css({
-        overflow: '',
-        width: ''
+        overflow: "",
+        width: "",
       });
 
-      this.$menu.velocity({
-        translateX: this.options.edge === 'left' ? '-100%' : '100%'
-      }, {
-        duration: this.options.timeDurationClose,
-        queue: false,
-        easing: this.options.easingClose,
-        complete: () => {
-          if (restoreMenu === true) {
-            this.$menu.removeAttr('style');
-            this.$menu.css('width', this.options.menuWidth);
-          }
+      this.$menu.velocity(
+        {
+          translateX: this.options.edge === "left" ? "-100%" : "100%",
+        },
+        {
+          duration: this.options.timeDurationClose,
+          queue: false,
+          easing: this.options.easingClose,
+          complete: () => {
+            if (restoreMenu === true) {
+              this.$menu.removeAttr("style");
+              this.$menu.css("width", this.options.menuWidth);
+            }
+          },
         }
-      });
+      );
 
-      this.$menu.removeClass('transform-fix-input');
+      this.$menu.removeClass("transform-fix-input");
       this.hideSidenavOverlay();
       this.menuOut = false;
-      
-      $('.fixed-sn .double-nav').css('padding-left', 'unset');
-      $('.fixed-sn main, .fixed-sn footer').css({
-        'padding-left': '0'
+
+      $(".fixed-sn .double-nav").css("padding-left", "unset");
+      $(".fixed-sn main, .fixed-sn footer").css({
+        "padding-left": "0",
       });
-      $(this).trigger('sidenav_close', [this.options.onClose]);
+      $(this).trigger("sidenav_close", [this.options.onClose]);
     }
 
     handleSlim() {
-
-      const $toggle = $('#toggle');
-      $toggle.on('click', () => {
-        if (this.$menu.hasClass('slim')) {
-          this.$menu.removeClass('slim');
-          $('.sv-slim-icon').removeClass('fa-angle-double-right').addClass('fa-angle-double-left');
-          $('.fixed-sn .double-nav').css({
-            transition: 'all .3s ease-in-out',
-            'padding-left': '15.9rem'
+      const $toggle = $("#toggle");
+      $toggle.on("click", () => {
+        if (this.$menu.hasClass("slim")) {
+          this.$menu.removeClass("slim");
+          $(".sv-slim-icon")
+            .removeClass("fa-angle-double-right")
+            .addClass("fa-angle-double-left");
+          $(".fixed-sn .double-nav").css({
+            transition: "all .3s ease-in-out",
+            "padding-left": "15.9rem",
           });
 
-          $('.fixed-sn main, .fixed-sn footer').css({
-            transition: 'all .3s ease-in-out',
-            'padding-left': '15rem'
+          $(".fixed-sn main, .fixed-sn footer").css({
+            transition: "all .3s ease-in-out",
+            "padding-left": "15rem",
           });
-
         } else {
-
-          this.$menu.addClass('slim');
-          $('.sv-slim-icon').removeClass('fa-angle-double-left').addClass('fa-angle-double-right');
-          $('.fixed-sn .double-nav').css('padding-left', '4.6rem');
-          $('.fixed-sn main, .fixed-sn footer').css({
-            'padding-left': '3.7rem'
+          this.$menu.addClass("slim");
+          $(".sv-slim-icon")
+            .removeClass("fa-angle-double-left")
+            .addClass("fa-angle-double-right");
+          $(".fixed-sn .double-nav").css("padding-left", "4.6rem");
+          $(".fixed-sn main, .fixed-sn footer").css({
+            "padding-left": "3.7rem",
           });
         }
       });
     }
 
     touchmoveEventHandler(e) {
-
-      if (e.type !== 'touchmove') {
-
+      if (e.type !== "touchmove") {
         return;
       }
 
@@ -356,7 +355,6 @@ jQuery(($) => {
 
       // calculate velocity every 20ms
       if (Date.now() - this.lastTouchVelocity.x.startTime > 20) {
-
         this.lastTouchVelocity.x.startPosition = touch.clientX;
         this.lastTouchVelocity.x.startTime = Date.now();
       }
@@ -365,18 +363,14 @@ jQuery(($) => {
 
       const overlayExists = this.$sidenavOverlay.length !== 0;
       if (!overlayExists) {
-
         this.buildSidenavOverlay();
       }
 
       // Keep within boundaries
-      if (this.options.edge === 'left') {
-
+      if (this.options.edge === "left") {
         if (touchX > this.options.menuWidth) {
-
           touchX = this.options.menuWidth;
         } else if (touchX < 0) {
-
           touchX = 0;
         }
       }
@@ -386,17 +380,19 @@ jQuery(($) => {
     }
 
     calculateTouchVelocityX() {
-
-      const distance = Math.abs(this.lastTouchVelocity.x.endPosition - this.lastTouchVelocity.x.startPosition);
-      const time = Math.abs(this.lastTouchVelocity.x.endTime - this.lastTouchVelocity.x.startTime);
+      const distance = Math.abs(
+        this.lastTouchVelocity.x.endPosition -
+          this.lastTouchVelocity.x.startPosition
+      );
+      const time = Math.abs(
+        this.lastTouchVelocity.x.endTime - this.lastTouchVelocity.x.startTime
+      );
 
       return distance / time;
     }
 
     touchendEventHandler(e) {
-
-      if (e.type !== 'touchend') {
-
+      if (e.type !== "touchend") {
         return;
       }
 
@@ -416,102 +412,118 @@ jQuery(($) => {
         rightPos = 0;
       }
 
-      if (this.options.edge === 'left') {
-
+      if (this.options.edge === "left") {
         // If velocityX <= 0.3 then the user is flinging the menu closed so ignore this.menuOut
-        if (this.menuOut || velocityX <= this.settings.menuLeftMinBorder || velocityX < this.options.menuLeftMaxBorder) {
-
+        if (
+          this.menuOut ||
+          velocityX <= this.settings.menuLeftMinBorder ||
+          velocityX < this.options.menuLeftMaxBorder
+        ) {
           if (leftPos !== 0) {
-
-            this.translateMenuX([0, leftPos], '300');
+            this.translateMenuX([0, leftPos], "300");
           }
 
           this.showSidenavOverlay();
-
-        } else if (!this.menuOut || velocityX > this.settings.menuLeftMinBorder) {
-
+        } else if (
+          !this.menuOut ||
+          velocityX > this.settings.menuLeftMinBorder
+        ) {
           this.enableScrolling();
-          this.translateMenuX([-1 * this.options.menuWidth - this.options.menuVelocityOffset, leftPos], '200');
+          this.translateMenuX(
+            [
+              -1 * this.options.menuWidth - this.options.menuVelocityOffset,
+              leftPos,
+            ],
+            "200"
+          );
           this.hideSidenavOverlay();
         }
 
         this.$dragTarget.css({
-          width: '10px',
-          right: '',
-          left: 0
+          width: "10px",
+          right: "",
+          left: 0,
         });
-      } else if (this.menuOut && velocityX >= this.settings.menuRightMinBorder || velocityX > this.settings.menuRightMaxBorder) {
-
-        this.translateMenuX([0, rightPos], '300');
+      } else if (
+        (this.menuOut && velocityX >= this.settings.menuRightMinBorder) ||
+        velocityX > this.settings.menuRightMaxBorder
+      ) {
+        this.translateMenuX([0, rightPos], "300");
         this.showSidenavOverlay();
 
         this.$dragTarget.css({
-          width: '50%',
-          right: '',
-          left: 0
+          width: "50%",
+          right: "",
+          left: 0,
         });
-      } else if (!this.menuOut || velocityX < this.settings.menuRightMinBorder) {
-
+      } else if (
+        !this.menuOut ||
+        velocityX < this.settings.menuRightMinBorder
+      ) {
         this.enableScrolling();
-        this.translateMenuX([this.options.menuWidth + this.options.menuVelocityOffset, rightPos], '200');
+        this.translateMenuX(
+          [this.options.menuWidth + this.options.menuVelocityOffset, rightPos],
+          "200"
+        );
         this.hideSidenavOverlay();
 
         this.$dragTarget.css({
-          width: '10px',
+          width: "10px",
           right: 0,
-          left: ''
+          left: "",
         });
       }
     }
 
     buildSidenavOverlay() {
-
       if (this.options.showOverlay === true) {
-
         this.$sidenavOverlay = $('<div id="sidenav-overlay"></div>');
-        this.$sidenavOverlay.css('opacity', 0).on('click', () => this.removeMenu());
+        this.$sidenavOverlay
+          .css("opacity", 0)
+          .on("click", () => this.removeMenu());
 
         this.$body.append(this.$sidenavOverlay);
       }
     }
 
     disableScrolling() {
-
       const oldWidth = this.$body.innerWidth();
-      this.$body.css('overflow', 'hidden');
+      this.$body.css("overflow", "hidden");
       this.$body.width(oldWidth);
     }
 
     enableScrolling() {
-
       this.$body.css({
-        overflow: '',
-        width: ''
+        overflow: "",
+        width: "",
       });
     }
 
     translateMenuX(fromTo, duration) {
-
-      this.$menu.velocity({
-        translateX: fromTo
-      }, {
-        duration: typeof duration === 'string' ? Number(duration) : duration,
-        queue: false,
-        easing: this.options.easingOpen
-      });
+      this.$menu.velocity(
+        {
+          translateX: fromTo,
+        },
+        {
+          duration: typeof duration === "string" ? Number(duration) : duration,
+          queue: false,
+          easing: this.options.easingOpen,
+        }
+      );
     }
 
     translateSidenavX(touchX) {
-
-      if (this.options.edge === 'left') {
-
+      if (this.options.edge === "left") {
         const isRightDirection = touchX >= this.options.menuWidth / 2;
         this.menuOut = isRightDirection;
 
-        this.$menu.css('transform', `translateX(${touchX - this.options.menuWidth}px)`);
+        this.$menu.css(
+          "transform",
+          `translateX(${touchX - this.options.menuWidth}px)`
+        );
       } else {
-
-        const isLeftDirection = touchX < window.innerWidth - this.options.menuWidth / 2;
+        const isLeftDirection =
+          touchX < window.innerWidth - this.options.menuWidth / 2;
         this.menuOut = isLeftDirection;
 
         let rightPos = touchX - this.options.menuWidth / 2;
@@ -519,58 +531,63 @@ jQuery(($) => {
           rightPos = 0;
         }
 
-        this.$menu.css('transform', `translateX(${rightPos}px)`);
+        this.$menu.css("transform", `translateX(${rightPos}px)`);
       }
     }
 
     updateOverlayOpacity(touchX) {
-
       let overlayPercentage;
-      if (this.options.edge === 'left') {
-
+      if (this.options.edge === "left") {
         overlayPercentage = touchX / this.options.menuWidth;
       } else {
-
-        overlayPercentage = Math.abs((touchX - window.innerWidth) / this.options.menuWidth);
+        overlayPercentage = Math.abs(
+          (touchX - window.innerWidth) / this.options.menuWidth
+        );
       }
 
-      this.$sidenavOverlay.velocity({
-        opacity: overlayPercentage
-      }, {
-        duration: 10,
-        queue: false,
-        easing: this.options.easingOpen
-      });
+      this.$sidenavOverlay.velocity(
+        {
+          opacity: overlayPercentage,
+        },
+        {
+          duration: 10,
+          queue: false,
+          easing: this.options.easingOpen,
+        }
+      );
     }
 
     showSidenavOverlay() {
-
-      if (this.options.showOverlay === true && !$('#sidenav-overlay').length) {
+      if (this.options.showOverlay === true && !$("#sidenav-overlay").length) {
         this.buildSidenavOverlay();
       }
-      this.$sidenavOverlay.velocity({
-        opacity: 1
-      }, {
-        duration: this.options.timeDurationOverlayOpen,
-        queue: false,
-        easing: this.options.easingOpen
-      });
+      this.$sidenavOverlay.velocity(
+        {
+          opacity: 1,
+        },
+        {
+          duration: this.options.timeDurationOverlayOpen,
+          queue: false,
+          easing: this.options.easingOpen,
+        }
+      );
     }
 
     hideSidenavOverlay() {
-
-      this.$sidenavOverlay.velocity({
-        opacity: 0
-      }, {
-        duration: this.options.timeDurationOverlayClose,
-        queue: false,
-        easing: this.options.easingOpen,
-        complete() {
-          $(this).remove();
+      this.$sidenavOverlay.velocity(
+        {
+          opacity: 0,
+        },
+        {
+          duration: this.options.timeDurationOverlayClose,
+          queue: false,
+          easing: this.options.easingOpen,
+          complete() {
+            $(this).remove();
+          },
         }
-      });
+      );
     }
-
   }
 
   $.fn.sideNav = function (options) {
@@ -580,8 +597,11 @@ jQuery(($) => {
     });
   };
 
-  $('.side-nav').on('touchmove', function (e) {
-    e.stopPropagation();
-  }, false);
-
+  $(".side-nav").on(
+    "touchmove",
+    function (e) {
+      e.stopPropagation();
+    },
+    false
+  );
 });

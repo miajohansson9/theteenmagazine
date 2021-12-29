@@ -23,11 +23,11 @@ Use it on your website:
 
 ```html
 <div id="editor">
-    <p>This is the editor content.</p>
+  <p>This is the editor content.</p>
 </div>
 <script src="./node_modules/ckeditor4/ckeditor.js"></script>
 <script>
-    CKEDITOR.replace( 'editor' );
+  CKEDITOR.replace("editor");
 </script>
 ```
 
@@ -35,16 +35,16 @@ You can also load CKEditor 4 using [CDN](https://cdn.ckeditor.com/#ckeditor4).
 
 ## Features
 
-* Over 500 plugins in the [Add-ons Repository](https://ckeditor.com/cke4/addons).
-* Pasting from Microsoft Word and Excel.
-* Drag&drop image uploads.
-* Media embeds to insert videos, tweets, maps, slideshows.
-* Powerful clipboard integration.
-* Content quality control with Advanced Content Filter.
-* Extensible widget system.
-* Custom table selection.
-* Accessibility conforming to WCAG and Section 508.
-* Over 60 localizations available with full RTL support.
+- Over 500 plugins in the [Add-ons Repository](https://ckeditor.com/cke4/addons).
+- Pasting from Microsoft Word and Excel.
+- Drag&drop image uploads.
+- Media embeds to insert videos, tweets, maps, slideshows.
+- Powerful clipboard integration.
+- Content quality control with Advanced Content Filter.
+- Extensible widget system.
+- Custom table selection.
+- Accessibility conforming to WCAG and Section 508.
+- Over 60 localizations available with full RTL support.
 
 ## Presets
 
@@ -52,19 +52,19 @@ The CKEditor 4 npm package comes in the `standard-all` preset, so it includes al
 
 ## Further Resources
 
-* [CKEditor 4 demo](https://ckeditor.com/ckeditor-4/)
-* [Documentation](https://ckeditor.com/docs/ckeditor4/latest/)
-* [API documentation](https://ckeditor.com/docs/ckeditor4/latest/api/index.html)
-* [Configuration reference](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html)
-* [CKEditor SDK with more samples](https://sdk.ckeditor.com/)
+- [CKEditor 4 demo](https://ckeditor.com/ckeditor-4/)
+- [Documentation](https://ckeditor.com/docs/ckeditor4/latest/)
+- [API documentation](https://ckeditor.com/docs/ckeditor4/latest/api/index.html)
+- [Configuration reference](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html)
+- [CKEditor SDK with more samples](https://sdk.ckeditor.com/)
 
 If you are looking for CKEditor 5, here's a link to the relevant npm package: <https://www.npmjs.com/package/ckeditor5>
 
 ## Browser Support
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome (Android) | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>iOS Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
-| --------- | --------- | --------- | --------- | --------- | --------- | --------- |
-| IE8, IE9, IE10, IE11, Edge| latest version| latest version| latest version| latest version| latest version| latest version
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| IE8, IE9, IE10, IE11, Edge                                                                                                                                                                                      | latest version                                                                                                                                                                                                    | latest version                                                                                                                                                                                                | latest version                                                                                                                                                                                                          | latest version                                                                                                                                                                                                | latest version                                                                                                                                                                                                                | latest version                                                                                                                                                                                            |
 
 Find out more in the [Browser Compatibility guide](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_browsers.html#officially-supported-browsers).
 

@@ -85,7 +85,8 @@
 .product-table {
   .btn {
     &.btn-sm {
-      padding: $ecommerce-product-table-btn-sm-py $ecommerce-product-table-btn-sm-px;
+      padding: $ecommerce-product-table-btn-sm-py
+        $ecommerce-product-table-btn-sm-px;
     }
   }
 }

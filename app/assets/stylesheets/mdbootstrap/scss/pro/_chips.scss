@@ -1,8 +1,8 @@
 // Chips
 .chip {
   display: inline-block;
-  height: $chip-height;
-  padding: 0 $chip-padding-right;
+  height: 100% !important;
+  padding: 10px $chip-padding-right;
   margin-right: $chip-margin-right;
   margin-bottom: $chip-margin-bottom;
   font-size: $chip-font-size;
@@ -26,7 +26,7 @@
 
   &:active {
     transition: $pagination-page-link-transition;
-    @extend .z-depth-1;
+    box-shadow: $z-depth-1 !important;
   }
 
   img {
@@ -43,7 +43,7 @@
     font-size: $chip-close-font-size;
     line-height: $chip-close-line-height;
     cursor: pointer;
-    transition: all .1s linear;
+    transition: all 0.1s linear;
   }
 }
 
@@ -55,7 +55,7 @@
   border-bottom: 1px solid $input-border-color;
   outline: none;
   box-shadow: none;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &.focus {
     border-bottom: 1px solid $input-md-focus-color;
@@ -93,7 +93,6 @@
 }
 
 .chips-autocomplete {
-
   .chips {
     padding-bottom: unset;
   }
@@ -117,7 +116,7 @@
 
     li {
       padding: 12px 15px;
-      font-size: .875rem;
+      font-size: 0.875rem;
       cursor: pointer;
 
       &:hover {

@@ -7,11 +7,9 @@
   .dropdown-menu {
     padding: $dropdown-menu-padding;
 
-    @each $name,
-      $color in $dropdown-colors {
+    @each $name, $color in $dropdown-colors {
       &.dropdown-#{$name} {
         .dropdown-item {
-
           &:hover,
           &:active,
           &.active {
@@ -73,12 +71,11 @@
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
-
   .dropdown .dropdown-animating {
-    -webkit-animation: unset!important;
-    animation: unset!important;
-    -webkit-transition: none!important;
-    -o-transition: none!important;
-    transition: none!important;
-    }
- }
+    -webkit-animation: unset !important;
+    animation: unset !important;
+    -webkit-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+}

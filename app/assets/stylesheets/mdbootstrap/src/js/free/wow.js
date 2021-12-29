@@ -1,8 +1,7 @@
-jQuery($ => {
-
+jQuery(($) => {
   class WOW {
     init() {
-      $('.wow').wow();
+      $(".wow").wow();
     }
   }
 
@@ -28,55 +27,58 @@ jQuery($ => {
 
     assignElementCustomization() {
       return {
-        animationName: this.$wowElement.css('animation-name'),
+        animationName: this.$wowElement.css("animation-name"),
         offset: 100,
         iteration: this.fallback()
-          .or(this.$wowElement.data('wow-iteration'))
+          .or(this.$wowElement.data("wow-iteration"))
           .or(1)
           .value(),
         duration: this.fallback()
-          .or(this.$wowElement.data('wow-duration'))
+          .or(this.$wowElement.data("wow-duration"))
           .or(1000)
           .value(),
         delay: this.fallback()
-          .or(this.$wowElement.data('wow-delay'))
+          .or(this.$wowElement.data("wow-delay"))
           .or(0)
-          .value()
+          .value(),
       };
     }
 
     mdbWow() {
-      if (this.$wowElement.css('visibility') === 'visible') {
+      if (this.$wowElement.css("visibility") === "visible") {
         return;
       }
 
       if (this.shouldElementBeVisible(true)) {
-        setTimeout(() => this.$wowElement.removeClass('animated'), this.countRemoveTime());
+        setTimeout(
+          () => this.$wowElement.removeClass("animated"),
+          this.countRemoveTime()
+        );
         this.appear();
       }
     }
 
     appear() {
-      this.$wowElement.addClass('animated');
+      this.$wowElement.addClass("animated");
       this.$wowElement.css({
-        visibility: 'visible',
-        'animation-name': this.options.animationName,
-        'animation-iteration-count': this.options.iteration,
-        'animation-duration': this.options.duration,
-        'animation-delay': this.options.delay
+        visibility: "visible",
+        "animation-name": this.options.animationName,
+        "animation-iteration-count": this.options.iteration,
+        "animation-duration": this.options.duration,
+        "animation-delay": this.options.delay,
       });
     }
 
     hide() {
       if (this.shouldElementBeVisible(false)) {
-        this.$wowElement.removeClass('animated');
+        this.$wowElement.removeClass("animated");
         this.$wowElement.css({
-          'animation-name': 'none',
-          visibility: 'hidden'
+          "animation-name": "none",
+          visibility: "hidden",
         });
       } else {
         setTimeout(() => {
-          this.$wowElement.removeClass('animated');
+          this.$wowElement.removeClass("animated");
         }, this.countRemoveTime());
       }
       this.mdbWow();
@@ -90,37 +92,51 @@ jQuery($ => {
       const windowHeight = window.innerHeight;
       const scroll = window.scrollY;
 
-      const isElementTopVisible = windowHeight + scroll - this.options.offset > thisElementOffset;
-      const isElementBottomVisible = windowHeight + scroll - this.options.offset > thisElementOffset + thisElementHeight;
+      const isElementTopVisible =
+        windowHeight + scroll - this.options.offset > thisElementOffset;
+      const isElementBottomVisible =
+        windowHeight + scroll - this.options.offset >
+        thisElementOffset + thisElementHeight;
       const isScrolledToTop = scroll < thisElementOffset;
       const isScrolledToBottom = scroll < thisElementOffset + thisElementHeight;
       const isDocumentHeightEqual = windowHeight + scroll === documentHeight;
-      const isOffsetHigherThanDocument = thisElementOffset + this.options.offset > documentHeight;
-      const isElementBottomHidden = windowHeight + scroll - this.options.offset < thisElementOffset;
-      const isScrolledOverTop = scroll > thisElementOffset + this.options.offset;
-      const isNotScrolledToTop = scroll < thisElementOffset + this.options.offset;
-      const isScrolledOverElement = thisElementOffset + thisElementHeight > documentHeight - this.options.offset;
+      const isOffsetHigherThanDocument =
+        thisElementOffset + this.options.offset > documentHeight;
+      const isElementBottomHidden =
+        windowHeight + scroll - this.options.offset < thisElementOffset;
+      const isScrolledOverTop =
+        scroll > thisElementOffset + this.options.offset;
+      const isNotScrolledToTop =
+        scroll < thisElementOffset + this.options.offset;
+      const isScrolledOverElement =
+        thisElementOffset + thisElementHeight >
+        documentHeight - this.options.offset;
 
       let returnLogic = false;
 
       if (state) {
-        returnLogic = isElementTopVisible && isScrolledToTop ||
-                      isElementBottomVisible && isScrolledToBottom ||
-                      isDocumentHeightEqual && isOffsetHigherThanDocument;
+        returnLogic =
+          (isElementTopVisible && isScrolledToTop) ||
+          (isElementBottomVisible && isScrolledToBottom) ||
+          (isDocumentHeightEqual && isOffsetHigherThanDocument);
       } else {
-        returnLogic = isElementTopVisible && isScrolledOverTop ||
-                      isElementBottomHidden && isNotScrolledToTop ||
-                      isScrolledOverElement;
+        returnLogic =
+          (isElementTopVisible && isScrolledOverTop) ||
+          (isElementBottomHidden && isNotScrolledToTop) ||
+          isScrolledOverElement;
       }
       return returnLogic;
     }
 
     countRemoveTime() {
-      const defaultAnimationTime = this.$wowElement.css('animation-duration').slice(0, -1) * 1000;
+      const defaultAnimationTime =
+        this.$wowElement.css("animation-duration").slice(0, -1) * 1000;
       let removeTime = 0;
 
       if (this.options.duration) {
-        removeTime = defaultAnimationTime + this.checkOptionsStringFormat(this.options.duration);
+        removeTime =
+          defaultAnimationTime +
+          this.checkOptionsStringFormat(this.options.duration);
       }
       if (this.options.delay) {
         removeTime += this.checkOptionsStringFormat(this.options.delay);
@@ -131,12 +147,12 @@ jQuery($ => {
     checkOptionsStringFormat(element) {
       let valueToReturn;
 
-      if (element.toString().slice(-1) === 's') {
-        valueToReturn =  element.toString().slice(0, -1);
+      if (element.toString().slice(-1) === "s") {
+        valueToReturn = element.toString().slice(0, -1);
       } else if (!isNaN(element.toString().slice(-1))) {
         valueToReturn = element;
       } else {
-        return console.log('Not supported animation customization format.');
+        return console.log("Not supported animation customization format.");
       }
 
       return valueToReturn;
@@ -157,14 +173,17 @@ jQuery($ => {
       return {
         _value: undefined,
         or(value) {
-          if (typeof value !== 'undefined' && typeof this._value === 'undefined') {
+          if (
+            typeof value !== "undefined" &&
+            typeof this._value === "undefined"
+          ) {
             this._value = value;
           }
           return this;
         },
         value() {
           return this._value;
-        }
+        },
       };
     }
   }
@@ -177,5 +196,4 @@ jQuery($ => {
   };
 
   window.WOW = WOW;
-
 });

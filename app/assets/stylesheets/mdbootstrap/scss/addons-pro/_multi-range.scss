@@ -31,7 +31,7 @@
     &.ghost {
       position: relative;
 
-      &:nth-of-type(n+1) {
+      &:nth-of-type(n + 1) {
         position: absolute;
       }
     }

@@ -106,7 +106,8 @@ button.md-toast-close-button {
 #toast-container > div {
   position: relative;
   width: $toast-container-width;
-  padding: $toast-container-py $toast-container-pr $toast-container-py $toast-container-pl;
+  padding: $toast-container-py $toast-container-pr $toast-container-py
+    $toast-container-pl;
   margin: 0 0 $toast-container-margin;
   overflow: hidden;
   filter: $toast-container-filter;

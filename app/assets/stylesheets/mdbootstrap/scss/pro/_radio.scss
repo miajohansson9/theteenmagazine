@@ -9,7 +9,6 @@
 // Radio buttons
 .form-check-input[type="radio"],
 label.btn input[type="radio"] {
-
   &:not(:checked) + label,
   &:checked + label {
     position: relative;
@@ -110,16 +109,15 @@ label.btn input[type="radio"] {
   }
 
   &:checked + label:after .disabled-material {
-    background-color: rgba($radio-fill-color, .2);
+    background-color: rgba($radio-fill-color, 0.2);
   }
-
 }
 
 .md-disabled::after {
-  background-color: rgba($radio-fill-color, .5) !important;
-  border-color: rgba($radio-fill-color, .2) !important;
+  background-color: rgba($radio-fill-color, 0.5) !important;
+  border-color: rgba($radio-fill-color, 0.2) !important;
 }
 
 .md-disabled::before {
-  border-color: rgba($radio-fill-color, .25) !important;
+  border-color: rgba($radio-fill-color, 0.25) !important;
 }

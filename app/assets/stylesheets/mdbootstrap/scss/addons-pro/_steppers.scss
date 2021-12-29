@@ -8,7 +8,7 @@
 label.invalid {
   top: 50px !important;
   font-size: 12.8px;
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: #f00 !important;
 
@@ -40,7 +40,7 @@ ul.stepper {
 
     &.feedbacking .step-new-content > *:not(.wait-feedback) {
       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=10)";
-      opacity: .1;
+      opacity: 0.1;
     }
 
     &:not(:last-of-type).active {
@@ -49,7 +49,7 @@ ul.stepper {
 
     &:before {
       position: absolute;
-      top: .75rem;
+      top: 0.75rem;
       width: 1.75rem;
       height: 1.75rem;
       font-weight: 400;
@@ -58,7 +58,7 @@ ul.stepper {
       text-align: center;
       content: counter(section);
       counter-increment: section;
-      background-color: rgba(0, 0, 0, .3);
+      background-color: rgba(0, 0, 0, 0.3);
       border-radius: 100%;
     }
 
@@ -84,27 +84,27 @@ ul.stepper {
   }
 
   > li:not(:last-of-type) {
-    margin-bottom: .625rem;
-    transition: margin-bottom .4s;
+    margin-bottom: 0.625rem;
+    transition: margin-bottom 0.4s;
   }
 
   .step-title {
     display: block;
-    padding: .9688rem 2.75rem 1.5rem 4rem;
+    padding: 0.9688rem 2.75rem 1.5rem 4rem;
     margin: 0 -1.3rem;
     cursor: pointer;
 
     &:after {
       position: absolute;
       display: block;
-      font-size: .8rem;
+      font-size: 0.8rem;
       font-weight: 400;
       color: #424242;
       content: attr(data-step-label);
     }
 
     &:hover {
-      background-color: rgba(0, 0, 0, .06);
+      background-color: rgba(0, 0, 0, 0.06);
     }
   }
 
@@ -126,13 +126,13 @@ ul.stepper {
     &:not(:last-of-type):after {
       position: absolute;
       top: 3.125rem;
-      left: .8438rem;
-      width: .0625rem;
+      left: 0.8438rem;
+      width: 0.0625rem;
       height: 40%;
       height: calc(100% - 38px);
       content: "";
-      background-color: rgba(0, 0, 0, .1);
-      transition: all .4s;
+      background-color: rgba(0, 0, 0, 0.1);
+      transition: all 0.4s;
     }
 
     &.active:not(:last-child):after {
@@ -156,17 +156,17 @@ ul.stepper {
     .btn:not(:last-child),
     .btn-flat:not(:last-child),
     .btn-large:not(:last-child) {
-      margin-right: .3125rem;
+      margin-right: 0.3125rem;
     }
   }
 
   .step-new-content .row {
-    margin-bottom: .4375rem;
+    margin-bottom: 0.4375rem;
   }
 
   .md-form {
     label {
-      left: .875rem;
+      left: 0.875rem;
     }
 
     .validate {
@@ -213,7 +213,7 @@ ul.stepper {
         position: static;
         display: inline-block;
         width: 100%;
-        height: .0625rem;
+        height: 0.0625rem;
         content: "";
       }
       &.active .step-title:before {
@@ -251,13 +251,12 @@ ul.stepper {
         text-align: center;
         content: counter(section);
         counter-increment: section;
-        background-color: rgba(0, 0, 0, .3);
+        background-color: rgba(0, 0, 0, 0.3);
         border-radius: 100%;
       }
     }
 
     > .step {
-
       &:last-of-type,
       &[data-last="true"] {
         width: auto !important;
@@ -268,7 +267,7 @@ ul.stepper {
       position: static;
       display: inline-block;
       width: 100%;
-      height: .0625rem;
+      height: 0.0625rem;
       content: "";
     }
 
@@ -287,7 +286,7 @@ ul.stepper {
     }
 
     & .step-title:after {
-      top: .9375rem;
+      top: 0.9375rem;
     }
 
     & .step-new-content {
@@ -314,7 +313,7 @@ ul.stepper {
       .btn-flat:not(:last-child),
       .btn-large:not(:last-child) {
         margin-right: 0;
-        margin-left: .3125rem;
+        margin-left: 0.3125rem;
       }
     }
   }

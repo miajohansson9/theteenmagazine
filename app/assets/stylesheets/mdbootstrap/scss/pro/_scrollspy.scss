@@ -10,14 +10,16 @@
         &:hover {
           color: $mdb-color-base;
           background-color: transparent;
-          border-left: $scrollspy-navpills-naviteam-hover-border-left solid $mdb-color-base;
+          border-left: $scrollspy-navpills-naviteam-hover-border-left solid
+            $mdb-color-base;
           @include scrollspy-font-weight(500);
         }
 
         &.active {
           color: $mdb-color-base;
           background-color: transparent;
-          border-left: $scrollspy-navpills-naviteam-active-border-left solid $mdb-color-base;
+          border-left: $scrollspy-navpills-naviteam-active-border-left solid
+            $mdb-color-base;
           box-shadow: none;
           @include scrollspy-font-weight(500);
 
@@ -39,7 +41,6 @@
 }
 
 @media only screen and (max-width: 991px) {
-
   .sticky,
   .sticky-placeholder {
     display: none;
@@ -51,7 +52,6 @@
 }
 
 @media only screen and (max-width: $medium-screen) {
-
   .col-md-4 .sticky,
   .col-lg-4 .sticky,
   .col-xl-4 .sticky {
@@ -60,13 +60,11 @@
 }
 
 @media only screen and (min-width: $medium-screen) {
-
   .col-md-4 .sticky .col-lg-4 .sticky,
   .col-xl-4 .sticky {
     @include scroll-width(25rem);
   }
 }
-
 
 @media only screen and (min-width: $large-screen) {
   .col-md-4 .sticky {
@@ -89,7 +87,7 @@
   display: block;
   background: $scrollspy-dotted-bg;
   transform: $scrollspy-dotted-transform;
-  @include scrollspy-border-radius-4rows(.125rem, 0, 0, .125rem);
+  @include scrollspy-border-radius-4rows(0.125rem, 0, 0, 0.125rem);
 
   li {
     display: block;
@@ -108,9 +106,9 @@
 
       span {
         display: block;
-        background-color: rgba($white, .54);
-        @include scroll-width(.5rem);
-        @include scroll-height(.5rem);
+        background-color: rgba($white, 0.54);
+        @include scroll-width(0.5rem);
+        @include scroll-height(0.5rem);
         @include scrollspy-border-radius(50%);
       }
 

@@ -14,7 +14,8 @@ Devise.setup do |config|
   # with default "from" parameter.
   config.mailer_sender = 'editors@theteenmagazine.com'
 
-  config.secret_key = ENV["DEVISE_KEY"]
+  config.secret_key = ENV['DEVISE_KEY']
+
   # Configure the class responsible to send e-mails.
   config.mailer = 'Mailer'
 
@@ -229,7 +230,7 @@ Devise.setup do |config|
 
   Warden::Manager.after_authentication do |user, auth, opts|
     if user.remember_me
-      auth.cookies[:email] = {value: user.email, expires: 2.months.from_now}
+      auth.cookies[:email] = { value: user.email, expires: 2.months.from_now }
     else
       auth.cookies.delete :email
     end

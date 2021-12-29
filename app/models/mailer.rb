@@ -3,6 +3,9 @@ class Mailer < Devise::Mailer
 
   def welcome_email
     @user = params[:user]
-    mail(to: @user.email, subject: "#{@user.first_name}, Welcome to The Teen Magazine!")
+    mail(
+      to: @user.email,
+      subject: "#{@user.first_name}, Welcome to The Teen Magazine!"
+    )
   end
 end

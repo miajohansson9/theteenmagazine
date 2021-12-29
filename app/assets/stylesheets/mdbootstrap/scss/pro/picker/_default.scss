@@ -42,7 +42,10 @@
 
     // stylelint-disable property-no-unknown
     overflow-scrolling: touch;
-    @include transition-main($picker-holder-transition-bg, $picker-holder-transition-top);
+    @include transition-main(
+      $picker-holder-transition-bg,
+      $picker-holder-transition-top
+    );
     backface-visibility: hidden;
   }
 
@@ -121,7 +124,6 @@
   }
 }
 
-
 /**
  * When the picker opens...
  */
@@ -143,7 +145,6 @@
     }
   }
 }
-
 
 /**
  * For `large` screens, transform into an inline picker.

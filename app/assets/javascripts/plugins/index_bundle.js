@@ -64,9 +64,8 @@
           if (!callbacks.push) callbacks = [callbacks];
           actions = callbacks;
 
-          document.getElementById(
-            "selectable_content"
-          ).onmouseup = _selectionEndText;
+          document.getElementById("selectable_content").onmouseup =
+            _selectionEndText;
           document.onmousedown = _processSelection;
         }
 
@@ -206,9 +205,8 @@
           if (!callbacks.push) callbacks = [callbacks];
           actions = callbacks;
 
-          document.getElementById(
-            "selectable_content"
-          ).onmouseup = _selectionEndText;
+          document.getElementById("selectable_content").onmouseup =
+            _selectionEndText;
           document.onmousedown = _processSelection;
         }
 

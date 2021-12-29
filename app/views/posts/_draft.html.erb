@@ -38,7 +38,29 @@ blockquote {
     <div class="flex_wrapper_columns">
       <div class="content_wrapper">
         <header id="post_title_show">
-          <h1 class="title_article_show"><%= @post.title %></h1>
+          <div class="title_wrapper">
+            <% if @thumbanil_credits && @thumbanil_credits.length > 0 %>
+              <div class="chip">
+                PHOTO BY
+                <% if @thumbanil_credits.length.eql? 2 %>
+                  <%= link_to(@thumbanil_credits[0], link_helper(@thumbanil_credits[1]), target: '_blank') %>
+                <% else %>
+                  <%= @thumbanil_credits[0] %>
+                <% end %>
+              </div>
+            <% end %>
+            <% if @partner_name %>
+              <div class="chip">
+                PARTNERSHIP WITH
+                <% if @partner.website %>
+                  <%= link_to(@partner_name, link_helper(@partner.website), target: "_blank") %>
+                <% else %>
+                  <%= @partner_name.upcase %>
+                <% end %>
+              </div>
+            <% end %>
+            <h1 class="title_article_show"><%= @post.title %></h1>
+          </div>
           <h3 id="category_title"><%= link_to(@post.category.name, @post.category) %></h3>
           <div class="post_info">
             <% @authors = [@user] + @collabs %>

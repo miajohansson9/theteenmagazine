@@ -1,5 +1,5 @@
 class BadgesController < ApplicationController
-  before_action :find_badge, only: [:destroy, :update, :edit]
+  before_action :find_badge, only: %i[destroy update edit]
 
   def destroy
     @badge.destroy
@@ -22,6 +22,8 @@ class BadgesController < ApplicationController
   end
 
   def badge_params
-    params.require(:badge).permit(:created_at, :id, :level, :kind, :color, :user_id, :activated)
+    params
+      .require(:badge)
+      .permit(:created_at, :id, :level, :kind, :color, :user_id, :activated)
   end
 end

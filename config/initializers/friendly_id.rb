@@ -16,8 +16,20 @@ FriendlyId.defaults do |config|
   # undesirable to allow as slugs. Edit this list as needed for your app.
   config.use :reserved
 
-  config.reserved_words = %w(new edit index session login logout users admin
-    stylesheets assets javascripts images)
+  config.reserved_words = %w[
+    new
+    edit
+    index
+    session
+    login
+    logout
+    users
+    admin
+    stylesheets
+    assets
+    javascripts
+    images
+  ]
 
   #  ## Friendly Finders
   #
@@ -39,6 +51,7 @@ FriendlyId.defaults do |config|
   # calls to `Module.extend`.
   #
   config.use :finders
+
   #
   # ## Slugs
   #
@@ -46,11 +59,13 @@ FriendlyId.defaults do |config|
   # to do so, uncomment the following line.
   #
   config.use :slugged
+
   #
   # By default, FriendlyId's :slugged addon expects the slug column to be named
   # 'slug', but you can change it if you wish.
   #
   config.slug_column = 'slug'
+
   #
   # When FriendlyId can not generate a unique ID from your base method, it appends
   # a UUID, separated by a single dash. You can configure the character used as the
@@ -58,6 +73,7 @@ FriendlyId.defaults do |config|
   # with two dashes.
   #
   config.sequence_separator = '-'
+
   #
   # Note that you must use the :slugged addon **prior** to the line which
   # configures the sequence separator, or else FriendlyId will raise an undefined
@@ -74,10 +90,10 @@ FriendlyId.defaults do |config|
   # more like 4.0.
   #
   config.use Module.new {
-     def should_generate_new_friendly_id?
-       slug.blank? #|| title_changed?
-     end
-  }
+               def should_generate_new_friendly_id?
+                 slug.blank? #|| title_changed?
+               end
+             }
 
   #
   # FriendlyId uses Rails's `parameterize` method to generate slugs, but for

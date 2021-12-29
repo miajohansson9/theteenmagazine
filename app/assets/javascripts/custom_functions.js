@@ -29,8 +29,9 @@ function animateEditorStats(decimal) {
 }
 
 function select_article_status() {
-  var selected = document.getElementById("post_reviews_attributes_0_status")
-    .value;
+  var selected = document.getElementById(
+    "post_reviews_attributes_0_status"
+  ).value;
   if (selected == "Approved for Publishing") {
     $(".rejected-reason").addClass("hide");
     $(".accepted-descr").removeClass("hide");

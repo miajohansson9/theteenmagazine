@@ -1,1 +1,4 @@
-﻿CKEDITOR.plugins.setLang("sourcedialog","sr",{toolbar:"Изворни код",title:"Изворни код"});
+﻿CKEDITOR.plugins.setLang("sourcedialog", "sr", {
+  toolbar: "Изворни код",
+  title: "Изворни код",
+});
