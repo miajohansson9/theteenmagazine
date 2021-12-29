@@ -198,8 +198,7 @@ class UsersController < ApplicationController
 
   def full_writer
     @invitation = Invitation.new
-    @invitations_from_notice =
-      @user.invitations.where(alert_viewed_at: nil, status: 'Applied')
+    @invitations_from_notice = @user.invitations.where(alert_viewed_at: nil, status: ["Accepted", "Applied"])
     @claimed_pitches_cnt = Pitch.where(claimed_id: @user.id)&.count || 0
     @pageviews = 0
     @user_posts_approved_records.map { |p| @pageviews += p.post_impressions }
