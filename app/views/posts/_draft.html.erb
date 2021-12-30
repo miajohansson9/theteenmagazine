@@ -129,6 +129,11 @@ blockquote {
 </div>
 <script type="text/javascript">
   window.onload = function () {
+    <% if @post.show_disclosure %>
+      $('.content_wrapper a')
+        .not("a[href*=theteenmagazine]")
+        .attr('rel','nofollow');
+    <% end %>
     <% if @comment_from_notifications.present? %>
       <% if @comment_parent_from_notifications.present? %>
         window.location.hash = "#reply_<%= @comment_parent_from_notifications %>";
