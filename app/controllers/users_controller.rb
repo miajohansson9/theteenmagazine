@@ -356,6 +356,8 @@ class UsersController < ApplicationController
           User
             .where(partner: [nil, false])
             .where('lower(full_name) LIKE ?', "%#{@query.downcase}%")
+            .or(User.where(partner: [nil, false])
+            .where('lower(email) LIKE ?', "%#{@query.downcase}%"))
             .order('last_sign_in_at IS NULL, last_sign_in_at desc'),
           page: params[:page],
           items: 25

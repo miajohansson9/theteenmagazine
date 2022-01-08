@@ -30,7 +30,7 @@
 <div id="posts_wrapper" class="skinny_wrapper">
   <div class="flex_horizontal">
     <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
-      <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Search for a writer" %>
+      <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Search for a writer by name or email" %>
     <% end %>
   </div>
   <% if @query.present? %>
