@@ -82,13 +82,18 @@
     <%= f.hidden_field :posts_count, :value => @user.posts.published.count %>
 
     <% if current_user && current_user.admin? %>
-    <%= f.label "Editor" %>
-    <%= f.check_box :editor %><br />
+      <%= f.label "Editor" %>
+      <%= f.check_box :editor %><br />
     <% end %>
 
     <% if current_user && current_user.admin? %>
       <%= f.label "Admin" %>
       <%= f.check_box :admin %><br />
+    <% end %>
+    <br>
+    <% if current_user && current_user.admin? %>
+      <%= f.label "Marketer" %>
+      <%= f.check_box :marketer %><br />
     <% end %>
     <br>
   <% end %>

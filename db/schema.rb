@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_29_171715) do
+ActiveRecord::Schema.define(version: 2022_01_08_124451) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -374,6 +374,7 @@ ActiveRecord::Schema.define(version: 2021_12_29_171715) do
     t.boolean "has_newsletter_permissions"
     t.integer "promotions", default: 0
     t.boolean "skip_assignment"
+    t.boolean "marketer"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
