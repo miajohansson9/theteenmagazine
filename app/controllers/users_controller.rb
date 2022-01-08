@@ -13,9 +13,8 @@ class UsersController < ApplicationController
                 ]
   before_action :authenticate_user!,
                 except: %i[index show redirect get_editor_stats]
-  before_action :is_editor?, only: %i[show_users new]
+  before_action :is_editor?, only: %i[show_users new partners]
   before_action :onboarding_redirect, if: :current_user?, only: [:show]
-  before_action :is_admin?, only: %i[new partners]
   after_action :update_last_sign_in_at, if: :current_user?
 
   def show
@@ -609,14 +608,6 @@ class UsersController < ApplicationController
       end
     else
       redirect_to "/writers/#{current_user.slug}/extensions"
-    end
-  end
-
-  def is_admin?
-    if (current_user && current_user.admin?)
-      true
-    else
-      redirect_to current_user, notice: 'You do not have access to this page.'
     end
   end
 
