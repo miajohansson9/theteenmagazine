@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   has_many :badges
   has_many :invitations
   has_many :applies
+  has_many :messages
+  has_many :chats, foreign_key: :sender_id
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

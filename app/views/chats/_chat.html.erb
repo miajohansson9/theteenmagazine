@@ -1,0 +1,21 @@
+<li>
+  <div class="panel panel-default" data-chat-id="<%= chat.id %>">
+    <div class="panel-heading">
+      <%= link_to chat.opposed_user(user).email, '', class: 'toggle-window' %>
+      <%= link_to "x", close_chat_path(chat), class: "btn btn-default btn-xs pull-right", remote: true, method: :post %>
+    </div>
+
+    <div class="panel-body" style="display: none;">
+      <div class="messages-list">
+        <ul>
+          <%= render 'chats/chat_content', messages: chat.messages, user: user %>
+        </ul>
+      </div>
+      <%= form_for [chat, chat.messages.new], remote: true do |f| %>
+        <%= f.hidden_field :user_id, value: user.id %>
+        <%= f.text_area :body, class: "form-control" %>
+        <%= f.submit "Send", class: "btn btn-success" %>
+      <% end %>
+    </div>
+  </div>
+</li>

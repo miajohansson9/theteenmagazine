@@ -28,6 +28,14 @@ Rails.application.routes.draw do
   resources :outreaches
   resources :newsletters
   resources :invitations
+  resources :chats, only: [:index]
+
+  resources :chats, only: [:create] do
+    member do
+      post :close
+    end
+    resources :messages, only: [:create]
+  end
 
   #asynchronously fetched
   get :get_trending_posts, controller: :welcome

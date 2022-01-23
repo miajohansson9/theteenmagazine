@@ -1,0 +1,3 @@
+var chat = $('#chats-list').find("[data-chat-id='" + "<%= @chat.id %>" + "']");
+chat.find('.messages-list').find('ul').append("<%= j(render 'messages/message', message: @message, user: current_user) %>");
+chat.find('textarea').val('');

@@ -11,24 +11,46 @@
 @import "mdbootstrap/scss/core/variables";
 @import "mdbootstrap/scss/pro/variables";
 @import "mdbootstrap/scss/pro/chips";
+.messages-list {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.message-sent {
+    position: relative;
+    background-color: #D9EDF7;
+    border-color: #BCE8F1;
+    margin: 5px 20px;
+    padding: 10px;
+    float: right;
+}
+
+.message-received {
+    background-color: #F1F0F0;
+    border-color: #EEEEEE;
+    margin: 5px 20px;
+    padding: 10px;
+    float: left;
+}
 
 #apply_description {
-  min-height: 200px;
+    min-height: 200px;
 }
 
 @media (max-width: 1080px) {
-  .nav-title {
-    display: none;
-  }
-  .nav_article {
-    .link {
-      margin-left: 0.8em !important;
+    .nav-title {
+        display: none;
     }
-  }
+    .nav_article {
+        .link {
+            margin-left: 0.8em !important;
+        }
+    }
 }
 
 @media (max-width: 800px) {
-  .hide-on-mobile {
-    display: none;
-  }
+    .hide-on-mobile {
+        display: none;
+    }
 }
