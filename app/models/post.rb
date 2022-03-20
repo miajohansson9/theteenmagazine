@@ -74,7 +74,7 @@ class Post < ApplicationRecord
   
   scope :most_viewed,
         -> {
-          .order(
+          order(
             'post_impressions desc'
           )
         }
