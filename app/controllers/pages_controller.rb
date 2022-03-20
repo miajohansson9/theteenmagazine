@@ -16,7 +16,7 @@ class PagesController < ApplicationController
                   reset_confirmation
                   search
                 ]
-  before_action :is_admin?, only: :featured
+  before_action :is_admin?, only: :most_viewed
 
   def team
     set_meta_tags title: 'About us',
@@ -88,6 +88,12 @@ class PagesController < ApplicationController
                     image: @trending.first.thumbnail.url(:large2),
                     domain: 'https://www.theteenmagazine.com/'
                   }
+  end
+
+  def most_viewed
+    @pagy, @most_viewed =
+      pagy(Post.published.most_viewed, page: params[:page], items: 15)
+    set_meta_tags title: 'Most Viewed | The Teen Magazine'
   end
 
   def submitted; end

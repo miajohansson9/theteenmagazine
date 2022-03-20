@@ -82,6 +82,7 @@ Rails.application.routes.draw do
   get 'email-preferences' => 'pages#email_preferences'
   post 'email-preferences', to: 'pages#email_preferences'
   get 'trending' => 'pages#trending'
+  get 'most-viewed' => 'pages#most_viewed'
   get 'newsletters/:id/featured-posts' => 'newsletters#featured'
   get 'reviews:post_id' => 'pages#reviews'
   get '/apply' => 'applies#new'

@@ -71,6 +71,13 @@ class Post < ApplicationRecord
             'post_impressions desc'
           )
         }
+  
+  scope :most_viewed,
+        -> {
+          .order(
+            'post_impressions desc'
+          )
+        }
 
   scope :by_published_date, -> { order(publish_at: :desc) }
 
