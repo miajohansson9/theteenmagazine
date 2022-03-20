@@ -1,0 +1,190 @@
+(function() {
+  <% if turbolinks %>
+  if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
+    return;
+  }
+  <% end %>
+  function createEvent(name, container) {
+    var event = undefined;
+    if (typeof(Event) === 'function') {
+      event = new Event(name);
+    } else {
+      event = document.createEvent('Event');
+      event.initEvent(name, true, true);
+    }
+    event.container = container
+    return event;
+  }
+
+  function _runAfterDocumentLoaded(callback) {
+    <% if turbolinks %>
+    document.addEventListener("turbolinks:load", function(e) {
+      e.target.removeEventListener(e.type, arguments.callee);
+      callback();
+    });
+    <% else %>
+    document.addEventListener("DOMContentLoaded", callback);
+    <% end %>
+  }
+
+  function _makeRequest(currentRetryCount) {
+    var request = new XMLHttpRequest();
+    var asyncRequest = true;
+    var SUCCESS = 200;
+    var ERROR = 400;
+
+    request.open('<%= method %>', '<%= path.html_safe %>', asyncRequest);
+
+    var headers = <%= headers.to_json.html_safe %>;
+    var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
+    if (csrfTokenElement)
+      headers['X-CSRF-Token'] = csrfTokenElement.content
+
+    Object.keys(headers).map(function(key) {
+      request.setRequestHeader(key, headers[key]);
+    });
+
+    request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    request.onreadystatechange = function() {
+      if (request.readyState === 4) {
+        if (request.status >= SUCCESS && request.status < ERROR) {
+          var container = document.getElementById('<%= container_id %>');
+          <% if !interval && replace_container %>
+          container.outerHTML = request.response;
+          <% else %>
+          container.innerHTML = request.response;
+          <% end %>
+
+          var loadEvent = createEvent('render_async_load', container);
+          document.dispatchEvent(loadEvent);
+
+          <% if event_name.present? %>
+            var event = createEvent('<%= event_name %>', container);
+            document.dispatchEvent(event);
+          <% end %>
+        } else {
+          var skipErrorMessage = false;
+          <% if retry_count > 0 %>
+          skipErrorMessage = retry(currentRetryCount)
+          <% end %>
+
+          if (skipErrorMessage) return;
+
+          var container = document.getElementById('<%= container_id %>');
+          container.outerHTML = '<%= error_message.try(:html_safe) %>';
+
+          var errorEvent = createEvent(
+            "<%= error_event_name || 'render_async_error' %>",
+            container
+          );
+          errorEvent.retryCount = currentRetryCount
+
+          document.dispatchEvent(errorEvent);
+        }
+      }
+    };
+
+    var body = "<%= escape_javascript(data.to_s.html_safe) %>";
+    request.send(body);
+  };
+
+  <% if retry_count > 0 %>
+
+  <% if retry_delay %>
+  _retryMakeRequest = function(currentRetryCount) {
+    setTimeout(function() {
+      _makeRequest(currentRetryCount)
+    }, <%= retry_delay %>)
+  }
+  <% end %>
+
+  function retry(currentRetryCount) {
+    if (typeof(currentRetryCount) === 'number') {
+      if (currentRetryCount >= <%= retry_count %>)
+        return false;
+
+      _retryMakeRequest(currentRetryCount + 1);
+      return true;
+    }
+
+    _retryMakeRequest(1);
+    return true;
+  }
+  <% end %>
+
+  var _renderAsyncFunction = _makeRequest;
+
+  var _interval;
+  <% if interval %>
+  var _renderAsyncFunction = function() {
+    // If interval is already set, return
+    if (typeof(_interval) === 'number') return
+
+    _makeRequest();
+    _interval = setInterval(_makeRequest, <%= interval %>);
+  }
+
+  var _clearRenderAsyncInterval = function() {
+    if (typeof(_interval) === 'number'){
+      clearInterval(_interval)
+      _interval = undefined;
+    }
+  }
+
+  function _setUpControlEvents() {
+    var container = document.getElementById('<%= container_id %>');
+
+    // Register a polling stop event on the container
+    container.addEventListener("async-stop", _clearRenderAsyncInterval)
+
+    // Register a start polling event on the container
+    container.addEventListener("async-start", _renderAsyncFunction)
+  }
+
+  _runAfterDocumentLoaded(_setUpControlEvents)
+
+  <% if turbolinks %>
+  document.addEventListener("turbolinks:visit", _clearRenderAsyncInterval)
+  <% end %>
+  <% end %>
+
+  <% if !replace_container %>
+  function _setUpRefreshEvent() {
+    var container = document.getElementById('<%= container_id %>');
+
+    container.addEventListener('refresh', _renderAsyncFunction)
+  }
+
+  _runAfterDocumentLoaded(_setUpRefreshEvent)
+  <% end %>
+
+  <% if toggle %>
+  function _setUpToggle() {
+    var selectors = document.querySelectorAll('<%= toggle[:selector] %>');
+    var handler = function(event) {
+      if (typeof(_interval) === 'number') {
+        clearInterval(_interval);
+        _interval = undefined;
+      } else {
+        _renderAsyncFunction();
+      }
+      <% if toggle[:once] %>
+      this.removeEventListener(event.type, handler);
+      <% end %>
+    };
+
+    <% if toggle[:start] %>
+    _renderAsyncFunction()
+    <% end %>
+
+    for (var i = 0; i < selectors.length; ++i) {
+      selectors[i].addEventListener('<%= toggle[:event] || 'click' %>', handler)
+    }
+  }
+
+  _runAfterDocumentLoaded(_setUpToggle);
+  <% elsif !toggle %>
+  _runAfterDocumentLoaded(_renderAsyncFunction);
+  <% end %>
+})();

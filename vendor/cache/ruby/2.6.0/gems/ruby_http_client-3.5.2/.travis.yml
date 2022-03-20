@@ -1,0 +1,36 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=$CC_TEST_REPORTER_ID
+language: ruby
+rvm:
+  - 2.7
+  - 2.6
+  - 2.5
+  - 2.4
+  - jruby-9.2
+before_script:
+  - make install
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - "./cc-test-reporter before-build"
+script:
+  - make test
+after_script:
+  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+deploy:
+  provider: rubygems
+  api_key: $RUBYGEMS_API_KEY
+  gem: ruby_http_client
+  on:
+    tags: true
+    rvm: '2.4'
+    skip_cleanup: true
+
+notifications:
+  slack:
+    if: branch = main
+    on_pull_requests: false
+    on_success: never
+    on_failure: change
+    rooms:
+      - secure: k9NxCTK/mvoRHWJ6QQ5ErM/+T7yy6KcUjNtb5WgsiA+OyjRgQb5qcm83pYXstDRP6JyEGmuLs4GLIQYSTte1yBvXzM2EqneltNZL2sc+r24zWFcVu6KZb/eq1+diJes+76W4tXT0w+uyyZc9sudFND32RUvcKr31jNvlHDpaII9sose9qC23YKf2u4PlxH8l7wRd3k58XeL9TaQ40xt+NiIrv1R+4QT1GnuYr9cqXrCbTNsZidrdnLmqHybsoJsHjqq7PRDi92CZBQitwzGDnyiOr40CBsqs0VoiUttsKxrG6WCglEDd2wlhYha8ti7z6GxshQHRk2bOePi2Z2YHLJXJcrkLxukCUcf/5GPu+M0vdVj+wWfrlIRa5yPW9dpEgain6Av8c/zc9GOMvTNKNlnxreh3710pQh6b9+C0PfKmsIR3kTqwrDFZxu63IHy8S/CfyFQqHAo2X1TMnJLvvWzXnxAu/qB729YGwuJX57qjk56pvun+pZXGiRsk2okjPcz1zlcoyQOd/a8WqUNN5FEIvHd+cNeDFnYm0QwqBoMTurNc+LyvlB61BNcdq+J2GdtGjAksIc55adFkeOnVGMioW349lGt0LkuhI5um7O3J8b3Y7WPOt1tcR9o44G6t2aZOnnVNZVV04/A3XjlZSJAmG26K6HoBBl3o9uL8aWk=

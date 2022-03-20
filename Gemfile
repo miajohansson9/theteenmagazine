@@ -39,7 +39,7 @@ gem 'figaro'
 gem 'aws-sdk', '~> 3'
 gem 'sitemap_generator'
 gem 'fog-aws'
-gem 'gibbon', git: 'git://github.com/amro/gibbon.git'
+gem 'gibbon'
 gem 'sprockets-rails', require: 'sprockets/railtie'
 gem 'bootsnap', require: false
 gem 'render_async'
