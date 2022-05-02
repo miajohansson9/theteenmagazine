@@ -685,33 +685,35 @@ class PostsController < ApplicationController
       's3.amazonaws.com/theteenmagazine',
       'media.theteenmagazine.com'
     )
-    @post.title =
-      @post
-        .title
-        .split
-        .map { |s| s.slice(0, 1).capitalize + s.slice(1..-1) }
-        .join(' ')
-    @post.title.gsub!(' A ', ' a ')
-    @post.title.gsub!(' Is ', ' is ')
-    @post.title.gsub!(' The ', ' the ')
-    @post.title.gsub!(' For ', ' for ')
-    @post.title.gsub!(' An ', ' an ')
-    @post.title.gsub!(' And ', ' and ')
-    @post.title.gsub!(' Nor ', ' nor ')
-    @post.title.gsub!(' Yet ', ' yet ')
-    @post.title.gsub!(' So ', ' so ')
-    @post.title.gsub!(' At ', ' at ')
-    @post.title.gsub!(' Around ', ' around ')
-    @post.title.gsub!(' But ', ' but ')
-    @post.title.gsub!(' By ', ' by ')
-    @post.title.gsub!(' After ', ' after ')
-    @post.title.gsub!(' Along ', ' along ')
-    @post.title.gsub!(' From ', ' from ')
-    @post.title.gsub!(' Of ', ' of ')
-    @post.title.gsub!(' On ', ' on ')
-    @post.title.gsub!(' To ', ' to ')
-    @post.title.gsub!(' With ', ' with ')
-    @post.title.gsub!(' In ', ' in ')
+    if !(@post.turn_off_caps)
+      @post.title =
+        @post
+          .title
+          .split
+          .map { |s| s.slice(0, 1).capitalize + s.slice(1..-1) }
+          .join(' ')
+      @post.title.gsub!(' A ', ' a ')
+      @post.title.gsub!(' Is ', ' is ')
+      @post.title.gsub!(' The ', ' the ')
+      @post.title.gsub!(' For ', ' for ')
+      @post.title.gsub!(' An ', ' an ')
+      @post.title.gsub!(' And ', ' and ')
+      @post.title.gsub!(' Nor ', ' nor ')
+      @post.title.gsub!(' Yet ', ' yet ')
+      @post.title.gsub!(' So ', ' so ')
+      @post.title.gsub!(' At ', ' at ')
+      @post.title.gsub!(' Around ', ' around ')
+      @post.title.gsub!(' But ', ' but ')
+      @post.title.gsub!(' By ', ' by ')
+      @post.title.gsub!(' After ', ' after ')
+      @post.title.gsub!(' Along ', ' along ')
+      @post.title.gsub!(' From ', ' from ')
+      @post.title.gsub!(' Of ', ' of ')
+      @post.title.gsub!(' On ', ' on ')
+      @post.title.gsub!(' To ', ' to ')
+      @post.title.gsub!(' With ', ' with ')
+      @post.title.gsub!(' In ', ' in ')
+    end
   end
 
   def post_params
@@ -745,6 +747,7 @@ class PostsController < ApplicationController
         :shared_at,
         :promoting_until,
         :slug,
+        :turn_off_caps,
         :thumbnail_credits,
         :show_disclosure,
         feedback_list: [],

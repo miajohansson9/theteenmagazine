@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_08_124451) do
+ActiveRecord::Schema.define(version: 2022_05_02_201006) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -98,10 +98,13 @@ ActiveRecord::Schema.define(version: 2022_01_08_124451) do
   end
 
   create_table "chats", force: :cascade do |t|
-    t.text "message"
-    t.integer "user_id"
+    t.integer "recipient_id"
+    t.integer "sender_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["recipient_id", "sender_id"], name: "index_chats_on_recipient_id_and_sender_id", unique: true
+    t.index ["recipient_id"], name: "index_chats_on_recipient_id"
+    t.index ["sender_id"], name: "index_chats_on_sender_id"
   end
 
   create_table "ckeditor_assets", force: :cascade do |t|
@@ -183,6 +186,16 @@ ActiveRecord::Schema.define(version: 2022_01_08_124451) do
   create_table "mailers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.integer "user_id"
+    t.integer "chat_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "newsletters", force: :cascade do |t|
@@ -291,6 +304,7 @@ ActiveRecord::Schema.define(version: 2022_01_08_124451) do
     t.datetime "shared_at"
     t.string "thumbnail_credits"
     t.boolean "show_disclosure"
+    t.boolean "turn_off_caps"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
     t.index ["publish_at"], name: "index_posts_on_publish_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
