@@ -6,11 +6,11 @@
   <h3 class="pitch_ttl"><%= @title %> <i><%= @pitch.title %></i></h3>
   <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
   <% if @claimed_user.present? %>
-    <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %><%= " on #{@pitch.claimed_at.in_time_zone.strftime('%A, %B %d')}" unless @pitch.claimed_at.nil? %></p>
+    <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %><%= " on #{@pitch.claimed_at.in_time_zone.strftime("%A, %B %d")}" unless @pitch.claimed_at.nil? %></p>
   <% elsif @pitch.status.eql? "Approved" %>
-    <p class="mb-3" style="background-color: #FCD04D; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present?%> by <%= link_to(@editor.try(:full_name), @editor) %><% end %>! You may claim it to start your draft.</p>
+    <p class="mb-3" style="background-color: #FCD04D; display: inline-block;">This pitch was approved<% if @pitch.editor_id.present? %> by <%= link_to(@editor.try(:full_name), @editor) %><% end %>! You may claim it to start your draft.</p>
   <% elsif @pitch.status.eql? "Rejected" %>
-    <p><span style="background-color: #FCD04D; padding: 5px 0;">This was pitch rejected<% if @pitch.editor_id.present?%> by <%= link_to(@editor.try(:full_name), @editor) %><% end %>. Please <%= link_to "delete", pitch_path(@pitch), method: :delete, data: {confirm: "Are you sure you want to delete this pitch? This cannot be undone."} %> it and submit a new pitch that meets all the requirements as described <a target="_blank" href="/choosing-a-topic">here</a>.</span></p>
+    <p><span style="background-color: #FCD04D; padding: 5px 0;">This was pitch rejected<% if @pitch.editor_id.present? %> by <%= link_to(@editor.try(:full_name), @editor) %><% end %>. Please <%= link_to "delete", pitch_path(@pitch), method: :delete, data: { confirm: "Are you sure you want to delete this pitch? This cannot be undone." } %> it and submit a new pitch that meets all the requirements as described <a target="_blank" href="/choosing-a-topic">here</a>.</span></p>
     <p>Reason(s) for rejection:</p>
     <ul>
       <% if @pitch.rejected_topic %>

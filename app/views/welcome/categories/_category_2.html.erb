@@ -1,9 +1,9 @@
 <div class="ctgry_section">
   <% @posts_approved_2.each do |post| %>
     <div class="ctgry_article">
-      <%=link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post )%>
+      <%= link_to(image_tag(post.thumbnail.url(:large2), alt: post.title), post) %>
       <h1><%= link_to post.title, post %></h1>
-      <p><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
+      <p><%= post.publish_at.in_time_zone.strftime("%A, %b %d") %></p>
       <p class="meta"><%= post.meta_description.truncate_words(15) %></p>
     </div>
   <% end %>

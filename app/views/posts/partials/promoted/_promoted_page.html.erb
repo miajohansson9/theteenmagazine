@@ -1,11 +1,11 @@
 <% @posts_promoted.each do |post| %>
   <div class="ctgry_article recent mb-4">
-    <%=link_to(image_tag(post.thumbnail.url(:large), alt: post.title, class: "image_recent_articles"), post )%>
+    <%= link_to(image_tag(post.thumbnail.url(:large), alt: post.title, class: "image_recent_articles"), post) %>
     <h1 class="mb-1"><%= link_to post.title, post %></h1>
     <% if post.promoting_until && post.promoting_until > Time.now %>
       <span class="badge bg-primary">Promoted</span>
     <% end %>
-    <p><%= post.publish_at.in_time_zone&.strftime("%A, %b %d")%></p>
+    <p><%= post.publish_at.in_time_zone&.strftime("%A, %b %d") %></p>
     <p class="meta"><%= post.meta_description&.truncate_words(20) %></p>
   </div>
 <% end %>

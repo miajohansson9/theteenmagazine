@@ -1,10 +1,10 @@
 <div class="skinny_wrapper wrapper_padding" style="max-width: 1000px; padding-top: 10px;">
   <% if @user.partner %>
-    <%= render 'form_partner' %>
+    <%= render "form_partner" %>
   <% else %>
-    <%= render 'form' %>
+    <%= render "form" %>
   <% end %>
   <% if current_user && current_user.admin? %>
-    <%= link_to "Delete Account", user_path(@user), method: :delete, data: {confirm: "Are you sure you want to delete this user?"},  class: "pitch_btn delete_btn theme_color", style: "margin-top: -90px;" %>
+    <%= link_to "Delete Account", user_path(@user), method: :delete, data: { confirm: "Are you sure you want to delete this user?" }, class: "pitch_btn delete_btn theme_color", style: "margin-top: -90px;" %>
   <% end %>
 </div>

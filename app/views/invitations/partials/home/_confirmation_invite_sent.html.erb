@@ -77,7 +77,7 @@
   function newInvite() {
     $('#past-invites').removeClass('hide');
     $(".spinner-button").addClass("hide");
-    $('#form-invite').html("<%= j(render partial: 'users/dashboard/tabs/earn_points', locals: {invitation: Invitation.new}) %>");
+    $('#form-invite').html("<%= j(render partial: "users/dashboard/tabs/earn_points", locals: { invitation: Invitation.new }) %>");
     var container = document.getElementById('past-invites-render-container');
     var event = new Event('refresh');
     // Dispatch 'refresh' on the render_async_cache container

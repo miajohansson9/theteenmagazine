@@ -10,7 +10,7 @@
   <body>
     <% images = ["https://theteenmagazine.s3.amazonaws.com/giphy.gif", "http://s3.amazonaws.com/theteenmagazine/Users/miajohansson/Desktop/ttm/blog/public/ckeditor_assets/pictures/2/content_3ZJ5ZIO.gif", "http://s3.amazonaws.com/theteenmagazine/Users/miajohansson/Desktop/ttm/blog/public/ckeditor_assets/pictures/1/content_giphy-1.gif"] %>
     <h1>You're published!</h1>
-    <p><%= @user.first_name %>, congratulations on publishing your first article on The Teen Magazine! This is a huge accomplishment! To view your published article, click on the link, <%= link_to @post.title, @post, :style => "color: #4ABEB6;"%>.</p>
+    <p><%= @user.first_name %>, congratulations on publishing your first article on The Teen Magazine! This is a huge accomplishment! To view your published article, click on the link, <%= link_to @post.title, @post, :style => "color: #4ABEB6;" %>.</p>
     <img style="display: block; max-width: 100%; width: 400px; margin: 0 auto;" src=<%= images[rand(0..2)] %>>
     <p>We've activated your official writer account and public author page on The Teen Magazine. To view the changes made to your account, <a href="https://www.theteenmagazine.com/login" style="color: #4ABEB6;">sign into your account</a>.</p>
     <p>If you have any questions, please do not hesitate to send us an email. Congratulations!</p>

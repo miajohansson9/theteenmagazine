@@ -16,6 +16,6 @@
   $('#invitation_email').val("");
 <% else %>
   $('#past-invites').addClass('hide');
-  $('#form-invite').html("<%= j(render partial: 'invitations/partials/home/confirmation_invite_sent', locals: {invitation: @invitation}) %>");
+  $('#form-invite').html("<%= j(render partial: "invitations/partials/home/confirmation_invite_sent", locals: { invitation: @invitation }) %>");
   $('#invite-count').html("<b><%= current_user.invitations.count %></b> friend<% if !(current_user.invitations.count.eql? 1) %>s<% end %>");
 <% end %>

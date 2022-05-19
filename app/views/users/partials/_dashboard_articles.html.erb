@@ -3,7 +3,7 @@
     <div class="inside--item">
       <%= image_tag image, class: "icon" %>
       <div>
-        <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
+        <h6 id="post-title"><a href="#"><%= link_to post.title, post %></a></h6>
         <p class="edited_dt"><%= "Last edited " + time_ago_in_words(post.updated_at) + " ago" %></p>
         <% if post.pitch.try(:claimed_id).present? && post.try(:deadline_at).present? && (post.reviews.last.status.eql? "In Progress") && !current_user.partner %>
           <% @class = post.deadline_at < Date.today + 4.days ? "text-danger" : "" %>

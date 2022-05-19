@@ -4,7 +4,7 @@
       data-step data-index="1" data-onboarding-content="Welcome to your editor account! Your profile has been updated with your editor stats."
     <% end %>
   >
-    <%= render :partial => 'profile', locals: {user: @user}, cached: true %>
+    <%= render :partial => "profile", locals: { user: @user }, cached: true %>
   </div>
   <div class="analytics card-group">
     <div class="card"
@@ -76,6 +76,9 @@
       <span><%= link_to "Pitch an Article", new_pitch_path, class: "newpost--new--profile mr-0" %></span>
     </div>
   <% end %>
+  <% # <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4"> %>
+    <% # <%= link_to "Get Paid to Write", new_post_path, class: "newpost--new--profile mr-0" %> 
+  <% # </div> %>
   <br>
   <div class="dashboard--articles--wrapper">
     <% if @user_pitches.present? %>

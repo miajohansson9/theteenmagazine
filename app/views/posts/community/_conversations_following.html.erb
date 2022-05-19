@@ -2,11 +2,11 @@
   <ul class="list-group list-group-flush" id="list-group-comments">
     <% @all.each do |comment| %>
       <% if @replies.include? comment %>
-        <%= render :partial => 'comments/comment_reply', locals: {comment: comment} %>
+        <%= render :partial => "comments/comment_reply", locals: { comment: comment } %>
       <% elsif @post_comments.include? comment %>
-        <%= render :partial => 'comments/comment_on_post', locals: {comment: comment} %>
+        <%= render :partial => "comments/comment_on_post", locals: { comment: comment } %>
       <% else %>
-        <%= render :partial => 'comments/comment_following', locals: {comment: comment} %>
+        <%= render :partial => "comments/comment_following", locals: { comment: comment } %>
       <% end %>
     <% end %>
   </ul>

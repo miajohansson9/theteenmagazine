@@ -22,7 +22,7 @@
         </div>
         <div class="pb-1">
           <p class="d-inline">Reject or Approve pitch:</p>
-          <%= f.select :status, options_for_select(["Approved", "Rejected"], {prompt: "Select status"}), {}, {:onChange => "select_status();"} %>
+          <%= f.select :status, options_for_select(["Approved", "Rejected"], { prompt: "Select status" }), {}, { :onChange => "select_status();" } %>
         </div>
         <div class="small-text-wrapper">
           <p class="accepted-descr">Make sure you've answered yes to all the above questions before approving.</p>

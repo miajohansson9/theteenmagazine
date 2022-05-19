@@ -1,29 +1,29 @@
-require 'date'
+require "date"
 
 task run_weekly_tasks: :environment do
-  Rake::Task['sitemap:refresh'].invoke if (Date.today.monday?)
+  Rake::Task["sitemap:refresh"].invoke if (Date.today.monday?)
 
   if (Date.today.thursday?)
     @newsletter =
-      Newsletter.where(sent_at: nil, ready: true).order('created_at asc').first
+      Newsletter.where(sent_at: nil, ready: true).order("created_at asc").first
     if @newsletter.present?
-      @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+      @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
       @offset = 0
       loop do
         @members =
           @gb
-            .lists(ENV['MAILCHIMP_LIST_ID'])
+            .lists(ENV["MAILCHIMP_LIST_ID"])
             .members
             .retrieve(
               params: {
-                'count': '1000',
+                'count': "1000",
                 'offset': "#{@offset}",
-                'fields': 'members.email_address',
-                'status': 'subscribed'
-              }
+                'fields': "members.email_address",
+                'status': "subscribed",
+              },
             )
         @offset = @offset + 1000
-        @emails = @members.body['members'].map { |x| x['email_address'] }
+        @emails = @members.body["members"].map { |x| x["email_address"] }
         @emails.each do |email|
           ApplicationMailer.weekly_newsletter(email, @newsletter).deliver
         end
@@ -42,25 +42,25 @@ task run_weekly_tasks: :environment do
         .is_approved
         .not_claimed
         .where(status: nil)
-        .order('updated_at desc')
+        .order("updated_at desc")
         .limit(8)
-    @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+    @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
     @offset = 0
     loop do
       @members =
         @gb
-          .lists(ENV['MAILCHIMP_WRITER_LIST_ID'])
+          .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
           .members
           .retrieve(
             params: {
-              'count': '1000',
+              'count': "1000",
               'offset': "#{@offset}",
-              'fields': 'members.email_address',
-              'status': 'subscribed'
-            }
+              'fields': "members.email_address",
+              'status': "subscribed",
+            },
           )
       @offset = @offset + 1000
-      @emails = @members.body['members'].map { |x| x['email_address'] }
+      @emails = @members.body["members"].map { |x| x["email_address"] }
       @emails.each do |email|
         ApplicationMailer.send_pitches(email, @pitches).deliver
       end
@@ -72,9 +72,9 @@ task run_weekly_tasks: :environment do
     Post.draft.each do |post|
       if post.sharing
         if post.shared_at.nil?
-          post.update_attributes('sharing' => false)
+          post.update_attributes("sharing" => false)
         elsif post.shared_at < Time.now - 1.month
-          post.update_attributes('shared_at' => nil, 'sharing' => false)
+          post.update_attributes("shared_at" => nil, "sharing" => false)
         end
       end
     end
@@ -87,34 +87,32 @@ task run_nightly_tasks: :environment do
     @reviews_requirement =
       Integer(
         Constant
-          .find_by(name: '# of monthly reviews editors need to complete')
-          .try(:value) || '0'
+          .find_by(name: "# of monthly reviews editors need to complete")
+          .try(:value) || "0"
       )
     @pitches_requirement =
       Integer(
         Constant
-          .find_by(name: '# of monthly pitches editors need to complete')
-          .try(:value) || '0'
+          .find_by(name: "# of monthly pitches editors need to complete")
+          .try(:value) || "0"
       )
     User.editor.each do |editor|
       @editor_pitches_cnt =
         editor
           .pitches
-          .where('created_at > ?', Date.today.beginning_of_month)
+          .where("created_at > ?", Date.today.beginning_of_month)
           .count
       @editor_reviews_cnt =
         Review
           .where(editor_id: editor.id)
-          .where('updated_at > ?', Date.today.beginning_of_month)
+          .where("updated_at > ?", Date.today.beginning_of_month)
           .count
       @is_not_on_track =
-        (
-          @editor_pitches_cnt + @editor_reviews_cnt <
-            (@reviews_requirement + @pitches_requirement) / 2
-        ) && (editor.created_at < (Time.now - 30.days))
+        (@editor_pitches_cnt + @editor_reviews_cnt <
+         (@reviews_requirement + @pitches_requirement) / 2) && (editor.created_at < (Time.now - 30.days))
       if @is_not_on_track
         if editor.missed_editor_deadline.try(:month) ===
-             (Date.today - 1.month).month
+           (Date.today - 1.month).month
           ApplicationMailer.editor_warning_deadline_2(
             editor,
             @reviews_requirement,
@@ -139,41 +137,37 @@ task run_nightly_tasks: :environment do
     @reviews_requirement =
       Integer(
         Constant
-          .find_by(name: '# of monthly reviews editors need to complete')
-          .try(:value) || '0'
+          .find_by(name: "# of monthly reviews editors need to complete")
+          .try(:value) || "0"
       )
     @pitches_requirement =
       Integer(
         Constant
-          .find_by(name: '# of monthly pitches editors need to complete')
-          .try(:value) || '0'
+          .find_by(name: "# of monthly pitches editors need to complete")
+          .try(:value) || "0"
       )
     User.editor.each do |editor|
       @editor_pitches_cnt =
         editor
           .pitches
-          .where('created_at > ?', Date.yesterday.beginning_of_month)
+          .where("created_at > ?", Date.yesterday.beginning_of_month)
           .count
       @editor_reviews_cnt =
         Review
           .where(editor_id: editor.id)
-          .where('updated_at > ?', Date.yesterday.beginning_of_month)
+          .where("updated_at > ?", Date.yesterday.beginning_of_month)
           .count
       @missed_deadline =
-        (
-          (@editor_pitches_cnt < @pitches_requirement) ||
-            (@editor_reviews_cnt < @reviews_requirement)
-        ) && (editor.created_at < (Time.now - 31.days))
+        ((@editor_pitches_cnt < @pitches_requirement) ||
+         (@editor_reviews_cnt < @reviews_requirement)) && (editor.created_at < (Time.now - 31.days))
       if @missed_deadline
-        if (
-             editor.missed_editor_deadline.try(:month) ===
-               (Time.now - 1.week).month
-           ) && !(editor.admin || editor.skip_assignment)
+        if (editor.missed_editor_deadline.try(:month) ===
+            (Time.now - 1.week).month) && !(editor.admin || editor.skip_assignment)
           ApplicationMailer.removed_editor_from_team(editor).deliver
           editor.update_attributes(
-            'editor' => false,
-            'became_an_editor' => nil,
-            'completed_editor_onboarding' => nil
+            "editor" => false,
+            "became_an_editor" => nil,
+            "completed_editor_onboarding" => nil,
           )
         elsif !editor.skip_assignment
           ApplicationMailer.editor_missed_deadline_1(
@@ -183,7 +177,7 @@ task run_nightly_tasks: :environment do
             @editor_pitches_cnt,
             @editor_reviews_cnt
           ).deliver
-          editor.update_attributes('missed_editor_deadline' => Time.now - 1.day)
+          editor.update_attributes("missed_editor_deadline" => Time.now - 1.day)
         end
       end
     end
@@ -195,7 +189,7 @@ task run_nightly_tasks: :environment do
     end
     @editors_with_passes = User.where(skip_assignment: true)
     @editors_with_passes.each do |editor|
-      editor.update_column('skip_assignment', false)
+      editor.update_column("skip_assignment", false)
     end
   end
 
@@ -210,7 +204,7 @@ task run_nightly_tasks: :environment do
     # Update monthly extensions for active writers
     User.active.each do |user|
       begin
-        user.update_attributes('extensions' => user.extensions + 1)
+        user.update_attributes("extensions" => user.extensions + 1)
       rescue StandardError
         next
       end
@@ -228,22 +222,22 @@ task run_nightly_tasks: :environment do
           @post.reviews.each { |review| review.destroy }
           @post.title = "#{@post.title} (locked)"
           @post.save
-          @post.pitch.update_attributes('claimed_id' => nil)
-          @post.pitch.update_attributes('archive' => !@post.pitch.user.editor)
+          @post.pitch.update_attributes("claimed_id" => nil)
+          @post.pitch.update_attributes("archive" => !@post.pitch.user.editor)
           @slug =
             FriendlyId::Slug.where(
               slug: @post.pitch.slug,
-              sluggable_type: 'Post'
+              sluggable_type: "Post",
             )
           @slug&.destroy_all
           ApplicationMailer.article_deadline_passed(user, @post).deliver
         elsif @post.deadline_at < (Time.now + 1.days)
           @posts << @post
         elsif ((Time.now + 3.days)..(Time.now + 4.days)).include? @post
-                                                                  .deadline_at
+                                                                    .deadline_at
           @posts << @post
         elsif ((Time.now + 6.days)..(Time.now + 7.days)).include? @post
-                                                                  .deadline_at
+                                                                    .deadline_at
           @posts << @post
         end
       end
@@ -258,8 +252,8 @@ task run_nightly_tasks: :environment do
   @overdue_reviews =
     Review
       .where.not(editor_id: nil)
-      .where(active: true, status: 'In Review')
-      .where('editor_claimed_review_at < ?', Time.now - 48.hours)
+      .where(active: true, status: "In Review")
+      .where("editor_claimed_review_at < ?", Time.now - 48.hours)
   @overdue_reviews.each do |review|
     @editor = User.find_by(id: review.editor_id)
     if @editor.present? && review.post.present?
@@ -271,13 +265,13 @@ task run_nightly_tasks: :environment do
         @editor_reviews_cnt =
           Review
             .where(editor_id: editor.id)
-            .where('updated_at > ?', Date.today.beginning_of_month)
+            .where("updated_at > ?", Date.today.beginning_of_month)
             .count
         @reviews_requirement =
           Integer(
             Constant
-              .find_by(name: '# of monthly reviews editors need to complete')
-              .try(:value) || '0'
+              .find_by(name: "# of monthly reviews editors need to complete")
+              .try(:value) || "0"
           )
         if @editor_reviews_cnt < @reviews_requirement
           ApplicationMailer.notify_editor_that_article_moved_to_review(
@@ -289,7 +283,7 @@ task run_nightly_tasks: :environment do
     end
     review.editor_id = nil
     review.editor_claimed_review_at = nil
-    review.status = 'Ready for Review'
+    review.status = "Ready for Review"
     review.save
   end
 
@@ -299,39 +293,39 @@ task run_nightly_tasks: :environment do
       .includes(:posts)
       .where.not(posts: { id: nil })
       .each do |user|
-        @user_posts_approved_records =
-          Post
-            .where('collaboration like ?', "%#{user.email}%")
-            .or(Post.where(user_id: user.id))
-            .published
-            .by_published_date
-        @pageviews = @user_posts_approved_records.sum(&:post_impressions)
+      @user_posts_approved_records =
+        Post
+          .where("collaboration like ?", "%#{user.email}%")
+          .or(Post.where(user_id: user.id))
+          .published
+          .by_published_date
+      @pageviews = @user_posts_approved_records.sum(&:post_impressions)
 
-        # if you want to change a badge color, you must update all the already created badges
-        # to match the new color
-        @levels = [
-          ['100k+', '#a88beb', 100_000],
-          ['50k+', '#a88beb', 50_000],
-          ['20k+', '#00acee', 20_000],
-          ['10k+', '#EF265F', 10_000],
-          ['5,000+', '#4ABEB6', 5000],
-          ['1,000+', '#4ABEB6', 1000]
-        ]
-        @levels.each_with_index do |level, index|
-          if user.badges.where(level: level[0]).present?
-            break
-          elsif (@pageviews >= level[2]) &&
-                (user.badges.where(level: level[0]).count.eql? 0)
-            @badge =
-              user.badges.build(
-                level: level[0],
-                kind: 'pageviews',
-                color: level[1]
-              )
-            ApplicationMailer.new_badge_earned(user, @badge).deliver
-            break
-          end
+      # if you want to change a badge color, you must update all the already created badges
+      # to match the new color
+      @levels = [
+        ["100k+", "#a88beb", 100_000],
+        ["50k+", "#a88beb", 50_000],
+        ["20k+", "#00acee", 20_000],
+        ["10k+", "#EF265F", 10_000],
+        ["5,000+", "#4ABEB6", 5000],
+        ["1,000+", "#4ABEB6", 1000],
+      ]
+      @levels.each_with_index do |level, index|
+        if user.badges.where(level: level[0]).present?
+          break
+        elsif (@pageviews >= level[2]) &&
+              (user.badges.where(level: level[0]).count.eql? 0)
+          @badge =
+            user.badges.build(
+              level: level[0],
+              kind: "pageviews",
+              color: level[1],
+            )
+          ApplicationMailer.new_badge_earned(user, @badge).deliver
+          break
         end
       end
+    end
   end
 end

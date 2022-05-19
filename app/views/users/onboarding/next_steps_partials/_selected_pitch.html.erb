@@ -2,7 +2,7 @@
   <%= link_to pitch_modal_path(:id => pitch.id, :intent => "Unclaim"), method: :patch, remote: true, class: "card selected_border", style: "width: 32%;", id: "pitch-#{pitch.id}" do %>
     <i style="color: #F0255E;" class="fas fa-check-circle fa-2x abs-right-corner"></i>
     <div>
-      <%=image_tag(pitch.thumbnail.url(:card), alt: pitch.title, :class => "card-img-top")%>
+      <%= image_tag(pitch.thumbnail.url(:card), alt: pitch.title, :class => "card-img-top") %>
       <div class="card-body">
         <h4 style="color: black;" class="pitch_ttl mt-0"><%= pitch.title %></h4>
         <p class="card-text"><%= pitch.description.truncate_words(20) %></p>

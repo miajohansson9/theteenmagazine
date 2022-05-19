@@ -1,7 +1,7 @@
 <div class="skinny_wrapper" style="padding-top: 30px;">
   <h1>Update your email preferences</h1>
   <p>Select which lists you would like to be subscribed to.</p>
-  <%= form_for(:pages, url:"/email-preferences?email=#{params[:email]}&id=#{params[:id]}") do |f| %>
+  <%= form_for(:pages, url: "/email-preferences?email=#{params[:email]}&id=#{params[:id]}") do |f| %>
     <%= f.hidden_field :email, :value => params[:email] %>
     <%= f.hidden_field :id, :value => params[:id] %>
     <p>

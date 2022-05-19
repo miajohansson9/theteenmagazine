@@ -69,7 +69,7 @@
 
 <script type="text/javascript">
   function newInvite() {
-    $('#form-invite').html("<%= j(render partial: 'invitations/partials/home/form', locals: {invitation: Invitation.new}) %>");
+    $('#form-invite').html("<%= j(render partial: "invitations/partials/home/form", locals: { invitation: Invitation.new }) %>");
   }
   $(document).ready(function() {
     $('.progress-bar').addClass("complete");

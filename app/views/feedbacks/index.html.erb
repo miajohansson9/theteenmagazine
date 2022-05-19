@@ -6,8 +6,8 @@
     </div>
     <div class="card-body">
       <% @feedbacks.each_with_index do |feedback| %>
-        <h6><%= feedback.editor_descr%> <i><% if current_user.admin %><%= link_to("(Edit)", edit_feedback_path(feedback), class: "link_pink") %></i><% end %></h6>
-        <i><%=markdown feedback.review_descr %></i>
+        <h6><%= feedback.editor_descr %> <i><% if current_user.admin %><%= link_to("(Edit)", edit_feedback_path(feedback), class: "link_pink") %></i><% end %></h6>
+        <i><%= markdown feedback.review_descr %></i>
         <i>Used <%= @feedbacks_given.where(feedback_id: feedback.id).count %> times</i>
         <hr>
       <% end %>

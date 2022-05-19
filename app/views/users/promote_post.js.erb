@@ -1,5 +1,5 @@
 $("#promotion_points").text("<%= @user.promotions - 1 %>");
-$('#preview-post-to-promote').html("<%= j(render partial: 'users/dashboard/tabs/articles/preview_post_confirmation') %>");
+$('#preview-post-to-promote').html("<%= j(render partial: "users/dashboard/tabs/articles/preview_post_confirmation") %>");
 var container = document.getElementById('published-articles');
 var event = new Event('refresh');
 // Dispatch 'refresh' on the render_async_cache container

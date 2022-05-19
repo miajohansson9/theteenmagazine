@@ -1,7 +1,7 @@
-$('#published-articles-page').append("<%= j(render 'users/dashboard/tabs/articles/published_articles_page')%>");
+$('#published-articles-page').append("<%= j(render "users/dashboard/tabs/articles/published_articles_page") %>");
 <% if @is_last_page %>
   $('#div_next_link_articles').html("");
 <% else %>
-  $('#div_next_link_articles').html("<%= j(render 'users/dashboard/tabs/articles/next_link') %>");
+  $('#div_next_link_articles').html("<%= j(render "users/dashboard/tabs/articles/next_link") %>");
 <% end %>
 $('.spinner-button').addClass("hide");

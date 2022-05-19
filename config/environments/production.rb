@@ -84,7 +84,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
@@ -94,33 +94,33 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.default_url_options = {
-    host: 'https://www.theteenmagazine.com/'
+    host: "https://www.theteenmagazine.com/",
   }
   config.action_mailer.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-    address: 'smtp.sendgrid.net',
-    port: '587',
+    address: "smtp.sendgrid.net",
+    port: "587",
     authentication: :plain,
-    user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY'],
-    domain: 'heroku.com',
-    enable_starttls_auto: true
+    user_name: "apikey",
+    password: ENV["SENDGRID_API_KEY"],
+    domain: "heroku.com",
+    enable_starttls_auto: true,
   }
 
   config.paperclip_defaults = {
     storage: :s3,
-    s3_host_alias: 'media.theteenmagazine.com',
-    url: ':s3_alias_url',
-    path: ':class/:attachment/:id_partition/:style/:filename',
+    s3_host_alias: "media.theteenmagazine.com",
+    url: ":s3_alias_url",
+    path: ":class/:attachment/:id_partition/:style/:filename",
     s3_credentials: {
-      bucket: ENV.fetch('S3_BUCKET_NAME'),
-      access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
-      secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
-      s3_region: ENV.fetch('AWS_REGION')
-    }
+      bucket: ENV.fetch("S3_BUCKET_NAME"),
+      access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+      secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"),
+      s3_region: ENV.fetch("AWS_REGION"),
+    },
   }
 
   # Secret key base for non-existent secrets.yml file
-  config.secret_key_base = ENV['SECRET_KEY_BASE']
+  config.secret_key_base = ENV["SECRET_KEY_BASE"]
 end

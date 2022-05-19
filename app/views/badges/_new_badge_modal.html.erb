@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <% if @badge.present? %>
-          <%= render '/badges/congrats', background: "linear-gradient( #{@badge.color}, white)" %>
+          <%= render "/badges/congrats", background: "linear-gradient( #{@badge.color}, white)" %>
           <div id="modal-body-badges">
             <h2>Congratulations!</h2>
             <p>You've reached a new milestone of <b><%= @badge.level %> <%= @badge.kind %></b>! That means that you are in the top <b><%= @percentile %>%</b> of all writers at The Teen Magazine.

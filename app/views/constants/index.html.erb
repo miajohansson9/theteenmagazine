@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
       <% @constants.each_with_index do |constant| %>
-        <h6><%= constant.name%> <i><%= link_to("(Edit)", edit_constant_path(constant), class: "link_pink") %></i></h6>
+        <h6><%= constant.name %> <i><%= link_to("(Edit)", edit_constant_path(constant), class: "link_pink") %></i></h6>
         <i><%= constant.value %></i>
         <hr>
       <% end %>

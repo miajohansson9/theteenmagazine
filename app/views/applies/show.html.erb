@@ -58,13 +58,13 @@
     <% if @user.id.nil? %>
       <span>Make Editor:</span>
       <%= f.check_box :editor %>
-      <%= f.hidden_field :password, value: [*('A'..'Z'),*('0'..'9')].shuffle[0,8].join %>
+      <%= f.hidden_field :password, value: [*("A".."Z"), *("0".."9")].shuffle[0, 8].join %>
       <br><br />
     <% end %>
     <%= f.hidden_field :apply_id, value: @application.id %>
-    <%= link_to "Delete", apply_path(@application), style: "float: right;", class: "mt-4", method: :delete, data: {confirm: "Are you sure you want to delete this application?"} %>
-    <%= f.submit 'Accept', class: "mt-2", name: "decision", value: "Accept" %>
-    <%= f.submit 'Reject', class: "mt-2", name: "decision", value: "Reject" %>
+    <%= link_to "Delete", apply_path(@application), style: "float: right;", class: "mt-4", method: :delete, data: { confirm: "Are you sure you want to delete this application?" } %>
+    <%= f.submit "Accept", class: "mt-2", name: "decision", value: "Accept" %>
+    <%= f.submit "Reject", class: "mt-2", name: "decision", value: "Reject" %>
   <% end %>
   <br>
 </div>

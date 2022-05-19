@@ -12,13 +12,12 @@
             <% end %>
           </a>
           <h6 style="margin-bottom: 5px;">
-            <% @name =
-              if (user.first_name != "" && user.first_name !=nil)
-                user.first_name
-              end
-              if (user.last_name != "" && user.last_name!= nil)
-                @name = @name + " " + user.last_name
-              end %>
+            <% @name = if (user.first_name != "" && user.first_name != nil)
+                   user.first_name
+                 end
+               if (user.last_name != "" && user.last_name != nil)
+                 @name = @name + " " + user.last_name
+               end %>
             <a href= "/writers/<%= user.slug %>/edit"><%= @name %></a>
           </h6>
         </div>
@@ -29,15 +28,15 @@
 <h1 id="page_title" style="margin-bottom: -20px; border-bottom: none;">Writers</h1>
 <div id="posts_wrapper" class="skinny_wrapper">
   <div class="flex_horizontal">
-    <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
+    <%= form_for(:search, method: :get, :html => { :class => "form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2" }) do |f| %>
       <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Search for a writer by name or email" %>
     <% end %>
   </div>
   <% if @query.present? %>
     <h2>Searching for writer... <span style="background-color: #FCD04D"><%= @query %></span></h2>
   <% end %>
-  <% @users.each do | user | %>
-    <%= render :partial => 'profile', locals: {user: user}, cached: true %>
+  <% @users.each do |user| %>
+    <%= render :partial => "profile", locals: { user: user }, cached: true %>
   <% end %>
   <%== pagy_nav(@pagy).html_safe %>
 </div>

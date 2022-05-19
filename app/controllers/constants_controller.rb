@@ -6,45 +6,45 @@ class ConstantsController < ApplicationController
 
   def new
     @constant = Constant.new
-    set_meta_tags title: 'New Constant Field'
+    set_meta_tags title: "New Constant Field"
   end
 
   def edit
-    set_meta_tags title: 'Edit Constant Field'
+    set_meta_tags title: "Edit Constant Field"
   end
 
   def index
     @constants = Constant.all
-    set_meta_tags title: 'Constant Fields'
+    set_meta_tags title: "Constant Fields"
   end
 
   def update
     if @constant.update constant_params
       @constant.save
-      redirect_to constants_path, notice: 'Your changes were updated.'
+      redirect_to constants_path, notice: "Your changes were updated."
     else
-      render 'edit', notice: 'Oops, something went wrong.'
+      render "edit", notice: "Oops, something went wrong."
     end
   end
 
   def create
     if @constant.save
       redirect_to constants_path,
-                  notice: 'Your constant was successfully added!'
+                  notice: "Your constant was successfully added!"
     else
-      render 'new', notice: 'Oh no! Your changes were not able to be saved!'
+      render "new", notice: "Oh no! Your changes were not able to be saved!"
     end
   end
 
   def is_admin?
     unless (current_user && current_user.admin?)
-      redirect_to root_path, notice: 'You do not have access to this page.'
+      redirect_to root_path, notice: "You do not have access to this page."
     end
   end
 
   def destroy
     @constant.destroy
-    redirect_to constants_path, notice: 'Constant deleted.'
+    redirect_to constants_path, notice: "Constant deleted."
   end
 
   private

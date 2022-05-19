@@ -35,22 +35,22 @@
         <!-- Classic tabs -->
         <div class="tab-content p-0" id="myClassicTabContent">
           <div class="tab-pane fade active show" id="home-classic" role="tabpanel" aria-labelledby="hometab-classic">
-            <%= render 'users/dashboard/tabs/home' %>
+            <%= render "users/dashboard/tabs/home" %>
           </div>
           <div class="tab-pane fade" id="be-promoted-classic" role="tabpanel" aria-labelledby="be-promoted-tab-classic">
-            <%= render 'users/dashboard/tabs/be_promoted' %>
+            <%= render "users/dashboard/tabs/be_promoted" %>
           </div>
           <div class="tab-pane activity_wrapper fade" id="earn-points-classic" role="tabpanel" aria-labelledby="earn-points-tab-classic">
             <div class="pitch_form_wrapper pt-4">
               <div id="form-invite">
-                <%= render 'users/dashboard/tabs/earn_points', invitation: @invitation %>
+                <%= render "users/dashboard/tabs/earn_points", invitation: @invitation %>
               </div>
               <div id="past-invites">
                 <h5 class="mb-3 font-weight-bold mt-4 pt-2">Past Invites</h5>
                 <% if @user.invitations.count.eql? 0 %>
                   <p>You haven't sent any invitations yet.</p>
                 <% else %>
-                  <%= render_async_cache get_past_invites_path(id: @user.id), container_id: "past-invites-render-container", container_class: "pl-0", toggle: { selector: '#earn-points-tab-classic', event: :click } do %>
+                  <%= render_async_cache get_past_invites_path(id: @user.id), container_id: "past-invites-render-container", container_class: "pl-0", toggle: { selector: "#earn-points-tab-classic", event: :click } do %>
                     <div class="d-flex justify-content-center">
                       <div class="spinner-border" role="status">
                         <span class="sr-only">Loading...</span>
@@ -63,7 +63,7 @@
           </div>
           <% if @user.admin? %>
             <div class="tab-pane activity_wrapper fade" id="admin-invites-classic" role="tabpanel" aria-labelledby="admin-invites-tab-classic">
-              <%= render_async get_sent_invitations_admin_path, toggle: { selector: '#admin-invites-tab-classic', event: :click } do %>
+              <%= render_async get_sent_invitations_admin_path, toggle: { selector: "#admin-invites-tab-classic", event: :click } do %>
                 <div class="d-flex justify-content-center">
                   <div class="spinner-border mb-4" role="status">
                     <span class="sr-only">Loading...</span>

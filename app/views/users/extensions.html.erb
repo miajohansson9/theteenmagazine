@@ -7,7 +7,7 @@
            <b><i>You currently have <%= current_user.extensions %> extension credit(s) available.</i></b>
            <p>*Note that an article must be <b>In Progress</b> to use an extension. Read more about extensions <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</p>
            <div class="flex_horizontal">
-             <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
+             <%= form_for(:search, method: :get, :html => { :class => "form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2" }) do |f| %>
                <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Searching in your article drafts" %>
              <% end %>
            </div>
@@ -19,8 +19,8 @@
              <div class="flex-wrapper flex-drafts">
                <% @posts.each do |draft| %>
                  <div class="card" style="width: 32%;">
-                   <a href="<%= post_path(draft)%>">
-                     <%=image_tag(draft.thumbnail.url(:large2), alt: draft.title, :class => "card-img-top")%>
+                   <a href="<%= post_path(draft) %>">
+                     <%= image_tag(draft.thumbnail.url(:large2), alt: draft.title, :class => "card-img-top") %>
                    </a>
                    <div class="card-body">
                      <% if draft.deadline_at.present? %>
@@ -36,9 +36,9 @@
                       <% end %>
                       <div class="btn_cntnr mb-0 pb-0">
                         <span data-toggle="tooltip" title="<% if @class.eql? "disabled" %>You don't have any more credits<% end %>" style="float: right;">
-                           <%= f.submit 'Use Promotion',
-                            data: {confirm: "You are using 1 credit to extend #{draft.title}'s deadline by 14 days. Do you want to continue?"},
-                            class: "mt-0 btn btn-primary #{@class}", id: "btn_dark" %>
+                           <%= f.submit "Use Promotion",
+                                        data: { confirm: "You are using 1 credit to extend #{draft.title}'s deadline by 14 days. Do you want to continue?" },
+                                        class: "mt-0 btn btn-primary #{@class}", id: "btn_dark" %>
                         </span>
                       </div>
                      <% end %>

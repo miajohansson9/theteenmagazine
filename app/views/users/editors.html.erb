@@ -3,14 +3,14 @@
 </div>
 <div id="posts_wrapper" class="skinny_wrapper mb-4">
   <div class="flex_horizontal">
-    <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
+    <%= form_for(:search, method: :get, :html => { :class => "form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2" }) do |f| %>
       <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Search for an editor" %>
     <% end %>
   </div>
   <% if @query.present? %>
     <h2>Searching for editor... <span style="background-color: #FCD04D"><%= @query %></span></h2>
   <% end %>
-  <% @editors.each do | user | %>
+  <% @editors.each do |user| %>
       <% if user != nil %>
         <div class="flex--profile">
           <% if user.profile.exists? %>

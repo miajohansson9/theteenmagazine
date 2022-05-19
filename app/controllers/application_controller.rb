@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def set_layout
-    current_user ? 'writer' : 'application'
+    current_user ? "writer" : "application"
   end
 
   # Its important that the location is NOT stored if:
@@ -37,27 +37,27 @@ class ApplicationController < ActionController::Base
         .not_claimed
         .where(status: nil)
         .where.not(user_id: current_user.id)
-        .where('updated_at > ?', current_user.last_saw_pitches)
+        .where("updated_at > ?", current_user.last_saw_pitches)
     @unseen_pitches_cnt = @unseen_pitches.size
 
     @unseen_shared_drafts =
       Post
         .where(sharing: true, publish_at: nil)
         .draft
-        .where('posts.shared_at > ?', current_user.last_saw_community)
+        .where("posts.shared_at > ?", current_user.last_saw_community)
     @unseen_shared_drafts_cnt = @unseen_shared_drafts.size
 
     @notifications = @unseen_pitches_cnt + @unseen_shared_drafts_cnt
     if current_user.editor?
       @unseen_posts =
         Review
-          .where(status: 'Ready for Review', active: true)
-          .where('updated_at > ?', current_user.last_saw_editor_dashboard)
+          .where(status: "Ready for Review", active: true)
+          .where("updated_at > ?", current_user.last_saw_editor_dashboard)
           .map { |r| Post.find_by(id: r.post_id) }
           .reject(&:blank?)
       @unseen_submitted_pitches =
         Pitch.is_submitted.where(
-          'updated_at > ?',
+          "updated_at > ?",
           current_user.last_saw_editor_dashboard
         )
       @unseen_editor_dashboard_cnt =
@@ -67,12 +67,12 @@ class ApplicationController < ActionController::Base
     if current_user.admin?
       @unseen_applications =
         Apply
-          .where('created_at > ?', current_user.last_saw_writer_applications)
+          .where("created_at > ?", current_user.last_saw_writer_applications)
           .or(
             Apply
-              .where(kind: 'Editor', rejected_editor_at: nil)
+              .where(kind: "Editor", rejected_editor_at: nil)
               .where(
-                'updated_at > ?',
+                "updated_at > ?",
                 current_user.last_saw_writer_applications
               )
           )
@@ -119,15 +119,15 @@ class ApplicationController < ActionController::Base
   def initiate_last_seen
     if current_user.last_saw_pitches.nil? && !(current_user.partner)
       current_user.update_attributes(
-        'last_saw_pitches' => Time.now,
-        'last_saw_pitches' => Time.now
+        "last_saw_pitches" => Time.now,
+        "last_saw_pitches" => Time.now,
       )
     end
     if current_user.admin && current_user.last_saw_writer_applications.nil?
-      current_user.update_attributes('last_saw_writer_applications' => Time.now)
+      current_user.update_attributes("last_saw_writer_applications" => Time.now)
     end
     if current_user.editor && current_user.last_saw_editor_dashboard.nil?
-      current_user.update_attributes('last_saw_editor_dashboard' => Time.now)
+      current_user.update_attributes("last_saw_editor_dashboard" => Time.now)
     end
   end
 end

@@ -4,7 +4,7 @@
   <p>Partners consist of any third party that The Teen Magazine works with to deliver an interview or sponsored article. Create a partner profile when you want to share a draft and receive feedback from an outside party directly related to your article. Check your email with next steps after creating a profile.</p>
   <%= form_for @user, :url => "/partners" do |f| %>
     <% if @user.errors.any? %>
-      <h2><%= pluralize(@user.errors.count, "error")%> prevented this post from saving:</h2>
+      <h2><%= pluralize(@user.errors.count, "error") %> prevented this post from saving:</h2>
       <ul>
         <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

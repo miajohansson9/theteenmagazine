@@ -1,7 +1,7 @@
 $('.spinner-button').addClass("hide");
 $("#TTM-Modal").modal('toggle');
 $('.claim_pitch_wrapper').empty();
-$('.claim_pitch_wrapper').append('<%= j render partial: "users/onboarding/next_steps_partials/pitches", locals: {pitches: @pitches} %>');
+$('.claim_pitch_wrapper').append('<%= j render partial: "users/onboarding/next_steps_partials/pitches", locals: { pitches: @pitches } %>');
 $('#onboarding_button').addClass("disabled");
 $('#tooltip').removeClass("hide");
 $('#final_step').empty();

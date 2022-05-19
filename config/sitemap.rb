@@ -1,22 +1,22 @@
-require 'fog-aws'
+require "fog-aws"
 
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = 'https://www.theteenmagazine.com'
+SitemapGenerator::Sitemap.default_host = "https://www.theteenmagazine.com"
 SitemapGenerator::Sitemap.sitemaps_host =
-  'https://theteenmagazine.s3.amazonaws.com/'
-SitemapGenerator::Sitemap.public_path = 'tmp/'
-SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
+  "https://theteenmagazine.s3.amazonaws.com/"
+SitemapGenerator::Sitemap.public_path = "tmp/"
+SitemapGenerator::Sitemap.sitemaps_path = "sitemaps/"
 
 SitemapGenerator::Sitemap.adapter =
   SitemapGenerator::AwsSdkAdapter.new(
-    ENV.fetch('S3_BUCKET_NAME'),
-    aws_access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
-    aws_secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
-    aws_region: ENV.fetch('AWS_REGION')
+    ENV.fetch("S3_BUCKET_NAME"),
+    aws_access_key_id: ENV.fetch("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key: ENV.fetch("AWS_SECRET_ACCESS_KEY"),
+    aws_region: ENV.fetch("AWS_REGION"),
   )
 
 SitemapGenerator::Sitemap.ping_search_engines(
-  'https://www.theteenmagazine.com/sitemap'
+  "https://www.theteenmagazine.com/sitemap"
 )
 
 SitemapGenerator::Sitemap.create do
@@ -39,10 +39,10 @@ SitemapGenerator::Sitemap.create do
   #
   # Add all articles:
   #
-  add '/about-us', priority: 0.8, changefreq: 'monthly'
-  add '/apply', priority: 0.8, changefreq: 'yearly'
-  add '/contact-us', priority: 0.8, changefreq: 'yearly'
-  add '/login', priority: 0.8, changefreq: 'yearly'
+  add "/about-us", priority: 0.8, changefreq: "monthly"
+  add "/apply", priority: 0.8, changefreq: "yearly"
+  add "/contact-us", priority: 0.8, changefreq: "yearly"
+  add "/login", priority: 0.8, changefreq: "yearly"
 
   Category.find_each do |category|
     add category_path(category), lastmod: category.updated_at, priority: 0.8
@@ -52,7 +52,7 @@ SitemapGenerator::Sitemap.create do
     add post_path(post),
         lastmod: post.updated_at,
         priority: 0.5,
-        changefreq: 'never'
+        changefreq: "never"
   end
 
   User.find_each do |user|

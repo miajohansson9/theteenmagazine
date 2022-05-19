@@ -17,13 +17,13 @@
   <br>
   <h4><i>Enter your email to receive this month's magazine issue:</i></h4>
 
-  <%= form_for(:pages, url:"/september-2021-bexesyjj-bxducjpuj-hrhhqug-xqkoktbve") do |f| %>
+  <%= form_for(:pages, url: "/september-2021-bexesyjj-bxducjpuj-hrhhqug-xqkoktbve") do |f| %>
     <br>
     <%= f.check_box :sub, :checked => true %>
     <span>Subscribe to The Teen Magazine newsletter and receive all future monthly issues.</span>
     <br>
     <br>
-    <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 25px;", required: true, id: "email", onkeyup: "isFormButtonDisabled('#email')"%>
+    <%= f.text_field :email, placeholder: "Email Address", :style => "margin-bottom: 25px;", required: true, id: "email", onkeyup: "isFormButtonDisabled('#email')" %>
     <br>
     <div class="btn_cntnr" style="float: none; position: relative; padding-bottom: 0;">
       <%= f.button "Get September Issue", class: "newpost--new--profile submit_modal disabled", id: "submit-comment-modal-button" %>

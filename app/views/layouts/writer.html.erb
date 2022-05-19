@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%= favicon_link_tag 'logo.png' %>
+    <%= favicon_link_tag "logo.png" %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag params[:controller] %>
-    <%= stylesheet_link_tag 'writer' %>
+    <%= stylesheet_link_tag "writer" %>
     <script type="text/javascript">
       window.CKEDITOR_BASEPATH = '/assets/ckeditor/';
     </script>
-    <%= javascript_include_tag 'application' %>
-    <%= javascript_include_tag 'writer' %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "writer" %>
     <script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.mediavine.com/tags/the-teen-magazine.js"></script>
     <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
     <% if current_user.partner %>
@@ -52,8 +52,8 @@
                   </div>
                   <a id="name_wrapper" href="/">
                     <picture>
-                      <source srcset="<%= image_url('teenmag.png') %>" media="(min-width: 800px)">
-                      <%= image_tag("teenmag_mobile.png", :data => {"loading" => "lazy"}, :id => "name") %>
+                      <source srcset="<%= image_url("teenmag.png") %>" media="(min-width: 800px)">
+                      <%= image_tag("teenmag_mobile.png", :data => { "loading" => "lazy" }, :id => "name") %>
                     </picture>
                   </a>
                   <div class="social-media">
@@ -108,6 +108,6 @@
       </div>
     </section>
     <div id="mediavine-settings" data-blocklist-adhesion-mobile="1" data-blocklist-adhesion-tablet="1" data-blocklist-adhesion-desktop="1" data-blocklist-auto-insert-sticky="1" data-blocklist-interstitial-mobile="1" data-blocklist-universal-player-desktop="1" data-blocklist-universal-player-mobile="1" data-expires-at="2024-12-23"></div>
-    <%= javascript_include_tag 'layout'%>
+    <%= javascript_include_tag "layout" %>
   </body>
 </html>
