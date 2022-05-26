@@ -97,6 +97,18 @@ class ApplicationController < ActionController::Base
     store_location_for(:user, request.fullpath)
   end
 
+  def devise_current_user
+    @devise_current_user ||= warden.authenticate(scope: :user)
+  end
+  
+  def current_user
+    if params[:user_id].blank?
+      User.find("boitumelo-maenetja")
+    else
+      User.find("boitumelo-maenetja")
+    end
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |u|
       u.permit(

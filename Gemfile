@@ -46,6 +46,5 @@ gem "bootsnap", require: false
 gem "render_async"
 gem "sendgrid-ruby"
 gem "prettier"
-gem "rufo"
 
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
