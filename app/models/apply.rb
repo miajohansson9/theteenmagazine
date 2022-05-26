@@ -23,10 +23,6 @@ class Apply < ActiveRecord::Base
     if user.blank?
       errors.add(:sample_writing, "can't be blank") if sample_writing.blank?
       errors.add(:resume, "can't be blank") if resume.blank?
-    else
-      errors.add(:editor_feedback, "can't be blank") if editor_feedback.blank?
-      errors.add(:editor_revision, "can't be blank") if editor_revision.blank?
-      errors.add(:editor_pitches, "can't be blank") if editor_pitches.blank?
     end
     return errors.blank?
   end
