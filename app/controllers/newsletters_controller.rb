@@ -9,7 +9,7 @@ class NewslettersController < ApplicationController
 
   def new
     @newsletter =
-      Newsletter.find_by(kind: nil) || current_user.newsletters.create
+      Newsletter.find_by(kind: nil) || current_user.newsletters.create(hero_image: Newsletter.not_nil.last.try(:hero_image))
     @pagy, @posts =
       pagy(
         Post.published.where(newsletter_id: nil),
