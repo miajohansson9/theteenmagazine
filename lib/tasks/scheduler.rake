@@ -183,7 +183,7 @@ task run_nightly_tasks: :environment do
             @editor_pitches_cnt,
             @editor_reviews_cnt
           ).deliver
-          editor.update_attributes('missed_editor_deadline' => Time.now - 1.day)
+          editor.update_attribute('missed_editor_deadline', Time.now - 1.day)
         end
       end
     end
