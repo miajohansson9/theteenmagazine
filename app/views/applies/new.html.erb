@@ -23,7 +23,7 @@ pintrk('track', 'pagevisit');
   <div id="submit-application-form">
     <%= form_for @application do |f| %>
       <% if @application.errors.any? %>
-        <h6 class="pt-3 text-danger"><%= pluralize(@application.errors.count, "error") %> prevented this application from submitting:</h6>
+        <h6 class="pt-3 text-danger"><%= pluralize(@application.errors.count, "error")%> prevented this application from submitting:</h6>
         <ul class="mb-4">
           <% @application.errors.full_messages.each do |msg| %>
           <li class="text-danger"><h6><%= msg %></h6></li>

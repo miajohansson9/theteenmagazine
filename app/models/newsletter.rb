@@ -5,15 +5,15 @@ class Newsletter < ApplicationRecord
   scope :not_nil,
         -> {
           where.not(
-            message: "",
+            message: '',
             background_color: nil,
-            hero_image_file_name: nil,
+            hero_image_file_name: nil
           )
         }
 
   has_attached_file :hero_image,
                     styles: {
-                      card: "800x335#",
+                      card: '800x335#'
                     },
                     restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
 

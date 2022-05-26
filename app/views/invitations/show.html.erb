@@ -25,7 +25,7 @@
     <div id="submit-application-form">
       <%= form_for @application, url: apply_through_invitation_path(:token => @invitation.token) do |f| %>
         <% if @application.errors.any? %>
-          <h6 class="pt-3 text-danger"><%= pluralize(@application.errors.count, "error") %> prevented this application from submitting:</h6>
+          <h6 class="pt-3 text-danger"><%= pluralize(@application.errors.count, "error")%> prevented this application from submitting:</h6>
           <ul class="mb-4">
             <% @application.errors.full_messages.each do |msg| %>
             <li class="text-danger"><h6><%= msg %></h6></li>
@@ -40,7 +40,7 @@
         <%= f.email_field :email, placeholder: "Email", value: @application.email || @invitation.email %>
         <p class="mt-0">*Grade Level: <%= f.select :grade, options_for_select(["College", "12th grade", "11th grade", "10th grade", "9th grade"]), :prompt => "Select a grade" %></p>
         <p>Cover letter: Your cover letter can describe why you think you'd be a good fit for The Teen Magazine and what you hope to gain from being a part of the writer community. <b>Because you were referred by a writer for The Teen Magazine, this part of the application is optional.</b></p>
-        <%= f.text_area :description, placeholder: "Write your cover letter here (optional)", style: "min-height: 150px !important;" %>
+        <%= f.text_area :description, placeholder: "Write your cover letter here (optional)", style: "min-height: 150px !important;"  %>
         <% if @application.resume.present? %>
           <p class="d-block mt-0">Attached resume:</p>
           <p><%= link_to "#{@application.resume}", "#{@application.resume}", target: "_blank", class: "link_nrml" %></p>
@@ -107,5 +107,5 @@
 </script>
 
 <% if @disabled.eql? "disabled" %>
-  <%= javascript_include_tag "writer" %>
+  <%= javascript_include_tag 'writer' %>
 <% end %>

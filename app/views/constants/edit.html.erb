@@ -7,6 +7,6 @@
   <br>
   <%= render "/constants/form" %>
   <% if current_user.admin? %>
-    <%= link_to "Delete", constant_path(@constant), style: "float: right;", class: "mt-4", method: :delete, data: { confirm: "Are you sure you want to delete this constant field? If you are not sure what you're doing, it could break something." } %>
+    <%= link_to "Delete", constant_path(@constant), style: "float: right;", class: "mt-4", method: :delete,  data: {confirm: "Are you sure you want to delete this constant field? If you are not sure what you're doing, it could break something."} %>
   <% end %>
 </div>

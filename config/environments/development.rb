@@ -14,12 +14,12 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp", "caching-dev.txt").exist?
+  if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}",
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -55,29 +55,29 @@ Rails.application.configure do
 
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.action_mailer.default_url_options = { host: "http://localhost:3000" }
+  config.action_mailer.default_url_options = { host: 'http://localhost:3000' }
   config.action_mailer.delivery_method = :smtp
 
   config.assets.raise_production_errors = false
 
   ActionMailer::Base.smtp_settings = {
-    address: "smtp.sendgrid.net",
-    port: "587",
+    address: 'smtp.sendgrid.net',
+    port: '587',
     authentication: :plain,
-    user_name: "apikey",
-    password: ENV["SENDGRID_API_KEY"],
-    domain: "heroku.com",
-    enable_starttls_auto: true,
+    user_name: 'apikey',
+    password: ENV['SENDGRID_API_KEY'],
+    domain: 'heroku.com',
+    enable_starttls_auto: true
   }
 
   config.paperclip_defaults = {
     storage: :s3,
-    s3_region: "us-east-1",
-    bucket: "media.theteenmagazine.com",
+    s3_region: 'us-east-1',
+    bucket: 'media.theteenmagazine.com',
     s3_credentials: "#{Rails.root}/config/s3.yml",
-    s3_host_alias: "media.theteenmagazine.com",
-    url: ":s3_alias_url",
-    path: ":class/:attachment/:id_partition/:style/:filename",
+    s3_host_alias: 'media.theteenmagazine.com',
+    url: ':s3_alias_url',
+    path: ':class/:attachment/:id_partition/:style/:filename'
   }
 
   # Raises error for missing translations

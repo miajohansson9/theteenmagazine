@@ -4,7 +4,7 @@ class NewslettersController < ApplicationController
   before_action :find_newsletter, except: %i[index new]
 
   def index
-    @newsletters = Newsletter.where.not(kind: nil).order("created_at desc")
+    @newsletters = Newsletter.where.not(kind: nil).order('created_at desc')
   end
 
   def new
@@ -14,7 +14,7 @@ class NewslettersController < ApplicationController
       pagy(
         Post.published.where(newsletter_id: nil),
         page: params[:page],
-        items: 20,
+        items: 20
       )
     @newsletter_posts = []
     @disabled = true
@@ -26,7 +26,7 @@ class NewslettersController < ApplicationController
     @newsletters_to_send_before_cnt =
       Newsletter
         .where(sent_at: nil)
-        .where("created_at < ?", @newsletter.created_at)
+        .where('created_at < ?', @newsletter.created_at)
         .count
     @disabled = @newsletter_posts.count < 5
   end
@@ -39,30 +39,32 @@ class NewslettersController < ApplicationController
   def destroy
     @newsletter.posts.map { |p| p.update_column(:newsletter_id, nil) }
     if @newsletter.destroy
-      redirect_to newsletters_path, notice: "Your newsletter was deleted."
+      redirect_to newsletters_path, notice: 'Your newsletter was deleted.'
     end
   end
 
   def update
     if @newsletter.update newsletter_params
-      redirect_to @newsletter, notice: "Your changes were saved."
+      redirect_to @newsletter, notice: 'Your changes were saved.'
     else
-      render "new"
+      render 'new'
     end
   end
 
   #only allow admin can send/create newsletters
   def is_admin?
-    if (current_user &&
-        (current_user.admin? || current_user.has_newsletter_permissions))
+    if (
+         current_user &&
+           (current_user.admin? || current_user.has_newsletter_permissions)
+       )
       true
     else
-      redirect_to current_user, notice: "You do not have access to this page."
+      redirect_to current_user, notice: 'You do not have access to this page.'
     end
   end
 
   def featured
-    set_meta_tags title: "Choose featured | The Teen Magazine"
+    set_meta_tags title: 'Choose featured | The Teen Magazine'
     @newsletter = Newsletter.find(params[:id])
     @newsletter_posts = @newsletter.posts
     if current_user.admin || current_user.has_newsletter_permissions
@@ -71,9 +73,9 @@ class NewslettersController < ApplicationController
         @query = params[:search][:query]
         @pagy, @posts =
           pagy(
-            Post.published.where("lower(title) LIKE ?", "%#{@query.downcase}%"),
+            Post.published.where('lower(title) LIKE ?', "%#{@query.downcase}%"),
             page: params[:page],
-            items: 15,
+            items: 15
           )
       else
         @pagy, @posts =

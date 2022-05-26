@@ -1,4 +1,4 @@
-<li class="list-group-item comment" id="comment_<%= comment.id %>">
+<li class="list-group-item comment" id="comment_<%=comment.id %>">
   <% @profile_img = comment.user.try(:profile)&.exists? ? image_tag(comment.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
   <div class="li-content list-item" style="width: 100%;">
     <%= link_to(@profile_img, comment.user) %>

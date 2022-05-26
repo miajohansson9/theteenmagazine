@@ -10,17 +10,17 @@ class Pitch < ApplicationRecord
   validates :thumbnail, presence: true
   validates :deadline, presence: true, if: :is_editor?
 
-  scope :is_submitted, -> { where(status: "Ready for Review") }
+  scope :is_submitted, -> { where(status: 'Ready for Review') }
 
-  scope :is_rejected, -> { where(status: "Rejected") }
+  scope :is_rejected, -> { where(status: 'Rejected') }
 
   scope :is_approved,
-        -> { where(status: ["Approved", nil], archive: [false, nil]) }
+        -> { where(status: ['Approved', nil], archive: [false, nil]) }
 
   scope :not_claimed, -> { where(claimed_id: nil) }
 
   scope :not_rejected,
-        -> { where(status: ["Ready for Review", nil, "Approved"]) }
+        -> { where(status: ['Ready for Review', nil, 'Approved']) }
 
   def is_editor?
     self.user.editor? && self.id.nil?
@@ -28,7 +28,7 @@ class Pitch < ApplicationRecord
 
   has_attached_file :thumbnail,
                     styles: {
-                      card: "540x380#",
+                      card: '540x380#'
                     },
                     restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
 

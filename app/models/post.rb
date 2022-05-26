@@ -16,9 +16,9 @@ class Post < ApplicationRecord
             .or(
               joins(:reviews).where(
                 reviews: {
-                  status: "In Progress",
-                  active: [nil, true],
-                },
+                  status: 'In Progress',
+                  active: [nil, true]
+                }
               )
             )
         }
@@ -26,56 +26,56 @@ class Post < ApplicationRecord
         -> {
           joins(:reviews).where(
             reviews: {
-              status: "Ready for Review",
-              active: true,
-            },
+              status: 'Ready for Review',
+              active: true
+            }
           )
         }
   scope :rejected,
         -> {
-          joins(:reviews).where(reviews: { status: "Rejected", active: true })
+          joins(:reviews).where(reviews: { status: 'Rejected', active: true })
         }
   scope :in_review,
         -> {
-          joins(:reviews).where(reviews: { status: "In Review", active: true })
+          joins(:reviews).where(reviews: { status: 'In Review', active: true })
         }
   scope :scheduled_for_publishing,
         -> {
           joins(:reviews)
-            .where.not("publish_at < ?", Time.now)
-            .where(reviews: { status: "Approved for Publishing", active: true })
+            .where.not('publish_at < ?', Time.now)
+            .where(reviews: { status: 'Approved for Publishing', active: true })
         }
   scope :published,
         -> {
           joins(:reviews)
-            .where(reviews: { status: "Approved for Publishing", active: true })
-            .where("publish_at < ?", Time.now)
+            .where(reviews: { status: 'Approved for Publishing', active: true })
+            .where('publish_at < ?', Time.now)
         }
   scope :has_been_submitted,
         -> {
           joins(:reviews).where(
             reviews: {
               status: [
-                "Rejected",
-                "Ready for Review",
-                "In Review",
-                "Approved for Publishing",
-              ],
-            },
+                'Rejected',
+                'Ready for Review',
+                'In Review',
+                'Approved for Publishing'
+              ]
+            }
           )
         }
 
   scope :trending,
         -> {
           where(publish_at: (Time.now - 2.months)..Time.now).order(
-            "post_impressions desc"
+            'post_impressions desc'
           )
         }
-
+  
   scope :most_viewed,
         -> {
           order(
-            "post_impressions desc"
+            'post_impressions desc'
           )
         }
 
@@ -84,7 +84,7 @@ class Post < ApplicationRecord
   scope :by_promoted_then_updated_date,
         -> {
           order(
-            "CASE WHEN promoting_until IS NOT NULL AND promoting_until > CURRENT_TIMESTAMP THEN 0 ELSE 1 END, posts.updated_at DESC"
+            'CASE WHEN promoting_until IS NOT NULL AND promoting_until > CURRENT_TIMESTAMP THEN 0 ELSE 1 END, posts.updated_at DESC'
           )
         }
 
@@ -93,11 +93,11 @@ class Post < ApplicationRecord
   end
 
   def is_locked?
-    if deadline_at.nil? && !(title.include? " (locked)")
+    if deadline_at.nil? && !(title.include? ' (locked)')
       false
     else
-      (title.include? " (locked)") ||
-        (deadline_at < Time.now) && (reviews.last.eql? "In Progress")
+      (title.include? ' (locked)') ||
+        (deadline_at < Time.now) && (reviews.last.eql? 'In Progress')
     end
   end
 
@@ -109,9 +109,9 @@ class Post < ApplicationRecord
 
   has_attached_file :thumbnail,
                     styles: {
-                      medium: "150x100#",
-                      large: "560x280#",
-                      large2: "540x340#",
+                      medium: '150x100#',
+                      large: '560x280#',
+                      large2: '540x340#'
                     },
                     restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
 

@@ -1,7 +1,7 @@
-$('#list-group-comments').append("<%= j(render "users/dashboard/tabs/invites/past_invites_page") %>");
+$('#list-group-comments').append("<%= j(render 'users/dashboard/tabs/invites/past_invites_page')%>");
 <% if @is_last_page %>
   $('#div_next_link_invites').html("");
 <% else %>
-  $('#div_next_link_invites').html("<%= j(render "users/dashboard/tabs/invites/next_link") %>");
+  $('#div_next_link_invites').html("<%= j(render 'users/dashboard/tabs/invites/next_link') %>");
 <% end %>
 $('.spinner-button').addClass("hide");

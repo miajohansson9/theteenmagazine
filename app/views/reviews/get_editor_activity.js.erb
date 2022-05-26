@@ -1,6 +1,6 @@
-$('#list-group-comments').append("<%= j(render "reviews/editor_activity/editor_activity_page") %>");
+$('#list-group-comments').append("<%= j(render 'reviews/editor_activity/editor_activity_page')%>");
 <% if @is_last_page %>
   $('#div_next_link').html("");
 <% else %>
-  $('#div_next_link').html("<%= j(render "reviews/editor_activity/next_link") %>");
+  $('#div_next_link').html("<%= j(render 'reviews/editor_activity/next_link') %>");
 <% end %>

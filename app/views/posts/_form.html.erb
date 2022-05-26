@@ -2,7 +2,7 @@
   <div id="edit_post">
     <%= form_for @post do |f| %>
       <% if @post.errors.any? %>
-        <h6 class="mt-3 text-danger"><%= pluralize(@post.errors.count, "error") %> prevented this post from saving:</h6>
+        <h6 class="mt-3 text-danger"><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h6>
         <ul>
           <% @post.errors.full_messages.each do |msg| %>
           <li class="text-danger"><h6><%= msg %></h6></li>
@@ -33,9 +33,9 @@
         </div>
       <% end %>
       <p>Give credit for your thumbnail image (Required). To show correctly, use the formatting: company's name + comma + full url to the site. See placeholder for example.</p>
-      <%= f.text_field :thumbnail_credits, placeholder: "Pexels, https://www.pexels.com/", class: "mb-0" %>
+      <%= f.text_field :thumbnail_credits, placeholder: 'Pexels, https://www.pexels.com/', class: "mb-0" %>
       <p class="d-inline">Category:</p>
-      <%= f.collection_select(:category_id, @categories, :id, :name, { prompt: "Select a Category" }, :class => "mdb-select md-form mb-3") %>
+      <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-3") %>
       <% if @post.partner_id || current_user.admin %>
         <p>Disclose partnership:
           <%= f.check_box :show_disclosure %>
@@ -45,9 +45,9 @@
         </p>
       <% end %>
       <p>Grab your ideal reader's interest in 1-2 sentences for Google search.</p>
-      <%= f.text_field :meta_description, placeholder: "What is your article about?" %>
+      <%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
       <p class="mt-0">If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</p>
-      <%= f.text_field :collaboration, placeholder: "(Optional) Email" %>
+      <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
       <%= f.fields_for :reviews, @review do |rv| %>
         <% if @should_show_editor_form %>
           <%= render "posts/editor_review_form", rv: rv, f: f, post: @post %>

@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="tab-pane activity_wrapper fade" id="your-invites-classic" role="tabpanel" aria-labelledby="your-invites-tab-classic">
-      <%= render_async get_sent_invitations_path(user: @user), toggle: { selector: "#your-invites-tab-classic", event: :click } do %>
+      <%= render_async get_sent_invitations_path(user: @user), toggle: { selector: '#your-invites-tab-classic', event: :click } do %>
         <div class="d-flex justify-content-center">
           <div class="spinner-border mb-4" role="status">
             <span class="sr-only">Loading...</span>
@@ -51,7 +51,7 @@
     </div>
     <% if @user.admin? %>
       <div class="tab-pane activity_wrapper fade" id="admin-invites-classic" role="tabpanel" aria-labelledby="admin-invites-tab-classic">
-        <%= render_async get_sent_invitations_admin_path, toggle: { selector: "#admin-invites-tab-classic", event: :click } do %>
+        <%= render_async get_sent_invitations_admin_path, toggle: { selector: '#admin-invites-tab-classic', event: :click } do %>
           <div class="d-flex justify-content-center">
             <div class="spinner-border mb-4" role="status">
               <span class="sr-only">Loading...</span>

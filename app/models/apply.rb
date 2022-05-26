@@ -12,11 +12,11 @@ class Apply < ActiveRecord::Base
   attributes :nickname, captcha: true
 
   has_attached_file :resume
-  validates_attachment_content_type :resume, content_type: ["application/pdf"]
+  validates_attachment_content_type :resume, content_type: ['application/pdf']
 
   has_attached_file :sample_writing
   validates_attachment_content_type :sample_writing,
-                                    content_type: ["application/pdf"]
+                                    content_type: ['application/pdf']
 
   def validate
     errors.add(:grade, "can't be blank") if grade.blank?
@@ -33,9 +33,10 @@ class Apply < ActiveRecord::Base
 
   def headers
     {
-      subject: "Your application to The Teen Magazine was submitted successfully",
+      subject:
+        'Your application to The Teen Magazine was submitted successfully',
       to: "#{email}",
-      from: '"The Teen Magazine Editor Team" <editors@theteenmagazine.com>',
+      from: '"The Teen Magazine Editor Team" <editors@theteenmagazine.com>'
     }
   end
 end

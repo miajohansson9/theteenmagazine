@@ -1,6 +1,6 @@
 <%= form_for @category do |f| %>
   <% if @category.errors.any? %>
-    <h2><%= pluralize(@post.errors.count, "error") %> prevented this post from saving:</h2>
+    <h2><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h2>
     <ul>
       <% @category.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
@@ -15,4 +15,4 @@
   <%= f.file_field :image %>
   <br />
   <br><%= f.submit "Save Category" %><br><br>
-<% end %>
+<%end%>

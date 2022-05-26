@@ -5,7 +5,6 @@
         <div class="nav-title-wrapper nav-title">
           <%= link_to "The Teen Magazine", root_path %>
         </div>
-         <% # <%= link_to "Get Paid to Write", new_pitch_path, class: "pt-4 pr-4" %>
          <% if current_user.editor? %>
             <%= link_to "Start an Article", new_post_path, class: "pt-4" %>
          <% elsif !current_user.partner %>

@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
       end
       if current_user.id != @comment.post.user.id
         if @comment.post.promoting_until.present? &&
-           @comment.post.promoting_until > Time.now
+             @comment.post.promoting_until > Time.now
           @points = @comment.text.size / 10
           @points = @points < 20 ? 20 : @points
         else
@@ -39,10 +39,10 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.js { }
+        format.js {}
         format.html { redirect_to @comment.post }
       else
-        format.js { }
+        format.js {}
         format.html { render :edit }
       end
     end

@@ -11,9 +11,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_attached_file :profile,
                     styles: {
-                      thumb: "100x100>",
-                      square: "200x200#",
-                      medium: "300x300>",
+                      thumb: '100x100>',
+                      square: '200x200#',
+                      medium: '300x300>'
                     }
 
   scope :review_profile,
@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   def is_new?
     @user_posts_approved =
       Post
-        .where("collaboration like ?", "%#{self.email}%")
+        .where('collaboration like ?', "%#{self.email}%")
         .or(Post.where(user_id: self.id))
         .published
     @user_posts_approved.empty?

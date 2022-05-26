@@ -11,7 +11,7 @@
          <% @most_viewed.each do |post| %>
            <div class="thumbnail">
              <div class="container--image">
-               <%= link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post) %>
+               <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
              </div>
              <div class="thumbnail--container">
                <h3 class="article_title">

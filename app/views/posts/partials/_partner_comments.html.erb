@@ -1,15 +1,15 @@
 <h3 class="title mb-2"><%= link_to(partner.try(:full_name), partner) %> was added as a partner</h3>
 <i><%= post.user.full_name %> is working on this article. To give feedback, highlight specific text to comment on, or write more general notes below.</i>
 <div class="comments">
-  <%= render :partial => "comments/comment_form", locals: { post: post, comment: comment } %>
+  <%= render :partial => 'comments/comment_form', locals: {post: post, comment: comment } %>
   <ul class="list-group list-group-flush" id="list-group-comments">
     <% comments.each do |comment| %>
-      <%= render :partial => "comments/comment", locals: { comment: comment, post: post } %>
+      <%= render :partial => 'comments/comment', locals: {comment: comment, post: post} %>
     <% end %>
   </ul>
 </div>
 <% if (current_user.admin? || current_user.id == post.user_id) %>
   <div class="btn_cntnr margin_top_20">
-    <%= link_to "Stop sharing with #{partner.try(:full_name)}", post_path(post, partner: false), :data => { :confirm => "Are you sure you want to stop sharing this article with #{partner.try(:full_name)}?" }, class: "newpost--new--profile", style: "float: right;" %>
+    <%= link_to "Stop sharing with #{partner.try(:full_name)}", post_path(post, partner: false), :data => {:confirm => "Are you sure you want to stop sharing this article with #{partner.try(:full_name)}?"}, class: "newpost--new--profile", style: "float: right;" %>
   </div>
 <% end %>

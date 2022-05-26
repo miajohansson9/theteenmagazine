@@ -27,7 +27,7 @@
           <div class="progress-bar pl-0" role="progressbar" style="width: <%= @width %>" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <p>Progress: <b><%= invitation.status %></b>
-          <% if invitation.status.eql? "Accepted" %> 🎉
+          <% if invitation.status.eql? "Accepted"%> 🎉
           <% elsif invitation.status.eql? "Viewed" %> <%= invitation.impressions %> time<% if !(invitation.impressions.eql? 1) %>s<% end %>
           <% elsif invitation.status.eql? "Applied" && invitation.applies.last.present? %> on <%= invitation.applies.last.created_at.in_time_zone.strftime("%D") %>
           <% end %>

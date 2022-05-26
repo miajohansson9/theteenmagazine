@@ -5,53 +5,58 @@ class AppliesController < ApplicationController
   #show all applications
   def index
     if (current_user && current_user.admin?)
-      set_meta_tags title: "Writer Applications | The Teen Magazine"
+      set_meta_tags title: 'Writer Applications | The Teen Magazine'
       @notifications = @notifications - @unseen_applications_cnt
       @unseen_applications_cnt = 0
       @pagy, @applies =
         pagy(
           Apply
             .where(rejected_writer_at: nil, rejected_editor_at: nil)
-            .order("updated_at desc"),
+            .order('updated_at desc'),
           page: params[:page],
-          items: 20,
+          items: 20
         )
       Thread.new do
-        current_user.update_column("last_saw_writer_applications", Time.now)
+        current_user.update_column('last_saw_writer_applications', Time.now)
       end
     elsif current_user
-      redirect_to "/applications/editor"
+      redirect_to '/applications/editor'
     else
-      redirect_to "/apply"
+      redirect_to '/apply'
     end
   end
 
   #create a new application
   def new
     @application = Apply.new
-    set_meta_tags title: "Apply",
-                  description: "Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!",
-                  image: "https://www.theteenmagazine.com/assets/become_writer-4c75511ff2d771fd380fad4dcdbeeef932870882239e52252cbea070a877761e.jpg",
+    set_meta_tags title: 'Apply',
+                  description:
+                    'Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!',
+                  image:
+                    'https://www.theteenmagazine.com/assets/become_writer-4c75511ff2d771fd380fad4dcdbeeef932870882239e52252cbea070a877761e.jpg',
                   fb: {
-                    app_id: "1190455601051741",
+                    app_id: '1190455601051741'
                   },
                   og: {
                     image: {
-                      url: "https://www.theteenmagazine.com/assets/become_writer-4c75511ff2d771fd380fad4dcdbeeef932870882239e52252cbea070a877761e.jpg",
-                      alt: "The Teen Magazine",
+                      url:
+                        'https://www.theteenmagazine.com/assets/become_writer-4c75511ff2d771fd380fad4dcdbeeef932870882239e52252cbea070a877761e.jpg',
+                      alt: 'The Teen Magazine'
                     },
-                    site_name: "The Teen Magazine",
+                    site_name: 'The Teen Magazine'
                   },
                   article: {
-                    publisher: "https://www.facebook.com/theteenmagazinee",
+                    publisher: 'https://www.facebook.com/theteenmagazinee'
                   },
                   twitter: {
-                    card: "summary_large_image",
-                    site: "@theteenmagazin_",
-                    title: "The Teen Magazine",
-                    description: "Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!",
-                    image: "https://www.theteenmagazine.com/assets/become_writer-4c75511ff2d771fd380fad4dcdbeeef932870882239e52252cbea070a877761e.jpg",
-                    domain: "https://www.theteenmagazine.com/",
+                    card: 'summary_large_image',
+                    site: '@theteenmagazin_',
+                    title: 'The Teen Magazine',
+                    description:
+                      'Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!',
+                    image:
+                      'https://www.theteenmagazine.com/assets/become_writer-4c75511ff2d771fd380fad4dcdbeeef932870882239e52252cbea070a877761e.jpg',
+                    domain: 'https://www.theteenmagazine.com/'
                   }
   end
 
@@ -60,7 +65,7 @@ class AppliesController < ApplicationController
     if @application.validate && @application.update(apply_params)
       app_submitted
     else
-      render "editor", notice: "Oh no! Your changes were not able to be saved!"
+      render 'editor', notice: 'Oh no! Your changes were not able to be saved!'
     end
   end
 
@@ -70,14 +75,14 @@ class AppliesController < ApplicationController
     if @application.validate && @application.save
       app_submitted
     elsif apply_params[:user_id].present?
-      render "editor", notice: "Oh no! Your changes were not able to be saved!"
+      render 'editor', notice: 'Oh no! Your changes were not able to be saved!'
     else
-      render "new", notice: "Oh no! Your changes were not able to be saved!"
+      render 'new', notice: 'Oh no! Your changes were not able to be saved!'
     end
   end
 
   def app_submitted
-    set_meta_tags title: "Application Submitted"
+    set_meta_tags title: 'Application Submitted'
     if apply_params[:user_id].present?
       @editor_app = true
       @application.request = request
@@ -106,9 +111,10 @@ class AppliesController < ApplicationController
       Apply.where(rejected_editor_at: nil).find_by(user_id: current_user.id) ||
         current_user.applies.build
     @applied_num_times =
-      Apply.where(user_id: current_user.id, kind: "Editor").count
-    set_meta_tags title: "Editor Application | The Teen Magazine",
-                  description: "Our editor team is in charge of pitching new article topics, publishing/giving feedback to articles, and responding to profile submissions. We are active on Slack and support each other in helping our writer team succeed at The Teen Magazine."
+      Apply.where(user_id: current_user.id, kind: 'Editor').count
+    set_meta_tags title: 'Editor Application | The Teen Magazine',
+                  description:
+                    'Our editor team is in charge of pitching new article topics, publishing/giving feedback to articles, and responding to profile submissions. We are active on Slack and support each other in helping our writer team succeed at The Teen Magazine.'
   end
 
   #only allow admin and editors to see submitted applications
@@ -116,7 +122,7 @@ class AppliesController < ApplicationController
     if (current_user && (current_user.admin? || current_user.editor?))
       true
     else
-      redirect_to current_user, notice: "You do not have access to this page."
+      redirect_to current_user, notice: 'You do not have access to this page.'
     end
   end
 
@@ -134,7 +140,7 @@ class AppliesController < ApplicationController
   def destroy
     @application = Apply.find(params[:id])
     @application.destroy
-    redirect_to applies_path, notice: "Application deleted. No email was sent."
+    redirect_to applies_path, notice: 'Application deleted. No email was sent.'
   end
 
   private

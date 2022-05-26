@@ -4,11 +4,11 @@
        <div class="flex">
           <div class="container">
             <div class="flex_horizontal search_wrapper">
-              <%= form_for(:search, method: :get, :html => { :class => "form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2" }) do |f| %>
+              <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
                 <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Searching in #{@filter.titleize}" %>
                 <%= f.hidden_field :filter, value: @filter %>
               <% end %>
-              <%= form_for(:search, method: :get, :html => { :class => "form-inline d-flex  justify-content-left md-form form-sm active-theme-2 mt-2", style: "flex: 1;" }) do |f| %>
+              <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex  justify-content-left md-form form-sm active-theme-2 mt-2', style: "flex: 1;"}) do |f| %>
                 <%= button_tag(class: "btn_no_style", name: "filter", value: @next) do %>
                   <svg width="40px" height="40px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8 mb-2" role="img" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
                 <% end %>
@@ -22,19 +22,19 @@
                <% @posts.each do |post| %>
                  <div class="thumbnail">
                    <div class="container--image">
-                     <%= link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post) %>
+                     <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
                    </div>
                    <div class="thumbnail--container">
                      <p class="date_post_preview"><%= post.category.name %></p>
                      <h3 class="article_title"><%= link_to post.title, post %></h3>
-                     <p class="date_post_preview"><%= post.publish_at.in_time_zone.strftime("%A, %b %d") %></p>
+                     <p class="date_post_preview"><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
                    </div>
                  </div>
                <% end %>
                <%== pagy_nav(@pagy).html_safe %>
               <% elsif @users.present? %>
-                <% @users.each do |user| %>
-                  <%= render :partial => "users/profile", locals: { user: user }, cached: true %>
+                <% @users.each do | user | %>
+                  <%= render :partial => 'users/profile', locals: {user: user}, cached: true %>
                 <% end %>
                 <%== pagy_nav(@pagy).html_safe %>
               <% else %>

@@ -4,7 +4,7 @@
   <div class="pb-4" style="margin-top: -70px;">
     <%= form_for @category do |f| %>
       <%= f.hidden_field :archive, value: !(@category.archive.eql? true) %>
-      <%= f.submit @archive_button, data: { confirm: @archive_msg }, :class => "link_theme delete_btn", :style => "font-size: 0.9em; margin-top: -15px;" %>
+      <%= f.submit @archive_button, data: {confirm: @archive_msg}, :class => "link_theme delete_btn", :style => "font-size: 0.9em; margin-top: -15px;" %>
     <% end %>
   </div>
 </div>

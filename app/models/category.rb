@@ -9,7 +9,7 @@ class Category < ApplicationRecord
                            image/jpeg
                            image/png
                            image/gif
-                         ],
+                         ]
                        }
 
   extend FriendlyId

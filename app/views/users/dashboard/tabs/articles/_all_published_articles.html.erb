@@ -3,12 +3,12 @@
     <div class="p-0">
       <div class="pitches_wrapper p-0">
         <div class="flex-wrapper w-100 p-0 m-0" id="published-articles-page">
-          <%= render partial: "users/dashboard/tabs/articles/published_articles_page" %>
+          <%= render partial: 'users/dashboard/tabs/articles/published_articles_page' %>
         </div>
       </div>
-      <% if @user_posts_approved_records.count > @per_page %>
+      <% if @user_posts_approved_records.count > @per_page  %>
         <div id="div_next_link_articles">
-          <%= render partial: "users/dashboard/tabs/articles/next_link" %>
+          <%= render partial: 'users/dashboard/tabs/articles/next_link' %>
         </div>
       <% end %>
     </div>

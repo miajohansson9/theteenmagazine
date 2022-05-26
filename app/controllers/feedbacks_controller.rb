@@ -6,34 +6,34 @@ class FeedbacksController < ApplicationController
 
   def new
     @feedback = Feedback.new
-    set_meta_tags title: "New Feedback Field"
+    set_meta_tags title: 'New Feedback Field'
   end
 
   def edit
-    set_meta_tags title: "Edit Feedback Field"
+    set_meta_tags title: 'Edit Feedback Field'
   end
 
   def index
-    @feedbacks = Feedback.active.order("created_at asc")
+    @feedbacks = Feedback.active.order('created_at asc')
     @feedbacks_given = FeedbackGiven.all
-    set_meta_tags title: "Editor Feedback Fields"
+    set_meta_tags title: 'Editor Feedback Fields'
   end
 
   def update
     if @feedback.update feedback_params
       @feedback.save
-      redirect_to feedbacks_path, notice: "Your changes were saved."
+      redirect_to feedbacks_path, notice: 'Your changes were saved.'
     else
-      render "edit", notice: "Oops, something went wrong."
+      render 'edit', notice: 'Oops, something went wrong.'
     end
   end
 
   def create
     if @feedback.save
       redirect_to feedbacks_path,
-                  notice: "Your feedback field was successfully added!"
+                  notice: 'Your feedback field was successfully added!'
     else
-      render "new", notice: "Oh no! Your changes were not able to be saved!"
+      render 'new', notice: 'Oh no! Your changes were not able to be saved!'
     end
   end
 

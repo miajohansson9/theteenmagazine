@@ -15,16 +15,16 @@
       <p class="description_user" style="margin-top: 5px;"><%= @user.description %></p>
     <% end %>
     <div class="website">
-      <% if (@user.website != "" && @user.website != nil) %>
+      <% if (@user.website != "" && @user.website !=  nil) %>
          <p class="website_link"><span>Website: </span><a class="link_grn" href="https://www.<%= @user.website %>" target="_blank"><%= @user.website %></a></p>
       <% end %>
-      <% if (@user.twitter != "" && @user.twitter != nil) %>
+      <% if (@user.twitter != "" && @user.twitter !=  nil) %>
          <p class="website_link"><a href="https://www.twitter.com/<%= @user.twitter %>" target="_blank"><i class="fab fa-sm fa-twitter"></i></a></p>
       <% end %>
       <% if (@user.insta != "" && @user.insta != nil) %>
          <p class="website_link"><a href="https://www.instagram.com/<%= @user.insta %>" target="_blank" style="padding-right: 4px;"><i class="fab fa-sm fa-instagram"></i></a>
       <% end %>
-      <% if (@user.facebook != "" && @user.facebook != nil) %>
+      <% if (@user.facebook != "" && @user.facebook !=  nil) %>
          <p class="website_link"><a href="https://www.facebook.com/<%= @user.facebook %>" target="_blank" style="padding-left: 5px;"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></p>
       <% end %>
       <% if (@user.youtube != "" && @user.youtube != nil) %>

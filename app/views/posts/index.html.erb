@@ -27,7 +27,7 @@
     <div class="flex-wrapper flex-drafts">
       <% @my_shared_drafts.each do |draft| %>
           <div class="card" style="width: 32%;">
-            <a href="<%= post_path(draft) %>">
+            <a href="<%= post_path(draft)%>">
               <%= image_tag(draft.thumbnail.url(:large2), :class => "card-img-top") %>
             </a>
             <div class="card-body">
@@ -45,9 +45,9 @@
                     <%= f.hidden_field :promoting_until, value: @initial + 3.day %>
                     <div class="btn_cntnr mb-0 pb-0">
                       <span data-toggle="tooltip" title="<% if @points < 200 %>Give feedback on more articles<% end %>">
-                        <%= f.submit "Promote (200 points)",
-                                     data: { confirm: "This draft will be featured for three days on the community page. You are using 200 points out of your available #{@points} points to do this. Do you want to continue?" },
-                                     class: "newpost--new--profile #{@class}" %>
+                        <%= f.submit 'Promote (200 points)',
+                          data: {confirm: "This draft will be featured for three days on the community page. You are using 200 points out of your available #{@points} points to do this. Do you want to continue?"},
+                          class: "newpost--new--profile #{@class}" %>
                       </span>
                     </div>
                   <% end %>
@@ -78,7 +78,7 @@
           <% @shared_drafts.each do |draft| %>
             <% @featured = draft.promoting_until.present? && draft.promoting_until > Time.now %>
             <% @color = @featured ? "#FA8075" : "#91A0BA" %>
-            <a href="<%= post_path(draft) %>">
+            <a href="<%= post_path(draft)%>">
               <div class="card" style="width: 32%; <% if @unseen_shared_drafts.to_a.include? draft %>background-color: #E6F6FF;<% end %>">
                 <%= image_tag(draft.thumbnail.url(:large2), :class => "card-img-top") %>
                 <div class="card-body">
@@ -88,7 +88,7 @@
                   <% end %>
                 </div>
                 <div class="rounded-bottom lighten-3 text-left p-3" style="background-color: <%= @color %>">
-                  <p class="list-inline-item pr-2 white-text"><%= link_to("Give Feedback", post_path(draft), style: "color: white !important;") %></p>
+                  <p class="list-inline-item pr-2 white-text"><%= link_to("Give Feedback", post_path(draft), style: "color: white !important;")%></p>
                   <p class="list-inline-item pr-2 white-text">
                     <svg width="20px" height="20px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="comments" class="mb-1 svg-inline--fa fa-comments fa-w-18" role="img" viewBox="0 0 576 512"><path fill="currentColor" d="M416 192c0-88.4-93.1-160-208-160S0 103.6 0 192c0 34.3 14.1 65.9 38 92-13.4 30.2-35.5 54.2-35.8 54.5-2.2 2.3-2.8 5.7-1.5 8.7S4.8 352 8 352c36.6 0 66.9-12.3 88.7-25 32.2 15.7 70.3 25 111.3 25 114.9 0 208-71.6 208-160zm122 220c23.9-26 38-57.7 38-92 0-66.9-53.5-124.2-129.3-148.1.9 6.6 1.3 13.3 1.3 20.1 0 105.9-107.7 192-240 192-10.8 0-21.3-.8-31.7-1.9C207.8 439.6 281.8 480 368 480c41 0 79.1-9.2 111.3-25 21.8 12.7 52.1 25 88.7 25 3.2 0 6.1-1.9 7.3-4.8 1.3-2.9.7-6.3-1.5-8.7-.3-.3-22.4-24.2-35.8-54.5z"></path></svg> <%= draft.comments.count %> comments</p>
                 </div>
@@ -102,7 +102,7 @@
       <%== pagy_nav(@pagy).html_safe %>
     </div>
     <div class="tab-pane fade" id="conversations-classic" role="tabpanel" aria-labelledby="conversations-tab-classic">
-      <%= render_async_cache get_conversations_following_path, toggle: { selector: "#conversations-tab-classic", event: :click } do %>
+      <%= render_async_cache get_conversations_following_path, toggle: { selector: '#conversations-tab-classic', event: :click } do %>
         <div class="d-flex justify-content-center">
           <div class="spinner-border mb-4" role="status">
             <span class="sr-only">Loading...</span>

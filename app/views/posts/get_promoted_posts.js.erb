@@ -1,7 +1,7 @@
-$('#promoted-posts').append("<%= j(render "posts/partials/promoted/promoted_page") %>");
+$('#promoted-posts').append("<%= j(render 'posts/partials/promoted/promoted_page')%>");
 <% if @is_last_page %>
   $('#div_next_link_articles').html("");
 <% else %>
-  $('#div_next_link_articles').html("<%= j(render "posts/partials/promoted/next_link") %>");
+  $('#div_next_link_articles').html("<%= j(render 'posts/partials/promoted/next_link') %>");
 <% end %>
 $('.spinner-button').addClass("hide");

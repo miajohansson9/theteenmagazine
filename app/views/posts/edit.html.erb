@@ -1,7 +1,7 @@
 <% @most_recent_review = @post.reviews.where.not(status: "In Progress").last %>
 <% @review_banner_soft = @post.reviews.where.not(status: nil).last %>
 <% if !@most_recent_review.nil? && !(@review_banner_soft.status.eql? "In Progress") %>
-  <div class="banner_stts_relative"><%= render "/posts/banner_status" %></div>
+  <div class="banner_stts_relative"><%= render '/posts/banner_status' %></div>
 <% elsif @post.is_locked? %>
   <p class= "banner_stts">Locked</p>
 <% elsif @post.pitch.present? %>
@@ -32,5 +32,5 @@
        <p class="mb-0"><i>Please make the above changes before submitting your article again. If you think there was a mistake, please email Mia at mia@theteenmagazine.com and explain the problem.</i></p>
     <% end %>
   <% end %>
-  <%= render "form" %>
+  <%= render 'form' %>
 </div>

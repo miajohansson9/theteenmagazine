@@ -8,7 +8,7 @@
         <br><br>
         <p style="display: inline;">Filter by category</p>
         <%= form_for @pitch, method: "get" do |f| %>
-          <%= f.collection_select(:category_id, @categories, :id, :name, { include_blank: "All Pitches" }) %>
+          <%= f.collection_select(:category_id, @categories, :id, :name, {include_blank: "All Pitches"}) %>
           <%= f.submit "Apply filter", method: :index, id: "button_nrml" %>
         <% end %>
         <br>
@@ -22,11 +22,11 @@
     <% @pitches.each do |pitch| %>
       <% @post = pitch.posts.find_by(user_id: pitch.claimed_id) %>
       <div class="card" style="width: 32%; <% if @unseen_pitches.to_a.include? pitch %>background-color: #E6F6FF;<% end %>">
-        <a href="<%= pitch_path(pitch) %>">
-          <%= image_tag(pitch.thumbnail.url(:card), alt: pitch.title, :class => "card-img-top") %>
+        <a href="<%= pitch_path(pitch)%>">
+          <%=image_tag(pitch.thumbnail.url(:card), alt: pitch.title, :class => "card-img-top")%>
         </a>
         <% if current_user.admin? || current_user.editor? %>
-          <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn") %>
+          <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn")%>
         <% end %>
         <div class="card-body">
           <% if @post.present? %>

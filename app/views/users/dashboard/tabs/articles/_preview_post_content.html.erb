@@ -22,11 +22,11 @@
       <% @class = @user.promotions < 1 ? "disabled" : "" %>
       <% if @is_promoted %>
         <div class="btn_cntnr mb-2 pb-4">
-          <%= link_to "Extend (1 credit)", promote_post_path(:id => user.id, :post_id => post.id), method: :patch, remote: true, data: { confirm: "This article is already being promoted and will be extended by 1 week. You are using 1 credit out of your available #{user.promotions} credits to do this. Do you want to continue?" }, class: "newpost--new--profile #{@class} mr-1" %>
+          <%= link_to "Extend (1 credit)", promote_post_path(:id => user.id, :post_id => post.id), method: :patch, remote: true, data: {confirm: "This article is already being promoted and will be extended by 1 week. You are using 1 credit out of your available #{user.promotions} credits to do this. Do you want to continue?"}, class: "newpost--new--profile #{@class} mr-1" %>
         </div>
       <% else %>
         <div class="btn_cntnr mb-2 pb-4">
-          <%= link_to "Promote (1 credit)", promote_post_path(:id => user.id, :post_id => post.id), method: :patch, remote: true, data: { confirm: "This article will be promoted across the entire website under More on The Teen Magazine for 1 week. You are using 1 credit out of your available #{user.promotions} credits to do this. Do you want to continue?" }, class: "newpost--new--profile #{@class} mr-1" %>
+          <%= link_to "Promote (1 credit)", promote_post_path(:id => user.id, :post_id => post.id), method: :patch, remote: true, data: {confirm: "This article will be promoted across the entire website under More on The Teen Magazine for 1 week. You are using 1 credit out of your available #{user.promotions} credits to do this. Do you want to continue?"}, class: "newpost--new--profile #{@class} mr-1" %>
         </div>
       <% end %>
     </div>

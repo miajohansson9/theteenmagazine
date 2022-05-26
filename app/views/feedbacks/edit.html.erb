@@ -13,7 +13,7 @@
   <% if current_user.admin? %>
     <%= form_for @feedback do |f| %>
       <%= f.hidden_field :archive, value: true %>
-      <%= f.submit "Archive", data: { confirm: "Are you sure you want to archive this feedback field? It will no longer show up for other editors." }, :class => "no_style link_pink", :style => "float: right; margin-top: -60px;" %>
+      <%= f.submit "Archive", data: {confirm: "Are you sure you want to archive this feedback field? It will no longer show up for other editors."}, :class => "no_style link_pink", :style => "float: right; margin-top: -60px;" %>
     <% end %>
   <% end %>
 </div>
