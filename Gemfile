@@ -39,7 +39,7 @@ gem 'figaro'
 gem 'aws-sdk', '~> 3'
 gem 'sitemap_generator'
 gem 'fog-aws'
-gem 'nokogiri', '~> 1.13', '>= 1.13.3'
+gem 'nokogiri', '~> 1.13'
 gem 'gibbon'
 gem 'sprockets-rails', require: 'sprockets/railtie'
 gem 'bootsnap', require: false
