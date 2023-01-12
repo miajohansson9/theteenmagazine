@@ -68,7 +68,6 @@ class NewslettersController < ApplicationController
     @newsletter = Newsletter.find(params[:id])
     @newsletter_posts = @newsletter.posts
     if current_user.admin || current_user.has_newsletter_permissions
-      @posts = @newsletter.posts || 0
       if params[:search].present?
         @query = params[:search][:query]
         @pagy, @posts =
@@ -82,7 +81,7 @@ class NewslettersController < ApplicationController
           pagy(Post.published.trending, page: params[:page], items: 15)
       end
     else
-      redirect_to "/writers/#{current_user.slug}/newsletters"
+      redirect_to "/writers/#{current_user.slug}"
     end
   end
 
