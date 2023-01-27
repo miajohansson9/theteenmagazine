@@ -46,5 +46,4 @@ gem 'bootsnap', require: false
 gem 'render_async'
 gem 'sendgrid-ruby'
 gem 'prettier'
-
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'htmlbeautifier'

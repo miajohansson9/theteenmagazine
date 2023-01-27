@@ -5,4 +5,4 @@
 ### 🤔 Additional Comments
 
 ### 💋💋 Screenshots
-![original](https://user-images.githubusercontent.com/24357628/150688481-8315dcdc-0078-45cd-9448-45b6948b79e5.gif)
+![giphy](https://user-images.githubusercontent.com/24357628/215206298-86571328-1dee-4ae6-8276-8c0fac48d5ad.gif)

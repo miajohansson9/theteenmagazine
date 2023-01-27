@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_02_201006) do
+ActiveRecord::Schema.define(version: 2023_01_25_202112) do
 
   create_table "activities", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -221,6 +221,8 @@ ActiveRecord::Schema.define(version: 2022_05_02_201006) do
     t.integer "user_id"
     t.text "email_draft"
     t.boolean "sent"
+    t.text "sponsored_article_pitch"
+    t.decimal "sponsored_article_cost"
   end
 
   create_table "phrasing_phrase_versions", force: :cascade do |t|
