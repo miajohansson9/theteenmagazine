@@ -46,5 +46,9 @@ gem 'bootsnap', require: false
 gem 'render_async'
 gem 'sendgrid-ruby'
 gem 'prettier'
+gem 'htmlbeautifier'
+gem 'rubocop'
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+gem "rubocop", "~> 1.44"

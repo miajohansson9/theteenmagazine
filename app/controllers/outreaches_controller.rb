@@ -1,6 +1,7 @@
 class OutreachesController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin?
+  before_action :find_outreach, except: %i[index new]
 
   #show all applications
   def index
@@ -10,13 +11,25 @@ class OutreachesController < ApplicationController
 
   #create a new application
   def new
-    @outreach = Outreach.new
+    @outreach = current_user.outreaches.create
   end
 
   #send submitted application
   def create
-    @outreach = Outreach.new(outreach_params)
+    @outreach = current_user.outreaches.build(outreach_params)
     @outreach.save
+  end
+
+  def update
+    if @outreach.update outreach_params
+      redirect_to @outreach, notice: 'Your changes were saved.'
+    else
+      render 'new'
+    end
+  end
+
+  def show
+    @user = @outreach.user
   end
 
   #only allow admin and editors to see submitted applications
@@ -28,15 +41,15 @@ class OutreachesController < ApplicationController
     end
   end
 
-  #show application to editor
-  #form for creating a new user already filled out
-  def show; end
-
   private
 
   def outreach_params
     params
       .require(:outreach)
-      .permit(:partner_email, :partner_name, :user_id, :email_draft, :sent)
+      .permit(:partner_email, :partner_name, :sponsored_article_pitch, :sponsored_article_cost, :user_id)
+  end
+
+  def find_outreach
+    @outreach = Outreach.find(params[:id])
   end
 end
