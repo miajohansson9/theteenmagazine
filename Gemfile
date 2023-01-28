@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.6.3'
+ruby '3.0.0'
 
 gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 
@@ -11,7 +11,7 @@ group :production do
 end
 
 group :development do
-  gem 'sqlite3', '~> 1.3.6'
+  gem 'sqlite3', '~> 1.3', '>= 1.3.11'
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
   gem 'spring'
