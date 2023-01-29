@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '3.0.0'
 
-gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
+gem 'rails', '~> 6.0.2'
 
 group :production do
   gem 'pg'
