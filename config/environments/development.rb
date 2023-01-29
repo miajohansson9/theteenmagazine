@@ -16,6 +16,7 @@ Rails.application.configure do
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
     config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
@@ -27,7 +28,7 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Store uploaded files on the local file system (see config/storage.yml for options)
+  # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
@@ -48,41 +49,14 @@ Rails.application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-  config.assets.check_precompiled_asset = false
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-
-  config.action_mailer.default_url_options = { host: 'http://localhost:3000' }
-  config.action_mailer.delivery_method = :smtp
-
-  config.assets.raise_production_errors = false
-
-  ActionMailer::Base.smtp_settings = {
-    address: 'smtp.sendgrid.net',
-    port: '587',
-    authentication: :plain,
-    user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY'],
-    domain: 'heroku.com',
-    enable_starttls_auto: true
-  }
-
-  config.paperclip_defaults = {
-    storage: :s3,
-    s3_region: 'us-east-1',
-    bucket: 'media.theteenmagazine.com',
-    s3_credentials: "#{Rails.root}/config/s3.yml",
-    s3_host_alias: 'media.theteenmagazine.com',
-    url: ':s3_alias_url',
-    path: ':class/:attachment/:id_partition/:style/:filename'
-  }
-
-  # Raises error for missing translations
+  # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end
