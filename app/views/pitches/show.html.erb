@@ -30,19 +30,22 @@
   <% end %>
   <% if @pitch.notes.present? %>
     <p class="mt-0"><i><%= @editor.try(:full_name) %> left a comment:
-    <%= @pitch.notes %><br></i></p>
+        <%= @pitch.notes %><br>
+      </i></p>
   <% end %>
-  <%= image_tag(@pitch.thumbnail.url(:card), class: "image_fit_scrn mb-4") %>
+  <% if @pitch.thumbnail.attached? %>
+    <%= image_tag(@pitch.thumbnail.variant(resize: "540x380"), alt: @pitch.title, :class => "card-img-top")%>
+  <% elsif @pitch.try(:thumbnail).present? %>
+    <%= image_tag(@pitch.thumbnail.url(:card), class: "image_fit_scrn mb-4") %>
+  <% end %>
   <%= markdown @pitch.description %>
   <% if @pitch.requirements.present? %>
     <i>Notes:</i>
     <%= markdown @pitch.requirements %>
   <% end %>
-
   <% if @pitch.deadline.present? %>
     <p class="pitch_usr"><b>This pitch has a <%= @pitch.deadline %> week deadline. Read more about deadlines <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</b></p>
   <% end %>
-
   <% if @claimed_user.nil? %>
     <%= form_for @post do |f| %>
       <%= f.hidden_field :title, value: @pitch.title %>
@@ -57,22 +60,22 @@
       </div>
       <br>
     <% end %>
-    <% else %>
-      <% if !@article&.is_published? %>
-        <%= form_for @pitch do |f| %>
-          <%= f.hidden_field :claimed_id, value: nil %>
-          <p class="pitch_usr mb-4">If you unclaim this pitch, the associated article will become locked unless you claim the pitch again. If this pitch was created by an editor, the topic will become available to any writer at TTM. Go to your started <%= link_to("draft", @article, class: "pitch_btn", target: "_blank") %>.</p>
-          <div class="content_hint"></div>
-          <div class="btn_cntnr">
-            <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }, class: "newpost--new--profile mb-0 mr-0 #{@disabled}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
-          </div>
-          <br>
-        <% end %>
-      <% else %>
-        <p class="pitch_usr">This pitch's <%= link_to("article", @article, class: "pitch_btn", target: "_blank") %> was published on <%= @article.publish_at.in_time_zone.strftime("%A, %B %d") %>.</p>
+  <% else %>
+    <% if !@article&.is_published? %>
+      <%= form_for @pitch do |f| %>
+        <%= f.hidden_field :claimed_id, value: nil %>
+        <p class="pitch_usr mb-4">If you unclaim this pitch, the associated article will become locked unless you claim the pitch again. If this pitch was created by an editor, the topic will become available to any writer at TTM. Go to your started <%= link_to("draft", @article, class: "pitch_btn", target: "_blank") %>.</p>
+        <div class="content_hint"></div>
+        <div class="btn_cntnr">
+          <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Unclaim Pitch", data: { confirm: "Are you sure you want to unclaim this pitch? You will no longer be able to work on this article." }, class: "newpost--new--profile mb-0 mr-0 #{@disabled}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
+        </div>
+        <br>
       <% end %>
+    <% else %>
+      <p class="pitch_usr">This pitch's <%= link_to("article", @article, class: "pitch_btn", target: "_blank") %> was published on <%= @article.publish_at.in_time_zone.strftime("%A, %B %d") %>.</p>
     <% end %>
-    <% if ((current_user.id.eql? @pitch.user.id) || current_user.admin) && !@article&.is_published? %>
-      <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme edit_btn_rel", style: "float: left; margin-top: -0.5rem;" %>
-    <% end %>
+  <% end %>
+  <% if ((current_user.id.eql? @pitch.user.id) || current_user.admin) && !@article&.is_published? %>
+    <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme edit_btn_rel", style: "float: left; margin-top: -0.5rem;" %>
+  <% end %>
 </div>

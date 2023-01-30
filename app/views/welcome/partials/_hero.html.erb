@@ -3,7 +3,7 @@
     <div class="featured divfeatured">
       <div class="featured individual">
         <div class="featured_img">
-          <%=link_to(image_tag(@posts_approved_0[0].thumbnail.url(:large2), alt: @posts_approved_0[0].title), @posts_approved_0[0] )%>
+          <%=link_to(image_tag(@posts_approved_0[0].thumbnail.variant(resize: "540x340"), alt: @posts_approved_0[0].title), @posts_approved_0[0] )%>
         </div>
         <h3 class="article_title"><%= link_to @posts_approved_0[0].title, @posts_approved_0[0] %></h3>
         <p class="date"><%= @posts_approved_0[0].publish_at.in_time_zone.strftime("%A, %b %d")%>, Featured article</p>
@@ -12,7 +12,7 @@
     <div class="articles2-6">
       <% @posts_approved_0[1..4].each do |post| %>
         <div class="thumbnail">
-          <%=link_to(image_tag(post.thumbnail.url(:medium), alt: post.title, :class => "image_thumbnail"), post )%>
+          <%=link_to(image_tag(post.thumbnail.variant(resize: "540x340"), alt: post.title, :class => "image_thumbnail"), post )%>
           <div class="thumbnail--container">
             <h3 class="article_title"><%= link_to post.title.truncate_words(14), post %></h3>
             <p class="date"><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
@@ -23,9 +23,9 @@
   </div>
   <div class="ads_wrapper ads_responsive">
     <div class="content_hint"></div>
-      <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-      <!-- Homepage 1 -->
-      <!-- <ins class="adsbygoogle"
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+    <!-- Homepage 1 -->
+    <!-- <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-4566416931763342"
            data-ad-slot="2546543885"
