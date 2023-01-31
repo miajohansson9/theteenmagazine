@@ -6,12 +6,8 @@ class Post < ApplicationRecord
   has_many :reviews
   has_many :comments, dependent: :destroy
 
-  has_one_attached :thumbnail do |attachable|
-    attachable.variant :thumb, resize_to_fill: [150, 100]
-    attachable.variant :medium, resize_to_fill: [560, 280]
-    attachable.variant :large, resize_to_fill: [540, 340]
-  end
-
+  has_one_attached :thumbnail
+  
   validates :title, presence: true
   validates :content, presence: true
 
@@ -53,9 +49,7 @@ class Post < ApplicationRecord
         }
   scope :published,
         -> {
-          joins(:reviews)
-            .where(reviews: { status: 'Approved for Publishing', active: true })
-            .where('publish_at < ?', Time.now)
+          includes(:reviews).where(reviews: :active).where('publish_at < ?', Time.now)
         }
   scope :has_been_submitted,
         -> {

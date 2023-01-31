@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-ruby '2.6.3'
+ruby '2.7.0'
 
-gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
+gem 'rails', '~> 6.1', '>= 6.1.3'
 
 group :production do
   gem 'pg'
@@ -11,7 +11,7 @@ group :production do
 end
 
 group :development do
-  gem 'sqlite3', '~> 1.3.6'
+  gem 'sqlite3', '~> 1.6'
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
   gem 'spring'
@@ -46,6 +46,7 @@ gem 'bootsnap', require: false
 gem 'render_async'
 gem 'sendgrid-ruby'
 gem 'prettier'
-gem "image_processing", ">= 1.2"
+gem 'mini_magick'
+gem 'image_processing', '~> 1.12', '>= 1.12.2'
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

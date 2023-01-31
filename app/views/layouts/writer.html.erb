@@ -26,10 +26,10 @@
       data-autoscroll="true"
       data-backdrop="true"
     >
-    <div id="site-wrapper">
-      <%= render "layouts/partials/slide-in-menu" %>
-      <%= render "layouts/partials/header-writer-mobile" %>
-      <div id="site-canvas">
+      <div id="site-wrapper">
+        <%= render "layouts/partials/slide-in-menu" %>
+        <%= render "layouts/partials/header-writer-mobile" %>
+        <div id="site-canvas">
           <div class="bodywrapper">
             <% if notice %>
               <p class="notice"><%= notice %></p>
@@ -40,41 +40,41 @@
             <% if @show_badge_popup %>
               <%= render "badges/new_badge_modal" %>
             <% end %>
-              <header id="main_navigation" class="clearfix header-navigation">
-                <!-- <div class="banner_stts_relative">
+            <header id="main_navigation" class="clearfix header-navigation">
+              <!-- <div class="banner_stts_relative">
                   <p class= "banner_stts" style="background-color: #F0255E;">The Teen Magazine's September Issue has been released! Download it for free <%= link_to("here", "/subscribe", class: "link_white", target: "_blank") %>.</p>
                 </div> -->
-                <div id="banner">
-                  <div class="flex-1">
-                    <svg width="20px" height="20px" onclick="toggleNav();" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="toggle-nav svg-inline--fa fa-bars fa-w-14" role="img" viewBox="0 0 448 512">
-                      <path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
-                    </svg>
-                  </div>
-                  <a id="name_wrapper" href="/">
-                    <picture>
-                      <source srcset="<%= image_url('teenmag.png') %>" media="(min-width: 800px)">
-                      <%= image_tag("teenmag_mobile.png", :data => {"loading" => "lazy"}, :id => "name") %>
-                    </picture>
-                  </a>
-                  <div class="social-media">
-                    <%= render "layouts/partials/social_media" %>
-                  </div>
+              <div id="banner">
+                <div class="flex-1">
+                  <svg width="20px" height="20px" onclick="toggleNav();" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="toggle-nav svg-inline--fa fa-bars fa-w-14" role="img" viewBox="0 0 448 512">
+                    <path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
+                  </svg>
                 </div>
-                <div class="border hide-on-mobile">
-                  <div class="nav_wrapper">
-                    <nav class="nav_article">
-                      <div class="nav-title-wrapper nav-title">
-                        <%= link_to "The Teen Magazine", root_path %>
-                      </div>
-                       <% if current_user.editor? %>
-                          <%= link_to "Start an Article", new_post_path, class: "pt-4" %>
-                       <% elsif !current_user.partner %>
-                          <%= link_to "Pitch an Article", new_pitch_path, class: "pt-4" %>
-                       <% end %>
-                       <div class="dropdown">
-                         <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image.jpg") %>
-                          <a class="mr-0 btn-floating btn-sm btn-block pt-0 dropdown-toggle btn-profile" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-dropdown-animation="off">
-                            <span
+                <a id="name_wrapper" href="/">
+                  <picture>
+                    <source srcset="<%= image_url('teenmag.png') %>" media="(min-width: 800px)">
+                    <%= image_tag("teenmag_mobile.png", :data => {"loading" => "lazy"}, :id => "name") %>
+                  </picture>
+                </a>
+                <div class="social-media">
+                  <%= render "layouts/partials/social_media" %>
+                </div>
+              </div>
+              <div class="border hide-on-mobile">
+                <div class="nav_wrapper">
+                  <nav class="nav_article">
+                    <div class="nav-title-wrapper nav-title">
+                      <%= link_to "The Teen Magazine", root_path %>
+                    </div>
+                    <% if current_user.editor? %>
+                      <%= link_to "Start an Article", new_post_path, class: "pt-4" %>
+                    <% elsif !current_user.partner %>
+                      <%= link_to "Pitch an Article", new_pitch_path, class: "pt-4" %>
+                    <% end %>
+                    <div class="dropdown">
+                      <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image.jpg") %>
+                      <a class="mr-0 btn-floating btn-sm btn-block pt-0 dropdown-toggle btn-profile" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-dropdown-animation="off">
+                        <span
                               id="dropdown-btn-content-wrapper"
                               style="display: block; height: 100%;"
                               <% if @show_onboarding %>
@@ -83,17 +83,17 @@
                                 data-step data-index="3" data-onboarding-content="New options have been added. Navigate to your editor dashboard here."
                               <% end %>
                             >
-                              <svg width="20px" height="20px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" viewBox="0 0 448 512">
-                                <path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
-                              </svg>
-                              <%= @profile_img %>
-                              <% if !(@notifications.eql? 0) %>
-                                <span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 5px !important;" <% end %>><%= @notifications %></span>
-                              <% end %>
-                            </span>
-                          </a>
-                          <%= render "layouts/partials/writer-dropdown-menu" %>
-                       </div>
+                          <svg width="20px" height="20px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" viewBox="0 0 448 512">
+                            <path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
+                          </svg>
+                          <%= @profile_img %>
+                          <% if !(@notifications.eql? 0) %>
+                            <span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 5px !important;" <% end %>><%= @notifications %></span>
+                            <% end %>
+                          </span>
+                        </a>
+                        <%= render "layouts/partials/writer-dropdown-menu" %>
+                      </div>
                     </nav>
                   </div>
                 </div>
@@ -101,13 +101,13 @@
               <button class="hide" id="click-event-trigger" type="button" name="button"></button>
               <%= yield %>
               <%= content_for :render_async %>
+            </div>
           </div>
+          <div class="toggle-nav" onclick="toggleNav();" id="navigation_overlay"></div>
+          <%= render "layouts/partials/footer" %>
         </div>
-        <div class="toggle-nav" onclick="toggleNav();" id="navigation_overlay"></div>
-        <%= render "layouts/partials/footer" %>
-      </div>
-    </section>
-    <div id="mediavine-settings" data-blocklist-adhesion-mobile="1" data-blocklist-adhesion-tablet="1" data-blocklist-adhesion-desktop="1" data-blocklist-auto-insert-sticky="1" data-blocklist-interstitial-mobile="1" data-blocklist-universal-player-desktop="1" data-blocklist-universal-player-mobile="1" data-expires-at="2024-12-23"></div>
-    <%= javascript_include_tag 'layout'%>
-  </body>
-</html>
+      </section>
+      <div id="mediavine-settings" data-blocklist-adhesion-mobile="1" data-blocklist-adhesion-tablet="1" data-blocklist-adhesion-desktop="1" data-blocklist-auto-insert-sticky="1" data-blocklist-interstitial-mobile="1" data-blocklist-universal-player-desktop="1" data-blocklist-universal-player-mobile="1" data-expires-at="2024-12-23"></div>
+      <%= javascript_include_tag 'layout'%>
+    </body>
+  </html>

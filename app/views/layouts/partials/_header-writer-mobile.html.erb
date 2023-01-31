@@ -12,7 +12,7 @@
          <% end %>
          <div class="dropdown">
            <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square)) : image_tag("profile_image.jpg") %>
-            <a class="mr-0 btn-floating btn-sm btn-block pt-0 dropdown-toggle btn-profile" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-dropdown-animation="off">
+            <a class="mr-0 btn-floating btn-sm btn-block pt-0 dropdown-toggle btn-profile" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-dropdown-animation="off">
               <span
                 id="dropdown-btn-content-wrapper"
                 style="display: block; height: 100%;"
