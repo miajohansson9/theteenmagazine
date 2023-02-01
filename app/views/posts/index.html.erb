@@ -1,8 +1,8 @@
 <div class="skinny_wrapper" id="comments_feed">
   <div class="flex--profile profile-minimal mt-4">
     <div class="position-relative" style="width: 120px; margin: 0 auto;">
-      <% if @user.profile.exists? %>
-        <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
+      <% if @user.profile.attached? %>
+        <%= image_tag(@user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img") %>
       <% else %>
         <%= image_tag("profile_image.jpg", :class => "profile_img") %>
       <% end %>
@@ -28,7 +28,7 @@
       <% @my_shared_drafts.each do |draft| %>
           <div class="card" style="width: 32%;">
             <a href="<%= post_path(draft)%>">
-              <%= image_tag(draft.thumbnail.url(:large2), :class => "card-img-top") %>
+              <%= image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340]), :class => "card-img-top") %>
             </a>
             <div class="card-body">
               <p class="card-text">Sharing has been turned on for your draft <%= link_to(draft.title, draft) %>.</p>
@@ -43,7 +43,7 @@
                   <%= form_for draft do |f| %>
                     <% @initial = (draft.promoting_until.present? && draft.promoting_until > Time.now) ? draft.promoting_until : Time.now %>
                     <%= f.hidden_field :promoting_until, value: @initial + 3.day %>
-                    <div class="btn_cntnr mb-0 pb-0">
+                    <div class="btn_cntnr mb-0 pb-0 pr-3">
                       <span data-toggle="tooltip" title="<% if @points < 200 %>Give feedback on more articles<% end %>">
                         <%= f.submit 'Promote (200 points)',
                           data: {confirm: "This draft will be featured for three days on the community page. You are using 200 points out of your available #{@points} points to do this. Do you want to continue?"},
@@ -61,11 +61,11 @@
   <div class="classic-tabs mb-4">
     <ul class="nav" id="myClassicTab" role="tablist">
       <li class="nav-item tab-custom">
-        <a class="tab-custom active show" id="drafts-tab-classic" data-toggle="tab" href="#drafts-classic"
+        <a class="tab-custom active show" id="drafts-tab-classic" data-bs-toggle="tab" href="#drafts-classic"
           role="tab" aria-controls="drafts-classic" aria-selected="true">Drafts Needing Feedback</a>
       </li>
       <li class="nav-item tab-custom">
-        <a class="tab-custom" id="conversations-tab-classic" data-toggle="tab" href="#conversations-classic" role="tab"
+        <a class="tab-custom" id="conversations-tab-classic" data-bs-toggle="tab" href="#conversations-classic" role="tab"
           aria-controls="conversations-classic" aria-selected="false">Your Conversations</a>
       </li>
     </ul>
@@ -80,7 +80,7 @@
             <% @color = @featured ? "#FA8075" : "#91A0BA" %>
             <a href="<%= post_path(draft)%>">
               <div class="card" style="width: 32%; <% if @unseen_shared_drafts.to_a.include? draft %>background-color: #E6F6FF;<% end %>">
-                <%= image_tag(draft.thumbnail.url(:large2), :class => "card-img-top") %>
+                <%= image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340]), :class => "card-img-top") %>
                 <div class="card-body">
                   <p class="card-text"><%= link_to(draft.user.try(:full_name), draft.user) %> is asking for peer feedback on <%= link_to draft.title, draft %></p>
                   <% if @featured %>

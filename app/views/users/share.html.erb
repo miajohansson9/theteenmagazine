@@ -20,7 +20,7 @@
                  <div class="card" style="width: 32%;">
                    <a href="<%= post_path(draft)%>">
                      <% if draft.thumbnail.exists? %>
-                      <%= image_tag(draft.thumbnail.url(:large2), :class => "card-img-top") %>
+                      <%= image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340], format: 'webp').processed, :class => "card-img-top") %>
                     <% else %>
                       <%= image_tag("thumbnail.png", :class => "card-img-top") %>
                     <% end %>

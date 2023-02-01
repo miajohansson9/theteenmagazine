@@ -1,7 +1,7 @@
 <% @invitations.each do |invitation| %>
   <li class="list-group-item comment pl-0 pr-0" style="background: transparent">
     <div class="d-flex w-100">
-      <% @profile_img = invitation.user.try(:profile)&.exists? ? image_tag(invitation.user.profile.url(:square), :class => "profile_img_small mr-2") : image_tag("profile_image.jpg", :class => "profile_img_small mr-2") %>
+      <% @profile_img = invitation.user.profile.attached? ? image_tag(invitation.user.profile.variant(resize_to_fill: [100,100], format: 'webp').processed, :class => "profile_img_small mr-2") : image_tag("profile_image.jpg", :class => "profile_img_small mr-2") %>
       <%= link_to(@profile_img, invitation.user, target: "_blank") %>
       <div class="li-content0 w-100">
         <p class="m-0">

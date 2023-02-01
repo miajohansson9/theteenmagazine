@@ -1,12 +1,12 @@
 <style lazyload>
   @media(min-width: 800px) {
     .post_image {
-      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [64, 64]) %>);
+      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [560, 280])) %>);
     }
   }
   @media(max-width: 800px) {
     .post_image {
-      background-image: url(<%= url_for(@post.thumbnail.variant(resize: "150x100")) %>);
+      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [150, 100])) %>);
     }
   }
   blockquote {
@@ -60,7 +60,7 @@
             <div class="left_side_flex">
               <% @authors.each do |author| %>
                 <div class="author">
-                  <% @profile = author.profile.exists? ? author.profile.url(:square) : "profile_image.jpg" %>
+                  <% @profile = author.profile.attached? ? author.profile.variant(resize_to_fill: [100,100]) : "profile_image.jpg" %>
                   <%= image_tag(@profile, :class => "profile_img") %>
                   <p class="author_name" style="margin-right: 10px;">By <%= link_to(author.full_name, author) %></p>
                 </div>

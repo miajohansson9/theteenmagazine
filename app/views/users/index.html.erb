@@ -5,8 +5,8 @@
       <div class="flex--profile">
         <div class="profiles">
           <a href= "/writers/<%= user.slug %>/edit">
-            <% if user.profile.exists? %>
-              <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+            <% if user.profile.attached? %>
+              <%= image_tag(user.profile.variant(resize_to_fill: [100, 100], format: 'webp').processed, :class => "profile_img") %>
             <% else %>
               <%= image_tag("profile_image.jpg", :class => "profile_img") %>
             <% end %>

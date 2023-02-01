@@ -2,8 +2,8 @@
 <div class="apply_wrapper pitch_form_wrapper">
   <div class="flex--profile profile-minimal">
     <div class="position-relative" style="width: 120px; margin: 0 auto;">
-      <% if @user.try(:profile)&.exists? %>
-        <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
+      <% if @user.profile.attached? %>
+        <%= image_tag(@user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img") %>
       <% else %>
         <%= image_tag("profile_image.jpg", :class => "profile_img") %>
         <% if @user.try(:editor) %>
@@ -18,16 +18,16 @@
   <div class="classic-tabs mb-4">
     <ul class="nav" id="myClassicTab" role="tablist">
       <li class="nav-item tab-custom">
-        <a class="tab-custom active show" id="home-tab-classic" data-toggle="tab" href="#home-classic"
+        <a class="tab-custom active show" id="home-tab-classic" data-bs-toggle="tab" href="#home-classic"
           role="tab" aria-controls="home-classic" aria-selected="true">Home</a>
       </li>
       <li class="nav-item tab-custom">
-        <a class="tab-custom" id="your-invites-tab-classic" data-toggle="tab" href="#your-invites-classic" role="tab"
+        <a class="tab-custom" id="your-invites-tab-classic" data-bs-toggle="tab" href="#your-invites-classic" role="tab"
           aria-controls="your-invites-classic" aria-selected="false">Your Invites</a>
       </li>
       <% if @user.admin? %>
         <li class="nav-item tab-custom">
-          <a class="tab-custom" id="admin-invites-tab-classic" data-toggle="tab" href="#admin-invites-classic" role="tab"
+          <a class="tab-custom" id="admin-invites-tab-classic" data-bs-toggle="tab" href="#admin-invites-classic" role="tab"
             aria-controls="admin-invites-classic" aria-selected="false">Admin</a>
         </li>
       <% end %>

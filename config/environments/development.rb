@@ -30,6 +30,8 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  config.active_storage.replace_on_assign_to_many = false
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon_dev
 

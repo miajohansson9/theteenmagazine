@@ -120,7 +120,7 @@
           <tr>
             <td align="center" class="section-img" style="background-color: white;">
               <a href="" style=" border-style: none !important; display: block; border: 0 !important;">
-                <% @hero_image_src = @newsletter.hero_image.present? ? "http:#{@newsletter.hero_image.url(:card)}" : "https://s3.amazonaws.com/media.theteenmagazine.com/newsletter_hero_0.png" %>
+                <% @hero_image_src = @newsletter.hero_image.attached? ? url_for(@newsletter.hero_image.variant(resize_to_fill: [800,335])) : "https://s3.amazonaws.com/media.theteenmagazine.com/newsletter_hero_0.png" %>
                 <img src="<%= @hero_image_src %>" style="display: block; width: 590px;" width="590" border="0" alt="" />
               </a>
             </td>
@@ -169,7 +169,7 @@
                                   class="container590">
                   <tr>
                     <td align="center" style="padding-left: 20px;">
-                      <a href="https://www.theteenmagazine.com/<%= post.slug %>" style=" border-style: none !important; border: 0 !important;"><img src="http:<%= post.thumbnail.variant(resize: "540x340") %>" style="display: block; width: 280px;" width="280" border="0" alt="" /></a>
+                      <a href="https://www.theteenmagazine.com/<%= post.slug %>" style=" border-style: none !important; border: 0 !important;"><img src="<%= url_for(post.thumbnail.variant(resize_to_fill: [800,335])) %>" style="display: block; width: 280px;" width="280" border="0" alt="" /></a>
                     </td>
                   </tr>
                 </table>
@@ -416,7 +416,7 @@
                             <td valign="top" class="mcnTextContent" style="padding-top: 0;color: white !important; padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #FFFFFF;font-family: Helvetica;font-size: 12px;line-height: 150%;text-align: center;">
                               <div>
                                 <br>
-                                Copyright © 2020 The Teen Magazine, All rights reserved.<br>
+                                Copyright © <%= Time.now.year %> The Teen Magazine, All rights reserved.<br>
                                 You are receiving this email because you subscribed to The Teen Magazine's newsletter.
                                 <br>
                                 <br>

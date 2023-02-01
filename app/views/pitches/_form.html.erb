@@ -30,7 +30,7 @@
     <% if @pitch.thumbnail.attached? %>
       <%= image_tag(@pitch.thumbnail.variant(resize: "540x380"), alt: @pitch.title, :class => "card-img-top")%>
     <% elsif @pitch.try(:thumbnail).present? %>
-      <%= image_tag(@pitch.thumbnail.url(:card), class: "image_fit_scrn mb-4") %>
+      <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540, 380]), class: "image_fit_scrn mb-4") %>
     <% end %>
     <div class="margin_flds">
       <p>Upload a <a target="_blank" href="/choosing-a-topic#thumbnail-requirements">royalty free and eye catching</a> thumbnail image:</p>

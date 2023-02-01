@@ -4,14 +4,12 @@ ruby '2.7.0'
 gem 'rails', '~> 6.1', '>= 6.1.3'
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
   gem 'byebug', platform: :mri
   gem 'dotenv-rails'
 end
 
 group :development do
-  gem 'sqlite3', '~> 1.6'
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
   gem 'spring'
@@ -19,6 +17,7 @@ group :development do
   gem 'sprockets_better_errors'
 end
 
+gem 'pg'
 gem 'puma', '>= 3.12.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
@@ -48,5 +47,6 @@ gem 'sendgrid-ruby'
 gem 'prettier'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
+gem 'poppler', '~> 3.0', '>= 3.0.7'
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

@@ -12,11 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2023_01_31_174523) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
-    t.integer "byte_size", null: false
+    t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.string "service_name", null: false
@@ -35,7 +38,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -50,7 +53,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.integer "user_id"
   end
 
-  create_table "admins", force: :cascade do |t|
+  create_table "admins", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -67,12 +70,12 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "analytics", force: :cascade do |t|
+  create_table "analytics", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "applies", force: :cascade do |t|
+  create_table "applies", id: :serial, force: :cascade do |t|
     t.string "email"
     t.string "first_name"
     t.string "last_name"
@@ -83,11 +86,11 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.datetime "updated_at", null: false
     t.string "resume_file_name"
     t.string "resume_content_type"
-    t.integer "resume_file_size"
+    t.bigint "resume_file_size"
     t.datetime "resume_updated_at"
     t.string "sample_writing_file_name"
     t.string "sample_writing_content_type"
-    t.integer "sample_writing_file_size"
+    t.bigint "sample_writing_file_size"
     t.datetime "sample_writing_updated_at"
     t.string "grade"
     t.integer "user_id"
@@ -111,7 +114,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.string "kind"
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
@@ -125,17 +128,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
-  create_table "chats", force: :cascade do |t|
-    t.integer "recipient_id"
-    t.integer "sender_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["recipient_id", "sender_id"], name: "index_chats_on_recipient_id_and_sender_id", unique: true
-    t.index ["recipient_id"], name: "index_chats_on_recipient_id"
-    t.index ["sender_id"], name: "index_chats_on_sender_id"
-  end
-
-  create_table "ckeditor_assets", force: :cascade do |t|
+  create_table "ckeditor_assets", id: :serial, force: :cascade do |t|
     t.string "data_file_name", null: false
     t.string "data_content_type"
     t.integer "data_file_size"
@@ -148,7 +141,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
-  create_table "comments", force: :cascade do |t|
+  create_table "comments", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "text"
@@ -166,14 +159,14 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.string "slug"
   end
 
-  create_table "feedback_givens", force: :cascade do |t|
+  create_table "feedback_givens", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "feedback_id"
     t.integer "review_id"
   end
 
-  create_table "feedbacks", force: :cascade do |t|
+  create_table "feedbacks", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "editor_descr"
@@ -181,7 +174,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.boolean "archive"
   end
 
-  create_table "friendly_id_slugs", force: :cascade do |t|
+  create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
     t.string "sluggable_type", limit: 50
@@ -193,7 +186,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
-  create_table "impressions", force: :cascade do |t|
+  create_table "impressions", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "Impression_count"
@@ -211,19 +204,9 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.datetime "alert_viewed_at"
   end
 
-  create_table "mailers", force: :cascade do |t|
+  create_table "mailers", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.text "body"
-    t.integer "user_id"
-    t.integer "chat_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["chat_id"], name: "index_messages_on_chat_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "newsletters", force: :cascade do |t|
@@ -241,7 +224,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.datetime "hero_image_updated_at"
   end
 
-  create_table "outreaches", force: :cascade do |t|
+  create_table "outreaches", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "partner_email"
@@ -249,27 +232,9 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.integer "user_id"
     t.text "email_draft"
     t.boolean "sent"
-    t.text "sponsored_article_pitch"
-    t.decimal "sponsored_article_cost"
   end
 
-  create_table "phrasing_phrase_versions", force: :cascade do |t|
-    t.integer "phrasing_phrase_id"
-    t.text "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["phrasing_phrase_id"], name: "index_phrasing_phrase_versions_on_phrasing_phrase_id"
-  end
-
-  create_table "phrasing_phrases", force: :cascade do |t|
-    t.string "locale"
-    t.string "key"
-    t.text "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "pitches", force: :cascade do |t|
+  create_table "pitches", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.datetime "created_at", null: false
@@ -277,7 +242,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.string "slug"
     t.string "thumbnail_file_name"
     t.string "thumbnail_content_type"
-    t.integer "thumbnail_file_size", limit: 8
+    t.bigint "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
     t.integer "category_id"
     t.integer "user_id"
@@ -297,7 +262,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.index ["updated_at"], name: "index_pitches_on_updated_at"
   end
 
-  create_table "posts", force: :cascade do |t|
+  create_table "posts", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.string "link"
@@ -316,14 +281,14 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.string "category_id"
     t.string "thumbnail_file_name"
     t.string "thumbnail_content_type"
-    t.integer "thumbnail_file_size", limit: 8
+    t.bigint "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
     t.integer "post_impressions", default: 0
     t.integer "ranking"
     t.string "collaboration"
     t.integer "pitch_id"
     t.datetime "publish_at"
-    t.integer "feedback_list", default: 0
+    t.integer "feedback_list", default: [], array: true
     t.boolean "sharing"
     t.boolean "editor_can_make_changes"
     t.datetime "promoting_until"
@@ -340,7 +305,17 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
-  create_table "reviews", force: :cascade do |t|
+  create_table "projects", id: :serial, force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_projects_on_slug", unique: true
+  end
+
+  create_table "reviews", id: :serial, force: :cascade do |t|
     t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -348,11 +323,11 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.boolean "active"
     t.integer "editor_id"
     t.text "notes"
-    t.integer "feedback", default: 0
+    t.integer "feedback", default: [], array: true
     t.datetime "editor_claimed_review_at"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -379,7 +354,7 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.boolean "admin"
     t.string "profile_file_name"
     t.string "profile_content_type"
-    t.integer "profile_file_size", limit: 8
+    t.bigint "profile_file_size"
     t.datetime "profile_updated_at"
     t.boolean "editor"
     t.string "full_name"
@@ -408,7 +383,6 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
     t.boolean "read_articles"
     t.boolean "read_images"
     t.string "last_saw_new_writer_dashboard"
-    t.string "last_saw_dashboard"
     t.string "last_saw_writer_dashboard"
     t.string "became_an_editor"
     t.boolean "completed_editor_onboarding"
@@ -429,6 +403,4 @@ ActiveRecord::Schema.define(version: 2023_01_31_174523) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "messages", "chats"
-  add_foreign_key "messages", "users"
 end

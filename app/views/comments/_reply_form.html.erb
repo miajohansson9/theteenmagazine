@@ -7,7 +7,7 @@
             <svg style="color: black;" width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
           <% end %>
         <% end %>
-        <% @profile_img = reply.user.profile.exists? ? image_tag(reply.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+        <% @profile_img = reply.user.profile.attached? ? image_tag(reply.user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
         <%= link_to(@profile_img, reply.user) %>
         <div class="li-content" style="width: 100%;">
           <h6><%= link_to reply.user.full_name, reply.user %></h6>
@@ -21,7 +21,7 @@
     <% end %>
   </ul>
   <div class="comment_form_wrapper mt-0 pl-0">
-    <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+    <% @profile_img = current_user.profile.attached? ? image_tag(current_user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
     <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
     <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
       <%= f.text_area :text, :placeholder => "Reply to #{parent.user.full_name}", id: "comment_field_reply", class: "comment_val_#{parent.id} comment_field_#{parent.id}", onkeyup: "isDisabled('#{parent.id}')" %>
