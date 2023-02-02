@@ -1,86 +1,86 @@
 <div class="category mb-4">
   <div class="category--show">
-   <div class="other--articles">
-     <div class="flex">
-       <div class="container" id="sharing_with_partners">
-         <h3>Choose featured articles for <%= link_to("Newsletter ##{@newsletter.id}", newsletter_path(@newsletter), style: "font-size: 1.75rem;") %></h3>
-         <h6>Selected articles:</h6>
-         <div class="flex-wrapper flex-posts mb-4">
-           <% @newsletter_posts.each do |post| %>
-            <div class="card" style="width: 32%;">
-               <a href="<%= post_path(post)%>">
-                 <%=image_tag(post.thumbnail.url(:large2), alt: post.title, :class => "card-img-top")%>
-               </a>
-               <div class="card-body">
-                 <% if post.deadline_at.present? %>
-                   <%= render "pitches/deadline_warning_msg", post: post %>
-                 <% end %>
-                 <h4 class="post_ttl"><%= link_to post.title, post, style: "color: black; text-decoration: none;" %></h4>
-                 <p class="card-text">
-                   <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye" class="svg-inline--fa fa-eye fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg> <%= post.post_impressions %> views
-                 </p>
-                 <% @class = @newsletter.sent_at.present? ? "disabled" : "" %>
-                 <%= form_for post, :url => update_newsletter_post_path(post), html: { method: :patch } do |f| %>
-                   <%= f.hidden_field :newsletter_id, value: nil %>
-                   <%= f.hidden_field :newsletter, value: @newsletter.id %>
-                   <div class="btn_cntnr mb-0 pb-0">
-                     <span data-toggle="tooltip" title="<% if @class.eql? "disabled" %>Newsletter already sent<% end %>" style="float: right;">
-                       <%= f.submit 'Remove',
+    <div class="other--articles">
+      <div class="flex">
+        <div class="container" id="sharing_with_partners">
+          <h3>Choose featured articles for <%= link_to("Newsletter ##{@newsletter.id}", newsletter_path(@newsletter), style: "font-size: 1.75rem;") %></h3>
+          <h6>Selected articles:</h6>
+          <div class="flex-wrapper flex-posts mb-4">
+            <% @newsletter_posts.each do |post| %>
+              <div class="card" style="width: 32%;">
+                <a href="<%= post_path(post)%>">
+                  <%=image_tag(post.thumbnail.url(:large2), alt: post.title, :class => "card-img-top")%>
+                </a>
+                <div class="card-body">
+                  <% if post.deadline_at.present? %>
+                    <%= render "pitches/deadline_warning_msg", post: post %>
+                  <% end %>
+                  <h4 class="post_ttl"><%= link_to post.title, post, style: "color: black; text-decoration: none;" %></h4>
+                  <p class="card-text">
+                    <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye" class="svg-inline--fa fa-eye fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg> <%= post.post_impressions %> views
+                  </p>
+                  <% @class = @newsletter.sent_at.present? ? "disabled" : "" %>
+                  <%= form_for post, :url => update_newsletter_post_path(post), html: { method: :patch } do |f| %>
+                    <%= f.hidden_field :newsletter_id, value: nil %>
+                    <%= f.hidden_field :newsletter, value: @newsletter.id %>
+                    <div class="btn_cntnr mb-0 pb-0">
+                      <span data-toggle="tooltip" title="<% if @class.eql? "disabled" %>Newsletter already sent<% end %>" style="float: right;">
+                        <%= f.submit 'Remove',
                         data: {confirm: "You're removing this article from Newsletter #{@newsletter.id}. Do you want to continue?"},
                         class: "mt-0 btn btn-primary #{@class}", id: "btn_dark" %>
-                     </span>
-                   </div>
-                <% end %>
-               </div>
-             </div>
-           <% end %>
-         </div>
-         <h6>Explore articles:</h6>
-         <div class="flex_horizontal">
-           <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
-             <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Searching in articles" %>
-           <% end %>
-         </div>
-         <% if @query.present? %>
-           <h2>Search for article... <span style="background-color: #FCD04D"><%= @query %></span></h2>
-           <br>
-         <% end %>
-         <% if @posts.present? %>
-           <div class="flex-wrapper flex-posts">
-             <% @posts.each do |post| %>
-               <div class="card" style="width: 32%;">
-                 <a href="<%= post_path(post)%>">
-                   <%=image_tag(post.thumbnail.url(:large2), alt: post.title, :class => "card-img-top")%>
-                 </a>
-                 <div class="card-body">
-                   <% if post.deadline_at.present? %>
-                     <%= render "pitches/deadline_warning_msg", post: post %>
-                   <% end %>
-                   <h4 class="post_ttl"><%= link_to post.title, post, style: "color: black; text-decoration: none;" %></h4>
-                   <p class="card-text">
-                     <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye" class="svg-inline--fa fa-eye fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg> <%= post.post_impressions %> views
-                   </p>
-                   <% @class = post.newsletter_id.present? ? "disabled" : "" %>
-                   <%= form_for post, :url => update_newsletter_post_path(post), html: { method: :patch } do |f| %>
-                   <%= f.hidden_field :newsletter_id, value: @newsletter.id %>
-                    <div class="btn_cntnr mb-0 pb-0">
-                      <span data-toggle="tooltip" title="<% if @class.eql? "disabled" %>Featured in newsletter <%= post.newsletter_id %><% end %>" style="float: right;">
-                         <%= f.submit 'Feature',
-                          data: {confirm: "You're choosing to feature this article in Newsletter #{@newsletter.id}. Do you want to continue?"},
-                          class: "mt-0 btn btn-primary #{@class}", id: "btn_dark" %>
                       </span>
                     </div>
-                   <% end %>
-                 </div>
-               </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <h6>Explore articles:</h6>
+          <div class="flex_horizontal">
+            <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
+              <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Searching in articles" %>
+            <% end %>
+          </div>
+          <% if @query.present? %>
+            <h2>Search for article... <span style="background-color: #FCD04D"><%= @query %></span></h2>
+            <br>
+          <% end %>
+          <% if @posts.present? %>
+            <div class="flex-wrapper flex-posts">
+              <% @posts.each do |post| %>
+                <div class="card" style="width: 32%;">
+                  <a href="<%= post_path(post)%>">
+                    <%=image_tag(post.thumbnail.url(:large2), alt: post.title, :class => "card-img-top")%>
+                  </a>
+                  <div class="card-body">
+                    <% if post.deadline_at.present? %>
+                      <%= render "pitches/deadline_warning_msg", post: post %>
+                    <% end %>
+                    <h4 class="post_ttl"><%= link_to post.title, post, style: "color: black; text-decoration: none;" %></h4>
+                    <p class="card-text">
+                      <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="eye" class="svg-inline--fa fa-eye fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg> <%= post.post_impressions %> views
+                    </p>
+                    <% @class = post.newsletter_id.present? ? "disabled" : "" %>
+                    <%= form_for post, :url => update_newsletter_post_path(post), html: { method: :patch } do |f| %>
+                      <%= f.hidden_field :newsletter_id, value: @newsletter.id %>
+                      <div class="btn_cntnr mb-0 pb-0">
+                        <span data-toggle="tooltip" title="<% if @class.eql? "disabled" %>Featured in newsletter <%= post.newsletter_id %><% end %>" style="float: right;">
+                          <%= f.submit 'Feature',
+                          data: {confirm: "You're choosing to feature this article in Newsletter #{@newsletter.id}. Do you want to continue?"},
+                          class: "mt-0 btn btn-primary #{@class}", id: "btn_dark" %>
+                        </span>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
             </div>
             <%== pagy_nav(@pagy).html_safe %>
           <% else %>
             <p style="margin-top: -10px;">Your search did not have any results.</p>
           <% end %>
-       </div>
-     </div>
-   </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

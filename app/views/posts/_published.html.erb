@@ -1,24 +1,23 @@
 <style lazyload>
-@media(min-width: 800px) {
-  .post_image {
-    background-image: url(<%= @post.thumbnail.url(:large2) %>);
+  @media(min-width: 800px) {
+    .post_image {
+      background-image: url(<%= url_for(@post.thumbnail.url(:large)) %>);
+    }
   }
-}
-@media(max-width: 800px) {
-  .post_image {
-    background-image: url(<%= @post.thumbnail.url(:medium) %>);
+  @media(max-width: 800px) {
+    .post_image {
+      background-image: url(<%= url_for(@post.thumbnail.url(:medium)) %>);
+    }
   }
-}
-blockquote {
-  margin: 1em 0;
-  font-style: italic;
-}
-.twitter-tweet {
-  margin: 0 auto;
-  display: block;
-}
+  blockquote {
+    margin: 1em 0;
+    font-style: italic;
+  }
+  .twitter-tweet {
+    margin: 0 auto;
+    display: block;
+  }
 </style>
-
 <div class="div">
   <div class="post_image">
   </div>
@@ -83,7 +82,7 @@ blockquote {
           <div class="flex_wrapper_content">
             <div class="post_wrapper">
               <div id="selectable_content" class="post_content">
-                  <%= markdown @post.content %>
+                <%= markdown @post.content %>
               </div>
               <% if current_user && (current_user.id == @post.user_id || (@post.collaboration&.include? current_user.email) || current_user.admin?) %>
                 <div id="admin_links" style="border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;text-align: center;padding: 1em 0;margin: 1em 0;margin-top: 0;">
@@ -96,10 +95,10 @@ blockquote {
                 </div>
               <% end %>
               <div id= "background">
-               <%= render :partial => 'users/profile', locals: {user: @user} %>
-               <% @collabs.each do |collab| %>
-                <%= render :partial => 'users/profile', locals: {user: collab} %>
-               <% end %>
+                <%= render :partial => 'users/profile', locals: {user: @user} %>
+                <% @collabs.each do |collab| %>
+                  <%= render :partial => 'users/profile', locals: {user: collab} %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -133,26 +132,26 @@ blockquote {
   </div>
 </div>
 <script>
-$(document).ready(function() {
-   if (<%= @post.show_disclosure %>) {
-     $('.content_wrapper a')
-       .not("a[href*=theteenmagazine]")
-       .attr('rel','nofollow');
-   }
-   $('.fb-share').click(function(e) {
-       e.preventDefault();
-       window.open($(this).attr('href'), 'fbShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-       return false;
-   });
-   $('.js-share-twitter-link').click(function(e) {
-       e.preventDefault();
-       var href = $(this).attr('href');
-       window.open(href, "Twitter", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-   });
-   $('.js-share-pinterest-link').click(function(e) {
-       e.preventDefault();
-       var href = $(this).attr('href');
-       window.open(href, "Pinterest", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-   });
-});
+  $(document).ready(function() {
+     if (<%= @post.show_disclosure %>) {
+       $('.content_wrapper a')
+         .not("a[href*=theteenmagazine]")
+         .attr('rel','nofollow');
+     }
+     $('.fb-share').click(function(e) {
+         e.preventDefault();
+         window.open($(this).attr('href'), 'fbShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+         return false;
+     });
+     $('.js-share-twitter-link').click(function(e) {
+         e.preventDefault();
+         var href = $(this).attr('href');
+         window.open(href, "Twitter", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+     });
+     $('.js-share-pinterest-link').click(function(e) {
+         e.preventDefault();
+         var href = $(this).attr('href');
+         window.open(href, "Pinterest", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+     });
+  });
 </script>

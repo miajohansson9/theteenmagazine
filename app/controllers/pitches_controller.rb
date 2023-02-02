@@ -88,6 +88,7 @@ class PitchesController < ApplicationController
   def update
     @categories = Category.active.or(Category.where(id: @pitch.category_id))
     @post = Post.find_by(user_id: @pitch.claimed_id, pitch_id: @pitch.id)
+    # @pitch.thumbnail.attach(pitch_params[:thumbnail])
     if @pitch.update pitch_params
       if (@pitch.status.eql? 'Ready for Review') &&
            !(pitch_params[:status].eql? 'Ready for Review')

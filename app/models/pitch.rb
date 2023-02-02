@@ -3,11 +3,14 @@ class Pitch < ApplicationRecord
   belongs_to :category
   has_many :posts
 
+  # has_one_attached :thumbnail
+
   validates_length_of :title, minimum: 30, maximum: 80
   validates :title, presence: true
   validates :description, presence: true
   validates :category_id, presence: true
-  validates :thumbnail, presence: true
+  # Validate the attached image is image/jpg, image/png, etc
+  # validates :thumbnail, presence: true, blob: { content_type: ['image/png', 'image/gif', 'image/jpeg', 'image/jpg'], size: { less_than: 2.megabytes , message: 'must be less than 2MB in size' } }
   validates :deadline, presence: true, if: :is_editor?
 
   scope :is_submitted, -> { where(status: 'Ready for Review') }
@@ -33,7 +36,7 @@ class Pitch < ApplicationRecord
                     restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
 
   # Validate the attached image is image/jpg, image/png, etc
-  validates_attachment_content_type :thumbnail, content_type: %r{\Aimage\/.*\Z}
+  # validates_attachment_content_type :thumbnail, content_type: %r{\Aimage\/.*\Z}
 
   extend FriendlyId
   friendly_id :title

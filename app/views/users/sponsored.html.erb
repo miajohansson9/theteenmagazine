@@ -1,29 +1,29 @@
 <br>
 <div class="category">
-   <div class="category--show">
-     <div class="other--articles">
-       <div class="flex">
-         <div class="container">
-           <h2 class="mb-4">Published articles: <%= link_to(@partner.full_name, @partner) %> x The Teen Magazine</h2>
-           <% @published.each do |post| %>
-             <div class="thumbnail">
-               <div class="container--image">
-                 <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
-               </div>
-               <div class="thumbnail--container">
-                 <p class="date_post_preview"><%= post.category.name %></p>
-                 <h3 class="article_title"><%= link_to post.title, post %></h3>
-                 <p class="date_post_preview"><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
-               </div>
-             </div>
-           <% end %>
-           <% if @published.count.eql? 0 %>
+  <div class="category--show">
+    <div class="other--articles">
+      <div class="flex">
+        <div class="container">
+          <h2 class="mb-4">Published articles: <%= link_to(@partner.full_name, @partner) %> x The Teen Magazine</h2>
+          <% @published.each do |post| %>
+            <div class="thumbnail">
+              <div class="container--image">
+                <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
+              </div>
+              <div class="thumbnail--container">
+                <p class="date_post_preview"><%= post.category.name %></p>
+                <h3 class="article_title"><%= link_to post.title, post %></h3>
+                <p class="date_post_preview"><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
+              </div>
+            </div>
+          <% end %>
+          <% if @published.count.eql? 0 %>
             <i class="d-block mb-4">None of your articles with The Teen Magazine have been published yet.</i>
-           <% end %>
-         </div>
-         <a class="apply" href="/apply" target="blank">
-         </a>
-       </div>
-     </div>
-   </div>
+          <% end %>
+        </div>
+        <a class="apply" href="/apply" target="blank">
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

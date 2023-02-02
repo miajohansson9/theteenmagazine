@@ -1,24 +1,23 @@
 <style lazyload>
-@media(min-width: 800px) {
-  .post_image {
-    background-image: url(<%= @post.thumbnail.url(:large2) %>);
+  @media(min-width: 800px) {
+    .post_image {
+      background-image: url(<%= @post.thumbnail.variant(:large) %>);
+    }
   }
-}
-@media(max-width: 800px) {
-  .post_image {
-    background-image: url(<%= @post.thumbnail.url(:medium) %>);
+  @media(max-width: 800px) {
+    .post_image {
+      background-image: url(<%= @post.thumbnail.url(:large2) %>);
+    }
   }
-}
-blockquote {
-  margin: 1em 0;
-  font-style: italic;
-}
-.twitter-tweet {
-  margin: 0 auto;
-  display: block;
-}
+  blockquote {
+    margin: 1em 0;
+    font-style: italic;
+  }
+  .twitter-tweet {
+    margin: 0 auto;
+    display: block;
+  }
 </style>
-
 <div class="div">
   <% @most_recent_review = @post.reviews.last %>
   <% if !@most_recent_review.nil? && !(@most_recent_review.try(:status).eql? "In Progress") %>
@@ -93,7 +92,7 @@ blockquote {
           <div class="flex_wrapper_content">
             <div class="post_wrapper">
               <div id="selectable_content" class="post_content">
-                  <%= markdown @post.content %>
+                <%= markdown @post.content %>
               </div>
               <% if current_user && (current_user.id == @post.user_id || (@post.collaboration&.include? current_user.email) || current_user.admin?) %>
                 <div id="admin_links" style="border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;text-align: center;padding: 1em 0;margin: 1em 0;margin-top: 0;">
@@ -106,10 +105,10 @@ blockquote {
                 </div>
               <% end %>
               <div id= "background">
-               <%= render :partial => 'users/profile', locals: {user: @user} %>
-               <% @collabs.each do |collab| %>
-                <%= render :partial => 'users/profile', locals: {user: collab} %>
-               <% end %>
+                <%= render :partial => 'users/profile', locals: {user: @user} %>
+                <% @collabs.each do |collab| %>
+                  <%= render :partial => 'users/profile', locals: {user: collab} %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -146,7 +145,6 @@ blockquote {
     <% end %>
   };
 </script>
-
 <% if @post.sharing || @post.partner_id.present? %>
   <%= javascript_include_tag "plugins/index_bundle" %>
 <% end %>

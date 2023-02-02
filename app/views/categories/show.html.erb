@@ -5,29 +5,29 @@
     </div>
   </div>
   <div class="category--show">
-   <div class="other--articles">
-     <div class="flex">
-       <div class="container">
-         <% @category_posts.each_with_index do |post, index| %>
-           <div class="thumbnail">
-             <div class="container--image">
-               <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
-             </div>
-             <div class="thumbnail--container">
-               <p class="date_post_preview"><%= post.category.name %></p>
-               <h3 class="article_title"><%= link_to post.title, post %></h3>
-               <p class="date_post_preview"><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
-             </div>
-           </div>
-           <% if (index + 1) % 2 == 0 %>
-            <div class="content_hint"></div>
-           <% end %>
-         <% end %>
-       </div>
-       <a class="apply" href="/apply" target="blank">
-       </a>
-     </div>
-     <%== pagy_nav(@pagy).html_safe %>
-   </div>
+    <div class="other--articles">
+      <div class="flex">
+        <div class="container">
+          <% @category_posts.each_with_index do |post, index| %>
+            <div class="thumbnail">
+              <div class="container--image">
+                <%=link_to(image_tag(post.thumbnail.url(:large2), :class => "image_thumbnail"), post )%>
+              </div>
+              <div class="thumbnail--container">
+                <p class="date_post_preview"><%= post.category.name %></p>
+                <h3 class="article_title"><%= link_to post.title, post %></h3>
+                <p class="date_post_preview"><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
+              </div>
+            </div>
+            <% if (index + 1) % 2 == 0 %>
+              <div class="content_hint"></div>
+            <% end %>
+          <% end %>
+        </div>
+        <a class="apply" href="/apply" target="blank">
+        </a>
+      </div>
+      <%== pagy_nav(@pagy).html_safe %>
+    </div>
   </div>
 </div>

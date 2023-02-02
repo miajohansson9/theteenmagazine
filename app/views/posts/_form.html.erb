@@ -5,7 +5,9 @@
         <h6 class="mt-3 text-danger"><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h6>
         <ul>
           <% @post.errors.full_messages.each do |msg| %>
-          <li class="text-danger"><h6><%= msg %></h6></li>
+            <li class="text-danger">
+              <h6><%= msg %></h6>
+            </li>
           <% end %>
         </ul>
       <% end %>
@@ -87,7 +89,6 @@
 <% else %>
   <h1 class="title">This article has already been published and can only be edited by the author(s) and admins.</h1>
 <% end %>
-
 <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
 <script type="text/javascript">
   $('document').ready(function(){
@@ -156,7 +157,6 @@
     serviceId: "<%= @service_id %>"
   };
 </script>
-
 <style>
   #cke_1_top .cke_button_icon {
     background-image: url('<%= request.base_url %>/assets/ckeditor/skins/moono-lisa/icons_hidpi.png') !important;

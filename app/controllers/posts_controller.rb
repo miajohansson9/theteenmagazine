@@ -435,6 +435,7 @@ class PostsController < ApplicationController
     @prev_review = @post.reviews.last.clone
     @prev_status = @post.reviews.last.status.clone
     @prev_featured = @post.featured.clone
+    # @post.thumbnail.attach(post_params[:thumbnail])
     if @post.update post_params
       if (@post.content.include? 'instagram.com/p/') &&
            !(@post.content.include? 'instgrm.Embeds.process()')
@@ -598,7 +599,7 @@ class PostsController < ApplicationController
   def set_post_meta_tags
     set_meta_tags title: @post.title,
                   description: @post.meta_description,
-                  image: 'https:' + @post.thumbnail.url(:large2),
+                  # image: url_for(@post.thumbnail),
                   fb: {
                     app_id: '1190455601051741'
                   },
@@ -608,7 +609,7 @@ class PostsController < ApplicationController
                     title: @post.title,
                     description: @post.meta_description,
                     image: {
-                      url: 'https:' + @post.thumbnail.url(:large2),
+                      # url: url_for(@post.thumbnail),
                       alt: @post.title
                     },
                     site_name: 'The Teen Magazine'
@@ -622,7 +623,7 @@ class PostsController < ApplicationController
                     title: @post.title,
                     description: @post.meta_description,
                     creator: @post.user.full_name,
-                    image: 'https:' + @post.thumbnail.url(:large),
+                    # image: url_for(@post.thumbnail),
                     domain: 'https://www.theteenmagazine.com/'
                   }
   end
