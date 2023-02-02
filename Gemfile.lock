@@ -1674,6 +1674,7 @@ DEPENDENCIES
   mail_form (~> 1.5, >= 1.5.1)
   meta-tags (~> 2.1)
   mini_magick
+  mini_portile2 (~> 2.8.1)
   nokogiri (~> 1.13, >= 1.13.3)
   pagy
   paperclip (>= 5.2.0)
