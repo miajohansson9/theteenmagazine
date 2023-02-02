@@ -1,7 +1,15 @@
+<style>
+.carousel-item {
+    -webkit-transition: all .4s ease-in-out !important;
+    -o-transition: all .4s ease-in-out !important;
+    transition: all .4s ease-in-out !important;
+}
+</style>
+
 <!--Carousel Wrapper-->
 <div>
   <h6 class="mb-4 text-center ml-4 mr-4">Meet the writers published this week on The Teen Magazine</h6>
-  <div style="width: 100%;" id="multi-item-example" data-interval="false" class="carousel slide carousel-multi-item">
+  <div style="width: 100%;" id="multi-item-example" class="carousel slide carousel-multi-item">
     <!--Slides-->
     <div class="carousel-inner" role="listbox">
       <% users.each_with_index do |user, index| %>
@@ -14,14 +22,12 @@
     </div>
     <!--Controls-->
     <div class="controls-top">
-      <a class="left-control" href="#multi-item-example" data-slide="prev">
+      <a class="carousel-control-prev" data-bs-target="#multi-item-example" data-bs-slide="prev">
         <svg width="40px" height="40px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left" class="svg-inline--fa fa-angle-left fa-w-8" role="img" viewBox="0 0 256 512"><path fill="currentColor" d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path></svg>
       </a>
-      <a class="right-control" href="#multi-item-example" data-slide="next">
+      <a class="carousel-control-next" data-bs-target="#multi-item-example" data-bs-slide="next">
         <svg width="40px" height="40px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" class="svg-inline--fa fa-angle-right fa-w-8" role="img" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
       </a>
-    </div>
-    <!--/.Controls-->
-    <!--/.Slides-->
+    </div> 
   </div>
-</div>
+</div> 

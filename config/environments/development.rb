@@ -88,15 +88,15 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  config.paperclip_defaults = {
-    storage: :s3,
-    s3_region: 'us-east-1',
-    bucket: 'media.theteenmagazine.com',
-    s3_credentials: "#{Rails.root}/config/s3.yml",
-    s3_host_alias: 'media.theteenmagazine.com',
-    url: ':s3_alias_url',
-    path: ':class/:attachment/:id_partition/:style/:filename'
-  }
+  # config.paperclip_defaults = {
+  #   storage: :s3,
+  #   s3_region: 'us-east-1',
+  #   bucket: 'media.theteenmagazine.com',
+  #   s3_credentials: "#{Rails.root}/config/s3.yml",
+  #   s3_host_alias: 'media.theteenmagazine.com',
+  #   url: ':s3_alias_url',
+  #   path: ':class/:attachment/:id_partition/:style/:filename'
+  # }
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true

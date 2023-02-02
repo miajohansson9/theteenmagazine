@@ -11,12 +11,13 @@ class Apply < ActiveRecord::Base
   attributes :grade, validate: true
   attributes :nickname, captcha: true
 
-  has_attached_file :resume
-  validates_attachment_content_type :resume, content_type: ['application/pdf']
-
-  has_attached_file :sample_writing
-  validates_attachment_content_type :sample_writing,
-                                    content_type: ['application/pdf']
+  has_one_attached :resume
+  has_one_attached :sample_writing
+  # has_attached_file :resume
+  # validates_attachment_content_type :resume, content_type: ['application/pdf']
+  # has_attached_file :sample_writing
+  # validates_attachment_content_type :sample_writing,
+  #                                   content_type: ['application/pdf']
 
   def validate
     errors.add(:grade, "can't be blank") if grade.blank?

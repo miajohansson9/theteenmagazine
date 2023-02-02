@@ -266,12 +266,6 @@ class PostsController < ApplicationController
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
     @trending = @post.category.posts.published.trending.limit(4)
-    puts @trending.count
-    puts "KJSDLFKJSD"
-    if @trending.length < 4
-      @trending =
-        @post.category.posts.published.order('created_at desc').limit(4)
-    end
     render partial: 'posts/partials/trending'
   end
 
