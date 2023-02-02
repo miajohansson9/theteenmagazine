@@ -49,6 +49,7 @@ gem 'mini_magick'
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
 gem 'poppler'
 gem "aws-sdk-s3", require: false
+gem 'mini_portile2'
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 

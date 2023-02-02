@@ -21,5 +21,4 @@ test:
   database: theteenmagazine_test
 
 production:
-  <<: *default
-  database: theteenmagazine_production
+  url: <%= ENV['DATABASE_URL'] %>
