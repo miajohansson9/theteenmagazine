@@ -1688,7 +1688,6 @@ DEPENDENCIES
   rails_12factor
   redcarpet (~> 3.5)
   render_async
-  ruby-vips
   sendgrid-ruby
   sitemap_generator
   spring
