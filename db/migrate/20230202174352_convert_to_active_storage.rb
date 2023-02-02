@@ -65,12 +65,12 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
     end
   end
 
-  #   # postgres
-  #   get_blob_id = 'LASTVAL()'
-  #   # mysql / mariadb
-  #   # get_blob_id = 'LAST_INSERT_ID()'
-  #   # sqlite
-  #   # get_blob_id = 'LAST_INSERT_ROWID()'
+    # postgres
+    # get_blob_id = 'LASTVAL()'
+    # mysql / mariadb
+    # get_blob_id = 'LAST_INSERT_ID()'
+    # sqlite
+  #   get_blob_id = 'LAST_INSERT_ROWID()'
 
   #   active_storage_blob_statement = ActiveRecord::Base.connection.raw_connection.prepare(<<-SQL)
   #     INSERT INTO active_storage_blobs (
@@ -154,4 +154,3 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
     end
   end
 end
-
