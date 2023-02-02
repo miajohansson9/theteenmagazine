@@ -105,16 +105,16 @@ class Post < ApplicationRecord
 
   accepts_nested_attributes_for :reviews, :user
 
-  has_attached_file :thumbnail,
-                    styles: {
-                      medium: '150x100#',
-                      large: '560x280#',
-                      large2: '540x340#'
-                    },
-                    restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
+  # has_attached_file :thumbnail,
+  #                   styles: {
+  #                     medium: '150x100#',
+  #                     large: '560x280#',
+  #                     large2: '540x340#'
+  #                   },
+  #                   restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
 
   # Validate the attached image is image/jpg, image/png, etc
-  validates_attachment_content_type :thumbnail, content_type: %r{\Aimage\/.*\Z}
+  # validates_attachment_content_type :thumbnail, content_type: %r{\Aimage\/.*\Z}
 
   extend FriendlyId
   friendly_id :title, use: :history
