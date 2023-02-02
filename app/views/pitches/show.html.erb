@@ -34,9 +34,9 @@
       </i></p>
   <% end %>
   <% if @pitch.thumbnail.attached? %>
-    <%= image_tag(@pitch.thumbnail.url(:card), alt: @pitch.title, :class => "card-img-top")%>
+    <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: @pitch.title, :class => "card-img-top")%>
   <% elsif @pitch.try(:thumbnail).present? %>
-    <%= image_tag(@pitch.thumbnail.url(:card), class: "image_fit_scrn mb-4") %>
+    <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540, 380]), class: "image_fit_scrn mb-4") %>
   <% end %>
   <%= markdown @pitch.description %>
   <% if @pitch.requirements.present? %>

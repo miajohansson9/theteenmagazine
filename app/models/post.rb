@@ -6,6 +6,8 @@ class Post < ApplicationRecord
   has_many :reviews
   has_many :comments, dependent: :destroy
 
+  has_one_attached :thumbnail
+  
   validates :title, presence: true
   validates :content, presence: true
 
@@ -47,9 +49,7 @@ class Post < ApplicationRecord
         }
   scope :published,
         -> {
-          joins(:reviews)
-            .where(reviews: { status: 'Approved for Publishing', active: true })
-            .where('publish_at < ?', Time.now)
+          includes(:reviews).where(reviews: { status: 'Approved for Publishing', active: true }).where('publish_at < ?', Time.now)
         }
   scope :has_been_submitted,
         -> {
@@ -83,9 +83,7 @@ class Post < ApplicationRecord
 
   scope :by_promoted_then_updated_date,
         -> {
-          order(
-            'CASE WHEN promoting_until IS NOT NULL AND promoting_until > CURRENT_TIMESTAMP THEN 0 ELSE 1 END, posts.updated_at DESC'
-          )
+          order(:promoting_until, updated_at: :desc)
         }
 
   def is_published?
@@ -107,16 +105,16 @@ class Post < ApplicationRecord
 
   accepts_nested_attributes_for :reviews, :user
 
-  has_attached_file :thumbnail,
-                    styles: {
-                      medium: '150x100#',
-                      large: '560x280#',
-                      large2: '540x340#'
-                    },
-                    restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
+  # has_attached_file :thumbnail,
+  #                   styles: {
+  #                     medium: '150x100#',
+  #                     large: '560x280#',
+  #                     large2: '540x340#'
+  #                   },
+  #                   restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
 
   # Validate the attached image is image/jpg, image/png, etc
-  validates_attachment_content_type :thumbnail, content_type: %r{\Aimage\/.*\Z}
+  # validates_attachment_content_type :thumbnail, content_type: %r{\Aimage\/.*\Z}
 
   extend FriendlyId
   friendly_id :title, use: :history

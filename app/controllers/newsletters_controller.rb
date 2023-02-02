@@ -9,7 +9,8 @@ class NewslettersController < ApplicationController
 
   def new
     @newsletter =
-      Newsletter.find_by(kind: nil) || current_user.newsletters.create(hero_image: Newsletter.not_nil.last.try(:hero_image))
+      Newsletter.find_by(kind: nil) || current_user.newsletters.new
+    @newsletter.hero_image.attach(Newsletter.not_nil.last.try(:hero_image).blob)
     @pagy, @posts =
       pagy(
         Post.published.where(newsletter_id: nil),
@@ -33,6 +34,7 @@ class NewslettersController < ApplicationController
 
   def create
     @newsletter = current_user.newsletters.build(newsletter_params)
+    @newsletter.hero_image.attach(newsletter_params[:hero_image])
     @newsletter.save
   end
 

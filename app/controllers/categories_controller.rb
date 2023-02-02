@@ -54,6 +54,7 @@ class CategoriesController < ApplicationController
   end
 
   def update
+    @category.image.attach(category_params[:image])
     if @category.update category_params
       redirect_to @category, notice: 'Changes were successfully saved!'
     else
@@ -70,7 +71,7 @@ class CategoriesController < ApplicationController
     if (user_signed_in? && current_user.admin?)
       @category = Category.new(category_params)
     end
-
+    @category.image.attach(category_params[:image])
     if @category.save
       redirect_to @category,
                   notice:

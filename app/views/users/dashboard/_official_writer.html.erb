@@ -6,26 +6,26 @@
         <div style="padding-top: 30px;">
           <div class="classic-tabs"
             <% if @show_onboarding_full %>
-              data-step data-index="6" data-onboarding-content="Earn credits and boost your published articles to reach a wider audience."
+              data-step data-index="7" data-onboarding-content="Earn credits and boost your published articles to reach a wider audience."
             <% end %>
           >
             <ul class="nav mt-0" id="myClassicTab" role="tablist">
               <li class="nav-item tab-custom">
-                <a class="tab-custom active show" id="home-tab-classic" data-toggle="tab" href="#home-classic"
+                <a class="tab-custom active show" id="home-tab-classic" data-bs-toggle="tab" href="#home-classic"
                   role="tab" aria-controls="home-classic" aria-selected="true">Home</a>
               </li>
               <li class="nav-item tab-custom">
-                <a class="tab-custom" id="be-promoted-tab-classic" data-toggle="tab" href="#be-promoted-classic" role="tab"
+                <a class="tab-custom" id="be-promoted-tab-classic" data-bs-toggle="tab" href="#be-promoted-classic" role="tab"
                   aria-controls="be-promoted-classic" aria-selected="false">Boost an Article
                 </a>
               </li>
               <li class="nav-item tab-custom">
-                <a class="tab-custom" id="earn-points-tab-classic" data-toggle="tab" href="#earn-points-classic" role="tab"
+                <a class="tab-custom" id="earn-points-tab-classic" data-bs-toggle="tab" href="#earn-points-classic" role="tab"
                   aria-controls="earn-points-classic" aria-selected="false">Earn Credits</a>
               </li>
               <% if false %>
                 <li class="nav-item tab-custom">
-                  <a class="tab-custom" id="admin-invites-tab-classic" data-toggle="tab" href="#admin-invites-classic" role="tab"
+                  <a class="tab-custom" id="admin-invites-tab-classic" data-bs-toggle="tab" href="#admin-invites-classic" role="tab"
                     aria-controls="admin-invites-classic" aria-selected="false">Admin</a>
                 </li>
               <% end %>
@@ -91,7 +91,7 @@
             <ul class="list-group list-group-flush whats-new">
               <% @pitches.each do |pitch| %>
                 <li class="list-group-item">
-                  <% @profile_img = pitch.user.try(:profile)&.exists? ? image_tag(pitch.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+                  <% @profile_img = pitch.user.profile.attached? ? image_tag(pitch.user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
                   <%= link_to(@profile_img, pitch.user) %>
                   <div><%= link_to(pitch.user.try(:full_name), pitch.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
                   <br><span class="date_ago"><%= time_ago_in_words(pitch.created_at) %> ago</span></div>
@@ -175,7 +175,7 @@
 <% if @show_badge_popup %>
   <script type="text/javascript">
     $(document).ready(function(){
-      $('#newBadgeModal').modal({backdrop: 'static'});
+      $('#newBadgeModal').modal('show');
     });
   </script>
 <% end %>

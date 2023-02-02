@@ -13,8 +13,8 @@
   <% @editors.each do | user | %>
       <% if user != nil %>
         <div class="flex--profile">
-          <% if user.profile.exists? %>
-            <%= image_tag(user.profile.url(:square), :class => "profile_img") %>
+          <% if user.profile.attached? %>
+            <%= image_tag(user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img") %>
           <% else %>
             <%= image_tag("profile_image.jpg", :class => "profile_img") %>
           <% end %>

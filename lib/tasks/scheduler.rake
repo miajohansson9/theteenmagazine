@@ -32,7 +32,7 @@ task run_weekly_tasks: :environment do
       @newsletter.posts.each do |post|
         ApplicationMailer.featured_in_newsletter(post.user, post).deliver
       end
-      @newsletter.update_attributes(sent_at: Time.now)
+      @newsletter.update(sent_at: Time.now)
     end
   end
 
@@ -72,9 +72,9 @@ task run_weekly_tasks: :environment do
     Post.draft.each do |post|
       if post.sharing
         if post.shared_at.nil?
-          post.update_attributes('sharing' => false)
+          post.update('sharing' => false)
         elsif post.shared_at < Time.now - 1.month
-          post.update_attributes('shared_at' => nil, 'sharing' => false)
+          post.update('shared_at' => nil, 'sharing' => false)
         end
       end
     end
@@ -170,7 +170,7 @@ task run_nightly_tasks: :environment do
                (Time.now - 1.week).month
            ) && !(editor.admin || editor.skip_assignment)
           ApplicationMailer.removed_editor_from_team(editor).deliver
-          editor.update_attributes(
+          editor.update(
             'editor' => false,
             'became_an_editor' => nil,
             'completed_editor_onboarding' => nil
@@ -210,7 +210,7 @@ task run_nightly_tasks: :environment do
     # Update monthly extensions for active writers
     User.active.each do |user|
       begin
-        user.update_attributes('extensions' => user.extensions + 1)
+        user.update('extensions' => user.extensions + 1)
       rescue StandardError
         next
       end
@@ -228,8 +228,8 @@ task run_nightly_tasks: :environment do
           @post.reviews.each { |review| review.destroy }
           @post.title = "#{@post.title} (locked)"
           @post.save
-          @post.pitch.update_attributes('claimed_id' => nil)
-          @post.pitch.update_attributes('archive' => !@post.pitch.user.editor)
+          @post.pitch.update('claimed_id' => nil)
+          @post.pitch.update('archive' => !@post.pitch.user.editor)
           @slug =
             FriendlyId::Slug.where(
               slug: @post.pitch.slug,

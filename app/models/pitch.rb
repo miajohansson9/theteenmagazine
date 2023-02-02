@@ -3,7 +3,7 @@ class Pitch < ApplicationRecord
   belongs_to :category
   has_many :posts
 
-  # has_one_attached :thumbnail
+  has_one_attached :thumbnail
 
   validates_length_of :title, minimum: 30, maximum: 80
   validates :title, presence: true
@@ -29,11 +29,11 @@ class Pitch < ApplicationRecord
     self.user.editor? && self.id.nil?
   end
 
-  has_attached_file :thumbnail,
-                    styles: {
-                      card: '540x380#'
-                    },
-                    restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
+  # has_attached_file :thumbnail,
+  #                   styles: {
+  #                     card: '540x380#'
+  #                   },
+  #                   restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
 
   # Validate the attached image is image/jpg, image/png, etc
   # validates_attachment_content_type :thumbnail, content_type: %r{\Aimage\/.*\Z}

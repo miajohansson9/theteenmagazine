@@ -1,16 +1,6 @@
 class Category < ApplicationRecord
   has_many :posts
-
-  has_attached_file :image
-  validates_attachment :image,
-                       content_type: {
-                         content_type: %w[
-                           image/jpg
-                           image/jpeg
-                           image/png
-                           image/gif
-                         ]
-                       }
+  has_one_attached :image
 
   extend FriendlyId
   friendly_id :name, use: :history

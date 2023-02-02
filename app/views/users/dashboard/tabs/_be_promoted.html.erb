@@ -3,7 +3,7 @@
     <div class="alert alert-info vertical-align-container" role="alert">
       <p class="m-0 pr-4">
         Your invitation link to <b><%= invitation.email %></b> has been used and you've received a new promotion credit! 🎉
-        <u><%= link_to "Close", {:controller => "invitations", :action => "dismissed_notification", :id => invitation.id, :remote => true}, "data-dismiss" => "alert" %></u>
+        <u><%= link_to "Close", {:controller => "invitations", :action => "dismissed_notification", :id => invitation.id, :remote => true}, "data-bs-dismiss" => "alert" %></u>
       </p>
     </div>
   <% end %>
