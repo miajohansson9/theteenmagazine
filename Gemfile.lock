@@ -1692,6 +1692,7 @@ DEPENDENCIES
   fog-aws
   friendly_id (~> 5.1)
   gibbon
+  gobject-introspection
   image_processing (~> 1.12, >= 1.12.2)
   jbuilder (~> 2.5)
   jquery-rails
@@ -1711,6 +1712,7 @@ DEPENDENCIES
   rails_12factor
   redcarpet (~> 3.5)
   render_async
+  ruby-vips
   sendgrid-ruby
   sitemap_generator
   spring
