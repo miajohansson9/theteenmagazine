@@ -47,7 +47,8 @@ gem 'sendgrid-ruby'
 gem 'prettier'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
-gem "mini_portile2", "~> 2.8.1"
+gem 'poppler'
+gem "aws-sdk-s3", require: false
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
