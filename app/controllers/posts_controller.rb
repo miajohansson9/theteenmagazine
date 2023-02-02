@@ -132,20 +132,19 @@ class PostsController < ApplicationController
   end
 
   def claim_pitch
-    @post.pitch.update_attributes(
+    @post.pitch.update(
       claimed_id: current_user.id,
       claimed_at: Time.now
     )
     if @post.pitch.deadline.present?
-      @post.update_attributes(
+      @post.update(
         'deadline_at' => Time.now + (@post.pitch.deadline).weeks
       )
     end
     @rev = @post.reviews.build(status: 'In Progress', active: true)
     @rev.save
     Thread.new do
-      @post.thumbnail = @post.pitch.thumbnail
-      @post.save
+      @post.thumbnail.attach(@post.pitch.thumbnail.blob)
     end
   end
 
@@ -267,10 +266,6 @@ class PostsController < ApplicationController
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
     @trending = @post.category.posts.published.trending.limit(4)
-    if @trending.length < 4
-      @trending =
-        @post.category.posts.published.order('created_at desc').limit(4)
-    end
     render partial: 'posts/partials/trending'
   end
 
@@ -435,7 +430,9 @@ class PostsController < ApplicationController
     @prev_review = @post.reviews.last.clone
     @prev_status = @post.reviews.last.status.clone
     @prev_featured = @post.featured.clone
-    # @post.thumbnail.attach(post_params[:thumbnail])
+    if post_params[:thumbnail].present?
+      @post.thumbnail.attach(post_params[:thumbnail])
+    end
     if @post.update post_params
       if (@post.content.include? 'instagram.com/p/') &&
            !(@post.content.include? 'instgrm.Embeds.process()')
@@ -599,7 +596,7 @@ class PostsController < ApplicationController
   def set_post_meta_tags
     set_meta_tags title: @post.title,
                   description: @post.meta_description,
-                  # image: url_for(@post.thumbnail),
+                  image: @post.thumbnail,
                   fb: {
                     app_id: '1190455601051741'
                   },
@@ -609,7 +606,7 @@ class PostsController < ApplicationController
                     title: @post.title,
                     description: @post.meta_description,
                     image: {
-                      # url: url_for(@post.thumbnail),
+                      url: @post.thumbnail,
                       alt: @post.title
                     },
                     site_name: 'The Teen Magazine'
@@ -623,7 +620,7 @@ class PostsController < ApplicationController
                     title: @post.title,
                     description: @post.meta_description,
                     creator: @post.user.full_name,
-                    # image: url_for(@post.thumbnail),
+                    image: @post.thumbnail,
                     domain: 'https://www.theteenmagazine.com/'
                   }
   end

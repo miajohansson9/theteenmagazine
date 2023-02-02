@@ -1,5 +1,5 @@
 <div class="comment_form_wrapper">
-  <% @profile_img = current_user.profile.exists? ? image_tag(current_user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+  <% @profile_img = current_user.profile.attached? ? image_tag(current_user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
   <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
   <% @placeholder = (post.comments.where(comment_id: nil).count.eql? 0) ? "Start the conversation" : "Share your thoughts on this article" %>
   <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>

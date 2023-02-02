@@ -202,7 +202,7 @@ class UsersController < ApplicationController
     @claimed_pitches_cnt = Pitch.where(claimed_id: @user.id)&.count || 0
     @pageviews = @user_posts_approved_records.sum(&:post_impressions)
     set_badges
-    @show_onboarding_full =
+    @show_onboarding_full = 
       @user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
     @show_editor_onboarding =
       @user.became_an_editor.nil? && @user.editor &&
@@ -284,7 +284,7 @@ class UsersController < ApplicationController
         @pageviews_away_from_new_badge =
           (@next_badge_to_earn[2] - @pageviews).abs
         @percent_to_next_level =
-          (@match[2] - @pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2] - @match[2]).to_f * 100
+          (@pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2] - @match[2]).to_f * 100
       else
         @next_badge_to_earn = @levels.first
         @pageviews_away_from_new_badge = 0
@@ -292,6 +292,8 @@ class UsersController < ApplicationController
     else
       @next_badge_to_earn = @levels.last
       @pageviews_away_from_new_badge = (@next_badge_to_earn[2] - @pageviews).abs
+      @percent_to_next_level =
+          (@next_badge_to_earn[2] - (@pageviews_away_from_new_badge).abs.to_f) / (@next_badge_to_earn[2]).to_f * 100
     end
   end
 
@@ -358,7 +360,7 @@ class UsersController < ApplicationController
             .where('lower(full_name) LIKE ?', "%#{@query.downcase}%")
             .or(User.where(partner: [nil, false])
             .where('lower(email) LIKE ?', "%#{@query.downcase}%"))
-            .order('last_sign_in_at IS NULL, last_sign_in_at desc'),
+            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc')),
           page: params[:page],
           items: 25
         )
@@ -367,7 +369,7 @@ class UsersController < ApplicationController
         pagy(
           User
             .where(partner: [nil, false])
-            .order('last_sign_in_at IS NULL, last_sign_in_at desc'),
+            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc')),
           page: params[:page],
           items: 25
         )
@@ -408,7 +410,7 @@ class UsersController < ApplicationController
         pagy(
           User
             .where(editor: true)
-            .order('last_sign_in_at IS NULL, last_sign_in_at desc')
+            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc'))
             .where('lower(full_name) LIKE ?', "%#{@query.downcase}%"),
           page: params[:page],
           items: 25
@@ -418,7 +420,7 @@ class UsersController < ApplicationController
         pagy(
           User
             .where(editor: true)
-            .order('last_sign_in_at IS NULL, last_sign_in_at desc'),
+            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc')),
           page: params[:page],
           items: 25
         )
@@ -459,6 +461,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.profile.attach(user_params[:profile])
     if @user.save
       if @user.partner
         ApplicationMailer.partner_login_details(current_user, @user).deliver
@@ -476,6 +479,7 @@ class UsersController < ApplicationController
     if @user.approved_profile == false && user_params[:approved_profile] == '1'
       ApplicationMailer.profile_approved(@user).deliver
     end
+    @user.profile.attach(user_params[:profile])
     if @user.update user_params
       if @user.first_name.present? && @user.last_name.present?
         @user.full_name = "#{@user.first_name} #{@user.last_name}"

@@ -1,6 +1,6 @@
 <% @editor_activity.each do |activity| %>
   <li class="list-group-item comment" id="comment_<%=activity.id %>">
-    <% @profile_img = activity.user.try(:profile)&.exists? ? image_tag(activity.user.profile.url(:square), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+    <% @profile_img = activity.user.profile.attached? ? image_tag(activity.user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
     <%= link_to(@profile_img, activity.user, target: "_blank") %>
     <div class="li-content ml-3">
       <span>

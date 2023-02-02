@@ -28,11 +28,11 @@
     <% if @application.resume.present? %>
       <br />
       <span>Resume:</span>
-      <iframe style="width: 100%; height: 600px;" src="<%= @application.resume %>"></iframe>
+      <iframe style="width: 100%; height: 600px;" src="<%= url_for(@application.resume) %>"></iframe>
     <% end %>
     <% if @application.sample_writing.present? %>
       <span>Sample Writing:</span>
-      <iframe style="width: 100%; height: 600px;" src="<%= @application.sample_writing %>"></iframe>
+      <iframe style="width: 100%; height: 600px;" src="<%= url_for(@application.sample_writing) %>"></iframe>
       <br>
     <% end %>
     <% if @application.editor_feedback.present? %>

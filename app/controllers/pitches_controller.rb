@@ -88,7 +88,9 @@ class PitchesController < ApplicationController
   def update
     @categories = Category.active.or(Category.where(id: @pitch.category_id))
     @post = Post.find_by(user_id: @pitch.claimed_id, pitch_id: @pitch.id)
-    # @pitch.thumbnail.attach(pitch_params[:thumbnail])
+    if pitch_params[:thumbnail].present?
+      @pitch.thumbnail.attach(pitch_params[:thumbnail])
+    end
     if @pitch.update pitch_params
       if (@pitch.status.eql? 'Ready for Review') &&
            !(pitch_params[:status].eql? 'Ready for Review')
@@ -146,12 +148,14 @@ class PitchesController < ApplicationController
     @prev_post_pitch =
       current_user.posts.where(pitch_id: post_params[:pitch_id]).last
     current_user.update(onboarding_claimed_pitch_id: @pitch.id)
+    # if user has already claimed this pitch 
     if !(@prev_post_pitch.try(:pitch).nil?)
       @prev_post_pitch.pitch.claimed_id = current_user.id
       @prev_post_pitch.pitch.save
       @prev_post_pitch.reviews.destroy
       @prev_post_pitch.reviews.build(status: 'In Progress', active: true)
       @prev_post_pitch.title = Pitch.find(post_params[:pitch_id]).title
+      @prev_post_pitch.thumbnail.attach(@pitch.thumbnail.blob)
       @prev_post_pitch.save
     elsif @post.save && @post.pitch.claimed_id.nil?
       claim_pitch
@@ -174,7 +178,7 @@ class PitchesController < ApplicationController
     end
     @rev = @post.reviews.build(status: 'In Progress', active: true)
     @rev.save
-    @post.thumbnail = @post.pitch.thumbnail
+    @post.thumbnail.attach(@post.pitch.thumbnail.blob)
     @post.save
   end
 

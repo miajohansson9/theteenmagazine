@@ -20,7 +20,7 @@
                <% @posts.each do |draft| %>
                  <div class="card" style="width: 32%;">
                    <a href="<%= post_path(draft)%>">
-                     <%=image_tag(draft.thumbnail.url(:large2), alt: draft.title, :class => "card-img-top")%>
+                     <%=image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340], format: 'webp'), alt: draft.title, :class => "card-img-top")%>
                    </a>
                    <div class="card-body">
                      <% if draft.deadline_at.present? %>
