@@ -47,6 +47,5 @@ gem 'sendgrid-ruby'
 gem 'prettier'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
-gem 'poppler', '~> 3.0', '>= 3.0.7'
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
