@@ -7,11 +7,11 @@
 </style>
 
 <!--Carousel Wrapper-->
-<div>
+<div class="mb-2">
   <h6 class="mb-4 text-center ml-4 mr-4">Meet the writers published this week on The Teen Magazine</h6>
-  <div style="width: 100%;" id="multi-item-example" class="carousel slide carousel-multi-item">
+  <div id="multi-item-example" class="carousel slide">
     <!--Slides-->
-    <div class="carousel-inner" role="listbox">
+    <div class="carousel-inner">
       <% users.each_with_index do |user, index| %>
         <div class="carousel-item <% if index.eql? 0 %> active <% end %>">
           <div>
