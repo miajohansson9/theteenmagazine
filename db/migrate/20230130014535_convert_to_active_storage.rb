@@ -136,7 +136,7 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
     id = instance.id
     id_partition = ("%09d".freeze % id).scan(/\d{3}/).join("/".freeze)
 
-    "#{klass}/#{attachment.pluralize}/#{id_partition}/original/#{filename}"
+    "#{klass}/#{attachment.pluralize}/#{SecureRandom.uuid}/#{id_partition}/original/#{filename}"
   end
 
   def checksum(attachment)
