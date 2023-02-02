@@ -13,8 +13,7 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
 
     active_storage_blob_statement = ActiveRecord::Base.connection.raw_connection.prepare(<<-SQL)
       INSERT INTO active_storage_blobs (
-        key, filename, content_type, metadata, byte_size,
-        checksum, created_at
+        `key`, filename, content_type, metadata, byte_size, checksum, created_at
       ) VALUES (?, ?, ?, '{}', ?, ?, ?)
     SQL
 
@@ -86,7 +85,7 @@ class ConvertToActiveStorage < ActiveRecord::Migration[5.2]
 
     # remote files stored on another person's computer:
     url = "https:#{attachment.url}"
-    # puts url
+    puts url
     Digest::MD5.base64digest(Net::HTTP.get(URI(url)))
   end
 end
