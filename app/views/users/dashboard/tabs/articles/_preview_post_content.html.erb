@@ -1,6 +1,6 @@
 <div class="published-article-modal pitch_preview_wrapper pt-2">
   <div class="flex_child mr-3">
-    <%= link_to image_tag(post.thumbnail.variant(resize: "540x340"), class: "image_half_left mb-4"), post %>
+    <%= link_to image_tag(post.thumbnail.url(:large2), class: "image_half_left mb-4"), post %>
   </div>
   <div class="flex_child">
     <h3><i><%= link_to post.title, post %></i></h3>

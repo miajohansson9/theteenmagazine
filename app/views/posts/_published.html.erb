@@ -1,12 +1,12 @@
 <style lazyload>
   @media(min-width: 800px) {
     .post_image {
-      background-image: url(<%= url_for(@post.thumbnail.variant(resize: "560x280")) %>);
+      background-image: url(<%= url_for(@post.thumbnail.url(:large)) %>);
     }
   }
   @media(max-width: 800px) {
     .post_image {
-      background-image: url(<%= url_for(@post.thumbnail.variant(resize: "150x100")) %>);
+      background-image: url(<%= url_for(@post.thumbnail.url(:medium)) %>);
     }
   }
   blockquote {

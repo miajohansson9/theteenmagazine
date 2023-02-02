@@ -34,7 +34,7 @@
       </i></p>
   <% end %>
   <% if @pitch.thumbnail.attached? %>
-    <%= image_tag(@pitch.thumbnail.variant(resize: "540x380"), alt: @pitch.title, :class => "card-img-top")%>
+    <%= image_tag(@pitch.thumbnail.url(:card), alt: @pitch.title, :class => "card-img-top")%>
   <% elsif @pitch.try(:thumbnail).present? %>
     <%= image_tag(@pitch.thumbnail.url(:card), class: "image_fit_scrn mb-4") %>
   <% end %>

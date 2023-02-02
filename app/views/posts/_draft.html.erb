@@ -6,7 +6,7 @@
   }
   @media(max-width: 800px) {
     .post_image {
-      background-image: url(<%= @post.thumbnail.variant(resize: "540x340") %>);
+      background-image: url(<%= @post.thumbnail.url(:large2) %>);
     }
   }
   blockquote {

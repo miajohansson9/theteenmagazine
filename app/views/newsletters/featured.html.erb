@@ -9,7 +9,7 @@
             <% @newsletter_posts.each do |post| %>
               <div class="card" style="width: 32%;">
                 <a href="<%= post_path(post)%>">
-                  <%=image_tag(post.thumbnail.variant(resize: "540x340"), alt: post.title, :class => "card-img-top")%>
+                  <%=image_tag(post.thumbnail.url(:large2), alt: post.title, :class => "card-img-top")%>
                 </a>
                 <div class="card-body">
                   <% if post.deadline_at.present? %>
@@ -50,7 +50,7 @@
               <% @posts.each do |post| %>
                 <div class="card" style="width: 32%;">
                   <a href="<%= post_path(post)%>">
-                    <%=image_tag(post.thumbnail.variant(resize: "540x340"), alt: post.title, :class => "card-img-top")%>
+                    <%=image_tag(post.thumbnail.url(:large2), alt: post.title, :class => "card-img-top")%>
                   </a>
                   <div class="card-body">
                     <% if post.deadline_at.present? %>
