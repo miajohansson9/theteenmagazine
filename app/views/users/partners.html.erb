@@ -14,7 +14,7 @@
       <% if user != nil %>
         <div class="flex--profile">
           <% if user.profile.attached? %>
-            <%= image_tag(user.profile.variant(resize_to_fill: [100, 100], format: 'webp').processed, :class => "profile_img") %>
+            <%= image_tag(user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img") %>
           <% else %>
             <%= image_tag("profile_image.jpg", :class => "profile_img") %>
           <% end %>

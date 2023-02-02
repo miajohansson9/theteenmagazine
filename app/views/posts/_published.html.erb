@@ -1,12 +1,12 @@
 <style lazyload>
   @media(min-width: 800px) {
     .post_image {
-      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [560, 280], format: 'webp').processed) %>);
+      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [560, 280], format: 'webp')) %>);
     }
   }
   @media(max-width: 800px) {
     .post_image {
-      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [150, 100], format: 'webp').processed) %>);
+      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [150, 100], format: 'webp')) %>);
     }
   }
   blockquote {

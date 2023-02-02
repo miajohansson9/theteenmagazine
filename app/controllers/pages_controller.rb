@@ -65,14 +65,14 @@ class PagesController < ApplicationController
     @pagy, @trending =
       pagy(Post.published.trending, page: params[:page], items: 15)
     set_meta_tags title: 'Trending | The Teen Magazine',
-                  image: @trending.first.thumbnail.variant(resize_to_fill: [540,340], format: "webp").processed,
+                  image: @trending.first.thumbnail.variant(resize_to_fill: [540,340], format: "webp"),
                   description: "See what's trending on The Teen Magazine",
                   fb: {
                     app_id: '1190455601051741'
                   },
                   og: {
                     image: {
-                      url: @trending.first.thumbnail.variant(resize_to_fill: [540,340], format: "webp").processed,
+                      url: @trending.first.thumbnail.variant(resize_to_fill: [540,340], format: "webp"),
                       alt: 'The Teen Magazine'
                     },
                     site_name: 'The Teen Magazine'
@@ -85,7 +85,7 @@ class PagesController < ApplicationController
                     site: '@theteenmagazin_',
                     title: 'The Teen Magazine',
                     description: "See what's trending on The Teen Magazine",
-                    image: @trending.first.thumbnail.variant(resize_to_fill: [540,340], format: "webp").processed,
+                    image: @trending.first.thumbnail.variant(resize_to_fill: [540,340], format: "webp"),
                     domain: 'https://www.theteenmagazine.com/'
                   }
   end

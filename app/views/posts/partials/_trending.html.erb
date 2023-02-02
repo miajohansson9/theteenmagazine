@@ -1,6 +1,6 @@
 <% @trending.each do |post| %>
   <div class="ctgry_article" style="margin-bottom: 18px;">
-    <%= link_to(image_tag(post.thumbnail.variant(resize_to_fill: [150, 100], format: "webp").processed), post) %>
+    <%= link_to(image_tag(post.thumbnail.variant(resize_to_fill: [150, 100], format: "webp")), post) %>
     <div class="paragraph" style="margin-top: -3px">
       <p><%= link_to(post.title.truncate_words(12), post) %></p>
     </div>

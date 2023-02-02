@@ -1,5 +1,5 @@
 <%= form_for @newsletter do |f| %>
-  <% @hero_image_src = @newsletter.hero_image.attached? ? @newsletter.hero_image.variant(resize_to_fill: [800,335]) : Newsletter.not_nil.last.try(:hero_image)&.variant(resize_to_fill: [540, 380], format: "webp").processed %>
+  <% @hero_image_src = @newsletter.hero_image.attached? ? @newsletter.hero_image.variant(resize_to_fill: [800,335]) : Newsletter.not_nil.last.try(:hero_image)&.variant(resize_to_fill: [540, 380], format: "webp") %>
   <% if @hero_image_src.present? %><img style="width: 100%;" src="<%= @hero_image_src %>"/><% end %>
   <p class="mb-4 mt-3">Upload New Image (800x335) <%= f.file_field :hero_image %></p>
   <p class="mb-0 mt-0">Message (80 - 150 words)</p>

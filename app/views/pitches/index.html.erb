@@ -25,7 +25,7 @@
       <div class="card" style="width: 32%; <% if @unseen_pitches.to_a.include? pitch %>background-color: #E6F6FF;<% end %>">
         <a href="<%= pitch_path(pitch)%>">
           <% if pitch.thumbnail.attached? %>
-            <%= image_tag(pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp').processed, alt: pitch.title, :class => "card-img-top")%>
+            <%= image_tag(pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: pitch.title, :class => "card-img-top")%>
           <% end %>
         </a>
         <% if current_user.admin? || current_user.editor? %>

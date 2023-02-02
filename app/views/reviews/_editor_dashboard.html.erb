@@ -23,7 +23,7 @@
             <% @editors_reviews.each do |draft| %>
               <div class="flex--postlist--item review_items pl-0">
                 <div class="inside--item">
-                  <%= link_to (image_tag draft.thumbnail.variant(resize_to_fill: [150,100], format: 'webp').processed), post_path(draft) %>
+                  <%= link_to (image_tag draft.thumbnail.variant(resize_to_fill: [150,100], format: 'webp')), post_path(draft) %>
                   <div>
                     <h4><%= link_to draft.title, post_path(draft), class: "link_nrml"%></h4>
                     <p class="edited_dt"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.editor_claimed_review_at) unless draft.reviews.last.editor_claimed_review_at.blank? %></p>
@@ -45,7 +45,7 @@
                   <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
                     <div class="card-bottom-flex p-2">
                       <% if draft.user.profile.attached? %>
-                        <%= image_tag draft.user.profile.variant(resize_to_fill: [100,100], format: 'webp').processed, :class => "profile_img", :id => "review_img" %>
+                        <%= image_tag draft.user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "profile_img", :id => "review_img" %>
                       <% else %>
                         <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
                       <% end %>
@@ -85,7 +85,7 @@
               <div class="card card-review <% if @unseen_submitted_pitches.include? pitch %> unread <% end %>" style="width: 100%;">
                   <div class="card-bottom-flex p-2">
                     <% if pitch.user.profile.attached? %>
-                      <%= image_tag pitch.user.profile.variant(resize_to_fill: [100, 100], format: 'webp').processed, :class => "profile_img", :id => "review_img" %>
+                      <%= image_tag pitch.user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img", :id => "review_img" %>
                     <% else %>
                       <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
                     <% end %>
@@ -148,7 +148,7 @@
                 </path>
               </svg>
               <% if @user.profile.attached? %>
-                <%= image_tag(@user.profile.variant(resize_to_fill: [100,100], format: 'webp').processed, :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Editor</span>
+                <%= image_tag(@user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Editor</span>
               <% else %>
                 <%= image_tag("profile_image.jpg", :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Editor</span>
               <% end %>
