@@ -13,7 +13,9 @@ namespace :paperclip do
 
       next if filename.blank?
 
-      url = "https://s3.amazonaws.com/media.theteenmagazine.com/variants/#{filename}"
+      id = instance.id
+      id_partition = ("%09d".freeze % id).scan(/\d{3}/).join("/".freeze)
+      url = "https://s3.amazonaws.com/media.theteenmagazine.com/#{klass}/#{attachment.pluralize}/#{id_partition}/original/#{filename}"
       puts url
       
       instance.send(attachment.to_sym).attach(
