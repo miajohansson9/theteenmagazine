@@ -55,6 +55,7 @@ namespace :paperclip do
             filename: instance.send(name_field),
             content_type: instance.send(:"#{attachment}_content_type")
         )
+        Process.wait
       rescue
         puts 'failed to upload instance'
       end
@@ -67,7 +68,7 @@ namespace :paperclip do
     attachment = 'thumbnail'
     name_field = :"#{attachment}_file_name"
 
-    klass.where(created_at: (Time.now - 340.days)..(Time.now - 200.days)).where.not(name_field => nil).find_each(batch_size: 5000, order: :desc) do |instance|
+    klass.where(created_at: (Time.now - 340.days)..(Time.now - 200.days)).where.not(name_field => nil).find_each(batch_size: 5000) do |instance|
       # This step helps us catch any attachments we might have uploaded that
       # don't have an explicit file extension in the filename
 
@@ -86,6 +87,7 @@ namespace :paperclip do
             filename: instance.send(name_field),
             content_type: instance.send(:"#{attachment}_content_type")
         )
+        Process.wait
       rescue
         puts 'failed to upload instance'
       end
