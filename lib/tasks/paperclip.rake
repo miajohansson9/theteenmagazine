@@ -68,7 +68,7 @@ namespace :paperclip do
     attachment = 'thumbnail'
     name_field = :"#{attachment}_file_name"
 
-    klass.where(created_at: (Time.now - 340.days)..(Time.now - 200.days)).where.not(name_field => nil).find_each(batch_size: 5000) do |instance|
+    klass.where(:id => 4290..4750).where.not(name_field => nil).find_each do |instance|
       # This step helps us catch any attachments we might have uploaded that
       # don't have an explicit file extension in the filename
 
@@ -80,6 +80,7 @@ namespace :paperclip do
       id_partition = ("%09d".freeze % id).scan(/\d{3}/).join("/".freeze)
       url = "https://s3.amazonaws.com/media.theteenmagazine.com/#{instance.class.table_name}/#{attachment.pluralize}/#{id_partition}/original/#{filename}"
       puts url
+      puts "id : #{id}"
 
       begin
         instance.send(attachment.to_sym).attach(
