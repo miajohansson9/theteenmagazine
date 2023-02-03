@@ -1,5 +1,6 @@
 namespace :paperclip do
-  task migrate: :environment do
+  task migrate_users: :environment do
+    puts "starting to migrate users"
     klass = User
     attachment = 'profile'
     name_field = :"#{attachment}_file_name"
@@ -13,7 +14,8 @@ namespace :paperclip do
       next if filename.blank?
 
       url = "https://s3.amazonaws.com/media.theteenmagazine.com/variants/#{filename}"
-
+      puts url
+      
       instance.send(attachment.to_sym).attach(
         io: open(url),
         filename: instance.send(name_field),
