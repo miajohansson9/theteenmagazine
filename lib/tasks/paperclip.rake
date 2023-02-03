@@ -67,7 +67,7 @@ namespace :paperclip do
     attachment = 'thumbnail'
     name_field = :"#{attachment}_file_name"
 
-    klass.where.not(name_field => nil).find_each(batch_size: 5000, order: :desc) do |instance|
+    klass.where(created_at: (Time.now - 240.days)..(Time.now - 90.days)).where.not(name_field => nil).find_each(batch_size: 5000, order: :desc) do |instance|
       # This step helps us catch any attachments we might have uploaded that
       # don't have an explicit file extension in the filename
 
