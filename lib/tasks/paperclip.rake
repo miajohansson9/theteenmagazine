@@ -68,7 +68,7 @@ namespace :paperclip do
     attachment = 'thumbnail'
     name_field = :"#{attachment}_file_name"
 
-    klass.where(:id => 4290..4750).where.not(name_field => nil).find_each do |instance|
+    klass.published.where(:id => 4562..4950).where.not(name_field => nil).find_each do |instance|
       # This step helps us catch any attachments we might have uploaded that
       # don't have an explicit file extension in the filename
 
