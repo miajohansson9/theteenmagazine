@@ -7,9 +7,17 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   has_one_attached :thumbnail
-  
+
   validates :title, presence: true
   validates :content, presence: true
+  validates :thumbnail, attached: true, 
+            content_type: [:png, :jpg, :jpeg, :gif, :webp], 
+            size: { less_than: 1.megabytes , message: 'Image must be less than 1 MB' }, 
+            if: :should_validate?
+  
+  def should_validate?
+    pitch.nil?
+  end
 
   scope :draft,
         -> {
@@ -104,17 +112,6 @@ class Post < ApplicationRecord
   end
 
   accepts_nested_attributes_for :reviews, :user
-
-  # has_attached_file :thumbnail,
-  #                   styles: {
-  #                     medium: '150x100#',
-  #                     large: '560x280#',
-  #                     large2: '540x340#'
-  #                   },
-  #                   restricted_characters: /[&$+,\/:;=?@<>\[\]\{\}\|\\\^~%# -]/
-
-  # Validate the attached image is image/jpg, image/png, etc
-  # validates_attachment_content_type :thumbnail, content_type: %r{\Aimage\/.*\Z}
 
   extend FriendlyId
   friendly_id :title, use: :history

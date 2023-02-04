@@ -475,7 +475,6 @@ class PostsController < ApplicationController
         @post.promoting_until = nil
         @post.publish_at = Time.now
       end
-      puts @rev.editor_id
       if @rev.present?
         @post.reviews.each { |review| review.update_column('active', false) }
         @rev.update_column('active', true)
@@ -536,7 +535,8 @@ class PostsController < ApplicationController
         redirect_to @post, notice: @notice
       end
     else
-      render 'edit', notice: 'Changes were unable to be saved.'
+      edit
+      render 'edit', notice: 'Oh no! Your post was not able to be saved!'
     end
   end
 

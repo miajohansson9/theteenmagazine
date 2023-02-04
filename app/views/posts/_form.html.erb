@@ -1,4 +1,4 @@
-<% if @can_edit || @post.created_at.nil? %>
+<% if !defined?(@can_edit) || @can_edit || @post.created_at.nil? %>
   <div id="edit_post">
     <%= form_for @post do |f| %>
       <% if @post.errors.any? %>
@@ -87,7 +87,7 @@
     <% end %>
   </div>
 <% else %>
-  <h1 class="title">This article has already been published and can only be edited by the author(s) and admins.</h1>
+  <h3 class="title m-4">This article has already been published and can only be edited by the author(s) and admins.</h3>
 <% end %>
 <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
 <script type="text/javascript">
