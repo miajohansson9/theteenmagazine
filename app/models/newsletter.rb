@@ -3,6 +3,8 @@ class Newsletter < ApplicationRecord
   belongs_to :user
 
   has_one_attached :hero_image
+  validates :hero_image, content_type: [:png, :jpg, :jpeg, :webp], 
+          size: { less_than: 2.megabytes , message: 'Image must be less than 2 MB' }
 
   scope :not_nil,
         -> {

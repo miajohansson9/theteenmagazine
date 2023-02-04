@@ -12,12 +12,14 @@ class Apply < ActiveRecord::Base
   attributes :nickname, captcha: true
 
   has_one_attached :resume
+  validates :resume,
+          content_type: :pdf,
+          size: { less_than: 5.megabytes, message: 'Attachment must be less than 1 MB' }
+
   has_one_attached :sample_writing
-  # has_attached_file :resume
-  # validates_attachment_content_type :resume, content_type: ['application/pdf']
-  # has_attached_file :sample_writing
-  # validates_attachment_content_type :sample_writing,
-  #                                   content_type: ['application/pdf']
+  validates :sample_writing,
+        content_type: :pdf,
+        size: { less_than: 5.megabytes, message: 'Attachment must be less than 1 MB' }
 
   def validate
     errors.add(:grade, "can't be blank") if grade.blank?

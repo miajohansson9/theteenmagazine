@@ -10,12 +10,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_one_attached :profile
-  # has_attached_file :profile,
-  #                   styles: {
-  #                     thumb: '100x100>',
-  #                     square: '200x200#',
-  #                     medium: '300x300>'
-  #                   }
+  validates :profile, content_type: [:png, :jpg, :jpeg, :webp], 
+          size: { less_than: 2.megabytes , message: 'Image must be less than 2 MB' }, on: :update
 
   scope :review_profile,
         -> { where(submitted_profile: true, approved_profile: false) }

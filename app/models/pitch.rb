@@ -9,9 +9,10 @@ class Pitch < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :category_id, presence: true
-  # Validate the attached image is image/jpg, image/png, etc
-  # validates :thumbnail, presence: true, blob: { content_type: ['image/png', 'image/gif', 'image/jpeg', 'image/jpg'], size: { less_than: 2.megabytes , message: 'must be less than 2MB in size' } }
   validates :deadline, presence: true, if: :is_editor?
+  validates :thumbnail, attached: true, 
+          content_type: [:png, :jpg, :jpeg, :gif, :webp], 
+          size: { less_than: 1.megabytes , message: 'Image must be less than 1 MB' }
 
   scope :is_submitted, -> { where(status: 'Ready for Review') }
 
