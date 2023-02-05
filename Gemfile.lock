@@ -1558,8 +1558,6 @@ GEM
     nokogiri (1.14.1)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    nokogiri (1.14.1-x86_64-linux)
-      racc (~> 1.4)
     orm_adapter (0.5.0)
     pagy (6.0.1)
     paperclip (6.1.0)
@@ -1684,7 +1682,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86_64-linux
 
 DEPENDENCIES
   active_storage_validations (~> 1.0, >= 1.0.3)
@@ -1718,7 +1715,6 @@ DEPENDENCIES
   rails_12factor
   redcarpet (~> 3.5)
   render_async
-  ruby-vips (~> 2.0, >= 2.0.7)
   sendgrid-ruby
   sitemap_generator
   spring
@@ -1731,7 +1727,7 @@ DEPENDENCIES
   will_paginate (~> 3.3)
 
 RUBY VERSION
-   ruby 3.0.0p0
+   ruby 3.1.3p185
 
 BUNDLED WITH
-   2.2.3
+   2.1.4
