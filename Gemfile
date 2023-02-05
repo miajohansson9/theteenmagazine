@@ -46,7 +46,6 @@ gem 'sendgrid-ruby'
 gem 'prettier'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
-gem 'ruby-vips', '~> 2.0', '>= 2.0.7'
 gem "aws-sdk-s3", require: false
 gem 'active_storage_validations', '~> 1.0', '>= 1.0.3'
 
