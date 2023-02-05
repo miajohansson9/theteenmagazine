@@ -1,4 +1,7 @@
 libglib2.0-0
 libglib2.0-dev
 libpoppler-glib8
-libpoppler
+libheif-dev
+libvips-dev
+libvips
+poppler-utils
