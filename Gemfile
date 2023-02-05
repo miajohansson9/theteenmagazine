@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '3.0.0'
+ruby '3.1.3'
 
 gem 'rails', '~> 7.0', '>= 7.0.1'
 
