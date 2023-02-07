@@ -240,7 +240,9 @@ class UsersController < ApplicationController
     # if you want to change a badge color, you must update all the already created badges
     # to match the new color
     @levels = [
-      ['500k+', '#1F2955', 500_000],
+      ['1 million+', '#D31E26', 1_000_000],
+      ['800k+', '#C50285', 800_000],
+      ['500k+', '#00215B', 500_000],
       ['300k+', '#6A198E', 300_000],
       ['100k+', '#a88beb', 100_000],
       ['50k+', '#a88beb', 50_000],
@@ -284,7 +286,7 @@ class UsersController < ApplicationController
         @pageviews_away_from_new_badge =
           (@next_badge_to_earn[2] - @pageviews).abs
         @percent_to_next_level =
-          (@pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2] - @match[2]).to_f * 100
+          100 - ((@pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2] - @match[2]).to_f * 100)
       else
         @next_badge_to_earn = @levels.first
         @pageviews_away_from_new_badge = 0
@@ -293,7 +295,7 @@ class UsersController < ApplicationController
       @next_badge_to_earn = @levels.last
       @pageviews_away_from_new_badge = (@next_badge_to_earn[2] - @pageviews).abs
       @percent_to_next_level =
-          (@next_badge_to_earn[2] - (@pageviews_away_from_new_badge).abs.to_f) / (@next_badge_to_earn[2]).to_f * 100
+          100 - ((@pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2]).to_f * 100)
     end
   end
 
