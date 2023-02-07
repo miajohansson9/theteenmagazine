@@ -310,6 +310,10 @@ task run_nightly_tasks: :environment do
         # if you want to change a badge color, you must update all the already created badges
         # to match the new color
         @levels = [
+          ['1 million+', '#D31E26', 1_000_000],
+          ['800k+', '#C50285', 800_000],
+          ['500k+', '#00215B', 500_000],
+          ['300k+', '#6A198E', 300_000],
           ['100k+', '#a88beb', 100_000],
           ['50k+', '#a88beb', 50_000],
           ['20k+', '#00acee', 20_000],
