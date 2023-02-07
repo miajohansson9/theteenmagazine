@@ -1,0 +1,18 @@
+<%= form_for @outreach do |f| %>
+  <span>Brand Name</span>
+  <%= f.text_field :partner_name, required: true %>
+  <br />
+  <span>Email (to send pitch to)</span>
+  <%= f.email_field :partner_email, required: true %>
+  <span>Fill in the article details using <a href="https://www.markdownguide.org/cheat-sheet/">markdown</a>. 
+    Some things you should think about including are:</span>
+  <li>What the article will be about</li>
+  <li>Rough timeline</li>
+  <li>Anything else you've agreed upon</li>
+  <%= f.text_area :sponsored_article_pitch, required: true %>
+  <span>Total Article Cost</span>
+  <%= f.number_field :sponsored_article_cost, placeholder: "Price in dollars", required: true, step: 10 %>
+  <br/>
+  <br/>
+  <%= f.submit 'Preview' %>
+<% end %>

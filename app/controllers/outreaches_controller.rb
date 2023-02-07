@@ -14,6 +14,9 @@ class OutreachesController < ApplicationController
     @outreach = current_user.outreaches.create
   end
 
+  def edit
+  end
+
   #send submitted application
   def create
     @outreach = current_user.outreaches.build(outreach_params)
