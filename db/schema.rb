@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_02_234522) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_07_173207) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -231,6 +231,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_234522) do
     t.integer "user_id"
     t.text "email_draft"
     t.boolean "sent"
+    t.text "sponsored_article_pitch"
+    t.decimal "sponsored_article_cost"
   end
 
   create_table "pitches", id: :serial, force: :cascade do |t|

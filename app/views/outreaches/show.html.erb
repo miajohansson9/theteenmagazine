@@ -1,0 +1,45 @@
+<div class="skinny_wrapper onboarding pt-4">
+  <div class="onboarding_page_container">
+    <div class="position-relative" style="width: 120px; margin: 0 auto;">
+      <% if @user.try(:profile)&.exists? %>
+        <%= image_tag(@user.profile.url(:square), :class => "profile_img") %>
+      <% else %>
+        <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+      <% end %>
+    </div>
+    <div class="text-center">
+      <h1>You've been sent an article proposal!</h1>
+      <p>Please complete the following steps to review the article proposal from
+        <%= link_to @user.full_name, @user, :target => "_blank", :class => "link_green" %>.
+      </p>
+    </div>
+    <div class="stair_step">
+      <a href="/editor-onboarding?step=welcome" class="node">
+        <span class="progress_step">
+          &#x25cf;
+          <p>Proposal</p>
+        </span>
+      </a>
+      <span class="progress_step">&#x25CB;
+        <p>Account</p>
+      </span>
+      <span class="progress_step">&#x25CB;
+        <p>Payment</p>
+      </span>
+      <div class="hr">
+        <hr />
+        <hr />
+      </div>
+    </div>
+    <div id="onboarding_page">
+      <b>Article price: $<%= number_with_precision(@outreach.sponsored_article_cost, precision: 2) %></b>
+      <i style="opacity: 80%;" class="d-block mb-3">
+        We take pride in delivering exceptional work to our partners.
+        If for any reason you are not happy with the finished article, 
+        we offer a money-back guarantee before it's published.
+      </i>
+      <%= markdown(@outreach.sponsored_article_pitch) %>
+    </div>
+    <%= link_to "Accept & Continue", :id => "onboarding_button" %>
+  </div>
+</div>

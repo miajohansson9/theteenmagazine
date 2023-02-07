@@ -6,12 +6,16 @@ class User < ActiveRecord::Base
   has_many :badges
   has_many :invitations
   has_many :applies
+  has_many :outreaches
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  has_one_attached :profile
-  validates :profile, content_type: [:png, :jpg, :jpeg, :webp], 
-          size: { less_than: 2.megabytes , message: 'Image must be less than 2 MB' }, on: :update
+  has_attached_file :profile,
+                    styles: {
+                      thumb: '100x100>',
+                      square: '200x200#',
+                      medium: '300x300>'
+                    }
 
   scope :review_profile,
         -> { where(submitted_profile: true, approved_profile: false) }
@@ -24,7 +28,7 @@ class User < ActiveRecord::Base
   scope :active, -> { where(last_sign_in_at: (Time.now - 1.month)..Time.now) }
 
   # Validate the attached image is image/jpg, image/png, etc
-  # validates_attachment_content_type :profile, content_type: %r{\Aimage\/.*\Z}
+  validates_attachment_content_type :profile, content_type: %r{\Aimage\/.*\Z}
 
   extend FriendlyId
   friendly_id :set_full_name, use: :slugged

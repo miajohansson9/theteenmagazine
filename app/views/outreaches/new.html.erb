@@ -1,23 +1,22 @@
-<!-- let someone create an application; sends to editor -->
-<div id="apply_image">
-</div>
+<div id="banner_writing" class="invite"></div>
 <div class="apply_wrapper">
   <%= form_for @outreach do |f| %>
     <span>Brand Name</span>
-    <%= f.text_field :partner_name, placeholder: "Honest Beauty", required: true %>
+    <%= f.text_field :partner_name, required: true %>
     <br />
-    <span>How did you find this brand?</span>
-    <%= f.text_field :partner_medium_found, placeholder: "Instagram account, @honest_beauty", required: true %>
-    <br />
-    <span>Email to reach out to</span>
-    <%= f.email_field :partner_email, placeholder: "jessica@honestbeauty.com", required: true %>
-    <span>First name of person with email (if applicable)</span>
-    <%= f.text_field :partner_email_name, placeholder: "Jessica", required: true %>
-    <span>What products/service does this brand sell?</span>
-    <%= f.text_field :partner_products %>
-    <span>Why would our Gen-Z readers love to learn about this brand's products?</span>
-    <%= f.text_field :partner_value_add %>
-    <%= f.submit 'Generate Email Draft' %>
+    <span>Email (to send pitch to)</span>
+    <%= f.email_field :partner_email, required: true %>
+    <span>Fill in the article details using <a href="https://www.markdownguide.org/cheat-sheet/">markdown</a>. 
+      Some things you should think about including are:</span>
+    <li>What the article will be about</li>
+    <li>Rough timeline</li>
+    <li>Anything else you've agreed upon</li>
+    <%= f.text_area :sponsored_article_pitch, required: true %>
+    <span>Total Article Cost</span>
+    <%= f.number_field :sponsored_article_cost, placeholder: "Price in dollars", required: true, step: 10 %>
+    <br/>
+    <br/>
+    <%= f.submit 'Preview' %>
   <% end %>
   <br>
 </div>
