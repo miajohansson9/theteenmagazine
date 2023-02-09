@@ -11,7 +11,7 @@ class Post < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
   validates :thumbnail, attached: true, 
-            content_type: [:png, :jpg, :jpeg, :gif, :webp], 
+            content_type: [:png, :jpg, :jpeg, :gif, :webp, :heic], 
             size: { less_than: 1.megabytes , message: 'Image must be less than 1 MB' }, 
             if: :should_validate?
   

@@ -20,7 +20,7 @@ class Pitch < ApplicationRecord
   validates :deadline, presence: true, if: :is_editor?
   validates :thumbnail,
             attached: true,
-            content_type: [:png, :jpg, :jpeg, :gif, :webp],
+            content_type: [:png, :jpg, :jpeg, :gif, :webp, :heic],
             size: { less_than: 1.megabytes, message: "Image must be less than 1 MB" }, unless: :is_interview?
 
   scope :is_submitted, -> { where(status: "Ready for Review") }

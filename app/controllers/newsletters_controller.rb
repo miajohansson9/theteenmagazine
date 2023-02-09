@@ -34,7 +34,9 @@ class NewslettersController < ApplicationController
 
   def create
     @newsletter = current_user.newsletters.build(newsletter_params)
-    @newsletter.hero_image.attach(newsletter_params[:hero_image])
+    if newsletter_params[:hero_image].present?
+      @newsletter.hero_image.attach(newsletter_params[:hero_image])
+    end
     @newsletter.save
   end
 
@@ -46,6 +48,9 @@ class NewslettersController < ApplicationController
   end
 
   def update
+    # if newsletter_params[:hero_image].present?
+    #   @newsletter.hero_image.attach(newsletter_params[:hero_image])
+    # end
     if @newsletter.update newsletter_params
       redirect_to @newsletter, notice: 'Your changes were saved.'
     else
