@@ -72,8 +72,12 @@ class AppliesController < ApplicationController
   #send submitted application
   def create
     @application = Apply.new(apply_params)
-    @application.resume.attach(apply_params[:resume])
-    @application.sample_writing.attach(apply_params[:sample_writing])
+    if apply_params[:resume].present?
+      @application.resume.attach(apply_params[:resume])
+    end
+    if apply_params[:sample_writing].present?
+      @application.sample_writing.attach(apply_params[:sample_writing])
+    end
     if @application.validate && @application.save
       app_submitted
     elsif apply_params[:user_id].present?
