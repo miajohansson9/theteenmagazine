@@ -463,7 +463,9 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.profile.attach(user_params[:profile])
+    if user_params[:profile].present?
+      @user.profile.attach(user_params[:profile])
+    end
     if @user.save
       if @user.partner
         ApplicationMailer.partner_login_details(current_user, @user).deliver
@@ -481,7 +483,9 @@ class UsersController < ApplicationController
     if @user.approved_profile == false && user_params[:approved_profile] == '1'
       ApplicationMailer.profile_approved(@user).deliver
     end
-    @user.profile.attach(user_params[:profile])
+    if user_params[:profile].present?
+      @user.profile.attach(user_params[:profile])
+    end
     if @user.update user_params
       if @user.first_name.present? && @user.last_name.present?
         @user.full_name = "#{@user.first_name} #{@user.last_name}"
