@@ -1,22 +1,26 @@
 <div class="skinny_wrapper onboarding pt-4">
   <div class="onboarding_page_container">
-    <h1>The Teen Magazine & <%= @outreach.partner_name %></h1>
+    <h1>The Teen Magazine & <%= @outreach.partner_name %> sponsored article (1)</h1>
     <h2 class="mb-3">Article price: $<%= number_with_precision(@outreach.sponsored_article_cost, precision: 2) %></h2>
     <div id="onboarding_page">
-      <p>This article will be written by one of our most experienced writers, <%= link_to @user.full_name, @user, target: "_blank" %>, and will by edited by The Teen Magazine's CEO <%= link_to 'Mia Johansson', user_path(User.find('mia-johansson')), target: "_blank" %>.</p>
-      <%= render "/users/profile", user: @user %>
+          <%= render "/users/profile", user: @user %>
+
+      <p>The article will be written by one of our most experienced writers, <%= link_to @user.full_name, @user, target: "_blank" %>, and will by edited by The Teen Magazine's CEO <%= link_to 'Mia Johansson', user_path(User.find('mia-johansson')), target: "_blank" %>.</p>
+      <div class="mt-3">
+        <%= markdown(@outreach.sponsored_article_pitch) %>
+      </div>
     </p>
   </div>
+  <i style="opacity: 80%;" class="d-block mb-0 mt-3">
+    The Teen Magazine cares about our relationships with our partners. We want to make you as happy as possible, and we strive
+    to always deliver timely and high-quality articles. If you are not happy with the draft for whatever reason,
+    our editor team will refund you all the money for the article and we will not publish it.
+  </i>
   <div class="submit-button align-right mt-4">
     <div class="hide spinner-button spinner-border" style="margin-left: 39%;" role="status">
       <span class="sr-only">Loading...</span>
     </div>
-    <%= link_to "Sounds great!", '#', class: "submit-button-inner" %>
+    <%= link_to "Continue to Payment", '#', class: "submit-button-inner" %>
   </div>
-  <i style="opacity: 80%;" class="d-block mb-3">
-    The Teen Magazine cares about our relationships with our partners. We want to make you as happy as possible, and we strive
-    to always deliver timely and high-quality articles. If however, you are not happy with the draft for whatever reason,
-    our editor team will refund you all the money for the article and we will not publish it.
-  </i>
 </div>
 </div>
