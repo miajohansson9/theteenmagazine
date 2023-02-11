@@ -49,6 +49,9 @@ gem 'image_processing', '~> 1.12', '>= 1.12.2'
 gem "aws-sdk-s3", require: false
 gem 'active_storage_validations', '~> 1.0', '>= 1.0.3'
 gem 'ruby-vips', '~> 2.0', '>= 2.0.7'
+gem "stripe"
+gem 'pay', '~> 3.0', '>= 3.0.24'
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
 

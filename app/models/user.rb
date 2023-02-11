@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :applies
   has_many :outreaches
 
+  pay_customer
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_one_attached :profile
@@ -42,6 +44,19 @@ class User < ActiveRecord::Base
       self.full_name = "#{self.first_name} #{self.last_name}"
     end
     self.full_name
+  end
+
+  def stripe_attributes(pay_customer)
+    {
+      address: {
+        city: pay_customer.owner.city,
+        country: pay_customer.owner.country
+      },
+      metadata: {
+        pay_customer_id: pay_customer.id,
+        user_id: id # or pay_customer.owner_id
+      }
+    }
   end
 
   def is_new?
