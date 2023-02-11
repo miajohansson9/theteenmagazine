@@ -22,7 +22,7 @@ class PostsController < ApplicationController
                               ]
 
   def log_impression
-    if @post.is_published?
+    if @post.is_published? && !browser.bot?
       Thread.new do
         if !(
              user_signed_in? &&
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
             @post.post_impressions = 1
             @post.save
           else
-            @post.increment(:post_impressions, by = 1)
+            @post.increment(:post_impressions, by=1)
             @post.save
           end
         end
