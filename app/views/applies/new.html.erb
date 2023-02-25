@@ -37,6 +37,7 @@ pintrk('track', 'pagevisit');
       <p class="mb-0 mt-0">*Email Address:</p>
       <%= f.email_field :email, placeholder: "Email" %>
       <p class="mt-0">*Grade Level: <%= f.select :grade, options_for_select(["College", "12th grade", "11th grade", "10th grade", "9th grade"]), :prompt => "Select a grade" %></p>
+      <p class="mt-0 text-danger">Note: You must be at least 13 years old apply to The Teen Magazine.</p>
       <p>*Cover letter: Please submit a cover letter describing why you want to join The Teen Magazine and what you hope to gain from being a part of, and contributing to, our writer community. Include links to any previously published articles if applicable (150-250 words).</p>
       <%= f.text_area :description, placeholder: "Write your cover letter here...", class: "required" %>
       <p class="d-block mt-0">*Upload your resume (pdf):</p>

@@ -1,0 +1,42 @@
+<div class="skinny_wrapper wrapper_padding pitches_wrapper">
+  <div class="flex_container_mobile_reverse_order">
+    <div>
+      <h1 class="pitch_ttl"><%= @title %></h1>
+      <% if @desc %>
+        <i>When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. If you change your mind later, you can unclaim the pitch. Deadlines are given for most editor pitches and become active once you claim a pitch. Read more about deadlines <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</i>
+        <br>
+      <% end %>
+      <% if @pitches.count.eql? 0 %>
+        <p><i><%= @message %></i></p>
+      <% end %>
+    </div>
+  </div>
+  <br>
+  <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
+    <% @pitches.each do |pitch| %>
+      <% @post = pitch.posts.find_by(user_id: pitch.claimed_id) %>
+      <div class="card" style="width: 32%; <% if @unseen_interviews.to_a.include? pitch %>background-color: #E6F6FF;<% end %>">
+        <a href="<%= pitch_path(pitch)%>">
+          <% if pitch.thumbnail.attached? %>
+            <%= image_tag(pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: pitch.title, :class => "card-img-top")%>
+          <% end %>
+        </a>
+        <% if current_user.admin? || current_user.editor? %>
+          <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn")%>
+        <% end %>
+        <div class="card-body">
+          <% if @post.present? %>
+            <% if pitch.claimed_id.present? && @post.deadline_at.present? && (@post.try(:reviews).try(:last).try(:status)&.eql? "In Progress") %>
+              <%= render "pitches/deadline_warning_msg", post: @post %>
+            <% end %>
+          <% end %>
+          <h4 class="pitch_ttl"><%= link_to pitch.title, pitch, style: "color: black; text-decoration: none;" %></h4>
+          <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
+          <%= link_to @button_text, pitch, :class => "btn btn-primary", :id => "btn_dark" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%== pagy_nav(@pagy).html_safe %>
+</div>
+<div class="content_hint"></div>

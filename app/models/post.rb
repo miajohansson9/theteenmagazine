@@ -98,6 +98,10 @@ class Post < ApplicationRecord
     @published = publish_at.present? ? (publish_at < Time.now) : false
   end
 
+  def is_interview?
+    self.category_id.to_i.eql? Category.find('q-a-w-influencers').id.to_i
+  end
+
   def is_locked?
     if deadline_at.nil? && !(title.include? ' (locked)')
       false

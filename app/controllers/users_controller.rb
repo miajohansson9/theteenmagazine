@@ -698,6 +698,7 @@ class UsersController < ApplicationController
         :snap,
         :bi_monthly_assignment,
         :last_saw_pitches,
+        :last_saw_interviews,
         :last_saw_writer_applications,
         :last_saw_editor_dashboard,
         :last_saw_peer_feedback,

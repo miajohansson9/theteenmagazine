@@ -30,7 +30,7 @@
                      <p class="card-text"> <%= draft.pitch.description.truncate_words(20) %></p>
                      <% @class = @extensions < 1 ? "disabled" : "" %>
                      <%= form_for draft do |f| %>
-                     <%= f.hidden_field :deadline_at, value: draft.deadline_at + 14.days %>
+                     <%= f.hidden_field :deadline_at, value: draft.deadline_at + 14.days unless draft.deadline_at.nil? %>
                       <%= f.fields_for :user, @user do |d| %>
                         <%= d.hidden_field :extensions, value: @extensions - 1 %>
                       <% end %>

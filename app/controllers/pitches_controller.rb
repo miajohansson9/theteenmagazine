@@ -2,8 +2,31 @@ class PitchesController < ApplicationController
   before_action :find_pitch, only: %i[show update edit destroy]
   before_action :can_edit?, only: [:edit]
   before_action :is_partner?, only: %i[index new show]
+  before_action :is_marketer?, only: [:interviews]
   before_action :authenticate_user!
   load_and_authorize_resource
+
+  #show all interview pitches
+  def interviews
+    @title = 'Interviews'
+    set_meta_tags title: @title
+    @notifications = @notifications - @unseen_interviews_cnt
+    @unseen_interviews_cnt = 0
+    @pagy, @pitches =
+      pagy(
+        Pitch
+          .is_approved
+          .not_claimed
+          .where(category_id: Category.find('q-a-w-influencers').id, status: nil)
+          .order('updated_at desc'),
+        page: params[:page],
+        items: 20
+      )
+    @desc = true
+    @message = 'All interviews have been claimed. Check back in a few days!'
+    @button_text = 'Claim Interview'
+    Thread.new { current_user.update_column('last_saw_interviews', Time.now) }
+  end
 
   #show all pitches
   def index
@@ -12,9 +35,9 @@ class PitchesController < ApplicationController
       @notifications = @notifications - @unseen_pitches_cnt
       @unseen_pitches_cnt = 0
       set_meta_tags title: @title
+      @categories = Category.active.where.not(slug: 'q-a-w-influencers')
       if params[:pitch].nil?
         @pitch = Pitch.new
-        @categories = Category.active
         @pagy, @pitches =
           pagy(
             Pitch
@@ -22,12 +45,12 @@ class PitchesController < ApplicationController
               .not_claimed
               .where(status: nil)
               .where('updated_at > ?', Time.now - 90.days)
+              .where.not(category_id: Category.find('q-a-w-influencers').id)
               .order('updated_at desc'),
             page: params[:page],
             items: 20
           )
       else
-        @categories = Category.active
         @category_id =
           if (params[:pitch][:category_id].blank?)
             @categories.map { |category| category.id }
@@ -244,7 +267,7 @@ class PitchesController < ApplicationController
       @tooltip = 'This pitch was rejected'
     elsif @claimed_user.nil?
       if @pitch.user.editor || (@pitch.user.id.eql? current_user.id)
-        @title = 'Claim Article Pitch'
+        @title = @pitch.is_interview? ? 'Claim Interview' : 'Claim Article Pitch'
         @disabled = ''
         @tooltip = ''
       else
@@ -281,6 +304,12 @@ class PitchesController < ApplicationController
     if !current_user.partner
       true
     else
+      redirect_to current_user, notice: 'You do not have access to this page.'
+    end
+  end
+
+  def is_marketer?
+    unless current_user.is_marketer?
       redirect_to current_user, notice: 'You do not have access to this page.'
     end
   end

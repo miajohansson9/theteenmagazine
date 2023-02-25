@@ -56,7 +56,7 @@
       <div class="content_hint"></div>
       <div class="btn_cntnr">
         <% @confirm = @pitch.deadline.nil? ? "When you claim this pitch, your draft will be started." : "When you claim this pitch, you will have #{@pitch.deadline} weeks to submit the associated draft for review." %>
-        <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit "Claim Article Pitch", data: { confirm: @confirm }, class: "newpost--new--profile mb-0 mr-0 #{@disabled}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
+        <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit @title, data: { confirm: @confirm }, class: "newpost--new--profile mb-0 mr-0 #{@disabled}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>
       </div>
       <br>
     <% end %>

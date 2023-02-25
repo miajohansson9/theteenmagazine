@@ -53,6 +53,10 @@ class User < ActiveRecord::Base
     @user_posts_approved.empty?
   end
 
+  def is_marketer?
+    self.admin? || self.marketer?
+  end
+
   def should_generate_new_friendly_id?
     slug.blank? || self.full_name_changed?
   end

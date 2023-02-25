@@ -29,6 +29,10 @@ class Pitch < ApplicationRecord
   def is_editor?
     self.user.editor? && self.id.nil?
   end
+  
+  def is_interview?
+    self.category_id.eql? Category.find('q-a-w-influencers').id
+  end
 
   # has_attached_file :thumbnail,
   #                   styles: {

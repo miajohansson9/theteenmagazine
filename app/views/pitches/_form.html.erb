@@ -37,7 +37,7 @@
       <%= f.file_field :thumbnail %>
     </div>
     <% if current_user.editor? %>
-      <p class="mb-0">Note: If this pitch does not fit The Teen Magazine's audience as described in <a target="_blank" href="/pitching-new-articles">Pitching New Articles</a>, an admin reserves the right to delete the pitch from Editor Pitches within 48 hours of it being created. Deleted pitches will not be counted toward your 10 required pitches every month.</p>
+      <p class="mb-0">Note: If this pitch does not fit The Teen Magazine's audience as described in <a target="_blank" href="/pitching-new-articles">Pitching New Articles</a>, an admin reserves the right to delete the pitch from Editor Pitches within 48 hours of it being created. Deleted pitches will not be counted toward your required pitches every month.</p>
     <% end %>
     <% if @pitch.status.nil? && !(@pitch.user.try(:editor) || current_user.editor) %>
       <%= f.hidden_field :status, value: "Ready for Review" %>
