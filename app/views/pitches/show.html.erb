@@ -4,7 +4,7 @@
     <%= render "pitches/deadline_warning_msg", post: @post %>
   <% end %>
   <h3 class="pitch_ttl"><%= @title %> <i><%= @pitch.title %></i></h3>
-  <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
+  <p class="pitch_usr">Pitched <% if @pitch.user.present? %> by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> <% end %>under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %> on <%= @pitch.created_at.strftime("%m-%d-%Y") %> </p>
   <% if @claimed_user.present? %>
     <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %><%= " on #{@pitch.claimed_at.in_time_zone.strftime('%A, %B %d')}" unless @pitch.claimed_at.nil? %></p>
   <% elsif @pitch.status.eql? "Approved" %>
@@ -33,18 +33,16 @@
         <%= @pitch.notes %><br>
       </i></p>
   <% end %>
+  <%= markdown @pitch.description %>
   <% if @pitch.thumbnail.attached? %>
     <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: @pitch.title, :class => "card-img-top")%>
-  <% elsif @pitch.try(:thumbnail).present? %>
-    <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540, 380]), class: "image_fit_scrn mb-4") %>
   <% end %>
-  <%= markdown @pitch.description %>
   <% if @pitch.requirements.present? %>
     <i>Notes:</i>
     <%= markdown @pitch.requirements %>
   <% end %>
   <% if @pitch.deadline.present? %>
-    <p class="pitch_usr"><b>This pitch has a <%= @pitch.deadline %> week deadline. Read more about deadlines <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</b></p>
+    <p class="pitch_usr mt-3"><b>This pitch has a <%= @pitch.deadline %> week deadline. Read more about deadlines <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</b></p>
   <% end %>
   <% if @claimed_user.nil? %>
     <%= form_for @post do |f| %>
@@ -53,7 +51,9 @@
       <%= f.hidden_field :category_id, value: @pitch.category_id %>
       <%= f.hidden_field :pitch_id, value: @pitch.id %>
       <i class="d-block pb-4 mb-2">When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
-      <div class="content_hint"></div>
+      <% if @pitch.is_interview? %>
+        <%= render "interview_explanation", home: false %>
+      <% end %>
       <div class="btn_cntnr">
         <% @confirm = @pitch.deadline.nil? ? "When you claim this pitch, your draft will be started." : "When you claim this pitch, you will have #{@pitch.deadline} weeks to submit the associated draft for review." %>
         <span data-toggle="tooltip" title="<%= @tooltip %>"><%= f.submit @title, data: { confirm: @confirm }, class: "newpost--new--profile mb-0 mr-0 #{@disabled}", style: "padding-left: 2.5em; padding-right: 2.5em;" %></span>

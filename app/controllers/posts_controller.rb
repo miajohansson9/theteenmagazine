@@ -467,7 +467,7 @@ class PostsController < ApplicationController
           ApplicationMailer.article_published(@post.user, @post).deliver
         end
         @post.promoting_until = nil
-        @post.publish_at = Time.now
+        @post.update_column("publish_at", Time.now)
       end
       if @rev.present?
         @post.reviews.each { |review| review.update_column("active", false) }

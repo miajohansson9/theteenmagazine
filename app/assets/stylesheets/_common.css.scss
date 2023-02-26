@@ -140,6 +140,16 @@ body,
     }
 }
 
+.interview_pitch_flds {
+    p {
+        margin: 0;
+    }
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
 .claim_pitch_wrapper .card {
     &:hover {
         text-decoration: none !important;

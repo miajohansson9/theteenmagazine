@@ -3,8 +3,8 @@ class PitchesController < ApplicationController
   before_action :can_edit?, only: [:edit]
   before_action :is_partner?, only: %i[index new show]
   before_action :is_marketer?, only: [:interviews]
-  before_action :authenticate_user!
-  load_and_authorize_resource
+  before_action :authenticate_user!,  except: [:pitch_interview, :create]
+  load_and_authorize_resource except: [:pitch_interview, :create]
 
   #show all interview pitches
   def interviews
@@ -22,7 +22,6 @@ class PitchesController < ApplicationController
         page: params[:page],
         items: 20
       )
-    @desc = true
     @message = 'All interviews have been claimed. Check back in a few days!'
     @button_text = 'Claim Interview'
     Thread.new { current_user.update_column('last_saw_interviews', Time.now) }
@@ -69,7 +68,6 @@ class PitchesController < ApplicationController
             items: 20
           )
       end
-      @desc = true
       @message = 'There are no unclaimed pitches. Check back in a few days!'
       @button_text = 'Claim Pitch'
       Thread.new { current_user.update_column('last_saw_pitches', Time.now) }
@@ -94,17 +92,31 @@ class PitchesController < ApplicationController
     set_meta_tags title: 'New Pitch | The Teen Magazine'
   end
 
+  def pitch_interview
+    @pitch = Pitch.new(deadline: 6, category_id: Category.find('q-a-w-influencers').id)
+    set_meta_tags title: 'Pitch an Interview | The Teen Magazine'
+  end
+
   def create
     @categories = Category.active
-    @pitch = current_user.pitches.build(pitch_params)
-    if @pitch.save && current_user.editor?
-      fix_title
-      redirect_to '/pitches', notice: 'Your pitch was successfully added!'
-    elsif @pitch.save
-      fix_title
-      redirect_to @pitch, notice: 'Your pitch was successfully submitted!'
+    if params[:button].eql? 'interview'
+      @pitch = Pitch.new(pitch_params)
+      if @pitch.save
+        redirect_to '/', notice: 'Your pitch was submitted successfully!'
+      else
+        render 'pitch_interview', notice: 'Oh no! Your changes were not able to be saved!'
+      end
     else
-      render 'new', notice: 'Oh no! Your changes were not able to be saved!'
+      @pitch = current_user.pitches.build(pitch_params)
+      if @pitch.save && current_user.editor?
+        fix_title
+        redirect_to '/pitches', notice: 'Your pitch was successfully added!'
+      elsif @pitch.save
+        fix_title
+        redirect_to @pitch, notice: 'Your pitch was successfully submitted!'
+      else
+        render 'new', notice: 'Oh no! Your changes were not able to be saved!'
+      end
     end
   end
 

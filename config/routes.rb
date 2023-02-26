@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/community' => 'posts#index'
+  get '/pitch-interview' => 'pitches#pitch_interview'
   get '/interviews' => 'pitches#interviews'
   get '/drafts/:id' => 'posts#draft'
   get '/drafts/:id/edit' => 'posts#edit'

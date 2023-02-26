@@ -1,5 +1,5 @@
 class Pitch < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :category
   has_many :posts
 
@@ -27,7 +27,7 @@ class Pitch < ApplicationRecord
         -> { where(status: ['Ready for Review', nil, 'Approved']) }
 
   def is_editor?
-    self.user.editor? && self.id.nil?
+    self.user.present? && self.user.editor? && self.id.nil?
   end
   
   def is_interview?
