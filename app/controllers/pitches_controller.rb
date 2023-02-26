@@ -101,8 +101,13 @@ class PitchesController < ApplicationController
     @categories = Category.active
     if params[:button].eql? 'interview'
       @pitch = Pitch.new(pitch_params)
+      if pitch_params[:thumbnail].present?
+        @pitch.thumbnail.attach(pitch_params[:thumbnail])
+      end
       if @pitch.save
-        redirect_to '/', notice: 'Your pitch was submitted successfully!'
+        @pitch.request = request
+        @pitch.deliver
+        set_meta_tags title: 'Interview Submitted'
       else
         render 'pitch_interview', notice: 'Oh no! Your changes were not able to be saved!'
       end
@@ -160,7 +165,9 @@ class PitchesController < ApplicationController
       ApplicationMailer.pitch_deleted(@pitch.user, @pitch).deliver
     end
     @pitch.posts.each { |p| p.update_column('pitch_id', nil) }
-    if @pitch&.destroy
+    if @pitch.is_interview? && @pitch&.destroy
+      redirect_to interviews_path, notice: 'Your pitch was deleted.'
+    elsif @pitch&.destroy
       redirect_to pitches_path, notice: 'Your pitch was deleted.'
     end
   end
@@ -278,7 +285,7 @@ class PitchesController < ApplicationController
       @disabled = 'disabled'
       @tooltip = 'This pitch was rejected'
     elsif @claimed_user.nil?
-      if @pitch.user.editor || (@pitch.user.id.eql? current_user.id)
+      if @pitch.user.nil? || @pitch.user.editor || (@pitch.user.id.eql? current_user.id)
         @title = @pitch.is_interview? ? 'Claim Interview' : 'Claim Article Pitch'
         @disabled = ''
         @tooltip = ''
@@ -379,7 +386,10 @@ class PitchesController < ApplicationController
         :category_id,
         :user_id,
         :editor_id,
-        :archive
+        :archive,
+        :contact_email,
+        :influencer_social_media,
+        :platform_to_share
       )
   end
 
@@ -416,7 +426,7 @@ class PitchesController < ApplicationController
         :slug,
         feedback_list: [],
         reviews_attributes: %i[id post_id created_at status notes editor_id],
-        user_attributes: %i[extensions id]
+        user_attributes: %i[extensions id],
       )
   end
 

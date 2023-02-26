@@ -322,9 +322,11 @@ class ApplicationMailer < ActionMailer::Base
   def pitch_deleted(user, pitch)
     @user = user
     @pitch = pitch
-    mail(
-      to: @user.email,
-      subject: "#{@user.first_name}, your pitch was deleted by an admin"
-    )
+    if @user
+      mail(
+        to: @user.email,
+        subject: "#{@user.first_name}, your pitch was deleted by an admin"
+      )
+    end
   end
 end

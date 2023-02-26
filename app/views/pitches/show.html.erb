@@ -33,6 +33,15 @@
         <%= @pitch.notes %><br>
       </i></p>
   <% end %>
+  <% if @pitch.is_interview? %>
+    <%= render "interview_explanation", home: false %>
+  <% end %>
+  <% if @pitch.contact_email %>
+    <i><b>Contact Email: <%= @pitch.contact_email %></b></i><br>
+  <% end %>
+  <% if @pitch.influencer_social_media %>
+    <i><b>Social media accounts:</b> <%= @pitch.influencer_social_media %></i>
+  <% end %>
   <%= markdown @pitch.description %>
   <% if @pitch.thumbnail.attached? %>
     <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: @pitch.title, :class => "card-img-top")%>
@@ -50,9 +59,8 @@
       <%= f.hidden_field :content, value: "<i>" << @pitch.description << " (delete pitch description before submitting)</i>" %>
       <%= f.hidden_field :category_id, value: @pitch.category_id %>
       <%= f.hidden_field :pitch_id, value: @pitch.id %>
-      <i class="d-block pb-4 mb-2">When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
-      <% if @pitch.is_interview? %>
-        <%= render "interview_explanation", home: false %>
+      <% if !@pitch.is_interview? %>
+        <i class="d-block pb-4 mb-2">When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
       <% end %>
       <div class="btn_cntnr">
         <% @confirm = @pitch.deadline.nil? ? "When you claim this pitch, your draft will be started." : "When you claim this pitch, you will have #{@pitch.deadline} weeks to submit the associated draft for review." %>
@@ -75,7 +83,7 @@
       <p class="pitch_usr">This pitch's <%= link_to("article", @article, class: "pitch_btn", target: "_blank") %> was published on <%= @article.publish_at.in_time_zone.strftime("%A, %B %d") %>.</p>
     <% end %>
   <% end %>
-  <% if ((current_user.id.eql? @pitch.user.id) || current_user.admin) && !@article&.is_published? %>
+  <% if ((current_user.id.eql? @pitch.user&.id) || current_user.admin) && !@article&.is_published? %>
     <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme edit_btn_rel", style: "float: left; margin-top: -0.5rem;" %>
   <% end %>
 </div>

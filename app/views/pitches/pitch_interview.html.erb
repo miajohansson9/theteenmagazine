@@ -8,7 +8,11 @@
       <ul>
         <% @pitch.errors.full_messages.each do |msg| %>
           <li class="text-danger">
-            <h6><%= msg %></h6>
+            <% if msg.include? 'Title' %>
+              <h6>Name of interviewee can't be blank</h6>
+            <% else %>
+              <h6><%= msg %></h6>
+            <% end %>
           </li>
         <% end %>
       </ul>
@@ -16,18 +20,16 @@
     <div class="interview_pitch_flds">
       <%= f.text_field :title, placeholder: "Name of interviewee" %>
       <p>What email can we send the questions to?</p>
-      <%= f.text_field :title, placeholder: "Contact email" %>
+      <%= f.text_field :contact_email, placeholder: "Contact email" %>
       <p>List your main social media accounts:</p>
-      <%= f.text_field :title, placeholder: "Instagram: @madelyncline, TikTok: @madelyn_cline" %>
+      <%= f.text_field :influencer_social_media, placeholder: "Instagram: @madelyncline, TikTok: @madelyn_cline" %>
       <p>
         An interview is much more likely to be picked if you can share the article once published on The Teen Magazine. 
         Please indicate the social media platform you can share the article link. (You will get to see the draft before it's published.)
       </p>
-      <%= f.collection_select(:user_id, Category.active, :id, :name, {prompt: "None selected"}) %>
-      <br>
-      <br>
-      <p>Upload an image that could be used for the thumbnail:</p>
-      <%= f.file_field :thumbnail %>
+      <%= f.select(:platform_to_share, ['Instagram story w/ link (preferred)', 'Instagram bio link (preferred)', 'TikTok bio link (preferred)', 'Facebook post', 'Youtube community post', 'Twitter tweet', 'Twitter bio', 'Pinterest post', 'Snapchat post', 'LinkedIn post'], {prompt: "None selected"}) %>
+      <%= f.hidden_field :category_id, :value => @pitch.category_id %>
+      <%= f.hidden_field :deadline, :value => 6 %>
       <br>
       <br>
       <%= f.text_area :description, placeholder: "Any other relevant info...", style: "min-height: 120px;" %>

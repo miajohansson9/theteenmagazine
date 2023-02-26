@@ -90,12 +90,14 @@
             <div class="card-header pt-3 pb-3" style="border: none; background-color: rgba(0,0,0,0.03);"><%= link_to "What's New...", pitches_path, style: "font-size: 0.9rem; font-weight: bold; text-decoration: none; line-height: 1.5; color: #212529;" %></div>
             <ul class="list-group list-group-flush whats-new">
               <% @pitches.each do |pitch| %>
-                <li class="list-group-item">
-                  <% @profile_img = pitch.user.profile.attached? ? image_tag(pitch.user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
-                  <%= link_to(@profile_img, pitch.user) %>
-                  <div><%= link_to(pitch.user.try(:full_name), pitch.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
-                  <br><span class="date_ago"><%= time_ago_in_words(pitch.created_at) %> ago</span></div>
-                </li>
+                <% if pitch.user.present? %>
+                  <li class="list-group-item">
+                    <% @profile_img = pitch.user&.profile&.attached? ? image_tag(pitch&.user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+                    <%= link_to(@profile_img, pitch&.user) %>
+                    <div><%= link_to(pitch.user.try(:full_name), pitch&.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
+                    <br><span class="date_ago"><%= time_ago_in_words(pitch.created_at) %> ago</span></div>
+                  </li>
+                <% end %>
               <% end %>
             </ul>
           </div>
