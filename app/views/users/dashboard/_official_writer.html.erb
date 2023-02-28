@@ -162,7 +162,7 @@
   });
 </script>
 
-<% if @show_onboarding_full || @show_editor_onboarding %>
+<% if @show_onboarding_full || @show_editor_onboarding || @show_marketer_onboarding %>
   <%= javascript_include_tag "mdbootstrap/mdb.min" %>
   <%= javascript_include_tag "plugins/onboarding.min" %>
   <script type="text/javascript">
