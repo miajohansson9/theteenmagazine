@@ -12,7 +12,9 @@
     <p>Your interview <%= link_to @post.title, @post, style: "color: #4ABEB6;" %> was just published!</p>
     <% if @pitch.platform_to_share.present? && (!@pitch.platform_to_share.eql? "None selected") %>
       <p>
-        We kindly request that you share the article link using <%= indefinite_articlerize(@pitch.platform_to_share) %> <b><%= @pitch.platform_to_share&.chomp('(preferred)')&.sub('w/', 'with') %></b> and reply to this email once you have done so.
+        In your interview request, you indicated that you would share the published article using 
+        <%= indefinite_articlerize(@pitch.platform_to_share) %> <b><%= @pitch.platform_to_share&.chomp(' (preferred)')&.sub('w/', 'with') %></b>.
+        We kindly request that you do this and reply to this email once you have done so.
         If you are no longer able to share the link or prefer to use a different platform, please inform us via email.
       </p>
     <% else %>
