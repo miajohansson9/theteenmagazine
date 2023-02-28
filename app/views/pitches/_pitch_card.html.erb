@@ -1,5 +1,5 @@
 <% @post = pitch.posts.find_by(user_id: pitch.claimed_id) %>
-<div class="card" style="width: 32%; <% if @unseen_interviews.to_a.include? pitch %>background-color: #E6F6FF;<% end %>">
+<div class="card" style="width: 32%; <% if @unseen_pitches.to_a.include? pitch %>background-color: #E6F6FF;<% end %>">
   <a href="<%= pitch_path(pitch)%>">
     <% if pitch.thumbnail.attached? %>
       <%= image_tag(pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: pitch.title, :class => "card-img-top")%>

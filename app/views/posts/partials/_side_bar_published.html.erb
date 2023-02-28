@@ -2,12 +2,13 @@
   <div class="articles">
     <div class="flex_other_articles">
       <div class="contain_articles">
-        <!--
-              <h3 style="margin-bottom: 18px;">Recommended in <%= link_to(@post.category.name, @post.category, :class => "category_title_trending") %></h3>
-              <%= render_async_cache get_trending_posts_in_category_path(id: @post.id) do %>
-                <div style="height: 366px; width: 100%; display: block; margin-bottom: 15px;"></div>
-              <% end %>
-              -->
+        <h3 style="margin-bottom: 18px;">Recommended in <%= link_to(@post.category.name, @post.category, :class => "category_title_trending") %></h3>
+        <%= render_async_cache get_trending_posts_in_category_path(id: @post.id) do %>
+          <div style="height: 366px; width: 100%; display: block; margin-bottom: 15px;"></div>
+        <% end %>
+        <% if @post.is_interview? %>
+          <p>Want to get featured on The Teen Magazine? Pitch your story <%= link_to 'here', '/pitch-interview', class: "link_grn" %></p>
+        <% end %>
         <div class="content_hint"></div>
         <div id="subscribe-widget" style="margin-top: 20px;">
           <h4>Subscribe to our weekly newsletter</h4>

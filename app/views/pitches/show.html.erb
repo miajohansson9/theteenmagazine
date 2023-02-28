@@ -40,7 +40,11 @@
     <i><b>Contact Email: <%= @pitch.contact_email %></b></i><br>
   <% end %>
   <% if @pitch.influencer_social_media %>
-    <i><b>Social media accounts:</b> <%= @pitch.influencer_social_media %></i>
+    <i><b>Social media accounts: <%= @pitch.influencer_social_media %></b></i><br>
+  <% end %>
+  <% if @pitch.platform_to_share.present? && !(@pitch.platform_to_share.eql? "None selected") %>
+    <span class="badge badge-default">Will share on social media</span>
+    <span class="badge badge-default editor_label"><%= @pitch.platform_to_share&.chomp('(preferred)')%></span>
   <% end %>
   <%= markdown @pitch.description %>
   <% if @pitch.thumbnail.attached? %>
@@ -55,8 +59,12 @@
   <% end %>
   <% if @claimed_user.nil? %>
     <%= form_for @post do |f| %>
-      <%= f.hidden_field :title, value: @pitch.title %>
       <%= f.hidden_field :content, value: "<i>" << @pitch.description << " (delete pitch description before submitting)</i>" %>
+      <% if @pitch.is_interview? %>
+          <%= f.hidden_field :title, value: "Interview with " << @pitch.title << " (replace this with interesting title)" %>
+      <% else %>
+          <%= f.hidden_field :title, value: @pitch.title %>
+      <% end %>
       <%= f.hidden_field :category_id, value: @pitch.category_id %>
       <%= f.hidden_field :pitch_id, value: @pitch.id %>
       <% if !@pitch.is_interview? %>

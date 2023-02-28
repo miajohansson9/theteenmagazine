@@ -267,7 +267,7 @@ class PostsController < ApplicationController
 
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
-    @trending = @post.category.posts.published.trending.limit(4)
+    @trending = @post.category.posts.published.trending.limit(3)
     render partial: "posts/partials/trending"
   end
 
@@ -466,6 +466,9 @@ class PostsController < ApplicationController
         else
           ApplicationMailer.article_published(@post.user, @post).deliver
         end
+        if @post.is_interview? && @post.pitch&.contact_email.present?
+          ApplicationMailer.interview_published(@post).deliver
+        end
         @post.promoting_until = nil
         @post.update_column("publish_at", Time.now)
       end
@@ -474,7 +477,7 @@ class PostsController < ApplicationController
         @rev.update_column("active", true)
       end
       fix_formatting
-      @post.save
+      @post.save!
       if (@new_status.eql? "In Progress") &&
          ((@prev_status.eql? "Ready for Review") ||
           (@prev_status.eql? "In Review"))

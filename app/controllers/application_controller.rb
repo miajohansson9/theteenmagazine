@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
         .not_claimed
         .where(status: nil)
         .where.not(user_id: current_user.id)
-        .where.not(category_id: Category.find('q-a-w-influencers').id)
+        .where.not(category_id: Category.find('interviews').id)
         .where('updated_at > ?', current_user.last_saw_pitches)
     @unseen_pitches_cnt = @unseen_pitches.size
 
@@ -55,8 +55,7 @@ class ApplicationController < ActionController::Base
         Pitch
           .is_approved
           .not_claimed
-          .where.not(user_id: current_user.id)
-          .where(status: nil, category_id: Category.find('q-a-w-influencers').id)
+          .where(status: nil, category_id: Category.find('interviews').id)
           .where('updated_at > ?', current_user.last_saw_interviews)
       @unseen_interviews_cnt = @unseen_interviews.size
       @notifications = @notifications + @unseen_interviews_cnt

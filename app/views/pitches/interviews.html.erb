@@ -1,9 +1,9 @@
 <div class="skinny_wrapper wrapper_padding pitches_wrapper">
   <div class="flex_container_mobile_reverse_order">
     <div>
-      <h1 class="pitch_ttl"><%= @title %></h1>
-      <%= render "interview_explanation", home: true %>
-      <i>Like other article pitches, the pitch will show up as claimed in your dashboard, and a new draft will be started. Deadlines are given for interviews but they're 6 weeks to give you enough time. Read more about deadlines <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</i>
+      <h1 class="pitch_ttl">Interview Requests</h1>
+      <i>These interviews are submitted externally by PR agents and content creators. Only claim the interviews you are excited to write about and think should be featured on The Teen Magazine. Just 
+      because an interview request was submitted does <i>not</i> mean they should be featured.</i>
       <br>
       <% if @pitches.count.eql? 0 %>
         <p><i><%= @message %></i></p>
@@ -13,7 +13,7 @@
   <br>
   <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
     <% @pitches.each do |pitch| %>
-      <%= render "pitch_card", pitch: pitch %>
+      <%= render "pitch_interview_card", pitch: pitch %>
     <% end %>
   </div>
   <%== pagy_nav(@pagy).html_safe %>

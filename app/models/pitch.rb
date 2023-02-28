@@ -6,7 +6,7 @@ class Pitch < ApplicationRecord
 
   has_one_attached :thumbnail
 
-  attributes :contact_email, validate: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
+  attributes :contact_email
   attributes :influencer_social_media
   attributes :platform_to_share
   attributes :description
@@ -40,7 +40,7 @@ class Pitch < ApplicationRecord
   end
 
   def is_interview?
-    self.category_id.eql? Category.find("q-a-w-influencers").id
+    self.category_id.eql? Category.find("interviews").id
   end
 
   extend FriendlyId

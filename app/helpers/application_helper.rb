@@ -1,12 +1,12 @@
 module ApplicationHelper
   include Pagy::Frontend
 
-  def link_helper link
+  def link_helper(link)
     @link = link.strip
     if @link[0..3] == "http" or @link[0..4] == "https"
-        @link
+      @link
     else
-        "//#{@link}"
+      "//#{@link}"
     end
   end
 
@@ -19,7 +19,7 @@ module ApplicationHelper
         disable_indented_code_blocks: true,
         fenced_code_blocks: true,
         strikethough: true,
-        superscirpt: true
+        superscirpt: true,
       )
 
     Redcarpet::Markdown.new(renderer).render(content).html_safe

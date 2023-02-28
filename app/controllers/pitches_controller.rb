@@ -8,8 +8,7 @@ class PitchesController < ApplicationController
 
   #show all interview pitches
   def interviews
-    @title = 'Interviews'
-    set_meta_tags title: @title
+    set_meta_tags title: "Interview Requests"
     @notifications = @notifications - @unseen_interviews_cnt
     @unseen_interviews_cnt = 0
     @pagy, @pitches =
@@ -17,7 +16,7 @@ class PitchesController < ApplicationController
         Pitch
           .is_approved
           .not_claimed
-          .where(category_id: Category.find('q-a-w-influencers').id, status: nil)
+          .where(category_id: Category.find('interviews').id, status: nil)
           .order('updated_at desc'),
         page: params[:page],
         items: 20
@@ -34,7 +33,7 @@ class PitchesController < ApplicationController
       @notifications = @notifications - @unseen_pitches_cnt
       @unseen_pitches_cnt = 0
       set_meta_tags title: @title
-      @categories = Category.active.where.not(slug: 'q-a-w-influencers')
+      @categories = Category.active.where.not(slug: 'interviews')
       if params[:pitch].nil?
         @pitch = Pitch.new
         @pagy, @pitches =
@@ -44,7 +43,7 @@ class PitchesController < ApplicationController
               .not_claimed
               .where(status: nil)
               .where('updated_at > ?', Time.now - 90.days)
-              .where.not(category_id: Category.find('q-a-w-influencers').id)
+              .where.not(category_id: Category.find('interviews').id)
               .order('updated_at desc'),
             page: params[:page],
             items: 20
@@ -93,7 +92,7 @@ class PitchesController < ApplicationController
   end
 
   def pitch_interview
-    @pitch = Pitch.new(deadline: 6, category_id: Category.find('q-a-w-influencers').id)
+    @pitch = Pitch.new(deadline: 6, category_id: Category.find('interviews').id)
     set_meta_tags title: 'Pitch an Interview | The Teen Magazine'
   end
 

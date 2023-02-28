@@ -99,7 +99,7 @@ class Post < ApplicationRecord
   end
 
   def is_interview?
-    self.category_id.to_i.eql? Category.find('q-a-w-influencers').id.to_i
+    self.category_id.to_i.eql? Category.find('interviews').id.to_i
   end
 
   def is_locked?

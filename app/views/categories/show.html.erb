@@ -1,8 +1,6 @@
 <div class="category">
   <div class="category_image" style="background-image: url(<%= url_for(@category.image) %>)">
-    <div id="background">
-      <h1><%= @category.name %></h1>
-    </div>
+    <h1><%= @category.name %></h1>
   </div>
   <div class="category--show">
     <div class="other--articles">
@@ -27,6 +25,9 @@
         <a class="apply" href="/apply" target="blank">
         </a>
       </div>
+      <% if @category.slug.eql? 'interviews' %>
+        <p class="text-center">Want to get featured on The Teen Magazine? Pitch your story <%= link_to 'here', '/pitch-interview', class: "link_grn" %></p>
+      <% end %>
       <%== pagy_nav(@pagy).html_safe %>
     </div>
   </div>
