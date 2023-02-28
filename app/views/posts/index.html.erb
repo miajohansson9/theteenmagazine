@@ -8,6 +8,8 @@
       <% end %>
       <% if @user.editor %>
         <span class="badge badge-default editor_label" style="top: 5px;">Editor</span>
+      <% elsif @user.marketer %>
+          <span class="badge badge-default marketer_label" style="top: 5px;">Interviewer</span>
       <% end %>
     </div>
   </div>

@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!,
                 except: %i[index show redirect get_editor_stats]
   before_action :is_editor?, only: %i[show_users new]
-  before_action :is_marketer?, only: %i[new partners]
+  before_action :is_admin?, only: %i[new partners]
   before_action :onboarding_redirect, if: :current_user?, only: [:show]
   after_action :update_last_sign_in_at, if: :current_user?
 
@@ -626,8 +626,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def is_marketer?
-    if (current_user && (current_user.admin? || current_user.marketer?))
+  def is_admin?
+    if (current_user && current_user.admin?)
       true
     else
       redirect_to current_user, notice: 'You do not have access to this page.'

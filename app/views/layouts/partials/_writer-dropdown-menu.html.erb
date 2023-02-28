@@ -49,8 +49,6 @@
   <% end %>
   <% if current_user.admin? %>
     <%= link_to "Editors", "/editors", class: "dropdown-item" %>
-  <% end %>
-  <% if current_user.admin? || current_user.marketer? %>
     <%= link_to "Partners", "/partners", class: "dropdown-item" %>
   <% end %>
   <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>
