@@ -33,9 +33,6 @@
         <%= @pitch.notes %><br>
       </i></p>
   <% end %>
-  <% if @pitch.is_interview? %>
-    <%= render "interview_explanation", home: false %>
-  <% end %>
   <% if @pitch.contact_email %>
     <i><b>Contact Email: <%= @pitch.contact_email %></b></i><br>
   <% end %>
@@ -43,16 +40,25 @@
     <i><b>Social media accounts: <%= @pitch.influencer_social_media %></b></i><br>
   <% end %>
   <% if @pitch.platform_to_share.present? && !(@pitch.platform_to_share.eql? "None selected") %>
-    <span class="badge badge-default">Will share on social media</span>
-    <span class="badge badge-default editor_label"><%= @pitch.platform_to_share&.chomp('(preferred)')%></span>
+    <span class="badge badge-pill badge-success">Will share on social media</span>
+    <span class="badge badge-pill badge-info"><%= @pitch.platform_to_share&.chomp('(preferred)')%></span>
+  <% end %>
+  <% if @pitch.following_level.present? %>
+    <span class="badge badge-pill badge-info"><%= @pitch.following_level %> followers</span>
   <% end %>
   <%= markdown @pitch.description %>
+  <% if @pitch.admin_notes.present? %>
+    <p><i style="background-color: #FCD04D;">Admin Notes: <%= @pitch.admin_notes %></i></p>
+  <% end %>
   <% if @pitch.thumbnail.attached? %>
     <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: @pitch.title, :class => "card-img-top")%>
   <% end %>
   <% if @pitch.requirements.present? %>
     <i>Notes:</i>
     <%= markdown @pitch.requirements %>
+  <% end %>
+  <% if @pitch.is_interview? %>
+    <%= render "interview_explanation", home: false %>
   <% end %>
   <% if @pitch.deadline.present? %>
     <p class="pitch_usr mt-3"><b>This pitch has a <%= @pitch.deadline %> week deadline. Read more about deadlines <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</b></p>
@@ -61,9 +67,9 @@
     <%= form_for @post do |f| %>
       <%= f.hidden_field :content, value: "<i>" << @pitch.description << " (delete pitch description before submitting)</i>" %>
       <% if @pitch.is_interview? %>
-          <%= f.hidden_field :title, value: "Interview with " << @pitch.title << " (replace this with interesting title)" %>
+        <%= f.hidden_field :title, value: "Interview with " << @pitch.title << " (replace this with interesting title)" %>
       <% else %>
-          <%= f.hidden_field :title, value: @pitch.title %>
+        <%= f.hidden_field :title, value: @pitch.title %>
       <% end %>
       <%= f.hidden_field :category_id, value: @pitch.category_id %>
       <%= f.hidden_field :pitch_id, value: @pitch.id %>

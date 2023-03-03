@@ -389,7 +389,9 @@ class PitchesController < ApplicationController
         :contact_email,
         :influencer_social_media,
         :platform_to_share,
-        :interview_kind
+        :interview_kind,
+        :following_level,
+        :admin_notes
       )
   end
 

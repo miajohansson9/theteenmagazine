@@ -23,6 +23,9 @@
       <%= f.text_field :contact_email, placeholder: "Contact email" %>
       <p>List your main social media accounts:</p>
       <%= f.text_field :influencer_social_media, placeholder: "Instagram: @madelyncline, TikTok: @madelyn_cline" %>
+      <p>How many followers does you/your client have?
+      <%= f.select(:following_level, ['less than 100k', 'between 100k and 500k', 'between 500k and 1 million', 'over 1 million'], {prompt: "None selected"}) %></p>
+      <br>
       <p>What description fits you/your client the best?
       <%= f.select(:interview_kind, ['Actor', 'Actress', 'Author', 'Artist', 'Activist', 'Content Creator', 'Entrepreneur', 'Influencer', 'Musician', 'Youtuber', 'Other'], {prompt: "None selected"}) %></p>
       <br>
