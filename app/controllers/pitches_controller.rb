@@ -388,7 +388,8 @@ class PitchesController < ApplicationController
         :archive,
         :contact_email,
         :influencer_social_media,
-        :platform_to_share
+        :platform_to_share,
+        :interview_kind
       )
   end
 
