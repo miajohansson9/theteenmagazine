@@ -17,7 +17,7 @@
                 <p class="date_post_preview"><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
               </div>
             </div>
-            <% if (index + 1) % 2 == 0 %>
+            <% if (index + 1) % 4 == 0 %>
               <div class="content_hint"></div>
             <% end %>
           <% end %>
