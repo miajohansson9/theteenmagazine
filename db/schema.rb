@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_26_205155) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_03_151806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -340,6 +340,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_205155) do
     t.string "contact_email"
     t.string "influencer_social_media"
     t.string "platform_to_share"
+    t.string "interview_kind"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
     t.index ["updated_at"], name: "index_pitches_on_updated_at"
   end

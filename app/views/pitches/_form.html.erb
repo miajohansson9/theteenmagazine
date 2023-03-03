@@ -25,12 +25,15 @@
     <div class="margin_flds">
       <% @prompt = current_user.editor? ? "Select a Deadline" : "Set a deadline (Optional)" %>
       <% if @pitch.is_interview? %>
-          <p>
-            Please indicate the social media platform you can share the article link. (You will get to see the draft before it's published.)
-          </p>
-          <%= f.select(:platform_to_share, ['None selected', 'Instagram story w/ link (preferred)', 'Instagram bio link (preferred)', 'TikTok bio link (preferred)', 'Facebook post', 'Youtube community post', 'Twitter tweet', 'Twitter bio', 'Pinterest post', 'Snapchat post', 'LinkedIn post'], {prompt: "None selected"}) %>
-          <br>
-          <%= f.select(:deadline, options_for_select(["6 weeks", "8 weeks"], [6, 8]), {prompt: @prompt}, {:class => "d-inline"}) %>
+        <p>What description fits you/your client the best?
+          <%= f.select(:interview_kind, ['Actor', 'Actress', 'Author', 'Artist', 'Activist', 'Content Creator', 'Influencer', 'Musician', 'Youtuber', 'Other'], {prompt: "None selected"}) %>
+        </p>
+        <p>
+          Please indicate the social media platform you can share the article link. (You will get to see the draft before it's published.)
+        </p>
+        <%= f.select(:platform_to_share, ['None selected', 'Instagram story w/ link (preferred)', 'Instagram bio link (preferred)', 'TikTok bio link (preferred)', 'Facebook post', 'Youtube community post', 'Twitter tweet', 'Twitter bio', 'Pinterest post', 'Snapchat post', 'LinkedIn post'], {prompt: "None selected"}) %>
+        <br>
+        <%= f.select(:deadline, options_for_select(["6 weeks", "8 weeks"], [6, 8]), {prompt: @prompt}, {:class => "d-inline"}) %>
       <% else %>
         <%= f.select(:deadline, options_for_select(["2 weeks", "4 weeks"], [2, 4]), {prompt: @prompt}, {:class => "d-inline"}) %>
       <% end %>
