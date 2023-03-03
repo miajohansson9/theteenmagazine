@@ -17,10 +17,14 @@
         We kindly request that you do this and reply to this email once you have done so.
         If you are no longer able to share the link or prefer to use a different platform, please inform us via email.
       </p>
-    <% else %>
-      <img style="display: block; max-width: 100%; width: 400px; margin: 0 auto;" src=<%= images[rand(0..2)] %>>
     <% end %>
-    <p>We greatly appreciate interviewing, and featuring, you on The Teen Magazine! If you have any questions, please do not hesitate to send us an email. Congratulations!</p>
+    <p>
+      We greatly appreciate interviewing, and featuring, you on The Teen Magazine!
+      <% if !@pitch.platform_to_share.present? || (@pitch.platform_to_share.eql? "None selected") %>
+        If you are happy with how the interview turned out, please consider sharing the link on social media to support our teenage writers.
+      <% end %>
+      If you have any questions, please do not hesitate to send us an email. Congratulations!
+    </p>
     <p>Best Regards,<br/>
       Mia Johansson</p>
   </body>
