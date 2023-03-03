@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+  <body>
+    <% images = ["https://theteenmagazine.s3.amazonaws.com/giphy.gif", "http://s3.amazonaws.com/theteenmagazine/Users/miajohansson/Desktop/ttm/blog/public/ckeditor_assets/pictures/2/content_3ZJ5ZIO.gif", "http://s3.amazonaws.com/theteenmagazine/Users/miajohansson/Desktop/ttm/blog/public/ckeditor_assets/pictures/1/content_giphy-1.gif"] %>
+    <p>Hi <%= @pitch.title %>,</p>
+    <p>Your interview <%= link_to @post.title, @post, style: "color: #4ABEB6;" %> was just published!</p>
+    <% if @pitch.platform_to_share.present? && (!@pitch.platform_to_share.eql? "None selected") %>
+      <p>
+        In your interview request, you indicated that you would share the published article using 
+        <%= indefinite_articlerize(@pitch.platform_to_share) %> <b><%= @pitch.platform_to_share&.chomp(' (preferred)')&.sub('w/', 'with') %></b>.
+        We kindly request that you do this and reply to this email once you have done so.
+        If you are no longer able to share the link or prefer to use a different platform, please inform us via email.
+      </p>
+    <% end %>
+    <p>
+      We greatly appreciate interviewing, and featuring, you on The Teen Magazine!
+      <% if !@pitch.platform_to_share.present? || (@pitch.platform_to_share.eql? "None selected") %>
+        If you are happy with how the interview turned out, please consider sharing the link on social media to support our teenage writers.
+      <% end %>
+      If you have any questions, please do not hesitate to send us an email. Congratulations!
+    </p>
+    <p>Best Regards,<br/>
+      Mia Johansson</p>
+  </body>
+</html>

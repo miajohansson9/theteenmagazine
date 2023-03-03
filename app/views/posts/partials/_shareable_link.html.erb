@@ -1,0 +1,16 @@
+<% if @post.shareable_token.nil? %>
+  <div class="alert alert-info" role="alert">
+    <p class="m-0 mt-2">
+      It's a good idea to share the finished draft with the interviewee before you submit it for review. 
+      Click <%= link_to "here", {:controller => "posts", :action => "generate_shareable_token", :id => @post.id} %> to generate a shareable link.
+    </p>
+  </div>
+<% else %>
+  <div class="alert alert-info" role="alert">
+    <p class="m-0 mt-2">
+      You've generated a shareable link for this article!
+      You can access it here: <a href="<%= @post.slug + '?shareable_token=' + shareable_token %>" target="_blank"><%= request.base_url + @post.slug + '?shareable_token=' + shareable_token %></a>
+      or regnerate it <%= link_to "here", {:controller => "posts", :action => "generate_shareable_token", :id => @post.id}, :data => {:confirm => "Are you sure you want to regenerate this link? The old one will no longer work."} %>. 
+    </p>
+  </div>
+<% end %>

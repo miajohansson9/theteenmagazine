@@ -13,6 +13,10 @@
     color: red !important;
 }
 
+.text-decoration-underline {
+    text-decoration: underline;
+}
+
 .h1,
 .h2,
 .h3,
@@ -138,6 +142,16 @@ body,
         padding: 0 !important;
         margin: 0 !important;
     }
+}
+
+.interview_pitch_flds {
+    p {
+        margin: 0;
+    }
+}
+
+.text-danger {
+    color: #dc3545 !important;
 }
 
 .claim_pitch_wrapper .card {

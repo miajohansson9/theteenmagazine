@@ -8,6 +8,8 @@
         <%= image_tag("profile_image.jpg", :class => "profile_img") %>
         <% if @user.try(:editor) %>
           <span class="badge badge-default editor_label" style="top: 5px;">Editor</span>
+        <% elsif @user.try(:marketer) %>
+          <span class="badge badge-default marketer_label" style="top: 5px;">Interviewer</span>
         <% end %>
       <% end %>
     </div>

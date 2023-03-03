@@ -1,0 +1,30 @@
+<div class="post_apply">
+  <div class="articles">
+    <div class="flex_other_articles">
+      <div class="contain_articles">
+        <h3 style="margin-bottom: 18px;">Recommended in <%= link_to(@post.category.name, @post.category, :class => "category_title_trending") %></h3>
+        <%= render_async_cache get_trending_posts_in_category_path(id: @post.id) do %>
+          <div style="height: 366px; width: 100%; display: block; margin-bottom: 15px;"></div>
+        <% end %>
+        <% if @post.is_interview? %>
+          <p>Want to get featured on The Teen Magazine? Pitch your story <%= link_to 'here', '/pitch-interview', class: "link_grn" %>.</p>
+        <% end %>
+        <div class="content_hint"></div>
+        <div id="subscribe-widget" style="margin-top: 20px;">
+          <h4>Subscribe to our weekly newsletter</h4>
+          <span class="sub-text">Get notified of the top trending articles every week!</span>
+          <small id="result-text"></small>
+          <%= form_for(:posts, url:"/posts/#{post.id}/subscribe", remote: true, :html => {:id => "subscribe-form"}) do |f| %>
+            <%= f.text_field :email, placeholder: "Your Email", required: true, id: "email", onkeyup: "isFormButtonDisabled('#email')"%>
+            <div class="btn_cntnr">
+              <%= f.button "Sign Up", class: "mr-0 newpost--new--profile submit_modal", id: "submit-comment-modal-button" %>
+            </div>
+          <% end %>
+        </div>
+        <!-- 
+              <%= link_to (image_tag "open_applications_ttm.png", class: "image_max_100_prcnt", style: "padding-bottom: 10px;"), new_apply_path, target: "_blank" %> 
+              -->
+      </div>
+    </div>
+  </div>
+</div>

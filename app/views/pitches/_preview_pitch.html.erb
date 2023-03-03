@@ -34,8 +34,12 @@
         <div class="btn_cntnr mb-0 pb-0">
           <% if intent.eql? "Claim" %>
             <%= form_for @post, url: pitch_onboarding_claim_path(:id => pitch.id), remote: true do |f| %>
-              <%= f.hidden_field :title, value: pitch.title %>
               <%= f.hidden_field :content, value: "<i>" << pitch.description << " (delete pitch description before submitting)</i>" %>
+              <% if @pitch.is_interview? %>
+                <%= f.hidden_field :title, value: "Interview with " << @pitch.title << " (replace this with interesting title)" %>
+              <% else %>
+                <%= f.hidden_field :title, value: @pitch.title %>
+              <% end %>
               <%= f.hidden_field :category_id, value: pitch.category_id %>
               <%= f.hidden_field :pitch_id, value: pitch.id %>
               <%= f.button "Cancel", class: "newpost--new--profile mr-2 pl-5 pr-5", id: "dismiss-modal", "data-bs-dismiss" => "modal" %>

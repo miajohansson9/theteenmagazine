@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   get :get_trending_posts_in_category, controller: :posts
   get :get_conversations_following, controller: :posts
   get :get_promoted_posts, controller: :posts
+  get :generate_shareable_token, controller: :posts
 
   get :get_sent_invitations, controller: :invitations
   get :get_sent_invitations_admin, controller: :invitations
@@ -60,7 +61,9 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/community' => 'posts#index'
-  get '/drafts/:id' => 'posts#preview_draft'
+  get '/pitch-interview' => 'pitches#pitch_interview'
+  get '/interviews' => 'pitches#interviews'
+  get '/drafts/:id' => 'posts#draft'
   get '/drafts/:id/edit' => 'posts#edit'
   get 'criteria' => 'pages#criteria'
   get 'about-us' => 'pages#team'

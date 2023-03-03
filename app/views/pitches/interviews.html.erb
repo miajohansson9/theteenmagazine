@@ -1,0 +1,21 @@
+<div class="skinny_wrapper wrapper_padding pitches_wrapper">
+  <div class="flex_container_mobile_reverse_order">
+    <div>
+      <h1 class="pitch_ttl">Interview Requests</h1>
+      <i>These interviews are submitted externally by PR agents and content creators. Only claim the interviews you are excited to write about and think should be featured on The Teen Magazine. Just 
+      because an interview request was submitted does <i>not</i> mean they should be featured.</i>
+      <br>
+      <% if @pitches.count.eql? 0 %>
+        <p><i><%= @message %></i></p>
+      <% end %>
+    </div>
+  </div>
+  <br>
+  <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
+    <% @pitches.each do |pitch| %>
+      <%= render "pitch_interview_card", pitch: pitch %>
+    <% end %>
+  </div>
+  <%== pagy_nav(@pagy).html_safe %>
+</div>
+<div class="content_hint"></div>

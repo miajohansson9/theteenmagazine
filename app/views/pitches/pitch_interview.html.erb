@@ -1,0 +1,44 @@
+<%= image_tag "reading_magazine_auto_x2.jpg", id: "banner_writing" %>
+<div class="apply_wrapper">
+  <h3>WANT TO BE FEATURED?</h3>
+  <p>Fill out this form and one of our writers will be in contact with you if you're chosen. See our past interviews <a target="_blank" class="link_grn" href="/categories/interviews">here</a>.</p>
+  <%= form_for @pitch do |f| %>
+    <% if @pitch.errors.any? %>
+      <h6 class="mt-3 text-danger"><%= pluralize(@pitch.errors.count, "error")%> prevented this pitch from saving:</h6>
+      <ul>
+        <% @pitch.errors.full_messages.each do |msg| %>
+          <li class="text-danger">
+            <% if msg.include? 'Title' %>
+              <h6>Name of interviewee can't be blank</h6>
+            <% else %>
+              <h6><%= msg %></h6>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class="interview_pitch_flds">
+      <%= f.text_field :title, placeholder: "Name of interviewee" %>
+      <p>What email can we send the questions to?</p>
+      <%= f.text_field :contact_email, placeholder: "Contact email" %>
+      <p>List your main social media accounts:</p>
+      <%= f.text_field :influencer_social_media, placeholder: "Instagram: @madelyncline, TikTok: @madelyn_cline" %>
+      <p>
+        An interview is much more likely to be picked if you can share the article once published on The Teen Magazine. 
+        Please indicate the social media platform you can share the article link. (You will get to see the draft before it's published.)
+      </p>
+      <%= f.select(:platform_to_share, ['Instagram story w/ link (preferred)', 'Instagram bio link (preferred)', 'TikTok bio link (preferred)', 'Facebook post', 'Youtube community post', 'Twitter tweet', 'Twitter bio', 'Pinterest post', 'Snapchat post', 'LinkedIn post'], {prompt: "None selected"}) %>
+      <%= f.hidden_field :category_id, :value => @pitch.category_id %>
+      <%= f.hidden_field :deadline, :value => 6 %>
+      <br>
+      <br>
+      <%= f.text_area :description, placeholder: "Description about interviewee...", style: "min-height: 120px;" %>
+      <div class="btn_cntnr" style="float: none; position: relative; margin-bottom: 0px; padding-bottom: 0px;">
+        <div class="spinner-button spinner-border hide" style="margin-left: 38%;" role="status">
+          <span class="sr-only"></span>
+        </div>
+        <%= f.button "Submit Request", class: "newpost--new--profile submit_modal", id: "submit-comment-modal-button", style: "margin-bottom: 0px;", value: "interview" %>
+      </div>
+    </div>
+  <% end %>
+</div>

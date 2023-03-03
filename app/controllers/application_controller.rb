@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
         .not_claimed
         .where(status: nil)
         .where.not(user_id: current_user.id)
+        .where.not(category_id: Category.find('interviews').id)
         .where('updated_at > ?', current_user.last_saw_pitches)
     @unseen_pitches_cnt = @unseen_pitches.size
 
@@ -48,6 +49,17 @@ class ApplicationController < ActionController::Base
     @unseen_shared_drafts_cnt = @unseen_shared_drafts.size
 
     @notifications = @unseen_pitches_cnt + @unseen_shared_drafts_cnt
+
+    if current_user.is_marketer?
+      @unseen_interviews =
+        Pitch
+          .is_approved
+          .not_claimed
+          .where(status: nil, category_id: Category.find('interviews').id)
+          .where('updated_at > ?', current_user.last_saw_interviews)
+      @unseen_interviews_cnt = @unseen_interviews.size
+      @notifications = @notifications + @unseen_interviews_cnt
+    end
     if current_user.editor?
       @unseen_posts =
         Review

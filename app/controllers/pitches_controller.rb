@@ -2,8 +2,29 @@ class PitchesController < ApplicationController
   before_action :find_pitch, only: %i[show update edit destroy]
   before_action :can_edit?, only: [:edit]
   before_action :is_partner?, only: %i[index new show]
-  before_action :authenticate_user!
-  load_and_authorize_resource
+  before_action :is_marketer?, only: [:interviews]
+  before_action :authenticate_user!,  except: [:pitch_interview, :create]
+  load_and_authorize_resource except: [:pitch_interview, :create]
+
+  #show all interview pitches
+  def interviews
+    set_meta_tags title: "Interview Requests"
+    @notifications = @notifications - @unseen_interviews_cnt
+    @unseen_interviews_cnt = 0
+    @pagy, @pitches =
+      pagy(
+        Pitch
+          .is_approved
+          .not_claimed
+          .where(category_id: Category.find('interviews').id, status: nil)
+          .order('updated_at desc'),
+        page: params[:page],
+        items: 20
+      )
+    @message = 'All interviews have been claimed. Check back in a few days!'
+    @button_text = 'Claim Interview'
+    Thread.new { current_user.update_column('last_saw_interviews', Time.now) }
+  end
 
   #show all pitches
   def index
@@ -12,9 +33,9 @@ class PitchesController < ApplicationController
       @notifications = @notifications - @unseen_pitches_cnt
       @unseen_pitches_cnt = 0
       set_meta_tags title: @title
+      @categories = Category.active.where.not(slug: 'interviews')
       if params[:pitch].nil?
         @pitch = Pitch.new
-        @categories = Category.active
         @pagy, @pitches =
           pagy(
             Pitch
@@ -22,12 +43,12 @@ class PitchesController < ApplicationController
               .not_claimed
               .where(status: nil)
               .where('updated_at > ?', Time.now - 90.days)
+              .where.not(category_id: Category.find('interviews').id)
               .order('updated_at desc'),
             page: params[:page],
             items: 20
           )
       else
-        @categories = Category.active
         @category_id =
           if (params[:pitch][:category_id].blank?)
             @categories.map { |category| category.id }
@@ -46,7 +67,6 @@ class PitchesController < ApplicationController
             items: 20
           )
       end
-      @desc = true
       @message = 'There are no unclaimed pitches. Check back in a few days!'
       @button_text = 'Claim Pitch'
       Thread.new { current_user.update_column('last_saw_pitches', Time.now) }
@@ -71,17 +91,36 @@ class PitchesController < ApplicationController
     set_meta_tags title: 'New Pitch | The Teen Magazine'
   end
 
+  def pitch_interview
+    @pitch = Pitch.new(deadline: 6, category_id: Category.find('interviews').id)
+    set_meta_tags title: 'Pitch an Interview | The Teen Magazine'
+  end
+
   def create
     @categories = Category.active
-    @pitch = current_user.pitches.build(pitch_params)
-    if @pitch.save && current_user.editor?
-      fix_title
-      redirect_to '/pitches', notice: 'Your pitch was successfully added!'
-    elsif @pitch.save
-      fix_title
-      redirect_to @pitch, notice: 'Your pitch was successfully submitted!'
+    if params[:button].eql? 'interview'
+      @pitch = Pitch.new(pitch_params)
+      if pitch_params[:thumbnail].present?
+        @pitch.thumbnail.attach(pitch_params[:thumbnail])
+      end
+      if @pitch.save
+        @pitch.request = request
+        @pitch.deliver
+        set_meta_tags title: 'Interview Submitted'
+      else
+        render 'pitch_interview', notice: 'Oh no! Your changes were not able to be saved!'
+      end
     else
-      render 'new', notice: 'Oh no! Your changes were not able to be saved!'
+      @pitch = current_user.pitches.build(pitch_params)
+      if @pitch.save && current_user.editor?
+        fix_title
+        redirect_to '/pitches', notice: 'Your pitch was successfully added!'
+      elsif @pitch.save
+        fix_title
+        redirect_to @pitch, notice: 'Your pitch was successfully submitted!'
+      else
+        render 'new', notice: 'Oh no! Your changes were not able to be saved!'
+      end
     end
   end
 
@@ -125,7 +164,9 @@ class PitchesController < ApplicationController
       ApplicationMailer.pitch_deleted(@pitch.user, @pitch).deliver
     end
     @pitch.posts.each { |p| p.update_column('pitch_id', nil) }
-    if @pitch&.destroy
+    if @pitch.is_interview? && @pitch&.destroy
+      redirect_to interviews_path, notice: 'Your pitch was deleted.'
+    elsif @pitch&.destroy
       redirect_to pitches_path, notice: 'Your pitch was deleted.'
     end
   end
@@ -243,8 +284,8 @@ class PitchesController < ApplicationController
       @disabled = 'disabled'
       @tooltip = 'This pitch was rejected'
     elsif @claimed_user.nil?
-      if @pitch.user.editor || (@pitch.user.id.eql? current_user.id)
-        @title = 'Claim Article Pitch'
+      if @pitch.user.nil? || @pitch.user.editor || (@pitch.user.id.eql? current_user.id)
+        @title = @pitch.is_interview? ? 'Claim Interview' : 'Claim Article Pitch'
         @disabled = ''
         @tooltip = ''
       else
@@ -281,6 +322,12 @@ class PitchesController < ApplicationController
     if !current_user.partner
       true
     else
+      redirect_to current_user, notice: 'You do not have access to this page.'
+    end
+  end
+
+  def is_marketer?
+    unless current_user.is_marketer?
       redirect_to current_user, notice: 'You do not have access to this page.'
     end
   end
@@ -338,7 +385,10 @@ class PitchesController < ApplicationController
         :category_id,
         :user_id,
         :editor_id,
-        :archive
+        :archive,
+        :contact_email,
+        :influencer_social_media,
+        :platform_to_share
       )
   end
 
@@ -375,7 +425,7 @@ class PitchesController < ApplicationController
         :slug,
         feedback_list: [],
         reviews_attributes: %i[id post_id created_at status notes editor_id],
-        user_attributes: %i[extensions id]
+        user_attributes: %i[extensions id],
       )
   end
 

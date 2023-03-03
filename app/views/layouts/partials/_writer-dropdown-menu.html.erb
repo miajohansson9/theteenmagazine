@@ -13,6 +13,13 @@
       <a href="<%= pitches_path(user_id: current_user.id) %>" class="dropdown-item">My Pitches</a>
   <% end %>
   <% if !current_user.partner? %>
+    <% if current_user.is_marketer? %>
+      <a href="/interviews" class="dropdown-item">Interview Requests
+      <% if @unseen_interviews_cnt > 0 %>
+        <span class="sec counter counter-sm"></span><p><%= @unseen_interviews_cnt %> new</p>
+      <% end %>
+    </a>
+    <% end %>
     <a href="/pitches" class="dropdown-item">Unclaimed Pitches
       <% if @unseen_pitches_cnt > 0 %>
         <span class="sec counter counter-sm"></span><p><%= @unseen_pitches_cnt %> new</p>
@@ -42,8 +49,6 @@
   <% end %>
   <% if current_user.admin? %>
     <%= link_to "Editors", "/editors", class: "dropdown-item" %>
-  <% end %>
-  <% if current_user.admin? || current_user.marketer? %>
     <%= link_to "Partners", "/partners", class: "dropdown-item" %>
   <% end %>
   <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>

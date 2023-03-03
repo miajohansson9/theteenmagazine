@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!,
                 except: %i[index show redirect get_editor_stats]
   before_action :is_editor?, only: %i[show_users new]
-  before_action :is_marketer?, only: %i[new partners]
+  before_action :is_admin?, only: %i[new partners]
   before_action :onboarding_redirect, if: :current_user?, only: [:show]
   after_action :update_last_sign_in_at, if: :current_user?
 
@@ -204,9 +204,12 @@ class UsersController < ApplicationController
     set_badges
     @show_onboarding_full = 
       @user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
-    @show_editor_onboarding =
+    @show_editor_onboarding = 
       @user.became_an_editor.nil? && @user.editor &&
         (current_user.id.eql? @user.id) && !@show_onboarding_full
+    @show_marketer_onboarding =
+      @user.last_saw_interviews.nil? && @user.marketer && 
+          (current_user.id.eql? @user.id) && !@show_onboarding_full && !@show_editor_onboarding
     if @show_onboarding_full
       @user.promotions = @user.promotions + 1
       @user.save
@@ -630,8 +633,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def is_marketer?
-    if (current_user && (current_user.admin? || current_user.marketer?))
+  def is_admin?
+    if (current_user && current_user.admin?)
       true
     else
       redirect_to current_user, notice: 'You do not have access to this page.'
@@ -702,6 +705,7 @@ class UsersController < ApplicationController
         :snap,
         :bi_monthly_assignment,
         :last_saw_pitches,
+        :last_saw_interviews,
         :last_saw_writer_applications,
         :last_saw_editor_dashboard,
         :last_saw_peer_feedback,
