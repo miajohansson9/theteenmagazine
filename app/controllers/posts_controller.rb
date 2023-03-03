@@ -267,7 +267,10 @@ class PostsController < ApplicationController
 
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
-    @trending = @post.category.posts.published.trending.limit(3)
+    @trending = @post.category.posts.published.trending.where.not(id: @post.id).limit(3)
+    if @trending&.count < 3
+      @trending = @post.category.posts.published.where.not(id: @post.id).limit(3)
+    end
     render partial: "posts/partials/trending"
   end
 
