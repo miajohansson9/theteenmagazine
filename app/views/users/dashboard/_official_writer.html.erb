@@ -81,7 +81,7 @@
           </div>
         <% end %>
         <%= render "/users/partials/featured_writers", users: @featured_writers, cached: true %>
-        <div>
+        <div class="mt-3">
           <div class="card whats-new-wrapper" style="border-radius: 10px; overflow: hidden;"
             <% if @show_onboarding_full %>
               data-step data-index="4" data-onboarding-content="See what other writers are pitching here."
@@ -111,7 +111,6 @@
           <% end %>
         >
           <div>
-            <%= link_to("Interview Application", "https://forms.gle/eQyETofL6M1bxvqy5", target: "_blank", class: "link_grn") %><br>
             <%= link_to("Editor Application", "/applications/editor", class: "link_grn") %><br>
           </div>
         </div>

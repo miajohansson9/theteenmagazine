@@ -64,7 +64,7 @@ class UsersController < ApplicationController
       end
     end
     if current_user.present?
-      @pitches = Pitch.not_rejected.all.order('created_at desc').limit(4)
+      @pitches = Pitch.not_rejected.where.not(user_id: nil).all.order('created_at desc').limit(4)
       @featured_writers =
         Post
           .where(publish_at: (Time.now - 7.days)..Time.now)
@@ -430,6 +430,37 @@ class UsersController < ApplicationController
           items: 25
         )
     end
+  end
+
+  def interviewers
+    set_meta_tags title: 'Interviewers | The Teen Magazine'
+    if params[:search].present?
+      @query = params[:search][:query]
+      @pagy, @interviewers =
+        pagy(
+          User
+            .where(editor: true)
+            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc'))
+            .where('lower(full_name) LIKE ?', "%#{@query.downcase}%"),
+          page: params[:page],
+          items: 25
+        )
+    else
+      @pagy, @interviewers =
+        pagy(
+          User
+            .where(editor: true)
+            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc')),
+          page: params[:page],
+          items: 25
+        )
+    end
+  end
+
+  def send_interviewer_invite_email
+    @user = User.find(params[:user_id])
+    ApplicationMailer.manual_invite_interviewer(@user).deliver
+    redirect_to request.referrer, notice: 'Invite sent to ' << @user.email
   end
 
   def reset_email

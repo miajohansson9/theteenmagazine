@@ -33,6 +33,15 @@ class ApplicationMailer < ActionMailer::Base
     )
   end
 
+  def manual_invite_interviewer(user)
+    @user = user
+    mail(
+      to: user.email,
+      subject: "Invitation to be on interview team",
+      from: "Mia from The Teen Magazine <mia@theteenmagazine.com>"
+    )
+  end
+
   def profile_approved(user)
     @user = user
     unless @user.do_not_send_emails
