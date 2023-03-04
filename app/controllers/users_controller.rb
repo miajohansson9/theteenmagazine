@@ -439,7 +439,7 @@ class UsersController < ApplicationController
       @pagy, @interviewers =
         pagy(
           User
-            .where(editor: true)
+            .where(marketer: true)
             .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc'))
             .where('lower(full_name) LIKE ?', "%#{@query.downcase}%"),
           page: params[:page],
@@ -449,7 +449,7 @@ class UsersController < ApplicationController
       @pagy, @interviewers =
         pagy(
           User
-            .where(editor: true)
+            .where(marketer: true)
             .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc')),
           page: params[:page],
           items: 25
