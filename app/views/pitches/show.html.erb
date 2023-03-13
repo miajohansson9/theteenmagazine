@@ -3,7 +3,7 @@
   <% if @claimed_user.present? && @post.deadline_at.present? %>
     <%= render "pitches/deadline_warning_msg", post: @post %>
   <% end %>
-  <h3 class="pitch_ttl"><%= @title %> <i><%= "#{@pitch.title}#{" (" << @pitch.interview_kind << ")" unless @pitch.interview_kind.nil?}" %></i></h3>
+  <h3 class="pitch_ttl"><%= @title %> <i><%= "#{@pitch.title}#{' (' << @pitch.interview_kind << ')' if @pitch.interview_kind.present?}" %></i></h3>
   <p class="pitch_usr">Pitched <% if @pitch.user.present? %> by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> <% end %>under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %> on <%= @pitch.created_at.strftime("%m-%d-%Y") %> </p>
   <% if @claimed_user.present? %>
     <p class="pitch_usr">Claimed by <%= link_to(@claimed_user.full_name, @claimed_user, class: "pitch_btn") %><%= " on #{@pitch.claimed_at.in_time_zone.strftime('%A, %B %d')}" unless @pitch.claimed_at.nil? %></p>
