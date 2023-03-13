@@ -104,6 +104,7 @@
           <i class="mt-4 d-block">See more pitches <%= link_to("here", pitches_path, class: "link_inline link_grn") %></i>
           <br>
         </div>
+        <%= link_to("Extensions page", "/writers/#{@user.slug}/extensions", class: "link_grn") %><br>
         <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn") %><br>
         <div class="links"
           <% if @show_onboarding_full %>
