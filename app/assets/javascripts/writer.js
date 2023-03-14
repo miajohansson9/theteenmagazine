@@ -1,5 +1,3 @@
-//= require popper
-//= require bootstrap
 //= require ckeditor/ckeditor
 
 $(document).ready(function() {

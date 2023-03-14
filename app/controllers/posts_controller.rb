@@ -175,9 +175,16 @@ class PostsController < ApplicationController
         @collabs.push @writer if @writer.present?
       end
     end
-    if (@post.sharing || @post.partner_id.present?) && !current_user.nil?
+    if !current_user.nil?
       @comment = current_user.comments.build(post_id: @post.id)
-      @partner = User.find_by(id: @post.partner_id)
+    else
+      @comment = Comment.new(post_id: @post.id)
+    end
+    @comments = @post.comments.where(comment_id: nil, public: true).order("created_at desc")
+    if params[:comment_id].present?
+      @comment_from_notifications = Comment.find(params[:comment_id]).id
+      @comment_parent_from_notifications =
+        Comment.find(params[:comment_id]).comment_id
     end
     set_post_meta_tags
   end
@@ -220,14 +227,11 @@ class PostsController < ApplicationController
         @comment = current_user.comments.build(post_id: @post.id)
         @partner = User.find_by(id: @post.partner_id)
       end
-      if !@post.is_published?
-        @comments =
-          @post.comments.where(comment_id: nil).order("created_at desc")
-        if params[:comment_id].present?
-          @comment_from_notifications = Comment.find(params[:comment_id]).id
-          @comment_parent_from_notifications =
-            Comment.find(params[:comment_id]).comment_id
-        end
+      @comments = @post.comments.where(comment_id: nil).order("created_at desc")
+      if params[:comment_id].present?
+        @comment_from_notifications = Comment.find(params[:comment_id]).id
+        @comment_parent_from_notifications =
+          Comment.find(params[:comment_id]).comment_id
       end
       set_post_meta_tags
     elsif current_user.present?

@@ -101,6 +101,9 @@
                   <%= render :partial => 'users/profile', locals: {user: collab} %>
                 <% end %>
               </div>
+              <div class="share_article_feedback pb-0 pr-0 pl-0">
+                <%= render :partial => 'posts/partials/comments_published', locals: {user: @user, post: @post, comments: @comments, comment: @comment}  %>
+              </div>
             </div>
           </div>
         </div>
@@ -133,3 +136,4 @@
      });
   });
 </script>
+<%= javascript_include_tag "plugins/index_bundle" %>

@@ -21,6 +21,9 @@
           <% if notice %>
             <p class="notice"><%= notice %></p>
           <% end %>
+          <% if @comment %>
+            <%= render "posts/draft_feedback" %>
+          <% end %>
           <%= render "layouts/partials/header" %>
           <%= yield %>
           <%= content_for :render_async %>

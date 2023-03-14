@@ -6,8 +6,7 @@
       /* Email styles need to be inline */
     </style>
   </head>
-
   <body>
-    <p><%= @user.first_name %>, there is a new comment on one of your recent drafts. To see the writer's feedback, click <%= link_to "here", @post, :style => "color: #4ABEB6;"%>.</p>
+    <p><%= @user.first_name %>, there is a new comment on one of your recent articles! To see the comment, click <%= link_to "here", @post, :style => "color: #4ABEB6;"%>.</p>
   </body>
 </html>

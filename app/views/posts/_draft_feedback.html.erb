@@ -12,10 +12,23 @@
         <i id="response_text"></i>
       </div>
       <div class="comment_form_wrapper mt-0 pl-4 pr-4">
-        <% @profile_img = current_user.profile.attached? ? image_tag(current_user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
-        <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+        <% if current_user.present? %>
+          <% @profile_img = current_user.profile.attached? ? image_tag(current_user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+          <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+        <% else %>
+          <%= image_tag("profile_image.jpg", :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+        <% end %>
         <%= form_for(@comment, id: "submit-comment-modal") do |f| %>
+          <% if !current_user.present? %>
+            <%= f.text_field :full_name, :value => session[:full_name], :placeholder => "Full name", class: 'mt-0', style: 'margin-bottom: 10px' %>
+            <%= f.text_field :email, :value => session[:email], :placeholder => "Personal email", class: 'mt-0', style: 'margin-bottom: 10px' %>
+            <%= f.hidden_field :cookie, :value => (session[:cookie] || SecureRandom.urlsafe_base64) %>
+          <% end %>
+          <%= f.hidden_field :public, :value => @post.is_published? %>
           <%= f.text_area :text, :placeholder => "Share your thoughts on this text", id: "comment_field", class: "comment_field_modal", onkeyup: "isDisabled('modal')" %>
+          <% if !current_user.present? %>
+            <span>Be notified of more articles like this <%= f.check_box :subscribed, :checked => (session[:subscribed] || true) %></span>
+          <% end %>
           <%= f.hidden_field :post_id, :post_id => @post.id %>
           <%= f.hidden_field :response_to, id: "response_text_form" %>
           <div class="btn_cntnr mb-0 pb-0">
