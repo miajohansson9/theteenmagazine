@@ -178,6 +178,11 @@ class PostsController < ApplicationController
         @collabs.push @writer if @writer.present?
       end
     end
+    if !current_user.nil?
+      @comment = current_user.comments.build(post_id: @post.id)
+    else
+      @comment = Comment.new(post_id: @post.id)
+    end
     set_post_meta_tags
   end
 
