@@ -46,16 +46,10 @@ gem 'sendgrid-ruby'
 gem 'prettier'
 gem 'mini_magick'
 gem 'image_processing', '~> 1.12', '>= 1.12.2'
-<<<<<<< Updated upstream
 gem "aws-sdk-s3", require: false
 gem 'active_storage_validations', '~> 1.0', '>= 1.0.3'
 gem 'ruby-vips', '~> 2.0', '>= 2.0.7'
 gem "browser"
-=======
-gem "mini_portile2", "~> 2.8.1"
-gem 'poppler'
-gem "aws-sdk-s3", require: false
->>>>>>> Stashed changes
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
