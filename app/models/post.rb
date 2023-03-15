@@ -89,9 +89,10 @@ class Post < ApplicationRecord
 
   scope :by_published_date, -> { order(publish_at: :desc) }
 
-  scope :by_promoted_then_updated_date,
+  scope :by_promoted_then_updated,
         -> {
-          order(:promoting_until, updated_at: :desc)
+          order(Arel.sql("(CASE WHEN promoting_until > NOW()
+          THEN promoting_until ELSE posts.updated_at END) DESC"))
         }
 
   def is_published?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_03_220236) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_15_212550) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -148,6 +148,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_220236) do
     t.integer "post_id"
     t.integer "comment_id"
     t.text "response_to"
+    t.string "full_name"
+    t.string "email"
+    t.boolean "subscribed"
+    t.string "cookie"
+    t.boolean "public"
+    t.boolean "is_thirteen"
   end
 
   create_table "constants", force: :cascade do |t|
@@ -386,6 +392,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_220236) do
     t.boolean "show_disclosure"
     t.boolean "turn_off_caps"
     t.string "shareable_token"
+    t.boolean "comments_turned_off"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
     t.index ["publish_at"], name: "index_posts_on_publish_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true

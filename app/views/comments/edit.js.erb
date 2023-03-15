@@ -1,2 +1,2 @@
-document.getElementById('<%= dom_id(@comment) %>').insertAdjacentHTML('afterend', "<%= j render 'form_inline', comment: @comment, post: @post %>")
+document.getElementById('<%= dom_id(@comment) %>').insertAdjacentHTML('afterend', "<%= j render 'form_inline', comment: @comment, post: @post, cookie: @cookie %>")
 $('#<%= dom_id(@comment) %>').addClass('d-none');

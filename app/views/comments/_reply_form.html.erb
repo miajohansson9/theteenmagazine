@@ -2,30 +2,55 @@
   <ul class="list-group list-group-flush" id="list-group-comments">
     <% replies.order("created_at asc").each do |reply| %>
       <li class="list-group-item comment" id="comment_<%=reply.id %>">
-        <% if (reply.user_id.eql? current_user.id) || (reply.post.user_id.eql? current_user.id) || (current_user.admin) %>
+        <% if current_user.present? && (reply.user_id.eql? current_user.id || (reply.post.user_id.eql? current_user.id) || (current_user.admin)) %>
           <%= link_to comment_path(reply), method: :delete, data: {confirm: "Are you sure you want to delete this comment?"}, class: "delete_btn_x", :remote => true, :style => "width: 15px !important;right: 0;position: absolute;z-index: 10;" do %>
             <svg style="color: black;" width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
           <% end %>
         <% end %>
-        <% @profile_img = reply.user.profile.attached? ? image_tag(reply.user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
-        <%= link_to(@profile_img, reply.user) %>
+        <% if reply.user.present? %>
+          <% @profile_img = reply.user.profile.attached? ? image_tag(reply.user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+          <%= link_to(@profile_img, reply.user) %>
+        <% else %>
+          <%= image_tag("profile_image.jpg", :class => "profile_img_small") %>
+        <% end %>
         <div class="li-content" style="width: 100%;">
-          <h6><%= link_to reply.user.full_name, reply.user %></h6>
+          <h6>
+            <% if reply.user_id.present? %>
+              <%= link_to reply.user.try(:full_name), reply.user %>
+            <% else %>
+              <%= reply.full_name %>
+            <% end %>
+          </h6>
           <span class="date_ago"><%= time_ago_in_words(reply.created_at) %> ago</span><br>
           <span class="comment_text"><%= reply.text %></span>
-          <% if reply.user_id.eql? current_user.id %>
-            <p class="d-inline link_theme"><%= link_to "Edit", edit_comment_path(reply), remote: true, class: "link_theme", style: "font-size: 1em;" %></p>
+          <% if current_user.present? && (reply.user_id.eql? current_user.id) %>
+            <p class="link_theme mt-0"><%= link_to "Edit", edit_comment_path(reply), remote: true, class: "link_theme", style: "font-size: 1em;" %></p>
           <% end %>
         </div>
       </li>
     <% end %>
   </ul>
   <div class="comment_form_wrapper mt-0 pl-0">
-    <% @profile_img = current_user.profile.attached? ? image_tag(current_user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
-    <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+    <% if current_user.present? %>
+      <% @profile_img = current_user.profile.attached? ? image_tag(current_user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+      <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+    <% else %>
+      <%= image_tag("profile_image.jpg", :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+    <% end %>
     <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
-      <%= f.text_area :text, :placeholder => "Reply to #{parent.user.full_name}", id: "comment_field_reply", class: "comment_val_#{parent.id} comment_field_#{parent.id}", onkeyup: "isDisabled('#{parent.id}')" %>
+      <% if !current_user.present? %>
+        <%= f.text_field :full_name, :value => cookies[:full_name], :placeholder => "Full name", onkeyup: "isDisabled('#{parent.id}')", class: "mt-0 full_name_#{parent.id}", style: 'margin-bottom: 10px' %>
+        <%= f.text_field :email, :value => cookies[:email], :placeholder => "Personal email", class: 'mt-0', style: 'margin-bottom: 10px' %>
+        <%= f.hidden_field :cookie, :value => (cookies[:cookie] || SecureRandom.urlsafe_base64) %>
+      <% end %>
+      <%= f.hidden_field :public, :value => post.is_published? %>
+      <%= f.text_area :text, :placeholder => "Reply to #{parent.full_name || parent.user.full_name}", id: "comment_field_reply", class: "comment_val_#{parent.id} comment_field_#{parent.id}", onkeyup: "isDisabled('#{parent.id}')" %>
       <%= f.hidden_field :post_id, :value => post.id %>
+      <br>
+      <% if !current_user.present? %>
+          <%= f.check_box :subscribed, :value => (cookies[:subscribed] || '1'), :checked => (cookies[:subscribed].nil? || (cookies[:subscribed].eql? '1')) %><span class="ml-2">Be notified of more articles like this (unsubscribe anytime)</span><br>
+          <%= f.check_box :is_thirteen, :value => (cookies[:is_thirteen] || '0'), :checked => (cookies[:is_thirteen].eql? '1'), class: "is_thirteen_#{parent.id}", onclick: "isDisabled('#{parent.id}')" %><span class="ml-2">You must be at least 13 to post on The Teen Magazine. I understand and confirm that I am at least 13 years old.</span><br>
+      <% end %>
       <%= f.hidden_field :comment_id, :value => parent.id %>
       <input alt="Submit" src="https://s3.amazonaws.com/media.theteenmagazine.com/post_comment.png" type="image" class="submit_comment disabled submit_<%= parent.id %>" />
     <% end %>

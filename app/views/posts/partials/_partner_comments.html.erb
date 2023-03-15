@@ -1,7 +1,7 @@
 <h3 class="title mb-2"><%= link_to(partner.try(:full_name), partner) %> was added as a partner</h3>
 <i><%= post.user.full_name %> is working on this article. To give feedback, highlight specific text to comment on, or write more general notes below.</i>
 <div class="comments">
-  <%= render :partial => 'comments/comment_form', locals: {post: post, comment: comment } %>
+  <%= render :partial => 'comments/comment_form', locals: {post: post, comment: comment, user: user } %>
   <ul class="list-group list-group-flush" id="list-group-comments">
     <% comments.each do |comment| %>
       <%= render :partial => 'comments/comment', locals: {comment: comment, post: post} %>

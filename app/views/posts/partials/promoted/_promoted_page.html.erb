@@ -5,7 +5,6 @@
     <% if post.promoting_until && post.promoting_until > Time.now %>
       <span class="badge bg-primary">Promoted</span>
     <% end %>
-    <p><%= post.publish_at.in_time_zone&.strftime("%A, %b %d")%></p>
-    <p class="meta"><%= post.meta_description&.truncate_words(20) %></p>
+    <p class="m-0"><%= date_to_words(post.publish_at) %></p>
   </div>
 <% end %>

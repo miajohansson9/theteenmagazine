@@ -33,7 +33,7 @@
         An interview is much more likely to be picked if you can share the article once published on The Teen Magazine. 
         Please indicate the social media platform you can share the article link. (You will get to see the draft before it's published.)
       </p>
-      <%= f.select(:platform_to_share, ['Instagram story w/ link (preferred)', 'Instagram bio link (preferred)', 'TikTok bio link (preferred)', 'Facebook post', 'Youtube community post', 'Twitter tweet', 'Twitter bio', 'Pinterest post', 'Snapchat post', 'LinkedIn post'], {prompt: "None selected"}) %>
+      <%= f.select(:platform_to_share, ['Instagram story w/ link (preferred)', 'Instagram bio link', 'TikTok bio link', 'Facebook post', 'Youtube community post', 'Twitter tweet', 'Twitter bio', 'Pinterest post', 'Snapchat post', 'LinkedIn post'], {prompt: "None selected"}) %>
       <%= f.hidden_field :category_id, :value => @pitch.category_id %>
       <%= f.hidden_field :deadline, :value => 6 %>
       <br>

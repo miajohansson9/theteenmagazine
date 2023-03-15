@@ -33,9 +33,9 @@
         <p>
           Please indicate the social media platform you can share the article link. (You will get to see the draft before it's published.)
         </p>
-        <%= f.select(:platform_to_share, ['None selected', 'Instagram story w/ link (preferred)', 'Instagram bio link (preferred)', 'TikTok bio link (preferred)', 'Facebook post', 'Youtube community post', 'Twitter tweet', 'Twitter bio', 'Pinterest post', 'Snapchat post', 'LinkedIn post'], {prompt: "None selected"}) %>
+        <%= f.select(:platform_to_share, ['None selected', 'Instagram story w/ link (preferred)', 'Instagram bio link', 'TikTok bio link', 'Facebook post', 'Youtube community post', 'Twitter tweet', 'Twitter bio', 'Pinterest post', 'Snapchat post', 'LinkedIn post'], {prompt: "None selected"}) %>
         <p>Admin notes about this pitch</p>
-          <%= f.text_area :admin_notes, placeholder: "No notes" %>
+        <%= f.text_area :admin_notes, placeholder: "No notes" %>
         <%= f.select(:deadline, options_for_select(["6 weeks", "8 weeks"], [6, 8]), {prompt: @prompt}, {:class => "d-inline"}) %>
       <% else %>
         <%= f.select(:deadline, options_for_select(["2 weeks", "4 weeks"], [2, 4]), {prompt: @prompt}, {:class => "d-inline"}) %>

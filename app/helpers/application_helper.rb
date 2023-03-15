@@ -9,6 +9,20 @@ module ApplicationHelper
       "//#{@link}"
     end
   end
+  
+  def date_to_words(date)
+    return "" if date.nil?
+    ## recent
+    if ((1.week.ago)..(Time.now)).cover?(date)
+      return "#{time_ago_in_words(date)} ago"
+    ## within this year
+    elsif ((Date.today.beginning_of_year)..(Time.now)).cover?(date)
+      return date.in_time_zone&.strftime("%A, %B %d")
+    ## year before
+    else
+      return date.in_time_zone&.strftime("%B %d, %Y")
+    end
+  end
 
   def markdown(content)
     renderer =
