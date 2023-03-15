@@ -20,8 +20,7 @@ class ReviewsController < ApplicationController
                     notice: 'Please complete the onboarding process first.'
       end
       if !(params[:id].eql? current_user.slug) && !current_user.admin
-        redirect_to "/editors/#{current_user.slug}",
-                    notice: 'You do not have access to that page.'
+        redirect_to request.referrer, notice: 'You do not have access to that page.'
       end
       @notifications = @notifications - @unseen_editor_dashboard_cnt
       @unseen_editor_dashboard_cnt = 0

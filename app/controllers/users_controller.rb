@@ -15,6 +15,7 @@ class UsersController < ApplicationController
                 except: %i[index show redirect get_editor_stats]
   before_action :is_editor?, only: %i[show_users new]
   before_action :is_admin?, only: %i[new partners]
+  before_action :is_marketer?, only: :interviewers
   before_action :onboarding_redirect, if: :current_user?, only: [:show]
   after_action :update_last_sign_in_at, if: :current_user?
 
@@ -24,20 +25,20 @@ class UsersController < ApplicationController
     redirect_to "/partners/#{@user.slug}" if @user.partner
     @user_posts =
       Post
-        .where('collaboration like ?', "%#{@user.email}%")
+        .where("collaboration like ?", "%#{@user.email}%")
         .or(Post.where(user_id: @user.id))
         .distinct
-        .order('updated_at desc')
+        .order("updated_at desc")
     @user_posts_approved_records =
       Post
-        .where('collaboration like ?', "%#{@user.email}%")
+        .where("collaboration like ?", "%#{@user.email}%")
         .or(Post.where(user_id: @user.id))
         .published
         .by_published_date
     @pagy, @user_posts_approved =
       pagy(@user_posts_approved_records, page: params[:page], items: 10)
     if !@user.editor? && current_user.present?
-      @user_pitches = @user.pitches.not_claimed.order('updated_at desc')
+      @user_pitches = @user.pitches.not_claimed.order("updated_at desc")
     elsif @user.editor?
       @editor_pitches_cnt = @user.pitches.count
       @editor_reviews = Review.where(editor_id: @user.id)
@@ -47,28 +48,26 @@ class UsersController < ApplicationController
     end
     if @user_posts_approved.length < 1
       begin
-        if (
-             current_user.id != @user.id && (!current_user.admin?) &&
-               (!current_user.editor?)
-           )
+        if (current_user.id != @user.id && (!current_user.admin?) &&
+            (!current_user.editor?))
           redirect_to(
             :back,
-            notice: 'This writer does not have a public profile yet.'
+            notice: "This writer does not have a public profile yet.",
           )
         end
       rescue StandardError
         redirect_to(
           :back,
-          notice: 'This writer does not have a public profile yet.'
+          notice: "This writer does not have a public profile yet.",
         )
       end
     end
     if current_user.present?
-      @pitches = Pitch.not_rejected.all.order('created_at desc').limit(4)
+      @pitches = Pitch.not_rejected.where.not(user_id: nil).all.order("created_at desc").limit(4)
       @featured_writers =
         Post
           .where(publish_at: (Time.now - 7.days)..Time.now)
-          .order('updated_at desc')
+          .order("updated_at desc")
           .map { |p| p.user }
           .uniq
       @user_posts_approved_records.length < 1 ? new_writer : full_writer
@@ -78,7 +77,7 @@ class UsersController < ApplicationController
   def get_profile
     @user = User.friendly.find(params[:id]) unless params[:id].nil?
     redirect_to "/writers/#{@user.slug}" unless @user.nil?
-    redirect_to '/login'
+    redirect_to "/login"
   end
 
   def get_editor_stats
@@ -87,7 +86,7 @@ class UsersController < ApplicationController
     @editor_reviews_cnt = @editor_reviews.count
     @writers_helped_cnt =
       @editor_reviews.map { |r| r.post.try(:user_id) }.uniq.count
-    render partial: 'users/partials/editor_stats'
+    render partial: "users/partials/editor_stats"
   end
 
   def get_past_invites
@@ -98,15 +97,15 @@ class UsersController < ApplicationController
       (@user.invitations.count - (@page - 2) * @per_page) <= @per_page
     @pagy, @invitations =
       pagy_countless(
-        @user.invitations.order('created_at desc'),
+        @user.invitations.order("created_at desc"),
         page: params[:page],
         items: @per_page,
-        link_extra: 'data-remote="true"'
+        link_extra: 'data-remote="true"',
       )
     if params[:page].present?
       respond_to { |format| format.js }
     else
-      render partial: 'users/dashboard/tabs/invites/all_past_invites'
+      render partial: "users/dashboard/tabs/invites/all_past_invites"
     end
   end
 
@@ -116,10 +115,10 @@ class UsersController < ApplicationController
     @per_page = 6
     @user_posts_approved_records =
       Post
-        .where('collaboration like ?', "%#{@user.email}%")
+        .where("collaboration like ?", "%#{@user.email}%")
         .or(Post.where(user_id: @user.id))
         .published
-        .by_promoted_then_updated_date
+        .by_promoted_then_updated
     @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
     @is_last_page =
       (@user_posts_approved_records.count - (@page - 2) * @per_page) <=
@@ -129,12 +128,12 @@ class UsersController < ApplicationController
         @user_posts_approved_records,
         page: params[:page],
         items: @per_page,
-        link_extra: 'data-remote="true"'
+        link_extra: 'data-remote="true"',
       )
     if params[:page].present?
       respond_to { |format| format.js }
     else
-      render partial: 'users/dashboard/tabs/articles/all_published_articles'
+      render partial: "users/dashboard/tabs/articles/all_published_articles"
     end
   end
 
@@ -152,20 +151,20 @@ class UsersController < ApplicationController
     @post = Post.find(params[:post_id])
     if @post.user.promotions > 0
       @initial = @post.promoting_until || Time.now
-      @post.update_column('promoting_until', @initial + 7.days)
+      @post.update_column("promoting_until", @initial + 7.days)
       respond_to do |format|
         format.html { redirect_to "/users/#{@post.user.slug}" }
         format.js
       end
-      @post.user.update_column('promotions', @post.user.promotions - 1)
+      @post.user.update_column("promotions", @post.user.promotions - 1)
     end
   end
 
   def onboarding_redirect
     if current_user.present? && (current_user.submitted_profile.eql? nil) &&
-         (!current_user.partner)
-      redirect_to '/onboarding',
-                  notice: 'Please complete the onboarding process first.'
+       (!current_user.partner)
+      redirect_to "/onboarding",
+                  notice: "Please complete the onboarding process first."
     end
   end
 
@@ -184,12 +183,12 @@ class UsersController < ApplicationController
         @has_claimed_pitch,
         @has_read_resources,
         @has_submitted_first_draft,
-        @has_published
+        @has_published,
       ].count(true) / 6.0 * 100.0
     @show_onboarding =
       @user.last_saw_new_writer_dashboard.nil? &&
         (current_user.id.eql? @user.id)
-    flash.now[:notice] = 'Writer dashboard unlocked!' if @show_onboarding
+    flash.now[:notice] = "Writer dashboard unlocked!" if @show_onboarding
     if current_user.id.eql? @user.id
       @user.last_saw_new_writer_dashboard = Time.now
       @user.save
@@ -202,14 +201,14 @@ class UsersController < ApplicationController
     @claimed_pitches_cnt = Pitch.where(claimed_id: @user.id)&.count || 0
     @pageviews = @user_posts_approved_records.sum(&:post_impressions)
     set_badges
-    @show_onboarding_full = 
+    @show_onboarding_full =
       @user.last_saw_writer_dashboard.nil? && (current_user.id.eql? @user.id)
-    @show_editor_onboarding = 
+    @show_editor_onboarding =
       @user.became_an_editor.nil? && @user.editor &&
         (current_user.id.eql? @user.id) && !@show_onboarding_full
     @show_marketer_onboarding =
-      @user.last_saw_interviews.nil? && @user.marketer && 
-          (current_user.id.eql? @user.id) && !@show_onboarding_full && !@show_editor_onboarding
+      @user.last_saw_interviews.nil? && @user.marketer &&
+        (current_user.id.eql? @user.id) && !@show_onboarding_full && !@show_editor_onboarding
     if @show_onboarding_full
       @user.promotions = @user.promotions + 1
       @user.save
@@ -234,8 +233,7 @@ class UsersController < ApplicationController
 
   def sponsored
     @partner = User.where(partner: true).find(params[:id])
-    set_meta_tags title:
-                    "#{@partner.full_name} Published Articles | The Teen Magazine"
+    set_meta_tags title: "#{@partner.full_name} Published Articles | The Teen Magazine"
     @published = Post.published.where(partner_id: @partner.id)
   end
 
@@ -243,16 +241,16 @@ class UsersController < ApplicationController
     # if you want to change a badge color, you must update all the already created badges
     # to match the new color
     @levels = [
-      ['1 million+', '#D31E26', 1_000_000],
-      ['800k+', '#C50285', 800_000],
-      ['500k+', '#00215B', 500_000],
-      ['300k+', '#6A198E', 300_000],
-      ['100k+', '#a88beb', 100_000],
-      ['50k+', '#a88beb', 50_000],
-      ['20k+', '#00acee', 20_000],
-      ['10k+', '#EF265F', 10_000],
-      ['5,000+', '#4ABEB6', 5000],
-      ['1,000+', '#4ABEB6', 1000]
+      ["1 million+", "#D31E26", 1_000_000],
+      ["800k+", "#C50285", 800_000],
+      ["500k+", "#00215B", 500_000],
+      ["300k+", "#6A198E", 300_000],
+      ["100k+", "#a88beb", 100_000],
+      ["50k+", "#a88beb", 50_000],
+      ["20k+", "#00acee", 20_000],
+      ["10k+", "#EF265F", 10_000],
+      ["5,000+", "#4ABEB6", 5000],
+      ["1,000+", "#4ABEB6", 1000],
     ]
     @levels.each_with_index do |level, index|
       if @user.badges.where(level: level[0]).present?
@@ -264,20 +262,16 @@ class UsersController < ApplicationController
         @badge =
           @user.badges.build(
             level: level[0],
-            kind: 'pageviews',
-            color: level[1]
+            kind: "pageviews",
+            color: level[1],
           )
         @badge.save
         @badges_above = @levels[0..index].map { |l| l[0] }
         @users_who_have_badge =
           User.includes(:badges).where(badges: { level: @badges_above }).count
         @percentile =
-          (
-            (
-              @users_who_have_badge.to_f / (User.all.count - @users_who_have_badge)
-            ) * 100
-          ).round(1)
-        @percentile = (@percentile < 0.1) ? '< 0.1' : @percentile
+          ((@users_who_have_badge.to_f / (User.all.count - @users_who_have_badge)) * 100).round(1)
+        @percentile = (@percentile < 0.1) ? "< 0.1" : @percentile
         @show_badge_popup = true
         break
       end
@@ -298,22 +292,22 @@ class UsersController < ApplicationController
       @next_badge_to_earn = @levels.last
       @pageviews_away_from_new_badge = (@next_badge_to_earn[2] - @pageviews).abs
       @percent_to_next_level =
-          100 - ((@pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2]).to_f * 100)
+        100 - ((@pageviews_away_from_new_badge).abs.to_f / (@next_badge_to_earn[2]).to_f * 100)
     end
   end
 
   def onboarding
-    set_meta_tags title: 'Onboarding | The Teen Magazine',
-                  onboarding: 'Turn off ads'
+    set_meta_tags title: "Onboarding | The Teen Magazine",
+                  onboarding: "Turn off ads"
     @user = current_user
-    @partial = params[:step] || 'welcome'
+    @partial = params[:step] || "welcome"
     @pitches =
       Pitch
         .is_approved
         .not_claimed
         .where(status: nil)
-        .where('updated_at > ?', Time.now - 40.days)
-        .order('updated_at desc')
+        .where("updated_at > ?", Time.now - 40.days)
+        .order("updated_at desc")
         .paginate(page: params[:page], per_page: 9)
     @pitch =
       Pitch
@@ -322,35 +316,35 @@ class UsersController < ApplicationController
   end
 
   def editor_onboarding
-    set_meta_tags title: 'Editor Onboarding | The Teen Magazine',
-                  onboarding: 'Turn off ads'
+    set_meta_tags title: "Editor Onboarding | The Teen Magazine",
+                  onboarding: "Turn off ads"
     @user = current_user
-    @partial = params[:step] || 'welcome'
+    @partial = params[:step] || "welcome"
     @categories = Category.active
     @reviews_requirement =
       Constant
-        .find_by(name: '# of monthly reviews editors need to complete')
+        .find_by(name: "# of monthly reviews editors need to complete")
         .try(:value)
     @pitches_requirement =
       Constant
-        .find_by(name: '# of monthly pitches editors need to complete')
+        .find_by(name: "# of monthly pitches editors need to complete")
         .try(:value)
     @max_reviews =
       Constant
-        .find_by(name: 'max # of reviews per month for editors')
+        .find_by(name: "max # of reviews per month for editors")
         .try(:value)
   end
 
   def index
-    if params[:commit].eql? 'Send reset link'
+    if params[:commit].eql? "Send reset link"
       reset_email
     elsif current_user && (current_user.admin? || current_user.editor?)
-      set_meta_tags title: 'Writers | The Teen Magazine'
+      set_meta_tags title: "Writers | The Teen Magazine"
       show_users
     elsif current_user
-      redirect_to current_user, notice: 'You do not have access to this page.'
+      redirect_to current_user, notice: "You do not have access to this page."
     else
-      redirect_to '/login', notice: 'You must sign in before continuing.'
+      redirect_to "/login", notice: "You must sign in before continuing."
       store_location_for(:user, request.fullpath)
     end
   end
@@ -362,74 +356,105 @@ class UsersController < ApplicationController
         pagy(
           User
             .where(partner: [nil, false])
-            .where('lower(full_name) LIKE ?', "%#{@query.downcase}%")
+            .where("lower(full_name) LIKE ?", "%#{@query.downcase}%")
             .or(User.where(partner: [nil, false])
-            .where('lower(email) LIKE ?', "%#{@query.downcase}%"))
-            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc')),
+              .where("lower(email) LIKE ?", "%#{@query.downcase}%"))
+            .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc")),
           page: params[:page],
-          items: 25
+          items: 25,
         )
     else
       @pagy, @users =
         pagy(
           User
             .where(partner: [nil, false])
-            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc')),
+            .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc")),
           page: params[:page],
-          items: 25
+          items: 25,
         )
     end
     @users_waiting = User.all.review_profile
   end
 
   def partners
-    set_meta_tags title: 'Partners | The Teen Magazine'
+    set_meta_tags title: "Partners | The Teen Magazine"
     if params[:search].present?
       @query = params[:search][:query]
       @pagy, @partners =
         pagy(
           User
             .where(partner: true)
-            .where('lower(full_name) LIKE ?', "%#{@query.downcase}%"),
+            .where("lower(full_name) LIKE ?", "%#{@query.downcase}%"),
           page: params[:page],
-          items: 25
+          items: 25,
         )
     else
       @pagy, @partners =
         pagy(
           User
             .where(partner: true)
-            .order('created_at desc')
-            .order('created_at desc'),
+            .order("created_at desc")
+            .order("created_at desc"),
           page: params[:page],
-          items: 25
+          items: 25,
         )
     end
   end
 
   def editors
-    set_meta_tags title: 'Editors | The Teen Magazine'
+    set_meta_tags title: "Editors | The Teen Magazine"
     if params[:search].present?
       @query = params[:search][:query]
       @pagy, @editors =
         pagy(
           User
             .where(editor: true)
-            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc'))
-            .where('lower(full_name) LIKE ?', "%#{@query.downcase}%"),
+            .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc"))
+            .where("lower(full_name) LIKE ?", "%#{@query.downcase}%"),
           page: params[:page],
-          items: 25
+          items: 25,
         )
     else
       @pagy, @editors =
         pagy(
           User
             .where(editor: true)
-            .order(Arel.sql('last_sign_in_at IS NULL, last_sign_in_at desc')),
+            .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc")),
           page: params[:page],
-          items: 25
+          items: 25,
         )
     end
+  end
+
+  def interviewers
+    set_meta_tags title: "Interviewers | The Teen Magazine"
+    if params[:search].present?
+      @query = params[:search][:query]
+      @pagy, @interviewers =
+        pagy(
+          User
+            .where(marketer: true)
+            .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc"))
+            .where("lower(full_name) LIKE ?", "%#{@query.downcase}%"),
+          page: params[:page],
+          items: 25,
+        )
+    else
+      @pagy, @interviewers =
+        pagy(
+          User
+            .where(marketer: true)
+            .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc")),
+          page: params[:page],
+          items: 25,
+        )
+    end
+  end
+
+  def send_interviewer_invite_email
+    @user = User.find(params[:user_id])
+    ApplicationMailer.manual_invite_interviewer(@user).deliver
+    redirect_to request.referrer, notice: "Invite sent to " << @user.email
   end
 
   def reset_email
@@ -438,13 +463,11 @@ class UsersController < ApplicationController
         .where(email: params[:user][:email].strip)
         .first
         .send_reset_password_instructions
-      redirect_to '/reset-password',
-                  notice:
-                    "A reset password email was sent to #{params[:user][:email]}."
+      redirect_to "/reset-password",
+                  notice: "A reset password email was sent to #{params[:user][:email]}."
     rescue StandardError
-      redirect_to '/reset-password',
-                  notice:
-                    "Oops, something went wrong! #{params[:user][:email]} may not be associated with a writer account."
+      redirect_to "/reset-password",
+                  notice: "Oops, something went wrong! #{params[:user][:email]} may not be associated with a writer account."
     end
   end
 
@@ -456,12 +479,12 @@ class UsersController < ApplicationController
       @writers_helped_cnt =
         @editor_reviews.map { |r| r.post.try(:user_id) }.uniq.count
     end
-    set_meta_tags title: 'Edit Profile | The Teen Magazine'
+    set_meta_tags title: "Edit Profile | The Teen Magazine"
   end
 
   def new
     @user = User.new
-    set_meta_tags title: 'New Partner | The Teen Magazine'
+    set_meta_tags title: "New Partner | The Teen Magazine"
   end
 
   def create
@@ -473,17 +496,17 @@ class UsersController < ApplicationController
       if @user.partner
         ApplicationMailer.partner_login_details(current_user, @user).deliver
         redirect_to "/partners/#{@user.slug}",
-                    notice: 'A new partner was added!'
+                    notice: "A new partner was added!"
       else
-        redirect_to @user, notice: 'Your changes were successfully saved!'
+        redirect_to @user, notice: "Your changes were successfully saved!"
       end
     else
-      render 'new', notice: 'Oh no! Your changes were not able to be saved!'
+      render "new", notice: "Oh no! Your changes were not able to be saved!"
     end
   end
 
   def update
-    if @user.approved_profile == false && user_params[:approved_profile] == '1'
+    if @user.approved_profile == false && user_params[:approved_profile] == "1"
       ApplicationMailer.profile_approved(@user).deliver
     end
     if user_params[:profile].present?
@@ -503,23 +526,22 @@ class UsersController < ApplicationController
       elsif params[:decision].present?
         respond_to_editor_app
         redirect_to applies_path,
-                    notice:
-                      "Editor application #{params[:decision].downcase}ed."
+                    notice: "Editor application #{params[:decision].downcase}ed."
       else
         add_to_list(@user)
-        redirect_to @user, notice: 'Your profile has been updated.'
+        redirect_to @user, notice: "Your profile has been updated."
       end
     else
-      render 'edit', notice: 'Changes were unable to be saved.'
+      render "edit", notice: "Changes were unable to be saved."
     end
   end
 
   def respond_to_editor_app
-    if params[:decision].eql? 'Accept'
+    if params[:decision].eql? "Accept"
       ApplicationMailer.accepted_editor_email(@user).deliver
       @user.editor = true
       @user.save
-    elsif params[:decision].eql? 'Reject'
+    elsif params[:decision].eql? "Reject"
       ApplicationMailer.rejected_editor_email(@user).deliver
       @app = Apply.where(rejected_editor_at: nil, user_id: @user.id)
       @app.each do |app|
@@ -536,24 +558,24 @@ class UsersController < ApplicationController
       Post
         .where(partner_id: @user.id)
         .each do |post|
-          post.partner_id = nil
-          post.save
-        end
+        post.partner_id = nil
+        post.save
+      end
     end
     @user.posts.each do |post|
-      post.user = User.where(email: 'anonymous@theteenmagazine.com').first
+      post.user = User.where(email: "anonymous@theteenmagazine.com").first
       post.save
     end
     Pitch
       .where(claimed_id: @user.id)
       .where.not(editor_id: nil)
       .each do |pitch|
-        pitch.claimed_id = nil
-        pitch.save
-      end
+      pitch.claimed_id = nil
+      pitch.save
+    end
     @user.comments.destroy_all
     @user.destroy
-    redirect_to users_path, notice: 'The writer account was deleted.'
+    redirect_to users_path, notice: "The writer account was deleted."
   end
 
   def redirect
@@ -565,7 +587,7 @@ class UsersController < ApplicationController
   end
 
   def share
-    set_meta_tags title: 'Add Partner to Article | The Teen Magazine'
+    set_meta_tags title: "Add Partner to Article | The Teen Magazine"
     @filtered_posts =
       current_user.admin? ? Post.draft : current_user.posts.draft
     if params[:search].present?
@@ -574,23 +596,23 @@ class UsersController < ApplicationController
         pagy(
           @filtered_posts
             .where(partner_id: nil)
-            .where('lower(title) LIKE ?', "%#{@query.downcase}%")
+            .where("lower(title) LIKE ?", "%#{@query.downcase}%")
             .by_published_date,
           page: params[:page],
-          items: 15
+          items: 15,
         )
     else
       @pagy, @posts =
         pagy(
           @filtered_posts.where(partner_id: nil).by_published_date,
           page: params[:page],
-          items: 15
+          items: 15,
         )
     end
   end
 
   def extensions
-    set_meta_tags title: 'Use an Extension | The Teen Magazine'
+    set_meta_tags title: "Use an Extension | The Teen Magazine"
     @user = User.find(params[:id])
     if current_user.admin || (current_user.id.eql? @user.id)
       @extensions = @user.extensions || 0
@@ -602,11 +624,11 @@ class UsersController < ApplicationController
               .posts
               .draft
               .distinct
-              .where('lower(title) LIKE ?', "%#{@query.downcase}%")
+              .where("lower(title) LIKE ?", "%#{@query.downcase}%")
               .where.not(deadline_at: nil, pitch_id: nil),
             page: params[:page],
-            items: 15
-          ).order('updated_at desc')
+            items: 15,
+          ).order("updated_at desc")
       else
         @pagy, @posts =
           pagy(
@@ -615,9 +637,9 @@ class UsersController < ApplicationController
               .draft
               .distinct
               .where.not(deadline_at: nil, pitch_id: nil)
-              .order('updated_at desc'),
+              .order("updated_at desc"),
             page: params[:page],
-            items: 15
+            items: 15,
           )
       end
     else
@@ -629,7 +651,7 @@ class UsersController < ApplicationController
     if (current_user && (current_user.admin? || current_user.editor?))
       true
     else
-      redirect_to current_user, notice: 'You do not have access to this page.'
+      redirect_to current_user, notice: "You do not have access to this page."
     end
   end
 
@@ -637,7 +659,13 @@ class UsersController < ApplicationController
     if (current_user && current_user.admin?)
       true
     else
-      redirect_to current_user, notice: 'You do not have access to this page.'
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
+  end
+
+  def is_marketer?
+    unless current_user.is_marketer?
+      redirect_to current_user, notice: "You do not have access to this page."
     end
   end
 
@@ -646,23 +674,23 @@ class UsersController < ApplicationController
   end
 
   def set_layout
-    current_user ? 'writer' : 'application'
+    current_user ? "writer" : "application"
   end
 
   def add_to_list(user)
     begin
-      @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+      @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
       @gb
-        .lists(ENV['MAILCHIMP_LIST_ID'])
+        .lists(ENV["MAILCHIMP_LIST_ID"])
         .members
-        .create(body: { email_address: user.email, status: 'subscribed' })
+        .create(body: { email_address: user.email, status: "subscribed" })
     rescue StandardError
-      puts 'Error: Failed to subscribe to mailchimp list'
+      puts "Error: Failed to subscribe to mailchimp list"
     end
   end
 
   def update_last_sign_in_at
-    Thread.new { current_user.update_column('last_sign_in_at', Time.now) }
+    Thread.new { current_user.update_column("last_sign_in_at", Time.now) }
   end
 
   private

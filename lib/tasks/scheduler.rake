@@ -42,6 +42,7 @@ task run_weekly_tasks: :environment do
         .is_approved
         .not_claimed
         .where(status: nil)
+        .where.not(user_id: nil)
         .order('updated_at desc')
         .limit(8)
     @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])

@@ -122,7 +122,19 @@ function reply(id) {
 
 function isDisabled(id) {
     var input = $(".comment_field_" + id).val();
-    if (input != "") {
+    var input_name = "jane";
+    var is_thirteen = true;
+    // name should have valid letters
+    var regExp = /[a-zA-Z]/g;
+    // if no user signed in must fill out full name
+    if ($(".full_name_" + id)[0]) {
+        input_name = $(".full_name_" + id).val();
+    }
+    // must be 13 to post
+    if ($(".is_thirteen_" + id)[0]) {
+        is_thirteen = $(".is_thirteen_" + id).is(":checked");
+    }
+    if (input != "" && regExp.test(input_name) && is_thirteen) {
         $(".submit_" + id).removeClass("disabled");
     } else {
         $(".submit_" + id).addClass("disabled");

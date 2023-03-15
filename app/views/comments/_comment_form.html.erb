@@ -1,10 +1,25 @@
 <div class="comment_form_wrapper">
-  <% @profile_img = current_user.profile.attached? ? image_tag(current_user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
-  <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
-  <% @placeholder = (post.comments.where(comment_id: nil).count.eql? 0) ? "Start the conversation" : "Share your thoughts on this article" %>
+  <% if current_user.present? %>
+    <% @profile_img = current_user.profile.attached? ? image_tag(current_user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+    <%= link_to(@profile_img, current_user, :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+  <% else %>
+    <%= image_tag("profile_image.jpg", :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
+  <% end %>
+  <% @placeholder = (post.comments.where(comment_id: nil, public: post.is_published?).count.eql? 0) ? "Start the conversation" : "Share your thoughts on this article" %>
   <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
+    <% if !current_user.present? %>
+      <%= f.text_field :full_name, :value => cookies[:full_name], :placeholder => "Full name", class: 'mt-0 full_name_0', style: 'margin-bottom: 10px', onkeyup: "isDisabled('0')" %>
+      <%= f.text_field :email, :value => cookies[:email], :placeholder => "Personal email", class: 'mt-0', style: 'margin-bottom: 10px' %>
+      <%= f.hidden_field :cookie, :value => (cookies[:cookie] || SecureRandom.urlsafe_base64) %>
+    <% end %>
+    <%= f.hidden_field :public, :value => post.is_published? %>
     <%= f.text_area :text, :placeholder => @placeholder, id: "comment_field", class: "comment_val_0 comment_field_0", onkeyup: "isDisabled('0')" %>
     <%= f.hidden_field :post_id, :post_id => post.id %>
+    <br>
+    <% if !current_user.present? %>
+      <%= f.check_box :subscribed, :value => (cookies[:subscribed] || '1'), :checked => (cookies[:subscribed].nil? || (cookies[:subscribed].eql? '1')) %><span class="ml-2">Be notified of more articles like this (unsubscribe anytime)</span><br>
+      <%= f.check_box :is_thirteen, :value => (cookies[:is_thirteen] || '0'), :checked => (cookies[:is_thirteen].eql? '1'), class: "is_thirteen_0", onclick: "isDisabled('0')" %><span class="ml-2">You must be at least 13 to post on The Teen Magazine. I understand and confirm that I am at least 13 years old.</span><br>
+    <% end %>
     <input alt="Submit" src="https://s3.amazonaws.com/media.theteenmagazine.com/post_comment.png" type="image" class="submit_comment disabled submit_0" />
   <% end %>
 </div>

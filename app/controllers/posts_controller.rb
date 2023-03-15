@@ -17,6 +17,7 @@ class PostsController < ApplicationController
   after_action :log_impression, only: [:show]
   load_and_authorize_resource except: %i[
                                 get_trending_posts_in_category
+                                get_conversations_following
                                 subscribe
                                 is_email
                                 get_promoted_posts
@@ -175,11 +176,24 @@ class PostsController < ApplicationController
         @collabs.push @writer if @writer.present?
       end
     end
-    if (@post.sharing || @post.partner_id.present?) && !current_user.nil?
-      @comment = current_user.comments.build(post_id: @post.id)
-      @partner = User.find_by(id: @post.partner_id)
-    end
     set_post_meta_tags
+  end
+
+  def get_comments_published
+    @user = User.find(params[:user_id])
+    @post = Post.find(params[:post_id])
+    if !current_user.nil?
+      @comment = current_user.comments.build(post_id: @post.id)
+    else
+      @comment = Comment.new(post_id: @post.id)
+    end
+    @comments = @post.comments.where(comment_id: nil, public: true).order("created_at desc")
+    if params[:comment_id].present?
+      @comment_from_notifications = Comment.find(params[:comment_id]).id
+      @comment_parent_from_notifications =
+        Comment.find(params[:comment_id]).comment_id
+    end
+    render partial: "posts/partials/comments_published", locals: {user: @user, post: @post, comments: @comments, comment: @comment}
   end
 
   def draft
@@ -220,14 +234,11 @@ class PostsController < ApplicationController
         @comment = current_user.comments.build(post_id: @post.id)
         @partner = User.find_by(id: @post.partner_id)
       end
-      if !@post.is_published?
-        @comments =
-          @post.comments.where(comment_id: nil).order("created_at desc")
-        if params[:comment_id].present?
-          @comment_from_notifications = Comment.find(params[:comment_id]).id
-          @comment_parent_from_notifications =
-            Comment.find(params[:comment_id]).comment_id
-        end
+      @comments = @post.comments.where(comment_id: nil).order("created_at desc")
+      if params[:comment_id].present?
+        @comment_from_notifications = Comment.find(params[:comment_id]).id
+        @comment_parent_from_notifications =
+          Comment.find(params[:comment_id]).comment_id
       end
       set_post_meta_tags
     elsif current_user.present?
@@ -247,7 +258,8 @@ class PostsController < ApplicationController
 
   def get_promoted_posts
     @per_page = 9
-    @posts_promoted_records = Post.published.by_promoted_then_updated_date
+    session[:fetched_at] = Time.now
+    @posts_promoted_records = Post.published.by_promoted_then_updated
     @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
     @is_last_page =
       (@posts_promoted_records.count - (@page - 2) * @per_page) <= @per_page
@@ -267,7 +279,10 @@ class PostsController < ApplicationController
 
   def get_trending_posts_in_category
     @post = Post.find(params[:id])
-    @trending = @post.category.posts.published.trending.limit(3)
+    @trending = @post.category.posts.published.trending.where.not(id: @post.id).limit(3)
+    if @trending&.count < 3
+      @trending = @post.category.posts.published.where.not(id: @post.id).by_published_date.limit(3)
+    end
     render partial: "posts/partials/trending"
   end
 
@@ -739,6 +754,7 @@ class PostsController < ApplicationController
         :thumbnail_credits,
         :show_disclosure,
         :shareable_token,
+        :comments_turned_off,
         feedback_list: [],
         reviews_attributes: %i[id post_id editor_id created_at status notes],
         user_attributes: %i[extensions id],

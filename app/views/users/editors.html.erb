@@ -11,16 +11,20 @@
     <h2>Searching for editor... <span style="background-color: #FCD04D"><%= @query %></span></h2>
   <% end %>
   <% @editors.each do | user | %>
-      <% if user != nil %>
-        <div class="flex--profile">
-          <% if user.profile.attached? %>
-            <%= image_tag(user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img") %>
-          <% else %>
-            <%= image_tag("profile_image.jpg", :class => "profile_img") %>
-          <% end %>
-          <div class="info">
+    <% if user != nil %>
+      <div class="flex--profile">
+        <% if user.profile.attached? %>
+          <%= image_tag(user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img") %>
+        <% else %>
+          <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+        <% end %>
+        <div class="info">
           <h2 style="margin-bottom: 5px; display: inline;">
-            <%= link_to(user.full_name, "/editors/#{user.slug}") %>
+            <% if current_user.admin? %>
+              <%= link_to(user.full_name, "/editors/#{user.slug}") %>
+            <% else %>
+              <%= link_to(user.full_name, user) %>
+            <% end %>
           </h2>
           <% if user.badges.present? %>
             <div class="badge_wrapper">
@@ -29,23 +33,27 @@
             </div>
           <% end %>
           <% if user.editor? %>
+            <br>
             <%= render_async_cache get_editor_stats_path(id: user) %>
           <% end %>
-            <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
-            <% if current_user.admin? %>
-              <div>
-                <h6 class="mt-2" style="margin: 0; opacity: 50%;">
-                  <% if user.last_sign_in_at.nil? %>
-                    Never signed in (admin only)
-                  <% else %>
-                    Last active <%= time_ago_in_words(user.last_sign_in_at) %> ago (admin only)
+          <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
+          <% if current_user.admin? %>
+            <div>
+              <h6 class="mt-2" style="margin: 0; opacity: 50%;">
+                <% if user.last_sign_in_at.nil? %>
+                  Never signed in (admin only)
+                <% else %>
+                  Last active <%= time_ago_in_words(user.last_sign_in_at) %> ago (admin only)
+                  <% if current_user.admin? %>
+                    <%= link_to "invite to interview team", "#"  %>
                   <% end %>
-                </h6>
-              </div>
-            <% end %>
-          </div>
+                <% end %>
+              </h6>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
+    <% end %>
   <% end %>
   <%== pagy_nav(@pagy).html_safe %>
 </div>

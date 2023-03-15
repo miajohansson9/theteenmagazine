@@ -1,3 +1,6 @@
+@import "mdbootstrap/css/bootstrap.min";
+@import "mdbootstrap/css/mdb.min";
+@import "mdbootstrap/css/mdb.lite.min";
 @import "normalize";
 @import "common";
 @import "userprofile";
@@ -11,24 +14,28 @@
 @import "mdbootstrap/scss/core/variables";
 @import "mdbootstrap/scss/pro/variables";
 @import "mdbootstrap/scss/pro/chips";
-
 #apply_description {
-  min-height: 200px;
+    min-height: 200px;
+}
+
+.badge-default {
+    background-color: #2bbbad !important;
+    padding: 0.25em 0.4em !important;
 }
 
 @media (max-width: 1080px) {
-  .nav-title {
-    display: none;
-  }
-  .nav_article {
-    .link {
-      margin-left: 0.8em !important;
+    .nav-title {
+        display: none;
     }
-  }
+    .nav_article {
+        .link {
+            margin-left: 0.8em !important;
+        }
+    }
 }
 
 @media (max-width: 800px) {
-  .hide-on-mobile {
-    display: none;
-  }
+    .hide-on-mobile {
+        display: none;
+    }
 }

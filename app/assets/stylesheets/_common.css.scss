@@ -1,3 +1,4 @@
+@import "likes";
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
     opacity: 100 !important;
@@ -14,7 +15,16 @@
 }
 
 .text-decoration-underline {
-    text-decoration: underline;
+    text-decoration: underline !important;
+    &:hover {
+        text-decoration: underline !important;
+    }
+}
+
+#selectable_content {
+    #response_to_text_0 {
+        background-color: #fcd04d;
+    }
 }
 
 .h1,
@@ -394,8 +404,7 @@ body {
 }
 
 .date_post_preview {
-    font-size: 20px !important;
-    font-style: italic;
+    font-size: 16px !important;
     color: #c0c0c0 !important;
 }
 
@@ -688,7 +697,7 @@ hr {
     }
     .date {
         color: #545454;
-        font-size: 12px;
+        font-size: 16px;
         margin-top: 3px;
     }
 }
@@ -772,15 +781,15 @@ hr {
                 font-weight: 400;
                 line-height: 0.8;
                 position: relative;
-                top: -5px;
                 a {
                     text-decoration: none;
                     color: #191919;
                     font-size: 20px;
+                    line-height: 1.1rem;
                 }
             }
             .date {
-                font-size: 12px;
+                font-size: 16px;
                 margin: 4px 0 0 0;
                 color: #545454;
             }
@@ -1411,6 +1420,9 @@ ol {
             margin: 0;
             padding: 0 60px;
             min-width: 100% !important;
+        }
+        .share_article_feedback_skinny {
+            padding: 0 30px;
         }
     }
 }

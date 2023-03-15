@@ -1,15 +1,9 @@
 class Pitch < ApplicationRecord
-  include MailForm::Delivery
   belongs_to :user, optional: true
   belongs_to :category
   has_many :posts
 
   has_one_attached :thumbnail
-
-  attributes :contact_email
-  attributes :influencer_social_media
-  attributes :platform_to_share
-  attributes :description
 
   validates_length_of :title, minimum: 30, maximum: 80, unless: :is_interview?
   validates :title, presence: true
@@ -48,14 +42,5 @@ class Pitch < ApplicationRecord
 
   def should_generate_new_friendly_id?
     slug.blank? || (title_changed? && (title.length < 70) && title.length > 30)
-  end
-
-  def headers
-    {
-      subject:
-        'Your interview request to The Teen Magazine was submitted successfully',
-      to: "#{contact_email}",
-      from: '"The Teen Magazine Editor Team" <editors@theteenmagazine.com>'
-    }
   end
 end

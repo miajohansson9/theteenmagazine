@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   get :get_trending_posts_in_category, controller: :posts
   get :get_conversations_following, controller: :posts
   get :get_promoted_posts, controller: :posts
+  get :get_comments_published, controller: :posts
   get :generate_shareable_token, controller: :posts
 
   get :get_sent_invitations, controller: :invitations
@@ -50,6 +51,7 @@ Rails.application.routes.draw do
   get :get_editor_stats, controller: :users
   get :get_past_invites, controller: :users
   get :get_published_articles, controller: :users
+  get :send_interviewer_invite_email, controller: :users
 
   get :get_editor_activity, controller: :reviews
   get :enable_notify_of_new_review, controller: :reviews
@@ -99,6 +101,7 @@ Rails.application.routes.draw do
   get '/partners/:id/edit', to: 'users#edit'
   get '/partners', to: 'users#partners'
   get '/editors', to: 'users#editors'
+  get '/interviewers', to: 'users#interviewers'
   get '/partners/:id/share', to: 'users#share'
   get '/writers/:id/extensions', to: 'users#extensions'
   get '/writers/:id/invitations', to: 'invitations#index'

@@ -1,6 +1,6 @@
 <% if @user_posts_approved.length < 1 && current_user.present? %>
   <%= render "users/dashboard/new_writer" %>
-<% elsif current_user.present? && params[:mode].nil? && (current_user.admin? || current_user.editor? || (current_user.id.eql? @user.id)) %>
+<% elsif current_user.present? && params[:mode].nil? && (current_user.admin? || (current_user.id.eql? @user.id)) %>
   <%= render "users/dashboard/official_writer" %>
 <% else %>
   <%= render "users/dashboard/public_writer_profile" %>

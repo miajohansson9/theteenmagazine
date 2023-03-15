@@ -230,7 +230,7 @@ Devise.setup do |config|
 
   Warden::Manager.after_authentication do |user, auth, opts|
     if user.remember_me
-      auth.cookies[:email] = { value: user.email, expires: 2.months.from_now }
+      auth.cookies[:email] = { value: user.email, expires: 6.months.from_now }
     else
       auth.cookies.delete :email
     end

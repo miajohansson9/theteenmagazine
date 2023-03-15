@@ -1,20 +1,33 @@
 <%= form_for comment, remote: true, :html => {id: dom_id(comment, 'form_inline')} do |f| %>
   <li class="comment_form_wrapper form_inline_wrapper list-group-item comment" style="width: 100%;">
-    <% if (comment.user_id.eql? current_user.id) || (comment.post.user_id.eql? current_user.id) || (current_user.admin) %>
+    <% if (current_user.present? && ((comment.user_id.eql? current_user.id) || (comment.post.user_id.eql? current_user.id) || (current_user.admin))) || (cookie.eql? comment.cookie) %>
       <%= link_to comment_path(comment), method: :delete, data: {confirm: "Are you sure you want to delete this comment?"}, class: "delete_btn_x", :remote => true, :style => "width: 15px !important;right: 0;position: absolute;z-index: 10;" do %>
         <svg style="color: black;" width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
       <% end %>
     <% end %>
-    <% @profile_img = comment.user.profile.attached? ? image_tag(comment.user.profile.variant(resize_to_fill: [50, 50]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+    <% @profile_img = comment.user.present? && comment.user.profile.attached? ? image_tag(comment.user.profile.variant(resize_to_fill: [50, 50]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
     <%= link_to(@profile_img, comment.user) %>
     <div class="li-content" style="width: 100%;">
-      <h6><%= link_to comment.user.try(:full_name), comment.user %></h6>
+      <h6>
+        <% if comment.user_id.present? %>
+          <%= link_to comment.user.try(:full_name), comment.user %>
+        <% else %>
+          <%= comment.full_name %>
+        <% end %>
+        <% if comment.user.try(:id).eql? comment.post.user.id %>
+          <span class="badge badge-default">Author</span>
+        <% elsif comment.user.try(:editor).present? %>
+          <span class="badge badge-default">Editor</span>
+        <% elsif comment.user.present? %>
+          <span class="badge badge-default">Writer</span>
+        <% end %>
+      </h6>
       <span class="date_ago"><%= time_ago_in_words(comment.created_at) %> ago</span><br>
       <% if comment.response_to.present? %>
         <span class="d-block">Commented on:
           <span id="anchor_link" style="font-size: 14px;" onclick="scrollToResponseText(`<%= comment.response_to %>`)" class="date_ago mb-2">
             <svg width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="quote-left" class="mb-1 svg-inline--fa fa-quote-left fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z"></path></svg>
-              <%= comment.response_to.truncate_words(30) %>
+            <%= comment.response_to.truncate_words(30) %>
             <svg width="14px" height="14px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="quote-right" class="mb-1 svg-inline--fa fa-quote-right fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"></path></svg>
           </span>
         </span>
@@ -23,13 +36,13 @@
       <% @reply_text = comment.comments.present? ? "Reply (#{comment.comments.count})" : "Reply" %>
       <% if comment.comment_id.nil? %>
         <span class="d-block">
-          <% if comment.user_id.eql? current_user.id %>
-            <p class="d-inline link_theme save"><%= f.submit "Save" %></p>
+          <% if (current_user.present? && (comment.user_id.eql? current_user.id)) || (cookie.eql? comment.cookie) %>
+            <p class="mr-2 d-inline link_theme save"><%= f.submit "Save" %></p>
           <% end %>
           <p class="d-inline link_theme"><%= link_to @reply_text, new_comment_path(parent_id: comment.id), remote: true, class: "link_theme toggle_#{comment.id}", style: "font-size: 1em;" %></p>
         </span>
-      <% elsif comment.user_id.eql? current_user.id %>
-        <p class="d-inline link_theme save"><%= f.submit "Save" %></p>
+      <% elsif (current_user.present? && (comment.user_id.eql? current_user.id)) || (cookie.eql? comment.cookie) %>
+        <p class="mr-2 d-inline link_theme save"><%= f.submit "Save" %></p>
       <% end %>
     </div>
   </li>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+  <body>
+    <div>
+      <h4 style="text-decoration:underline">Your interview request to The Teen Magazine was submitted successfully</h4>
+      <p><b>Contact email:</b>
+        <a href="mailto:<%= @contact_email %>" target="_blank"><%= @contact_email %>.<wbr>edu</a></p>
+      <p><b>Influencer social media:</b>
+        <%= @pitch.influencer_social_media %></p>
+      <p><b>Platform to share:</b><%= @pitch.platform_to_share %></p>
+      <p><b>Description:</b>
+        <%= @pitch.description %></p>
+    </div>
+  </body>
+</html>

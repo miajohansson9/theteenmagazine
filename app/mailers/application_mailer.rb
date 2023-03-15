@@ -33,6 +33,24 @@ class ApplicationMailer < ActionMailer::Base
     )
   end
 
+  def confirm_submitted_interview(contact_email, pitch)
+    @pitch = pitch
+    @contact_email = contact_email
+    mail(
+      to: contact_email,
+      subject: "Your interview request to The Teen Magazine was submitted successfully",
+    )
+  end
+
+  def manual_invite_interviewer(user)
+    @user = user
+    mail(
+      to: user.email,
+      subject: "Invitation to be on interview team",
+      from: "Mia from The Teen Magazine <mia@theteenmagazine.com>"
+    )
+  end
+
   def profile_approved(user)
     @user = user
     unless @user.do_not_send_emails

@@ -1,5 +1,13 @@
+var is_editing_parent = document.getElementById('<%= dom_id(@parent, "form_inline") %>');
+if (is_editing_parent) {
+  // stop editing parent if in edit mode
+  document.getElementById('<%= dom_id(@parent, "form_inline") %>').remove()
+  document.getElementById('<%= dom_id(@parent) %>').innerHTML = "<%= j render @parent %>"
+  $('#<%= dom_id(@parent) %>').removeClass('d-none');
+}
+// continue
 var toggle = document.getElementById("reply_<%= @parent.id %>");
 if (!toggle) {
-  document.getElementById('<%= dom_id(@parent) %>').insertAdjacentHTML('afterend', "<%= j render 'reply_form', replies: @replies, post: @post, comment: @comment, parent: @parent %>")
+  document.getElementById('<%= dom_id(@parent) %>').insertAdjacentHTML('afterend', "<%= j render 'reply_form', replies: @replies, post: @post, comment: @comment, parent: @parent, user: @user %>")
 }
 reply('#reply_<%= @parent.id %>');
