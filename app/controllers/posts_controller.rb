@@ -9,6 +9,7 @@ class PostsController < ApplicationController
                   subscribe
                   is_email
                   get_promoted_posts
+                  get_comments_published
                 ]
   before_action :load_author, only: [:show]
   before_action :create, only: [:unapprove]
@@ -21,6 +22,7 @@ class PostsController < ApplicationController
                                 subscribe
                                 is_email
                                 get_promoted_posts
+                                get_comments_published
                               ]
 
   def log_impression
