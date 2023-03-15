@@ -118,7 +118,7 @@ class UsersController < ApplicationController
         .where("collaboration like ?", "%#{@user.email}%")
         .or(Post.where(user_id: @user.id))
         .published
-        .by_promoted_then_updated_date
+        .by_promoted_then_updated
     @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
     @is_last_page =
       (@user_posts_approved_records.count - (@page - 2) * @per_page) <=

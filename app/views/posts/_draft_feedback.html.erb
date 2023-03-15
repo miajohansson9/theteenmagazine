@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Comment on this text</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -20,14 +20,15 @@
         <% end %>
         <%= form_for(@comment, id: "submit-comment-modal") do |f| %>
           <% if !current_user.present? %>
-            <%= f.text_field :full_name, :value => session[:full_name], :placeholder => "Full name", class: 'mt-0', style: 'margin-bottom: 10px' %>
-            <%= f.text_field :email, :value => session[:email], :placeholder => "Personal email", class: 'mt-0', style: 'margin-bottom: 10px' %>
-            <%= f.hidden_field :cookie, :value => (session[:cookie] || SecureRandom.urlsafe_base64) %>
+            <%= f.text_field :full_name, :value => cookies[:full_name], :placeholder => "Full name", class: 'mt-0 full_name_modal', onkeyup: "isDisabled('modal')", style: 'margin-bottom: 10px' %>
+            <%= f.text_field :email, :value => cookies[:email], :placeholder => "Personal email", class: 'mt-0', style: 'margin-bottom: 10px' %>
+            <%= f.hidden_field :cookie, :value => (cookies[:cookie] || SecureRandom.urlsafe_base64) %>
           <% end %>
           <%= f.hidden_field :public, :value => @post.is_published? %>
           <%= f.text_area :text, :placeholder => "Share your thoughts on this text", id: "comment_field", class: "comment_field_modal", onkeyup: "isDisabled('modal')" %>
           <% if !current_user.present? %>
-            <span>Be notified of more articles like this <%= f.check_box :subscribed, :checked => (session[:subscribed] || true) %></span>
+              <%= f.check_box :subscribed, :value => (cookies[:subscribed] || '1'), :checked => (cookies[:subscribed].nil? || (cookies[:subscribed].eql? '1')) %><span class="ml-2">Be notified of more articles like this</span><br>
+              <%= f.check_box :is_thirteen, :value => (cookies[:is_thirteen] || '0'), :checked => (cookies[:is_thirteen].eql? '1'), class: "is_thirteen_modal", onclick: "isDisabled('modal')" %><span class="ml-2">You must be at least 13 to post on The Teen Magazine. I understand and confirm that I am at least 13 years old.</span><br>
           <% end %>
           <%= f.hidden_field :post_id, :post_id => @post.id %>
           <%= f.hidden_field :response_to, id: "response_text_form" %>

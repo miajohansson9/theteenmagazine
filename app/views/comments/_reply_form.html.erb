@@ -39,16 +39,17 @@
     <% end %>
     <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
       <% if !current_user.present? %>
-        <%= f.text_field :full_name, :value => session[:full_name], :placeholder => "Full name", class: 'mt-0', style: 'margin-bottom: 10px' %>
-        <%= f.text_field :email, :value => session[:email], :placeholder => "Personal email", class: 'mt-0', style: 'margin-bottom: 10px' %>
-        <%= f.hidden_field :cookie, :value => (session[:cookie] || SecureRandom.urlsafe_base64) %>
+        <%= f.text_field :full_name, :value => cookies[:full_name], :placeholder => "Full name", onkeyup: "isDisabled('#{parent.id}')", class: "mt-0 full_name_#{parent.id}", style: 'margin-bottom: 10px' %>
+        <%= f.text_field :email, :value => cookies[:email], :placeholder => "Personal email", class: 'mt-0', style: 'margin-bottom: 10px' %>
+        <%= f.hidden_field :cookie, :value => (cookies[:cookie] || SecureRandom.urlsafe_base64) %>
       <% end %>
       <%= f.hidden_field :public, :value => post.is_published? %>
       <%= f.text_area :text, :placeholder => "Reply to #{parent.full_name || parent.user.full_name}", id: "comment_field_reply", class: "comment_val_#{parent.id} comment_field_#{parent.id}", onkeyup: "isDisabled('#{parent.id}')" %>
       <%= f.hidden_field :post_id, :value => post.id %>
       <br>
       <% if !current_user.present? %>
-        <span>Be notified of more articles like this (unsubscribe anytime) <%= f.check_box :subscribed, :checked => (session[:subscribed] || true) %></span>
+          <%= f.check_box :subscribed, :value => (cookies[:subscribed] || '1'), :checked => (cookies[:subscribed].nil? || (cookies[:subscribed].eql? '1')) %><span class="ml-2">Be notified of more articles like this (unsubscribe anytime)</span><br>
+          <%= f.check_box :is_thirteen, :value => (cookies[:is_thirteen] || '0'), :checked => (cookies[:is_thirteen].eql? '1'), class: "is_thirteen_#{parent.id}", onclick: "isDisabled('#{parent.id}')" %><span class="ml-2">You must be at least 13 to post on The Teen Magazine. I understand and confirm that I am at least 13 years old.</span><br>
       <% end %>
       <%= f.hidden_field :comment_id, :value => parent.id %>
       <input alt="Submit" src="https://s3.amazonaws.com/media.theteenmagazine.com/post_comment.png" type="image" class="submit_comment disabled submit_<%= parent.id %>" />

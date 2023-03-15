@@ -17,6 +17,7 @@ class PostsController < ApplicationController
   after_action :log_impression, only: [:show]
   load_and_authorize_resource except: %i[
                                 get_trending_posts_in_category
+                                get_conversations_following
                                 subscribe
                                 is_email
                                 get_promoted_posts
@@ -175,6 +176,12 @@ class PostsController < ApplicationController
         @collabs.push @writer if @writer.present?
       end
     end
+    set_post_meta_tags
+  end
+
+  def get_comments_published
+    @user = User.find(params[:user_id])
+    @post = Post.find(params[:post_id])
     if !current_user.nil?
       @comment = current_user.comments.build(post_id: @post.id)
     else
@@ -186,7 +193,7 @@ class PostsController < ApplicationController
       @comment_parent_from_notifications =
         Comment.find(params[:comment_id]).comment_id
     end
-    set_post_meta_tags
+    render partial: "posts/partials/comments_published", locals: {user: @user, post: @post, comments: @comments, comment: @comment}
   end
 
   def draft
@@ -251,7 +258,8 @@ class PostsController < ApplicationController
 
   def get_promoted_posts
     @per_page = 9
-    @posts_promoted_records = Post.published.by_promoted_then_updated_date
+    session[:fetched_at] = Time.now
+    @posts_promoted_records = Post.published.by_promoted_then_updated
     @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
     @is_last_page =
       (@posts_promoted_records.count - (@page - 2) * @per_page) <= @per_page
@@ -746,6 +754,7 @@ class PostsController < ApplicationController
         :thumbnail_credits,
         :show_disclosure,
         :shareable_token,
+        :comments_turned_off,
         feedback_list: [],
         reviews_attributes: %i[id post_id editor_id created_at status notes],
         user_attributes: %i[extensions id],

@@ -6,7 +6,7 @@
           <%=link_to(image_tag(@posts_approved_0[0].thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), alt: @posts_approved_0[0].title), @posts_approved_0[0] )%>
         </div>
         <h3 class="article_title"><%= link_to @posts_approved_0[0].title, @posts_approved_0[0] %></h3>
-        <p class="date"><%= @posts_approved_0[0].publish_at.in_time_zone.strftime("%A, %b %d")%>, Featured article</p>
+        <p class="date"><%= date_to_words(@posts_approved_0[0].publish_at) %>, Featured article</p>
       </div>
     </div>
     <div class="articles2-6">
@@ -15,7 +15,7 @@
           <%=link_to(image_tag(post.thumbnail.variant(resize_to_fill: [300,150], format: 'webp'), alt: post.title, :class => "image_thumbnail"), post )%>
           <div class="thumbnail--container">
             <h3 class="article_title"><%= link_to post.title.truncate_words(14), post %></h3>
-            <p class="date"><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
+            <p class="date"><%= date_to_words(post.publish_at) %></p>
           </div>
         </div>
       <% end %>

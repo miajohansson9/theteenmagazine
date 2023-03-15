@@ -14,10 +14,34 @@ class CommentsController < ApplicationController
       @comment = current_user.comments.build(comment_params)
     else
       @comment = Comment.new(comment_params)
-      session[:cookie] = comment_params[:cookie]
-      session[:full_name] = comment_params[:full_name]
-      session[:email] = comment_params[:email]
-      session[:subscribed] = comment_params[:subscribed]
+      cookies[:cookie] = comment_params[:cookie]
+      cookies[:full_name] = comment_params[:full_name]
+      cookies[:email] = comment_params[:email]
+      cookies[:is_thirteen] = comment_params[:is_thirteen]
+      if comment_params[:subscribed].eql? '1'
+        # subscribe to TTM newsletter
+        Thread.new do
+          @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+          begin
+            @gb
+              .lists(ENV['MAILCHIMP_LIST_ID'])
+              .members(comment_params[:email])
+              .update(body: { status: 'subscribed' })
+          rescue StandardError
+            @gb
+              .lists(ENV['MAILCHIMP_LIST_ID'])
+              .members
+              .create(
+                body: {
+                  email_address: comment_params[:email],
+                  status: 'subscribed',
+                  merge_fields: {FNAME: comment_params[:full_name], SLOCATION: "Comment on #{@comment.post.title}"}
+                }
+              )
+          end
+        end
+      end
+      cookies[:subscribed] = comment_params[:subscribed]
     end
     if @comment.save
       @parent = Comment.find_by(id: @comment.comment_id)
@@ -25,13 +49,13 @@ class CommentsController < ApplicationController
         format.html { redirect_to @comment.post }
         format.js
       end
-      if current_user.present? && current_user.id != @comment.post.user.id
+      if current_user.present?
         if @comment.post.promoting_until.present? &&
              @comment.post.promoting_until > Time.now
-          @points = @comment.text.size / 10
+          @points = @comment.text.size / 5
           @points = @points < 20 ? 20 : @points
         else
-          @points = @comment.text.size / 20
+          @points = @comment.text.size / 10
           @points = @points < 10 ? 10 : @points
         end
         current_user.points = current_user.points + @points
@@ -96,7 +120,8 @@ class CommentsController < ApplicationController
         :subscribed,
         :full_name,
         :cookie,
-        :public
+        :public,
+        :is_thirteen,
       )
   end
 end

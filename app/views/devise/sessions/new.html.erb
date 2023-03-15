@@ -1,33 +1,29 @@
 <h1 id="page_title">Log in</h1>
 <br>
 <div class="skinny_wrapper wrapper_padding" style="max-width: 1000px;">
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true %>
     </div>
-  <% end -%>
-
-  <div class="btn_cntnr mb-0 pt-3" style="float: none; position: relative;">
-    <div class="hide spinner-button spinner-border" style="margin-left: 39%;" role="status">
-      <span class="sr-only">Loading...</span>
+    <div class="field">
+      <%= f.label :password %><br />
+      <%= f.password_field :password, autocomplete: "off" %>
     </div>
-    <%= f.button "Log in", class: "mb-2 newpost--new--profile mr-0 pl-5 pr-5 submit_modal", id: "submit-comment-modal-button" %>
-  </div>
-<% end %>
+    <% if devise_mapping.rememberable? -%>
+      <div class="field">
+        <%= f.check_box :remember_me, :value => '1', :checked => true %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end -%>
+    <div class="btn_cntnr mb-0 pt-3" style="float: none; position: relative;">
+      <div class="hide spinner-button spinner-border" style="margin-left: 39%;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <%= f.button "Log in", class: "mb-2 newpost--new--profile mr-0 pl-5 pr-5 submit_modal", id: "submit-comment-modal-button" %>
+    </div>
+  <% end %>
   <p style="margin-top: 0;"><i>If you forgot your password, you can reset your password <a href="/reset-password" class="link_nrml underline">here</a>. If you do not have a writer account, you can
-    apply to The Teen Magazine writer team <a href="/apply" class="link_nrml underline">here</a>.</i></p>
+      apply to The Teen Magazine writer team <a href="/apply" class="link_nrml underline">here</a>.</i></p>
 </div>
 <br>

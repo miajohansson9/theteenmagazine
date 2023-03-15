@@ -3,9 +3,8 @@
     <div class="ctgry_article recent mb-4">
       <%=link_to(image_tag(post.thumbnail.variant(resize_to_fill: [560,280]), alt: post.title, class: "image_recent_articles"), post )%>
       <h1><%= link_to post.title, post %></h1>
-      <p class="category"><%= link_to(post.category.name, post.category) %></p>
-      <p><%= post.publish_at.in_time_zone.strftime("%A, %b %d")%></p>
-      <p class="meta"><%= post.meta_description.truncate_words(20) %></p>
+      <p class="category m-0"><%= link_to(post.category.name, post.category) %></p>
+      <p class="m-0"><%= date_to_words(post.publish_at) %></p>
     </div>
   <% end %>
 </div>

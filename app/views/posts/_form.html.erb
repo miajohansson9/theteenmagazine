@@ -46,8 +46,11 @@
           </i>
         </p>
       <% end %>
-      <p>Grab your ideal reader's interest in 1-2 sentences for Google search.</p>
-      <%= f.text_field :meta_description, placeholder: 'What is your article about?' %>
+      <% if @post.is_published? %>
+        <p>Turn off commenting:
+          <%= f.check_box :comments_turned_off %>
+        </p>
+      <% end %>
       <p class="mt-0">If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</p>
       <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
       <%= f.fields_for :reviews, @review do |rv| %>
