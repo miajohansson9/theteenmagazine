@@ -274,59 +274,7 @@ $gray: #2a2a2a;
     }
 }
 
-@media (min-width: 731px) {
-    .right_side_wrapper {
-        height: fit-content;
-        margin: auto;
-        margin-right: 0;
-        .social_icons {
-            padding-bottom: 0.7em;
-        }
-    }
-    .right_side_flex {
-        display: flex;
-        flex-direction: row;
-        min-width: fit-content;
-        justify-content: flex-end;
-        align-items: center;
-        .social_icons {
-            margin: 0.5em;
-            margin-right: 0;
-            margin-left: 10px;
-            padding-bottom: 0 !important;
-        }
-        .date_wrapper {
-            margin: 0;
-        }
-    }
-}
-
 @media (max-width: 730px) {
-    .post_info_published {
-        flex-direction: column !important;
-        .left_side_flex {
-            flex-direction: column;
-        }
-        .right_side_wrapper {
-            .published {
-                max-width: fit-content;
-                position: absolute;
-                right: 20px;
-                bottom: 65px;
-            }
-        }
-        .social_icons {
-            margin: 10px 0;
-            justify-content: space-between;
-            a {
-                flex: 1;
-                margin-left: 0px;
-                div {
-                    width: 100%;
-                }
-            }
-        }
-    }
     .button {
         height: 30px !important;
         padding: 0;
@@ -417,63 +365,6 @@ $gray: #2a2a2a;
     }
     .category_image {
         margin-top: 0px !important;
-    }
-}
-
-@media (max-width: 420px) {
-    .post_info {
-        flex-direction: column !important;
-        .right_side_wrapper {
-            .draft {
-                position: relative !important;
-                max-width: fit-content;
-                height: fit-content !important;
-                p {
-                    margin-top: 0;
-                }
-            }
-        }
-    }
-}
-
-@media (max-width: 550px) {
-    .post_info {
-        p,
-        i {
-            font-size: 14px !important;
-        }
-        .right_side_wrapper {
-            position: relative;
-            min-width: 150px;
-            .published {
-                bottom: 53px;
-                right: 0;
-            }
-            .draft {
-                height: 100%;
-                position: absolute;
-                top: 0;
-                right: 0;
-            }
-        }
-        .social_icons {
-            margin-top: 0px;
-        }
-        img {
-            display: none;
-        }
-    }
-}
-
-@media (max-width: 420px) {
-    .post_info .right_side_wrapper .published {
-        position: relative !important;
-        bottom: 0;
-        right: 0;
-        line-height: normal;
-        p {
-            margin-top: 0;
-        }
     }
 }
 

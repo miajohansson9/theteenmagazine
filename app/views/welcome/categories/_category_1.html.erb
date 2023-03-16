@@ -3,7 +3,15 @@
     <div class="ctgry_article">
       <%=link_to(image_tag(post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), alt: post.title), post )%>
       <h1><%= link_to post.title, post %></h1>
-      <p><%= date_to_words(post.publish_at) %></p>
+      <div class="d-flex flex-wrap overflow-hidden align-items-center justify-content-between">
+        <div class="author d-table-cell align-middle">
+          <% @profile = post.user.profile.attached? ? post.user.profile.variant(resize_to_fill: [100,100]) : "profile_image.jpg" %>
+          <%= image_tag(@profile, :class => "profile_img", :style => "max-width: 20px !important; min-width: 20px !important; height: 20px;") %>
+          <%= link_to(post.user.full_name, post.user, class: 'date') %>
+        </div>
+        <%= render 'posts/partials/views_and_comments', post: post %>
+      </div>
+      <p class="m-0"><%= date_to_words(post.publish_at) %></p>
     </div>
   <% end %>
 </div>

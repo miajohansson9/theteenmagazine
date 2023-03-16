@@ -1,4 +1,3 @@
-  
 <div class="category">
   <div class="category--show">
     <div class="other--articles">
@@ -26,9 +25,9 @@
                   <%=link_to(image_tag(post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), :class => "image_thumbnail"), post )%>
                 </div>
                 <div class="thumbnail--container">
-                  <p class="date_post_preview"><%= post.category.name %></p>
                   <h3 class="article_title"><%= link_to post.title, post %></h3>
-                  <p class="date_post_preview"><%= date_to_words(post.publish_at) %></p>
+                  <%= render 'posts/partials/views_and_comments', post: post %>
+                  <p class="date"><%= date_to_words(post.publish_at) %></p>
                 </div>
               </div>
             <% end %>

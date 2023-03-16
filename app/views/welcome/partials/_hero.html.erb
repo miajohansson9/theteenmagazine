@@ -6,7 +6,8 @@
           <%=link_to(image_tag(@posts_approved_0[0].thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), alt: @posts_approved_0[0].title), @posts_approved_0[0] )%>
         </div>
         <h3 class="article_title"><%= link_to @posts_approved_0[0].title, @posts_approved_0[0] %></h3>
-        <p class="date"><%= date_to_words(@posts_approved_0[0].publish_at) %>, Featured article</p>
+        <p class="mb-0 date"><%= date_to_words(@posts_approved_0[0].publish_at) %>, Featured article</p>
+        <%= render 'posts/partials/views_and_comments', post: @posts_approved_0[0] %>
       </div>
     </div>
     <div class="articles2-6">
