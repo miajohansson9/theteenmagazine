@@ -1559,6 +1559,7 @@ GEM
     nokogiri (1.14.1)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
+    obscenity (1.0.2)
     orm_adapter (0.5.0)
     pagy (6.0.1)
     paperclip (6.1.0)
@@ -1708,6 +1709,7 @@ DEPENDENCIES
   meta-tags (~> 2.1)
   mini_magick
   nokogiri (~> 1.13, >= 1.13.3)
+  obscenity
   pagy
   paperclip (>= 5.2.0)
   pg
