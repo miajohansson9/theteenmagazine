@@ -12,6 +12,6 @@
       <span class="date_ago"><%= comment.text.truncate_words(12) %></span></span>
   </div>
   <div class="li-link-wrapper">
-    <%= link_to("", post_path(comment.post, :comment_id => comment.id)) %>
+    <%= link_to("", "/#{comment.post.slug}?comment_id=#{comment.id}#comments") %>
   </div>
 </li>

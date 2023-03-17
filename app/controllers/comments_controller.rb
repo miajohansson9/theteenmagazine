@@ -9,6 +9,11 @@ class CommentsController < ApplicationController
     end
   end
 
+  def get_all_comments
+    @comments = Comment.all.order(:created_at => :desc)
+    render partial: "comments/all_comments"
+  end
+
   def create
     if Obscenity.profane?(comment_params[:full_name]) ||
        Obscenity.profane?(comment_params[:email]) ||

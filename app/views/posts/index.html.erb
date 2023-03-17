@@ -69,6 +69,10 @@
         <a class="tab-custom" id="conversations-tab-classic" data-bs-toggle="tab" href="#conversations-classic" role="tab"
           aria-controls="conversations-classic" aria-selected="false">Your Conversations</a>
       </li>
+      <li class="nav-item tab-custom">
+        <a class="tab-custom" id="all-comments-tab-classic" data-bs-toggle="tab" href="#all-comments-classic" role="tab"
+          aria-controls="all-comments-classic" aria-selected="false">All Comments</a>
+      </li>
     </ul>
   </div>
   <!-- Classic tabs -->
@@ -104,6 +108,15 @@
     </div>
     <div class="tab-pane fade" id="conversations-classic" role="tabpanel" aria-labelledby="conversations-tab-classic">
       <%= render_async_cache get_conversations_following_path, toggle: { selector: '#conversations-tab-classic', event: :click } do %>
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border mb-4" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="tab-pane fade" id="all-comments-classic" role="tabpanel" aria-labelledby="all-comments-tab-classic">
+      <%= render_async_cache get_all_comments_path, toggle: { selector: '#all-comments-tab-classic', event: :click } do %>
         <div class="d-flex justify-content-center">
           <div class="spinner-border mb-4" role="status">
             <span class="sr-only">Loading...</span>
