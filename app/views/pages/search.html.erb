@@ -20,14 +20,24 @@
           <% end %>
           <% if @posts.present? %>
             <% @posts.each do |post| %>
-              <div class="thumbnail">
-                <div class="container--image">
+              <div class="thumbnail d-flex">
+                <div class="child container--image">
                   <%=link_to(image_tag(post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), :class => "image_thumbnail"), post )%>
                 </div>
-                <div class="thumbnail--container">
-                  <h3 class="article_title"><%= link_to post.title, post %></h3>
+                <div class="child category-show recent">
+                  <h3 class="mb-3 pl-3 pr-3" style="line-height: 0.8"><%= link_to post.title, post %></h3>
+                  <div class="d-flex justify-content-center">
+                    <div class="d-table-cell align-middle">
+                      <div class="author d-inline">
+                        <% @profile = post.user.profile.attached? ? post.user.profile.variant(resize_to_fill: [100,100]) : "profile_image.jpg" %>
+                        <%= image_tag(@profile, :class => "profile_img", :style => "max-width: 20px !important; min-width: 20px !important; height: 20px;") %>
+                        <%= link_to("#{post.user.full_name}, ", post.user, class: 'date') %>
+                      </div>
+                      <span><%= date_to_words(post.publish_at) %></span>
+                    </div>
+                  </div>
+                  <p class="date_post_preview mb-0"><%= post.category.name %></p>
                   <%= render 'posts/partials/views_and_comments', post: post %>
-                  <p class="date"><%= date_to_words(post.publish_at) %></p>
                 </div>
               </div>
             <% end %>

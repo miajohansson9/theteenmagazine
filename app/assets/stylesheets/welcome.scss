@@ -296,11 +296,13 @@ $gray: #2a2a2a;
         .thumbnail {
             flex-direction: column;
             margin-bottom: 30px;
-            .container--image {
-                width: 100%;
+            .container--image,
+            .category-show {
+                width: 100% !important;
                 .image_thumbnail {
                     height: 260px;
                     width: 100%;
+                    margin-bottom: 25px;
                 }
             }
             .thumbnail--container {

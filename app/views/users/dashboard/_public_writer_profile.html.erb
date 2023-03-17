@@ -10,14 +10,17 @@
       <div class="flex">
         <div class="container">
           <% @user_posts_approved.each do |post| %>
-            <div class="thumbnail">
-              <div class="container--image">
+            <div class="thumbnail d-flex">
+              <div class="child container--image">
                 <%=link_to(image_tag(post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), :class => "image_thumbnail"), post )%>
               </div>
-              <div class="thumbnail--container">
-                <p class="date_post_preview"><%= post.category.name %></p>
-                <h3 class="article_title"><%= link_to post.title, post %></h3>
-                <p class="date_post_preview"><%= date_to_words(post.publish_at) %></p>
+              <div class="child category-show recent">
+                <h3 class="mb-3 pl-3 pr-3" style="line-height: 0.8"><%= link_to post.title, post %></h3>
+                <div class="d-flex justify-content-center">
+                  <span><%= date_to_words(post.publish_at) %></span>
+                </div>
+                <p class="date_post_preview mb-0"><%= post.category.name %></p>
+                <%= render 'posts/partials/views_and_comments', post: post %>
               </div>
             </div>
           <% end %>

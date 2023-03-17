@@ -1042,9 +1042,10 @@ body {
 }
 
 .post_info,
+.category-show,
 .ctgry_article {
     a {
-        color: #333;
+        color: #333 !important;
         text-align: center;
         text-decoration: none;
         &:hover {
@@ -1470,7 +1471,7 @@ ol {
             .divfeatured {
                 margin-bottom: 15px;
                 .article_title,
-                .date {
+                .d-table-cell {
                     margin: 0 auto;
                     padding: 0px 15px;
                     width: 100%;
