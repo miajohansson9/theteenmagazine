@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
   end
 
   def get_all_comments
-    @comments = Comment.all.order(:created_at => :desc)
+    @comments = Comment.all.order(:created_at => :desc).limit(20)
     render partial: "comments/all_comments"
   end
 
