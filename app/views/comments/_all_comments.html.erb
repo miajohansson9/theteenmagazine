@@ -14,9 +14,9 @@
             <%= comment.full_name %>
           <% end %>
           <% if comment.comment_id.present? %>
-            <% @parent = Comment.find(comment.comment_id) %>
-            <% @full_name = @parent.user.present? ? @parent.user.full_name : @parent.try(:full_name) %>
-            replied to <%= @full_name %>'s comment
+            <% @parent = Comment.find_by(id: comment.comment_id) %>
+            <% @full_name = (@parent.present? && @parent.user.present?) ? @parent.user.full_name : @parent.try(:full_name) %>
+            replied to <%= @full_name || "Anonymous" %>'s comment
           <% else %>
             commented on <%= link_to("#{comment.post.user.first_name}'s article", comment.post, class: "link_nrml") %>
           <% end %>
