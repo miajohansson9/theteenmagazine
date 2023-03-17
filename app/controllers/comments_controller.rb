@@ -17,7 +17,8 @@ class CommentsController < ApplicationController
   def create
     if Obscenity.profane?(comment_params[:full_name]) ||
        Obscenity.profane?(comment_params[:email]) ||
-       Obscenity.profane?(comment_params[:text])
+       Obscenity.profane?(comment_params[:text]) ||
+       (comment_params[:full_name].eql? comment_params[:text])
       # profane comment submitted
       respond_to do |format|
         format.js { render js: "window.location='#{request.base_url + "/no_profanity.html"}'" }
