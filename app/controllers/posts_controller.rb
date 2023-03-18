@@ -30,8 +30,6 @@ class PostsController < ApplicationController
       Thread.new do
         if !(user_signed_in? &&
              ((@post.user.id == current_user.id) ||
-              (current_user.admin == true) ||
-              (current_user.editor == true) ||
               (current_user.full_name == @post.collaboration)))
           if @post.post_impressions == nil
             @post.post_impressions = 1
@@ -200,7 +198,7 @@ class PostsController < ApplicationController
       @comment_parent_from_notifications =
         Comment.find(params[:comment_id]).comment_id
     end
-    render partial: "posts/partials/comments_published", locals: {user: @user, post: @post, comments: @comments, comment: @comment}
+    render partial: "posts/partials/comments_published", locals: { user: @user, post: @post, comments: @comments, comment: @comment }
   end
 
   def draft
