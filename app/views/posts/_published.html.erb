@@ -102,8 +102,6 @@
               <div id="selectable_content" class="post_content">
                 <%= markdown @post.content %>
               </div>
-              <%# TODO add likes to published articles %>
-              <%# <%= render :partial => 'posts/partials/likes' %>
               <% if current_user && (current_user.id == @post.user_id || (@post.collaboration&.include? current_user.email) || current_user.admin?) %>
                 <div id="admin_links" style="border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;text-align: center;padding: 1em 0;margin: 1em 0;margin-top: 0;">
                   <% if !(@post.is_locked?) %>

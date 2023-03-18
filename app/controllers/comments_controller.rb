@@ -3,7 +3,9 @@ class CommentsController < ApplicationController
 
   def destroy
     @post = @comment.post
+    @likes = @comment.likes
     if @comment.destroy
+      @likes&.destroy_all
       @parent = Comment.find_by(id: @comment.comment_id)
       respond_to { |format| format.js }
     end
