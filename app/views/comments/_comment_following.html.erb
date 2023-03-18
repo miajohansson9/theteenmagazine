@@ -3,6 +3,9 @@
   <div class="li-content" style="width: 100%;">
     <%= link_to(@profile_img, comment.user) %>
     <span>
+      <% if comment.is_public? %>
+        <span class="badge badge-pill badge-success">Public</span>
+      <% end %>
       <% if comment.user_id.present? %>
         <%= link_to comment.user.try(:full_name), comment.user, class: "link_nrml" %>
       <% else %>

@@ -20,6 +20,15 @@
             <% else %>
               <%= reply.full_name %>
             <% end %>
+            <% if reply.user.try(:id).eql? reply.post.user.id %>
+              <span class="badge badge-default">Author</span>
+            <% elsif reply.user.try(:editor).present? %>
+              <span class="badge badge-default">Editor</span>
+            <% elsif reply.user.try(:marketer).present? %>
+              <span class="badge badge-default">Interviewer</span>
+            <% elsif reply.user.present? %>
+              <span class="badge badge-default">Writer</span>
+            <% end %>
           </h6>
           <span class="date_ago"><%= time_ago_in_words(reply.created_at) %> ago</span><br>
           <span class="comment_text"><%= reply.text %></span>
@@ -48,8 +57,8 @@
       <%= f.hidden_field :post_id, :value => post.id %>
       <br>
       <% if !current_user.present? %>
-          <%= f.check_box :subscribed, :value => (cookies[:subscribed] || '1'), :checked => (cookies[:subscribed].nil? || (cookies[:subscribed].eql? '1')) %><span class="ml-2">Be notified of more articles like this (unsubscribe anytime)</span><br>
-          <%= f.check_box :is_thirteen, :value => (cookies[:is_thirteen] || '0'), :checked => (cookies[:is_thirteen].eql? '1'), class: "is_thirteen_#{parent.id}", onclick: "isDisabled('#{parent.id}')" %><span class="ml-2">You must be at least 13 to post on The Teen Magazine. I understand and confirm that I am at least 13 years old.</span><br>
+        <%= f.check_box :subscribed, :value => (cookies[:subscribed] || '1'), :checked => (cookies[:subscribed].nil? || (cookies[:subscribed].eql? '1')) %><span class="ml-2">Be notified of more articles like this (unsubscribe anytime)</span><br>
+        <%= f.check_box :is_thirteen, :value => (cookies[:is_thirteen] || '0'), :checked => (cookies[:is_thirteen].eql? '1'), class: "is_thirteen_#{parent.id}", onclick: "isDisabled('#{parent.id}')" %><span class="ml-2">You must be at least 13 to post on The Teen Magazine. I understand and confirm that I am at least 13 years old.</span><br>
       <% end %>
       <%= f.hidden_field :comment_id, :value => parent.id %>
       <input alt="Submit" src="https://s3.amazonaws.com/media.theteenmagazine.com/post_comment.png" type="image" class="submit_comment disabled submit_<%= parent.id %>" />

@@ -3,6 +3,9 @@
     <% @profile_img = comment.user.present? && comment.user.profile.attached? ? image_tag(comment.user.profile.variant(resize_to_fill: [50, 50]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
     <%= link_to(@profile_img, comment.user) %>
     <span>
+      <% if comment.is_public? %>
+        <span class="badge badge-pill badge-success">Public</span>
+      <% end %>
       <% if comment.user_id.present? %>
         <%= link_to comment.user.try(:full_name), comment.user, class: "link_nrml" %>
       <% else %>
