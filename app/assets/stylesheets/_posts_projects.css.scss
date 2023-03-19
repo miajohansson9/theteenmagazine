@@ -363,6 +363,9 @@
 #content {
     padding: 0 30px;
     .post_content {
+        p {
+            font-size: 19px !important;
+        }
         br {
             display: none;
         }
@@ -416,26 +419,6 @@
             img {
                 width: 100% !important;
             }
-        }
-    }
-}
-
-#share_box {
-    text-align: center;
-    p {
-        padding: 0 0 1em 0;
-        margin: 0;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: #424653;
-        font-size: 0.8em;
-    }
-    i {
-        color: #424653;
-        padding: 1em 1.5em;
-        &:hover {
-            color: #4abeb6;
-            cursor: pointer;
         }
     }
 }
