@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <%= display_meta_tags %>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag params[:controller] %>
+    <% controller_asset = controller.controller_name %>
+    <%= stylesheet_link_tag controller_asset if Rails.application.assets.find_asset(controller_asset) %>
     <%= stylesheet_link_tag 'application' %>
     <%= javascript_include_tag 'application'%>
     <script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.mediavine.com/tags/the-teen-magazine.js"></script>
