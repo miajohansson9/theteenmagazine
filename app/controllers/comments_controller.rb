@@ -18,7 +18,12 @@ class CommentsController < ApplicationController
     if Obscenity.profane?(comment_params[:full_name]) ||
        Obscenity.profane?(comment_params[:email]) ||
        Obscenity.profane?(comment_params[:text]) ||
-       (comment_params[:full_name].eql? comment_params[:text])
+       (comment_params[:full_name].eql? comment_params[:text]) ||
+       (comment_params[:text].include? "http") ||
+       (comment_params[:text].include? "href") ||
+       (comment_params[:text].include? "/>") ||
+       (comment_params[:full_name].include? "http") ||
+       (comment_params[:full_name].include? "href")
       # profane comment submitted
       respond_to do |format|
         format.js { render js: "window.location='#{request.base_url + "/no_profanity.html"}'" }
