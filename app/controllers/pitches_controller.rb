@@ -69,7 +69,7 @@ class PitchesController < ApplicationController
       @message = "There are no unclaimed pitches. Check back in a few days!"
       @button_text = "Claim Pitch"
       Thread.new { current_user.update_column("last_saw_pitches", Time.now) }
-    else
+    elsif (params[:user_id].eql? "#{current_user.id}") || current_user.admin
       @title = "Your Claimed Pitches"
       set_meta_tags title: @title
       @button_text = "View Pitch"
@@ -80,6 +80,8 @@ class PitchesController < ApplicationController
           page: params[:page],
           items: 20,
         )
+    else
+      redirect_to pitches_path(user_id: current_user.id), notice: "You can only view your claimed pitches."
     end
   end
 
