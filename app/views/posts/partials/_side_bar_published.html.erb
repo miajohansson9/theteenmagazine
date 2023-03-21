@@ -9,21 +9,21 @@
         <% if @post.is_interview? %>
           <p>Want to get featured on The Teen Magazine? Pitch your story <%= link_to 'here', '/pitch-interview', class: "link_grn" %>.</p>
         <% end %>
-        <div id="subscribe-widget" style="margin-top: 20px;">
+        <%# <div id="subscribe-widget" style="margin-top: 20px;">
           <h4>Subscribe to our weekly newsletter</h4>
           <span class="sub-text">Get notified of the top trending articles every week!</span>
           <small id="result-text"></small>
           <%= form_for(:posts, url:"/posts/#{post.id}/subscribe", remote: true, :html => {:id => "subscribe-form"}) do |f| %>
-            <%= f.text_field :email, placeholder: "Your Email", required: true, id: "email", onkeyup: "isFormButtonDisabled('#email')"%>
-            <div class="btn_cntnr">
+          <%# <%= f.text_field :email, placeholder: "Your Email", required: true, id: "email", onkeyup: "isFormButtonDisabled('#email')"%>
+          <%# <div class="btn_cntnr">
               <%= f.button "Sign Up", class: "mr-0 newpost--new--profile submit_modal", id: "submit-comment-modal-button" %>
-            </div>
-          <% end %>
-        </div>
-        <!-- 
+          <%# </div>  %>
+          <%# <% end %>
+          <%# </div>  %>
+          <!-- 
               <%= link_to (image_tag "open_applications_ttm.png", class: "image_max_100_prcnt", style: "padding-bottom: 10px;"), new_apply_path, target: "_blank" %> 
               -->
+        </div>
       </div>
     </div>
   </div>
-</div>
