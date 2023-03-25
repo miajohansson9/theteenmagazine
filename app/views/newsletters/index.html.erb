@@ -2,7 +2,7 @@
   <table class="table table-striped scrollmenu">
     <thead>
       <tr>
-        <th scope="col"><b>Date created</b></th>
+        <th scope="col"><b>Created at</b></th>
         <th scope="col"><b>Subject line</b></th>
         <th scope="col"><b>Sent at</b></th>
         <th scope="col"><b>Audience</b></th>
@@ -14,8 +14,8 @@
       <% @newsletters.each do |newsletter| %>
         <tr>
           <td><%= date_to_words(newsletter.created_at) %></td>
-          <td><%= link_to(newsletter.subjects, newsletter) %></td>
-          <td><%= newsletter.sent_at || "Never sent" %></td>
+          <td><%= link_to(newsletter.subject || newsletter.header, newsletter) %></td>
+          <td><%= date_to_words(newsletter.sent_at) || "Never sent" %></td>
           <td><%= newsletter.audience || "Readers" %></td>
           <td><%= newsletter.template %></td>
           <td><%= newsletter.recipients %></td>

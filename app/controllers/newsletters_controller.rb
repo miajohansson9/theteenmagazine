@@ -4,7 +4,7 @@ class NewslettersController < ApplicationController
   before_action :find_newsletter, except: %i[index new create]
 
   def index
-    @newsletters = Newsletter.where.not(kind: nil).order("created_at desc")
+    @newsletters = Newsletter.order("created_at desc")
   end
 
   def new
@@ -114,23 +114,27 @@ class NewslettersController < ApplicationController
   end
 
   def send_to_audience
-    recipients = 0
-    if @newsletter.audience.eql? "All Writers"
-      User.each do |user|
-        if !user.do_not_send_emails
-          ApplicationMailer.custom_message_template(user, @newsletter).deliver
-          recipients = recipients + 1
+    @newsletter.update_column(:sent_at, Time.now)
+    Thread.new do
+      recipients = 0
+      if @newsletter.audience.eql? "All Writers"
+        User.all.each do |user|
+          if !user.do_not_send_emails
+            ApplicationMailer.custom_message_template(user, @newsletter).deliver
+            recipients = recipients + 1
+          end
+        end
+      elsif @newsletter.audience.eql? "Editors"
+        User.editor.each do |editor|
+          if !editor.do_not_send_emails
+            ApplicationMailer.custom_message_template(editor, @newsletter).deliver
+            recipients = recipients + 1
+          end
         end
       end
-    elsif @newsletter.audience.eql? "Editors"
-      User.editor.each do |editor|
-        if !editor.do_not_send_emails
-          ApplicationMailer.custom_message_template(editor, @newsletter).deliver
-          recipients = recipients + 1
-        end
-      end
+      @newsletter.update_column(:recipients, recipients)
     end
-    @newsletter.update_column(:recipients, recipients)
+    redirect_to "/newsletters", notice: "Email is sending to #{@newsletter.audience}"
   end
 
   private
@@ -149,6 +153,7 @@ class NewslettersController < ApplicationController
         :recipients,
         :template,
         :header,
+        :subject,
       )
   end
 

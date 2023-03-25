@@ -1,11 +1,10 @@
 <%= form_for @newsletter do |f| %>
-  <p class="mb-0 mt-0">Subject</p>
-  <%= f.text_field :subject %>
   <p class="mb-0 mt-0">Header</p>
   <%= f.text_field :header %>
   <p class="mb-0 mt-0">Message</p>
   <%= f.text_area :message %>
-  <br />
+  <p class="mb-0 mt-0">Subject</p>
+  <%= f.text_field :subject %>
   <%# <p class="mb-0 mt-0">Select featured posts for this newsletter <%= link_to("here", "/newsletters/#{@newsletter.id}/featured-posts", target: "_blank") %>
   <%# <p class="mb-0 mt-0">Background hex color (view hex colors here: <%= link_to "https://htmlcolorcodes.com/", "https://htmlcolorcodes.com/" %>
   <%# <%= f.text_field :background_color, value: (@newsletter.background_color || Newsletter.not_nil.last.try(:background_color)) %>

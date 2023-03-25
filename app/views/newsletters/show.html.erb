@@ -7,6 +7,6 @@
   <div class="d-flex justify-content-end">
     <p class="mr-4"><%= link_to "Edit email", edit_newsletter_path(@newsletter), class: "link_nrml" %></p>
     <p class="mr-4"><%= link_to "Send a test email", {:controller => "newsletters", :action => "send_test_newsletter", :user_id => current_user.id, :id => @newsletter.id}, :data => {:confirm => "Sending a test email to #{current_user.email}"}, class: "link_nrml" %></p>
-    <p><%= link_to "Send to #{@newsletter.audience} now", {:controller => "newsletters", :action => "send_test_newsletter", :user_id => current_user.id, :id => @newsletter.id}, :data => {:confirm => "Sending a test email to #{current_user.email}"}, class: "link_nrml" %></p>
+    <p><%= link_to "Send to #{@newsletter.audience} now", {:controller => "newsletters", :action => "send_to_audience", :user_id => current_user.id, :id => @newsletter.id}, :data => {:confirm => "Sending newsletter to #{@newsletter.audience}"}, class: "link_nrml" %></p>
   </div>
 </div>
