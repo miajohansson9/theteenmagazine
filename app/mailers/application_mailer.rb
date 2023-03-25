@@ -8,6 +8,7 @@ class ApplicationMailer < ActionMailer::Base
     mail(
       to: @user.email,
       subject: @subject,
+      from: "Mia from The Teen Magazine <mia@theteenmagazine.com>",
     )
   end
 
