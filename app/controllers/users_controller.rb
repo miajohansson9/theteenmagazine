@@ -307,6 +307,7 @@ class UsersController < ApplicationController
         .not_claimed
         .where(status: nil)
         .where("updated_at > ?", Time.now - 40.days)
+        .where.not(user_id: nil)
         .order("updated_at desc")
         .paginate(page: params[:page], per_page: 9)
     @pitch =
