@@ -211,38 +211,38 @@ class PagesController < ApplicationController
   end
 
   def email_preferences
-    @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
-    if params[:pages].present?
-      @user = User.find_by(email: params[:pages][:email])
+    # @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
+    if params[:email].present?
+      @user = User.find_by(email: params[:email], id: params[:id])
     else
       @user = current_user
     end
     update_email_preferences
-    # begin
-    #   @subscribed_to_readers =
-    #     @gb
-    #       .lists(ENV["MAILCHIMP_LIST_ID"])
-    #       .members(params[:email])
-    #       .retrieve(params: { 'fields': "status" })
-    #       .body[
-    #       "status"
-    #     ].eql? "subscribed"
-    # rescue StandardError
-    #   @subscribed_to_readers = false
-    # end
-    # @user = User.find_by(email: params[:email])
-    # begin
-    #   @subscribed_to_writers =
-    #     @gb
-    #       .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
-    #       .members(params[:email])
-    #       .retrieve(params: { 'fields': "status" })
-    #       .body[
-    #       "status"
-    #     ].eql? "subscribed" || !@user.try(:do_not_send_emails)
-    # rescue StandardError
-    #   @subscribed_to_writers = false
-    # end
+    begin
+      @subscribed_to_readers =
+        @gb
+          .lists(ENV["MAILCHIMP_LIST_ID"])
+          .members(params[:email])
+          .retrieve(params: { 'fields': "status" })
+          .body[
+          "status"
+        ].eql? "subscribed"
+    rescue StandardError
+      @subscribed_to_readers = false
+    end
+    @user = User.find_by(email: params[:email])
+    begin
+      @subscribed_to_writers =
+        @gb
+          .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
+          .members(params[:email])
+          .retrieve(params: { 'fields': "status" })
+          .body[
+          "status"
+        ].eql? "subscribed" || !@user.try(:do_not_send_emails)
+    rescue StandardError
+      @subscribed_to_writers = false
+    end
     @subscribed_to_newsletter = @user.remove_from_reader_newsletter.nil? || !@user.remove_from_reader_newsletter
     @subscribed_to_writer_newsletter = @user.remove_from_writer_newsletter.nil? || !@user.remove_from_writer_newsletter
     @subscribed_to_writer_updates = @user.do_not_send_emails.nil? || !@user.do_not_send_emails

@@ -119,7 +119,7 @@ class NewslettersController < ApplicationController
       recipients = 0
       if @newsletter.audience.eql? "All Writers"
         User.all.each do |user|
-          if !user.do_not_send_emails
+          if !user.do_not_send_emails && !user.remove_from_writer_newsletter
             ApplicationMailer.custom_message_template(user, @newsletter).deliver
             recipients = recipients + 1
           end
