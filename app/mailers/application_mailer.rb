@@ -6,7 +6,7 @@ class ApplicationMailer < ActionMailer::Base
     @newsletter = newsletter
     mail(
       to: @user.email,
-      subject: @newsletter.subject,
+      subject: @newsletter.subject || @newsletter.header || "Message from The Teen Magazine",
     )
   end
 
