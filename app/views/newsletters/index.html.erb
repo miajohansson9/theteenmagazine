@@ -14,7 +14,8 @@
       <% @newsletters.each do |newsletter| %>
         <tr>
           <td><%= date_to_words(newsletter.created_at) %></td>
-          <td><%= link_to((newsletter.subject || newsletter.header || "Message from The Teen Magazine"), newsletter) %></td>
+          <% @subject = newsletter.subject.present? ? newsletter.subject : (newsletter.header.present? ? newsletter.header : "Message from The Teen Magazine") %>
+          <td><%= link_to(@subject, newsletter) %></td>
           <td><%= date_to_words(newsletter.sent_at) || "Never sent" %></td>
           <td><%= newsletter.audience || "Readers" %></td>
           <td><%= newsletter.template %></td>

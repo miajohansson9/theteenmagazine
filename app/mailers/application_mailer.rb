@@ -4,9 +4,10 @@ class ApplicationMailer < ActionMailer::Base
   def custom_message_template(user, newsletter)
     @user = user
     @newsletter = newsletter
+    @subject = newsletter.subject.present? ? newsletter.subject : (newsletter.header.present? ? newsletter.header : "Message from The Teen Magazine")
     mail(
       to: @user.email,
-      subject: @newsletter.subject || @newsletter.header || "Message from The Teen Magazine",
+      subject: @subject,
     )
   end
 
