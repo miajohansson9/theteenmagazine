@@ -683,7 +683,11 @@ class UsersController < ApplicationController
       @gb
         .lists(ENV["MAILCHIMP_LIST_ID"])
         .members
-        .create(body: { email_address: user.email, status: "subscribed" })
+        .create(body: {
+                  email_address: user.email,
+                  status: "subscribed",
+                  merge_fields: { FNAME: user.first_name, LNAME: user.last_name, SLOCATION: "Became a writer" },
+                })
     rescue StandardError
       puts "Error: Failed to subscribe to mailchimp list"
     end

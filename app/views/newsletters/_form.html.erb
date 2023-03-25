@@ -1,17 +1,23 @@
 <%= form_for @newsletter do |f| %>
-  <% @hero_image_src = @newsletter.hero_image.attached? ? url_for(@newsletter.hero_image.variant(resize_to_fill: [800,335])) : Newsletter.not_nil.last.try(:hero_image)&.variant(resize_to_fill: [540, 380]) %>
-  <% if @hero_image_src.present? %><img style="width: 100%;" src="<%= @hero_image_src %>"/><% end %>
-  <p class="mb-4 mt-3">Upload New Image (800x335) <%= f.file_field :hero_image %></p>
-  <p class="mb-0 mt-0">Message (80 - 150 words)</p>
-  <%= f.text_area :message, value: (@newsletter.message || Newsletter.not_nil.last.try(:message)) %>
+  <p class="mb-0 mt-0">Subject</p>
+  <%= f.text_field :subject %>
+  <p class="mb-0 mt-0">Header</p>
+  <%= f.text_field :header %>
+  <p class="mb-0 mt-0">Message</p>
+  <%= f.text_area :message %>
   <br />
-  <p class="mb-0 mt-0">Select featured posts for this newsletter <%= link_to("here", "/newsletters/#{@newsletter.id}/featured-posts", target: "_blank") %>.</p>
-  <br />
-  <p class="mb-0 mt-0">Background hex color (view hex colors here: <%= link_to "https://htmlcolorcodes.com/", "https://htmlcolorcodes.com/" %>)</p>
-  <%= f.text_field :background_color, value: (@newsletter.background_color || Newsletter.not_nil.last.try(:background_color)) %>
-  <br />
-  <p class="mb-2 mt-0"><%= f.check_box :ready, disabled: @disabled %> Schedule send on next available Thursday.</p>
-  <i class="d-block">Note: You must have all fields filled out and at least five featured posts to schedule send.</i>
-  <%= f.hidden_field :kind, value: "Weekly Editor's Pick" %>
-  <%= f.submit 'Save Newsletter', class: "mt-4" %>
+  <%# <p class="mb-0 mt-0">Select featured posts for this newsletter <%= link_to("here", "/newsletters/#{@newsletter.id}/featured-posts", target: "_blank") %>
+  <%# <p class="mb-0 mt-0">Background hex color (view hex colors here: <%= link_to "https://htmlcolorcodes.com/", "https://htmlcolorcodes.com/" %>
+  <%# <%= f.text_field :background_color, value: (@newsletter.background_color || Newsletter.not_nil.last.try(:background_color)) %>
+  <%# <p class="mb-2 mt-0"><%= f.check_box :ready, disabled: @disabled %>
+  <%# Schedule send on next available Thursday.</p> %>
+  <%# <i class="d-block">Note: You must have all fields filled out and at least five featured posts to schedule send.</i> %>
+  <%= f.select(:audience, ['All Writers', 'Only Editors', 'Only Interviewers', 'All Readers']) %></p>
+<%= f.select(:template, ['Announcement', 'Weekly Picks']) %></p>
+<div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
+  <div class="hide spinner-button spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <%= f.button "Save Changes", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
+</div>
 <% end %>

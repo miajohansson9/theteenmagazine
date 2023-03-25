@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # All users should first have an application
   def new
-    redirect_to '/apply'
+    redirect_to "/apply"
   end
 
   # POST /resource
@@ -13,7 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     # create a new user with sign up params
     @user = resource
-    if params[:decision].eql? 'Accept'
+    if params[:decision].eql? "Accept"
       resource.save
 
       # from devise code
@@ -28,54 +28,57 @@ class Users::RegistrationsController < Devise::RegistrationsController
         # send welcome email
         ApplicationMailer.welcome_email(resource).deliver
         begin
-          @gb = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
+          @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
           @gb
-            .lists(ENV['MAILCHIMP_WRITER_LIST_ID'])
+            .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
             .members
             .create(
               body: {
                 email_address: resource.email,
-                status: 'subscribed',
+                status: "subscribed",
                 merge_fields: {
                   FNAME: resource.first_name,
-                  LNAME: resource.last_name
-                }
-              }
+                  LNAME: resource.last_name,
+                },
+              },
             )
           @gb
-            .lists(ENV['MAILCHIMP_LIST_ID'])
+            .lists(ENV["MAILCHIMP_LIST_ID"])
             .members
-            .create(
-              body: {
-                email_address: resource.email,
-                status: 'subscribed'
-              }
-            )
+            .create(body: {
+                      email_address: resource.email,
+                      status: "subscribed",
+                      merge_fields: {
+                        FNAME: resource.first_name,
+                        LNAME: resource.last_name,
+                        SLOCATION: "Became a writer",
+                      },
+                    })
         rescue StandardError
-          puts 'Error: Failed to subscribe to mailchimp list'
+          puts "Error: Failed to subscribe to mailchimp list"
         end
         @application = Apply.find_by(email: @user.email.downcase)
         @application.update(user_id: resource.id)
         if @application.invitation.present?
-          @application.invitation.update_column('status', 'Accepted')
+          @application.invitation.update_column("status", "Accepted")
         end
 
         # if user was saved, then redirect to user path
-        redirect_to applies_path, notice: 'Application successfully accepted.'
+        redirect_to applies_path, notice: "Application successfully accepted."
       else
         # user model did not persist
         clean_up_passwords resource
         set_minimum_password_length
-        redirect_to '/writers/', notice: 'Something went wrong.'
+        redirect_to "/writers/", notice: "Something went wrong."
       end
     else
       @application = Apply.find_by(email: @user.email.downcase)
       @application.update(rejected_writer_at: Time.now)
       if @application.invitation.present?
-        @application.invitation.update_column('status', 'Not accepted')
+        @application.invitation.update_column("status", "Not accepted")
       end
       ApplicationMailer.rejection_email(resource).deliver
-      redirect_to applies_path, notice: 'Application was rejected.'
+      redirect_to applies_path, notice: "Application was rejected."
     end
   end
 

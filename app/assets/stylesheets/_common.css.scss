@@ -643,6 +643,7 @@ hr {
 .link_nrml {
     color: black;
     font-weight: 400;
+    text-decoration: underline !important;
     &:hover {
         color: #545454 !important;
     }
