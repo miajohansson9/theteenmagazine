@@ -212,32 +212,40 @@ class PagesController < ApplicationController
 
   def email_preferences
     @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
+    if params[:pages].present?
+      @user = User.find_by(email: params[:pages][:email])
+    else
+      @user = current_user
+    end
     update_email_preferences
-    begin
-      @subscribed_to_readers =
-        @gb
-          .lists(ENV["MAILCHIMP_LIST_ID"])
-          .members(params[:email])
-          .retrieve(params: { 'fields': "status" })
-          .body[
-          "status"
-        ].eql? "subscribed"
-    rescue StandardError
-      @subscribed_to_readers = false
-    end
-    @user = User.find_by(email: params[:email])
-    begin
-      @subscribed_to_writers =
-        @gb
-          .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
-          .members(params[:email])
-          .retrieve(params: { 'fields': "status" })
-          .body[
-          "status"
-        ].eql? "subscribed" || !@user.try(:do_not_send_emails)
-    rescue StandardError
-      @subscribed_to_writers = false
-    end
+    # begin
+    #   @subscribed_to_readers =
+    #     @gb
+    #       .lists(ENV["MAILCHIMP_LIST_ID"])
+    #       .members(params[:email])
+    #       .retrieve(params: { 'fields': "status" })
+    #       .body[
+    #       "status"
+    #     ].eql? "subscribed"
+    # rescue StandardError
+    #   @subscribed_to_readers = false
+    # end
+    # @user = User.find_by(email: params[:email])
+    # begin
+    #   @subscribed_to_writers =
+    #     @gb
+    #       .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
+    #       .members(params[:email])
+    #       .retrieve(params: { 'fields': "status" })
+    #       .body[
+    #       "status"
+    #     ].eql? "subscribed" || !@user.try(:do_not_send_emails)
+    # rescue StandardError
+    #   @subscribed_to_writers = false
+    # end
+    @subscribed_to_newsletter = @user.remove_from_reader_newsletter.nil? || !@user.remove_from_reader_newsletter
+    @subscribed_to_writer_newsletter = @user.remove_from_writer_newsletter.nil? || !@user.remove_from_writer_newsletter
+    @subscribed_to_writer_updates = @user.do_not_send_emails.nil? || !@user.do_not_send_emails
   end
 
   def update_email_preferences
@@ -245,11 +253,12 @@ class PagesController < ApplicationController
     if params[:pages].present?
       @user = User.find_by(email: params[:pages][:email])
       if params[:pages][:newsletter].eql? "1"
+        # wants to be subscribed to reader newsletter
         begin
           @gb
             .lists(ENV["MAILCHIMP_LIST_ID"])
             .members(params[:pages][:email])
-            .update(body: { status: "unsubscribed" })
+            .update(body: { status: "subscribed" })
         rescue StandardError
           @gb
             .lists(ENV["MAILCHIMP_LIST_ID"])
@@ -261,23 +270,27 @@ class PagesController < ApplicationController
               },
             )
         end
+        @user.update_column("remove_from_reader_newsletter", false)
       else
+        # does not want to be subscribed to reader newsletter
         begin
           @gb
             .lists(ENV["MAILCHIMP_LIST_ID"])
             .members(params[:pages][:email])
-            .update(body: { status: "subscribed" })
+            .update(body: { status: "unsubscribed" })
         rescue StandardError
           @errors = true
         end
+        @user.update_column("remove_from_reader_newsletter", true)
       end
       if @user != nil && (@user.id.to_s.eql? params[:pages][:id])
         if params[:pages][:writer_newsletter].eql? "1"
+          # does want to be subscribed to writer newsletter
           begin
             @gb
               .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
               .members(params[:pages][:email])
-              .update(body: { status: "unsubscribed" })
+              .update(body: { status: "subscribed" })
           rescue StandardError
             @gb
               .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
@@ -285,30 +298,33 @@ class PagesController < ApplicationController
               .create(
                 body: {
                   email_address: params[:pages][:email],
-                  status: "unsubscribed",
+                  status: "subscribed",
                 },
               )
           end
+          @user.update_column("remove_from_writer_newsletter", false)
         else
+          # does not want to be subscribed to writer newsletter
           begin
             @gb
               .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
               .members(params[:pages][:email])
-              .update(body: { status: "subscribed" })
+              .update(body: { status: "unsubscribed" })
           rescue StandardError
             @errors = true
           end
-          @user.update_column("do_not_send_emails", false)
+          @user.update_column("remove_from_writer_newsletter", true)
         end
       else
         @errors = true
       end
-
       if @user != nil && (@user.id.to_s.eql? params[:pages][:id])
         if params[:pages][:writer].eql? "1"
-          @user.update_column("do_not_send_emails", true)
-        else
+          # does want to get writer updates about their account
           @user.update_column("do_not_send_emails", false)
+        else
+          # does not want to get writer updates about their account
+          @user.update_column("do_not_send_emails", true)
         end
       end
 

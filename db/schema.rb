@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_24_225352) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_25_135249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -501,6 +501,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_225352) do
     t.string "city"
     t.string "country"
     t.datetime "last_saw_interviews"
+    t.boolean "remove_from_writer_newsletter"
+    t.boolean "remove_from_reader_newsletter"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true

@@ -29,17 +29,17 @@
         data-step data-index="2" data-onboarding-content="View your public writer page here. Your published articles are also viewable at this url when you are not signed in."
       <% end %>
     >
-        <div class="card-body dashboard-card-2 dashboard-card">
-          <a href="<%= user_path(mode: "public") %>">
-            <div class="stats_wrapper">
-              <div class="value" id="value2"></div>
-              <div class="text-wrapper">
-                <span>Published</span>
-                <span>Articles</span>
-              </div>
+      <div class="card-body dashboard-card-2 dashboard-card">
+        <a href="<%= user_path(mode: "public") %>">
+          <div class="stats_wrapper">
+            <div class="value" id="value2"></div>
+            <div class="text-wrapper">
+              <span>Published</span>
+              <span>Articles</span>
             </div>
-          </a>
-        </div>
+          </div>
+        </a>
+      </div>
     </div>
     <div class="card"
       <% if @show_onboarding_full %>
@@ -65,7 +65,7 @@
         role="button" data-step data-index="2" data-onboarding-content="You are now able to start an article without first submitting a pitch. Ensure all your articles fit the topic requirements."
       <% end %>
     >
-       <%= link_to "Start an Article", new_post_path, class: "newpost--new--profile mr-0" %>
+      <%= link_to "Start an Article", new_post_path, class: "newpost--new--profile mr-0" %>
     </div>
   <% else %>
     <div class="btn_cntnr mt-1 pl-0 pr-0 pt-2 pb-2 mr-4 mb-4"

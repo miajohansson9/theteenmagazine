@@ -750,7 +750,9 @@ class UsersController < ApplicationController
         :missed_editor_deadline,
         :notify_of_new_review,
         :has_newsletter_permissions,
-        :skip_assignment
+        :skip_assignment,
+        :remove_from_reader_newsletter,
+        :remove_from_writer_newsletter,
       )
   end
 

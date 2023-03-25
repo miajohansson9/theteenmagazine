@@ -1,17 +1,17 @@
 <div class="skinny_wrapper" style="padding-top: 30px;">
   <h1>Update your email preferences</h1>
-  <p>Select which lists you would like to be unsubscribed from.</p>
+  <p>Select which lists you would like to receive emails from.</p>
   <%= form_for(:pages, url:"/email-preferences?email=#{params[:email]}&id=#{params[:id]}") do |f| %>
     <%= f.hidden_field :email, :value => params[:email] %>
     <%= f.hidden_field :id, :value => params[:id] %>
     <p>
-      <%= f.check_box :newsletter, class: "text_field" %> Weekly editor picks
+      <%= f.check_box :newsletter, :value => @subscribed_to_readers, :checked => @subscribed_to_newsletter, class: "text_field" %> Weekly editor picks
     </p>
     <p>
-      <%= f.check_box :writer_newsletter, class: "text_field" %> Writer newsletter
+      <%= f.check_box :writer_newsletter, :value => @subscribed_to_writers, :checked => @subscribed_to_writer_newsletter, class: "text_field" %> Weekly writer newsletter
     </p>
     <p>
-      <%= f.check_box :writer, class: "text_field" %> All writer communication
+      <%= f.check_box :writer, :value => @subscribed_to_writer_updates, :checked => @subscribed_to_writer_updates, class: "text_field" %> Writer notifications about your account
     </p>
     <%= f.submit "Save changes", class: "submit_btn" %>
   <% end %>

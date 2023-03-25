@@ -284,6 +284,7 @@ class ApplicationMailer < ActionMailer::Base
         to: user.email,
         subject: "#{user.first_name}, you missed the editor deadline for #{@month}",
         from: "Mia from The Teen Magazine <mia@theteenmagazine.com>",
+        cc: ["Editors <editors@theteenmagazine.com>"],
       )
     end
   end
@@ -300,6 +301,7 @@ class ApplicationMailer < ActionMailer::Base
         to: user.email,
         subject: "#{user.first_name}, you were removed from the editor team",
         from: "Mia from The Teen Magazine <mia@theteenmagazine.com>",
+        cc: ["Editors <editors@theteenmagazine.com>"],
       )
     end
   end
@@ -319,7 +321,7 @@ class ApplicationMailer < ActionMailer::Base
     @user = user
     @post = post
     unless @user.do_not_send_emails
-      mail(to: user.email, subject: "Your review is overdue")
+      mail(to: user.email, subject: "Your review is overdue", cc: ["Editors <editors@theteenmagazine.com>"])
     end
   end
 
