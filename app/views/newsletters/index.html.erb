@@ -1,4 +1,4 @@
-<div class="skinny_wrapper wrapper_padding mb-4 pb-4 mt-4">
+<div class="skinny_wrapper newsletters wrapper_padding mb-4 pb-4 mt-4">
   <table class="table table-striped scrollmenu">
     <thead>
       <tr>
@@ -14,7 +14,7 @@
       <% @newsletters.each do |newsletter| %>
         <tr>
           <td><%= date_to_words(newsletter.created_at) %></td>
-          <td><%= link_to(@newsletter.subject || @newsletter.header || "Message from The Teen Magazine", newsletter) %></td>
+          <td><%= link_to((newsletter.subject || newsletter.header || "Message from The Teen Magazine"), newsletter) %></td>
           <td><%= date_to_words(newsletter.sent_at) || "Never sent" %></td>
           <td><%= newsletter.audience || "Readers" %></td>
           <td><%= newsletter.template %></td>

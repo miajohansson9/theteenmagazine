@@ -382,6 +382,7 @@ class ApplicationMailer < ActionMailer::Base
         strikethough: true,
         superscirpt: true,
       )
+    content.gsub!('src="/rails/active_storage/', 'src="https://www.theteenmagazine.com/rails/active_storage/')
     Redcarpet::Markdown.new(renderer).render(content).html_safe
   end
 end
