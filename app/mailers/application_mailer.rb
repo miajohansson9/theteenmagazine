@@ -1,6 +1,15 @@
 class ApplicationMailer < ActionMailer::Base
   default from: "The Teen Magazine Editor Team <editors@theteenmagazine.com>"
 
+  def custom_message_template(user, newsletter)
+    @user = user
+    @newsletter = newsletter
+    mail(
+      to: @user.email,
+      subject: @newsletter.subject,
+    )
+  end
+
   def welcome_email(user)
     @user = user
     mail(
@@ -47,7 +56,7 @@ class ApplicationMailer < ActionMailer::Base
     mail(
       to: user.email,
       subject: "Invitation to be on interview team",
-      from: "Mia from The Teen Magazine <mia@theteenmagazine.com>"
+      from: "Mia from The Teen Magazine <mia@theteenmagazine.com>",
     )
   end
 
@@ -275,6 +284,7 @@ class ApplicationMailer < ActionMailer::Base
         to: user.email,
         subject: "#{user.first_name}, you missed the editor deadline for #{@month}",
         from: "Mia from The Teen Magazine <mia@theteenmagazine.com>",
+        cc: ["Editors <editors@theteenmagazine.com>"],
       )
     end
   end
@@ -291,6 +301,7 @@ class ApplicationMailer < ActionMailer::Base
         to: user.email,
         subject: "#{user.first_name}, you were removed from the editor team",
         from: "Mia from The Teen Magazine <mia@theteenmagazine.com>",
+        cc: ["Editors <editors@theteenmagazine.com>"],
       )
     end
   end
@@ -310,7 +321,7 @@ class ApplicationMailer < ActionMailer::Base
     @user = user
     @post = post
     unless @user.do_not_send_emails
-      mail(to: user.email, subject: "Your review is overdue")
+      mail(to: user.email, subject: "Your review is overdue", cc: ["Editors <editors@theteenmagazine.com>"])
     end
   end
 
@@ -358,5 +369,19 @@ class ApplicationMailer < ActionMailer::Base
 
   helper_method def indefinite_articlerize(params_word)
     %w(a e i o u).include?(params_word[0].downcase) ? "an" : "a"
+  end
+
+  helper_method def markdown(content)
+    renderer =
+      Redcarpet::Render::HTML.new(
+        hard_wrap: true,
+        autolink: true,
+        no_intra_empasis: true,
+        disable_indented_code_blocks: true,
+        fenced_code_blocks: true,
+        strikethough: true,
+        superscirpt: true,
+      )
+    Redcarpet::Markdown.new(renderer).render(content).html_safe
   end
 end

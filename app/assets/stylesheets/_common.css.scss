@@ -648,6 +648,16 @@ hr {
     }
 }
 
+.link_nrml_underline {
+    color: black;
+    font-weight: 400;
+    text-decoration: underline !important;
+    &:hover {
+        color: #545454 !important;
+        text-decoration: underline !important;
+    }
+}
+
 .chip a {
     text-transform: uppercase;
     color: rgba(0, 0, 0, 0.6);

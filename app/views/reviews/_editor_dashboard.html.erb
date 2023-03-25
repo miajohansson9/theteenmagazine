@@ -17,104 +17,104 @@
         </div>
         <!-- Classic tabs -->
         <div class="tab-content p-0" id="myClassicTabContent">
-         <div class="tab-pane fade active show" id="profile-classic" role="tabpanel" aria-labelledby="home-tab-classic">
-          <div data-step data-index="1" data-onboarding-content="Welcome to your editor dashboard! Articles you're reviewing will show up here.">
-            <h5 class="pitch_ttl">Drafts You're Reviewing</h5>
-            <% @editors_reviews.each do |draft| %>
-              <div class="flex--postlist--item review_items pl-0">
-                <div class="inside--item">
-                  <%= link_to (image_tag draft.thumbnail.variant(resize_to_fill: [150,100], format: 'webp')), post_path(draft) %>
-                  <div>
-                    <h4><%= link_to draft.title, post_path(draft), class: "link_nrml"%></h4>
-                    <p class="edited_dt"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.editor_claimed_review_at) unless draft.reviews.last.editor_claimed_review_at.blank? %></p>
-                    <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
-                    <p class="edit_lnk"><%= link_to "Edit Article", edit_post_path(draft) %></p>
+          <div class="tab-pane fade active show" id="profile-classic" role="tabpanel" aria-labelledby="home-tab-classic">
+            <div data-step data-index="1" data-onboarding-content="Welcome to your editor dashboard! Articles you're reviewing will show up here.">
+              <h5 class="pitch_ttl">Drafts You're Reviewing</h5>
+              <% @editors_reviews.each do |draft| %>
+                <div class="flex--postlist--item review_items pl-0">
+                  <div class="inside--item">
+                    <%= link_to (image_tag draft.thumbnail.variant(resize_to_fill: [150,100], format: 'webp')), post_path(draft) %>
+                    <div>
+                      <h4><%= link_to draft.title, post_path(draft), class: "link_nrml"%></h4>
+                      <p class="edited_dt"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.editor_claimed_review_at) unless draft.reviews.last.editor_claimed_review_at.blank? %></p>
+                      <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
+                      <p class="edit_lnk"><%= link_to "Edit Article", edit_post_path(draft) %></p>
+                    </div>
                   </div>
                 </div>
+              <% end %>
+              <% if @editors_reviews.count.eql? 0 %>
+                <i>You don't have any articles that you're editing right now.</i>
+              <% end %>
+            </div>
+            <div data-step data-index="2" data-onboarding-content= "Articles waiting to be reviewed by an editor will show up here. You can start claiming and reviewing articles once you've finished reading &ldquo;Reviewing Articles.&rdquo;">
+              <h5 class="pitch_ttl">Articles Ready for Review</h5>
+              <div class="flex-wrapper">
+                <% if @editor_reviews_cnt < @max_reviews %>
+                  <% @submitted_for_review.each do |draft| %>
+                    <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
+                      <div class="card-bottom-flex p-2">
+                        <% if draft.user.profile.attached? %>
+                          <%= image_tag draft.user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "profile_img", :id => "review_img" %>
+                        <% else %>
+                          <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
+                        <% end %>
+                        <div>
+                          <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
+                          <% if !draft.pitch.blank? %>
+                            <p class="card-text"> <%= draft.pitch.description.truncate_words(20) %></p>
+                          <% end %>
+                          <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> on <%= draft.reviews.last.updated_at.in_time_zone.strftime("%A, %b %d %H %M %S") %> </p>
+                          <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                  <% if @submitted_for_review.count.eql? 0 %>
+                    <i>There are no submitted articles right now.
+                      <% if @user.notify_of_new_review && (@editor_reviews_cnt < @reviews_requirement) %>
+                        You will be notified via email when a review becomes available. Turn off notifications
+                        <%= link_to "here", {:controller => "reviews", :action => "disable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "You are turning off notifications."} %>.
+                      <% elsif @editor_reviews_cnt < @reviews_requirement %>
+                        Be notified via email when a new review becomes available
+                        <%= link_to "here", {:controller => "reviews", :action => "enable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "Notifications will only be enabled for the month of #{Date.today.in_time_zone.strftime("%B")} and will be turned off once you've finished this month's reviews."} %>.
+                      <% else %>
+                        Check back in a few days!
+                      <% end %>
+                    </i>
+                  <% end %>
+                <% else %>
+                  <i>You have reached the maximum number of reviews this month. Check the <a href="/community">Community Page</a> to continue giving feedback to articles.</i>
+                <% end %>
               </div>
-            <% end %>
-            <% if @editors_reviews.count.eql? 0 %>
-              <i>You don't have any articles that you're editing right now.</i>
-            <% end %>
-          </div>
-          <div data-step data-index="2" data-onboarding-content= "Articles waiting to be reviewed by an editor will show up here. You can start claiming and reviewing articles once you've finished reading &ldquo;Reviewing Articles.&rdquo;">
-            <h5 class="pitch_ttl">Articles Ready for Review</h5>
-            <div class="flex-wrapper">
-              <% if @editor_reviews_cnt < @max_reviews %>
-                <% @submitted_for_review.each do |draft| %>
-                  <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
+            </div>
+            <div data-step data-index="3" data-onboarding-content='Newly pitched articles will show up here. You may accept/reject pitches as explained in "Reviewing Pitches."'>
+              <h5 class="pitch_ttl">New Pitched Articles</h5>
+              <div class="flex-wrapper">
+                <% @submitted_pitches.each do |pitch| %>
+                  <div class="card card-review <% if @unseen_submitted_pitches.include? pitch %> unread <% end %>" style="width: 100%;">
                     <div class="card-bottom-flex p-2">
-                      <% if draft.user.profile.attached? %>
-                        <%= image_tag draft.user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "profile_img", :id => "review_img" %>
+                      <% if pitch.user.profile.attached? %>
+                        <%= image_tag pitch.user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img", :id => "review_img" %>
                       <% else %>
                         <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
                       <% end %>
                       <div>
-                        <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
-                        <% if !draft.pitch.blank? %>
-                          <p class="card-text"> <%= draft.pitch.description.truncate_words(20) %></p>
-                        <% end %>
-                        <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> on <%= draft.reviews.last.updated_at.in_time_zone.strftime("%A, %b %d %H %M %S") %> </p>
-                        <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
+                        <h4 class="card-title"><%= link_to pitch.title, pitch, class: "link_nrml" %></h4>
+                        <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
+                        <p class="card-text"> Submitted by <%= link_to pitch.user.try(:full_name), pitch.user, class: "link_nrml" %> on <%= pitch.updated_at.in_time_zone.strftime("%A, %b %d") %> </p>
+                        <%= link_to "Review Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
                       </div>
                     </div>
                   </div>
                 <% end %>
-                <% if @submitted_for_review.count.eql? 0 %>
-                  <i>There are no submitted articles right now.
-                    <% if @user.notify_of_new_review && (@editor_reviews_cnt < @reviews_requirement) %>
-                      You will be notified via email when a review becomes available. Turn off notifications
-                      <%= link_to "here", {:controller => "reviews", :action => "disable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "You are turning off notifications."} %>.
-                    <% elsif @editor_reviews_cnt < @reviews_requirement %>
-                      Be notified via email when a new review becomes available
-                      <%= link_to "here", {:controller => "reviews", :action => "enable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "Notifications will only be enabled for the month of #{Date.today.in_time_zone.strftime("%B")} and will be turned off once you've finished this month's reviews."} %>.
-                    <% else %>
-                      Check back in a few days!
-                    <% end %>
-                  </i>
+                <% if @submitted_pitches.count.eql? 0 %>
+                  <i>There are no submitted pitches right now. Check back in a few days!</i>
                 <% end %>
-              <% else %>
-                <i>You have reached the maximum number of reviews this month. Check the <a href="/community">Community Page</a> to continue giving feedback to articles.</i>
-              <% end %>
-            </div>
-          </div>
-          <div data-step data-index="3" data-onboarding-content='Newly pitched articles will show up here. You may accept/reject pitches as explained in "Reviewing Pitches."'>
-            <h5 class="pitch_ttl">New Pitched Articles</h5>
-            <div class="flex-wrapper">
-              <% @submitted_pitches.each do |pitch| %>
-              <div class="card card-review <% if @unseen_submitted_pitches.include? pitch %> unread <% end %>" style="width: 100%;">
-                  <div class="card-bottom-flex p-2">
-                    <% if pitch.user.profile.attached? %>
-                      <%= image_tag pitch.user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img", :id => "review_img" %>
-                    <% else %>
-                      <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
-                    <% end %>
-                    <div>
-                      <h4 class="card-title"><%= link_to pitch.title, pitch, class: "link_nrml" %></h4>
-                      <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
-                      <p class="card-text"> Submitted by <%= link_to pitch.user.try(:full_name), pitch.user, class: "link_nrml" %> on <%= pitch.updated_at.in_time_zone.strftime("%A, %b %d") %> </p>
-                      <%= link_to "Review Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-              <% if @submitted_pitches.count.eql? 0 %>
-                <i>There are no submitted pitches right now. Check back in a few days!</i>
-              <% end %>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="activity-tab-classic">
-          <h5 class="pitch_ttl">All Editor Activity</h5>
-          <%= render_async_cache get_editor_activity_path, toggle: { selector: '#activity-tab-classic', event: :click } do %>
-            <div class="d-flex justify-content-center">
-              <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
               </div>
             </div>
-          <% end %>
+          </div>
+          <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="activity-tab-classic">
+            <h5 class="pitch_ttl">All Editor Activity</h5>
+            <%= render_async_cache get_editor_activity_path, toggle: { selector: '#activity-tab-classic', event: :click } do %>
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
-      </div>
         <br>
       </div>
       <div class="dashboard--writer--flex--two dashboard--editor" style="width: 30rem;">
@@ -185,9 +185,9 @@
   <div class="guidelines" data-step data-index="4" data-onboarding-content="Reference the editor docs here to be clear on pitch and article requirements.">
     <div class="thelink">
       <a href="/editor-requirements">
-      <div class="box foo G6 ">
-        <p>Start Here</p>
-      </div>
+        <div class="box foo G6 ">
+          <p>Start Here</p>
+        </div>
       </a>
     </div>
     <div class="thelink">
@@ -213,7 +213,6 @@
     </div>
   </div>
 </div>
-
 <script type="text/javascript">
   var pitches = <%= @editor_pitches_cnt %>;
   var reviews = <%= @editor_reviews_cnt %>;
@@ -228,7 +227,6 @@
     animateEditorStats(percent);
   });
 </script>
-
 <% if @show_editor_dashboard_onboarding %>
   <%= javascript_include_tag "mdbootstrap/mdb.min" %>
   <%= javascript_include_tag "plugins/onboarding.min" %>
@@ -240,5 +238,4 @@
     });
   </script>
 <% end %>
-
 <%= javascript_include_tag "plugins/snap.svg-min" %>

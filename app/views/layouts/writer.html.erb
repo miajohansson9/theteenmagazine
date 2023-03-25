@@ -90,26 +90,26 @@
                           </svg>
                           <%= @profile_img %>
                           <% if !(@notifications.eql? 0) %>
-                          <span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 4.5px !important;" <% end %>><%= @notifications %></span>
-                          <% end %>
+                            <span class="counter counter-sm" <% if @notifications < 10 %> style="padding: 2px 4.5px !important;" <% end %>><%= @notifications %></span>
+                            <% end %>
+                          </a>
                         </span>
-                      </a>
-                      <%= render "layouts/partials/writer-dropdown-menu" %>
-                    </div>
-                  </nav>
+                        <%= render "layouts/partials/writer-dropdown-menu" %>
+                      </div>
+                    </nav>
+                  </div>
                 </div>
-              </div>
-            </header>
-            <button class="hide" id="click-event-trigger" type="button" name="button"></button>
-            <%= yield %>
-            <%= content_for :render_async %>
+              </header>
+              <button class="hide" id="click-event-trigger" type="button" name="button"></button>
+              <%= yield %>
+              <%= content_for :render_async %>
+            </div>
           </div>
+          <div class="toggle-nav" onclick="toggleNav();" id="navigation_overlay"></div>
+          <%= render "layouts/partials/footer" %>
         </div>
-        <div class="toggle-nav" onclick="toggleNav();" id="navigation_overlay"></div>
-        <%= render "layouts/partials/footer" %>
-      </div>
-    </section>
-    <div id="mediavine-settings" data-blocklist-adhesion-mobile="1" data-blocklist-adhesion-tablet="1" data-blocklist-adhesion-desktop="1" data-blocklist-auto-insert-sticky="1" data-blocklist-interstitial-mobile="1" data-blocklist-universal-player-desktop="1" data-blocklist-universal-player-mobile="1" data-expires-at="2024-12-23"></div>
-    <%= javascript_include_tag 'layout'%>
-  </body>
-</html>
+      </section>
+      <div id="mediavine-settings" data-blocklist-adhesion-mobile="1" data-blocklist-adhesion-tablet="1" data-blocklist-adhesion-desktop="1" data-blocklist-auto-insert-sticky="1" data-blocklist-interstitial-mobile="1" data-blocklist-universal-player-desktop="1" data-blocklist-universal-player-mobile="1" data-expires-at="2024-12-23"></div>
+      <%= javascript_include_tag 'layout'%>
+    </body>
+  </html>

@@ -1,27 +1,28 @@
 <div class="skinny_wrapper wrapper_padding mb-4 pb-4 mt-4">
-  <div class="card review_frm" style="background-color: white;">
-    <div class="card-header">
-      <h6>Newsletters</h6>
-    </div>
-    <div class="card-body">
-      <% @newsletters.each_with_index do |newsletter| %>
-        <h6><%= link_to("Newsletter ##{newsletter.id}", newsletter_path(newsletter)) %></h6>
-        <% if newsletter.sent_at.present? %>
-          <div class="alert alert-success" role="alert">
-            <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" class="mb-1 svg-inline--fa fa-check-circle fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg>  This newsletter was sent at <%= newsletter.sent_at.in_time_zone.strftime("%l:%M on %D UTC") %>
-          </div>
-        <% elsif newsletter.ready.eql? true %>
-          <div class="alert alert-success" role="alert">
-            <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" class="mb-1 svg-inline--fa fa-check-circle fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg>  This newsletter is in queue and will be sent on the next available Thursday.
-          </div>
-        <% else %>
-          <div class="alert alert-info" role="alert" data-mdb-color="info">
-            This is a newsletter draft. It will not be sent until you check "Schedule send" on the edit page.
-          </div>
-        <% end %>
+  <table class="table table-striped scrollmenu">
+    <thead>
+      <tr>
+        <th scope="col"><b>Created at</b></th>
+        <th scope="col"><b>Subject line</b></th>
+        <th scope="col"><b>Sent at</b></th>
+        <th scope="col"><b>Audience</b></th>
+        <th scope="col"><b>Template</b></th>
+        <th scope="col"><b>Recipients</b></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @newsletters.each do |newsletter| %>
+        <tr>
+          <td><%= date_to_words(newsletter.created_at) %></td>
+          <td><%= link_to(newsletter.subject || newsletter.header, newsletter) %></td>
+          <td><%= date_to_words(newsletter.sent_at) || "Never sent" %></td>
+          <td><%= newsletter.audience || "Readers" %></td>
+          <td><%= newsletter.template %></td>
+          <td><%= newsletter.recipients %></td>
+        </tr>
       <% end %>
-    </div>
-  </div>
+    </tbody>
+  </table>
   <div class="pb-4">
     <div class="btn_cntnr"><%= link_to "New Newsletter", new_newsletter_path, class: "newpost--new--profile", style: "margin-right: 0px;" %></div>
   </div>

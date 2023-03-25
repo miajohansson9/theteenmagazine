@@ -3,21 +3,21 @@
     <div class="dashboard--writer--flex--main">
       <div class="flex--item" style="background-color: #F7F6F6; margin-top: 30px; margin-right: 30px;">
         <% if @user.submitted_profile == true && @user.approved_profile == false %>
-            <div class="overlay">
-              <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
-              <h5>Your profile is waiting to be reviewed</h5>
-            </div>
+          <div class="overlay">
+            <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
+            <h5>Your profile is waiting to be reviewed</h5>
+          </div>
         <% elsif @user.submitted_profile == false && @user.approved_profile == false %>
-            <div class="overlay">
-              <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
-              <h5>Your profile was rejected. Please make changes and submit again.</h5>
-            </div>
+          <div class="overlay">
+            <img src="http://img.icons8.com/metro/26/000000/lock.png" class="icon">
+            <h5>Your profile was rejected. Please make changes and submit again.</h5>
+          </div>
         <% else %>
-            <style>
-              .flex--profile {
-                opacity: 1 !important;
-              }
-            </style>
+          <style>
+            .flex--profile {
+              opacity: 1 !important;
+            }
+          </style>
         <% end %>
         <%= render :partial => 'profile', locals: {user: @user} %>
       </div>
@@ -73,14 +73,13 @@
     <div class="dashboard--writer--flex--two" style="width: 30rem;">
       <%= render "/users/partials/featured_writers", users: @featured_writers, cached: true %>
       <p class="pl-3 pr-3 mt-2 pb-3" style="width: 100%; color: gray;">This is a new writer account. Your public writer account will be activated
-            once you publish your first article.
+        once you publish your first article.
       </p>
-      <div class="links mb-4"
-        <% if @show_onboarding %>
-          data-step data-index="5" data-onboarding-content="Recommend a friend to The Teen Magazine here."
-        <% end %>
-      >
-        <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn pl-3 pr-3 mt-2") %>
+      <div class="links mb-4">
+        <div <% if @show_onboarding %> data-step data-index="5" data-onboarding-content="Recommend a friend to The Teen Magazine here."<% end %>>
+          <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn pl-3 pr-3 mt-2") %>
+        </div>
+        <%= link_to("Email preferences", "/email-preferences?email=#{@user.email}&id=#{@user.id}", class: "link_grn pl-3 pr-3 mt-2") %><br>
       </div>
     </div>
   </div>
@@ -88,26 +87,23 @@
 <div role="button" data-step data-index="4" data-onboarding-content="Read the docs to know what our editor team is looking for in published articles.">
   <%= render "users/dashboard/guidelines" %>
 </div>
-
 <% if @show_onboarding %>
   <%= javascript_include_tag "mdbootstrap/mdb.min" %>
   <%= javascript_include_tag "plugins/onboarding.min" %>
   <script type="text/javascript">
-    $(document).ready(function(){      
+    $(document).ready(function(){
       setTimeout(function() {
         document.getElementById("click-event-trigger").click();
       }, 2000);
     });
   </script>
 <% end %>
-
 <style media="screen">
   .complete {
     width: <%= @percent_complete.round %>% !important;
     transition-duration: 2s;
   }
 </style>
-
 <script type="text/javascript">
   $(document).ready(function() {
     $('.progress-bar').addClass("complete");

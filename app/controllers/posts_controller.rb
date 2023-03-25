@@ -338,6 +338,7 @@ class PostsController < ApplicationController
             body: {
               email_address: params[:posts][:email],
               status: "subscribed",
+              merge_fields: { SLOCATION: "Subscribe page" },
             },
           )
         @failed = false

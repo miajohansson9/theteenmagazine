@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_15_212550) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_25_135249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -209,6 +209,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_212550) do
     t.datetime "alert_viewed_at", precision: nil
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.integer "comment_id"
+    t.string "cookie"
+  end
+
   create_table "mailers", id: :serial, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -216,7 +224,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_212550) do
 
   create_table "newsletters", force: :cascade do |t|
     t.text "message"
-    t.string "kind"
     t.string "background_color"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -227,6 +234,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_212550) do
     t.string "hero_image_content_type"
     t.bigint "hero_image_file_size"
     t.datetime "hero_image_updated_at", precision: nil
+    t.string "audience"
+    t.integer "recipients"
+    t.string "template"
+    t.string "subject"
+    t.string "header"
   end
 
   create_table "outreaches", id: :serial, force: :cascade do |t|
@@ -489,6 +501,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_212550) do
     t.string "city"
     t.string "country"
     t.datetime "last_saw_interviews"
+    t.boolean "remove_from_writer_newsletter"
+    t.boolean "remove_from_reader_newsletter"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
