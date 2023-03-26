@@ -482,6 +482,12 @@ class PostsController < ApplicationController
       end
       if (@new_status.eql? "Approved for Publishing") &&
          !(@prev_status.eql? "Approved for Publishing")
+        if !@post.thumbnail.attached?
+          # post does not have thumbnail! this will break the homepage
+          redirect_to edit_post_path(@post), notice: "This post does not have a thumbnail image! It cannot be published"
+          @rev.update_column(:status, "In Review")
+          return
+        end
         if @post.user.posts.published.count.eql? 0
           ApplicationMailer.first_article_published(@post.user, @post).deliver
         else
@@ -505,6 +511,12 @@ class PostsController < ApplicationController
         @notice = "Your article was withdrawn from review."
       elsif ((@prev_status.eql? "In Progress") || (@prev_status.blank?)) &&
             (@new_status.eql? "Ready for Review")
+        if !@post.thumbnail.attached?
+          # post does not have thumbnail! this can break the homepage
+          redirect_to edit_post_path(@post), notice: "This post does not have a thumbnail image! It cannot be submitted for review."
+          @rev.update_column(:status, "In Progress")
+          return
+        end
         deliver_submitted_article_emails
         @notice = "Great job! Your article was submitted for review."
       else

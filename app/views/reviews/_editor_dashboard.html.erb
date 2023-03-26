@@ -23,7 +23,9 @@
               <% @editors_reviews.each do |draft| %>
                 <div class="flex--postlist--item review_items pl-0">
                   <div class="inside--item">
-                    <%= link_to (image_tag draft.thumbnail.variant(resize_to_fill: [150,100], format: 'webp')), post_path(draft) %>
+                    <% if draft.thumbnail.attached? %>
+                      <%= link_to (image_tag draft.thumbnail.variant(resize_to_fill: [150,100], format: 'webp')), post_path(draft) %>
+                    <% end %>
                     <div>
                       <h4><%= link_to draft.title, post_path(draft), class: "link_nrml"%></h4>
                       <p class="edited_dt"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.editor_claimed_review_at) unless draft.reviews.last.editor_claimed_review_at.blank? %></p>

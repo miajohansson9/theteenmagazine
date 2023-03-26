@@ -24,6 +24,14 @@ module ApplicationHelper
     end
   end
 
+  def format_large_number(number)
+    if number >= 1000
+      return "#{(number / 1000.0).round(1)}k"
+    else
+      return number
+    end
+  end
+
   def markdown(content)
     renderer =
       Redcarpet::Render::HTML.new(
