@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_one_attached :profile
-  validates :profile, content_type: [:png, :jpg, :jpeg, :webp], 
-          size: { less_than: 2.megabytes , message: 'Image must be less than 2 MB' }, on: :update
+  validates :profile, content_type: [:png, :jpg, :jpeg, :webp],
+                      size: { less_than: 2.megabytes, message: "Image must be less than 2 MB" }, on: :update
 
   scope :review_profile,
         -> { where(submitted_profile: true, approved_profile: false) }
@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
         -> { includes(:posts).where.not(posts: { publish_at: nil }) }
 
   scope :active, -> { where(last_sign_in_at: (Time.now - 1.month)..Time.now) }
+
+  scope :writer, -> { where(partner: [nil, false]) }
 
   # Validate the attached image is image/jpg, image/png, etc
   # validates_attachment_content_type :profile, content_type: %r{\Aimage\/.*\Z}
@@ -47,7 +49,7 @@ class User < ActiveRecord::Base
   def is_new?
     @user_posts_approved =
       Post
-        .where('collaboration like ?', "%#{self.email}%")
+        .where("collaboration like ?", "%#{self.email}%")
         .or(Post.where(user_id: self.id))
         .published
     @user_posts_approved.empty?

@@ -115,24 +115,33 @@ class NewslettersController < ApplicationController
 
   def send_to_audience
     @newsletter.update_column(:sent_at, Time.now)
+    @newsletter.update_column(:recipients, 0)
     Thread.new do
-      recipients = 0
       if @newsletter.audience.eql? "All Writers"
-        User.all.each do |user|
-          if !user.do_not_send_emails && !user.remove_from_writer_newsletter
-            ApplicationMailer.custom_message_template(user, @newsletter).deliver
-            recipients = recipients + 1
+        User.writer.each do |user|
+          begin
+            if !user.do_not_send_emails && !user.remove_from_writer_newsletter
+              ApplicationMailer.custom_message_template(user, @newsletter).deliver
+              @newsletter.increment(:recipients, by = 1)
+              @newsletter.save(:validate => false)
+            end
+          rescue
+            puts "Could not send to user #{user.id}"
           end
         end
       elsif @newsletter.audience.eql? "Editors"
         User.editor.each do |editor|
-          if !editor.do_not_send_emails
-            ApplicationMailer.custom_message_template(editor, @newsletter).deliver
-            recipients = recipients + 1
+          begin
+            if !user.do_not_send_emails
+              ApplicationMailer.custom_message_template(user, @newsletter).deliver
+              @newsletter.increment(:recipients, by = 1)
+              @newsletter.save(:validate => false)
+            end
+          rescue
+            puts "Could not send to editor #{user.id}"
           end
         end
       end
-      @newsletter.update_column(:recipients, recipients)
     end
     redirect_to "/newsletters", notice: "Email is sending to #{@newsletter.audience}"
   end
