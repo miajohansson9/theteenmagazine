@@ -330,4 +330,8 @@
     .articles2-6 .d-table-cell {
         display: none !important;
     }
+    .thumbnail {
+        max-height: 100px;
+        overflow: hidden;
+    }
 }
