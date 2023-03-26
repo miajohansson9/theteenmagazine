@@ -1439,13 +1439,21 @@ ol {
     }
 }
 
+@media (max-width: 350px) {
+    .articles2-6 .thumbnail {
+        a .image_thumbnail {
+            width: 100px !important;
+        }
+    }
+}
+
 @media (max-width: 390px) {
     .articles2-6 .thumbnail {
         .article_title {
             font-size: 19px !important;
         }
         a .image_thumbnail {
-            width: 100px !important;
+            width: 130px;
         }
     }
     .flex_other_articles {
