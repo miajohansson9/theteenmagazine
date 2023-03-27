@@ -327,11 +327,13 @@
     .applies {
         width: 100% !important;
     }
-    .articles2-6 .d-table-cell {
-        display: none !important;
-    }
-    .thumbnail {
-        max-height: 104px;
-        overflow: hidden;
+    .articles2-6 {
+        .d-table-cell {
+            display: none !important;
+        }
+        .thumbnail {
+            max-height: 104px;
+            overflow: hidden;
+        }
     }
 }
