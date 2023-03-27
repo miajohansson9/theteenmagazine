@@ -81,11 +81,11 @@
               </p>
             </div>
           </div>
-          <div style="height: 57px;" class="post_info d-flex flex-wrap overflow-hidden align-items-center justify-content-between pb-2">
-            <% @authors = [@user] + @collabs %>
-            <div class="pt-2">
+          <% @authors = [@user] + @collabs %>
+          <div style="<% if @authors.length.eql? 1 %>height: 57px;<% else %>max-height: <%= 30 + @authors.length * 40 %>px<% end %>" class="post_info d-flex flex-wrap overflow-hidden align-items-center justify-content-between pb-2">
+            <div class="d-flex flex-wrap pt-2">
               <% @authors.each do |author| %>
-                <div class="author d-table-cell align-middle">
+                <div class="author d-table-cell align-middle text-nowrap">
                   <% @profile = author.profile.attached? ? author.profile.variant(resize_to_fill: [100,100]) : "profile_image.jpg" %>
                   <%= image_tag(@profile, :class => "profile_img") %>
                   <p class="author_name m-0 mr-2">By <%= link_to(author.full_name, author) %></p>
