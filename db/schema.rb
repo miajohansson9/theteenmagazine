@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_27_130651) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -154,6 +154,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_130651) do
     t.string "cookie"
     t.boolean "public"
     t.boolean "is_thirteen"
+    t.index ["created_at"], name: "index_comments_on_created_at"
   end
 
   create_table "constants", force: :cascade do |t|
@@ -240,6 +241,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_130651) do
     t.string "subject"
     t.string "header"
     t.string "action_button"
+    t.index ["created_at"], name: "index_newsletters_on_created_at"
   end
 
   create_table "outreaches", id: :serial, force: :cascade do |t|
@@ -406,9 +408,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_130651) do
     t.boolean "turn_off_caps"
     t.string "shareable_token"
     t.boolean "comments_turned_off"
+    t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
+    t.index ["promoting_until"], name: "index_posts_on_promoting_until"
     t.index ["publish_at"], name: "index_posts_on_publish_at"
     t.index ["slug"], name: "index_posts_on_slug", unique: true
+    t.index ["updated_at"], name: "index_posts_on_updated_at"
   end
 
   create_table "projects", id: :serial, force: :cascade do |t|
@@ -508,6 +513,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_130651) do
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["full_name"], name: "index_users_on_full_name"
+    t.index ["last_sign_in_at"], name: "index_users_on_last_sign_in_at"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
