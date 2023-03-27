@@ -5,6 +5,8 @@
   <%= f.text_area :message, class: "ckeditor" %>
   <p class="mb-0 mt-4">Subject</p>
   <%= f.text_field :subject %>
+  <p class="mb-0">Action button text (use button text + comma + full url. See placeholder for example)</p>
+  <%= f.text_field :action_button, placeholder: 'Join Discord, https://discord.com/' %>
   <%# <p class="mb-0 mt-0">Select featured posts for this newsletter <%= link_to("here", "/newsletters/#{@newsletter.id}/featured-posts", target: "_blank") %>
   <%# <p class="mb-0 mt-0">Background hex color (view hex colors here: <%= link_to "https://htmlcolorcodes.com/", "https://htmlcolorcodes.com/" %>
   <%# <%= f.text_field :background_color, value: (@newsletter.background_color || Newsletter.not_nil.last.try(:background_color)) %>

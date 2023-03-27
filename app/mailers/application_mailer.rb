@@ -5,6 +5,11 @@ class ApplicationMailer < ActionMailer::Base
     @user = user
     @newsletter = newsletter
     @subject = newsletter.subject.present? ? newsletter.subject : (newsletter.header.present? ? newsletter.header : "Message from The Teen Magazine")
+    if @newsletter.action_button.present?
+      @button = @newsletter.action_button.split(",")
+      @button_text = @button[0]
+      @button_link = (@button.length.eql? 2) ? @button[1].gsub(" ", "") : ""
+    end
     mail(
       to: @user.email,
       subject: @subject,

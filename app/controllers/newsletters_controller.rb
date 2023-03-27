@@ -99,6 +99,11 @@ class NewslettersController < ApplicationController
   #form for creating a new user already filled out
   def show
     @posts = @newsletter.posts
+    if @newsletter.action_button.present?
+      @button = @newsletter.action_button.split(",")
+      @button_text = @button[0]
+      @button_link = (@button.length.eql? 2) ? @button[1].gsub(" ", "") : ""
+    end
   end
 
   def send_test_newsletter
@@ -163,6 +168,7 @@ class NewslettersController < ApplicationController
         :template,
         :header,
         :subject,
+        :action_button,
       )
   end
 
