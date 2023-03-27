@@ -13,7 +13,7 @@
     <tbody>
       <% @user_posts.each do |post| %>
         <tr>
-          <td><%= post.post_impressions %></td>
+          <td><%= format_large_number(post.post_impressions) %></td>
           <td><%= post.publish_at.in_time_zone.strftime("%D") %></td>
           <td><%= link_to post.title.truncate(40), post, class: "link_nrml" %></td>
           <% @top_percent = ((@posts_by_impressions.index(post).to_f / @posts_by_impressions.count.to_f) * 100).round(1) %>
