@@ -39,12 +39,6 @@ class UsersController < ApplicationController
       pagy(@user_posts_approved_records, page: params[:page], items: 10)
     if !@user.editor? && current_user.present?
       @user_pitches = @user.pitches.not_claimed.order("updated_at desc")
-    elsif @user.editor?
-      @editor_pitches_cnt = @user.pitches.count
-      @editor_reviews = Review.where(editor_id: @user.id)
-      @editor_reviews_cnt = @editor_reviews.count
-      @writers_helped_cnt =
-        @editor_reviews.map { |r| r.post.try(:user_id) }.uniq.count
     end
     if @user_posts_approved.length < 1
       begin
@@ -472,14 +466,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if @user.editor?
-      @editor_pitches_cnt = @user.pitches.count
-      @editor_reviews = Review.where(editor_id: @user.id)
-      @editor_reviews_cnt = @editor_reviews.count
-      @writers_helped_cnt =
-        @editor_reviews.map { |r| r.post.try(:user_id) }.uniq.count
+    if current_user.admin? || (current_user.id.eql? @user.id)
+      set_meta_tags title: "Edit Profile | The Teen Magazine"
+    else
+      redirect_to edit_user_path(current_user), notice: "You can only edit your own profile"
     end
-    set_meta_tags title: "Edit Profile | The Teen Magazine"
   end
 
   def new
