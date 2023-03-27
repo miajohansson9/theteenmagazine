@@ -84,8 +84,7 @@ class UsersController < ApplicationController
     @editor_pitches_cnt = @user.pitches.count
     @editor_reviews = Review.where(editor_id: @user.id)
     @editor_reviews_cnt = @editor_reviews.count
-    @writers_helped_cnt =
-      @editor_reviews.map { |r| r.post.try(:user_id) }.uniq.count
+    @became_editor = " since #{@user.became_an_editor.in_time_zone&.strftime("%b, %Y")}"
     render partial: "users/partials/editor_stats"
   end
 
