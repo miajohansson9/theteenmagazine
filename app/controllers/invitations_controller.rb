@@ -84,9 +84,13 @@ class InvitationsController < ApplicationController
   end
 
   def dismissed_notification
-    @invitation = Invitation.find(params[:id])
-    if @invitation.user_id.eql? current_user.id
-      @invitation.update_column("alert_viewed_at", Time.now)
+    if params[:id].present?
+      @invitation = Invitation.find(params[:id])
+      if @invitation.user_id.eql? current_user.id
+        @invitation.update_column("alert_viewed_at", Time.now)
+      end
+    else
+      cookies[:closed_alert_user_id] = current_user.id
     end
   end
 

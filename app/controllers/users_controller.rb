@@ -144,7 +144,7 @@ class UsersController < ApplicationController
     @post = Post.find(params[:post_id])
     if @post.user.promotions > 0
       @initial = @post.promoting_until || Time.now
-      @post.update_column("promoting_until", @initial + 7.days)
+      @post.update_column("promoting_until", @initial + 3.days)
       respond_to do |format|
         format.html { redirect_to "/users/#{@post.user.slug}" }
         format.js
@@ -203,12 +203,14 @@ class UsersController < ApplicationController
       @user.last_saw_interviews.nil? && @user.marketer &&
         (current_user.id.eql? @user.id) && !@show_onboarding_full && !@show_editor_onboarding
     if @show_onboarding_full
-      @user.promotions = @user.promotions + 5
+      @user.promotions = @user.promotions + 1
+      cookies[:closed_alert_user_id] = nil
       @user.save
     end
     if @show_editor_onboarding
       @user.became_an_editor = Time.now
-      @user.promotions = @user.promotions + 5
+      @user.promotions = @user.promotions + 1
+      cookies[:closed_alert_user_id] = nil
       @user.save
     elsif current_user.id.eql? @user.id
       @user.last_saw_writer_dashboard = Time.now

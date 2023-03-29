@@ -535,6 +535,10 @@
     }
 }
 
+.invitation-alert {
+    margin-right: 20px;
+}
+
 @media (max-width: 900px) {
     .guidelines {
         flex-wrap: wrap;
@@ -559,6 +563,9 @@
         #waiting--for--approval {
             flex-direction: column-reverse !important;
         }
+    }
+    .invitation-alert {
+        margin-right: 0px;
     }
     .new--writer--wrapper,
     .official--writer--wrapper {

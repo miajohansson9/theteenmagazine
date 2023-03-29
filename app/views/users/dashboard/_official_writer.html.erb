@@ -5,10 +5,18 @@
         <!-- Classic tabs -->
         <div style="padding-top: 30px;">
           <% @invitations_from_notice.each do |invitation| %>
-            <div class="alert alert-info vertical-align-container" role="alert">
+            <div class="alert alert-info vertical-align-container invitation-alert" role="alert">
               <p class="m-0 pr-4">
                 Your invitation link to <b><%= invitation.email %></b> has been used and you've received new promotion credits! 🎉 Go to "Boost an Article" to use them.
                 <u><%= link_to "Close", {:controller => "invitations", :action => "dismissed_notification", :id => invitation.id, :remote => true}, "data-bs-dismiss" => "alert" %></u>
+              </p>
+            </div>
+          <% end %>
+          <% if (!(cookies[:closed_alert_user_id].eql? "#{@user.id}")) && @user.promotions.present? && (@user.promotions > 0) && (@invitations_from_notice.count.eql? 0) %>
+            <div class="alert alert-info vertical-align-container invitation-alert" role="alert">
+              <p class="m-0 pr-4">
+                You have unused promotion credits! 🎉 Go to "Boost an Article" to use them.
+                <u><%= link_to "Close", {:controller => "invitations", :action => "dismissed_notification", :remote => true}, "data-bs-dismiss" => "alert" %></u>
               </p>
             </div>
           <% end %>
