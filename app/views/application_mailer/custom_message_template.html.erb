@@ -5,15 +5,6 @@
     <title>Reset Password Email Template</title>
     <meta name="description" content="Reset Password Email Template.">
     <style type="text/css">
-      .content_wrapper {
-        max-width:670px;
-        background:#fff;
-        border-radius:3px;
-        text-align:center;
-        -webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);
-        -moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);
-        box-shadow:0 6px 18px 0 rgba(0,0,0,.06);
-      }
       .content p {
           color:#455056;
           font-size:15px;
@@ -29,19 +20,16 @@
       .bottom_links a:hover, .content a:hover {
         text-decoration: underline !important;
       }
-      .padding {
-        padding: 0 35px;
-      }
       .content img {
         max-width: 100%;
         height: auto !important;
       }
       @media only screen and (max-width: 640px) {
         .padding {
-          padding: 0 15px;
+          padding: 0 15px !important;
         }
         .content_wrapper {
-          border-radius: 15px;
+          border-radius: 15px !important;
         }
       }
     </style>
@@ -68,12 +56,12 @@
             </tr>
             <tr>
               <td align="center">
-                <table class="content_wrapper" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <table class="content_wrapper" style="max-width:670px; background:#fff; border-radius:3px;text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);" width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tr>
                     <td style="height:40px;">&nbsp;</td>
                   </tr>
                   <tr class='content'>
-                    <td class="padding">
+                    <td style="padding: 0 35px;" class="padding">
                       <% if @newsletter.header.present? %>
                         <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Charter', 'Rubik',sans-serif;">
                           <%= @newsletter.header %>
