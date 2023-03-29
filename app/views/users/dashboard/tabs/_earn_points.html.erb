@@ -1,13 +1,15 @@
 <h3 class="mb-3">Invite a friend to earn credits.</h3>
 <p>
-  Earn <b>1</b> promotion credit for every friend you invite who applies to The Teen Magazine.
+  Earn <b>5</b> promotion credits for every friend you invite who applies to The Teen Magazine.
 </p>
 <%= form_for invitation, :remote=>true do |f| %>
   <% if invitation.errors.any? %>
     <h6 class="mt-3 text-danger"><%= pluralize(invitation.errors.count, "error")%> prevented this invitation from sending:</h6>
     <ul>
       <% invitation.errors.full_messages.each do |msg| %>
-      <li class="text-danger"><h6><%= msg %></h6></li>
+        <li class="text-danger">
+          <h6><%= msg %></h6>
+        </li>
       <% end %>
     </ul>
   <% end %>
@@ -23,11 +25,9 @@
     </div>
   </div>
   <small>
-    When you click <i>Send Invite</i>, we will send an email inviting your friend(s) to apply to The Teen Magazine. The email will include a special apply link from you that will waive the cover letter and prioritize their application for review.
-    The referral link will expire in 1 week so they must apply before then to benefit from the easier application. For you to earn a promotional credit, your friend must apply to The Teen Magazine using your referral link.
+    When you click <i>Send Invite</i>, we will send an email inviting your friend to apply to The Teen Magazine. The email will include a special apply link from you that will waive the cover letter and prioritize their application for review.
   </small>
 <% end %>
-
 <script type="text/javascript">
   $(document).ready(function() {
     isFormButtonDisabled('#invitation_email');

@@ -4,6 +4,14 @@
       <div class="w-100">
         <!-- Classic tabs -->
         <div style="padding-top: 30px;">
+          <% @invitations_from_notice.each do |invitation| %>
+            <div class="alert alert-info vertical-align-container" role="alert">
+              <p class="m-0 pr-4">
+                Your invitation link to <b><%= invitation.email %></b> has been used and you've received new promotion credits! 🎉 Go to "Boost an Article" to use them.
+                <u><%= link_to "Close", {:controller => "invitations", :action => "dismissed_notification", :id => invitation.id, :remote => true}, "data-bs-dismiss" => "alert" %></u>
+              </p>
+            </div>
+          <% end %>
           <div class="classic-tabs"
             <% if @show_onboarding_full %>
               data-step data-index="7" data-onboarding-content="Earn credits and boost your published articles to reach a wider audience."

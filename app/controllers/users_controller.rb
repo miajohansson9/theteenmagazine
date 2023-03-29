@@ -203,12 +203,12 @@ class UsersController < ApplicationController
       @user.last_saw_interviews.nil? && @user.marketer &&
         (current_user.id.eql? @user.id) && !@show_onboarding_full && !@show_editor_onboarding
     if @show_onboarding_full
-      @user.promotions = @user.promotions + 1
+      @user.promotions = @user.promotions + 5
       @user.save
     end
     if @show_editor_onboarding
       @user.became_an_editor = Time.now
-      @user.promotions = @user.promotions + 1
+      @user.promotions = @user.promotions + 5
       @user.save
     elsif current_user.id.eql? @user.id
       @user.last_saw_writer_dashboard = Time.now
