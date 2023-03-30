@@ -23,6 +23,7 @@ class PostsController < ApplicationController
                                 is_email
                                 get_promoted_posts
                                 get_comments_published
+                                generate_shareable_token
                               ]
 
   def log_impression
