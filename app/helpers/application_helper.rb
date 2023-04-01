@@ -32,6 +32,28 @@ module ApplicationHelper
     end
   end
 
+  def format_number_category(number)
+    if number >= 200000
+      return "200k+"
+    elsif number >= 150000
+      return "150k+"
+    elsif number >= 100000
+      return "100k+"
+    elsif number >= 50000
+      return "50k+"
+    elsif number >= 20000
+      return "20k+"
+    elsif number >= 10000
+      return "10k+"
+    elsif number >= 5000
+      return "5k+"
+    elsif number >= 1000
+      return "1k+"
+    else
+      return ""
+    end
+  end
+
   def markdown(content)
     renderer =
       Redcarpet::Render::HTML.new(

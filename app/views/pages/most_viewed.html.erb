@@ -1,5 +1,5 @@
 <div class="category">
-  <div class="category_image" style="background-image: url(<%= @most_viewed.first.thumbnail.variant(resize_to_fill: [540,340]) %>)">
+  <div class="category_image" style="background-image: url(<%= url_for(@most_viewed.first.thumbnail.variant(resize_to_fill: [540, 340], format: 'webp')) %>);">
     <div id="background">
       <h1>Most Viewed Articles</h1>
     </div>

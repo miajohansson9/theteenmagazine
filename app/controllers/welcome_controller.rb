@@ -21,7 +21,7 @@ class WelcomeController < ApplicationController
     @posts_approved_1 =
       Post
         .published
-        .by_published_date
+        .trending
         .limit(3)
         .where(category_id: Category.find('interviews').id)
         .where.not(id: @post_approved_0_ids)
