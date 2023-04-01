@@ -135,7 +135,7 @@ class NewslettersController < ApplicationController
           end
         end
       elsif @newsletter.audience.eql? "Only Editors"
-        User.editor.each do |editor|
+        User.editor.each do |user|
           begin
             if !user.do_not_send_emails
               ApplicationMailer.custom_message_template(user, @newsletter).deliver
@@ -147,7 +147,7 @@ class NewslettersController < ApplicationController
           end
         end
       elsif @newsletter.audience.eql? "Only Interviewers"
-        User.where(marketer: true).each do |editor|
+        User.where(marketer: true).each do |user|
           begin
             if !user.do_not_send_emails
               ApplicationMailer.custom_message_template(user, @newsletter).deliver
