@@ -75,6 +75,7 @@ class UsersController < ApplicationController
   end
 
   def get_editor_stats
+    @editor_posts_cnt = @user.posts.published.count
     @editor_pitches_cnt = @user.pitches.count
     @editor_reviews = Review.where(editor_id: @user.id)
     @editor_reviews_cnt = @editor_reviews.count
