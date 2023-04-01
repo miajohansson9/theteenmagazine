@@ -1,22 +1,15 @@
-<style lazyload>
-  @media(min-width: 800px) {
-    .post_image {
-      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [560, 280], format: 'webp')) %>);
+<style>
+  .post_image {
+      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [540, 340], format: 'webp')) %>);
     }
-  }
-  @media(max-width: 800px) {
-    .post_image {
-      background-image: url(<%= url_for(@post.thumbnail.variant(resize_to_fill: [150, 100], format: 'webp')) %>);
+    blockquote {
+      margin: 1em 0;
+      font-style: italic;
     }
-  }
-  blockquote {
-    margin: 1em 0;
-    font-style: italic;
-  }
-  .twitter-tweet {
-    margin: 0 auto;
-    display: block;
-  }
+    .twitter-tweet {
+      margin: 0 auto;
+      display: block;
+    }
 </style>
 <div class="div">
   <div class="post_image">

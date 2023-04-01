@@ -1708,7 +1708,6 @@ DEPENDENCIES
   mail_form (~> 1.5, >= 1.5.1)
   meta-tags (~> 2.1)
   mini_magick
-  nokogiri (~> 1.13, >= 1.13.3)
   obscenity
   pagy
   paperclip (>= 5.2.0)

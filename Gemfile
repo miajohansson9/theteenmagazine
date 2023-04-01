@@ -37,7 +37,6 @@ gem 'figaro'
 gem 'aws-sdk', '~> 3'
 gem 'sitemap_generator'
 gem 'fog-aws'
-gem 'nokogiri', '~> 1.13', '>= 1.13.3'
 gem 'gibbon'
 gem 'sprockets-rails', '~> 3.0', '>= 3.0.4'
 gem 'bootsnap', require: false

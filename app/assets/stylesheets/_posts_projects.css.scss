@@ -15,12 +15,17 @@
     margin-top: -10px;
     background-size: cover;
     position: absolute;
-    -webkit-filter: blur(2px);
-    z-index: 0;
-    -moz-filter: blur(2px);
-    -o-filter: blur(2px);
-    -ms-filter: blur(2px);
-    filter: blur(2px);
+}
+
+@media (min-width: 700px) {
+    .post_image {
+        -webkit-filter: blur(3px);
+        z-index: 0;
+        -moz-filter: blur(3px);
+        -o-filter: blur(3px);
+        -ms-filter: blur(3px);
+        filter: blur(3px);
+    }
 }
 
 .flex_wrapper_content {
