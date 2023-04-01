@@ -23,50 +23,50 @@ class WelcomeController < ApplicationController
         .published
         .trending
         .limit(3)
-        .where(category_id: Category.find('interviews').id)
+        .where(category_id: Category.find("interviews").id)
         .where.not(id: @post_approved_0_ids)
-    render partial: 'welcome/categories/category_1'
+    render partial: "welcome/categories/category_1"
   end
 
   def get_category_2_welcome
     @posts_approved_2 =
       Post
         .published
-        .by_published_date
+        .trending
         .limit(3)
-        .where(category_id: Category.find('student-life').id)
+        .where(category_id: Category.find("student-life").id)
         .where.not(id: @post_approved_0_ids)
-    render partial: 'welcome/categories/category_2'
+    render partial: "welcome/categories/category_2"
   end
 
   def get_category_3_welcome
     @posts_approved_3 =
       Post
         .published
-        .by_published_date
+        .trending
         .limit(3)
-        .where(category_id: Category.find('opinion').id)
+        .where(category_id: Category.find("opinion").id)
         .where.not(id: @post_approved_0_ids)
-    render partial: 'welcome/categories/category_3'
+    render partial: "welcome/categories/category_3"
   end
 
   def get_category_4_welcome
     @posts_approved_4 =
       Post
         .published
-        .by_published_date
+        .trending
         .limit(6)
-        .where(category_id: Category.find('beauty-style').id)
+        .where(category_id: Category.find("beauty-style").id)
         .where.not(id: @post_approved_0_ids)
-    render partial: 'welcome/categories/category_4'
+    render partial: "welcome/categories/category_4"
   end
 
   def get_recent_posts
     @category_ids = [
-      Category.find('interviews').id,
-      Category.find('student-life').id,
-      Category.find('opinion').id,
-      Category.find('beauty-style').id,
+      Category.find("interviews").id,
+      Category.find("student-life").id,
+      Category.find("opinion").id,
+      Category.find("beauty-style").id,
     ]
     @posts_approved_last =
       Post
@@ -75,45 +75,39 @@ class WelcomeController < ApplicationController
         .where.not(category_id: @category_ids)
         .where.not(id: @post_approved_0_ids)
         .limit(9)
-    render partial: 'welcome/partials/recents'
+    render partial: "welcome/partials/recents"
   end
 
   def get_trending_posts
     @trending = Post.published.trending.limit(9)
-    render partial: 'welcome/partials/trending'
+    render partial: "welcome/partials/trending"
   end
 
   def show
-    set_meta_tags title: 'The Teen Magazine',
-                  image:
-                    "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path('ttm.png')}",
-                  description:
-                    'The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.',
+    set_meta_tags title: "The Teen Magazine",
+                  image: "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path("ttm.png")}",
+                  description: "The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.",
                   fb: {
-                    app_id: '1190455601051741'
+                    app_id: "1190455601051741",
                   },
                   og: {
                     image: {
-                      url:
-                        "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path('ttm.png')}",
-                      alt: 'The Teen Magazine'
+                      url: "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path("ttm.png")}",
+                      alt: "The Teen Magazine",
                     },
-                    site_name: 'The Teen Magazine',
-                    description:
-                      'The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.'
+                    site_name: "The Teen Magazine",
+                    description: "The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.",
                   },
                   article: {
-                    publisher: 'https://www.facebook.com/theteenmagazinee'
+                    publisher: "https://www.facebook.com/theteenmagazinee",
                   },
                   twitter: {
-                    card: 'summary_large_image',
-                    site: '@theteenmagazin_',
-                    title: 'The Teen Magazine',
-                    description:
-                      'The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.',
-                    image:
-                      "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path('ttm.png')}",
-                    domain: 'https://www.theteenmagazine.com/'
+                    card: "summary_large_image",
+                    site: "@theteenmagazin_",
+                    title: "The Teen Magazine",
+                    description: "The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.",
+                    image: "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path("ttm.png")}",
+                    domain: "https://www.theteenmagazine.com/",
                   }
   end
 end

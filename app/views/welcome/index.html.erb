@@ -5,18 +5,18 @@
     </div>
   </div>
   <div class="wrapper_home">
-    <h1 class="section--title"><a href="/categories/interviews">interviews</a></h1>
+    <h1 class="section--title"><a href="/categories/interviews">trending in interviews</a></h1>
     <div class="flex--welcome">
       <div class="flex-1">
         <%= render_async_cache get_category_1_welcome_path, retry_count: 3 do %>
           <%= render "welcome/placeholders/category_row_placeholder" %>
         <% end %>
-        <h1 class="section--title"><a href="/categories/student-life">student life</a></h1>
+        <h1 class="section--title"><a href="/categories/student-life">trending in student life</a></h1>
         <div class="content_hint"></div>
         <%= render_async_cache get_category_2_welcome_path, retry_count: 3 do %>
           <%= render "welcome/placeholders/category_row_placeholder" %>
         <% end %>
-        <h1 class="section--title"><a href="/categories/opinion">opinion</a></h1>
+        <h1 class="section--title"><a href="/categories/opinion">trending in opinion</a></h1>
         <%= render_async_cache get_category_3_welcome_path, retry_count: 3 do %>
           <%= render "welcome/placeholders/category_row_placeholder" %>
         <% end %>
@@ -41,7 +41,7 @@
         <div class="content_hint"></div>
       </div>
     </div>
-    <h1 class="section--title"><a href="/categories/beauty-style">beauty & style</a></h1>
+    <h1 class="section--title"><a href="/categories/beauty-style">trending in beauty & style</a></h1>
     <div class="flex--welcome">
       <div class="flex-1">
         <%= render_async_cache get_category_4_welcome_path %>
@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="content_hint"></div>
-    <h1 class="section--title"><a href="/search">more articles</a></h1>
+    <h1 class="section--title"><a href="/search">recent articles</a></h1>
     <%= render_async_cache get_recent_posts_path, retry_count: 3 %>
     <div class="content_hint"></div>
   </div>

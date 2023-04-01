@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!,
                 except: %i[
                   show
-                  get_trending_posts_in_category
+                  get_recent_posts_in_category
                   subscribe
                   is_email
                   get_promoted_posts
@@ -17,7 +17,7 @@ class PostsController < ApplicationController
   before_action :is_partner?, only: %i[index edit]
   after_action :log_impression, only: [:show]
   load_and_authorize_resource except: %i[
-                                get_trending_posts_in_category
+                                get_recent_posts_in_category
                                 get_conversations_following
                                 subscribe
                                 is_email
@@ -284,13 +284,10 @@ class PostsController < ApplicationController
     end
   end
 
-  def get_trending_posts_in_category
+  def get_recent_posts_in_category
     @post = Post.find(params[:id])
-    @trending = @post.category.posts.published.trending.where.not(id: @post.id).limit(3)
-    if @trending&.count < 3
-      @trending = @post.category.posts.published.where.not(id: @post.id).by_published_date.limit(3)
-    end
-    render partial: "posts/partials/trending"
+    @recent = @post.category.posts.published.by_published_date.where.not(id: @post.id).limit(3)
+    render partial: "posts/partials/recent"
   end
 
   def get_conversations_following
