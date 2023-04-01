@@ -134,7 +134,7 @@ class NewslettersController < ApplicationController
             puts "Could not send to user #{user.id}"
           end
         end
-      elsif @newsletter.audience.eql? "Editors"
+      elsif @newsletter.audience.eql? "Only Editors"
         User.editor.each do |editor|
           begin
             if !user.do_not_send_emails
@@ -144,6 +144,18 @@ class NewslettersController < ApplicationController
             end
           rescue
             puts "Could not send to editor #{user.id}"
+          end
+        end
+      elsif @newsletter.audience.eql? "Only Interviewers"
+        User.where(marketer: true).each do |editor|
+          begin
+            if !user.do_not_send_emails
+              ApplicationMailer.custom_message_template(user, @newsletter).deliver
+              @newsletter.increment(:recipients, by = 1)
+              @newsletter.save(:validate => false)
+            end
+          rescue
+            puts "Could not send to marketer #{user.id}"
           end
         end
       end
