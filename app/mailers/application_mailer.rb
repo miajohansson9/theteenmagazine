@@ -347,9 +347,10 @@ class ApplicationMailer < ActionMailer::Base
     )
   end
 
-  def weekly_newsletter(email, newsletter)
+  def editor_picks(posts, newsletter)
     @newsletter = newsletter
-    mail(to: email, subject: @newsletter.posts.last.title)
+    @posts = posts
+    mail(to: "email", subject: "This Week's Editor Picks are Here!")
   end
 
   def featured_in_newsletter(user, post)
@@ -391,5 +392,19 @@ class ApplicationMailer < ActionMailer::Base
       )
     content.gsub!('src="/rails/active_storage/', 'src="https://www.theteenmagazine.com/rails/active_storage/')
     Redcarpet::Markdown.new(renderer).render(content).html_safe
+  end
+
+  helper_method def date_to_words(date)
+    return "" if date.nil?
+    ## recent
+    if ((1.week.ago)..(Time.now)).cover?(date)
+      return "#{time_ago_in_words(date)} ago"
+      ## within this year
+    elsif ((Date.today.beginning_of_year)..(Time.now)).cover?(date)
+      return date.in_time_zone&.strftime("%A, %B %d")
+      ## year before
+    else
+      return date.in_time_zone&.strftime("%B %d, %Y")
+    end
   end
 end

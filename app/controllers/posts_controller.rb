@@ -266,7 +266,7 @@ class PostsController < ApplicationController
   def get_promoted_posts
     @per_page = 9
     @fetched_at = cookies[:fetched_at].present? ? cookies[:fetched_at] : Time.now
-    @posts_promoted_records = Post.published.where(updated_at: (Time.now - 1.days)..@fetched_at).where.not(id: params[:post_id]).by_promoted_then_updated.limit(27)
+    @posts_promoted_records = Post.published.where(updated_at: (Time.now - 1.days)..@fetched_at).where.not(id: params[:post_id]).by_updated.limit(27)
     @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
     @is_last_page =
       (@posts_promoted_records.count - (@page - 2) * @per_page) <= @per_page

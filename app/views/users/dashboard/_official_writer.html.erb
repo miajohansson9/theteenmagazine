@@ -66,6 +66,12 @@
   </div>
   <%= render "users/dashboard/guidelines" %>
 </div>
+<style media="screen">
+  .complete {
+    width: <%= @percent_to_next_level %>% !important;
+    transition-duration: 2s;
+  }
+</style>
 <script type="text/javascript">
   var loaded = []
   $.fn.isOnScreen = function(){
@@ -95,10 +101,14 @@
       animateValue('value3', 0, <%= @pageviews %>, 500);
       loaded[2] = true;
     }
+    if (($('#progress-bar').isOnScreen()) && (!loaded[3])) {
+      $('#progress-bar').addClass("complete");
+      loaded[3] = true;
+    }
   };
 
   $(document).ready(function(){
-    loaded = [false, false, false];
+    loaded = [false, false, false, false];
     $.fn.triggerAnalytics();
     $(window).on('scroll',function(){
         $.fn.triggerAnalytics();

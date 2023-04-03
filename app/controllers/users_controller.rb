@@ -103,34 +103,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def get_published_articles
-    @user = User.find(params[:id])
-    @promotions = @user.promotions
-    @per_page = 6
-    @user_posts_approved_records =
-      Post
-        .where("collaboration like ?", "%#{@user.email}%")
-        .or(Post.where(user_id: @user.id))
-        .published
-        .by_promoted_then_updated
-    @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
-    @is_last_page =
-      (@user_posts_approved_records.count - (@page - 2) * @per_page) <=
-        @per_page
-    @pagy, @posts =
-      pagy_countless(
-        @user_posts_approved_records,
-        page: params[:page],
-        items: @per_page,
-        link_extra: 'data-remote="true"',
-      )
-    if params[:page].present?
-      respond_to { |format| format.js }
-    else
-      render partial: "users/dashboard/tabs/articles/all_published_articles"
-    end
-  end
-
   def post_modal
     @user = User.find(params[:id])
     @post = Post.find(params[:post_id])
