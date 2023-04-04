@@ -5,26 +5,19 @@
         <th scope="col">views</th>
         <th scope="col">published</th>
         <th scope="col">title</th>
-        <th scope="col">in top % of all articles</th>
         <th scope="col">category</th>
-        <th scope="col">in top % in category</th>
       </tr>
     </thead>
     <tbody>
       <% @user_posts.each do |post| %>
         <tr>
-          <td><%= format_large_number(post.post_impressions) %></td>
+          <td><%= post.post_impressions %></td>
           <td><%= post.publish_at.in_time_zone.strftime("%D") %></td>
           <td><%= link_to post.title.truncate(40), post, class: "link_nrml" %></td>
-          <% @top_percent = ((@posts_by_impressions.index(post).to_f / @posts_by_impressions.count.to_f) * 100).round(1) %>
-          <% @top_percent = (@top_percent < 0.1 ) ? "< 0.1" : @top_percent %>
-          <td <% if !(@top_percent.class.eql? String) %><% if (@top_percent < 25) %> style= "font-weight: bold;" <% end %><% else %>style= "font-weight: bold;"<% end %>><%= @top_percent %>%</td>
+          <%# <% @top_percent = ((@posts_by_impressions.index(post).to_f / @posts_by_impressions.count.to_f) * 100).round(1) %>
+          <%# <% @top_percent = (@top_percent < 0.1 ) ? "< 0.1" : @top_percent %>
           <% @category = Category.find(post.category_id) %>
           <td><%= @category.name %></td>
-          <% @posts_by_impressions_category = @category.posts.published.order("post_impressions desc") %>
-          <% @top_percent_category = ((@posts_by_impressions_category.index(post).to_f / @posts_by_impressions_category.count.to_f) * 100).round(1) %>
-          <% @top_percent_category = (@top_percent_category < 0.1 ) ? "< 0.1" : @top_percent_category %>
-          <td <% if !(@top_percent_category.class.eql? String) %><% if (@top_percent_category < 25) %> style= "font-weight: bold;" <% end %><% else %>style= "font-weight: bold;"<% end %>><%= @top_percent_category %>%</td>
         </tr>
       <% end %>
     </tbody>

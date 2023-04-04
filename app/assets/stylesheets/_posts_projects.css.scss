@@ -7,14 +7,12 @@
 }
 
 .post_image {
-    height: 320px;
-    position: absolute;
-    background-position: center;
-    width: 105%;
-    margin-left: -10px;
-    margin-top: -10px;
-    background-size: cover;
-    position: absolute;
+    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    -o-object-fit: cover;
+    -o-object-position: center;
 }
 
 @media (min-width: 700px) {
