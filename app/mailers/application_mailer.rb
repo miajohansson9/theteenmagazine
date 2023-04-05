@@ -1,4 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
+  include ActionView::Helpers::DateHelper
   default from: "The Teen Magazine Editor Team <editors@theteenmagazine.com>"
 
   def custom_message_template(user, newsletter)
@@ -347,10 +348,10 @@ class ApplicationMailer < ActionMailer::Base
     )
   end
 
-  def editor_picks(posts, newsletter)
+  def editor_picks(email, posts, newsletter)
     @newsletter = newsletter
     @posts = posts
-    mail(to: "email", subject: "This Week's Editor Picks are Here!")
+    mail(to: email, subject: "This Week's Editor Picks are Here!")
   end
 
   def featured_in_newsletter(user, post)
@@ -401,10 +402,10 @@ class ApplicationMailer < ActionMailer::Base
       return "#{time_ago_in_words(date)} ago"
       ## within this year
     elsif ((Date.today.beginning_of_year)..(Time.now)).cover?(date)
-      return date.in_time_zone&.strftime("%A, %B %d")
+      return date.in_time_zone&.strftime("%b %d")
       ## year before
     else
-      return date.in_time_zone&.strftime("%B %d, %Y")
+      return date.in_time_zone&.strftime("%b, %Y")
     end
   end
 end

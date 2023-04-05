@@ -30,35 +30,22 @@
     max-width: 100%;
     height: auto !important;
   }
-  .ctgry_section {
+  .article {
     display: flex;
     flex-direction: row;
+  }
+  .article_image {
+    display: block;
+    width: 40%;
+  }
+  .article_image img {
     width: 100%;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    justify-content: space-between;
-    p {
-        font-size: 16px;
-        margin-bottom: 5px;
-        color: #545454;
-    }
-    .ctgry_article {
-        width: 31%;
-        img {
-            width: 100%;
-        }
-        h1 {
-            margin: 0;
-            margin-top: 10px;
-            font-size: 26px;
-            font-family: "Lucitana";
-            font-weight: 400;
-            a {
-                color: black;
-                text-decoration: none;
-            }
-        }
-    }
+  }
+  .article_info {
+    width: 60%;
+  }
+  .article_info h3 {
+    font-size: 20px;
   }
   @media only screen and (max-width: 640px) {
     .padding {
@@ -104,23 +91,88 @@
                       <span style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                     <% end %>
                     <%= markdown @newsletter.message %>
-                    <div class="ctgry_section">
-                      <% Post.published.limit(5).each do |post| %>
-                        <div class="ctgry_article">
-                          <%=link_to(image_tag(post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), alt: post.title), post )%>
-                          <h1><%= link_to post.title, post %></h1>
-                          <div class="d-flex flex-wrap overflow-hidden align-items-center justify-content-between">
-                            <div class="author d-table-cell align-middle">
-                              <% @profile = post.user.profile.attached? ? post.user.profile.variant(resize_to_fill: [100,100]) : "profile_image.jpg" %>
-                              <%= image_tag(@profile, :class => "profile_img", :style => "max-width: 20px !important; min-width: 20px !important; height: 20px;") %>
-                              <%= link_to(post.user.full_name, post.user, class: 'date') %>
-                            </div>
-                            <%= render 'posts/partials/views_and_comments', post: post %>
-                          </div>
-                          <p class="m-0"><%= date_to_words(post.publish_at) %></p>
-                        </div>
-                      <% end %>
-                    </div>
+                    <% Post.published.limit(5).each do |post| %>
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+                        <tbody>
+                          <tr>
+                            <td valign="top" style="padding:9px">
+                              <table border="0" cellpadding="0" cellspacing="0" class="m_-3653343243659045546mcnCaptionRightContentOuter" width="100%" style="border-collapse:collapse">
+                                <tbody>
+                                  <tr>
+                                    <td valign="top" style="padding:0 9px">
+                                      <table align="left" border="0" cellpadding="0" cellspacing="0" class="m_-3653343243659045546mcnCaptionRightImageContentContainer" width="264" style="border-collapse:collapse">
+                                        <tbody>
+                                          <tr>
+                                            <td align="center" valign="top">
+                                              <a href="https://hercampus.us1.list-manage.com/track/click?u=b2c46422e6258e64213e440fe&amp;id=f826df9830&amp;e=a712c01b49" title="" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://hercampus.us1.list-manage.com/track/click?u%3Db2c46422e6258e64213e440fe%26id%3Df826df9830%26e%3Da712c01b49&amp;source=gmail&amp;ust=1680801506679000&amp;usg=AOvVaw2ParY6UxC5fzVbTJDC8nnA">
+                                                <img alt="" src="https://ci3.googleusercontent.com/proxy/WOYTJYIPa_o1fuiwrJwthi3PezNLNbQNMubvtsRab1nrSySnXu5LcPxdh7VSLKXrux9tpPMLVCGHfK9BQGAXgaRTepU_MYNCpe_AEXNam1tCRFhFolYpOXbWu1W83pl64BoEbNGaaxB7sgsydBmyDZGVqLuMQw=s0-d-e1-ft#https://mcusercontent.com/b2c46422e6258e64213e440fe/images/8a42b6a1-fc92-6550-69d9-6f3c2984dda2.png" width="264" style="max-width:719px;border:0;height:auto;outline:none;text-decoration:none;vertical-align:bottom" class="m_-3653343243659045546mcnImage CToWUd" data-bit="iit">
+                                              </a>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                      <table class="m_-3653343243659045546mcnCaptionRightTextContentContainer" align="right" border="0" cellpadding="0" cellspacing="0" width="264" style="border-collapse:collapse">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" class="m_-3653343243659045546mcnTextContent" style="line-height:200%;word-break:break-word;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;text-align:left">
+                                              <header><a href="https://hercampus.us1.list-manage.com/track/click?u=b2c46422e6258e64213e440fe&amp;id=4c3f3d4220&amp;e=a712c01b49" style="color:#000000;font-weight:normal;text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://hercampus.us1.list-manage.com/track/click?u%3Db2c46422e6258e64213e440fe%26id%3D4c3f3d4220%26e%3Da712c01b49&amp;source=gmail&amp;ust=1680801506679000&amp;usg=AOvVaw2DBCIP-qaE83VOPUh07zly"><font face="playfair display, georgia, times new roman, serif"><span style="font-size:32px">Going To Your First K-Pop Concert? Here's What To Expect</span><br>
+                                                    <span style="font-size:18px">Don't miss out on these tips!</span></font></a></header>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+                        <tbody>
+                          <tr>
+                            <td valign="top" style="padding:9px">
+                              <table border="0" cellpadding="0" cellspacing="0" class="m_-3653343243659045546mcnCaptionLeftContentOuter" width="100%" style="border-collapse:collapse">
+                                <tbody>
+                                  <tr>
+                                    <td valign="top" style="padding:0 9px">
+                                      <table align="right" border="0" cellpadding="0" cellspacing="0" class="m_-3653343243659045546mcnCaptionLeftImageContentContainer" width="264" style="border-collapse:collapse">
+                                        <tbody>
+                                          <tr>
+                                            <td align="center" valign="top">
+                                              <a href="https://hercampus.us1.list-manage.com/track/click?u=b2c46422e6258e64213e440fe&amp;id=3d57eda432&amp;e=a712c01b49" title="" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://hercampus.us1.list-manage.com/track/click?u%3Db2c46422e6258e64213e440fe%26id%3D3d57eda432%26e%3Da712c01b49&amp;source=gmail&amp;ust=1680801506679000&amp;usg=AOvVaw0g-jHIiS97JZWcJ-LNiDam">
+                                                <img alt="" src="https://ci6.googleusercontent.com/proxy/o0QVSEA7xfJVtIELairFRd7ZNUPUfBYBMnh4LvZaOHqGmj6hweFXFFwyMlRJ-Fp7Kpkr2X8-pCDWYv21rYnQKMS7pCThsxUYPa9QdEtg0G5D8me3trPGYKDwsAMWO5nQenY4UwvTVZD5Pu7OJ_YBkdruLX2urQ=s0-d-e1-ft#https://mcusercontent.com/b2c46422e6258e64213e440fe/images/5a4d8429-8d92-5fb3-7dc0-c899211a1eec.png" width="264" style="max-width:719px;border:0;height:auto;outline:none;text-decoration:none;vertical-align:bottom" class="m_-3653343243659045546mcnImage CToWUd" data-bit="iit">
+                                              </a>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                      <table class="m_-3653343243659045546mcnCaptionLeftTextContentContainer" align="left" border="0" cellpadding="0" cellspacing="0" width="264" style="border-collapse:collapse">
+                                        <tbody>
+                                          <tr>
+                                            <td valign="top" class="m_-3653343243659045546mcnTextContent" style="line-height:200%;word-break:break-word;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;text-align:left">
+                                              <header>
+                                              </header>
+                                              <header>
+                                              </header>
+                                              <header>
+                                              </header>
+                                              <header><a href="https://hercampus.us1.list-manage.com/track/click?u=b2c46422e6258e64213e440fe&amp;id=f6c092072f&amp;e=a712c01b49" style="color:#000000;font-weight:normal;text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://hercampus.us1.list-manage.com/track/click?u%3Db2c46422e6258e64213e440fe%26id%3Df6c092072f%26e%3Da712c01b49&amp;source=gmail&amp;ust=1680801506680000&amp;usg=AOvVaw2bBwgEnqhevWbdKHkkulUf"><font face="playfair display, georgia, times new roman, serif"><span style="font-size:32px">Rhode Is Releasing A New Peptide Lip Treatment Flavor</span></font><br>
+                                                  <span style="font-size:18px"><span style="font-family:playfair display,georgia,times new roman,serif">Just in time for summer.</span></span></a></header>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    <% end %>
                     <% if @newsletter.action_button.present? %>
                       <a target="_blank" href="<%= @button_link %>"style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;"><%= @button_text %></a>
                     <% end %>

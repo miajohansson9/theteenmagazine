@@ -6,7 +6,7 @@ class ApplicationMailerPreview < ActionMailer::Preview
 
   # Accessible from http://localhost:3000/rails/mailers/application_mailer/editor_picks
   def editor_picks
-    ApplicationMailer.editor_picks(Post.published.limit(6), Newsletter.where(template: "Weekly Picks").last)
+    ApplicationMailer.editor_picks(User.first.email, Post.published.limit(5), Newsletter.where(template: "Weekly Picks").last)
   end
 
   # Accessible from http://localhost:3000/rails/mailers/application_mailer/invitation_to_apply

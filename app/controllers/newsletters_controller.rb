@@ -110,11 +110,17 @@ class NewslettersController < ApplicationController
     @user = User.find(params[:user_id])
     @newsletter = Newsletter.find(params[:id])
     if @newsletter.template.eql? "Weekly Picks"
-      ApplicationMailer.weekly_newsletter(@user.email, @newsletter).deliver
-      redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
+      if ApplicationMailer.editor_picks(@user.email, Post.published.limit(5), @newsletter).deliver
+        redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
+      else
+        redirect_to "/newsletters/#{params[:id]}", notice: "Something went wrong"
+      end
     elsif @newsletter.template.eql? "Announcement"
-      ApplicationMailer.custom_message_template(@user, @newsletter).deliver
-      redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
+      if ApplicationMailer.custom_message_template(@user, @newsletter).deliver
+        redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
+      else
+        redirect_to "/newsletters/#{params[:id]}", notice: "Something went wrong"
+      end
     end
   end
 
