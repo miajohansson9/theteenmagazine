@@ -33,7 +33,9 @@ module ApplicationHelper
   end
 
   def format_number_category(number)
-    if number >= 200000
+    if number >= 250000
+      return "250k+"
+    elsif number >= 200000
       return "200k+"
     elsif number >= 150000
       return "150k+"
