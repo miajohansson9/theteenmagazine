@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_10_221834) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", precision: nil, null: false
+    t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -29,10 +29,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
+    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
-    t.datetime "created_at", precision: nil, null: false
-    t.string "service_name", null: false
+    t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -83,14 +83,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.string "category"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "resume_file_name"
-    t.string "resume_content_type"
-    t.bigint "resume_file_size"
-    t.datetime "resume_updated_at", precision: nil
-    t.string "sample_writing_file_name"
-    t.string "sample_writing_content_type"
-    t.bigint "sample_writing_file_size"
-    t.datetime "sample_writing_updated_at", precision: nil
     t.string "grade"
     t.integer "user_id"
     t.text "editor_revision"
@@ -118,10 +110,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "name"
     t.string "slug"
-    t.string "image_file_name"
-    t.string "image_content_type"
-    t.bigint "image_file_size"
-    t.datetime "image_updated_at", precision: nil
     t.string "description"
     t.boolean "archive"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
@@ -210,14 +198,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.datetime "alert_viewed_at", precision: nil
   end
 
-  create_table "likes", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "comment_id"
-    t.string "cookie"
-  end
-
   create_table "mailers", id: :serial, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -231,10 +211,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.boolean "ready"
     t.datetime "sent_at", precision: nil
     t.integer "user_id"
-    t.string "hero_image_file_name"
-    t.string "hero_image_content_type"
-    t.bigint "hero_image_file_size"
-    t.datetime "hero_image_updated_at", precision: nil
     t.string "audience"
     t.integer "recipients"
     t.string "template"
@@ -256,94 +232,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.decimal "sponsored_article_cost"
   end
 
-  create_table "pay_charges", force: :cascade do |t|
-    t.bigint "customer_id", null: false
-    t.bigint "subscription_id"
-    t.string "processor_id", null: false
-    t.integer "amount", null: false
-    t.string "currency"
-    t.integer "application_fee_amount"
-    t.integer "amount_refunded"
-    t.jsonb "metadata"
-    t.jsonb "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["customer_id", "processor_id"], name: "index_pay_charges_on_customer_id_and_processor_id", unique: true
-    t.index ["subscription_id"], name: "index_pay_charges_on_subscription_id"
-  end
-
-  create_table "pay_customers", force: :cascade do |t|
-    t.string "owner_type"
-    t.bigint "owner_id"
-    t.string "processor", null: false
-    t.string "processor_id"
-    t.boolean "default"
-    t.jsonb "data"
-    t.datetime "deleted_at", precision: nil
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["owner_type", "owner_id", "deleted_at", "default"], name: "pay_customer_owner_index"
-    t.index ["processor", "processor_id"], name: "index_pay_customers_on_processor_and_processor_id", unique: true
-  end
-
-  create_table "pay_merchants", force: :cascade do |t|
-    t.string "owner_type"
-    t.bigint "owner_id"
-    t.string "processor", null: false
-    t.string "processor_id"
-    t.boolean "default"
-    t.jsonb "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["owner_type", "owner_id", "processor"], name: "index_pay_merchants_on_owner_type_and_owner_id_and_processor"
-  end
-
-  create_table "pay_payment_methods", force: :cascade do |t|
-    t.bigint "customer_id", null: false
-    t.string "processor_id", null: false
-    t.boolean "default"
-    t.string "type"
-    t.jsonb "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["customer_id", "processor_id"], name: "index_pay_payment_methods_on_customer_id_and_processor_id", unique: true
-  end
-
-  create_table "pay_subscriptions", force: :cascade do |t|
-    t.bigint "customer_id", null: false
-    t.string "name", null: false
-    t.string "processor_id", null: false
-    t.string "processor_plan", null: false
-    t.integer "quantity", default: 1, null: false
-    t.string "status", null: false
-    t.datetime "trial_ends_at", precision: nil
-    t.datetime "ends_at", precision: nil
-    t.decimal "application_fee_percent", precision: 8, scale: 2
-    t.jsonb "metadata"
-    t.jsonb "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["customer_id", "processor_id"], name: "index_pay_subscriptions_on_customer_id_and_processor_id", unique: true
-  end
-
-  create_table "pay_webhooks", force: :cascade do |t|
-    t.string "processor"
-    t.string "event_type"
-    t.jsonb "event"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "pitches", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "slug"
-    t.string "thumbnail_file_name"
-    t.string "thumbnail_content_type"
-    t.bigint "thumbnail_file_size"
-    t.datetime "thumbnail_updated_at", precision: nil
     t.integer "category_id"
     t.integer "user_id"
     t.integer "claimed_id"
@@ -385,10 +279,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.boolean "waiting_for_approval"
     t.boolean "after_approved"
     t.string "category_id"
-    t.string "thumbnail_file_name"
-    t.string "thumbnail_content_type"
-    t.bigint "thumbnail_file_size"
-    t.datetime "thumbnail_updated_at", precision: nil
     t.integer "post_impressions", default: 0
     t.integer "ranking"
     t.string "collaboration"
@@ -463,10 +353,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.text "youtube"
     t.text "snap"
     t.boolean "admin"
-    t.string "profile_file_name"
-    t.string "profile_content_type"
-    t.bigint "profile_file_size"
-    t.datetime "profile_updated_at", precision: nil
     t.boolean "editor"
     t.string "full_name"
     t.string "slug"
@@ -504,8 +390,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
     t.integer "promotions", default: 0
     t.boolean "skip_assignment"
     t.boolean "marketer"
-    t.string "city"
-    t.string "country"
     t.datetime "last_saw_interviews"
     t.boolean "remove_from_writer_newsletter"
     t.boolean "remove_from_reader_newsletter"
@@ -520,8 +404,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_27_160448) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
-  add_foreign_key "pay_charges", "pay_subscriptions", column: "subscription_id"
-  add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
-  add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
 end
