@@ -47,6 +47,8 @@ module ApplicationHelper
       return "10k+"
     elsif number >= 5000
       return "5k+"
+    elsif number >= 2000
+      return "2k+"
     elsif number >= 1000
       return "1k+"
     else
