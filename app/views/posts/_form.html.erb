@@ -73,8 +73,21 @@
               <p>
                 <%= f.check_box :editor_can_make_changes %>
                 <i>
-                  I give permission for an editor to make changes to my article when I submit. These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
-                  I understand I am still able to alter these once my article is published. Large edits will always be sent back for changes.
+                  I give permission for an editor to make changes to my article when I submit. These changes may include small improvements to formatting, grammar/punctuation, thumbnail image, and/or title optimization.
+                </i>
+              </p>
+            <% end %>
+            <% if (@post.user_id.eql? current_user.id) %>
+              <p>
+                <%= f.check_box :agree_to_image_policy %>
+                <i style="background-color: #FCD04D">
+                  I have read and understand the image policy found <a target="_blank" class="link_nrml" href="/finding-images">here</a>. By checking this box, I confirm that the images found in my article (including the thumbnail) have the proper attributions and follow all the requirements explained in the Image Policy. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
+                </i>
+              </p>
+            <% elsif !post.agree_to_image_policy %>
+              <p>
+                <i>
+                  <%= post.full_name %> has not agreed to the image policy.
                 </i>
               </p>
             <% end %>
