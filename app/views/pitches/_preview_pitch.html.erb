@@ -31,6 +31,19 @@
             <%= image_tag(pitch.thumbnail.variant(resize_to_fill: [540, 380]), class: "image_half_left mb-4") %>
           </div>
         </div>
+                    <% if !@pitch.agree_to_image_policy %>
+              <div class="alert alert-danger" role="alert">
+                <p class="m-0">
+                  The writer who pitched this topic did not agree to the image policy found <a target="_blank" href="/image-policy">here</a> and the thumbnail image might not be safe to use. If you claim this pitch, you should replace the thumbnail image and attribute it correctly before submitting your article for review.
+                </p>
+              </div>
+            <% else %>
+              <div class="alert alert-info" role="alert">
+                <p class="m-0">
+                  The writer who pitched this topic has agreed to the image policy found <a target="_blank" href="/image-policy">here</a>. Please double check that the thumbnail image is attributed correctly and that the source fits the image policy found <a target="_blank" href="/finding-images">here</a> before submitting the article for review.
+                </p>
+              </div>
+            <% end %>
         <div class="btn_cntnr mb-0 pb-0">
           <% if intent.eql? "Claim" %>
             <%= form_for @post, url: pitch_onboarding_claim_path(:id => pitch.id), remote: true do |f| %>
@@ -39,10 +52,11 @@
                 <%= f.hidden_field :title, value: "Interview with " << @pitch.title << " (replace this with interesting title)" %>
               <% else %>
                 <%= f.hidden_field :title, value: @pitch.title %>
+                <%= f.hidden_field :thumbnail_credits, value: @pitch.thumbnail_credits %>
               <% end %>
               <%= f.hidden_field :category_id, value: pitch.category_id %>
               <%= f.hidden_field :pitch_id, value: pitch.id %>
-              <%= f.button "Cancel", class: "newpost--new--profile mr-2 pl-5 pr-5", id: "dismiss-modal", "data-bs-dismiss" => "modal" %>
+              <%= f.label "Cancel", class: "newpost--new--profile mr-2 pl-5 pr-5", id: "dismiss-modal", "data-bs-dismiss" => "modal" %>
               <div class="hide spinner-button spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
               </div>
@@ -52,7 +66,7 @@
             <%= form_for pitch, url: pitch_onboarding_unclaim_path(:id => pitch.id), remote: true do |f| %>
               <%= f.hidden_field :claimed_id, value: nil %>
               <%= f.hidden_field :archive, value: !pitch.user.editor %>
-              <%= f.button "Cancel", class: "newpost--new--profile mr-2 pl-5 pr-5", id: "dismiss-modal", "data-bs-dismiss" => "modal" %>
+              <%= f.label "Cancel", class: "newpost--new--profile mr-2 pl-5 pr-5", id: "dismiss-modal", "data-bs-dismiss" => "modal" %>
               <div class="hide spinner-button spinner-border" style="margin-left: 78px !important;" role="status">
                 <span class="sr-only">Loading...</span>
               </div>

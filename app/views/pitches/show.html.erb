@@ -51,6 +51,16 @@
     <p><i style="background-color: #FCD04D;">Admin Notes: <%= @pitch.admin_notes %></i></p>
   <% end %>
   <% if @pitch.thumbnail.attached? %>
+    <% if @thumbanil_credits && @thumbanil_credits.length > 0 %>
+      <div class="chip">
+        PHOTO BY
+        <% if @thumbanil_credits.length.eql? 2 %>
+          <%= link_to(@thumbanil_credits[0], link_helper(@thumbanil_credits[1]), target: '_blank') %>
+        <% else %>
+          <%= @thumbanil_credits[0] %>
+        <% end %>
+      </div>
+    <% end %>
     <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: @pitch.title, :class => "card-img-top")%>
   <% end %>
   <% if @pitch.requirements.present? %>
@@ -70,11 +80,25 @@
         <%= f.hidden_field :title, value: "Interview with " << @pitch.title << " (replace this with interesting title)" %>
       <% else %>
         <%= f.hidden_field :title, value: @pitch.title %>
+        <%= f.hidden_field :thumbnail_credits, value: @pitch.thumbnail_credits %>
       <% end %>
       <%= f.hidden_field :category_id, value: @pitch.category_id %>
       <%= f.hidden_field :pitch_id, value: @pitch.id %>
       <% if !@pitch.is_interview? %>
-        <i class="d-block pb-4 mb-2">When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
+        <i class="d-block pb-4 ">When you claim an article idea, the pitch will show up as claimed in your dashboard, and a new draft will be started. Only claim pitches you intend to write. If you change your mind later, you can unclaim the pitch.</i>
+        <% if !@pitch.agree_to_image_policy %>
+          <div class="alert alert-danger" role="alert">
+            <p class="m-0">
+              The writer who pitched this topic did not agree to the image policy found <a target="_blank" href="/image-policy">here</a> and the thumbnail image might not be safe to use. If you claim this pitch, you should replace the thumbnail image and attribute it correctly before submitting your article for review.
+            </p>
+          </div>
+        <% else %>
+          <div class="alert alert-info" role="alert">
+            <p class="m-0">
+              The writer who pitched this topic has agreed to the image policy found <a target="_blank" href="/image-policy">here</a>. Please double check that the thumbnail image is attributed correctly and that the source fits the image policy found <a target="_blank" href="/finding-images">here</a> before submitting the article for review.
+            </p>
+          </div>
+        <% end %>
       <% end %>
       <div class="btn_cntnr">
         <% @confirm = @pitch.deadline.nil? ? "When you claim this pitch, your draft will be started." : "When you claim this pitch, you will have #{@pitch.deadline} weeks to submit the associated draft for review." %>

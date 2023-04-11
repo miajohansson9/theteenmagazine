@@ -33,7 +33,7 @@
         <p>
           Please indicate the social media platform you can share the article link. (You will get to see the draft before it's published.)
         </p>
-        <%= f.select(:platform_to_share, ['None selected', 'Instagram story w/ link (preferred)', 'Instagram bio link', 'TikTok bio link', 'Facebook post', 'Youtube community post', 'Twitter tweet', 'Twitter bio', 'Pinterest post', 'Snapchat post', 'LinkedIn post'], {prompt: "None selected"}) %>
+        <%= f.select(:platform_to_share, ['None selected', 'Instagram story w/ link (preferred)', 'Instagram post (preferred)', 'TikTok video', 'Youtube video description (top)', 'Twitter tweet'], {prompt: "None selected"}) %>
         <p>Admin notes about this pitch</p>
         <%= f.text_area :admin_notes, placeholder: "No notes" %>
         <%= f.select(:deadline, options_for_select(["6 weeks", "8 weeks"], [6, 8]), {prompt: @prompt}, {:class => "d-inline"}) %>
@@ -52,8 +52,21 @@
         <p>Upload a <a target="_blank" href="/choosing-a-topic#thumbnail-requirements">royalty free and eye catching</a> thumbnail image:</p>
         <%= f.file_field :thumbnail %>
       </div>
-      <% if current_user.editor? %>
-        <p class="mb-0">Note: If this pitch does not fit The Teen Magazine's audience as described in <a target="_blank" href="/pitching-new-articles">Pitching New Articles</a>, an admin reserves the right to delete the pitch from Editor Pitches within 48 hours of it being created. Deleted pitches will not be counted toward your required pitches every month.</p>
+      <p>Give credit for your thumbnail image (Required). To show correctly, use the formatting: company's name + comma + full url to the site. See placeholder for example.</p>
+      <%= f.text_field :thumbnail_credits, placeholder: 'Pexels, https://www.pexels.com/photo/photo-of-woman-looking-on-computer-3059748/', class: "mb-0" %>
+      <% if (@pitch.user_id.eql? current_user.id) %>
+        <p>
+          <i >
+            <%= f.check_box :agree_to_image_policy, class: "d-inline" %>
+              I have read and understand the image policy found <a target="_blank" class="link_nrml" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this pitch has the proper attributions and follows all the requirements explained in the Image Policy. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
+          </i>
+        </p>
+      <% elsif !@post.agree_to_image_policy %>
+        <p>
+          <i>
+            <%= @post.user.full_name %> has not agreed to the image policy.
+          </i>
+        </p>
       <% end %>
     <% end %>
     <% if @pitch.status.nil? && !(@pitch.user.try(:editor) || current_user.editor) %>
@@ -70,5 +83,10 @@
       </div>
       <%= f.button @button_text, class: "newpost--new--profile mr-0 pl-4 pr-4 mb-0 submit_modal", id: "submit-comment-modal-button" %>
     </div>
+    <% if !@pitch.is_interview? && current_user.editor? %>
+      <div class="alert alert-info mt-4" role="alert">
+        <p class="m-0">Note: If this pitch does not fit The Teen Magazine's audience as described in <a target="_blank" href="/pitching-new-articles">Pitching New Articles</a>, an admin reserves the right to delete the pitch from Editor Pitches at any time. Deleted pitches will not be counted toward your required pitches every month.</p>
+      </div>
+    <% end %>
   </div>
 <% end %>

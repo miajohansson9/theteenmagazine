@@ -86,6 +86,7 @@ Rails.application.routes.draw do
   get "checklist" => "pages#checklist"
   get "ranking" => "pages#ranking"
   get "privacy-policy" => "pages#privacy"
+  get "copyright-policy" => "pages#copyright"
   get "subscribe" => "pages#subscribe"
   get "email-preferences" => "pages#email_preferences"
   post "email-preferences", to: "pages#email_preferences"

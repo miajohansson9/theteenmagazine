@@ -5,6 +5,7 @@ class PagesController < ApplicationController
                   ads
                   issue
                   privacy
+                  copyright
                   subscribe
                   email_preferences
                   update_email_preferences
@@ -25,6 +26,10 @@ class PagesController < ApplicationController
 
   def contact
     set_meta_tags title: "Contact us | The Teen Magazine"
+  end
+
+  def copyright
+    set_meta_tags title: "Copyright Policy | The Teen Magazine"
   end
 
   def criteria

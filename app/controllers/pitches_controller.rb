@@ -88,7 +88,7 @@ class PitchesController < ApplicationController
   #create a new pitch
   def new
     @pitch = current_user.pitches.build
-    @categories = Category.active
+    @categories = Category.active.where.not(slug: "interviews")
     set_meta_tags title: "New Pitch | The Teen Magazine"
   end
 
@@ -111,6 +111,10 @@ class PitchesController < ApplicationController
       end
     else
       @pitch = current_user.pitches.build(pitch_params)
+      if !(pitch_params[:agree_to_image_policy].eql? "1")
+        redirect_to new_pitch_path, notice: "You have not agreed to the image policy! It cannot be submitted"
+        return
+      end
       if @pitch.save && current_user.editor?
         fix_title
         redirect_to "/pitches", notice: "Your pitch was successfully added!"
@@ -270,6 +274,10 @@ class PitchesController < ApplicationController
       @pitch.claimed_id.present? ? User.find_by(id: @pitch.claimed_id) : nil
     @article =
       @claimed_user ? @claimed_user.posts.where(pitch_id: @pitch.id).last : nil
+    if @pitch.thumbnail_credits.present?
+      @thumbanil_credits =
+        (@pitch.thumbnail_credits.include? ",") ? @pitch.thumbnail_credits.split(",") : [@pitch.thumbnail_credits.upcase]
+    end
     if @pitch.status.eql? "Ready for Review"
       @title = "Pitch Submitted"
       @disabled = "disabled"
@@ -385,6 +393,8 @@ class PitchesController < ApplicationController
         :platform_to_share,
         :interview_kind,
         :following_level,
+        :thumbnail_credits,
+        :agree_to_image_policy,
         :admin_notes
       )
   end
@@ -419,6 +429,8 @@ class PitchesController < ApplicationController
         :deadline_at,
         :shared_at,
         :promoting_until,
+        :agree_to_image_policy,
+        :thumbnail_credits,
         :slug,
         feedback_list: [],
         reviews_attributes: %i[id post_id created_at status notes editor_id],
