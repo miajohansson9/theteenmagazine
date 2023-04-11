@@ -48,7 +48,7 @@ class PagesController < ApplicationController
   end
 
   def images
-    set_meta_tags title: "Finding Images | The Teen Magazine"
+    set_meta_tags title: "Image Policy | The Teen Magazine"
     current_user.update(read_images: true)
   end
 

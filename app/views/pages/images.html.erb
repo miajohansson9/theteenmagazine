@@ -1,26 +1,67 @@
 <div class="skinny_wrapper theimages">
-  <h1 id="page_title">Finding Images</h1>
-  <%= image_tag("11.png") %>
-
+  <h1 id="page_title">Image Policy</h1>
+  <h3><b>Image Usage Policy</b></h3>
+  <p>As a writer for our platform, you are responsible for ensuring that any images used in your content comply with applicable copyright laws and are used in accordance with our policies. Failure to follow this policy may result in liability on your part, including legal consequences.
+  </p>
   <ul>
-    <li>Sites with the best lifestyle images are <a target="_blank" href="https://www.pinterest.com">Pinterest.com</a>, <a target="_blank" href="http://favim.com/">Favim.com</a>, and <a target="_blank" href="http://weheartit.com/">WeHeartIt.com</a>. Only use images that have lots of shares.</li>
-    <li>Do not use images that have watermarks or copyright seals. Google search is not a safe way to find images.</li>
-    <li>Some great royalty free, high-quality image websites are <a target="_blank" href="https://www.pexels.com/">Pexels.com</a>, <a target="_blank" href="https://unsplash.com/">Unsplash.com</a>, <a target="_blank" href="https://creativecommons.org/">Creative Commons</a>, and <a target="_blank" href="Favim.com">Favim.com</a>.</li>
-    <li>You may use GIF's and please do. They make articles more interesting and interactive. You can search for gifs on google and insert them just like you would for an image. A good site to find gifs on is <a target="_blank" href="http://giphy.com/">Giphy.com</a></li>
-    <li>All images need to be good quality and not grainy. </li>
-    <li>The image you choose for your thumbnail needs to be high resolution quality.</li>
-    <li> If you are writing about a certain product, you may use the product image on company's website or on any other site like amazon.</li>
+    <li>
+      Image Attribution: When using images in your content, you must provide proper attribution, giving credit to the original creator or source of the image as required by the relevant licensing terms. This includes providing the name of the owner and a link to the original source, if applicable.
+    </li>
+    <li>
+      Royalty-Free Images: You may use royalty-free images that are licensed for free use or under a Creative Commons (CC) license, provided that you comply with the terms of the license and properly attribute the images. It is your responsibility to verify the licensing terms of any image you use to ensure that it is free to use for your intended purpose.
+    </li>
+    <li>
+      Prohibited Images: You must not use any images that are copyrighted, trademarked, or otherwise protected by intellectual property rights, without obtaining proper authorization from the owner. Please see Which Images Are Not Safe to Use.
+    </li>
+    <li>
+      Liability for Infringement: If you use images in violation of this policy, you may be liable for any resulting copyright infringement or other legal consequences. You are solely responsible for the images you use in your content, and you must indemnify and hold our platform harmless from any claims, damages, or losses resulting from your failure to comply with this policy.
+    </li>
   </ul>
-
+  <h3><b>How to find images that are safe to use:</b></h3>
+  <ul>
+    <li>
+      Use reputable websites: Look for established websites that offer royalty-free or creative commons images, such as <b>Unsplash, Pixabay, Pexels, or Wikimedia Commons</b>. These websites typically provide images that are free to use for various purposes, including commercial use, without the need for attribution or payment.
+    </li>
+    <li>
+      Use advanced search filters: When using search engines like Google, utilize advanced search filters to narrow down results to images that are labeled for reuse or modification. You can do this by selecting "Tools" > "Usage Rights" and choosing an appropriate option, such as "Labeled for reuse" or "Labeled for noncommercial reuse."
+    </li>
+    <li>
+      Check licenses and terms of use: Read and understand the licenses and terms of use associated with the images you find. Some images may require attribution, have restrictions on usage, or may not be allowed for certain purposes. Make sure to comply with the stated terms of use to avoid copyright infringement.
+    </li>
+    <li>
+      Consider using public domain images: Public domain images are not protected by copyright and can be used freely for any purpose. There are websites that offer collections of public domain images, such as Public Domain Pictures, Public Domain Archive, or the Library of Congress.
+    </li>
+  </ul>
+  <h3><b>Which Images Are Not Safe to Use:</b></h3>
+  <ul>
+    <li>
+      Copyrighted images: Avoid using images that are protected by copyright unless you have obtained proper authorization or a license to use them. Copyrighted images are owned by the creator or owner and are subject to legal protection, which means that unauthorized use can result in copyright infringement.
+    </li>
+    <li>
+      Images without proper attribution or permission: Some images may be labeled as "free to use" but require attribution or permission from the creator or owner. Always check the licensing terms and requirements for proper attribution or permission, and comply with them to avoid any legal issues.
+    </li>
+    <li>
+      Watermarked or copyrighted images: Avoid using images that contain watermarks, logos, or other indications of copyright ownership, unless you have proper authorization or a license to use them. Using such images without permission can result in copyright infringement.
+    </li>
+    <li>
+      Images from unknown or sketchy sources: Be cautious when using images from unknown or unreliable sources, as they may not have proper authorization or may not be legitimate royalty-free sources. Stick to reputable websites and verify the legitimacy and usage rights of the images before using them.
+    </li>
+    <li>
+      Images with recognizable people or trademarks: Avoid using images that contain recognizable people or trademarks without proper authorization, as this may infringe on privacy rights or trademark laws. Be mindful of using images that depict identifiable individuals, brands, logos, or trademarks without proper permission.
+    </li>
+    <li>
+      Embedded images without proper authorization: Embedding images from social media platforms may not always be considered safe in terms of copyright compliance, as the original uploader may not have obtained proper authorization or may have only granted permission for personal, non-commercial use. Always make sure that an embedded image from social media was created by the user and ask the creator for permission, where possible.
+    </li>
+  </ul>
+  <p>
+    By using images in your content, you acknowledge and agree to comply with this Image Usage Policy. Failure to follow this policy may result in removal of your content from our platform and may make you liable for any legal consequences arising from copyright infringement or other violations. It is your responsibility to ensure that you have proper rights and permissions for any images used in your content, and to promptly remove any images that are found to be in violation of this policy or applicable copyright laws.
+  </p>
   <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
     <circle cx="26" cy="26" r="25" fill="none"/>
     <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
   </svg>
-
   <p>Return to your <%= link_to "dashboard", user_path(current_user) %></p>
 </div>
-
-
 <script type="text/javascript">
   $(document).ready(function(){
     $(window).on('scroll',function(){
