@@ -62,9 +62,6 @@
               Never signed in (admin only)
             <% else %>
               Last active <%= time_ago_in_words(user.last_sign_in_at) %> ago (admin only)
-              <% if current_user.admin? && !user.marketer? %>
-                <%= link_to "Invite to interview team", {:controller => "users", :action => "send_interviewer_invite_email", :user_id => user.id, data: {confirm: "Are you sure you want to send an invite email to this writer?"}}, class: 'text-decoration-underline' %>
-              <% end %>
             <% end %>
           </h6>
         </div>

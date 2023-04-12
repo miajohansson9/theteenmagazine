@@ -44,9 +44,6 @@
                   Never signed in (admin only)
                 <% else %>
                   Last active <%= time_ago_in_words(user.last_sign_in_at) %> ago (admin only)
-                  <% if current_user.admin? %>
-                    <%= link_to "invite to interview team", "#"  %>
-                  <% end %>
                 <% end %>
               </h6>
             </div>

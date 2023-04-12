@@ -42,8 +42,8 @@
           <%= f.file_field :thumbnail %>
         </div>
       <% end %>
-      <p>Give credit for your thumbnail image (Required). To show correctly, use the formatting: company's name + comma + full url to the site. See placeholder for example.</p>
-      <%= f.text_field :thumbnail_credits, placeholder: 'Pexels, https://www.pexels.com/photo/photo-of-woman-looking-on-computer-3059748/', class: "mb-0" %>
+      <p>Give credit for your thumbnail image (Required). To show correctly, use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. See placeholder for example.</p>
+      <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0" %>
       <% if (@post.user_id.eql? current_user.id) %>
         <p>
           Image Policy: <%= f.check_box :agree_to_image_policy %>
