@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :invitations
   has_many :applies
   has_many :outreaches
+  has_many :subscribers
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_12_134943) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_12_162604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -345,6 +345,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_12_134943) do
     t.boolean "subscribed_to_writer_newsletter"
     t.integer "user_id"
     t.string "token"
+    t.datetime "last_email_sent_at"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

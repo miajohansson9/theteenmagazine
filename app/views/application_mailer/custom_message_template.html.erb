@@ -68,7 +68,7 @@
                         </h1>
                         <span style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                       <% end %>
-                      <p>Hi <%= @user.first_name %>,</p>
+                      <p>Hi<%= " #{@user&.first_name}" %>,</p>
                       <%= markdown @newsletter.message %>
                       <p>Best,<br/>
                         Mia</p>
@@ -99,7 +99,7 @@
                     Sent to <%= @newsletter.audience %>
                   </span>
                   <span style="font-size:12px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0; padding-left: 4px;">-</span>
-                  <a style="font-size:12px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;" href="https://www.theteenmagazine.com/email-preferences?email=<%= @user.email %>&id=<%= @user.id %>">
+                  <a style="font-size:12px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;" href="https://www.theteenmagazine.com/email-preferences?email=&id=">
                     Email Preferences
                   </a>
                 </td>

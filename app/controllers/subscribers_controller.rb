@@ -14,10 +14,9 @@ class SubscribersController < ApplicationController
     end
 
     def index
-        @subscribers = Subscriber.order('opted_in_at desc')
         @pagy, @subscribers =
         pagy(
-            Subscriber.order('opted_in_at desc'),
+            Subscriber.order('last_email_sent_at desc'),
             page: params[:page],
             items: 40,
         )
@@ -57,6 +56,7 @@ class SubscribersController < ApplicationController
                 :created_at, 
                 :updated_at, 
                 :email,
+                :last_email_sent_at,
                 :first_name, 
                 :last_name, 
                 :user_id,

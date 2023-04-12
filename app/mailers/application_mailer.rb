@@ -2,8 +2,8 @@ class ApplicationMailer < ActionMailer::Base
   include ActionView::Helpers::DateHelper
   default from: "The Teen Magazine Editor Team <editors@theteenmagazine.com>"
 
-  def custom_message_template(user, newsletter)
-    @user = user
+  def custom_message_template(user_id, email, newsletter)
+    @user = User.find_by(id: user_id)
     @newsletter = newsletter
     @subject = newsletter.subject.present? ? newsletter.subject : (newsletter.header.present? ? newsletter.header : "Message from The Teen Magazine")
     if @newsletter.action_button.present?
@@ -12,7 +12,7 @@ class ApplicationMailer < ActionMailer::Base
       @button_link = (@button.length.eql? 2) ? @button[1].gsub(" ", "") : ""
     end
     mail(
-      to: @user.email,
+      to: email,
       subject: @subject,
       from: "Mia from The Teen Magazine <mia@theteenmagazine.com>",
     )

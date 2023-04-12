@@ -2,6 +2,7 @@
   <table class="table table-striped scrollmenu">
     <thead>
       <tr>
+        <th scope="col">last_email_sent_at</th>
         <th scope="col">opted_in_at</th>
         <th scope="col">created_at</th> 
         <th scope="col">updated_at</th>
@@ -19,9 +20,10 @@
     <tbody>
       <% @subscribers.each do |subscriber| %>
         <tr>
+          <td><%=  date_to_words(subscriber.last_email_sent_at) %></td>
           <td><%= date_to_words(subscriber.opted_in_at) %></td>
           <td><%=  date_to_words(subscriber.created_at) %></td>
-          <td><%=  date_to_words(subscriber.updated_at.in_time_zone) %></td>
+          <td><%=  date_to_words(subscriber.updated_at) %></td>
           <td>
             <% if subscriber.user_id.present? %>
                 <%= link_to(subscriber.user_id, User.find_by(id: subscriber.user_id))  %>
