@@ -1,0 +1,51 @@
+<div class="subscribers">
+  <table class="table table-striped scrollmenu">
+    <thead>
+      <tr>
+        <th scope="col">opted_in_at</th>
+        <th scope="col">created_at</th> 
+        <th scope="col">updated_at</th>
+        <th scope="col">user</th>
+        <th scope="col">last active</th>
+        <th scope="col">email</th>
+        <th scope="col">first_name</th>
+        <th scope="col">last_name</th>
+        <th scope="col">token</th>
+        <th scope="col">subscribed_to_reader_newsletter</th>
+        <th scope="col">subscribed_to_writer_newsletter</th>
+        <th scope="col">user do not send emails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @subscribers.each do |subscriber| %>
+        <tr>
+          <td><%= date_to_words(subscriber.opted_in_at) %></td>
+          <td><%=  date_to_words(subscriber.created_at) %></td>
+          <td><%=  date_to_words(subscriber.updated_at.in_time_zone) %></td>
+          <td>
+            <% if subscriber.user_id.present? %>
+                <%= link_to(subscriber.user_id, User.find_by(id: subscriber.user_id))  %>
+            <% end %>
+          </td>
+          <td>
+            <% if subscriber.user_id.present?%>
+                <%= date_to_words(User.find_by(id: subscriber.user_id)&.last_sign_in_at) %>
+            <% end %>
+          </td>
+          <td><%= subscriber.email %></td>
+          <td><%= subscriber.first_name %></td>
+          <td><%= subscriber.last_name %></td>
+          <td><%= subscriber.token %></td>
+          <td><%= subscriber.subscribed_to_reader_newsletter %></td>
+          <td><%= subscriber.subscribed_to_writer_newsletter %></td>
+          <td>
+            <% if subscriber.user_id.present? %>
+                <%= User.find_by(id: subscriber.user_id)&.do_not_send_emails  %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%== pagy_nav(@pagy).html_safe %>
+</div>

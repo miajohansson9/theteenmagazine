@@ -14,13 +14,11 @@
           <td><%= post.post_impressions %></td>
           <td><%= post.publish_at.in_time_zone.strftime("%D") %></td>
           <td><%= link_to post.title.truncate(40), post, class: "link_nrml" %></td>
-          <%# <% @top_percent = ((@posts_by_impressions.index(post).to_f / @posts_by_impressions.count.to_f) * 100).round(1) %>
-          <%# <% @top_percent = (@top_percent < 0.1 ) ? "< 0.1" : @top_percent %>
           <% @category = Category.find(post.category_id) %>
           <td><%= @category.name %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <div class="content_hint"></div>
+  <%== pagy_nav(@pagy).html_safe %>
 </div>

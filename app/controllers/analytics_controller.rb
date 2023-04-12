@@ -9,14 +9,17 @@ class AnalyticsController < ApplicationController
 
   def index
     redirect_to @user unless access
-    @posts_by_impressions = Post.published.order('post_impressions desc')
-    @user_posts =
+    @pagy, @user_posts =
+    pagy(
       Post
         .where('collaboration like ?', "%#{@user.email}%")
         .or(Post.where(user_id: @user.id))
         .or(Post.where(partner_id: @user.id))
         .published
-        .by_published_date
+        .by_published_date,
+        page: params[:page],
+        items: 40,
+    )
   end
 
   private

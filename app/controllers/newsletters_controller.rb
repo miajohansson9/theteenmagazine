@@ -4,7 +4,12 @@ class NewslettersController < ApplicationController
   before_action :find_newsletter, except: %i[index new create]
 
   def index
-    @newsletters = Newsletter.order("created_at desc")
+    @pagy, @newsletters =
+    pagy(
+      Newsletter.order("created_at desc"),
+      page: params[:page],
+      items: 20,
+    )
   end
 
   def new

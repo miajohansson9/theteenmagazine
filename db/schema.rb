@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_11_213132) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_12_134943) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -331,6 +331,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_213132) do
     t.text "notes"
     t.integer "feedback", default: [], array: true
     t.datetime "editor_claimed_review_at", precision: nil
+  end
+
+  create_table "subscribers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "source"
+    t.datetime "opted_in_at"
+    t.boolean "subscribed_to_reader_newsletter"
+    t.boolean "subscribed_to_writer_newsletter"
+    t.integer "user_id"
+    t.string "token"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

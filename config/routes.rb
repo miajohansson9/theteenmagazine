@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :pitches
   resources :reviews
   resources :feedbacks
+  resources :subscribers
   resources :constants
   resources :analytics
   resources :comments
