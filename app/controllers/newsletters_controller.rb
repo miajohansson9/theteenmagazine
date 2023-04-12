@@ -73,36 +73,23 @@ class NewslettersController < ApplicationController
     end
   end
 
-  def featured
-    set_meta_tags title: "Choose featured | The Teen Magazine"
-    @newsletter = Newsletter.find(params[:id])
-    @newsletter_posts = @newsletter.posts
-    if current_user.admin || current_user.has_newsletter_permissions
-      if params[:search].present?
-        @query = params[:search][:query]
-        @pagy, @posts =
-          pagy(
-            Post.published.where("lower(title) LIKE ?", "%#{@query.downcase}%"),
-            page: params[:page],
-            items: 15,
-          )
-      else
-        @pagy, @posts =
-          pagy(Post.published.trending, page: params[:page], items: 15)
-      end
-    else
-      redirect_to "/writers/#{current_user.slug}"
-    end
-  end
-
   #show application to editor
   #form for creating a new user already filled out
   def show
-    @posts = @newsletter.posts
     if @newsletter.action_button.present?
       @button = @newsletter.action_button.split(",")
       @button_text = @button[0]
       @button_link = (@button.length.eql? 2) ? @button[1].gsub(" ", "") : ""
+    end
+    if @newsletter.featured_posts.present?
+      @posts = []
+      @editor_quotes = []
+      @newsletter.featured_posts.split("],[").each_with_index do |featured, index|
+        slug = featured.split(', "')[0].gsub('[', '')
+        editor_message = '"' + featured.split(', "')[1].gsub(']', '')
+        @posts[index] = Post.find_by(slug: slug)
+        @editor_quotes[index] = editor_message
+      end
     end
   end
 
@@ -110,7 +97,19 @@ class NewslettersController < ApplicationController
     @user = User.find(params[:user_id])
     @newsletter = Newsletter.find(params[:id])
     if @newsletter.template.eql? "Weekly Picks"
-      if ApplicationMailer.editor_picks(@user.email, Post.published.limit(5), @newsletter).deliver
+      @posts = []
+      @editor_quotes = []
+      @newsletter.featured_posts.split("],[").each_with_index do |featured, index|
+        slug = featured.split(', "')[0].gsub('[', '')
+        editor_message = '"' + featured.split(', "')[1].gsub(']', '')
+        @posts[index] = Post.find_by(slug: slug)
+        @editor_quotes[index] = editor_message
+      end
+      if @posts.count.eql? 0
+        redirect_to newsletters_path, notice: "Something went wrong"
+        return
+      end
+      if ApplicationMailer.editor_picks(@user.email, @posts, @editor_quotes, @newsletter).deliver
         redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
       else
         redirect_to "/newsletters/#{params[:id]}", notice: "Something went wrong"
@@ -127,6 +126,72 @@ class NewslettersController < ApplicationController
   def send_to_audience
     @newsletter.update_column(:sent_at, Time.now)
     @newsletter.update_column(:recipients, 0)
+    if @newsletter.template.eql? "Announcment"
+      send_announcement
+    elsif @newsletter.template.eql? "Weekly Picks"
+      send_editor_picks
+    end
+    redirect_to "/newsletters", notice: "Email is sending to #{@newsletter.audience}"
+  end
+
+  def send_editor_picks
+    @posts = []
+    @editor_quotes = []
+    @newsletter.featured_posts.split("],[").each_with_index do |featured, index|
+      slug = featured.split(', "')[0].gsub('[', '')
+      editor_message = '"' + featured.split(', "')[1].gsub(']', '')
+      @posts[index] = Post.find_by(slug: slug)
+      @editor_quotes[index] = editor_message
+    end
+    if @posts.count.eql? 0
+      redirect_to newsletters_path, notice: "Something went wrong"
+      return
+    end
+    Thread.new do
+      if @newsletter.audience.eql? "All Writers"
+        User.writer.each do |user|
+          begin
+            if !user.remove_from_reader_newsletter
+              ApplicationMailer.editor_picks(user.email, @posts, @editor_quotes, @newsletter).deliver
+              @newsletter.increment(:recipients, by = 1)
+              @newsletter.save(:validate => false)
+            end
+          rescue
+            puts "Could not send to user #{user.id}"
+          end
+        end
+      elsif @newsletter.audience.eql? "Only Editors"
+        User.editor.each do |user|
+          begin
+            if !user.remove_from_reader_newsletter
+              ApplicationMailer.editor_picks(user.email, @posts, @editor_quotes, @newsletter).deliver
+              @newsletter.increment(:recipients, by = 1)
+              @newsletter.save(:validate => false)
+            end
+          rescue
+            puts "Could not send to editor #{user.id}"
+          end
+        end
+      elsif @newsletter.audience.eql? "Only Interviewers"
+        User.where(marketer: true).each do |user|
+          begin
+            if !user.remove_from_reader_newsletter
+              ApplicationMailer.editor_picks(user.email, @posts, @editor_quotes, @newsletter).deliver
+              @newsletter.increment(:recipients, by = 1)
+              @newsletter.save(:validate => false)
+            end
+          rescue
+            puts "Could not send to marketer #{user.id}"
+          end
+        end
+      elsif @newsletter.audience.eql? "All Readers"
+        # TODO
+        # Create subscriber model and migrate from mailchimp
+      end
+    end
+  end
+
+  def send_announcement
     Thread.new do
       if @newsletter.audience.eql? "All Writers"
         User.writer.each do |user|
@@ -166,7 +231,6 @@ class NewslettersController < ApplicationController
         end
       end
     end
-    redirect_to "/newsletters", notice: "Email is sending to #{@newsletter.audience}"
   end
 
   private
@@ -187,6 +251,8 @@ class NewslettersController < ApplicationController
         :header,
         :subject,
         :action_button,
+        :featured_posts,
+        :subheader,
       )
   end
 

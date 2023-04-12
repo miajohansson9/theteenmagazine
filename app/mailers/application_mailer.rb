@@ -18,6 +18,14 @@ class ApplicationMailer < ActionMailer::Base
     )
   end
 
+  def editor_picks(email, posts, editor_quotes, newsletter)
+    @newsletter = newsletter
+    @posts = posts
+    @editor_quotes = editor_quotes
+    @subject = newsletter.subject.present? ? newsletter.subject : "This Week's Editor Picks are Here!"
+    mail(to: email, subject: @subject)
+  end
+
   def welcome_email(user)
     @user = user
     mail(
@@ -346,12 +354,6 @@ class ApplicationMailer < ActionMailer::Base
       to: user.email,
       subject: "#{@user.first_name}, congratulations! Your article is featured",
     )
-  end
-
-  def editor_picks(email, posts, newsletter)
-    @newsletter = newsletter
-    @posts = posts
-    mail(to: email, subject: "This Week's Editor Picks are Here!")
   end
 
   def featured_in_newsletter(user, post)

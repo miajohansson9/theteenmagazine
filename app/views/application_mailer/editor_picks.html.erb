@@ -59,7 +59,7 @@
       }
     </style>
   </head>
-  <div marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #ecf8f7;" leftmargin="0">
+<div marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #ecf8f7;" leftmargin="0">
     <!--100% body table-->
     <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#ecf8f7"
         style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;">
@@ -106,9 +106,11 @@
                                                       <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Charter', 'Rubik',sans-serif;">
                                                         <%= @newsletter.header %>
                                                       </h1>
-                                                      <p style="color: #545454;font-style: italic;text-decoration: none; text-align: center; margin-bottom: 0px;font-family: 'Playfair Display';font-weight: 400;font-size: 1rem;white-space: nowrap;">
-                                                        March 27th - April 5th
-                                                      </p>
+                                                      <% if @newsletter.subheader.present? %>
+                                                        <p style="color: #545454;font-style: italic;text-decoration: none; text-align: center; margin-bottom: 0px;font-family: 'Playfair Display';font-weight: 400;font-size: 1rem;white-space: nowrap;">
+                                                          <%= @newsletter.subheader %>
+                                                        </p>
+                                                      <% end %>
                                                     <% end %>
                                                   </td>
                                                 </tr>
@@ -142,7 +144,7 @@
                           </tr>
                         </tbody>
                       </table>
-                      <% Post.published.limit(5).each_with_index do |post, index| %>
+                      <% @posts.each_with_index do |post, index| %>
                         <table class="content_wrapper" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;">
                           <tbody>
                             <tr>
@@ -178,7 +180,7 @@
                                           <tbody>
                                             <tr>
                                               <td align="center" valign="top">
-                                                <a href="https://hercampus.us1.list-manage.com/track/click?u=b2c46422e6258e64213e440fe&amp;id=f826df9830&amp;e=a712c01b49" title="" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://hercampus.us1.list-manage.com/track/click?u%3Db2c46422e6258e64213e440fe%26id%3Df826df9830%26e%3Da712c01b49&amp;source=gmail&amp;ust=1680801506679000&amp;usg=AOvVaw2ParY6UxC5fzVbTJDC8nnA">
+                                                <a href="https://theteenmagazine.com/<%= post.slug %>" title="" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://theteenmagazine.com/<%= post.slug %>">
                                                   <img alt="" src="<%= url_for(post.thumbnail.variant(resize_to_fill: [540, 340])) %>" width="264" style="max-width:719px;border:0;height:auto;outline:none;text-decoration:none;vertical-align:bottom" class="m_-3653343243659045546mcnImage CToWUd" data-bit="iit">
                                                 </a>
                                               </td>
@@ -190,7 +192,7 @@
                                             <tr>
                                               <td valign="top" style="line-height:200%;word-break:break-word;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;text-align:left">
                                                 <header>
-                                                  <a href="http://localhost:3000/<%= post.slug %>" style="color:#000000;font-weight:normal;text-decoration:none" target="_blank">
+                                                  <a href="https://theteenmagazine.com/<%= post.slug %>" style="color:#000000;font-weight:normal;text-decoration:none" target="_blank">
                                                     <font face="playfair display, georgia, times new roman, serif">
                                                       <span style="font-size:24px"><%= post.title %></span>
                                                     </font>
@@ -205,7 +207,7 @@
                                                     <td  valign="middle">
                                                       <p dir="ltr" style="text-align:center;margin:10px 0;padding:0;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;line-height:150%;font-size:16px; color: #545454;">
                                                         <font face="playfair display, georgia, times new roman, serif">
-                                                          <%= post.user.full_name %>, <span style="white-space: nowrap;"><%= date_to_words(post.created_at) %></span>
+                                                          <%= post.user.full_name %>, <span style="white-space: nowrap;"><%= post.created_at.in_time_zone&.strftime("%b %d") %></span>
                                                         </font>
                                                       </p>
                                                     </td>
@@ -226,7 +228,7 @@
                                                         <p dir="ltr" style="text-align:center;margin:10px 0;padding:0;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;line-height:150%">
                                                           <font face="playfair display, georgia, times new roman, serif">
                                                             <p style="font-size:16px; color: #545454;">
-                                                              "This is a quote by an editor. This article was so well done etc. etc." - Emily Johansson (Editor for The Teen Magazine)
+                                                              <%= @editor_quotes[index] %>
                                                             </p>
                                                           </font>
                                                         </p>
@@ -248,9 +250,6 @@
                         </table>
                       <% end %>
                     </td>
-                  </tr>
-                  <tr>
-                    <td style="height:40px;">&nbsp;</td>
                   </tr>
                 </table>
               </td>

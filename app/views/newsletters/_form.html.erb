@@ -1,18 +1,19 @@
 <%= form_for @newsletter do |f| %>
-  <p class="mb-0 mt-0">Header</p>
+  <p class="mb-0 mt-4">Subject</p>
+  <%= f.text_field :subject %>
+  <p class="mb-0 mt-0">Header (optional)</p>
   <%= f.text_field :header %>
   <p class="mb-0 mt-0">Message</p>
   <%= f.text_area :message, class: "ckeditor" %>
-  <p class="mb-0 mt-4">Subject</p>
-  <%= f.text_field :subject %>
-  <p class="mb-0">Action button text (use button text + comma + full url. See placeholder for example)</p>
-  <%= f.text_field :action_button, placeholder: 'Join Discord, https://discord.com/' %>
-  <%# <p class="mb-0 mt-0">Select featured posts for this newsletter <%= link_to("here", "/newsletters/#{@newsletter.id}/featured-posts", target: "_blank") %>
-  <%# <p class="mb-0 mt-0">Background hex color (view hex colors here: <%= link_to "https://htmlcolorcodes.com/", "https://htmlcolorcodes.com/" %>
-  <%# <%= f.text_field :background_color, value: (@newsletter.background_color || Newsletter.not_nil.last.try(:background_color)) %>
-  <%# <p class="mb-2 mt-0"><%= f.check_box :ready, disabled: @disabled %>
-  <%# Schedule send on next available Thursday.</p> %>
-  <%# <i class="d-block">Note: You must have all fields filled out and at least five featured posts to schedule send.</i> %>
+  <% if (params[:template].eql? 'Weekly Picks') || (@newsletter.template.eql? 'Weekly Picks') %>
+    <p class="mb-0 mt-4">Featured Posts (follow the placeholder's format *exactly*)</p>
+    <%= f.text_area :featured_posts, placeholder: '[5-new-aesthetics-that-are-dominating-2023, This is a quote by an editor. This article was so well done etc. etc. Emily Johansson],[next url ending..' %>
+    <p class="mb-0 mt-0">Subheader</p>
+    <%= f.text_field :subheader %>
+  <% else %>
+    <p class="mb-0">Action button text (use button text + comma + full url. See placeholder for example)</p>
+    <%= f.text_field :action_button, placeholder: 'Join Discord, https://discord.com/' %>
+  <% end %>
   <%= f.select(:audience, ['All Writers', 'Only Editors', 'Only Interviewers', 'All Readers']) %></p>
 <%= f.select(:template, ['Announcement', 'Weekly Picks']) %></p>
 <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">

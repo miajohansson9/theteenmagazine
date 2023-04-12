@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_11_153306) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_11_213132) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -217,6 +217,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_11_153306) do
     t.string "subject"
     t.string "header"
     t.string "action_button"
+    t.string "featured_posts"
+    t.string "subheader"
     t.index ["created_at"], name: "index_newsletters_on_created_at"
   end
 
