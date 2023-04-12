@@ -428,12 +428,17 @@ class UsersController < ApplicationController
 
   def reset_email
     begin
-      User
-        .where(email: params[:user][:email].strip)
-        .first
-        .send_reset_password_instructions
-      redirect_to "/reset-password",
+      user = User
+          .where('lower(email) = ?', params[:user][:email].strip.downcase)
+          .first
+      if user.present?
+        user.send_reset_password_instructions
+        redirect_to "/reset-password",
                   notice: "A reset password email was sent to #{params[:user][:email]}."
+      else
+        redirect_to "/reset-password",
+                  notice: "Oops! We didn't find a writer with the email #{params[:user][:email]}."
+      end
     rescue StandardError
       redirect_to "/reset-password",
                   notice: "Oops, something went wrong! #{params[:user][:email]} may not be associated with a writer account."
