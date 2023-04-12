@@ -126,7 +126,7 @@ class NewslettersController < ApplicationController
   def send_to_audience
     @newsletter.update_column(:sent_at, Time.now)
     @newsletter.update_column(:recipients, 0)
-    if @newsletter.template.eql? "Announcment"
+    if @newsletter.template.eql? "Announcement"
       send_announcement
     elsif @newsletter.template.eql? "Weekly Picks"
       send_editor_picks
