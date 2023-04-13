@@ -66,8 +66,7 @@ class PagesController < ApplicationController
   def about; end
 
   def trending
-    @pagy, @trending =
-      pagy(Post.published.trending, page: params[:page], items: 15)
+    @pagy, @trending = pagy(Post.published.trending, page: params[:page], items: 15)
     set_meta_tags title: "Trending | The Teen Magazine",
                   image: @trending.first.thumbnail.variant(resize_to_fill: [540, 340]),
                   description: "See what's trending on The Teen Magazine",

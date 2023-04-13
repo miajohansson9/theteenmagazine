@@ -75,9 +75,7 @@ class Post < ApplicationRecord
 
   scope :trending,
         -> {
-          where(publish_at: (Time.now - 2.months)..Time.now).order(
-            "post_impressions desc"
-          )
+          order("trending_score desc")
         }
 
   scope :most_viewed,
