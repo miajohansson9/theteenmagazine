@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_12_162604) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_13_220308) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -303,6 +303,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_12_162604) do
     t.string "shareable_token"
     t.boolean "comments_turned_off"
     t.boolean "agree_to_image_policy"
+    t.integer "trending_score", default: 0
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
     t.index ["promoting_until"], name: "index_posts_on_promoting_until"

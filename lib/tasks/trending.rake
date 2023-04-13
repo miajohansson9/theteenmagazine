@@ -1,0 +1,14 @@
+require 'date'
+namespace :trending do
+    task calculate_trending: :environment do
+        Post.published.each do |post|
+            begin
+                days = (Date.today - post.publish_at.to_date).to_i
+                score = post.post_impressions * (0.98 ** days)
+                post.update_attribute(:trending_score, score)
+            rescue StandardError
+                puts "Failed to calculate for post #{post.slug}"
+            end
+        end
+    end
+end

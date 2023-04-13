@@ -27,18 +27,19 @@ class PostsController < ApplicationController
                               ]
 
   def log_impression
+    # check if post is published
     if @post.is_published? && !browser.bot?
-      Thread.new do
-        if !(user_signed_in? &&
-             ((@post.user.id == current_user.id) ||
-              (current_user.full_name == @post.collaboration)))
-          if @post.post_impressions == nil
-            @post.post_impressions = 1
-            @post.save
+      # don't count views on own articles
+      if !(user_signed_in? && ((@post.user.id == current_user.id) || (current_user.full_name == @post.collaboration)))
+        # don't count refreshes
+        if !(session[:has_counted_view].eql? @post.id)
+          if @post.post_impressions.nil?
+            new_impressions = 1
           else
-            @post.increment(:post_impressions, by = 1)
-            @post.save
+            new_impressions = @post.post_impressions + 1
           end
+          @post.update_attribute(:post_impressions, new_impressions)
+          session[:has_counted_view] = @post.id
         end
       end
     end
@@ -785,6 +786,7 @@ class PostsController < ApplicationController
         :turn_off_caps,
         :thumbnail_credits,
         :show_disclosure,
+        :trending_score,
         :shareable_token,
         :comments_turned_off,
         :agree_to_image_policy,
