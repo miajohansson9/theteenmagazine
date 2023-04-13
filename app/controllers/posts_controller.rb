@@ -39,6 +39,12 @@ class PostsController < ApplicationController
             new_impressions = @post.post_impressions + 1
           end
           @post.update_attribute(:post_impressions, new_impressions)
+          # calculate new trending score
+          days = (Date.today - @post.publish_at.to_date).to_i
+          score = @post.post_impressions * (0.98 ** days)
+          # update new trending score
+          @post.update_attribute(:trending_score, score)
+          # create session variable to not log again
           session[:has_counted_view] = @post.id
         end
       end
