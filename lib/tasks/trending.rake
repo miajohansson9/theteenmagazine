@@ -6,6 +6,7 @@ namespace :trending do
                 days = (Date.today - post.publish_at.to_date).to_i
                 score = post.post_impressions * (0.98 ** days)
                 post.update_attribute(:trending_score, score)
+                puts "post #{post.id} given score #{score} (published #{days} ago, #{post.post_impressions} impressions)"
             rescue StandardError
                 puts "Failed to calculate for post #{post.slug}"
             end
