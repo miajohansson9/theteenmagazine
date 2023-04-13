@@ -270,7 +270,7 @@
                     Sent to <%= @newsletter.audience %>
                   </span>
                   <span style="font-size:12px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0; padding-left: 4px;">-</span>
-                  <a style="font-size:12px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;" href="https://www.theteenmagazine.com/email-preferences?email=&id=">
+                  <a style="font-size:12px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;" href="https://www.theteenmagazine.com/email-preferences?email=<%= @subscriber.email%>&token=<%= @subscriber.token %>">
                     Email Preferences
                   </a>
                 </td>

@@ -329,17 +329,22 @@ class PostsController < ApplicationController
     @failed = true
     begin
       if isEmail(params[:posts][:email])
-        @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
-        @gb
-          .lists(ENV["MAILCHIMP_LIST_ID"])
-          .members
-          .create(
-            body: {
-              email_address: params[:posts][:email],
-              status: "subscribed",
-              merge_fields: { SLOCATION: "Subscribe page" },
-            },
+        # subscribe to TTM newsletter
+        maybe_subscriber = Subscriber.find_by(email: params[:posts][:email])
+        if !maybe_subscriber.present?
+          @token = SecureRandom.urlsafe_base64
+          subscriber = Subscriber.new(
+              email: params[:posts][:email], 
+              token: @token,
+              source: "Subscribe widget",
+              opted_in_at: Time.now,
+              subscribed_to_reader_newsletter: true,
+              subscribed_to_writer_newsletter: false,
           )
+          subscriber.save
+        else
+          maybe_subscriber.update_column("subscribed_to_reader_newsletter", true)
+        end
         @failed = false
       else
         redirect_to "/subscribe", notice: "Please enter a valid email address."

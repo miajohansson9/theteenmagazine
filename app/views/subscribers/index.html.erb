@@ -11,6 +11,7 @@
         <th scope="col">email</th>
         <th scope="col">first_name</th>
         <th scope="col">last_name</th>
+        <th scope="col">source</th>
         <th scope="col">token</th>
         <th scope="col">subscribed_to_reader_newsletter</th>
         <th scope="col">subscribed_to_writer_newsletter</th>
@@ -37,6 +38,7 @@
           <td><%= subscriber.email %></td>
           <td><%= subscriber.first_name %></td>
           <td><%= subscriber.last_name %></td>
+          <td><%= subscriber.source&.truncate(50) %></td>
           <td><%= subscriber.token %></td>
           <td><%= subscriber.subscribed_to_reader_newsletter %></td>
           <td><%= subscriber.subscribed_to_writer_newsletter %></td>

@@ -24,38 +24,35 @@ class Users::RegistrationsController < Devise::RegistrationsController
         else
           expire_data_after_sign_in!
         end
-
         # send welcome email
         ApplicationMailer.welcome_email(resource).deliver
         begin
-          @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
-          @gb
-            .lists(ENV["MAILCHIMP_WRITER_LIST_ID"])
-            .members
-            .create(
-              body: {
-                email_address: resource.email,
-                status: "subscribed",
-                merge_fields: {
-                  FNAME: resource.first_name,
-                  LNAME: resource.last_name,
-                },
-              },
+          # subscribe to TTM newsletter
+          maybe_subscriber = Subscriber.find_by(email: resource.email)
+          if !maybe_subscriber.present?
+            @token = SecureRandom.urlsafe_base64
+            subscriber = Subscriber.new(
+                email: resource.email, 
+                first_name: resource.first_name, 
+                last_name: resource.last_name, 
+                token: @token,
+                source: "Became a writer",
+                opted_in_at: Time.now,
+                subscribed_to_reader_newsletter: true,
+                subscribed_to_writer_newsletter: true,
             )
-          @gb
-            .lists(ENV["MAILCHIMP_LIST_ID"])
-            .members
-            .create(body: {
-                      email_address: resource.email,
-                      status: "subscribed",
-                      merge_fields: {
-                        FNAME: resource.first_name,
-                        LNAME: resource.last_name,
-                        SLOCATION: "Became a writer",
-                      },
-                    })
+            subscriber.save
+          else
+            maybe_subscriber.update_columns({
+              first_name: resource.first_name, 
+              last_name: resource.last_name, 
+              user_id: resource.id,
+              subscribed_to_reader_newsletter: true,
+              subscribed_to_writer_newsletter: true,
+            })
+          end
         rescue StandardError
-          puts "Error: Failed to subscribe to mailchimp list"
+          puts "Error: Failed to create subscriber"
         end
         @application = Apply.find_by(email: @user.email.downcase)
         @application.update(user_id: resource.id)

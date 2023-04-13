@@ -650,17 +650,28 @@ class UsersController < ApplicationController
 
   def add_to_list(user)
     begin
-      @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
-      @gb
-        .lists(ENV["MAILCHIMP_LIST_ID"])
-        .members
-        .create(body: {
-                  email_address: user.email,
-                  status: "subscribed",
-                  merge_fields: { FNAME: user.first_name, LNAME: user.last_name, SLOCATION: "Became a writer" },
-                })
-    rescue StandardError
-      puts "Error: Failed to subscribe to mailchimp list"
+      maybe_subscriber = Subscriber.find_by(user_id: user.id)
+      if !maybe_subscriber.present?
+        subscriber = Subscriber.new(
+          email: user.email, 
+          first_name: user.first_name, 
+          last_name: user.last_name, 
+          user_id: user.id,
+          token: @token,
+          source: "Became a writer",
+          opted_in_at: user.created_at,
+          subscribed_to_reader_newsletter: true,
+          subscribed_to_writer_newsletter: true,
+        )
+        subscriber.save
+      else
+        maybe_subscriber.update_columns({
+          email: user.email,
+          first_name: user.first_name, 
+          last_name: user.last_name, 
+          user_id: user.id,
+        })
+      end
     end
   end
 

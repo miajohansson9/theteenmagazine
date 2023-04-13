@@ -99,7 +99,7 @@ class NewslettersController < ApplicationController
   end
 
   def send_test_newsletter
-    @user = User.find(params[:user_id])
+    @subscriber = Subscriber.find_by(user_id: params[:user_id])
     @newsletter = Newsletter.find(params[:id])
     if @newsletter.template.eql? "Weekly Picks"
       @posts = []
@@ -114,13 +114,13 @@ class NewslettersController < ApplicationController
         redirect_to newsletters_path, notice: "Something went wrong"
         return
       end
-      if ApplicationMailer.editor_picks(@user.email, @posts, @editor_quotes, @newsletter).deliver
+      if ApplicationMailer.editor_picks(@subscriber, @posts, @editor_quotes, @newsletter).deliver
         redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
       else
         redirect_to "/newsletters/#{params[:id]}", notice: "Something went wrong"
       end
     elsif @newsletter.template.eql? "Announcement"
-      if ApplicationMailer.custom_message_template(@user.id, @user.email, @newsletter).deliver
+      if ApplicationMailer.custom_message_template(@subscriber, @newsletter).deliver
         redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
       else
         redirect_to "/newsletters/#{params[:id]}", notice: "Something went wrong"
@@ -154,53 +154,27 @@ class NewslettersController < ApplicationController
     end
     Thread.new do
       if @newsletter.audience.eql? "All Writers"
-        User.writer.each do |user|
-          begin
-            if !user.remove_from_reader_newsletter
-              ApplicationMailer.editor_picks(user.email, @posts, @editor_quotes, @newsletter).deliver
-              @newsletter.increment(:recipients, by = 1)
-              @newsletter.save(:validate => false)
-            end
-          rescue
-            puts "Could not send to user #{user.id}"
-          end
-        end
+        send_editor_picks_helper(Subscriber.writer)
       elsif @newsletter.audience.eql? "Only Editors"
-        User.editor.each do |user|
-          begin
-            if !user.remove_from_reader_newsletter
-              ApplicationMailer.editor_picks(user.email, @posts, @editor_quotes, @newsletter).deliver
-              @newsletter.increment(:recipients, by = 1)
-              @newsletter.save(:validate => false)
-            end
-          rescue
-            puts "Could not send to editor #{user.id}"
-          end
-        end
+        send_editor_picks_helper(Subscriber.editor)
       elsif @newsletter.audience.eql? "Only Interviewers"
-        User.where(marketer: true).each do |user|
-          begin
-            if !user.remove_from_reader_newsletter
-              ApplicationMailer.editor_picks(user.email, @posts, @editor_quotes, @newsletter).deliver
-              @newsletter.increment(:recipients, by = 1)
-              @newsletter.save(:validate => false)
-            end
-          rescue
-            puts "Could not send to marketer #{user.id}"
-          end
-        end
+        send_editor_picks_helper(Subscriber.interviewer)
       elsif @newsletter.audience.eql? "All Readers"
-        Subscriber.where.not(subscribed_to_reader_newsletter: false).each do |subscriber|
-          begin
-            ApplicationMailer.editor_picks(subscriber.email, @posts, @editor_quotes, @newsletter).deliver
-            @newsletter.increment(:recipients, by = 1)
-            @newsletter.save(:validate => false)
-            subscriber.update_column("last_email_sent_at", Time.now)
-            puts "sent to #{subscriber.email}"
-          rescue
-            puts "Could not send to reader #{subscriber.email}"
-          end
-        end
+        send_editor_picks_helper(Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
+      end
+    end
+  end
+
+  def send_editor_picks_helper(audience)
+    audience.each do |subscriber|
+      begin
+        ApplicationMailer.editor_picks(subscriber, @posts, @editor_quotes, @newsletter).deliver
+        @newsletter.increment(:recipients, by = 1)
+        @newsletter.save(:validate => false)
+        subscriber.update_column("last_email_sent_at", Time.now)
+        puts "Sent to reader #{subscriber.email}"
+      rescue
+        puts "Could not send to reader #{subscriber.email}"
       end
     end
   end
@@ -208,52 +182,26 @@ class NewslettersController < ApplicationController
   def send_announcement
     Thread.new do
       if @newsletter.audience.eql? "All Writers"
-        User.writer.each do |user|
-          begin
-            if !user.do_not_send_emails && !user.remove_from_writer_newsletter
-              ApplicationMailer.custom_message_template(user.id, user.email, @newsletter).deliver
-              @newsletter.increment(:recipients, by = 1)
-              @newsletter.save(:validate => false)
-            end
-          rescue
-            puts "Could not send to user #{user.id}"
-          end
-        end
+        send_announcement_helper(Subscriber.writer)
       elsif @newsletter.audience.eql? "Only Editors"
-        User.editor.each do |user|
-          begin
-            if !user.do_not_send_emails
-              ApplicationMailer.custom_message_template(user.id, user.email, @newsletter).deliver
-              @newsletter.increment(:recipients, by = 1)
-              @newsletter.save(:validate => false)
-            end
-          rescue
-            puts "Could not send to editor #{user.id}"
-          end
-        end
+        send_announcement_helper(Subscriber.editor)
       elsif @newsletter.audience.eql? "Only Interviewers"
-        User.where(marketer: true).each do |user|
-          begin
-            if !user.do_not_send_emails
-              ApplicationMailer.custom_message_template(user.id, user.email, @newsletter).deliver
-              @newsletter.increment(:recipients, by = 1)
-              @newsletter.save(:validate => false)
-            end
-          rescue
-            puts "Could not send to marketer #{user.id}"
-          end
-        end
+        send_announcement_helper(Subscriber.interviewer)
       elsif @newsletter.audience.eql? "All Readers"
-        Subscriber.where.not(subscribed_to_reader_newsletter: false).each do |subscriber|
-          begin
-            ApplicationMailer.custom_message_template(subscriber.user_id, subscriber.email, @newsletter).deliver
-            @newsletter.increment(:recipients, by = 1)
-            @newsletter.save(:validate => false)
-            subscriber.update_column("last_email_sent_at", Time.now)
-          rescue
-            puts "Could not send to reader #{subscriber.email}"
-          end
-        end
+        send_announcement_helper(Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
+      end
+    end
+  end
+
+  def send_announcement_helper(audience)
+    audience.each do |subscriber|
+      begin
+        ApplicationMailer.custom_message_template(subscriber, @newsletter).deliver
+        @newsletter.increment(:recipients, by = 1)
+        @newsletter.save(:validate => false)
+        subscriber.update_column("last_email_sent_at", Time.now)
+      rescue
+        puts "Could not send to reader #{subscriber.email}"
       end
     end
   end

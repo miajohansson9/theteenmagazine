@@ -1,7 +1,7 @@
 <% if @newsletter.template.eql? "Announcement" %>
-  <%= render "newsletters/previews/announcement", user: User.first %>
+  <%= render "newsletters/previews/announcement", subscriber: Subscriber.find_by(user_id: 1) %>
 <% elsif @newsletter.template.eql? "Weekly Picks" %>
-  <%= render "newsletters/previews/weekly_picks", user: User.first %>
+  <%= render "newsletters/previews/weekly_picks", subscriber: Subscriber.find_by(user_id: 1) %>
 <% end %>
 <div class="skinny_wrapper">
   <div class="d-flex justify-content-end">

@@ -79,7 +79,7 @@
         <div <% if @show_onboarding %> data-step data-index="5" data-onboarding-content="Recommend a friend to The Teen Magazine here."<% end %>>
           <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn pl-3 pr-3 mt-2") %>
         </div>
-        <%= link_to("Email preferences", "/email-preferences?email=#{@user.email}&id=#{@user.id}", class: "link_grn pl-3 pr-3 mt-2") %><br>
+        <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscribers.last.email}&token=#{@user.subscribers.last.token}", class: "link_grn pl-3 pr-3 mt-2") %><br>
       </div>
     </div>
   </div>

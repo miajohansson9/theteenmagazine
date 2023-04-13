@@ -37,27 +37,30 @@ class CommentsController < ApplicationController
         cookies[:full_name] = comment_params[:full_name]
         cookies[:email] = comment_params[:email]
         cookies[:is_thirteen] = comment_params[:is_thirteen]
-        if comment_params[:subscribed].eql? "1"
+        if (comment_params[:subscribed].eql? "1")
           # subscribe to TTM newsletter
-          Thread.new do
-            @gb = Gibbon::Request.new(api_key: ENV["MAILCHIMP_API_KEY"])
-            begin
-              @gb
-                .lists(ENV["MAILCHIMP_LIST_ID"])
-                .members(comment_params[:email])
-                .update(body: { status: "subscribed" })
-            rescue StandardError
-              @gb
-                .lists(ENV["MAILCHIMP_LIST_ID"])
-                .members
-                .create(
-                  body: {
-                    email_address: comment_params[:email],
-                    status: "subscribed",
-                    merge_fields: { FNAME: comment_params[:full_name], SLOCATION: "Comment on #{@comment.post.title}" },
-                  },
-                )
+          maybe_subscriber = Subscriber.find_by(email: comment_params[:email])
+          if !maybe_subscriber.present?
+            @first_name = comment_params[:full_name]
+            @last_name = ''
+            @token = SecureRandom.urlsafe_base64
+            if @first_name.present? && @first_name.include?(' ')
+                @first_name = @first_name.split(' ')[0]
+                @last_name = @first_name.split(' ')[1]
             end
+            subscriber = Subscriber.new(
+                email: comment_params[:email], 
+                first_name: @first_name, 
+                last_name: @last_name, 
+                token: @token,
+                source: "Comment on #{@comment.post.title}",
+                opted_in_at: Time.now,
+                subscribed_to_reader_newsletter: true,
+                subscribed_to_writer_newsletter: false,
+            )
+            subscriber.save
+          else
+            maybe_subscriber.update_column("subscribed_to_reader_newsletter", true)
           end
         end
         cookies[:subscribed] = comment_params[:subscribed]
