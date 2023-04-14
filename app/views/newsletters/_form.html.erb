@@ -6,8 +6,8 @@
   <p class="mb-0 mt-0">Message</p>
   <%= f.text_area :message, class: "ckeditor" %>
   <% if (params[:template].eql? 'editor_picks') || (@newsletter.template.eql? 'Weekly Picks') %>
-    <p class="mb-0 mt-4">Featured Posts (follow the placeholder's format *exactly*)</p>
-    <%= f.text_area :featured_posts, placeholder: '[5-new-aesthetics-that-are-dominating-2023, This is a quote by an editor. This article was so well done etc. etc. Emily Johansson],[next url ending..' %>
+    <p class="mb-0 mt-4">Featured Posts: full link + space + editor's quote (optional)</p>
+    <%= f.text_area :featured_posts, placeholder: 'https://www.theteenmagazine.com/5-best-books-to-read-when-you-have-nothing-to-do "This is a quote by an editor. This article was so well done etc. etc." - Emily Johansson' %>
     <p class="mb-0 mt-0">Subheader</p>
     <%= f.text_field :subheader %>
   <% else %>

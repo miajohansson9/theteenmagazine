@@ -89,11 +89,13 @@ class NewslettersController < ApplicationController
     if @newsletter.featured_posts.present?
       @posts = []
       @editor_quotes = []
-      @newsletter.featured_posts.split("],[").each_with_index do |featured, index|
-        slug = featured.split(', "')[0].gsub('[', '')
-        editor_message = '"' + featured.split(', "')[1].gsub(']', '')
-        @posts[index] = Post.find_by(slug: slug)
+      @featured_all = @newsletter.featured_posts.split("https://www.theteenmagazine.com/").drop(1)
+      @featured_all.each_with_index do |featured, index|
+        featured_arr = featured.split(" ")
+        slug = featured_arr[0]
+        editor_message = featured_arr.drop(1).join(" ")
         @editor_quotes[index] = editor_message
+        @posts[index] = Post.find_by(slug: slug.strip)
       end
     end
   end
@@ -104,24 +106,26 @@ class NewslettersController < ApplicationController
     if @newsletter.template.eql? "Weekly Picks"
       @posts = []
       @editor_quotes = []
-      @newsletter.featured_posts.split("],[").each_with_index do |featured, index|
-        slug = featured.split(', "')[0].gsub('[', '')
-        editor_message = '"' + featured.split(', "')[1].gsub(']', '')
-        @posts[index] = Post.find_by(slug: slug)
+      @featured_all = @newsletter.featured_posts.split("https://www.theteenmagazine.com/").drop(1)
+      @featured_all.each_with_index do |featured, index|
+        featured_arr = featured.split(" ")
+        slug = featured_arr[0]
+        editor_message = featured_arr.drop(1).join(" ")
         @editor_quotes[index] = editor_message
+        @posts[index] = Post.find_by(slug: slug.strip)
       end
       if @posts.count.eql? 0
         redirect_to newsletters_path, notice: "Something went wrong"
         return
       end
       if ApplicationMailer.editor_picks(@subscriber, @posts, @editor_quotes, @newsletter).deliver
-        redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
+        redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@subscriber.email}"
       else
         redirect_to "/newsletters/#{params[:id]}", notice: "Something went wrong"
       end
     elsif @newsletter.template.eql? "Announcement"
       if ApplicationMailer.custom_message_template(@subscriber, @newsletter).deliver
-        redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@user.email}"
+        redirect_to "/newsletters/#{params[:id]}", notice: "Test email sent to #{@subscriber.email}"
       else
         redirect_to "/newsletters/#{params[:id]}", notice: "Something went wrong"
       end
@@ -142,11 +146,13 @@ class NewslettersController < ApplicationController
   def send_editor_picks
     @posts = []
     @editor_quotes = []
-    @newsletter.featured_posts.split("],[").each_with_index do |featured, index|
-      slug = featured.split(', "')[0].gsub('[', '')
-      editor_message = '"' + featured.split(', "')[1].gsub(']', '')
-      @posts[index] = Post.find_by(slug: slug)
+    @featured_all = @newsletter.featured_posts.split("https://www.theteenmagazine.com/").drop(1)
+    @featured_all.each_with_index do |featured, index|
+      featured_arr = featured.split(" ")
+      slug = featured_arr[0]
+      editor_message = featured_arr.drop(1).join(" ")
       @editor_quotes[index] = editor_message
+      @posts[index] = Post.find_by(slug: slug.strip)
     end
     if @posts.count.eql? 0
       redirect_to newsletters_path, notice: "Something went wrong"
@@ -161,6 +167,9 @@ class NewslettersController < ApplicationController
         send_editor_picks_helper(Subscriber.interviewer)
       elsif @newsletter.audience.eql? "All Readers"
         send_editor_picks_helper(Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
+        @posts.each do |post|
+          ApplicationMailer.featured_in_newsletter(post.user, post).deliver
+        end
       end
     end
   end
