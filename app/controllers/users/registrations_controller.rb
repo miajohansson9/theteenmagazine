@@ -28,11 +28,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
         ApplicationMailer.welcome_email(resource).deliver
         begin
           # subscribe to TTM newsletter
-          maybe_subscriber = Subscriber.find_by(email: resource.email)
+          maybe_subscriber = Subscriber.find_by('lower(email) = ?', resource.email)
           if !maybe_subscriber.present?
             @token = SecureRandom.urlsafe_base64
             subscriber = Subscriber.new(
                 email: resource.email, 
+                user_id: resource.id,
                 first_name: resource.first_name, 
                 last_name: resource.last_name, 
                 token: @token,

@@ -34,7 +34,7 @@ namespace :subscribers do
     task migrate_readers: :environment do
         subscribers = []
         CSV.foreach('subscribed_members_export_a88ed6a6bf.csv', :headers => true) do |row|
-            if !Subscriber.find_by(email: row['Email Address']).present?
+            if !Subscriber.find_by('lower(email) = ?', row['Email Address']).present?
                 @first_name = row['First Name']
                 @last_name = row['Last Name']
                 @token = SecureRandom.urlsafe_base64

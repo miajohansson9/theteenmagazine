@@ -39,7 +39,7 @@ class CommentsController < ApplicationController
         cookies[:is_thirteen] = comment_params[:is_thirteen]
         if (comment_params[:subscribed].eql? "1")
           # subscribe to TTM newsletter
-          maybe_subscriber = Subscriber.find_by(email: comment_params[:email])
+          maybe_subscriber = Subscriber.find_by('lower(email) = ?', comment_params[:email].downcase)
           if !maybe_subscriber.present?
             @first_name = comment_params[:full_name]
             @last_name = ''

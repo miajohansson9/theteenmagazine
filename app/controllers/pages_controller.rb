@@ -264,16 +264,21 @@ class PagesController < ApplicationController
   def issue
     if params[:pages].present? && (params[:pages][:sub].eql? "1")
         # subscribe to email list
-        @token = SecureRandom.urlsafe_base64
-        subscriber = Subscriber.new(
-            email: params[:pages][:email], 
-            token: @token,
-            source: "Subscribe page",
-            opted_in_at: Time.now,
-            subscribed_to_reader_newsletter: true,
-            subscribed_to_writer_newsletter: false,
-        )
-        subscriber.save
+        maybe_subscriber = Subscriber.find_by('lower(email) = ?', params[:pages][:email].downcase)
+        if !maybe_subscriber.present?
+          @token = SecureRandom.urlsafe_base64
+          subscriber = Subscriber.new(
+              email: params[:pages][:email], 
+              token: @token,
+              source: "Subscribe page",
+              opted_in_at: Time.now,
+              subscribed_to_reader_newsletter: true,
+              subscribed_to_writer_newsletter: false,
+          )
+          subscriber.save
+        else
+          maybe_subscriber.update_column("subscribed_to_reader_newsletter", true)
+        end
     end
   end
 

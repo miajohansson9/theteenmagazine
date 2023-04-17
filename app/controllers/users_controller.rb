@@ -650,7 +650,7 @@ class UsersController < ApplicationController
 
   def add_to_list(user)
     begin
-      maybe_subscriber = Subscriber.find_by(user_id: user.id)
+      maybe_subscriber = Subscriber.where(user_id: user.id).or(Subscriber.where("lower(email) = ?", user.email.downcase)).first
       if !maybe_subscriber.present?
         subscriber = Subscriber.new(
           email: user.email, 

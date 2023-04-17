@@ -337,7 +337,7 @@ class PostsController < ApplicationController
     begin
       if isEmail(params[:posts][:email])
         # subscribe to TTM newsletter
-        maybe_subscriber = Subscriber.find_by(email: params[:posts][:email])
+        maybe_subscriber = Subscriber.find_by('lower(email) = ?', params[:posts][:email].downcase)
         if !maybe_subscriber.present?
           @token = SecureRandom.urlsafe_base64
           subscriber = Subscriber.new(
