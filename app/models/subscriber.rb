@@ -3,7 +3,7 @@ class Subscriber < ApplicationRecord
 
     scope :writer,
         -> {
-          joins(:user).where(user: { partner: [nil, false] })
+          joins(:user).where(user: { partner: [nil, false], do_not_send_emails: [nil, false] })
         }
     scope :editor,
         -> {
