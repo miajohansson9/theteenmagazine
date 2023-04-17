@@ -7,10 +7,10 @@ class Subscriber < ApplicationRecord
         }
     scope :editor,
         -> {
-            joins(:user).where(user: { editor: true })
+            joins(:user).where(user: { editor: true, do_not_send_emails: [nil, false] })
         }
     scope :interviewer,
         -> {
-            joins(:user).where(user: { marketer: true })
+            joins(:user).where(user: { marketer: true, do_not_send_emails: [nil, false] })
         }
 end
