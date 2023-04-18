@@ -180,7 +180,7 @@
                                           <tbody>
                                             <tr>
                                               <td align="center" valign="top">
-                                                <a href="<%= post_path(post) %>" title="" target="_blank" data-saferedirecturl="https://www.google.com/url?q=<%= post_path(post) %>">
+                                                <a href="<%= post_path(post) %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>" title="" target="_blank" data-saferedirecturl="https://www.google.com/url?q=<%= post_path(post) %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>">
                                                   <img alt="" src="<%= url_for(post.thumbnail.variant(resize_to_fill: [540, 340])) %>" width="264" style="max-width:719px;border:0;height:auto;outline:none;text-decoration:none;vertical-align:bottom" class="m_-3653343243659045546mcnImage CToWUd" data-bit="iit">
                                                 </a>
                                               </td>
@@ -192,7 +192,7 @@
                                             <tr>
                                               <td valign="top" style="line-height:200%;word-break:break-word;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;text-align:left">
                                                 <header>
-                                                  <a href="<%= post_path(post) %>" style="color:#000000;font-weight:normal;text-decoration:none" target="_blank">
+                                                  <a href="<%= post_path(post) %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>" style="color:#000000;font-weight:normal;text-decoration:none" target="_blank">
                                                     <font face="playfair display, georgia, times new roman, serif">
                                                       <span style="font-size:24px"><%= post.title %></span>
                                                     </font>
