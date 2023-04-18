@@ -3,7 +3,7 @@ namespace :newsletters do
     task :commenters, [:weeks] => :environment do |t, args|
         @weeks = args[:weeks].present? ? args[:weeks].to_i : 2
         @start_date = Date.today - (7 * @weeks)
-        @comments = Comment.where(created_at: (@start_date..Time.now))
+        @comments = Comment.where(created_at: (@start_date..Time.now)..Time.now)
         @commenters = []
         User.writer.where(last_sign_in_at: (Time.now - 1.month)..Time.now).each do |user|
             @user_comments = @comments.where(user_id: user.id)
