@@ -225,7 +225,9 @@ class PagesController < ApplicationController
     update_email_preferences
     @subscribed_to_newsletter = !(@subscriber.subscribed_to_reader_newsletter.eql? false)
     @subscribed_to_writer_newsletter = !(@subscriber.subscribed_to_writer_newsletter.eql? false)
-    @subscribed_to_writer_updates = !(@subscriber.user.do_not_send_emails.eql? true)
+    if @subscriber.user.present?
+      @subscribed_to_writer_updates = !(@subscriber.user.do_not_send_emails.eql? true)
+    end
   end
 
   def update_email_preferences

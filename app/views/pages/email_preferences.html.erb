@@ -10,7 +10,7 @@
       <p>
         <%= f.check_box :newsletter, :value => @subscribed_to_readers, :checked => @subscribed_to_newsletter, class: "text_field" %> Subscriber newsletter (newsletters like Editor Picks, sent to all subscribers)
       </p>
-      <% if @subscriber.user_id.present? %>
+      <% if @subscriber.user.present? %>
         <p>
           <%= f.check_box :writer_newsletter, :value => @subscribed_to_writers, :checked => @subscribed_to_writer_newsletter, class: "text_field" %> Writer newsletter (updates sent to all writers)
         </p>
