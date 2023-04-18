@@ -11,6 +11,7 @@ namespace :newsletters do
                 @commenters[@user_comments.count - 3] = "<address style='text-align: center;'><a href='https://www.theteenmagazine.com/writers/" + user.slug + "'>" + user.full_name + "</a>, " + "#{@user_comments.count}" + " comments</address>"
             end
         end
+        @commenters[-1] = "<strong>" + @commenters[-1] + "</strong>"
         @commenters = @commenters.reverse.join(" ")
         newsletter = Newsletter.new(
             subject: "TTM UPDATE: Comments",
