@@ -7,8 +7,8 @@ namespace :newsletters do
         @commenters = []
         User.writer.where(last_sign_in_at: (Time.now - 1.month)..Time.now).each do |user|
             @user_comments = user.comments.published.where(created_at: (Time.now - 3.weeks)..Time.now)
-            if !@user_comments.nil? && @user_comments.count >= 5
-                @commenters[@user_comments.count - 5] = "<address style='text-align: center;'><a href='https://www.theteenmagazine.com/writers/" + user.slug + "'>" + user.full_name + "</a>, " + "#{@user_comments.count}" + " comments</address>"
+            if !@user_comments.nil? && @user_comments.count >= 3
+                @commenters[@user_comments.count - 3] = "<address style='text-align: center;'><a href='https://www.theteenmagazine.com/writers/" + user.slug + "'>" + user.full_name + "</a>, " + "#{@user_comments.count}" + " comments</address>"
             end
         end
         @commenters = @commenters.reverse.join(" ")
