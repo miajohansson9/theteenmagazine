@@ -4,15 +4,26 @@ namespace :newsletters do
         @weeks = args[:weeks].present? ? args[:weeks].to_i : 2
         @start_date = Date.today - (7 * @weeks)
         @comments = Comment.where('created_at > ?', @start_date)
-        @commenters = []
+        @commenters = [[]]
         User.writer.where(last_sign_in_at: (Time.now - 1.month)..Time.now).each do |user|
             @user_comments = @comments.where(user_id: user.id)
             if !@user_comments.nil? && @user_comments.count >= 3
-                @commenters[@user_comments.count - 3] = "<address style='text-align: center;'><a href='https://www.theteenmagazine.com/writers/" + user.slug + "'>" + user.full_name + "</a>, " + "#{@user_comments.count}" + " comments</address>"
+                if @commenters[@user_comments.count - 3].nil?
+                    @commenters[@user_comments.count - 3] = ["<address style='text-align: center;'><a href='https://www.theteenmagazine.com/writers/" + user.slug + "'>" + user.full_name + "</a>, " + "#{@user_comments.count}" + " comments</address>"]
+                else
+                    @commenters[@user_comments.count - 3] = @commenters[@user_comments.count - 3].push("<address style='text-align: center;'><a href='https://www.theteenmagazine.com/writers/" + user.slug + "'>" + user.full_name + "</a>, " + "#{@user_comments.count}" + " comments</address>")
+                end
             end
         end
-        @commenters[-1] = "<strong>" + @commenters[-1] + "</strong>"
-        @commenters = @commenters.reverse.join(" ")
+        @commenters[-1].each_with_index do |comment, index|
+            @commenters[-1][index] = "<strong>" + comment + "</strong>"
+        end
+        @commenters.each_with_index do |comment, index|
+            if comment.present?
+                @commenters[index] = comment.join(' ')
+            end
+        end
+        @commenters = @commenters.reverse.join(' ')
         newsletter = Newsletter.new(
             subject: "TTM UPDATE: Comments",
             header: "Thank you to the writers who have been commenting!",
