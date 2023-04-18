@@ -250,7 +250,7 @@ class PagesController < ApplicationController
       if params[:pages][:writer].eql? "1"
         # does want to get writer updates about their account
         @subscriber.user.update_column("do_not_send_emails", false)
-      else
+      elsif @subscriber.user.present?
         # does not want to get writer updates about their account
         @subscriber.user.update_column("do_not_send_emails", true)
       end
