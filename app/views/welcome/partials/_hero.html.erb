@@ -30,7 +30,7 @@
         <div class="thumbnail">
           <% if post.thumbnail.attached? %>
             <%=link_to(post) do %>
-              <% if post.rank.present? && post.rank <= 10 %>
+              <% if post.rank.present? && post.rank <= 8 %>
                 <span class="badge badge-pink" style="position: absolute; z-index: 10000; top: 5px; left: 5px;">trending 🔥</span>
               <% end %>
               <%= image_tag(post.thumbnail.variant(resize_to_fill: [300,150], format: 'webp'), alt: post.title, :class => "image_thumbnail") %>
