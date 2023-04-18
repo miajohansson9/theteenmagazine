@@ -38,7 +38,7 @@ namespace :newsletters do
             @featured_posts.push("https://www.theteenmagazine.com/#{post.slug}")
         end
         @header = @category.nil? ? "What's trending!" : "#{@category.name.capitalize}: What's trending!"
-        @name_prep = @category.nil? ? "on <a href='https://www.theteenmagazine.com'>The Teen Magazine</a>" : "in <a href='https://www.theteenmagazine.com/#{@category.slug}'>#{@category.name}</a>"
+        @name_prep = @category.nil? ? "on <a href='https://www.theteenmagazine.com?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>The Teen Magazine</a>" : "in <a href='https://www.theteenmagazine.com/categories/#{@category.slug}?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>#{@category.name}</a>"
         newsletter = Newsletter.new(
             subject: "TTM TRENDING 🔥: #{@posts.first.title.truncate(60)} & more",
             header: @header,
