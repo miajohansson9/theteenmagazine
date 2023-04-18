@@ -19,6 +19,12 @@
       <div class="content_wrapper">
         <header id="post_title_show">
           <div class="title_wrapper">
+            <% if @post.rank.present? && @post.rank <= 100 %>
+              <div class="chip">
+                #<%= @post.rank %> TRENDING IN 
+                <%= link_to "#{@post.category.name.upcase}", @post.category %> 🔥
+              </div>
+            <% end %>
             <% if @thumbanil_credits && @thumbanil_credits.length > 0 %>
               <div class="chip">
                 PHOTO BY

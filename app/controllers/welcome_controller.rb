@@ -21,10 +21,10 @@ class WelcomeController < ApplicationController
     @posts_approved_1 =
       Post
         .published
-        .trending
         .limit(3)
         .where(category_id: Category.find("interviews").id)
         .where.not(id: @post_approved_0_ids)
+        .by_published_date
     render partial: "welcome/categories/category_1"
   end
 
@@ -32,10 +32,10 @@ class WelcomeController < ApplicationController
     @posts_approved_2 =
       Post
         .published
-        .trending
         .limit(3)
         .where(category_id: Category.find("student-life").id)
         .where.not(id: @post_approved_0_ids)
+        .by_published_date
     render partial: "welcome/categories/category_2"
   end
 
@@ -43,10 +43,10 @@ class WelcomeController < ApplicationController
     @posts_approved_3 =
       Post
         .published
-        .trending
         .limit(3)
         .where(category_id: Category.find("opinion").id)
         .where.not(id: @post_approved_0_ids)
+        .by_published_date
     render partial: "welcome/categories/category_3"
   end
 
@@ -54,10 +54,10 @@ class WelcomeController < ApplicationController
     @posts_approved_4 =
       Post
         .published
-        .trending
         .limit(6)
         .where(category_id: Category.find("beauty-style").id)
         .where.not(id: @post_approved_0_ids)
+        .by_published_date
     render partial: "welcome/categories/category_4"
   end
 

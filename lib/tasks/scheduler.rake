@@ -17,6 +17,18 @@ task run_weekly_tasks: :environment do
 end
 
 task run_nightly_tasks: :environment do
+  # update trending ranks
+  Category.active.each do |category|
+    Post.published.where(category_id: category.id).trending.limit(100).each_with_index do |post, index|
+        begin
+            post.update_column(:rank, index + 1)
+            puts "updated post #{post.slug} with rank #{index + 1} in category #{category.name}"
+        rescue
+            puts "failed to update post #{post.slug} with rank #{index + 1} in category #{category.name}"
+        end
+    end
+  end
+
   ## Send warning emails if editor is not on track to complete assignments
   if (Date.today.day.eql? 18)
     @reviews_requirement =

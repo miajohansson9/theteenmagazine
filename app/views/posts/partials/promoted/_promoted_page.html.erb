@@ -1,6 +1,13 @@
 <% @posts_promoted.each do |post| %>
   <div class="ctgry_article recent mb-4">
-    <%=link_to(image_tag(post.thumbnail.variant(resize_to_fill: [560,280]), alt: post.title, class: "image_recent_articles"), post )%>
+    <%=link_to(post) do %>
+      <div class="w-100 position-relative">
+        <% if post.rank.present? && post.rank <= 20 %>
+            <span class="badge badge-pink" style="position: absolute; z-index: 10000; top: 5px; left: 5px;">trending in <%= post.category.name %> 🔥</span>
+        <% end %>
+        <%= image_tag(post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), alt: post.title, class: "image_recent_articles") %>
+      </div>
+    <% end %> 
     <h1 class="mb-1"><%= link_to post.title, post %></h1>
     <% if post.promoting_until && post.promoting_until > Time.now %>
       <span class="badge bg-primary">Promoted</span>

@@ -11,7 +11,14 @@
           <% @trending.each do |post| %>
             <div class="thumbnail">
               <div class="container--image">
-                <%=link_to(image_tag(post.thumbnail.variant(resize_to_fill: [540, 340]), :class => "image_thumbnail"), post )%>
+                <%= link_to(post) do %>
+                <div class="w-100 position-relative">
+                  <% if post.rank.present? && post.rank <= 5 %>
+                    <span class="badge badge-pink" style="position: absolute; z-index: 10000; top: 5px; left: 5px;">trending in <%= post.category.name %> 🔥</span>
+                  <% end %>
+                  <%= image_tag(post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), alt: post.title, class: "image_thumbnail") %>
+                </div>
+              <% end %>
               </div>
               <div class="thumbnail--container">
                 <h3 class="article_title">
