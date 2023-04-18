@@ -223,8 +223,11 @@
 }
 
 .category {
-  a {
+  .category-name {
     color: #4abeb6 !important;
+  }
+  a {
+    color: #4abeb6;
     margin-bottom: -20px;
     margin: 0;
     text-decoration: none;
