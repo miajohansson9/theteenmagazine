@@ -15,6 +15,9 @@
         box-shadow:0 6px 18px 0 rgba(0,0,0,.06);
         margin-bottom: 15px;
       }
+      .content-message p {
+        font-size: 16px;
+      }
       .content_wrapper a {
         color: #000000;
       }
@@ -121,7 +124,7 @@
                                                         <tr>
                                                           <td valign="top" style="padding-top:0;padding-right:18px;padding-bottom:9px;padding-left:18px;word-break:break-word;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;line-height:150%;">
                                                             <font face="playfair display, georgia, times new roman, serif">
-                                                              <p style="font-size:16px; color: #545454;">
+                                                              <p class="content-message" style="font-size:16px; color: #545454;">
                                                                 <%= markdown @newsletter.message %>
                                                               </p>
                                                             </font>
@@ -163,9 +166,15 @@
                                                       <td valign="top" style="padding-top:0;padding-right:18px;padding-bottom:9px;padding-left:18px;word-break:break-word;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;line-height:150%;text-align:left">
                                                         <p dir="ltr" style="text-align:left;margin:10px 0;padding:0;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;line-height:150%">
                                                           <font face="playfair display, georgia, times new roman, serif">
-                                                            <span style="font-size:20px">
-                                                              Editor Pick #<%= index + 1 %>
-                                                            </span>
+                                                            <% if @newsletter.subheader.present? %>
+                                                              <span style="font-size:20px">
+                                                                Editor Pick #<%= index + 1 %>
+                                                              </span>
+                                                            <% else %>
+                                                              <span style="font-size:20px">
+                                                                trending in <%= post.category.name %> 🔥
+                                                              </span>
+                                                            <% end %>
                                                           </font>
                                                         </p>
                                                       </td>

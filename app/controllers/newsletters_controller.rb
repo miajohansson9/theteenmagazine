@@ -167,8 +167,14 @@ class NewslettersController < ApplicationController
         send_editor_picks_helper(Subscriber.interviewer)
       elsif @newsletter.audience.eql? "All Readers"
         send_editor_picks_helper(Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
-        @posts.each do |post|
-          ApplicationMailer.featured_in_newsletter(post.user, post).deliver
+        if @newsletter.subject.include? "TTM TRENDING"
+          @posts.each do |post|
+            ApplicationMailer.featured_in_trending(post.user, post).deliver
+          end
+        else
+          @posts.each do |post|
+            ApplicationMailer.featured_in_newsletter(post.user, post).deliver
+          end
         end
       end
     end

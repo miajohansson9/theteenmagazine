@@ -357,13 +357,26 @@ class ApplicationMailer < ActionMailer::Base
     )
   end
 
+  def featured_in_trending(user, post)
+    @user = user
+    @post = post
+    unless @user.do_not_send_emails
+      mail(
+        to: @user.email,
+        subject: "#{@user.first_name}, congratulations! Your article was included in TTM's top trending newsletter!",
+      )
+    end
+  end
+
   def featured_in_newsletter(user, post)
     @user = user
     @post = post
-    mail(
-      to: @user.email,
-      subject: "#{@user.first_name}, congratulations! Your article was chosen for this week's newsletter!",
-    )
+    unless @user.do_not_send_emails
+      mail(
+        to: @user.email,
+        subject: "#{@user.first_name}, congratulations! Your article was chosen for this week's newsletter!",
+      )
+    end
   end
 
   def pitch_deleted(user, pitch)

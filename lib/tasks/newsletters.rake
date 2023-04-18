@@ -1,6 +1,6 @@
-require 'date'
+require 'rake'
 namespace :newsletters do
-    task commenters_newsletter: :environment do
+    task commenters: :environment do
         @comments = Comment.published.where(created_at: (Time.now - 1.week)..Time.now)
         @commenters = []
         User.writer.where(last_sign_in_at: (Time.now - 1.month)..Time.now).each do |user|
@@ -20,5 +20,32 @@ namespace :newsletters do
             action_button: "Comment on Recent Articles, https://www.theteenmagazine.com/"
         )
         newsletter.save!
+        puts "Created commenters newsletter"
+    end
+
+    task :trending, [:category] => :environment do |t, args|
+        if args[:category].present?
+            @category = Category.find(args[:category])
+            @posts = Post.published.trending.where(category_id: @category.id).limit(8)
+        else
+            @posts = Post.published.trending.limit(8)
+        end
+        @featured_posts = []
+        @posts.each do |post|
+            @featured_posts.push("https://www.theteenmagazine.com/#{post.slug}")
+        end
+        @header = @category.nil? ? "What's trending!" : "#{@category.name.capitalize}: What's trending!"
+        @name_prep = @category.nil? ? "on <a href='https://www.theteenmagazine.com'>The Teen Magazine</a>" : "in <a href='https://www.theteenmagazine.com/#{@category.slug}'>#{@category.name}</a>"
+        newsletter = Newsletter.new(
+            subject: "TTM TRENDING 🔥: #{@posts.first.title.truncate(60)} & more",
+            header: @header,
+            template: "Weekly Picks",
+            audience: "All Readers",
+            message: "<p style='font-size: 16px'>Below is a list of the top trending articles #{@name_prep} this week. If you haven&#39;t read these yet, we highly&nbsp;recommend that you do!</p><p style='font-size: 16px'>The Teen Magazine Editor Team&nbsp;&lt;3</p>",
+            user_id: 1,
+            featured_posts: @featured_posts.join(" ")
+        )
+        newsletter.save!
+        puts "Created trending newsletter"
     end
 end

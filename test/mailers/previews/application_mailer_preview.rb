@@ -18,4 +18,9 @@ class ApplicationMailerPreview < ActionMailer::Preview
   def featured_in_newsletter
     ApplicationMailer.featured_in_newsletter(User.first, Post.published.last)
   end
+
+  # Accessible from http://localhost:3000/rails/mailers/application_mailer/featured_in_trending
+  def featured_in_trending
+    ApplicationMailer.featured_in_trending(User.first, Post.published.last)
+  end
 end
