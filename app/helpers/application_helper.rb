@@ -17,7 +17,7 @@ module ApplicationHelper
       return "#{time_ago_in_words(date)} ago"
       ## within this year
     elsif ((Date.today.beginning_of_year)..(Time.now)).cover?(date)
-      return date.in_time_zone&.strftime("%A, %B %d")
+      return date.in_time_zone&.strftime("%a, %B %d")
       ## year before
     else
       return date.in_time_zone&.strftime("%B %d, %Y")
