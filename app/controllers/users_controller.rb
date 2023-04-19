@@ -45,13 +45,13 @@ class UsersController < ApplicationController
         if (current_user.id != @user.id && (!current_user.admin?) &&
             (!current_user.editor?))
           redirect_to(
-            :back,
+            '/login',
             notice: "This writer does not have a public profile yet.",
           )
         end
       rescue StandardError
         redirect_to(
-          :back,
+          '/login',
           notice: "This writer does not have a public profile yet.",
         )
       end
