@@ -39,8 +39,12 @@ class CommentsController < ApplicationController
        (comment_params[:full_name]&.include? "href") ||
        language_is_not_english
       # profane comment submitted
-      respond_to do |format|
-        format.js { render js: "window.location='#{request.base_url + "/no_profanity.html"}'" }
+      if comment_params[:response_to].present?
+        redirect_to '/no_profanity.html'
+      else
+        respond_to do |format|
+          format.js { render js: "window.location='#{request.base_url + "/no_profanity.html"}'" }
+        end
       end
     else
       if current_user.present?
