@@ -66,17 +66,19 @@ class CommentsController < ApplicationController
                 @first_name = @first_name.split(' ')[0]
                 @last_name = @first_name.split(' ')[1]
             end
-            subscriber = Subscriber.new(
-                email: comment_params[:email], 
-                first_name: @first_name, 
-                last_name: @last_name, 
-                token: @token,
-                source: "Comment on #{@comment.post.title}",
-                opted_in_at: Time.now,
-                subscribed_to_reader_newsletter: true,
-                subscribed_to_writer_newsletter: false,
-            )
-            subscriber.save
+            if comment_params[:email].present?
+              subscriber = Subscriber.new(
+                  email: comment_params[:email], 
+                  first_name: @first_name, 
+                  last_name: @last_name, 
+                  token: @token,
+                  source: "Comment on #{@comment.post.title}",
+                  opted_in_at: Time.now,
+                  subscribed_to_reader_newsletter: true,
+                  subscribed_to_writer_newsletter: false,
+              )
+              subscriber.save
+            end
           else
             maybe_subscriber.update_column("subscribed_to_reader_newsletter", true)
           end
