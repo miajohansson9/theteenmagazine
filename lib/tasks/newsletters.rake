@@ -106,9 +106,9 @@ namespace :newsletters do
     def recent(category)
         if category.present?
             @category = Category.find(category)
-            @posts = Post.published.where(category_id: @category.id).by_published_date.limit(8)
+            @posts = Post.where('publish_at > ?', Time.now - 1.week).where(category_id: @category.id).trending.limit(8)
         else
-            @posts = Post.published.by_published_date.limit(8)
+            @posts = Post.where('publish_at > ?', Time.now - 1.week).trending.limit(8)
         end
         @featured_posts = []
         @posts.each do |post|
