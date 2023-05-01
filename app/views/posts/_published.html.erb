@@ -156,4 +156,6 @@
      });
   });
 </script>
-<%= javascript_include_tag "plugins/index_bundle" %>
+<% if !(@post.comments_turned_off.eql? true) %>
+  <%= javascript_include_tag "plugins/index_bundle" %>
+<% end %>

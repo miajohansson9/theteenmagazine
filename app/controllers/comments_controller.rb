@@ -14,6 +14,18 @@ class CommentsController < ApplicationController
     render partial: "comments/all_comments"
   end
 
+  def language_is_not_english
+    @languages = Linguo.detect(comment_params[:text], ENV['LANG_API_KEY']).detections
+    for lang in @languages
+      if !(lang['language'].eql? 'en') && (lang['isReliable'].eql? true)
+        # not english
+        return true
+      end
+    end
+    # is english
+    return false
+  end
+
   def create
     if Obscenity.profane?(comment_params[:full_name]) ||
        Obscenity.profane?(comment_params[:email]) ||
@@ -24,7 +36,8 @@ class CommentsController < ApplicationController
        (comment_params[:text].include? "href") ||
        (comment_params[:text].include? "/>") ||
        (comment_params[:full_name]&.include? "http") ||
-       (comment_params[:full_name]&.include? "href")
+       (comment_params[:full_name]&.include? "href") ||
+       language_is_not_english
       # profane comment submitted
       respond_to do |format|
         format.js { render js: "window.location='#{request.base_url + "/no_profanity.html"}'" }
