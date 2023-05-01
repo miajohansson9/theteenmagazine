@@ -1,7 +1,38 @@
 require 'rake'
 namespace :newsletters do
+    task run_newsletter_tasks: :environment do
+        if Date.today.sunday?
+            recent
+        end
+
+        if Date.today.sunday? && ((Date.today.cweek % 3).eql? 3)
+            commenters(3)
+        end
+
+        if Date.today.wednesday?
+            @categories = ['mental-health-self-love','opinion','student-life','beauty-style','interviews','pop-culture','books-writing']
+            if Date.today.cweek.odd?
+                trending
+            else
+                trending(@categories[Date.today.cweek % 7])
+            end
+        end
+    end
+
     task :commenters, [:weeks] => :environment do |t, args|
-        @weeks = args[:weeks].present? ? args[:weeks].to_i : 2
+        commenters(args[:weeks])
+    end
+
+    task :trending, [:category] => :environment do |t, args|
+        trending(args[:category])
+    end
+
+    task :recent, [:category] => :environment do |t, args|
+        recent(args[:category])
+    end
+
+    def commenters(weeks)
+        @weeks = weeks.present? ? weeks.to_i : 2
         @start_date = Date.today - (7 * @weeks)
         @comments = Comment.where('created_at > ?', @start_date)
         @commenters = [[]]
@@ -46,9 +77,9 @@ namespace :newsletters do
         puts "Created commenters newsletter"
     end
 
-    task :trending, [:category] => :environment do |t, args|
-        if args[:category].present?
-            @category = Category.find(args[:category])
+    def trending(category)
+        if category.present?
+            @category = Category.find(category)
             @posts = Post.published.trending.where(category_id: @category.id).limit(8)
         else
             @posts = Post.published.trending.limit(8)
@@ -72,9 +103,9 @@ namespace :newsletters do
         puts "Created trending newsletter"
     end
 
-    task :recent, [:category] => :environment do |t, args|
-        if args[:category].present?
-            @category = Category.find(args[:category])
+    def recent(category)
+        if category.present?
+            @category = Category.find(category)
             @posts = Post.published.where(category_id: @category.id).by_published_date.limit(8)
         else
             @posts = Post.published.by_published_date.limit(8)

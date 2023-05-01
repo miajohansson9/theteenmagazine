@@ -108,8 +108,11 @@ task run_nightly_tasks: :environment do
         ((@editor_pitches_cnt < @pitches_requirement) ||
          (@editor_reviews_cnt < @reviews_requirement)) && (editor.created_at < (Time.now - 31.days))
       if @missed_deadline
-        if (editor.missed_editor_deadline.try(:month) ===
-            (Time.now - 1.week).month) && !(editor.admin || editor.skip_assignment)
+        # check if missed editor deadline for two months ago
+        # ie. today is May 1st; I want to check if missed deadline in March too
+        if (editor.missed_editor_deadline.try(:year) === (Time.now - 32.days).year) &&
+           (editor.missed_editor_deadline.try(:month) === (Time.now - 32.days).month) && 
+           !(editor.admin || editor.skip_assignment)
           ApplicationMailer.removed_editor_from_team(editor).deliver
           editor.update_attribute("editor", false)
           editor.update_attribute("became_an_editor", nil)
@@ -122,6 +125,7 @@ task run_nightly_tasks: :environment do
             @editor_pitches_cnt,
             @editor_reviews_cnt
           ).deliver
+          # update missed assignment for previous month
           editor.update_attribute("missed_editor_deadline", Time.now - 1.day)
         end
       end
@@ -202,34 +206,12 @@ task run_nightly_tasks: :environment do
   @overdue_reviews.each do |review|
     @editor = User.find_by(id: review.editor_id)
     if @editor.present? && review.post.present?
-      ApplicationMailer.editor_missed_review_deadline(@editor, review.post)
-        .deliver
-      @editors_to_notify_of_new_review =
-        User.editor.where(notify_of_new_review: true)
-      @editors_to_notify_of_new_review.each do |editor|
-        @editor_reviews_cnt =
-          Review
-            .where(editor_id: editor.id)
-            .where("updated_at > ?", Date.today.beginning_of_month)
-            .count
-        @reviews_requirement =
-          Integer(
-            Constant
-              .find_by(name: "# of monthly reviews editors need to complete")
-              .try(:value) || "0"
-          )
-        if @editor_reviews_cnt < @reviews_requirement
-          ApplicationMailer.notify_editor_that_article_moved_to_review(
-            editor,
-            review.post
-          ).deliver
-        end
-      end
+      ApplicationMailer.editor_missed_review_deadline(@editor, review.post).deliver
+      review.editor_id = nil
+      review.editor_claimed_review_at = nil
+      review.status = "Ready for Review"
+      review.save(:validate => false)
     end
-    review.editor_id = nil
-    review.editor_claimed_review_at = nil
-    review.status = "Ready for Review"
-    review.save
   end
 
   # Notify writers of new badge earned
