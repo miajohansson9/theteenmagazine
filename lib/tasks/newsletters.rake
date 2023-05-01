@@ -71,4 +71,30 @@ namespace :newsletters do
         newsletter.save!
         puts "Created trending newsletter"
     end
+
+    task :recent, [:category] => :environment do |t, args|
+        if args[:category].present?
+            @category = Category.find(args[:category])
+            @posts = Post.published.where(category_id: @category.id).by_published_date.limit(8)
+        else
+            @posts = Post.published.by_published_date.limit(8)
+        end
+        @featured_posts = []
+        @posts.each do |post|
+            @featured_posts.push("https://www.theteenmagazine.com/#{post.slug}")
+        end
+        @header = @category.nil? ? "What's new!" : "#{@category.name.capitalize}: What's new!"
+        @name_prep = @category.nil? ? "on <a href='https://www.theteenmagazine.com?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>The Teen Magazine</a>" : "in <a href='https://www.theteenmagazine.com/categories/#{@category.slug}?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>#{@category.name}</a>"
+        newsletter = Newsletter.new(
+            subject: "RECENT ON TTM 💬: #{@posts.first.title.truncate(60)} & more",
+            header: @header,
+            template: "Weekly Picks",
+            audience: "All Readers",
+            message: "<p style='font-size: 16px'>Below are the most recent articles published #{@name_prep}. If you haven&#39;t checked these out yet, we highly&nbsp;recommend that you do!</p><p style='font-size: 16px'>The Teen Magazine Editor Team&nbsp;&lt;3</p>",
+            user_id: 1,
+            featured_posts: @featured_posts.join(" ")
+        )
+        newsletter.save!
+        puts "Created recents newsletter"
+    end
 end

@@ -170,9 +170,13 @@
                                                               <span style="font-size:20px">
                                                                 Editor Pick #<%= index + 1 %>
                                                               </span>
+                                                            <% elsif @newsletter.subject.include? "TRENDING" %>
+                                                              <span style="font-size:20px">
+                                                                trending in <a href='https://theteenmagazine.com/categories/<%= post.category.slug %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>'><%= post.category.name %> 🔥
+                                                              </span>
                                                             <% else %>
                                                               <span style="font-size:20px">
-                                                                trending in <%= post.category.name %> 🔥
+                                                                This week in <a href='https://theteenmagazine.com/categories/<%= post.category.slug %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>'><%= post.category.name %></a> 💬
                                                               </span>
                                                             <% end %>
                                                           </font>
