@@ -13,7 +13,14 @@
   <p style="margin-bottom: 0;"><i>This article has been reviewed <%= @reviews.count %> time(s).
      View all past reviews <%= link_to("here", reviews_path(post: @post), target: "_blank", :class => "link_nrml underline") %>.
   </i></p>
-  <% if @most_recent_review.try(:status).eql? "Rejected" %>
+  <% if (@most_recent_review.try(:status).eql? "In Review") && (@most_recent_review.editor_claimed_review_at.present?) %>
+    <div class="alert alert-info m-0 pb-1 pt-2" role="alert">
+      <% @message = (@most_recent_review.editor_claimed_review_at + 2.days > Time.now) ? 
+        "and they have #{date_to_words(@most_recent_review.editor_claimed_review_at + 2.days)} left to review your article." 
+        : "and their review is overdue. It will be unclaimed and assigned to a different editor." %>
+      <p><i>Your article is currently being reviewed by <%= link_to(User.find_by(id: @most_recent_review.editor_id)&.full_name, User.find_by(id: @most_recent_review.editor_id), target: "_blank") %> <%= @message %></i></p>
+    </div>
+  <% elsif @most_recent_review.try(:status).eql? "Rejected" %>
     <% if !@most_recent_review.notes.blank? %>
      <p><i>Editor Notes: <%= @most_recent_review.notes %></i></p>
     <% end %>

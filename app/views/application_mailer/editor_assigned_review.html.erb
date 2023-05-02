@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>Hi <%= @editor.first_name %>,</p>
+    <p>You previously reviewed the article <%= link_to @post.title, @post %>. 
+    The article was resubmitted for review by <%=link_to(@post.user.full_name, @post.user) %> and was automatically assigned to you.</p>
+    <p>You will have 48 hours to review the article until it is unclaimed.</p>
+    <p>Best</p>
+    <p>Admin Team</p>
+  </body>
+</html>

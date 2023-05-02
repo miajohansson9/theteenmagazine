@@ -28,4 +28,9 @@ class ApplicationMailerPreview < ActionMailer::Preview
   def welcome_email
     ApplicationMailer.welcome_email(User.first)
   end
+
+  # Accessible from http://localhost:3000/rails/mailers/application_mailer/editor_assigned_review
+  def editor_assigned_review
+    ApplicationMailer.editor_assigned_review(User.first, Post.first)
+  end
 end

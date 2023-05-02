@@ -525,7 +525,7 @@ class PostsController < ApplicationController
          ((@prev_status.eql? "Ready for Review") ||
           (@prev_status.eql? "In Review"))
         @notice = "Your article was withdrawn from review."
-      elsif ((@prev_status.eql? "In Progress") || (@prev_status.blank?)) &&
+      elsif ([nil, "In Progress", "Rejected"].include? @prev_status) &&
             (@new_status.eql? "Ready for Review")
         if !@post.thumbnail.attached?
           # post does not have thumbnail! this can break the homepage
@@ -538,8 +538,28 @@ class PostsController < ApplicationController
           @rev.update_column(:status, "In Progress")
           return
         end
-        deliver_submitted_article_emails
-        @notice = "Great job! Your article was submitted for review."
+        if @post.reviews.count > 1
+          begin
+            # has been reviewed before and should go to the previous reviewer
+            @prev_editor = User.find(@prev_review.editor_id)
+            @notice = "Great job! #{@prev_editor.full_name} was assigned this review."
+            @rev.update_columns({
+              status: "In Review",
+              editor_id: @prev_editor.id, 
+              editor_claimed_review_at: Time.now,
+            })
+            @rev.save!
+            ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
+            ApplicationMailer.editor_assigned_review(@post.user, @post).deliver
+          rescue
+            # rescue and make review open to all editors
+            deliver_submitted_article_emails
+            @notice = "Great job! Your article was submitted for review."
+          end
+        else
+          deliver_submitted_article_emails
+          @notice = "Great job! Your article was submitted for review."
+        end
       else
         @notice = "Your changes were saved."
       end

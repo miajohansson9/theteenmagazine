@@ -114,6 +114,17 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
+  def editor_assigned_review(editor, post)
+    @editor = editor
+    @post = post
+    unless @editor.do_not_send_emails
+      mail(
+        to: @editor.email,
+        subject: "#{@editor.first_name}, you were assigned a review for #{@post.title}",
+      )
+    end
+  end
+
   def article_moved_to_review(user, post)
     @user = user
     @post = post

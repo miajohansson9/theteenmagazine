@@ -12,8 +12,10 @@ module ApplicationHelper
 
   def date_to_words(date)
     return "" if date.nil?
-    ## recent
-    if ((1.week.ago)..(Time.now)).cover?(date)
+    if (date > Time.now)
+      return "#{time_ago_in_words(date)}"
+      ## future
+    elsif ((1.week.ago)..(Time.now)).cover?(date)
       return "#{time_ago_in_words(date)} ago"
       ## within this year
     elsif ((Date.today.beginning_of_year)..(Time.now)).cover?(date)
