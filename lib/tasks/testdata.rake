@@ -59,6 +59,9 @@ namespace :testdata do
         @max_reviews = Constant.new(name: "max # of reviews per month for editors", value: 20)
         @max_reviews.save!
 
+        @comments_requirement = Constant.new(name: "# of monthly comments editors need to complete", value: 5)
+        @comments_requirement.save!
+        
         puts "Set constants"
     end
 end

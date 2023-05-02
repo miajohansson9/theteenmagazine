@@ -298,6 +298,10 @@ class UsersController < ApplicationController
       Constant
         .find_by(name: "# of monthly pitches editors need to complete")
         .try(:value)
+    @comments_requirement =
+      Constant
+        .find_by(name: "# of monthly comments editors need to complete")
+        .try(:value)
     @max_reviews =
       Constant
         .find_by(name: "max # of reviews per month for editors")
