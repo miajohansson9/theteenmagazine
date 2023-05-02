@@ -53,11 +53,6 @@
   <% end %>
   <% if current_user.is_marketer? %>
     <%= link_to "Interviewer Team", "/interviewers", class: "dropdown-item" %>
-    <% if current_user.admin? %>
-      <%= link_to "Partners", "/partners", class: "dropdown-item" %>
-    <% elsif !current_user.partner? %>
-      <%= link_to "Review Onboarding", onboarding_path(:step => "welcome"), class: "dropdown-item" %>
-    <% end %>
     <div class="dropdown-divider"></div>
   <% end %>
   <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>

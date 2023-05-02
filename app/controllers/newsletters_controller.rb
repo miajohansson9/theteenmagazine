@@ -171,7 +171,7 @@ class NewslettersController < ApplicationController
           @posts.each do |post|
             ApplicationMailer.featured_in_trending(post.user, post).deliver
           end
-        else
+        elsif !(@newsletter.subject.include? "RECENT")
           @posts.each do |post|
             ApplicationMailer.featured_in_newsletter(post.user, post).deliver
           end

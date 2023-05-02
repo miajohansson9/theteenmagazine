@@ -23,4 +23,9 @@ class ApplicationMailerPreview < ActionMailer::Preview
   def featured_in_trending
     ApplicationMailer.featured_in_trending(User.first, Post.published.last)
   end
+
+  # Accessible from http://localhost:3000/rails/mailers/application_mailer/welcome_email
+  def welcome_email
+    ApplicationMailer.welcome_email(User.first)
+  end
 end

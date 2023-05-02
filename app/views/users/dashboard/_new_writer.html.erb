@@ -72,9 +72,33 @@
     </div>
     <div class="dashboard--writer--flex--two" style="width: 30rem;">
       <%= render "/users/partials/featured_writers", users: @featured_writers, cached: true %>
-      <p class="pl-3 pr-3 mt-2 pb-3" style="width: 100%; color: gray;">This is a new writer account. Your public writer account will be activated
-        once you publish your first article.
-      </p>
+      <div class="d-flex align-items-center justify-content-center">
+          <iframe src="https://discord.com/widget?id=1081601449550688286&theme=dark" width="100%" height="200" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+      </div>
+      <div class="mt-3">
+        <div class="card whats-new-wrapper" style="border-radius: 10px; overflow: hidden;"
+          <% if @show_onboarding_full %>
+            data-step data-index="4" data-onboarding-content="See what other writers are pitching here."
+          <% end %>
+        >
+          <div class="card-header pt-3 pb-3" style="border: none; background-color: rgba(0,0,0,0.03);"><%= link_to "What's New...", pitches_path, style: "font-size: 0.9rem; font-weight: bold; text-decoration: none; line-height: 1.5; color: #212529;" %></div>
+          <ul class="list-group list-group-flush whats-new">
+            <% @pitches.each do |pitch| %>
+              <% if pitch.user.present? %>
+                <li class="list-group-item">
+                  <% @profile_img = pitch.user&.profile&.attached? ? image_tag(pitch&.user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
+                  <%= link_to(@profile_img, pitch&.user) %>
+                  <div><%= link_to(pitch.user.try(:full_name), pitch&.user, class: "link_nrml") %> pitched <%= link_to(pitch.title, pitch, class: "link_nrml") %>
+                    <br>
+                    <span class="date_ago"><%= time_ago_in_words(pitch.created_at) %> ago</span></div>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+        <i class="mt-4 d-block">See more pitches <%= link_to("here", pitches_path, class: "link_inline link_grn") %></i>
+        <br>
+      </div>
       <div class="links mb-4">
         <div <% if @show_onboarding %> data-step data-index="5" data-onboarding-content="Recommend a friend to The Teen Magazine here."<% end %>>
           <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn pl-3 pr-3 mt-2") %>
