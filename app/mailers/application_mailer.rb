@@ -226,6 +226,12 @@ class ApplicationMailer < ActionMailer::Base
           .find_by(name: "# of monthly pitches editors need to complete")
           .try(:value) || "0"
       )
+    @comments_requirement =
+      Integer(
+        Constant
+          .find_by(name: "# of monthly comments editors need to complete")
+          .try(:value) || "0"
+      )
     @month = Date.today.strftime("%B")
     @gifs = %w[
       https://s3.amazonaws.com/media.theteenmagazine.com/months/giphy.gif
@@ -254,15 +260,19 @@ class ApplicationMailer < ActionMailer::Base
     user,
     reviews_requirement,
     pitches_requirement,
+    comments_requirement,
     editor_pitches_cnt,
-    editor_reviews_cnt
+    editor_reviews_cnt,
+    editor_comments_cnt
   )
     @user = user
     @month = Date.yesterday.strftime("%B")
     @reviews_requirement = reviews_requirement
     @pitches_requirement = pitches_requirement
+    @comments_requirement = comments_requirement
     @editor_pitches_cnt = editor_pitches_cnt
     @editor_reviews_cnt = editor_reviews_cnt
+    @editor_comments_cnt = editor_comments_cnt
     unless @user.do_not_send_emails
       mail(
         to: user.email,
@@ -276,15 +286,19 @@ class ApplicationMailer < ActionMailer::Base
     user,
     reviews_requirement,
     pitches_requirement,
+    comments_requirement,
     editor_pitches_cnt,
-    editor_reviews_cnt
+    editor_reviews_cnt,
+    editor_comments_cnt
   )
     @user = user
     @month = Date.yesterday.strftime("%B")
     @reviews_requirement = reviews_requirement
     @pitches_requirement = pitches_requirement
+    @comments_requirement = comments_requirement
     @editor_pitches_cnt = editor_pitches_cnt
     @editor_reviews_cnt = editor_reviews_cnt
+    @editor_comments_cnt = editor_comments_cnt
     unless @user.do_not_send_emails
       mail(
         to: user.email,
@@ -298,15 +312,19 @@ class ApplicationMailer < ActionMailer::Base
     user,
     reviews_requirement,
     pitches_requirement,
+    comments_requirement,
     editor_pitches_cnt,
-    editor_reviews_cnt
+    editor_reviews_cnt,
+    editor_comments_cnt
   )
     @user = user
     @month = Date.yesterday.strftime("%B")
     @reviews_requirement = reviews_requirement
     @pitches_requirement = pitches_requirement
+    @comments_requirement = comments_requirement
     @editor_pitches_cnt = editor_pitches_cnt
     @editor_reviews_cnt = editor_reviews_cnt
+    @editor_comments_cnt = editor_comments_cnt
     unless @user.do_not_send_emails
       mail(
         to: user.email,

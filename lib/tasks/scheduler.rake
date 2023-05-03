@@ -43,6 +43,12 @@ task run_nightly_tasks: :environment do
           .find_by(name: "# of monthly pitches editors need to complete")
           .try(:value) || "0"
       )
+    @comments_requirement =
+      Integer(
+        Constant
+          .find_by(name: "# of monthly comments editors need to complete")
+          .try(:value) || "0"
+      )
     User.editor.each do |editor|
       @editor_pitches_cnt =
         editor
@@ -54,9 +60,10 @@ task run_nightly_tasks: :environment do
           .where(editor_id: editor.id)
           .where("updated_at > ?", Date.today.beginning_of_month)
           .count
+      @editor_comments_cnt = editor.comments.where("created_at > ?", Date.today.beginning_of_month).count
       @is_not_on_track =
-        (@editor_pitches_cnt + @editor_reviews_cnt <
-         (@reviews_requirement + @pitches_requirement) / 2) && (editor.created_at < (Time.now - 30.days))
+        (@editor_pitches_cnt + @editor_reviews_cnt + @editor_comments_cnt <
+         (@reviews_requirement + @pitches_requirement + @comments_requirement) / 2) && (editor.created_at < (Time.now - 30.days))
       if @is_not_on_track
         if editor.missed_editor_deadline.try(:month) ===
            (Date.today - 1.month).month
@@ -64,16 +71,20 @@ task run_nightly_tasks: :environment do
             editor,
             @reviews_requirement,
             @pitches_requirement,
+            @comments_requirement,
             @editor_pitches_cnt,
-            @editor_reviews_cnt
+            @editor_reviews_cnt,
+            @editor_comments_cnt
           ).deliver
         else
           ApplicationMailer.editor_warning_deadline_1(
             editor,
             @reviews_requirement,
             @pitches_requirement,
+            @comments_requirement,
             @editor_pitches_cnt,
-            @editor_reviews_cnt
+            @editor_reviews_cnt,
+            @editor_comments_cnt
           ).deliver
         end
       end
@@ -93,6 +104,12 @@ task run_nightly_tasks: :environment do
           .find_by(name: "# of monthly pitches editors need to complete")
           .try(:value) || "0"
       )
+    @comments_requirement =
+      Integer(
+        Constant
+          .find_by(name: "# of monthly comments editors need to complete")
+          .try(:value) || "0"
+      )
     User.editor.each do |editor|
       @editor_pitches_cnt =
         editor
@@ -104,8 +121,14 @@ task run_nightly_tasks: :environment do
           .where(editor_id: editor.id)
           .where("updated_at > ?", Date.yesterday.beginning_of_month)
           .count
+      @editor_comments_cnt =
+          editor
+            .comments
+            .where("created_at > ?", Date.yesterday.beginning_of_month)
+            .count
       @missed_deadline =
         ((@editor_pitches_cnt < @pitches_requirement) ||
+         (@editor_comments_cnt < @comments_requirement) ||
          (@editor_reviews_cnt < @reviews_requirement)) && (editor.created_at < (Time.now - 31.days))
       if @missed_deadline
         # check if missed editor deadline for two months ago
@@ -122,8 +145,10 @@ task run_nightly_tasks: :environment do
             editor,
             @reviews_requirement,
             @pitches_requirement,
+            @comments_requirement,
             @editor_pitches_cnt,
-            @editor_reviews_cnt
+            @editor_reviews_cnt,
+            @editor_comments_cnt
           ).deliver
           # update missed assignment for previous month
           editor.update_attribute("missed_editor_deadline", Time.now - 1.day)

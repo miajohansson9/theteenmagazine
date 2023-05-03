@@ -36,6 +36,12 @@ class ReviewsController < ApplicationController
             .find_by(name: '# of monthly pitches editors need to complete')
             .try(:value) || '0'
         )
+      @comments_requirement =
+        Integer(
+          Constant
+            .find_by(name: "# of monthly comments editors need to complete")
+            .try(:value)
+        )
       @max_reviews =
         Integer(
           Constant
@@ -47,6 +53,11 @@ class ReviewsController < ApplicationController
           .pitches
           .where('created_at > ?', Date.today.beginning_of_month)
           .count
+      @editor_comments_cnt =
+          @user
+            .comments
+            .where('created_at > ?', Date.today.beginning_of_month)
+            .count
       @editor_reviews_cnt =
         Review
           .where(editor_id: @user.id)
