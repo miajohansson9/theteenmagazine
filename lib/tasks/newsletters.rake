@@ -17,6 +17,10 @@ namespace :newsletters do
                 trending(@categories[Date.today.cweek % 7])
             end
         end
+
+        if Date.today.day.eql? 1
+            editor_picks
+        end
     end
 
     task :commenters, [:weeks] => :environment do |t, args|
@@ -29,6 +33,10 @@ namespace :newsletters do
 
     task :recent, [:category] => :environment do |t, args|
         recent(args[:category])
+    end
+
+    task editor_picks: :environment do
+        editor_picks
     end
 
     def commenters(weeks)
@@ -62,7 +70,7 @@ namespace :newsletters do
                 @writers[index] = writer.join(' ')
             end
         end
-        @commenters = @commenters.reverse.join(' ')
+        @commenters = @commenters.reverse.first(12).join(' ')
         @writers = @writers.delete_if(&:blank?).reverse.first(4).join(', ')
         newsletter = Newsletter.new(
             subject: "TTM UPDATE: Thank you #{@writers} & more!",
@@ -127,5 +135,22 @@ namespace :newsletters do
         )
         newsletter.save!
         puts "Created recents newsletter"
+    end
+
+    def editor_picks
+        @month = (Date.today - 25.days).in_time_zone&.strftime("%B")
+        @next_month = Date.today.in_time_zone&.strftime("%B")
+        @num_total_articles = Post.published.where(publish_at: ((Date.today - 25.days).beginning_of_month..(Date.today - 25.days).end_of_month)).count
+        newsletter = Newsletter.new(
+            subject: "#{@month} Editor Picks are Here!",
+            header: "Editor Picks from #{@month}! 🎉",
+            template: "Weekly Picks",
+            audience: "All Readers",
+            message: "<p>#{@month} was an incredible month for our team of student writers who published&nbsp; #{@num_total_articles} articles!&nbsp;After careful review, our editors have chosen 6 articles that stood out and deserve a special shoutout.</p> <p>To the writers whose articles were included, congratulations!&nbsp;And to our email subscribers, we highly recommend that you check out these articles.&nbsp;🤩</p><p>Stay tuned for our editors&#39; top picks from #{@next_month} in our next newsletter.</p>",
+            user_id: 1,
+            subheader: "#{@month} 1 to #{@month} #{(Date.today - 25.days).end_of_month.day}"
+        )
+        newsletter.save!
+        puts "Created editor picks newsletter"
     end
 end

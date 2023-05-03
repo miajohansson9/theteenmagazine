@@ -65,8 +65,11 @@ task run_nightly_tasks: :environment do
         (@editor_pitches_cnt + @editor_reviews_cnt + @editor_comments_cnt <
          (@reviews_requirement + @pitches_requirement + @comments_requirement) / 2) && (editor.created_at < (Time.now - 30.days))
       if @is_not_on_track
-        if editor.missed_editor_deadline.try(:month) ===
-           (Date.today - 1.month).month
+        # check if missed editor deadline for two months ago
+        # ie. today is May 1st; I want to check if missed deadline in April too
+        if (editor.missed_editor_deadline.try(:year) === (Time.now - 20.days).year) &&
+          (editor.missed_editor_deadline.try(:month) === (Time.now - 20.days).month) && 
+          !(editor.skip_assignment)
           ApplicationMailer.editor_warning_deadline_2(
             editor,
             @reviews_requirement,
@@ -168,13 +171,6 @@ task run_nightly_tasks: :environment do
   end
 
   if (Date.today.day.eql? Date.today.end_of_month.day)
-    # Disable opted-in editor notifications for previous month
-    @users = User.where(notify_of_new_review: true)
-    @users.each do |user|
-      user.notify_of_new_review = false
-      user.save
-    end
-
     # Update monthly extensions for active writers
     User.active.each do |user|
       begin
