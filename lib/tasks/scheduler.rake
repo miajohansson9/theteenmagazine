@@ -63,7 +63,7 @@ task run_nightly_tasks: :environment do
       @editor_comments_cnt = editor.comments.where("created_at > ?", Date.today.beginning_of_month).count
       @is_not_on_track =
         (@editor_pitches_cnt + @editor_reviews_cnt + @editor_comments_cnt <
-         (@reviews_requirement + @pitches_requirement + @comments_requirement) / 3) && (editor.created_at < (Time.now - 30.days))
+         (@reviews_requirement + @pitches_requirement + @comments_requirement) / 2) && (editor.created_at < (Time.now - 30.days))
       if @is_not_on_track
         if editor.missed_editor_deadline.try(:month) ===
            (Date.today - 1.month).month
@@ -81,6 +81,7 @@ task run_nightly_tasks: :environment do
             editor,
             @reviews_requirement,
             @pitches_requirement,
+            @comments_requirement,
             @editor_pitches_cnt,
             @editor_reviews_cnt,
             @editor_comments_cnt
