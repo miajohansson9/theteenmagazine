@@ -61,7 +61,7 @@
         <% end %>
       </div>
     <% end %>
-    <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: @pitch.title, :class => "card-img-top")%>
+    <%= render "posts/partials/header_image", post: @pitch, img_class: "card-img-top" %>
   <% end %>
   <% if @pitch.requirements.present? %>
     <i>Notes:</i>

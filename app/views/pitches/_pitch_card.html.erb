@@ -1,9 +1,7 @@
 <% @post = pitch.posts.find_by(user_id: pitch.claimed_id) %>
 <div class="card" style="width: 32%; <% if @unseen_pitches.to_a.include? pitch %>background-color: #E6F6FF;<% end %>">
   <a href="<%= pitch_path(pitch)%>">
-    <% if pitch.thumbnail.attached? %>
-      <%= image_tag(pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: pitch.title, :class => "card-img-top")%>
-    <% end %>
+    <%= render "posts/partials/header_image", post: pitch, img_class: "card-img-top" %>
   </a>
   <% if current_user.admin? || current_user.editor? %>
     <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn")%>
