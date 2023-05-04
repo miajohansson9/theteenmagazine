@@ -146,7 +146,7 @@ namespace :newsletters do
             header: "Editor Picks from #{@month}! 🎉",
             template: "Weekly Picks",
             audience: "All Readers",
-            message: "<p>#{@month} was an incredible month for our team of student writers who published&nbsp; #{@num_total_articles} articles!&nbsp;After careful review, our editors have chosen 6 articles that stood out and deserve a special shoutout.</p> <p>To the writers whose articles were included, congratulations!&nbsp;And to our email subscribers, we highly recommend that you check out these articles.&nbsp;🤩</p><p>Stay tuned for our editors&#39; top picks from #{@next_month} in our next newsletter.</p>",
+            message: "<p style='font-size: 16px'>#{@month} was an incredible month for our team of student writers who published&nbsp; #{@num_total_articles} articles!&nbsp;After careful review, our editors have chosen 6 articles that stood out and deserve a special shoutout.</p> <p style='font-size: 16px'>To the writers whose articles were included, congratulations!&nbsp;And to our email subscribers, we highly recommend that you check out these articles.&nbsp;🤩</p><p style='font-size: 16px'>Stay tuned for our editors&#39; top picks from #{@next_month} in our next newsletter.</p>",
             user_id: 1,
             subheader: "#{@month} 1 to #{@month} #{(Date.today - 25.days).end_of_month.day}"
         )
