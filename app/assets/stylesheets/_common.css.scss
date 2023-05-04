@@ -1350,7 +1350,7 @@ ol {
   margin: 0.8em 0;
 }
 
-@media (min-width: 1030px) {
+@media (min-width: 930px) {
   .fixed_ads {
     align-self: flex-start;
     position: sticky;
@@ -1362,7 +1362,7 @@ ol {
   }
 }
 
-@media (max-width: 1030px) {
+@media (max-width: 930px) {
   body,
   #site-wrapper,
   #site-canvas,
@@ -1427,7 +1427,7 @@ ol {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 930px) {
   .parentflex {
     flex-direction: column;
     .flexbox {
