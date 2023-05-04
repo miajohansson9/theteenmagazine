@@ -6,7 +6,7 @@
           <% if post.rank.present? && post.rank <= 8 %>
             <span class="badge badge-pink" style="position: absolute; z-index: 10000; top: 5px; left: 5px;">trending 🔥</span>
           <% end %>
-          <%= image_tag(post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), alt: post.title, class: "image_recent_articles") %>
+          <%= render 'posts/partials/header_image', post: post, img_class: "image_recent_articles" %>
         </div>
       <% end %>
       <h1><%= link_to post.title, post %></h1>

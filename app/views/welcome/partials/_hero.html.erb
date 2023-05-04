@@ -6,14 +6,7 @@
           <% if @posts_approved_0[0].thumbnail.attached? %>
             <%= link_to(@posts_approved_0[0]) do %>
               <div class="w-100 position-relative">
-                <%= image_set_tag url_for(@posts_approved_0[0].thumbnail.variant(resize_to_fill: [800, 560], format: 'webp')), { 
-                  url_for(@posts_approved_0[0].thumbnail.variant(resize_to_fill: [550], format: 'webp'))  => '550w', 
-                  url_for(@posts_approved_0[0].thumbnail.variant(resize_to_fill: [630], format: 'webp')) => '630w', 
-                  url_for(@posts_approved_0[0].thumbnail.variant(resize_to_fill: [440], format: 'webp')) => '440w', 
-                  url_for(@posts_approved_0[0].thumbnail.variant(resize_to_fill: [738], format: 'webp')) => '738w', 
-                  url_for(@posts_approved_0[0].thumbnail.variant(resize_to_fill: [100], format: 'webp')) => '100w', 
-                  url_for(@posts_approved_0[0].thumbnail.variant(resize_to_fill: [1200, 845], format: 'webp')) => '1200w' 
-                }, sizes: '100vw, 800px', alt: 'logo', id: 'logo', class: "post_image", alt: @posts_approved_0[0].title, class: "image_thumbnail" %>
+                <%= render 'posts/partials/header_image', post: @posts_approved_0[0], img_class: "image_thumbnail" %>
               </div>
             <% end %>
           <% end %>
@@ -33,8 +26,8 @@
       <% @posts_approved_0[1..4].each do |post| %>
         <div class="thumbnail">
           <% if post.thumbnail.attached? %>
-            <%=link_to(post) do %>
-              <%= image_tag(post.thumbnail.variant(resize_to_fill: [300,150], format: 'webp'), alt: post.title, :class => "image_thumbnail") %>
+            <%= link_to(post) do %>
+              <%= render 'posts/partials/header_image', post: post, img_class: "image_thumbnail" %>
             <% end %>
           <% end %>
           <div class="thumbnail--container">
