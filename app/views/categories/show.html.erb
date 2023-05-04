@@ -1,5 +1,5 @@
 <div class="category">
-  <div class="category_image" style="background-image: url(<%= url_for(@category.image) %>)">
+  <div class="category_image" style="background-image: url(<%= url_for(@category.image.variant(resize_to_fill: [1200, 845], format: 'webp')) %>)">
     <h1><%= @category.name %></h1>
   </div>
   <div class="category--show">
