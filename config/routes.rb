@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   get :get_promoted_posts, controller: :posts
   get :get_comments_published, controller: :posts
   get :generate_shareable_token, controller: :posts
+  get :get_header_image, controller: :posts
 
   get :get_all_comments, controller: :comments
 

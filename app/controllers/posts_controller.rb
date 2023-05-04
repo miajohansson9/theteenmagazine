@@ -193,6 +193,10 @@ class PostsController < ApplicationController
     set_post_meta_tags
   end
 
+  def get_header_image
+    render partial: "posts/partials/header_image", locals: { user: @user, post: @post, comments: @comments, comment: @comment }
+  end
+
   def get_comments_published
     @user = User.find(params[:user_id])
     @post = Post.find(params[:post_id])

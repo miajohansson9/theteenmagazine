@@ -66,6 +66,10 @@ Rails.application.configure do
 
   config.assets.raise_production_errors = false
 
+  config.public_file_server.headers = {
+    'Cache-Control' => "no-cache"
+  }
+
   ActionMailer::Base.smtp_settings = {
     address: 'smtp.sendgrid.net',
     port: '587',

@@ -10,6 +10,11 @@ module ApplicationHelper
     end
   end
 
+  def image_set_tag(source, srcset = {}, options = {})
+    srcset = srcset.map { |src, size| "#{path_to_image(src)} #{size}" }.join(', ')
+    image_tag(source, options.merge(srcset: srcset))
+  end
+
   def date_to_words(date)
     return "" if date.nil?
     if (date > Time.now)
