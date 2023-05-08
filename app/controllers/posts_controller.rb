@@ -554,7 +554,7 @@ class PostsController < ApplicationController
             })
             @rev.save!
             ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
-            ApplicationMailer.editor_assigned_review(@post.user, @post).deliver
+            ApplicationMailer.editor_assigned_review(@prev_editor, @post).deliver
           rescue
             # rescue and make review open to all editors
             deliver_submitted_article_emails
