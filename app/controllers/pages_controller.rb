@@ -60,7 +60,7 @@ class PagesController < ApplicationController
   def privacy; end
 
   def sitemap
-    redirect_to "https://s3.amazonaws.com/media.theteenmagazine.com/sitemaps/sitemap.xml.gz"
+    redirect_to "https://s3.amazonaws.com/media.theteenmagazine.com/sitemaps/sitemap.xml.gz", allow_other_host: true
   end
 
   def about; end
