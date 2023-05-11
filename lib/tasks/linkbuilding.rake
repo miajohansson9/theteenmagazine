@@ -14,4 +14,17 @@ namespace :linkbuilding do
             end
         end
     end
+
+    task :undo_link_building, [:key_phrase, :link] => :environment do |t, args|
+        posts = Post.published.where("content LIKE ?", "%<a href='#{args[:link]}'>#{args[:key_phrase]}</a>%")
+        posts.each do |post|
+            begin
+                post.content = post.content.sub!("<a href='#{args[:link]}'>#{args[:key_phrase]}</a>", "#{args[:key_phrase]}")
+                post.save(:validate => true)
+                puts "Removed link from https://www.theteenmagazine.com/#{post.slug}"
+            rescue StandardError
+                puts "Failed to remove link to https://www.theteenmagazine.com/#{post.slug}"
+            end
+        end
+    end
 end
