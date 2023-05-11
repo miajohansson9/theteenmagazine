@@ -4,9 +4,9 @@ namespace :trending do
         G = args[:gravity].present? ? args[:gravity].to_f : 1.8
         Post.published.each do |post|
             begin
-                @hours = ((Time.now - post.publish_at) / 1.hour).round
+                @hours = [24.0, ((Time.now - post.publish_at) / 1.hour).round].max
                 @points = post.post_impressions.to_f
-                score = (@points / ((@hours+24.0)**G)) * 10000.0
+                score = (@points / ((@hours+2.0)**G)) * 1000.0
                 post.update_attribute(:trending_score, score)
                 puts "post #{post.id} given score #{score} (published #{@hours} hours ago, #{@points} impressions)"
             rescue StandardError
