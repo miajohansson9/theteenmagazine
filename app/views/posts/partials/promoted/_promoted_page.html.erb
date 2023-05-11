@@ -2,7 +2,7 @@
   <div class="ctgry_article recent mb-4">
     <%=link_to(post) do %>
       <div class="w-100 position-relative">
-        <% if post.rank.present? && post.rank <= 8 %>
+        <% if post.rank.present? && post.rank <= 4 %>
             <span class="badge badge-pink" style="position: absolute; z-index: 10000; top: 5px; left: 5px;">trending in <%= post.category.name %> 🔥</span>
         <% end %>
         <%= render 'posts/partials/header_image', post: post, img_class: "image_recent_articles" %>
