@@ -42,7 +42,7 @@ class PostsController < ApplicationController
           # calculate new trending score
           @hours = ((Time.now - @post.publish_at) / 1.hour).round
           @points = @post.post_impressions
-          score = @points / ((@hours+2)**1.8)
+          score = (@points / ((@hours+2)**1.8)) * 1000
           # update new trending score
           @post.update_attribute(:trending_score, score)
           # create session variable to not log again
