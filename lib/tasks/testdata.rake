@@ -13,12 +13,17 @@ namespace :testdata do
             )
             @user.save!
             puts "Created test user"
+        end
+    end
+
+    task subscribers: :environment do
+        User.editor.each do |user|
             @token = SecureRandom.urlsafe_base64
             @subscriber = Subscriber.new(
-                email: @user.email, 
-                user_id: @user.id,
-                first_name: @user.first_name, 
-                last_name: @user.last_name, 
+                email: user.email, 
+                user_id: user.id,
+                first_name: user.first_name, 
+                last_name: user.last_name, 
                 token: @token,
                 source: "Test data",
                 opted_in_at: Time.now,
@@ -26,7 +31,7 @@ namespace :testdata do
                 subscribed_to_writer_newsletter: true,
             )
             @subscriber.save!
-            puts "Added test user to subscriber list"
+            puts "Added editor to subscriber list"
         end
     end
 

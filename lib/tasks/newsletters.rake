@@ -1,24 +1,41 @@
 require 'rake'
+require "#{Rails.root}/app/helpers/newsletters_helper"
+include NewslettersHelper
+
 namespace :newsletters do
     task run_newsletter_tasks: :environment do
-        if Date.today.sunday?
-            recent
-        end
-
-        if Date.today.sunday? && ((Date.today.cweek % 3).eql? 3)
-            commenters(3)
+        if Date.today.monday?
+            # send recents newsletter every monday
+            @newsletter = recent
+            send_to_audience(@newsletter)
         end
 
         if Date.today.wednesday?
-            @categories = ['mental-health-self-love','opinion','student-life','beauty-style','interviews','pop-culture','books-writing']
-            if Date.today.cweek.odd?
-                trending
-            else
-                trending(@categories[Date.today.cweek % 7])
+            # send commenters newsletter every other week
+            if Date.today.cweek.even?
+                @newsletter = commenters
+                send_to_audience(@newsletter)
             end
         end
 
-        if Date.today.day.eql? 1
+        if Date.today.thursday?
+            @categories = []
+            Category.active.each do |category|
+                @categories = @categories.push(category.slug)
+            end
+            if Date.today.cweek.odd?
+                # send trending newsletter every other thursday
+                @newsletter = trending
+                send_to_audience(@newsletter)
+            else
+                # send recents newsletter in category every other thursday
+                @newsletter = recent(@categories[Date.today.cweek % 7])
+                send_to_audience(@newsletter)
+            end
+        end
+
+        # create editor picks newsletter
+        if Date.today.day.eql? 20
             editor_picks
         end
     end
@@ -39,7 +56,22 @@ namespace :newsletters do
         editor_picks
     end
 
-    def commenters(weeks)
+    def send_to_audience(newsletter)
+        if Newsletter.where(audience: newsletter.audience).where(sent_at: (Time.now - 1.day)..Time.now).present?
+            # newsletter sent to audience within one day
+            puts "Do not send newsletters to the same audience within one day of each other"
+            return
+        end
+        newsletter.update_column(:sent_at, Time.now)
+        newsletter.update_column(:recipients, 0)
+        if newsletter.template.eql? "Announcement"
+            send_announcement(newsletter, false)
+        elsif newsletter.template.eql? "Weekly Picks"
+            send_editor_picks(newsletter, false)
+        end
+    end
+
+    def commenters(weeks=2)
         @weeks = weeks.present? ? weeks.to_i : 2
         @start_date = Date.today - (7 * @weeks)
         @comments = Comment.where('created_at > ?', @start_date)
@@ -47,7 +79,7 @@ namespace :newsletters do
         @writers = [[]]
         User.writer.where(last_sign_in_at: (Time.now - 1.month)..Time.now).each do |user|
             @user_comments = @comments.where(user_id: user.id)
-            if !@user_comments.nil? && @user_comments.count >= 3
+            if !@user_comments.nil? && @user_comments.count >= 4
                 if @commenters[@user_comments.count - 3].nil?
                     @writers[@user_comments.count - 3] = [user.first_name]
                     @commenters[@user_comments.count - 3] = ["<address style='text-align: center;'><a href='https://www.theteenmagazine.com/writers/" + user.slug + "'>" + user.full_name + "</a>, " + "#{@user_comments.count}" + " comments</address>"]
@@ -82,10 +114,11 @@ namespace :newsletters do
             action_button: "Comment on Recent Articles, https://www.theteenmagazine.com/"
         )
         newsletter.save!
+        return newsletter
         puts "Created commenters newsletter"
     end
 
-    def trending(category)
+    def trending(category=nil)
         if category.present?
             @category = Category.find(category)
             @posts = Post.published.trending.where(category_id: @category.id).limit(8)
@@ -108,10 +141,11 @@ namespace :newsletters do
             featured_posts: @featured_posts.join(" ")
         )
         newsletter.save!
+        return newsletter
         puts "Created trending newsletter"
     end
 
-    def recent(category)
+    def recent(category=nil)
         if category.present?
             @category = Category.find(category)
             @posts = Post.where('publish_at > ?', Time.now - 1.week).where(category_id: @category.id).trending.limit(8)
@@ -125,7 +159,7 @@ namespace :newsletters do
         @header = @category.nil? ? "What's new!" : "#{@category.name.capitalize}: What's new!"
         @name_prep = @category.nil? ? "on <a href='https://www.theteenmagazine.com?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>The Teen Magazine</a>" : "in <a href='https://www.theteenmagazine.com/categories/#{@category.slug}?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>#{@category.name}</a>"
         newsletter = Newsletter.new(
-            subject: "RECENT ON TTM 💬: #{@posts.first.title.truncate(60)} & more",
+            subject: "#{@posts.first.title.truncate(90)} & more",
             header: @header,
             template: "Weekly Picks",
             audience: "All Readers",
@@ -134,15 +168,16 @@ namespace :newsletters do
             featured_posts: @featured_posts.join(" ")
         )
         newsletter.save!
+        return newsletter
         puts "Created recents newsletter"
     end
 
     def editor_picks
-        @month = (Date.today - 25.days).in_time_zone&.strftime("%B")
+        @month = (Date.today - 19.days).in_time_zone&.strftime("%B")
         @next_month = Date.today.in_time_zone&.strftime("%B")
         @num_total_articles = Post.published.where(publish_at: ((Date.today - 25.days).beginning_of_month..(Date.today - 25.days).end_of_month)).count
         newsletter = Newsletter.new(
-            subject: "#{@month} Editor Picks are Here!",
+            subject: "#{@month.upcase} 2023 EDITOR PICKS ANNOUNCED!",
             header: "Editor Picks from #{@month}! 🎉",
             template: "Weekly Picks",
             audience: "All Readers",

@@ -1,3 +1,4 @@
+include NewslettersHelper
 class NewslettersController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin?
@@ -136,89 +137,11 @@ class NewslettersController < ApplicationController
     @newsletter.update_column(:sent_at, Time.now)
     @newsletter.update_column(:recipients, 0)
     if @newsletter.template.eql? "Announcement"
-      send_announcement
+      send_announcement(@newsletter)
     elsif @newsletter.template.eql? "Weekly Picks"
-      send_editor_picks
+      send_editor_picks(@newsletter)
     end
     redirect_to "/newsletters", notice: "Email is sending to #{@newsletter.audience}"
-  end
-
-  def send_editor_picks
-    @posts = []
-    @editor_quotes = []
-    @featured_all = @newsletter.featured_posts.split("https://www.theteenmagazine.com/").drop(1)
-    @featured_all.each_with_index do |featured, index|
-      featured_arr = featured.split(" ")
-      slug = featured_arr[0]
-      editor_message = featured_arr.drop(1).join(" ")
-      @editor_quotes[index] = editor_message
-      @posts[index] = Post.find_by(slug: slug.strip)
-    end
-    if @posts.count.eql? 0
-      redirect_to newsletters_path, notice: "Something went wrong"
-      return
-    end
-    Thread.new do
-      if @newsletter.audience.eql? "All Writers"
-        send_editor_picks_helper(Subscriber.writer)
-      elsif @newsletter.audience.eql? "Only Editors"
-        send_editor_picks_helper(Subscriber.editor)
-      elsif @newsletter.audience.eql? "Only Interviewers"
-        send_editor_picks_helper(Subscriber.interviewer)
-      elsif @newsletter.audience.eql? "All Readers"
-        send_editor_picks_helper(Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
-        if @newsletter.subject.include? "TTM TRENDING"
-          @posts.each do |post|
-            ApplicationMailer.featured_in_trending(post.user, post).deliver
-          end
-        elsif !(@newsletter.subject.include? "RECENT")
-          @posts.each do |post|
-            ApplicationMailer.featured_in_newsletter(post.user, post).deliver
-          end
-        end
-      end
-    end
-  end
-
-  def send_editor_picks_helper(audience)
-    audience.each do |subscriber|
-      begin
-        ApplicationMailer.editor_picks(subscriber, @posts, @editor_quotes, @newsletter).deliver
-        @newsletter.increment(:recipients, by = 1)
-        @newsletter.save(:validate => false)
-        subscriber.update_column("last_email_sent_at", Time.now)
-        puts "Sent to reader #{subscriber.email}"
-      rescue
-        puts "Could not send to reader #{subscriber.email}"
-      end
-    end
-  end
-
-  def send_announcement
-    Thread.new do
-      if @newsletter.audience.eql? "All Writers"
-        send_announcement_helper(Subscriber.writer)
-      elsif @newsletter.audience.eql? "Only Editors"
-        send_announcement_helper(Subscriber.editor)
-      elsif @newsletter.audience.eql? "Only Interviewers"
-        send_announcement_helper(Subscriber.interviewer)
-      elsif @newsletter.audience.eql? "All Readers"
-        send_announcement_helper(Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
-      end
-    end
-  end
-
-  def send_announcement_helper(audience)
-    audience.each do |subscriber|
-      begin
-        ApplicationMailer.custom_message_template(subscriber, @newsletter).deliver
-        @newsletter.increment(:recipients, by = 1)
-        @newsletter.save(:validate => false)
-        subscriber.update_column("last_email_sent_at", Time.now)
-      rescue
-        puts "Could not send to reader #{subscriber.email}"
-      end
-    end
   end
 
   private
