@@ -1,12 +1,14 @@
 require 'date'
 namespace :trending do
-    task calculate_trending: :environment do
+    task :calculate_trending, [:gravity] => :environment do |t, args|
+        G = args[:gravity].present? ? args[:gravity].to_f : 1.8
         Post.published.each do |post|
             begin
-                days = (Date.today - post.publish_at.to_date).to_i
-                score = post.post_impressions * (0.96 ** days)
+                @hours = ((Time.now - post.publish_at) / 1.hour).round
+                @points = post.post_impressions
+                score = @points / ((@hours+2)**G)
                 post.update_attribute(:trending_score, score)
-                puts "post #{post.id} given score #{score} (published #{days} ago, #{post.post_impressions} impressions)"
+                puts "post #{post.id} given score #{score} (published #{@hours} hours ago, #{@points} impressions)"
             rescue StandardError
                 puts "Failed to calculate for post #{post.slug}"
             end

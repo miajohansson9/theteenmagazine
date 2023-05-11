@@ -40,8 +40,9 @@ class PostsController < ApplicationController
           end
           @post.update_attribute(:post_impressions, new_impressions)
           # calculate new trending score
-          days = (Date.today - @post.publish_at.to_date).to_i
-          score = @post.post_impressions * (0.98 ** days)
+          @hours = ((Time.now - @post.publish_at) / 1.hour).round
+          @points = @post.post_impressions
+          score = @points / ((@hours+2)**1.8)
           # update new trending score
           @post.update_attribute(:trending_score, score)
           # create session variable to not log again
