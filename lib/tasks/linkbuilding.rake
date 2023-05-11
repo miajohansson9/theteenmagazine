@@ -7,7 +7,7 @@ namespace :linkbuilding do
         posts.each do |post|
             begin
                 post.content = post.content.sub!(args[:key_phrase], "<a href='#{args[:link]}'>#{args[:key_phrase]}</a>")
-                post.save(:validate => true)
+                post.save(:validate => false)
                 puts "Added link to https://www.theteenmagazine.com/#{post.slug}"
             rescue StandardError
                 puts "Failed to add link to https://www.theteenmagazine.com/#{post.slug}"
@@ -20,7 +20,7 @@ namespace :linkbuilding do
         posts.each do |post|
             begin
                 post.content = post.content.sub!("<a href='#{args[:link]}'>#{args[:key_phrase]}</a>", "#{args[:key_phrase]}")
-                post.save(:validate => true)
+                post.save(:validate => false)
                 puts "Removed link from https://www.theteenmagazine.com/#{post.slug}"
             rescue StandardError
                 puts "Failed to remove link to https://www.theteenmagazine.com/#{post.slug}"
