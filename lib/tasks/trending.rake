@@ -6,7 +6,7 @@ namespace :trending do
             begin
                 @hours = ((Time.now - post.publish_at) / 1.hour).round
                 @points = post.post_impressions
-                score = (@points / ((@hours+2)**G)) * 1000
+                score = (@points / ((@hours+2)**G)) * 10000
                 post.update_attribute(:trending_score, score)
                 puts "post #{post.id} given score #{score} (published #{@hours} hours ago, #{@points} impressions)"
             rescue StandardError
