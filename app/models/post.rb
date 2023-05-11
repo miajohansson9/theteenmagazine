@@ -118,7 +118,11 @@ class Post < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :history
 
+  def already_ranked?
+    publish_at.present? && publish_at < Time.now - 3.months
+  end
+
   def should_generate_new_friendly_id?
-    slug.blank? || title_changed?
+    slug.blank? || (title_changed? && !already_ranked?)
   end
 end
