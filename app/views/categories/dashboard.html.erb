@@ -19,16 +19,22 @@
         <div class="tab-content p-0" id="myClassicTabContent">
 			<div class="tab-pane fade active show" id="profile-classic" role="tabpanel" aria-labelledby="home-tab-classic">
 				<!-- Put analytics here -->
-				<div class="mt-4" id="chartContainer" style="height: 300px; width: 100%;"></div>
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-6">
-						<div id="pieChart" style="height: 360px; width: 100%;">
+				<div class="mt-4">
+					<div class="card pt-4 pl-4" style="width: 100%;">
+						<div class="card-body">
+							<div id="chartContainer" style="height: 300px; width: 90%;"></div>
 						</div>
+					</div>
+				</div>
+				<div class="mt-4 d-flex flex-row flex-wrap justify-content-between">
+					<div class="chart-card d-inline-flex card" style="width: 49%;">
+						<div class="card-body">
+							<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
 						</div>
-						<div class="col-md-6">
-						<div id="columnChart" style="height: 360px; width: 100%;">
-						</div>
+					</div>
+					<div class="chart-card d-inline-flex card" style="width: 49%;">
+						<div class="card-body">
+							<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
 						</div>
 					</div>
 				</div>
@@ -79,69 +85,111 @@
 <%= javascript_include_tag "plugins/canvasjs.min" %>
 <script>
 window.onload = function () {
-var chart = new CanvasJS.Chart("chartContainer", {
+	var chart1 = new CanvasJS.Chart("chartContainer", {
+		animationEnabled: true,
+		title:{
+			text: "Daily Articles Published/Started in <%= @category.name.capitalize %>".replace('amp;','')
+		},
+		axisX: {
+			valueFormatString: "MMM DD"
+		},
+		axisY: {
+			title: "# Articles",
+		},
+		legend:{
+			cursor: "pointer",
+			fontSize: 16,
+			itemclick: toggleDataSeries
+		},
+		toolTip:{
+			shared: true
+		},
+		data: [{
+			name: "Published in <%= @category.name.capitalize %>".replace('amp;',''),
+			type: "spline",
+			showInLegend: true,
+			dataPoints: [
+				{ x: new Date(<%= (Time.now - 14.days).to_f * 1000 %>), y: <%= @published_in_category[0] %> },
+				{ x: new Date(<%= (Time.now - 13.days).to_f * 1000 %>), y: <%= @published_in_category[1] %> },
+				{ x: new Date(<%= (Time.now - 12.days).to_f * 1000 %>), y: <%= @published_in_category[2] %> },
+				{ x: new Date(<%= (Time.now - 11.days).to_f * 1000 %>), y: <%= @published_in_category[3] %> },
+				{ x: new Date(<%= (Time.now - 10.days).to_f * 1000 %>), y: <%= @published_in_category[4] %> },
+				{ x: new Date(<%= (Time.now - 9.days).to_f * 1000 %>), y: <%= @published_in_category[5] %> },
+				{ x: new Date(<%= (Time.now - 8.days).to_f * 1000 %>), y: <%= @published_in_category[6] %> },
+				{ x: new Date(<%= (Time.now - 7.days).to_f * 1000 %>), y: <%= @published_in_category[7] %> },
+				{ x: new Date(<%= (Time.now - 6.days).to_f * 1000 %>), y: <%= @published_in_category[8] %> },
+				{ x: new Date(<%= (Time.now - 5.days).to_f * 1000 %>), y: <%= @published_in_category[9] %> },
+				{ x: new Date(<%= (Time.now - 4.days).to_f * 1000 %>), y: <%= @published_in_category[10] %> },
+				{ x: new Date(<%= (Time.now - 3.days).to_f * 1000 %>), y: <%= @published_in_category[11] %> },
+				{ x: new Date(<%= (Time.now - 2.days).to_f * 1000 %>), y: <%= @published_in_category[12] %> },
+				{ x: new Date(<%= (Time.now - 1.days).to_f * 1000 %>), y: <%= @published_in_category[13] %> },
+			]
+		},
+		{
+			name: "Drafts Started in <%= @category.name.capitalize %>".replace('amp;',''),
+			type: "spline",
+			showInLegend: true,
+			dataPoints: [
+				{ x: new Date(<%= (Time.now - 14.days).to_f * 1000 %>), y: <%= @started_in_category[0] %> },
+				{ x: new Date(<%= (Time.now - 13.days).to_f * 1000 %>), y: <%= @started_in_category[1] %> },
+				{ x: new Date(<%= (Time.now - 12.days).to_f * 1000 %>), y: <%= @started_in_category[2] %> },
+				{ x: new Date(<%= (Time.now - 11.days).to_f * 1000 %>), y: <%= @started_in_category[3] %> },
+				{ x: new Date(<%= (Time.now - 10.days).to_f * 1000 %>), y: <%= @started_in_category[4] %> },
+				{ x: new Date(<%= (Time.now - 9.days).to_f * 1000 %>), y: <%= @started_in_category[5] %> },
+				{ x: new Date(<%= (Time.now - 8.days).to_f * 1000 %>), y: <%= @started_in_category[6] %> },
+				{ x: new Date(<%= (Time.now - 7.days).to_f * 1000 %>), y: <%= @started_in_category[7] %> },
+				{ x: new Date(<%= (Time.now - 6.days).to_f * 1000 %>), y: <%= @started_in_category[8] %> },
+				{ x: new Date(<%= (Time.now - 5.days).to_f * 1000 %>), y: <%= @started_in_category[9] %> },
+				{ x: new Date(<%= (Time.now - 4.days).to_f * 1000 %>), y: <%= @started_in_category[10] %> },
+				{ x: new Date(<%= (Time.now - 3.days).to_f * 1000 %>), y: <%= @started_in_category[11] %> },
+				{ x: new Date(<%= (Time.now - 2.days).to_f * 1000 %>), y: <%= @started_in_category[12] %> },
+				{ x: new Date(<%= (Time.now - 1.days).to_f * 1000 %>), y: <%= @started_in_category[13] %> },
+			]
+		}]
+	});
+chart1.render();
+
+var chart2 = new CanvasJS.Chart("chartContainer1", {
 	animationEnabled: true,
+	theme: "light1", // "light1", "light2", "dark1", "dark2"
 	title:{
-		text: "Daily Articles Published/Started in <%= @category.name.capitalize %>".replace('amp;','')
-	},
-	axisX: {
-		valueFormatString: "MMM DD"
+		text: "Published Articles in <%= @category.name.capitalize %>".replace("amp;", "")
 	},
 	axisY: {
-		title: "# Articles",
+		title: "# Published articles"
 	},
-	legend:{
-		cursor: "pointer",
-		fontSize: 16,
-		itemclick: toggleDataSeries
-	},
-	toolTip:{
-		shared: true
-	},
-	data: [{
-		name: "Published in Category",
-		type: "spline",
-		showInLegend: true,
-		dataPoints: [
-			{ x: new Date(<%= (Time.now - 14.days).to_f * 1000 %>), y: <%= @published_in_category[0] %> },
-			{ x: new Date(<%= (Time.now - 13.days).to_f * 1000 %>), y: <%= @published_in_category[1] %> },
-			{ x: new Date(<%= (Time.now - 12.days).to_f * 1000 %>), y: <%= @published_in_category[2] %> },
-			{ x: new Date(<%= (Time.now - 11.days).to_f * 1000 %>), y: <%= @published_in_category[3] %> },
-			{ x: new Date(<%= (Time.now - 10.days).to_f * 1000 %>), y: <%= @published_in_category[4] %> },
-			{ x: new Date(<%= (Time.now - 9.days).to_f * 1000 %>), y: <%= @published_in_category[5] %> },
-			{ x: new Date(<%= (Time.now - 8.days).to_f * 1000 %>), y: <%= @published_in_category[6] %> },
-            { x: new Date(<%= (Time.now - 7.days).to_f * 1000 %>), y: <%= @published_in_category[7] %> },
-			{ x: new Date(<%= (Time.now - 6.days).to_f * 1000 %>), y: <%= @published_in_category[8] %> },
-			{ x: new Date(<%= (Time.now - 5.days).to_f * 1000 %>), y: <%= @published_in_category[9] %> },
-			{ x: new Date(<%= (Time.now - 4.days).to_f * 1000 %>), y: <%= @published_in_category[10] %> },
-			{ x: new Date(<%= (Time.now - 3.days).to_f * 1000 %>), y: <%= @published_in_category[11] %> },
-			{ x: new Date(<%= (Time.now - 2.days).to_f * 1000 %>), y: <%= @published_in_category[12] %> },
-			{ x: new Date(<%= (Time.now - 1.days).to_f * 1000 %>), y: <%= @published_in_category[13] %> },
-		]
-	},
-	{
-		name: "Drafts Started in Category",
-		type: "spline",
-		showInLegend: true,
-		dataPoints: [
-			{ x: new Date(<%= (Time.now - 14.days).to_f * 1000 %>), y: <%= @started_in_category[0] %> },
-			{ x: new Date(<%= (Time.now - 13.days).to_f * 1000 %>), y: <%= @started_in_category[1] %> },
-			{ x: new Date(<%= (Time.now - 12.days).to_f * 1000 %>), y: <%= @started_in_category[2] %> },
-			{ x: new Date(<%= (Time.now - 11.days).to_f * 1000 %>), y: <%= @started_in_category[3] %> },
-			{ x: new Date(<%= (Time.now - 10.days).to_f * 1000 %>), y: <%= @started_in_category[4] %> },
-			{ x: new Date(<%= (Time.now - 9.days).to_f * 1000 %>), y: <%= @started_in_category[5] %> },
-			{ x: new Date(<%= (Time.now - 8.days).to_f * 1000 %>), y: <%= @started_in_category[6] %> },
-            { x: new Date(<%= (Time.now - 7.days).to_f * 1000 %>), y: <%= @started_in_category[7] %> },
-			{ x: new Date(<%= (Time.now - 6.days).to_f * 1000 %>), y: <%= @started_in_category[8] %> },
-			{ x: new Date(<%= (Time.now - 5.days).to_f * 1000 %>), y: <%= @started_in_category[9] %> },
-			{ x: new Date(<%= (Time.now - 4.days).to_f * 1000 %>), y: <%= @started_in_category[10] %> },
-			{ x: new Date(<%= (Time.now - 3.days).to_f * 1000 %>), y: <%= @started_in_category[11] %> },
-			{ x: new Date(<%= (Time.now - 2.days).to_f * 1000 %>), y: <%= @started_in_category[12] %> },
-			{ x: new Date(<%= (Time.now - 1.days).to_f * 1000 %>), y: <%= @started_in_category[13] %> },
+	data: [{        
+		type: "column",  
+		showInLegend: true, 
+		legendMarkerColor: "grey",
+		dataPoints: [      
+			{ y: <%= @articles_last_month %>, label: "<%= format_date(Time.now - 60.days) %> - <%= format_date(Time.now - 30.days) %>" },
+			{ y: <%= @articles_this_month %>,  label: "<%= format_date(Time.now - 30.days) %> - <%= format_date(Time.now) %>" },
 		]
 	}]
 });
-chart.render();
+chart2.render();
+
+var chart3 = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	theme: "light1", // "light1", "light2", "dark1", "dark2"
+	title:{
+		text: "Your newsletters sent"
+	},
+	axisY: {
+		title: "# Newsletters sent"
+	},
+	data: [{        
+		type: "column",  
+		showInLegend: true, 
+		legendMarkerColor: "grey",
+		dataPoints: [      
+			{ y: <%= @newsletters_sent_last_month %>, label: "<%= format_date(Time.now - 60.days) %> - <%= format_date(Time.now - 30.days) %>" },
+			{ y: <%= @newsletters_sent_this_month %>,  label: "<%= format_date(Time.now - 30.days) %> - <%= format_date(Time.now) %>" },
+		]
+	}]
+});
+chart3.render();
 
 function toggleDataSeries(e){
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -150,7 +198,7 @@ function toggleDataSeries(e){
 	else{
 		e.dataSeries.visible = true;
 	}
-	chart.render();
+	chart1.render();
 }
 
 }

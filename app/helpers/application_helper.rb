@@ -15,6 +15,11 @@ module ApplicationHelper
     image_tag(source, options.merge(srcset: srcset))
   end
 
+  def format_date(date)
+    return "" if date.nil?
+    return date.in_time_zone&.strftime("%b %d")
+  end
+
   def date_to_words(date)
     return "" if date.nil?
     if (date > Time.now)
