@@ -84,6 +84,7 @@ class ReviewsController < ApplicationController
   end
 
   def get_editor_activity
+    @category_id = params[:category_id]
     @update_since = Activity.first.try(:action_at) || Time.now - 30.days
     @editor_reviewed_article =
       Review.where.not(editor_id: nil).where('updated_at > ?', @update_since)
@@ -123,7 +124,7 @@ class ReviewsController < ApplicationController
             action: @action,
             kind: review.class.name,
             kind_id: review.id,
-            user_id: review.editor_id
+            user_id: review.editor_id,
           ).count.eql? 0
         if @activity_does_not_exist
           Activity.create(
@@ -131,7 +132,8 @@ class ReviewsController < ApplicationController
             action_at: review.updated_at,
             kind: review.class.name,
             kind_id: review.id,
-            user_id: review.editor_id
+            user_id: review.editor_id,
+            category_id: @post.category_id,
           )
         end
       end
@@ -143,7 +145,8 @@ class ReviewsController < ApplicationController
         action_at: pitch.updated_at,
         kind: pitch.class.name,
         kind_id: pitch.id,
-        user_id: pitch.editor_id
+        user_id: pitch.editor_id,
+        category_id: pitch.category_id,
       )
     end
     @editor_pitched_new_article.each do |pitch|
@@ -153,7 +156,8 @@ class ReviewsController < ApplicationController
         action_at: pitch.created_at,
         kind: pitch.class.name,
         kind_id: pitch.id,
-        user_id: pitch.user_id
+        user_id: pitch.user_id,
+        category_id: pitch.category_id,
       )
     end
     @writer_claimed_editor_pitch.each do |pitch|
@@ -164,15 +168,21 @@ class ReviewsController < ApplicationController
         action_at: pitch.claimed_at,
         kind: pitch.class.name,
         kind_id: pitch.id,
-        user_id: pitch.user_id
+        user_id: pitch.user_id,
+        category_id: pitch.category_id,
       )
     end
     @per_page = 20
     @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
-    @is_last_page = (Activity.all.count - (@page - 2) * @per_page) <= @per_page
+    if @category_id.nil?
+      @activities = Activity.all
+    else
+      @activities = Activity.where(category_id: @category_id)
+    end
+    @is_last_page = (@activities.count - (@page - 2) * @per_page) <= @per_page
     @pagy, @editor_activity =
       pagy_countless(
-        Activity.all,
+        @activities,
         page: params[:page],
         items: @per_page,
         link_extra: 'data-remote="true"'

@@ -3,6 +3,6 @@
     <span class="sr-only">Loading...</span>
   </div>
   <li class="nav-item tab-custom d-inline">
-    <%= link_to "Load More", get_editor_activity_path(page: @page), remote: true, class: "tab-custom tab-custom active show", id: "load-more-button", onclick: "clickedLoadMoreButton('#load-more-button');" %>
+    <%= link_to "Load More", get_editor_activity_path(category_id: @category_id, page: @page), remote: true, class: "tab-custom tab-custom active show", id: "load-more-button", onclick: "clickedLoadMoreButton('#load-more-button');" %>
   </li>
 </div>

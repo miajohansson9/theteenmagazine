@@ -9,6 +9,6 @@ class ActivitiesController < ApplicationController
   def activity_params
     params
       .require(:activity)
-      .permit(:id, :action_at, :kind, :kind_id, :action, :user_id)
+      .permit(:id, :action_at, :kind, :kind_id, :action, :user_id, :category_id)
   end
 end

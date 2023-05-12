@@ -41,11 +41,8 @@ module CategoriesHelper
         @bucket = @bucket + 1.day
         @index = @index + 1
       end
-      puts post.slug
       @started_in_category[@index] = @started_in_category[@index] + 1
     end
-    puts @started_in_category
-    puts "KSDJFLKsSJDF"
     return @started_in_category
   end
 end

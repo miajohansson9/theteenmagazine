@@ -11,26 +11,38 @@
             </li>
             <li class="nav-item tab-custom">
               <a class="tab-custom" id="activity-tab-classic" data-bs-toggle="tab" href="#follow-classic" role="tab"
-                aria-controls="follow-classic" aria-selected="false"><%= @category.name.capitalize %> activity</a>
+                aria-controls="follow-classic" aria-selected="false">Activity in <%= @category.name.capitalize %></a>
             </li>
           </ul>
         </div>
         <!-- Classic tabs -->
         <div class="tab-content p-0" id="myClassicTabContent">
-          <!-- Put analytics here -->
-          <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-          <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                <div id="pieChart" style="height: 360px; width: 100%;">
+			<div class="tab-pane fade active show" id="profile-classic" role="tabpanel" aria-labelledby="home-tab-classic">
+				<!-- Put analytics here -->
+				<div class="mt-4" id="chartContainer" style="height: 300px; width: 100%;"></div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-6">
+						<div id="pieChart" style="height: 360px; width: 100%;">
+						</div>
+						</div>
+						<div class="col-md-6">
+						<div id="columnChart" style="height: 360px; width: 100%;">
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		   <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="activity-tab-classic">
+            <h5 class="pitch_ttl">All Editor Activity</h5>
+            <%= render_async_cache get_editor_activity_path(category_id: @category.id), toggle: { selector: '#activity-tab-classic', event: :click } do %>
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
                 </div>
-                </div>
-                <div class="col-md-6">
-                <div id="columnChart" style="height: 360px; width: 100%;">
-                </div>
-                </div>
-            </div>
-           </div>
+              </div>
+            <% end %>
+          </div>
         </div>
         <br>
       </div>
@@ -70,7 +82,7 @@ window.onload = function () {
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	title:{
-		text: "Daily Articles Published/Started"
+		text: "Daily Articles Published/Started in <%= @category.name.capitalize %>".replace('amp;','')
 	},
 	axisX: {
 		valueFormatString: "MMM DD"
