@@ -1,5 +1,6 @@
+include CategoriesHelper
 class CategoriesController < ApplicationController
-  before_action :find_category, only: %i[show edit update destroy]
+  before_action :find_category, except: %i[index]
   before_action :authenticate_user!, except: %i[index show]
 
   def index
@@ -41,6 +42,17 @@ class CategoriesController < ApplicationController
         page: params[:page],
         items: 15
       )
+  end
+
+  def dashboard
+    @user = User.first
+    @published_in_category = []
+    @drafts_in_category = []
+    # populate published posts
+    @bucket = Time.now - 13.days
+    @published = populate_published(14)
+    @published_in_category = populate_published_in_category(14, @category)
+    @started_in_category = populate_started_in_category(14, @category)
   end
 
   def edit

@@ -1,0 +1,166 @@
+<div class="official--writer--wrapper pitches_wrapper reviews_wrapper">
+  <div class="dashboard_wrapper">
+    <div id="waiting--for--approval">
+      <div class="dashboard--writer--flex--main pr-3">
+        <!-- Classic tabs -->
+        <div class="classic-tabs">
+          <ul class="nav mt-0" id="myClassicTab" role="tablist" style="padding-top: 15px;">
+            <li class="nav-item tab-custom">
+              <a class="tab-custom active show" id="home-tab-classic" data-bs-toggle="tab" href="#profile-classic"
+                role="tab" aria-controls="profile-classic" aria-selected="true">Analytics</a>
+            </li>
+            <li class="nav-item tab-custom">
+              <a class="tab-custom" id="activity-tab-classic" data-bs-toggle="tab" href="#follow-classic" role="tab"
+                aria-controls="follow-classic" aria-selected="false"><%= @category.name.capitalize %> activity</a>
+            </li>
+          </ul>
+        </div>
+        <!-- Classic tabs -->
+        <div class="tab-content p-0" id="myClassicTabContent">
+          <!-- Put analytics here -->
+          <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+          <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                <div id="pieChart" style="height: 360px; width: 100%;">
+                </div>
+                </div>
+                <div class="col-md-6">
+                <div id="columnChart" style="height: 360px; width: 100%;">
+                </div>
+                </div>
+            </div>
+           </div>
+        </div>
+        <br>
+      </div>
+      <div class="dashboard--writer--flex--two dashboard--editor" style="width: 30rem;">
+        <div class="flex--item">
+          <div class="profile-minimal">
+            <div class="position-relative" style="width: 120px; margin: 0 auto;">
+              <svg id="animated" class="value1" viewbox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#fff"/>
+                <path id="progress" stroke-linecap="round" stroke-width="5" stroke="#F0255E" fill="none"
+                      d="M50 10
+                         a 40 40 0 0 1 0 80
+                         a 40 40 0 0 1 0 -80">
+                </path>
+              </svg>
+              <% if @user.profile.attached? %>
+                <%= image_tag(@user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Manager</span>
+              <% else %>
+                <%= image_tag("profile_image.jpg", :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Manager</span>
+              <% end %>
+            </div>
+            <h5>Welcome,</h5>
+            <div>
+              <h2 style="max-width: 80%; margin: 0 auto; font-weight: bold;">
+                <%= link_to(@user.try(:full_name), @user, class: "link_grn") %>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag "plugins/canvasjs.min" %>
+<script>
+window.onload = function () {
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Daily Articles Published/Started"
+	},
+	axisX: {
+		valueFormatString: "MMM DD"
+	},
+	axisY: {
+		title: "# Articles",
+	},
+	legend:{
+		cursor: "pointer",
+		fontSize: 16,
+		itemclick: toggleDataSeries
+	},
+	toolTip:{
+		shared: true
+	},
+	data: [{
+		name: "Published",
+		type: "spline",
+		showInLegend: true,
+		dataPoints: [
+			{ x: new Date(<%= (Time.now - 14.days).to_f * 1000 %>), y: <%= @published[0] %> },
+			{ x: new Date(<%= (Time.now - 13.days).to_f * 1000 %>), y: <%= @published[1] %> },
+			{ x: new Date(<%= (Time.now - 12.days).to_f * 1000 %>), y: <%= @published[2] %> },
+			{ x: new Date(<%= (Time.now - 11.days).to_f * 1000 %>), y: <%= @published[3] %> },
+			{ x: new Date(<%= (Time.now - 10.days).to_f * 1000 %>), y: <%= @published[4] %> },
+			{ x: new Date(<%= (Time.now - 9.days).to_f * 1000 %>), y: <%= @published[5] %> },
+			{ x: new Date(<%= (Time.now - 8.days).to_f * 1000 %>), y: <%= @published[6] %> },
+            { x: new Date(<%= (Time.now - 7.days).to_f * 1000 %>), y: <%= @published[7] %> },
+			{ x: new Date(<%= (Time.now - 6.days).to_f * 1000 %>), y: <%= @published[8] %> },
+			{ x: new Date(<%= (Time.now - 5.days).to_f * 1000 %>), y: <%= @published[9] %> },
+			{ x: new Date(<%= (Time.now - 4.days).to_f * 1000 %>), y: <%= @published[10] %> },
+			{ x: new Date(<%= (Time.now - 3.days).to_f * 1000 %>), y: <%= @published[11] %> },
+			{ x: new Date(<%= (Time.now - 2.days).to_f * 1000 %>), y: <%= @published[12] %> },
+			{ x: new Date(<%= (Time.now - 1.days).to_f * 1000 %>), y: <%= @published[13] %> },
+		]
+	},
+	{
+		name: "Published in Category",
+		type: "spline",
+		showInLegend: true,
+		dataPoints: [
+			{ x: new Date(<%= (Time.now - 14.days).to_f * 1000 %>), y: <%= @published_in_category[0] %> },
+			{ x: new Date(<%= (Time.now - 13.days).to_f * 1000 %>), y: <%= @published_in_category[1] %> },
+			{ x: new Date(<%= (Time.now - 12.days).to_f * 1000 %>), y: <%= @published_in_category[2] %> },
+			{ x: new Date(<%= (Time.now - 11.days).to_f * 1000 %>), y: <%= @published_in_category[3] %> },
+			{ x: new Date(<%= (Time.now - 10.days).to_f * 1000 %>), y: <%= @published_in_category[4] %> },
+			{ x: new Date(<%= (Time.now - 9.days).to_f * 1000 %>), y: <%= @published_in_category[5] %> },
+			{ x: new Date(<%= (Time.now - 8.days).to_f * 1000 %>), y: <%= @published_in_category[6] %> },
+            { x: new Date(<%= (Time.now - 7.days).to_f * 1000 %>), y: <%= @published_in_category[7] %> },
+			{ x: new Date(<%= (Time.now - 6.days).to_f * 1000 %>), y: <%= @published_in_category[8] %> },
+			{ x: new Date(<%= (Time.now - 5.days).to_f * 1000 %>), y: <%= @published_in_category[9] %> },
+			{ x: new Date(<%= (Time.now - 4.days).to_f * 1000 %>), y: <%= @published_in_category[10] %> },
+			{ x: new Date(<%= (Time.now - 3.days).to_f * 1000 %>), y: <%= @published_in_category[11] %> },
+			{ x: new Date(<%= (Time.now - 2.days).to_f * 1000 %>), y: <%= @published_in_category[12] %> },
+			{ x: new Date(<%= (Time.now - 1.days).to_f * 1000 %>), y: <%= @published_in_category[13] %> },
+		]
+	},
+	{
+		name: "Drafts Started in Category",
+		type: "spline",
+		showInLegend: true,
+		dataPoints: [
+			{ x: new Date(<%= (Time.now - 14.days).to_f * 1000 %>), y: <%= @started_in_category[0] %> },
+			{ x: new Date(<%= (Time.now - 13.days).to_f * 1000 %>), y: <%= @started_in_category[1] %> },
+			{ x: new Date(<%= (Time.now - 12.days).to_f * 1000 %>), y: <%= @started_in_category[2] %> },
+			{ x: new Date(<%= (Time.now - 11.days).to_f * 1000 %>), y: <%= @started_in_category[3] %> },
+			{ x: new Date(<%= (Time.now - 10.days).to_f * 1000 %>), y: <%= @started_in_category[4] %> },
+			{ x: new Date(<%= (Time.now - 9.days).to_f * 1000 %>), y: <%= @started_in_category[5] %> },
+			{ x: new Date(<%= (Time.now - 8.days).to_f * 1000 %>), y: <%= @started_in_category[6] %> },
+            { x: new Date(<%= (Time.now - 7.days).to_f * 1000 %>), y: <%= @started_in_category[7] %> },
+			{ x: new Date(<%= (Time.now - 6.days).to_f * 1000 %>), y: <%= @started_in_category[8] %> },
+			{ x: new Date(<%= (Time.now - 5.days).to_f * 1000 %>), y: <%= @started_in_category[9] %> },
+			{ x: new Date(<%= (Time.now - 4.days).to_f * 1000 %>), y: <%= @started_in_category[10] %> },
+			{ x: new Date(<%= (Time.now - 3.days).to_f * 1000 %>), y: <%= @started_in_category[11] %> },
+			{ x: new Date(<%= (Time.now - 2.days).to_f * 1000 %>), y: <%= @started_in_category[12] %> },
+			{ x: new Date(<%= (Time.now - 1.days).to_f * 1000 %>), y: <%= @started_in_category[13] %> },
+		]
+	}]
+});
+chart.render();
+
+function toggleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	}
+	else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+}
+
+}
+</script>
