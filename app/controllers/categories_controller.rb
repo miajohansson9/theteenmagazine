@@ -1,5 +1,6 @@
+include CategoriesHelper
 class CategoriesController < ApplicationController
-  before_action :find_category, only: %i[show edit update destroy]
+  before_action :find_category, except: %i[index]
   before_action :authenticate_user!, except: %i[index show]
 
   def index
@@ -41,6 +42,29 @@ class CategoriesController < ApplicationController
         page: params[:page],
         items: 15
       )
+  end
+
+  def dashboard
+    @user = User.first
+    @published_in_category = []
+    @drafts_in_category = []
+    # populate published posts
+    @bucket = Time.now - 13.days
+    # @published = populate_published(14)
+    @published_in_category = populate_published_in_category(14, @category)
+    @started_in_category = populate_started_in_category(14, @category)
+
+    # newsletter calculations
+    @newsletters_sent_last_month = current_user.newsletters.where(sent_at: (Time.now - 60.days)..(Time.now - 30.days))
+    @newsletters_sent_last_month = @newsletters_sent_last_month.nil? ? 0 : @newsletters_sent_last_month.count
+    @newsletters_sent_this_month = current_user.newsletters.where(sent_at: (Time.now - 30.days)..(Time.now))
+    @newsletters_sent_this_month = @newsletters_sent_this_month.nil? ? 0 : @newsletters_sent_this_month.count
+
+    # published articles calculations
+    @articles_last_month = Post.published.where(category_id: @category.id, publish_at: (Time.now - 60.days)..(Time.now - 30.days))
+    @articles_last_month = @articles_last_month.nil? ? 0 : @articles_last_month.count
+    @articles_this_month = Post.published.where(category_id: @category.id, publish_at: (Time.now - 30.days)..Time.now)
+    @articles_this_month = @articles_this_month.nil? ? 0 : @articles_this_month.count
   end
 
   def edit

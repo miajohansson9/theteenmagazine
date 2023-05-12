@@ -1,7 +1,7 @@
 <ul class="feed_wrapper mb-4 list-group list-group-flush mb-3" id="list-group-comments">
   <%= render partial: 'reviews/editor_activity/editor_activity_page' %>
 </ul>
-<% if Activity.all.count > @per_page  %>
+<% if !@is_last_page %>
   <div id="div_next_link">
     <%= render partial: 'reviews/editor_activity/next_link' %>
   </div>
