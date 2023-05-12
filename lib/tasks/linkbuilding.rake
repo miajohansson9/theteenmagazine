@@ -13,7 +13,7 @@ namespace :linkbuilding do
                 puts "Failed to add link to https://www.theteenmagazine.com/#{post.slug}"
             end
         end
-        puts "To undo run: heroku run rake linkbuilding:undo_link_building\['#{args[:key_phrase]}','#{args[:link]}'\]"
+        puts "To undo run: heroku run rake linkbuilding:undo_link_building\\['#{args[:key_phrase]}','#{args[:link]}'\\]"
     end
 
     task :undo_link_building, [:key_phrase, :link] => :environment do |t, args|
