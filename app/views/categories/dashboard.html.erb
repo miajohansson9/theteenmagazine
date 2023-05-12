@@ -87,27 +87,6 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		shared: true
 	},
 	data: [{
-		name: "Published",
-		type: "spline",
-		showInLegend: true,
-		dataPoints: [
-			{ x: new Date(<%= (Time.now - 14.days).to_f * 1000 %>), y: <%= @published[0] %> },
-			{ x: new Date(<%= (Time.now - 13.days).to_f * 1000 %>), y: <%= @published[1] %> },
-			{ x: new Date(<%= (Time.now - 12.days).to_f * 1000 %>), y: <%= @published[2] %> },
-			{ x: new Date(<%= (Time.now - 11.days).to_f * 1000 %>), y: <%= @published[3] %> },
-			{ x: new Date(<%= (Time.now - 10.days).to_f * 1000 %>), y: <%= @published[4] %> },
-			{ x: new Date(<%= (Time.now - 9.days).to_f * 1000 %>), y: <%= @published[5] %> },
-			{ x: new Date(<%= (Time.now - 8.days).to_f * 1000 %>), y: <%= @published[6] %> },
-            { x: new Date(<%= (Time.now - 7.days).to_f * 1000 %>), y: <%= @published[7] %> },
-			{ x: new Date(<%= (Time.now - 6.days).to_f * 1000 %>), y: <%= @published[8] %> },
-			{ x: new Date(<%= (Time.now - 5.days).to_f * 1000 %>), y: <%= @published[9] %> },
-			{ x: new Date(<%= (Time.now - 4.days).to_f * 1000 %>), y: <%= @published[10] %> },
-			{ x: new Date(<%= (Time.now - 3.days).to_f * 1000 %>), y: <%= @published[11] %> },
-			{ x: new Date(<%= (Time.now - 2.days).to_f * 1000 %>), y: <%= @published[12] %> },
-			{ x: new Date(<%= (Time.now - 1.days).to_f * 1000 %>), y: <%= @published[13] %> },
-		]
-	},
-	{
 		name: "Published in Category",
 		type: "spline",
 		showInLegend: true,

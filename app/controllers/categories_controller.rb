@@ -50,7 +50,7 @@ class CategoriesController < ApplicationController
     @drafts_in_category = []
     # populate published posts
     @bucket = Time.now - 13.days
-    @published = populate_published(14)
+    # @published = populate_published(14)
     @published_in_category = populate_published_in_category(14, @category)
     @started_in_category = populate_started_in_category(14, @category)
   end
