@@ -1,7 +1,10 @@
 class Category < ApplicationRecord
   has_many :posts
   has_many :activities
+  belongs_to :user, optional: true
   has_one_attached :image
+
+  attr_accessor :managing_editor
 
   extend FriendlyId
   friendly_id :name, use: :history

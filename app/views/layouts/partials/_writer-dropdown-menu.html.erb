@@ -3,6 +3,9 @@
   <% if !current_user.partner? %>
     <div class="dropdown-divider"></div>
   <% end %>
+  <% current_user.categories.each do |category| %>
+    <a href="/categories/<%= category.slug %>/dashboard" class="dropdown-item"><%= category.name.capitalize.truncate(20) %> Dashboard</a>
+  <% end %>
   <% if current_user.editor? %>
     <a href="/editors/<%= current_user.slug %>" class="dropdown-item">Editor Dashboard
       <% if @unseen_editor_dashboard_cnt > 0 %>
@@ -10,10 +13,17 @@
         <p><%= @unseen_editor_dashboard_cnt %> new</p>
       <% end %>
     </a>
+    <div class="dropdown-divider"></div>
   <% elsif (!current_user.partner? && (current_user.is_new?)) %>
     <a href="<%= pitches_path(user_id: current_user.id) %>" class="dropdown-item">My Pitches</a>
   <% end %>
   <% if !current_user.partner? %>
+    <a href="/pitches" class="dropdown-item">Unclaimed Pitches
+      <% if @unseen_pitches_cnt > 0 %>
+        <span class="sec counter counter-sm"></span>
+        <p><%= @unseen_pitches_cnt %> new</p>
+      <% end %>
+    </a>
     <% if current_user.is_marketer? %>
       <a href="/interviews" class="dropdown-item">Interview Requests
         <% if @unseen_interviews_cnt > 0 %>
@@ -22,12 +32,6 @@
         <% end %>
       </a>
     <% end %>
-    <a href="/pitches" class="dropdown-item">Unclaimed Pitches
-      <% if @unseen_pitches_cnt > 0 %>
-        <span class="sec counter counter-sm"></span>
-        <p><%= @unseen_pitches_cnt %> new</p>
-      <% end %>
-    </a>
     <a href="/community" class="dropdown-item">Community
       <% if @unseen_shared_drafts_cnt > 0 %>
         <span class="sec counter counter-sm"></span>
@@ -47,14 +51,6 @@
     </a>
   <% end %>
   <div class="dropdown-divider"></div>
-  <% if current_user.editor? %>
-    <%= link_to "Writer Team", users_path, class: "dropdown-item" %>
-    <%= link_to "Editor Team", "/editors", class: "dropdown-item" %>
-  <% end %>
-  <% if current_user.is_marketer? %>
-    <%= link_to "Interviewer Team", "/interviewers", class: "dropdown-item" %>
-    <div class="dropdown-divider"></div>
-  <% end %>
   <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>
   <%= link_to "Edit Profile", @edit_path, class: "dropdown-item" %>
   <%= link_to "Change Password", edit_user_registration_path, class: "dropdown-item" %>

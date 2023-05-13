@@ -122,7 +122,11 @@
       <div class="dashboard--writer--flex--two dashboard--editor" style="width: 30rem;">
         <div class="flex--item">
           <div class="profile-minimal">
-            <% if @editor_pitches_cnt >= @pitches_requirement && @editor_reviews_cnt >= @reviews_requirement && @editor_comments_cnt >= @comments_requirement %>
+            <% if @user.categories.present? %>
+              <div class="alert alert-success" role="alert">
+                <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" class="mb-1 svg-inline--fa fa-check-circle fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg>  As a managing editor, you don't have any editor assignments!
+              </div>
+            <% elsif @editor_pitches_cnt >= @pitches_requirement && @editor_reviews_cnt >= @reviews_requirement && @editor_comments_cnt >= @comments_requirement %>
               <div class="alert alert-success" role="alert">
                 <svg width="15px" height="15px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" class="mb-1 svg-inline--fa fa-check-circle fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path></svg>  You have completed the required reviews, pitches, and comments this month. Great job!
               </div>

@@ -45,7 +45,7 @@ class CategoriesController < ApplicationController
   end
 
   def dashboard
-    @user = User.first
+    @user = @category.user
     @published_in_category = []
     @drafts_in_category = []
     # populate published posts
@@ -82,6 +82,11 @@ class CategoriesController < ApplicationController
       @category.image.attach(category_params[:image])
     end
     if @category.update category_params
+      if category_params[:managing_editor].present?
+        @editor = User.find(category_params[:managing_editor])
+        @category.user_id = @editor.id
+        @category.save
+      end
       redirect_to @category, notice: 'Changes were successfully saved!'
     else
       render 'edit'
@@ -115,7 +120,7 @@ class CategoriesController < ApplicationController
   def category_params
     params
       .require(:category)
-      .permit(:name, :image, :created_at, :description, :slug, :archive)
+      .permit(:name, :image, :created_at, :description, :slug, :archive, :user_id, :managing_editor)
   end
 
   def find_category

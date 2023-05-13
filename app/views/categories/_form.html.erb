@@ -7,10 +7,13 @@
       <% end %>
     </ul>
   <% end %>
-  <br><%= f.label "Category" %><br>
+  <br><%= f.label "Category Name (ask to change)" %><br>
   <%= f.text_field :name %>
   <br><%= f.label "Meta Description" %><br>
   <%= f.text_field :description %>
+  <br><%= f.label "Managing Editor Slug ID (last part of url on their profile)" %><br>
+  <% @user = @category.user.present? ? @category.user.slug : '' %>
+  <%= f.text_field 'managing_editor', value: @user, placeholder: current_user.slug %>
   <br><%= f.label "Image" %><br>
   <%= f.file_field :image %>
   <br />

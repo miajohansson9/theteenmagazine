@@ -55,26 +55,65 @@
       <div class="dashboard--writer--flex--two dashboard--editor" style="width: 30rem;">
         <div class="flex--item">
           <div class="profile-minimal">
-            <div class="position-relative" style="width: 120px; margin: 0 auto;">
-              <svg id="animated" class="value1" viewbox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" fill="#fff"/>
-                <path id="progress" stroke-linecap="round" stroke-width="5" stroke="#F0255E" fill="none"
-                      d="M50 10
-                         a 40 40 0 0 1 0 80
-                         a 40 40 0 0 1 0 -80">
-                </path>
-              </svg>
-              <% if @user.profile.attached? %>
-                <%= image_tag(@user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Manager</span>
-              <% else %>
-                <%= image_tag("profile_image.jpg", :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Manager</span>
-              <% end %>
-            </div>
-            <h5>Welcome,</h5>
-            <div>
-              <h2 style="max-width: 80%; margin: 0 auto; font-weight: bold;">
-                <%= link_to(@user.try(:full_name), @user, class: "link_grn") %>
-              </h2>
+		  	<% if @user.present? %>
+				<div class="position-relative" style="width: 120px; margin: 0 auto;">
+				<svg id="animated" class="value1" viewbox="0 0 100 100">
+					<circle cx="50" cy="50" r="45" fill="#fff"/>
+					<path id="progress" stroke-linecap="round" stroke-width="5" stroke="#065F63" fill="none"
+						d="M50 10
+							a 40 40 0 0 1 0 80
+							a 40 40 0 0 1 0 -80">
+					</path>
+				</svg>
+				<% if @user.profile.attached? %>
+					<%= image_tag(@user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Manager</span>
+				<% else %>
+					<%= image_tag("profile_image.jpg", :class => "progress_editor_profile profile_img") %><span class="badge badge-default editor_label">Manager</span>
+				<% end %>
+				</div>
+				<h5>Welcome,</h5>
+				<div>
+				<h2 style="max-width: 80%; margin: 0 auto; font-weight: bold;">
+					<%= link_to(@user.try(:full_name), @user, class: "link_grn") %>
+				</h2>
+				</div>
+			<% else %>
+				<h3>There is no managing editor for this category</h3>
+			<% end %>
+			<div class="list-group-flush menu-links text-left mt-4 pt-2 mb-4" data-step data-index="5">
+			  <% if @category.slug.eql? 'interviews' %>
+			  	<div class="list-group-item">
+					<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
+					<%= link_to "Manage interview requests", '/interviews', class: "link_nrml" %>
+				</div>
+			  <% else %>
+				<div class="list-group-item">
+					<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
+					<%= link_to "Manage category pitches", pitches_path(pitch: {:category_id => @category.id}), class: "link_nrml" %>
+				</div>
+			  <% end %>
+			  <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
+                <%= link_to "Send newsletters", newsletters_path, class: "link_nrml"  %>
+			  </div>
+			  <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
+                <%= link_to "All writers", "/writers", class: "link_nrml link_light"  %>
+			  </div>
+			  <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
+                <%= link_to "All editors", "/editors", class: "link_nrml link_light"  %>
+			  </div>
+			  <% if @category.slug.eql? 'interviews' %>
+			  	<div class="list-group-item">
+					<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
+					<%= link_to "All interviewers", "/interviewers", class: "link_nrml link_light"  %>
+				</div>
+			  <% end %>
+			  <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M460.3 39.6l12.1 12.1c15.6 15.6 15.6 40.9 0 56.6L440 140.7 371.3 72l32.4-32.4c15.6-15.6 40.9-15.6 56.6 0zM175.4 267.9L360 83.3 428.7 152 244.1 336.6c-5.3 5.3-12 9-19.3 10.7l-78.1 18 18-78.1c1.7-7.3 5.4-14 10.7-19.3zm217-239.6L164.1 256.6c-7.4 7.4-12.6 16.8-15 27l-20.9 90.6c-.6 2.7 .2 5.5 2.1 7.5s4.8 2.8 7.5 2.1l90.6-20.9c10.2-2.4 19.6-7.5 27-15L483.7 119.6c21.9-21.9 21.9-57.3 0-79.2L471.6 28.3c-21.9-21.9-57.3-21.9-79.2 0zM72 64C32.2 64 0 96.2 0 136V440c0 39.8 32.2 72 72 72H376c39.8 0 72-32.2 72-72V296c0-4.4-3.6-8-8-8s-8 3.6-8 8V440c0 30.9-25.1 56-56 56H72c-30.9 0-56-25.1-56-56V136c0-30.9 25.1-56 56-56H216c4.4 0 8-3.6 8-8s-3.6-8-8-8H72z"/></svg>
+                <%= link_to "Edit Category", edit_category_path(@category), class: "link_nrml link_light"  %>
+			  </div>
             </div>
           </div>
         </div>

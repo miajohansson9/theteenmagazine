@@ -48,6 +48,12 @@ class ReviewsController < ApplicationController
             .find_by(name: 'max # of reviews per month for editors')
             .try(:value) || '0'
         )
+      if @user.categories.present?
+        @pitches_requirement = 0
+        @comments_requirement = 0
+        @reviews_requirement = 0
+        @max_reviews = 100
+      end
       @editor_pitches_cnt =
         @user
           .pitches
