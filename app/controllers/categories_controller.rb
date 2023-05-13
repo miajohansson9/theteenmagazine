@@ -86,6 +86,9 @@ class CategoriesController < ApplicationController
         @editor = User.find(category_params[:managing_editor])
         @category.user_id = @editor.id
         @category.save
+      else
+        @category.user_id = nil
+        @category.save
       end
       redirect_to @category, notice: 'Changes were successfully saved!'
     else

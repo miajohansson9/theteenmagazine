@@ -546,18 +546,20 @@ class PostsController < ApplicationController
         if @post.reviews.count > 1
           begin
             # has been reviewed before and should go to the previous reviewer
-            @prev_editor = User.find(@prev_review.editor_id)
+            @reviews = @post.reviews.where.not(editor_id: nil).order("created_at asc")
+            @prev_editor = User.find(@reviews.last.editor_id)
             @notice = "Great job! #{@prev_editor.full_name} was assigned this review."
             @rev.update_columns({
               status: "In Review",
               editor_id: @prev_editor.id, 
               editor_claimed_review_at: Time.now,
             })
-            @rev.save!
-            ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
+            ApplicationMailer.article_moved_to_review(@post.user, @post, @prev_editor).deliver
             ApplicationMailer.editor_assigned_review(@prev_editor, @post).deliver
-          rescue
-            # rescue and make review open to all editors
+            Sentry.capture_message("re-assigned editor to review for post #{@post.slug} successfully")
+          rescue => e
+            Sentry.capture_message(e)
+            Sentry.capture_message("did not re-assign editor to review for post #{@post.slug}")
             deliver_submitted_article_emails
             @notice = "Great job! Your article was submitted for review."
           end
@@ -611,9 +613,10 @@ class PostsController < ApplicationController
 
   def editor_claimed_review
     @rev = @post.reviews.last
+    @editor = User.find(@rev.editor_id)
     @rev.update_column("editor_claimed_review_at", Time.now)
     Thread.new do
-      ApplicationMailer.article_moved_to_review(@post.user, @post).deliver
+      ApplicationMailer.article_moved_to_review(@post.user, @post, @editor).deliver
     end
   end
 

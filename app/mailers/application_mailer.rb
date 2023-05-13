@@ -125,9 +125,10 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
-  def article_moved_to_review(user, post)
+  def article_moved_to_review(user, post, editor)
     @user = user
     @post = post
+    @editor = editor
     unless @user.do_not_send_emails
       mail(
         to: user.email,

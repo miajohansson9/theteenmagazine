@@ -8,7 +8,7 @@
   </head>
 
   <body>
-    <p>Your article <%= link_to(@post.title, @post) %> has been moved to <b>in review</b> by <%= link_to(User.find(@post.reviews.last.editor_id).full_name, User.find(@post.reviews.last.editor_id)) %>.</p>
+    <p>Your article <%= link_to(@post.title, @post) %> has been moved to <b>in review</b> by <%= link_to(@editor.full_name, @editor) %>.</p>
     <p>Log into your account <a href="https://www.theteenmagazine.com/login" style="color: #4ABEB6;">here</a>.</p>
   </body>
 </html>

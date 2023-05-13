@@ -1639,6 +1639,11 @@ GEM
       tilt
     sendgrid-ruby (6.6.2)
       ruby_http_client (~> 3.4)
+    sentry-rails (5.9.0)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.9.0)
+    sentry-ruby (5.9.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     sitemap_generator (6.3.0)
       builder (~> 3.0)
     spring (2.1.1)
@@ -1724,6 +1729,8 @@ DEPENDENCIES
   render_async
   ruby-vips (~> 2.0, >= 2.0.7)
   sendgrid-ruby
+  sentry-rails
+  sentry-ruby
   sitemap_generator
   spring
   spring-watcher-listen (~> 2.0.0)
