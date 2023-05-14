@@ -543,7 +543,7 @@ class PostsController < ApplicationController
           @rev.update_column(:status, "In Progress")
           return
         end
-        if @post.reviews.count > 1
+        if @post.reviews.where.not(editor_id: nil).count > 0
           begin
             # has been reviewed before and should go to the previous reviewer
             @reviews = @post.reviews.where.not(editor_id: nil).order("created_at asc")
