@@ -10,7 +10,7 @@
         <p style="display: inline;">Filter by category</p>
         <%= form_for @pitch, method: "get" do |f| %>
           <%= f.collection_select(:category_id, @categories, :id, :name, {include_blank: "All Pitches"}) %>
-          <%= f.submit "Apply filter", method: :index, id: "button_nrml" %>
+          <%= f.submit "Filter by Category", method: :index, id: "button_nrml" %>
         <% end %>
       <% end %>
     </div>
@@ -20,42 +20,42 @@
     <div class="classic-tabs mb-4">
       <ul class="nav" id="myClassicTab" role="tablist">
         <li class="nav-item tab-custom">
-          <a class="tab-custom active show" id="drafts-tab-classic" data-bs-toggle="tab" href="#drafts-classic"
-            role="tab" aria-controls="drafts-classic" aria-selected="true">High Priority</a>
+          <a class="tab-custom <% if @tab.nil? || (@tab.eql? 'high') %>active show<% end %>" id="high-priority-tab-classic" data-bs-toggle="tab" href="#high-priority-classic"
+            role="tab" aria-controls="high-priority-classic" aria-selected="true">High Priority</a>
         </li>
         <li class="nav-item tab-custom">
-          <a class="tab-custom" id="conversations-tab-classic" data-bs-toggle="tab" href="#conversations-classic" role="tab"
-            aria-controls="conversations-classic" aria-selected="false">All Pitches</a>
+          <a class="tab-custom <% if (@tab.eql? 'all') %>active show<% end %>" id="all-tab-classic" data-bs-toggle="tab" href="#all-classic" role="tab"
+            aria-controls="all-classic" aria-selected="false">All Pitches</a>
         </li>
       </ul>
     </div>
-    <!-- Classic tabs -->
+    <!-- High Priority pitches vs not -->
     <div class="tab-content p-0" id="myClassicTabContent">
-      <div class="tab-pane fade active show" id="drafts-classic" role="tabpanel" aria-labelledby="draftstab-classic">
-        <div>
-          <% if @pitches.where(priority: "High").present? %>
-            <% @pitches.where(priority: "High").each do |pitch| %>
-              <%= render "pitch_card", pitch: pitch %>
-            <% end %>
-          <% else %>
-            <p><i>There are no pitches marked high-priority right now.</i></p>
-          <% end %>
-          <%== pagy_nav(@pagy).html_safe %>
-        </div>
-      </div>
-      <div class="tab-pane fade" id="conversations-classic" role="tabpanel" aria-labelledby="conversations-tab-classic">
+      <div class="tab-pane fade <% if @tab.nil? || (@tab.eql? 'high') %>active show<% end %>" id="high-priority-classic" role="tabpanel" aria-labelledby="high-prioritytab-classic">
         <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
-          <% @pitches.each do |pitch| %>
+          <% @pitches_high_priority.each do |pitch| %>
             <%= render "pitch_card", pitch: pitch %>
           <% end %>
-          <% if @pitches.count.eql? 0 %>
+          <% if @pitches_high_priority.count.eql? 0 %>
+            <p><i><%= "There are no pitches marked high priority right now. Check in All Pitches!" %></i></p>
+          <% end %>
+        </div>
+        <%== pagy_nav(@pagy_high_priority, page_param: :page_high_priority, params: {tab: 'high'}).html_safe %>
+      </div>
+      <div class="tab-pane fade <% if (@tab.eql? 'all') %>active show<% end %>" id="all-classic" role="tabpanel" aria-labelledby="all-tab-classic">
+        <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
+          <% @pitches_all.each do |pitch| %>
+            <%= render "pitch_card", pitch: pitch %>
+          <% end %>
+          <% if @pitches_all.count.eql? 0 %>
             <p><i><%= @message %></i></p>
           <% end %>
         </div>
-        <%== pagy_nav(@pagy).html_safe %>
+        <%== pagy_nav(@pagy_all, page_param: :page_all, params: {tab: 'all'}).html_safe %>
       </div>
     </div>
   <% else %>
+    <!-- Your pitches section -->
     <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
       <% @pitches.each do |pitch| %>
         <%= render "pitch_card", pitch: pitch %>

@@ -44,7 +44,7 @@
     </div>
     <p>Priority (select <b>High</b> for SEO pitches and high-priority topics)</p>
     <div class="margin_flds mt-0">
-      <%= f.select(:priority, options_for_select(["High"]), {prompt: "None"}, {:class => "d-inline"}) %>
+      <%= f.select(:priority, ["None", "High"], {prompt: "None"}, {:class => "d-inline"}) %>
     </div>
     <% if !@pitch.is_interview? %>
       <% if @pitch.thumbnail.attached? %>
