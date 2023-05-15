@@ -28,8 +28,7 @@ class User < ActiveRecord::Base
 
   scope :writer, -> { where(partner: [nil, false]) }
 
-  # Validate the attached image is image/jpg, image/png, etc
-  # validates_attachment_content_type :profile, content_type: %r{\Aimage\/.*\Z}
+  scope :managing_editor, -> { joins(:categories).where.not(categories: {id: nil}) }
 
   extend FriendlyId
   friendly_id :set_full_name, use: :slugged
@@ -46,6 +45,10 @@ class User < ActiveRecord::Base
       self.full_name = "#{self.first_name} #{self.last_name}"
     end
     self.full_name
+  end
+
+  def is_manager?
+    self.categories.present?
   end
 
   def is_new?

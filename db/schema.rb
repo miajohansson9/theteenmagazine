@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_13_003358) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_15_000619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -264,6 +264,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_003358) do
     t.string "admin_notes"
     t.boolean "agree_to_image_policy"
     t.string "thumbnail_credits"
+    t.string "priority"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
     t.index ["updated_at"], name: "index_pitches_on_updated_at"
   end

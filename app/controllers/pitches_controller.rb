@@ -1,3 +1,4 @@
+include PitchesHelper
 class PitchesController < ApplicationController
   before_action :find_pitch, only: %i[show update edit destroy]
   before_action :can_edit?, only: [:edit]
@@ -35,51 +36,15 @@ class PitchesController < ApplicationController
       set_meta_tags title: @title
       @categories = Category.active.where.not(slug: "interviews")
       if params[:pitch].nil?
-        @pitch = Pitch.new
-        @pagy, @pitches =
-          pagy(
-            Pitch
-              .is_approved
-              .not_claimed
-              .where(status: nil)
-              .where("updated_at > ?", Time.now - 90.days)
-              .where.not(category_id: Category.find("interviews").id)
-              .order("updated_at desc"),
-            page: params[:page],
-            items: 20,
-          )
+        all_pitches
       else
-        @category_id = if (params[:pitch][:category_id].blank?)
-            @categories.map { |category| category.id }
-          else
-            params[:pitch][:category_id]
-          end
-        @pitch = Pitch.new(category_id: params[:pitch][:category_id])
-        @pagy, @pitches =
-          pagy(
-            Pitch
-              .is_approved
-              .not_claimed
-              .where(category_id: @category_id, status: nil)
-              .order("updated_at desc"),
-            page: params[:page],
-            items: 20,
-          )
+        filtered_pitches
       end
       @message = "There are no unclaimed pitches. Check back in a few days!"
       @button_text = "Claim Pitch"
       Thread.new { current_user.update_column("last_saw_pitches", Time.now) }
     elsif (params[:user_id].eql? "#{current_user.id}") || current_user.admin
-      @title = "Your Claimed Pitches"
-      set_meta_tags title: @title
-      @button_text = "View Pitch"
-      @message = "You don't have any claimed pitches. :("
-      @pagy, @pitches =
-        pagy(
-          Pitch.where(claimed_id: params[:user_id]).order("updated_at desc"),
-          page: params[:page],
-          items: 20,
-        )
+      your_claimed_pitches
     else
       redirect_to pitches_path(user_id: current_user.id), notice: "You can only view your claimed pitches."
     end
@@ -395,7 +360,8 @@ class PitchesController < ApplicationController
         :following_level,
         :thumbnail_credits,
         :agree_to_image_policy,
-        :admin_notes
+        :admin_notes,
+        :priority
       )
   end
 

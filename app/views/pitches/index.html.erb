@@ -13,17 +13,58 @@
           <%= f.submit "Apply filter", method: :index, id: "button_nrml" %>
         <% end %>
       <% end %>
-      <br>
+    </div>
+  </div>
+  <% if !(@title.eql? "Your Claimed Pitches") %>
+    <!-- Classic tabs -->
+    <div class="classic-tabs mb-4">
+      <ul class="nav" id="myClassicTab" role="tablist">
+        <li class="nav-item tab-custom">
+          <a class="tab-custom active show" id="drafts-tab-classic" data-bs-toggle="tab" href="#drafts-classic"
+            role="tab" aria-controls="drafts-classic" aria-selected="true">High Priority</a>
+        </li>
+        <li class="nav-item tab-custom">
+          <a class="tab-custom" id="conversations-tab-classic" data-bs-toggle="tab" href="#conversations-classic" role="tab"
+            aria-controls="conversations-classic" aria-selected="false">All Pitches</a>
+        </li>
+      </ul>
+    </div>
+    <!-- Classic tabs -->
+    <div class="tab-content p-0" id="myClassicTabContent">
+      <div class="tab-pane fade active show" id="drafts-classic" role="tabpanel" aria-labelledby="draftstab-classic">
+        <div>
+          <% if @pitches.where(priority: "High").present? %>
+            <% @pitches.where(priority: "High").each do |pitch| %>
+              <%= render "pitch_card", pitch: pitch %>
+            <% end %>
+          <% else %>
+            <p><i>There are no pitches marked high-priority right now.</i></p>
+          <% end %>
+          <%== pagy_nav(@pagy).html_safe %>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="conversations-classic" role="tabpanel" aria-labelledby="conversations-tab-classic">
+        <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
+          <% @pitches.each do |pitch| %>
+            <%= render "pitch_card", pitch: pitch %>
+          <% end %>
+          <% if @pitches.count.eql? 0 %>
+            <p><i><%= @message %></i></p>
+          <% end %>
+        </div>
+        <%== pagy_nav(@pagy).html_safe %>
+      </div>
+    </div>
+  <% else %>
+    <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
+      <% @pitches.each do |pitch| %>
+        <%= render "pitch_card", pitch: pitch %>
+      <% end %>
       <% if @pitches.count.eql? 0 %>
         <p><i><%= @message %></i></p>
       <% end %>
     </div>
-  </div>
-  <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
-    <% @pitches.each do |pitch| %>
-      <%= render "pitch_card", pitch: pitch %>
-    <% end %>
-  </div>
-  <%== pagy_nav(@pagy).html_safe %>
+    <%== pagy_nav(@pagy).html_safe %>
+  <% end %>
 </div>
 <div class="content_hint"></div>

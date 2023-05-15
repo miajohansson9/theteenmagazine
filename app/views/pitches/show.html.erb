@@ -39,6 +39,11 @@
   <% if @pitch.influencer_social_media %>
     <i><b>Social media accounts: <%= @pitch.influencer_social_media %></b></i><br>
   <% end %>
+  <% if @pitch.priority.eql? "High" %>
+    <span class="badge badge-pill badge-danger">
+      High Priority
+    </span>
+  <% end %>
   <% if @pitch.platform_to_share.present? && !(@pitch.platform_to_share.eql? "None selected") %>
     <span class="badge badge-pill badge-success">Will share on social media</span>
     <span class="badge badge-pill badge-info"><%= @pitch.platform_to_share&.chomp('(preferred)')%></span>
