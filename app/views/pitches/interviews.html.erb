@@ -2,20 +2,48 @@
   <div class="flex_container_mobile_reverse_order">
     <div>
       <h1 class="pitch_ttl">Interview Requests</h1>
-      <i style="background-color: #FCD04D;">These interviews are submitted externally by talent managers and creators. Only claim the interviews you are excited to write about and think should be featured on The Teen Magazine. Just 
-      because an interview request was submitted does <i>not</i> mean they should be featured.</i>
-      <br>
-      <% if @pitches.count.eql? 0 %>
-        <p><i><%= @message %></i></p>
-      <% end %>
+      <p>These interviews are submitted externally by talent managers and creators. Only claim the interviews you are excited to write about and think should be featured on The Teen Magazine. Just 
+      because an interview request was submitted does <i>not</i> mean they should be featured.</p>
     </div>
   </div>
   <br>
-  <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
-    <% @pitches.each do |pitch| %>
-      <%= render "pitch_interview_card", pitch: pitch %>
-    <% end %>
-  </div>
-  <%== pagy_nav(@pagy).html_safe %>
+  <!-- Classic tabs -->
+    <div class="classic-tabs mb-4">
+      <ul class="nav" id="myClassicTab" role="tablist">
+        <li class="nav-item tab-custom">
+          <a class="tab-custom <% if @tab.nil? || (@tab.eql? 'high') %>active show<% end %>" id="high-priority-tab-classic" data-bs-toggle="tab" href="#high-priority-classic"
+            role="tab" aria-controls="high-priority-classic" aria-selected="true">High Priority</a>
+        </li>
+        <li class="nav-item tab-custom">
+          <a class="tab-custom <% if (@tab.eql? 'all') %>active show<% end %>" id="all-tab-classic" data-bs-toggle="tab" href="#all-classic" role="tab"
+            aria-controls="all-classic" aria-selected="false">All Interviews</a>
+        </li>
+      </ul>
+    </div>
+    <!-- High Priority pitches vs not -->
+    <div class="tab-content p-0" id="myClassicTabContent">
+      <div class="tab-pane fade <% if @tab.nil? || (@tab.eql? 'high') %>active show<% end %>" id="high-priority-classic" role="tabpanel" aria-labelledby="high-prioritytab-classic">
+        <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
+          <% @pitches_high_priority.each do |pitch| %>
+            <%= render "pitch_interview_card", pitch: pitch %>
+          <% end %>
+          <% if !@pitches_high_priority.present? %>
+            <p><i><%= "There are no interviews marked high priority right now. Check in All Interviews!" %></i></p>
+          <% end %>
+        </div>
+        <%== pagy_nav(@pagy_high_priority, page_param: :page_high_priority, params: {tab: 'high'}).html_safe %>
+      </div>
+      <div class="tab-pane fade <% if (@tab.eql? 'all') %>active show<% end %>" id="all-classic" role="tabpanel" aria-labelledby="all-tab-classic">
+          <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
+            <% @pitches_all.each do |pitch| %>
+              <%= render "pitch_interview_card", pitch: pitch %>
+            <% end %>
+          </div>
+          <% if !@pitches_all.present? %>
+            <p><i>All interviews have been claimed. Check back in a few days!</i></p>
+          <% end %>
+          <%== pagy_nav(@pagy_all, page_param: :page_all, params: {tab: 'all'}).html_safe %>
+      </div>
+    </div>
 </div>
 <div class="content_hint"></div>

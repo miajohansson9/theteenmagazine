@@ -27,6 +27,20 @@ module PitchesHelper
            items: 20)
   end
 
+  def all_interviews
+    @pagy, @pitches =
+      pagy(
+        Pitch
+          .is_approved
+          .not_claimed
+          .where(category_id: Category.find("interviews").id, status: nil)
+          .order("updated_at desc"),
+        page: params[:page],
+        items: 20,
+      )
+    pitches_helper(@pitches)
+  end
+
   def all_pitches
     @pitch = Pitch.new
     @pitches = Pitch

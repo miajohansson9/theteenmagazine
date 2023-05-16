@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
   scope :writer, -> { where(partner: [nil, false]) }
 
-  scope :managing_editor, -> { joins(:categories).where.not(categories: {id: nil}) }
+  scope :managing_editor, -> { joins(:categories).where.not(categories: { id: nil }) }
 
   extend FriendlyId
   friendly_id :set_full_name, use: :slugged
@@ -48,7 +48,11 @@ class User < ActiveRecord::Base
   end
 
   def is_manager?
-    self.categories.present?
+    self.admin? || self.categories.present?
+  end
+
+  def is_interviewer_manager?
+    self.categories.present? && self.categories.where(slug: "interviews").present?
   end
 
   def is_new?

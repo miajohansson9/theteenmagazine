@@ -74,6 +74,29 @@ namespace :testdata do
     end
   end
 
+  task interviews: :environment do
+    following_level = ['less than 100k', 'between 100k and 500k', 'between 500k and 1 million', 'over 1 million']
+    interview_kind = ["Actor", "Actress", "Author", "Artist", "Activist", "Content Creator", "Influencer", "Musician", "Youtuber", "Other"]
+    platform_to_share = ['Instagram story w/ link (preferred)', 'Instagram post description', 'Youtube shoutout', 'Twitter tweet', 'Pinterest post', 'LinkedIn post']
+    10.times do |i|
+      @pitch = Pitch.new(
+        title: "Notable person #{i}",
+        deadline: 6,
+        contact_email: "notableperson#{i}@theteenmagazine.com",
+        following_level: following_level[i % following_level.length],
+        user_id: nil,
+        influencer_social_media: "ig: @notableperson#{i}",
+        interview_kind: interview_kind[i % interview_kind.length],
+        category_id: Category.find("interviews").id,
+        platform_to_share: platform_to_share[i % platform_to_share.length],
+        description: "Description about Notable person #{i}",
+        claimed_id: nil,
+      )
+      @pitch.save!
+      puts "Created test interview request"
+    end
+  end
+
   task constants: :environment do
     @max_reviews = Constant.new(name: "# of monthly reviews editors need to complete", value: 2)
     @max_reviews.save!

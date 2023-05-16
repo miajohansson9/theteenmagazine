@@ -1,4 +1,5 @@
 include CategoriesHelper
+
 class CategoriesController < ApplicationController
   before_action :find_category, except: %i[index]
   before_action :authenticate_user!, except: %i[index show]
@@ -16,35 +17,38 @@ class CategoriesController < ApplicationController
                   image: @category.image,
                   description: @category.description,
                   fb: {
-                    app_id: '1190455601051741'
+                    app_id: "1190455601051741",
                   },
                   og: {
                     image: {
                       url: @category.image,
-                      alt: 'The Teen Magazine'
+                      alt: "The Teen Magazine",
                     },
-                    site_name: 'The Teen Magazine'
+                    site_name: "The Teen Magazine",
                   },
                   article: {
-                    publisher: 'https://www.facebook.com/theteenmagazinee'
+                    publisher: "https://www.facebook.com/theteenmagazinee",
                   },
                   twitter: {
-                    card: 'summary_large_image',
-                    site: '@theteenmagazin_',
-                    title: 'The Teen Magazine',
+                    card: "summary_large_image",
+                    site: "@theteenmagazin_",
+                    title: "The Teen Magazine",
                     description: @category.description,
                     image: @category.image,
-                    domain: 'https://www.theteenmagazine.com/'
+                    domain: "https://www.theteenmagazine.com/",
                   }
     @pagy, @category_posts =
       pagy(
         Post.where(category_id: @category.id).published.by_published_date,
         page: params[:page],
-        items: 15
+        items: 15,
       )
   end
 
   def dashboard
+    unless current_user? && (current_user.admin? || (current_user.categories.where(slug: @category.slug).present?))
+      redirect_to @category, notice: "You do not have access to this page."
+    end
     @user = @category.user
     @published_in_category = []
     @drafts_in_category = []
@@ -68,13 +72,16 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @archive_button = @category.archive ? 'Undo Archive' : 'Archive'
-    @archive_msg =
-      if @category.archive
-        ''
-      else
-        'Are you sure you want to archive this category? Writers will no longer be able to select this category.'
-      end
+    if current_user && current_user.is_manager? && current_user.categories.where(slug: @category.slug).present?
+      @archive_button = @category.archive ? "Undo Archive" : "Archive"
+      @archive_msg = if @category.archive
+          ""
+        else
+          "Are you sure you want to archive this category? Writers will no longer be able to select this category."
+        end
+    else
+      redirect_to @category, notice: "You do not have access to this page."
+    end
   end
 
   def update
@@ -90,9 +97,9 @@ class CategoriesController < ApplicationController
         @category.user_id = nil
         @category.save
       end
-      redirect_to @category, notice: 'Changes were successfully saved!'
+      redirect_to @category, notice: "Changes were successfully saved!"
     else
-      render 'edit'
+      render "edit"
     end
   end
 
@@ -108,13 +115,12 @@ class CategoriesController < ApplicationController
     @category.image.attach(category_params[:image])
     if @category.save
       redirect_to @category,
-                  notice:
-                    'The category was successfully added to The Teen Magazine!'
+                  notice: "The category was successfully added to The Teen Magazine!"
     elsif @category.save
       redirect_to @category,
-                  notice: 'Changes to category were successfully saved!'
+                  notice: "Changes to category were successfully saved!"
     else
-      render 'new', notice: 'Oh no! Your category was not saved!'
+      render "new", notice: "Oh no! Your category was not saved!"
     end
   end
 

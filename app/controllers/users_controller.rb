@@ -45,19 +45,19 @@ class UsersController < ApplicationController
         if (current_user.id != @user.id && (!current_user.admin?) &&
             (!current_user.editor?))
           redirect_to(
-            '/login',
+            "/login",
             notice: "This writer does not have a public profile yet.",
           )
         end
       rescue StandardError
         redirect_to(
-          '/login',
+          "/login",
           notice: "This writer does not have a public profile yet.",
         )
       end
     end
     if current_user.present?
-      @pitches = Pitch.not_rejected.where.not(user_id: nil).all.order("created_at desc").limit(4)
+      @pitches = Pitch.not_rejected.where.not(category_id: Category.find("interviews").id).all.order("created_at desc").limit(4)
       @featured_writers =
         Post
           .where(publish_at: (Time.now - 7.days)..Time.now)
@@ -275,7 +275,7 @@ class UsersController < ApplicationController
         .not_claimed
         .where(status: nil)
         .where("updated_at > ?", Time.now - 40.days)
-        .where.not(user_id: nil)
+        .where.not(category_id: Category.find("interviews").id)
         .order("updated_at desc")
         .paginate(page: params[:page], per_page: 9)
     @pitch =
@@ -433,15 +433,15 @@ class UsersController < ApplicationController
   def reset_email
     begin
       user = User
-          .where('lower(email) = ?', params[:user][:email].strip.downcase)
-          .first
+        .where("lower(email) = ?", params[:user][:email].strip.downcase)
+        .first
       if user.present?
         user.send_reset_password_instructions
         redirect_to "/reset-password",
-                  notice: "A reset password email was sent to #{params[:user][:email]}."
+                    notice: "A reset password email was sent to #{params[:user][:email]}."
       else
         redirect_to "/reset-password",
-                  notice: "Oops! We didn't find a writer with the email #{params[:user][:email]}."
+                    notice: "Oops! We didn't find a writer with the email #{params[:user][:email]}."
       end
     rescue StandardError
       redirect_to "/reset-password",
@@ -639,8 +639,8 @@ class UsersController < ApplicationController
   end
 
   def is_marketer?
-    unless current_user.is_marketer?
-      redirect_to current_user, notice: "You do not have access to this page."
+    unless current_user && current_user.is_marketer?
+      redirect_to "/login", notice: "You do not have access to this page."
     end
   end
 
@@ -657,9 +657,9 @@ class UsersController < ApplicationController
       maybe_subscriber = Subscriber.where(user_id: user.id).or(Subscriber.where("lower(email) = ?", user.email.downcase)).first
       if !maybe_subscriber.present?
         subscriber = Subscriber.new(
-          email: user.email, 
-          first_name: user.first_name, 
-          last_name: user.last_name, 
+          email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
           user_id: user.id,
           token: @token,
           source: "Became a writer",
@@ -671,8 +671,8 @@ class UsersController < ApplicationController
       else
         maybe_subscriber.update_columns({
           email: user.email,
-          first_name: user.first_name, 
-          last_name: user.last_name, 
+          first_name: user.first_name,
+          last_name: user.last_name,
           user_id: user.id,
         })
       end

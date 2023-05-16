@@ -9,7 +9,7 @@ class Pitch < ApplicationRecord
   validates :title, presence: true
   validates :contact_email, presence: true, if: :is_interview?
   validates :influencer_social_media, presence: true, if: :is_interview?
-  validates :description, presence: true, unless: :is_interview?
+  validates :description, presence: true
   validates :category_id, presence: true
   validates :deadline, presence: true, if: :is_editor?
   validates :thumbnail,

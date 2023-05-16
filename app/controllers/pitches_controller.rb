@@ -1,9 +1,10 @@
 include PitchesHelper
+
 class PitchesController < ApplicationController
   before_action :find_pitch, only: %i[show update edit destroy]
   before_action :can_edit?, only: [:edit]
   before_action :is_partner?, only: %i[index new show]
-  before_action :is_marketer?, only: [:interviews]
+  before_action :is_marketer?, only: [:interviews, :new_interview]
   before_action :authenticate_user!, except: [:pitch_interview, :create]
   load_and_authorize_resource except: [:pitch_interview, :create]
 
@@ -12,18 +13,7 @@ class PitchesController < ApplicationController
     set_meta_tags title: "Interview Requests"
     @notifications = @notifications - @unseen_interviews_cnt
     @unseen_interviews_cnt = 0
-    @pagy, @pitches =
-      pagy(
-        Pitch
-          .is_approved
-          .not_claimed
-          .where(category_id: Category.find("interviews").id, status: nil)
-          .order("updated_at desc"),
-        page: params[:page],
-        items: 20,
-      )
-    @message = "All interviews have been claimed. Check back in a few days!"
-    @button_text = "Claim Interview"
+    all_interviews
     Thread.new { current_user.update_column("last_saw_interviews", Time.now) }
   end
 
@@ -60,6 +50,11 @@ class PitchesController < ApplicationController
   def pitch_interview
     @pitch = Pitch.new(deadline: 6, category_id: Category.find("interviews").id)
     set_meta_tags title: "Pitch an Interview | The Teen Magazine"
+  end
+
+  def new_interview
+    @pitch = Pitch.new(deadline: 6, category_id: Category.find("interviews").id, user_id: current_user.id)
+    set_meta_tags title: "Create an Interview Pitch | The Teen Magazine"
   end
 
   def create
@@ -294,8 +289,8 @@ class PitchesController < ApplicationController
   end
 
   def is_marketer?
-    unless current_user.is_marketer?
-      redirect_to current_user, notice: "You do not have access to this page."
+    unless current_user && current_user.is_marketer?
+      redirect_to "/login", notice: "You do not have access to this page."
     end
   end
 
