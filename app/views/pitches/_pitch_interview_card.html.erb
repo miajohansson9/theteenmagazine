@@ -23,10 +23,7 @@
         High Priority
       </span>
     <% end %>
-    <% if pitch.following_level.present? && (!pitch.following_level.eql? 'less than 25k')%>
-      <% if pitch.platform_to_share.present? && !(pitch.platform_to_share.eql? "None selected") %>
-        <span class="badge badge-pill badge-success">Will share on social media</span>
-      <% end %>
+    <% if pitch.following_level.present? && !((pitch.following_level.eql? 'less than 100k') || (pitch.following_level.eql? 'less than 25k'))%>
       <span class="badge badge-pill badge-info"><%= pitch.following_level %> followers</span>
     <% end %>
     <% if pitch.influencer_social_media.present? %>
