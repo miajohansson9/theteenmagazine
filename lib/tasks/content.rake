@@ -3,26 +3,30 @@ namespace :content do
   task :optimize_paragraph_length, [:post_link] => :environment do |t, args|
     @slug = args[:post_link].split("https://www.theteenmagazine.com/")[1]
     @post = Post.find(@slug)
-    begin
-      @paragraphs = @post.content.split("</p>")
-      @paragraphs.each_with_index do |paragraph, index|
-        # only include <p> tags in sentence count
-        paragraph_cleaned = paragraph.split("<p").count > 1 ? paragraph.split("<p")[1] : paragraph
-        # get number of sentences
-        @sentences = paragraph_cleaned.split(/(?<=[?.!])/)
+    @post_content_length = @post.content.length
+    @paragraphs = @post.content.scan(/<p(.*?)<\/p>/m)
+    @paragraphs.each_with_index do |paragraph, index|
+      if !paragraph[0].nil?
+        # remove all links from paragraph
+        @cleaned_paragraph = paragraph[0].gsub(/(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/, "")
+        @sentences = @cleaned_paragraph.scan(/(?:[A-Z][^.!?]*[.!?])(?=\s[A-Z]|$)/)
         # add break after every 3rd sentence for all paragraphs over 5 sentences long
         if @sentences.count >= 5
           @add_break_after = @sentences[2]
-          @post.content = @post.content.sub!(@add_break_after, "#{@add_break_after}</p><p>")
-          puts "added paragraph break after the sentence: #{@add_break_after}"
-          # add new paragraph to paragraph array to optimize its length
-          @paragraphs.push(@sentences.slice(3, @sentences.count - 1).join(""))
+          if @post.content.include? @add_break_after
+            @post.content = @post.content.sub(@add_break_after, "#{@add_break_after}</p><p>")
+            puts "added paragraph break after the sentence: #{@add_break_after.truncate(20)}"
+            # add new paragraph to paragraph array to optimize its length
+            @paragraphs.push([@sentences.slice(3, @sentences.count).join(" ")])
+          end
         end
       end
+    end
+    if @post.content.present? && (@post.content.length >= @post_content_length)
       @post.save(:validate => false)
       puts "Finished optimizing post https://www.theteenmagazine.com/#{@post.slug}"
-    rescue StandardError
-      puts "Failed to optimize https://www.theteenmagazine.com/#{@post.slug}"
+    else
+      puts "Failed to optimize post https://www.theteenmagazine.com/#{@post.slug}"
     end
   end
 
