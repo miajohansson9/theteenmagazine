@@ -56,13 +56,13 @@ namespace :content do
         @cleaned_paragraph = paragraph[0].gsub(/(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/, "")
         @sentences = @cleaned_paragraph.scan(/(?:[A-Z][^.!?]*[.!?])(?=\s[A-Z]|$)/)
         # add break after every 3rd sentence for all paragraphs over 5 sentences long
-        if @sentences.count >= 5
-          @add_break_after = @sentences[2]
+        if @sentences.count >= 4
+          @add_break_after = @sentences[1]
           if @post.content.include? @add_break_after
             @post.content = @post.content.sub(@add_break_after, "#{@add_break_after}</p><p>")
             puts "added paragraph break after the sentence: #{@add_break_after.truncate(60)}"
             # add new paragraph to paragraph array to optimize its length
-            @paragraphs.push([@sentences.slice(3, @sentences.count).join(" ")])
+            @paragraphs.push([@sentences.slice(2, @sentences.count).join(" ")])
           end
         end
       end
