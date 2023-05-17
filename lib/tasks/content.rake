@@ -1,4 +1,16 @@
 namespace :content do
+  task :optimize_all_recent_posts => :environment do |t, args|
+    if Date.today.sunday?
+      Post.published.where(publish_at: (Time.now - 1.week)..Time.now).each do |post|
+        begin
+          optimize_paragraph_length("https://www.theteenmagazine.com/#{post.slug}")
+        rescue
+          puts "Rescued from Error. Failed to optimize post https://www.theteenmagazine.com/#{post.slug}"
+        end
+      end
+    end
+  end
+
   task :optimize_all_posts, [:limit] => :environment do |t, args|
     @limit = args[:limit].nil? ? 100 : Integer(args[:limit])
     Post.published.order("publish_at asc").limit(@limit).each do |post|
