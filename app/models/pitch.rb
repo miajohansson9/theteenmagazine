@@ -7,7 +7,7 @@ class Pitch < ApplicationRecord
 
   validates_length_of :title, minimum: 30, maximum: 80, unless: :is_interview?
   validates :title, presence: true
-  validates :contact_email, presence: true, if: :is_interview?
+  validates :contact_email, presence: true, if: :is_interview_from_outside_source?
   validates :influencer_social_media, presence: true, if: :is_interview?
   validates :description, presence: true
   validates :category_id, presence: true
@@ -34,6 +34,10 @@ class Pitch < ApplicationRecord
 
   def is_interview?
     self.category_id.eql? Category.find("interviews").id
+  end
+
+  def is_interview_from_outside_source?
+    !self.user_id.present? && (self.category_id.eql? Category.find("interviews").id)
   end
 
   extend FriendlyId

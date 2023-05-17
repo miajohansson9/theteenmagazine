@@ -16,7 +16,7 @@
       <% end %>
       <p class="mb-0">Title</p>
       <%= f.text_field :title %>
-      <% if current_user.admin %>
+      <% if current_user.is_manager? %>
         <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
       <% end %>
       <p class="mt-0">Write your article here and make sure you are saving often. Saving can also help fix formatting problems.</p>

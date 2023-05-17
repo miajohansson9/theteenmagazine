@@ -2,6 +2,20 @@ class ApplicationMailer < ActionMailer::Base
   include ActionView::Helpers::DateHelper
   default from: "The Teen Magazine Editor Team <editors@theteenmagazine.com>"
 
+  def plain_message_template(user, newsletter)
+    @from_user = newsletter.user
+    @user = user
+    @newsletter = newsletter
+    @subject = newsletter.subject.present? ? newsletter.subject : "Message from The Teen Magazine"
+    mail(
+      to: @user.email,
+      subject: @subject,
+      from: "Managing Editor <editors@theteenmagazine.com>",
+      reply_to: @from_user.email,
+      cc: @from_user.email,
+    )
+  end
+
   def custom_message_template(subscriber, newsletter)
     @subscriber = subscriber
     @newsletter = newsletter
@@ -438,6 +452,7 @@ class ApplicationMailer < ActionMailer::Base
         superscirpt: true,
       )
     content.gsub!('src="/rails/active_storage/', 'src="https://www.theteenmagazine.com/rails/active_storage/')
+    content.gsub!("<p>", '<p style="font-size: 16px">')
     Redcarpet::Markdown.new(renderer).render(content).html_safe
   end
 

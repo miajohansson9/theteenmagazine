@@ -60,12 +60,17 @@ class PitchesController < ApplicationController
   def create
     @categories = Category.active
     if params[:button].eql? "interview"
-      @pitch = Pitch.new(pitch_params)
+      @pitch = current_user? ? current_user.pitches.build(pitch_params) : Pitch.new(pitch_params)
       if pitch_params[:thumbnail].present?
         @pitch.thumbnail.attach(pitch_params[:thumbnail])
       end
-      if @pitch.save && ApplicationMailer.confirm_submitted_interview(@pitch.contact_email, @pitch).deliver
-        set_meta_tags title: "Interview Submitted"
+      if @pitch.save
+        if @pitch.user_id.nil?
+          ApplicationMailer.confirm_submitted_interview(@pitch.contact_email, @pitch).deliver
+          set_meta_tags title: "Interview Submitted"
+        else
+          redirect_to "/interviews", notice: "The interview request was created successfully."
+        end
       else
         render "pitch_interview", notice: "Oh no! Your changes were not able to be saved!"
       end

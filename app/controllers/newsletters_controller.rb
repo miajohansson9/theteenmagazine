@@ -1,31 +1,26 @@
 include NewslettersHelper
+
 class NewslettersController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin?
-  before_action :find_newsletter, except: %i[index new create]
+  before_action :find_newsletter, except: %i[index new create send_user_email]
 
   def index
     @pagy, @newsletters =
-    pagy(
-      Newsletter.order("created_at desc"),
-      page: params[:page],
-      items: 20,
-    )
+      pagy(
+        Newsletter.order("created_at desc"),
+        page: params[:page],
+        items: 20,
+      )
   end
 
   def new
     @newsletter = current_user.newsletters.new
-    # @newsletter =
-    #   Newsletter.find_by(kind: nil) || current_user.newsletters.new
-    # @newsletter.hero_image.attach(Newsletter.not_nil.last.try(:hero_image).blob)
-    # @pagy, @posts =
-    #   pagy(
-    #     Post.published.where(newsletter_id: nil),
-    #     page: params[:page],
-    #     items: 20,
-    #   )
-    # @newsletter_posts = []
-    # @disabled = true
+  end
+
+  def send_user_email
+    @newsletter = current_user.newsletters.build(recipient_id: params[:recipient_id], template: "Plain")
+    @user = User.find(params[:recipient_id])
   end
 
   def edit
@@ -45,7 +40,17 @@ class NewslettersController < ApplicationController
       @newsletter.hero_image.attach(newsletter_params[:hero_image])
     end
     if @newsletter.save
-      redirect_to @newsletter
+      if @newsletter.recipient_id.present?
+        @recipient = User.find(@newsletter.recipient_id)
+        ApplicationMailer.plain_message_template(@recipient, @newsletter).deliver!
+        @newsletter.update_columns({
+          sent_at: Time.now,
+          recipients: 1,
+        })
+        redirect_to @newsletter, notice: "Message sent to #{@recipient.full_name}"
+      else
+        redirect_to @newsletter
+      end
     else
       render "new", notice: "Something went wrong"
     end
@@ -155,6 +160,7 @@ class NewslettersController < ApplicationController
         :sent_at,
         :ready,
         :user_id,
+        :recipient_id,
         :hero_image,
         :audience,
         :recipients,

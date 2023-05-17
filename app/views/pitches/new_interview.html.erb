@@ -20,7 +20,7 @@
     <% end %>
     <div class="interview_pitch_flds">
       <%= f.text_field :title, placeholder: "Name of interviewee" %>
-      <p>What email should the writer contact? Put your own if you want the writer to contact you first.</p>
+      <p>What email should the writer contact for the interview? Leave blank if you don't want automated emails to be sent to the interviewee. (This will be a confirmation email and reminder to share on social media when the article is published)</p>
       <%= f.text_field :contact_email, placeholder: "Contact email" %>
       <p>List the main social media accounts:</p>
       <%= f.text_field :influencer_social_media, placeholder: "Instagram: @madelyncline, TikTok: @madelyn_cline" %>
@@ -42,6 +42,7 @@
       </p>
       <%= f.select(:platform_to_share, ['Instagram story w/ link (preferred)', 'Instagram post description', 'Youtube shoutout', 'Twitter tweet', 'Pinterest post', 'LinkedIn post'], {prompt: "None selected"}) %>
       <%= f.hidden_field :category_id, :value => @pitch.category_id %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
       <%= f.hidden_field :deadline, :value => 6 %>
       <br>
       <br>

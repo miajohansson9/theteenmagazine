@@ -1,0 +1,53 @@
+<%= form_for @newsletter do |f| %>
+    <p class="mb-0 mt-4">Subject</p>
+    <%= f.text_field :subject, value: "Message from #{current_user.full_name}" %>
+    <p class="mb-0 mt-0">Message</p>
+    <%= f.text_area :message,
+        class: "ckeditor", 
+        value: "<p>Hi #{user.first_name},</p><p>Write your message here...</p><p>Best,<br>#{current_user.full_name}</p>"
+    %>
+    <%= f.hidden_field :recipient_id, value: user.id %>
+    <%= f.hidden_field :audience, value: user.full_name %>
+    <%= f.hidden_field :template, value: 'Plain' %>
+    <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
+    <div class="hide spinner-button spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <%= f.button "Send to #{user.first_name} now", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
+<% end %>
+<script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+    var unsaved = false;
+    var editor = CKEDITOR.instances.post_content.on( 'change', function( evt ) {
+      unsaved = true;
+    });
+    $(":input").change(function(){ //triggers change in all input fields including text type
+      unsaved = true;
+    });
+    function unloadPage(){
+      if(unsaved){
+        return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+      }
+    }
+    window.onbeforeunload = unloadPage;
+  });
+  CKEDITOR.addCss('img{width: 100% !important; height: auto !important;margin-left: auto !important;margin-right: auto !important;display: block;}');
+  CKEDITOR.addCss('iframe, .instagram-media{margin: 1em auto !important;}');
+  CKEDITOR.addCss('h1,h2,h3,p{font-size: 1.3em;}a{color: #4ABEB6 !important;}');
+  CKEDITOR.addCss('h1 {font-size: 1.7rem; text-transform: capitalize;} h2 {font-size: 1.5rem; text-transform: capitalize;} h3 {font-size: 1.3rem; text-transform: capitalize;} h4 {font-size: 1.1rem;} h5 {font-size: 0.9rem;} h1, h2, h3, h4, h5, h6, span {margin: 10px 0;}');
+  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #4ABEB6;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
+  window.WEBSPELLCHECKER_CONFIG = {
+    autoSearch: true,
+    serviceId: "<%= @service_id %>"
+  };
+</script>
+<style>
+#cke_1_contents {
+    min-height: 300px !important;
+   }
+  #cke_1_top .cke_button_icon {
+    background-image: url('<%= request.base_url %>/assets/ckeditor/skins/moono-lisa/icons_hidpi.png') !important;
+    background-size: 16px !important;
+  }
+</style>
