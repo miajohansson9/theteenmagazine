@@ -37,9 +37,16 @@ class CategoriesController < ApplicationController
                     image: @category.image,
                     domain: "https://www.theteenmagazine.com/",
                   }
+    @posts = Post.where(category_id: @category.id)
+    if current_user.present? && current_user.is_manager? && params[:popular_within].present?
+      @weeks = Integer(params[:popular_within]) * 1.week
+      @posts = @posts.published.where(publish_at: (Time.now - @weeks)..Time.now).most_viewed
+    else
+      @posts = @posts.published.by_published_date
+    end
     @pagy, @category_posts =
       pagy(
-        Post.where(category_id: @category.id).published.by_published_date,
+        @posts,
         page: params[:page],
         items: 15,
       )
@@ -76,7 +83,7 @@ class CategoriesController < ApplicationController
 
     # popular articles
     @views_cut_off = 2000
-    @popular_articles = Post.published.where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
+    @popular_articles = Post.published.where(category_id: @category.id).where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
     @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
 
     # writers subscribed

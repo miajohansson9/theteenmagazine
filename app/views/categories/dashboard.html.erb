@@ -53,7 +53,7 @@
 									<span>Articles with more than <%= format_large_number(@views_cut_off) %> views<br>(last 3 months)</span>
 								</div>
 							</div>
-							<a class="text-align-center bottom-link" href="/categories/<%= @category.slug %>">
+							<a class="text-align-center bottom-link" href="/categories/<%= @category.slug %>?popular_within=12">
 								<p class="mb-0 text-white bg-dark text-center">View Popular Articles</p>
 							</a>
 						</div>
