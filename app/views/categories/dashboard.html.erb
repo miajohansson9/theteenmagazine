@@ -66,7 +66,7 @@
 									<span>Writers subscribed to <%= @category.name.capitalize %>'s email list</span>
 								</div>
 							</div>
-							<a class="text-align-center bottom-link" href="/newsletters">
+							<a class="text-align-center bottom-link" href="/writers?email_list=<%= @category.slug %>">
 								<p class="mb-0 text-white bg-dark text-center">View Writers on Email List</p>
 							</a>
 						</div>
@@ -200,7 +200,7 @@
       loaded[0] = true;
     }
     if (($('#value2').isOnScreen()) && (!loaded[1])) {
-      animateValue('value2', 0, 20, 500);
+      animateValue('value2', 0, <%= @subscribers_count %>, 500);
       loaded[1] = true;
     }
   };

@@ -220,7 +220,7 @@ class PagesController < ApplicationController
 
   def email_preferences
     if params[:email].present? && params[:token].present?
-      @subscriber = Subscriber.where('lower(email) = ? AND token = ?', params[:email].downcase, params[:token]).first
+      @subscriber = Subscriber.where("lower(email) = ? AND token = ?", params[:email].downcase, params[:token]).first
     elsif current_user?
       @subscriber = Subscriber.find_by(user_id: current_user.id)
     else
@@ -236,7 +236,7 @@ class PagesController < ApplicationController
 
   def update_email_preferences
     if params[:pages].present?
-      @subscriber = Subscriber.where('lower(email) = ? AND token = ?', params[:pages][:email].downcase, params[:pages][:token]).first
+      @subscriber = Subscriber.where("lower(email) = ? AND token = ?", params[:pages][:email].downcase, params[:pages][:token]).first
       if params[:pages][:newsletter].eql? "1"
         # wants to be subscribed to reader newsletter
         @subscriber.update_column("subscribed_to_reader_newsletter", true)
@@ -258,6 +258,11 @@ class PagesController < ApplicationController
         # does not want to get writer updates about their account
         @subscriber.user.update_column("do_not_send_emails", true)
       end
+      if params[:pages][:category_ids].present?
+        # update category ids
+        @subscriber.category_ids = params[:pages][:category_ids].map(&:to_i).reject { |e| Category.find_by(id: Integer(e)).nil? }
+        @subscriber.save!
+      end
       if @errors
         flash.now[:notice] = "There was an error saving your preferences"
       else
@@ -269,22 +274,22 @@ class PagesController < ApplicationController
 
   def issue
     if params[:pages].present? && (params[:pages][:sub].eql? "1")
-        # subscribe to email list
-        maybe_subscriber = Subscriber.find_by('lower(email) = ?', params[:pages][:email].downcase)
-        if !maybe_subscriber.present?
-          @token = SecureRandom.urlsafe_base64
-          subscriber = Subscriber.new(
-              email: params[:pages][:email], 
-              token: @token,
-              source: "Subscribe page",
-              opted_in_at: Time.now,
-              subscribed_to_reader_newsletter: true,
-              subscribed_to_writer_newsletter: false,
-          )
-          subscriber.save
-        else
-          maybe_subscriber.update_column("subscribed_to_reader_newsletter", true)
-        end
+      # subscribe to email list
+      maybe_subscriber = Subscriber.find_by("lower(email) = ?", params[:pages][:email].downcase)
+      if !maybe_subscriber.present?
+        @token = SecureRandom.urlsafe_base64
+        subscriber = Subscriber.new(
+          email: params[:pages][:email],
+          token: @token,
+          source: "Subscribe page",
+          opted_in_at: Time.now,
+          subscribed_to_reader_newsletter: true,
+          subscribed_to_writer_newsletter: false,
+        )
+        subscriber.save
+      else
+        maybe_subscriber.update_column("subscribed_to_reader_newsletter", true)
+      end
     end
   end
 

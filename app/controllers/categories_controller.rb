@@ -72,7 +72,7 @@ class CategoriesController < ApplicationController
     @articles_this_month = @articles_this_month.nil? ? 0 : @articles_this_month.count
 
     # get all drafts
-    @category_drafts = @category.posts
+    @category_drafts = @category.posts.order("updated_at desc")
 
     # popular articles
     @views_cut_off = 2000
@@ -80,9 +80,7 @@ class CategoriesController < ApplicationController
     @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
 
     # writers subscribed
-    @views_cut_off = 2000
-    @popular_articles = Post.published.where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
-    @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
+    @subscribers_count = @category.subscribers.count
   end
 
   def edit

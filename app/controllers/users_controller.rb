@@ -313,7 +313,18 @@ class UsersController < ApplicationController
       reset_email
     elsif current_user && (current_user.admin? || current_user.editor?)
       set_meta_tags title: "Writers | The Teen Magazine"
-      show_users
+      if params[:email_list].present?
+        @category = Category.find(params[:email_list])
+        @pagy, @users =
+          pagy(
+            User.joins(subscriber: { categories: :subscribers })
+              .where(categories: { id: @category.id }),
+            page: params[:page],
+            items: 25,
+          )
+      else
+        show_users
+      end
     elsif current_user
       redirect_to current_user, notice: "You do not have access to this page."
     else
@@ -323,24 +334,17 @@ class UsersController < ApplicationController
   end
 
   def show_users
+    @users = User.where(partner: [nil, false])
     if params[:search].present?
       @query = params[:search][:query]
-      @pagy, @users =
-        pagy(
-          User
-            .where(partner: [nil, false])
-            .where("lower(full_name) LIKE ?", "%#{@query.downcase}%")
-            .or(User.where(partner: [nil, false])
-              .where("lower(email) LIKE ?", "%#{@query.downcase}%"))
-            .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc")),
-          page: params[:page],
-          items: 25,
-        )
+      @users = @users.where("lower(full_name) LIKE ?", "%#{@query.downcase}%")
+        .or(@users.where("lower(email) LIKE ?", "%#{@query.downcase}%"))
+        .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc"))
+      @pagy, @users = pagy(@users, page: params[:page], items: 25)
     else
       @pagy, @users =
         pagy(
-          User
-            .where(partner: [nil, false])
+          @users.where(partner: [nil, false])
             .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc")),
           page: params[:page],
           items: 25,
