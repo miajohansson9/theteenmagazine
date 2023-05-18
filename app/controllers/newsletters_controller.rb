@@ -47,6 +47,7 @@ class NewslettersController < ApplicationController
           sent_at: Time.now,
           recipients: 1,
         })
+        @recipient.subscriber.update_column('last_email_sent_at', Time.now)
         redirect_to @newsletter, notice: "Message sent to #{@recipient.full_name}"
       else
         redirect_to @newsletter

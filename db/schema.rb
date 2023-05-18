@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_17_140834) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_18_150241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -115,6 +115,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_17_140834) do
     t.boolean "archive"
     t.integer "user_id"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
+  end
+
+  create_table "categories_subscribers", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "subscriber_id"
+    t.datetime "opted_in_at", precision: nil
+    t.boolean "subscribed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_categories_subscribers_on_category_id"
+    t.index ["subscriber_id"], name: "index_categories_subscribers_on_subscriber_id"
   end
 
   create_table "ckeditor_assets", id: :serial, force: :cascade do |t|

@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :invitations
   has_many :applies
   has_many :outreaches
-  has_many :subscribers
+  has_one :subscriber
   has_many :categories
 
   # Include default devise modules. Others available are:
