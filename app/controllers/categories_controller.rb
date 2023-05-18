@@ -49,6 +49,7 @@ class CategoriesController < ApplicationController
     unless current_user? && (current_user.admin? || (current_user.categories.where(slug: @category.slug).present?))
       redirect_to @category, notice: "You do not have access to this page."
     end
+    set_meta_tags title: "#{@category.name.capitalize} Dashboard"
     @user = @category.user
     @published_in_category = []
     @drafts_in_category = []
