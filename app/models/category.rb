@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
   has_many :posts
+  has_many :pitches
   has_many :activities
   belongs_to :user, optional: true
   has_one_attached :image

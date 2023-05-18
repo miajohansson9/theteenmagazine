@@ -69,10 +69,13 @@ class CategoriesController < ApplicationController
     @articles_last_month = @articles_last_month.nil? ? 0 : @articles_last_month.count
     @articles_this_month = Post.published.where(category_id: @category.id, publish_at: (Time.now - 30.days)..Time.now)
     @articles_this_month = @articles_this_month.nil? ? 0 : @articles_this_month.count
+
+    # get all drafts
+    @category_drafts = @category.posts
   end
 
   def edit
-    if current_user && current_user.is_manager? && current_user.categories.where(slug: @category.slug).present?
+    if current_user && (current_user.admin? || current_user.categories.where(slug: @category.slug).present?)
       @archive_button = @category.archive ? "Undo Archive" : "Archive"
       @archive_msg = if @category.archive
           ""

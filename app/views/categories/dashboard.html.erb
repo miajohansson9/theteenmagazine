@@ -9,6 +9,10 @@
               <a class="tab-custom active show" id="home-tab-classic" data-bs-toggle="tab" href="#profile-classic"
                 role="tab" aria-controls="profile-classic" aria-selected="true">Analytics</a>
             </li>
+			<li class="nav-item tab-custom">
+              <a class="tab-custom" id="drafts-tab-classic" data-bs-toggle="tab" href="#drafts-classic"
+                role="tab" aria-controls="drafts-classic" aria-selected="true">Current Drafts</a>
+            </li>
             <li class="nav-item tab-custom">
               <a class="tab-custom" id="activity-tab-classic" data-bs-toggle="tab" href="#follow-classic" role="tab"
                 aria-controls="follow-classic" aria-selected="false">Activity in <%= @category.name.capitalize %></a>
@@ -41,8 +45,26 @@
 					</div>
 				</div>
 			</div>
+			<div class="tab-pane fade" id="drafts-classic" role="tabpanel" aria-labelledby="drafts-tab-classic">
+				<div class="dashboard--articles--wrapper">
+					<% if @category_drafts.rejected.present? %>
+						<h6 class="header_ttl">Changes Requested</h6>
+						<%= render "/users/partials/dashboard_articles", articles: @category_drafts.rejected, image: "changes_requested.png" %>
+					<% end %>
+					<% if @category_drafts.in_review.present? %>
+						<h6 class="header_ttl">Articles In Review</h6>
+						<%= render "/users/partials/dashboard_articles", articles: @category_drafts.in_review, image: "in_review.png" %>
+					<% end %>
+					<% if @category_drafts.submitted.present? %>
+						<h6 class="header_ttl">Pending Review</h6>
+						<%= render "/users/partials/dashboard_articles", articles: @category_drafts.submitted, image: "waiting.png" %>
+					<% end %>
+					<h6 class="header_ttl">Articles In Progress</h6>
+					<%= render "/users/partials/dashboard_articles", articles: @category_drafts.draft, image: "saved.png" %>
+				</div>
+            </div>
 		   <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="activity-tab-classic">
-            <h5 class="pitch_ttl">All Editor Activity</h5>
+            <h5 class="pitch_ttl">Editor Activity</h5>
             <%= render_async_cache get_editor_activity_path(category_id: @category.id), toggle: { selector: '#activity-tab-classic', event: :click } do %>
               <div class="d-flex justify-content-center">
                 <div class="spinner-border" role="status">
