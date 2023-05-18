@@ -73,6 +73,16 @@ class CategoriesController < ApplicationController
 
     # get all drafts
     @category_drafts = @category.posts
+
+    # popular articles
+    @views_cut_off = 2000
+    @popular_articles = Post.published.where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
+    @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
+
+    # writers subscribed
+    @views_cut_off = 2000
+    @popular_articles = Post.published.where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
+    @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
   end
 
   def edit

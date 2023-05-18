@@ -33,14 +33,42 @@
 				<div class="mt-4 d-flex flex-row flex-wrap justify-content-between">
 					<div class="chart-card d-inline-flex card" style="width: 49%;">
 						<div class="card-body">
-							<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
-							<a class="text-align-center mt-2" href="/categories/<%= @category.slug %>"><p class="mb-0 text-white bg-dark text-center">View Published Articles</p></a>
+							<div class="mb-3" id="chartContainer1" style="height: 300px; width: 100%;"></div>
+							<a class="text-align-center bottom-link" href="/categories/<%= @category.slug %>"><p class="mb-0 text-white bg-dark text-center">View Published Articles</p></a>
 						</div>
 					</div>
 					<div class="chart-card d-inline-flex card" style="width: 49%;">
 						<div class="card-body">
-							<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
-							<a class="text-align-center mt-2" href="/newsletters"><p class="mb-0 text-white bg-dark text-center">View Newsletters Sent</p></a>
+							<div class="mb-3" id="chartContainer2" style="height: 300px; width: 100%;"></div>
+							<a class="text-align-center bottom-link" href="/newsletters"><p class="mb-0 text-white bg-dark text-center">View Newsletters Sent</p></a>
+						</div>
+					</div>
+				</div>
+				<div class="mt-4 d-flex flex-row flex-wrap justify-content-between">
+					<div class="chart-card d-inline-flex card" style="width: 49%;">
+						<div class="card-body category-dashboard-card dashboard-card">
+							<div class="stats_wrapper">
+								<h1 class="mb-0 d-block text-center value" id="value1"></h1>
+								<div class="description">
+									<span>Articles with more than <%= format_large_number(@views_cut_off) %> views<br>(last 3 months)</span>
+								</div>
+							</div>
+							<a class="text-align-center bottom-link" href="/categories/<%= @category.slug %>">
+								<p class="mb-0 text-white bg-dark text-center">View Popular Articles</p>
+							</a>
+						</div>
+					</div>
+					<div class="chart-card d-inline-flex card" style="width: 49%;">
+						<div class="card-body category-dashboard-card dashboard-card">
+							<div class="stats_wrapper">
+								<h1 class="mb-0 d-block text-center value" id="value2"></h1>
+								<div class="description">
+									<span>Writers subscribed to <%= @category.name.capitalize %>'s email list</span>
+								</div>
+							</div>
+							<a class="text-align-center bottom-link" href="/newsletters">
+								<p class="mb-0 text-white bg-dark text-center">View Writers on Email List</p>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -150,6 +178,41 @@
   </div>
 </div>
 <%= javascript_include_tag "plugins/canvasjs.min" %>
+<script type="text/javascript">
+  var loaded = []
+  $.fn.isOnScreen = function(){
+    var win = $(window);
+    var viewport = {
+        top : win.scrollTop(),
+        left : win.scrollLeft()
+    };
+    viewport.right = viewport.left + win.width();
+    viewport.bottom = viewport.top + win.height();
+    var bounds = this.offset();
+    bounds.right = bounds.left + this.outerWidth();
+    bounds.bottom = bounds.top + this.outerHeight();
+    return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+  };
+
+  $.fn.triggerAnalytics = function(){
+    if (($('#value1').isOnScreen()) && (!loaded[0])) {
+      animateValue('value1', 0, <%= @popular_articles_count %>, 500);
+      loaded[0] = true;
+    }
+    if (($('#value2').isOnScreen()) && (!loaded[1])) {
+      animateValue('value2', 0, 20, 500);
+      loaded[1] = true;
+    }
+  };
+
+  $(document).ready(function(){
+    loaded = [false, false];
+    $.fn.triggerAnalytics();
+    $(window).on('scroll',function(){
+        $.fn.triggerAnalytics();
+    });
+  });
+</script>
 <script>
 window.onload = function () {
 	var chart1 = new CanvasJS.Chart("chartContainer", {
