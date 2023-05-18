@@ -19,19 +19,9 @@ namespace :newsletters do
         end
 
         if Date.today.thursday?
-            @categories = []
-            Category.active.each do |category|
-                @categories = @categories.push(category.slug)
-            end
-            if Date.today.cweek.odd?
-                # send trending newsletter every other thursday
-                @newsletter = trending
-                send_to_audience(@newsletter)
-            else
-                # send recents newsletter in category every other thursday
-                @newsletter = recent(@categories[Date.today.cweek % 7])
-                send_to_audience(@newsletter)
-            end
+            # send trending newsletter every thursday
+            @newsletter = trending
+            send_to_audience(@newsletter)
         end
 
         # create editor picks newsletter
@@ -62,12 +52,16 @@ namespace :newsletters do
             puts "Do not send newsletters to the same audience within one day of each other"
             return
         end
-        newsletter.update_column(:sent_at, Time.now)
-        newsletter.update_column(:recipients, 0)
         if newsletter.template.eql? "Announcement"
+            newsletter.update_column(:sent_at, Time.now)
+            newsletter.update_column(:recipients, 0)
             send_announcement(newsletter, false)
         elsif newsletter.template.eql? "Weekly Picks"
-            send_editor_picks(newsletter, false)
+            if (newsletter.featured_posts.scan("theteenmagazine.com").count >= 7)
+                newsletter.update_column(:sent_at, Time.now)
+                newsletter.update_column(:recipients, 0)
+                send_editor_picks(newsletter, false)
+            end
         end
     end
 
