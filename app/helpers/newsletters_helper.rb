@@ -1,4 +1,14 @@
 module NewslettersHelper
+  def is_blocked(newsletter)
+    # current user is sending newsletter
+    @admin_lists = ["All Writers", "All Readers"]
+    if current_user.present? && !current_user.admin? && (@admin_lists.include? @newsletter.audience)
+      # user cannot send newsletter to this audience!
+      return true
+    end
+    return false
+  end
+
   def send_editor_picks(newsletter, new_thread = true)
     @newsletter = newsletter
     @posts = []
@@ -16,10 +26,16 @@ module NewslettersHelper
       return
     end
     if new_thread
-      Thread.new do
-        send_editor_picks_to_audience(@newsletter)
+      if is_blocked(@newsletter)
+        Sentry.capture_message("#{current_user.full_name} tried to send to audience #{@newsletter.audience}!")
+        return
+      else
+        Thread.new do
+          send_editor_picks_to_audience(@newsletter)
+        end
       end
     else
+      # newsletter is sent through task
       send_editor_picks_to_audience(@newsletter)
     end
   end
@@ -43,14 +59,24 @@ module NewslettersHelper
           ApplicationMailer.featured_in_newsletter(post.user, post).deliver
         end
       end
+    elsif @newsletter.audience.include? "Writers in"
+      # is one of the categories
+      @category_name = @newsletter.audience.split("Writers in ")[1]
+      @category = Category.find_by("lower(name) = ?", @category_name.downcase)
+      send_editor_picks_helper(@newsletter, @category.subscribers)
     end
   end
 
   def send_announcement(newsletter, new_thread = true)
     @newsletter = newsletter
     if new_thread
-      Thread.new do
-        send_announcement_to_audience(@newsletter)
+      if is_blocked(@newsletter)
+        Sentry.capture_message("#{current_user.full_name} tried to send to audience #{@newsletter.audience}!")
+        return
+      else
+        Thread.new do
+          send_announcement_to_audience(@newsletter)
+        end
       end
     else
       send_announcement_to_audience(@newsletter)
@@ -66,6 +92,11 @@ module NewslettersHelper
       send_announcement_helper(@newsletter, Subscriber.interviewer)
     elsif @newsletter.audience.eql? "All Readers"
       send_announcement_helper(@newsletter, Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
+    elsif @newsletter.audience.include? "Writers in"
+      # is one of the categories
+      @category_name = @newsletter.audience.split("Writers in ")[1]
+      @category = Category.find_by("lower(name) = ?", @category_name.downcase)
+      send_announcement_helper(@newsletter, @category.subscribers)
     end
   end
 

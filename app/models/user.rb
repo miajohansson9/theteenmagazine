@@ -51,6 +51,14 @@ class User < ActiveRecord::Base
     self.admin? || self.categories.present?
   end
 
+  def is_manager_of_category(category_id)
+    self.admin? || self.is_manager? && (self.category_ids.include? Integer(category_id))
+  end
+
+  def can_edit_post(post)
+    self.id == post.user_id || (post.collaboration&.include? self.email) || self.is_manager_of_category(post.category_id)
+  end
+
   def is_interviewer_manager?
     self.categories.present? && self.categories.where(slug: "interviews").present?
   end

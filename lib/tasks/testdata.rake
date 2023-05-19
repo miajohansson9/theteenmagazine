@@ -18,20 +18,24 @@ namespace :testdata do
 
   task subscribers: :environment do
     User.editor.each do |user|
-      @token = SecureRandom.urlsafe_base64
-      @subscriber = Subscriber.new(
-        email: user.email,
-        user_id: user.id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        token: @token,
-        source: "Test data",
-        opted_in_at: Time.now,
-        subscribed_to_reader_newsletter: true,
-        subscribed_to_writer_newsletter: true,
-      )
-      @subscriber.save!
-      puts "Added editor to subscriber list"
+      begin
+        @token = SecureRandom.urlsafe_base64
+        @subscriber = Subscriber.new(
+          email: user.email,
+          user_id: user.id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          token: @token,
+          source: "Test data",
+          opted_in_at: Time.now,
+          subscribed_to_reader_newsletter: true,
+          subscribed_to_writer_newsletter: true,
+        )
+        @subscriber.save!
+        puts "Added editor to subscriber list"
+      rescue e
+        puts e
+      end
     end
   end
 
@@ -75,9 +79,9 @@ namespace :testdata do
   end
 
   task interviews: :environment do
-    following_level = ['less than 100k', 'between 100k and 500k', 'between 500k and 1 million', 'over 1 million']
+    following_level = ["less than 100k", "between 100k and 500k", "between 500k and 1 million", "over 1 million"]
     interview_kind = ["Actor", "Actress", "Author", "Artist", "Activist", "Content Creator", "Influencer", "Musician", "Youtuber", "Other"]
-    platform_to_share = ['Instagram story w/ link (preferred)', 'Instagram post description', 'Youtube shoutout', 'Twitter tweet', 'Pinterest post', 'LinkedIn post']
+    platform_to_share = ["Instagram story w/ link (preferred)", "Instagram post description", "Youtube shoutout", "Twitter tweet", "Pinterest post", "LinkedIn post"]
     10.times do |i|
       @pitch = Pitch.new(
         title: "Notable person #{i}",

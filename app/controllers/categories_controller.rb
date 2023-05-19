@@ -69,9 +69,9 @@ class CategoriesController < ApplicationController
     @started_in_category = populate_started_in_category(14, @category)
 
     # newsletter calculations
-    @newsletters_sent_last_month = current_user.newsletters.where(sent_at: (Time.now - 60.days)..(Time.now - 30.days))
+    @newsletters_sent_last_month = current_user.newsletters.where(recipient_id: nil, sent_at: (Time.now - 60.days)..(Time.now - 30.days))
     @newsletters_sent_last_month = @newsletters_sent_last_month.nil? ? 0 : @newsletters_sent_last_month.count
-    @newsletters_sent_this_month = current_user.newsletters.where(sent_at: (Time.now - 30.days)..(Time.now))
+    @newsletters_sent_this_month = current_user.newsletters.where(recipient_id: nil, sent_at: (Time.now - 30.days)..(Time.now))
     @newsletters_sent_this_month = @newsletters_sent_this_month.nil? ? 0 : @newsletters_sent_this_month.count
 
     # published articles calculations

@@ -24,8 +24,6 @@ class SubscribersController < ApplicationController
   end
 
   def update
-    puts subscriber_params
-    puts "LSKDJFLSKDJf"
     if @subscriber.update subscriber_params
       @subscriber.save
       redirect_to subscribers_path, notice: "Your changes were saved."

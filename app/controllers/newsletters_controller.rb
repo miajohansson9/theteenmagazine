@@ -7,6 +7,7 @@ class NewslettersController < ApplicationController
   before_action :find_newsletter, except: %i[index new create send_user_email manage_newsletters]
 
   def index
+    set_meta_tags title: "Newsletters | The Teen Magazine"
     @pagy, @newsletters =
       pagy(
         Newsletter.order("created_at desc"),
@@ -16,6 +17,7 @@ class NewslettersController < ApplicationController
   end
 
   def manage_newsletters
+    set_meta_tags title: "Newsletters | The Teen Magazine"
     @user = User.find(params[:manager_id])
     if current_user.id.eql? @user.id
       @pagy, @newsletters =
@@ -60,6 +62,9 @@ class NewslettersController < ApplicationController
   end
 
   def edit
+    if !current_user.admin? && !(current_user.id.eql? @newsletter.user.id)
+      redirect_to "/newsletters/manage/#{current_user.id}", notice: "You do not have access to this page."
+    end
     get_audiences
     @posts = Post.published.where(newsletter_id: nil)
     @newsletter_posts = @newsletter.posts || []
@@ -97,7 +102,7 @@ class NewslettersController < ApplicationController
   def destroy
     @newsletter.posts.map { |p| p.update_column(:newsletter_id, nil) }
     if @newsletter.destroy
-      redirect_to newsletters_path, notice: "Your newsletter was deleted."
+      redirect_to "/newsletters/manage/#{current_user.slug}", notice: "Your newsletter was deleted."
     end
   end
 
@@ -114,11 +119,10 @@ class NewslettersController < ApplicationController
 
   #only allow admin can send/create newsletters
   def is_admin?
-    if (current_user &&
-        (current_user.admin? || current_user.has_newsletter_permissions))
+    if (current_user && (current_user.admin? || current_user.has_newsletter_permissions))
       true
     else
-      redirect_to current_user, notice: "You do not have access to this page."
+      redirect_to "/newsletters/manage/#{current_user.slug}"
     end
   end
 
@@ -133,8 +137,8 @@ class NewslettersController < ApplicationController
   #show application to editor
   #form for creating a new user already filled out
   def show
-    if !current_user.is_manager? && !(current_user.id.eql? @newsletter.user.id)
-      redirect_to "newsletters/manage/#{current_user.id}", notice: "You do not have access to this page."
+    if !current_user.admin? && !(current_user.id.eql? @newsletter.user.id)
+      redirect_to "/newsletters/manage/#{current_user.id}", notice: "You do not have access to this page."
     end
     if @newsletter.action_button.present?
       @button = @newsletter.action_button.split(",")
@@ -170,7 +174,7 @@ class NewslettersController < ApplicationController
         @posts[index] = Post.find_by(slug: slug.strip)
       end
       if @posts.count.eql? 0
-        redirect_to newsletters_path, notice: "Something went wrong"
+        redirect_to "/newsletters/manage/#{current_user.slug}", notice: "Something went wrong"
         return
       end
       if ApplicationMailer.editor_picks(@subscriber, @posts, @editor_quotes, @newsletter).deliver
@@ -191,11 +195,11 @@ class NewslettersController < ApplicationController
     @newsletter.update_column(:sent_at, Time.now)
     @newsletter.update_column(:recipients, 0)
     if @newsletter.template.eql? "Announcement"
-      send_announcement(@newsletter)
+      send_announcement(@newsletter, true)
     elsif @newsletter.template.eql? "Weekly Picks"
-      send_editor_picks(@newsletter)
+      send_editor_picks(@newsletter, true)
     end
-    redirect_to "/newsletters", notice: "Email is sending to #{@newsletter.audience}"
+    redirect_to "/newsletters/manage/#{@newsletter.user.slug}", notice: "Email is sending to #{@newsletter.audience}"
   end
 
   private

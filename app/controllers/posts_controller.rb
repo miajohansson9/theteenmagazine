@@ -42,7 +42,7 @@ class PostsController < ApplicationController
           # calculate new trending score
           @hours = [24.0, ((Time.now - @post.publish_at) / 1.hour).round].max
           @points = @post.post_impressions.to_f
-          score = (@points / ((@hours+2.0)**1.8)) * 1000.0
+          score = (@points / ((@hours + 2.0) ** 1.8)) * 1000.0
           # update new trending score
           @post.update_attribute(:trending_score, score)
           # create session variable to not log again
@@ -342,16 +342,16 @@ class PostsController < ApplicationController
     begin
       if isEmail(params[:posts][:email])
         # subscribe to TTM newsletter
-        maybe_subscriber = Subscriber.find_by('lower(email) = ?', params[:posts][:email].downcase)
+        maybe_subscriber = Subscriber.find_by("lower(email) = ?", params[:posts][:email].downcase)
         if !maybe_subscriber.present?
           @token = SecureRandom.urlsafe_base64
           subscriber = Subscriber.new(
-              email: params[:posts][:email], 
-              token: @token,
-              source: "Subscribe widget",
-              opted_in_at: Time.now,
-              subscribed_to_reader_newsletter: true,
-              subscribed_to_writer_newsletter: false,
+            email: params[:posts][:email],
+            token: @token,
+            source: "Subscribe widget",
+            opted_in_at: Time.now,
+            subscribed_to_reader_newsletter: true,
+            subscribed_to_writer_newsletter: false,
           )
           subscriber.save
         else
@@ -383,9 +383,7 @@ class PostsController < ApplicationController
     end
     @can_edit =
       !(@post.reviews.last.try(:status).eql? "Approved for Publishing") ||
-        (current_user.id == @post.user_id) ||
-        (@post.collaboration&.include? current_user.email) ||
-        (current_user.admin?) ||
+        (current_user.can_edit_post(@post)) ||
         (@post.reviews.last.editor_id.eql? current_user.id)
     @categories = Category.active.or(Category.where(id: @post.category_id))
     @service_id = ENV["WEBSPELLCHECKER_ID"]
@@ -551,7 +549,7 @@ class PostsController < ApplicationController
             @notice = "Great job! #{@prev_editor.full_name} was assigned this review."
             @rev.update_columns({
               status: "In Review",
-              editor_id: @prev_editor.id, 
+              editor_id: @prev_editor.id,
               editor_claimed_review_at: Time.now,
             })
             ApplicationMailer.article_moved_to_review(@post.user, @post, @prev_editor).deliver

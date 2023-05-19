@@ -125,7 +125,7 @@
       <p class="pitch_usr">This pitch's <%= link_to("article", @article, class: "pitch_btn", target: "_blank") %> was published on <%= date_to_words(@article.publish_at) %>.</p>
     <% end %>
   <% end %>
-  <% if ((current_user.id.eql? @pitch.user&.id) || current_user.admin) && !@article&.is_published? %>
+  <% if ((current_user.id.eql? @pitch.user&.id) || current_user.is_manager?) && !@article&.is_published? %>
     <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme edit_btn_rel", style: "float: left; margin-top: -0.5rem;" %>
   <% end %>
 </div>

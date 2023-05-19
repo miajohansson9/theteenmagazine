@@ -3,7 +3,7 @@
   <a href="<%= pitch_path(pitch)%>">
     <%= render "posts/partials/header_image", post: pitch, img_class: "card-img-top" %>
   </a>
-  <% if (current_user.id.eql? pitch.editor_id) || current_user.is_manager? %>
+  <% if (current_user.id.eql? pitch.editor_id) || current_user.is_manager_of_category(pitch.category_id) %>
     <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn")%>
   <% end %>
   <div class="card-body">

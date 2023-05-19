@@ -107,7 +107,7 @@
                 <%= markdown @post.content %>
               </div>
               <% if params[:shareable_token].nil? %>
-                <% if current_user && (current_user.id == @post.user_id || (@post.collaboration&.include? current_user.email) || current_user.admin?) %>
+                <% if current_user && current_user.can_edit_post(@post) %>
                   <div id="admin_links" style="border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;text-align: center;padding: 1em 0;margin: 1em 0;margin-top: 0;">
                     <% if !(@post.is_locked?) %>
                       <%= link_to "Edit Article", edit_post_path(@post), style: "text-decoration: none;color: #9a9da4;margin: 0 1em;font-weight: 700;font-size: .8em;text-transform: uppercase;font-family: inherit;" %>

@@ -14,8 +14,8 @@
     <p class="mb-0">Action button text (use button text + comma + full url. See placeholder for example)</p>
     <%= f.text_field :action_button, placeholder: 'Join Discord, https://discord.com/' %>
   <% end %>
-  <%= f.select(:audience, @audiences) %></p>
-<%= f.select(:template, ['Announcement', 'Weekly Picks']) %></p>
+<p>Audience: <%= f.select(:audience, @audiences) %></p>
+<p>Template: <%= f.select(:template, ['Announcement', 'Weekly Picks']) %></p>
 <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
   <div class="hide spinner-button spinner-border" role="status">
     <span class="sr-only">Loading...</span>
