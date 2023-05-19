@@ -1,0 +1,12 @@
+<div class="flex_horizontal center">
+  <h1 id="page_title" style="border-bottom: none; margin-top: 0px;">Managing Editors</h1>
+</div>
+<div id="posts_wrapper" class="skinny_wrapper mb-4">
+    <div class="alert alert-info" role="alert">
+      You can contact any of the managing editors below for help. If you have a question about one of your articles, you should contact the managing editor of that category.
+    </div>
+    <% @users.each do | user | %>
+        <%= render :partial => 'profile', locals: {user: user}, cached: true %>
+    <% end %>
+    <%== pagy_nav(@pagy).html_safe %>
+</div>

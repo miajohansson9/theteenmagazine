@@ -25,7 +25,9 @@
     </tbody>
   </table>
   <%== pagy_nav(pagy).html_safe %>
-  <div class="pb-4">
-    <div class="btn_cntnr"><%= link_to "New Newsletter", new_newsletter_path, class: "newpost--new--profile", style: "margin-right: 0px;" %></div>
-  </div>
+  <% if current_user.is_manager? %>
+    <div class="pb-4">
+      <div class="btn_cntnr"><%= link_to "New Newsletter", new_newsletter_path, class: "newpost--new--profile", style: "margin-right: 0px;" %></div>
+    </div>
+  <% end %>
 </div>

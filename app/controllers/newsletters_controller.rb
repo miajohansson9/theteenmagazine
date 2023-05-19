@@ -3,8 +3,8 @@ include NewslettersHelper
 class NewslettersController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin?, only: %i[index]
-  before_action :is_manager?
-  before_action :find_newsletter, except: %i[index new create send_user_email manager_newsletters]
+  before_action :is_manager?, except: %i[show send_user_email create update]
+  before_action :find_newsletter, except: %i[index new create send_user_email manage_newsletters]
 
   def index
     @pagy, @newsletters =
@@ -15,14 +15,18 @@ class NewslettersController < ApplicationController
       )
   end
 
-  def manager_newsletters
+  def manage_newsletters
     @user = User.find(params[:manager_id])
-    @pagy, @newsletters =
-      pagy(
-        Newsletter.where(user_id: @user.id).order("created_at desc"),
-        page: params[:page],
-        items: 20,
-      )
+    if current_user.id.eql? @user.id
+      @pagy, @newsletters =
+        pagy(
+          Newsletter.where(user_id: @user.id).order("created_at desc"),
+          page: params[:page],
+          items: 20,
+        )
+    else
+      redirect_to "/newsletters/manage/#{current_user.slug}", notice: "You can only view your own emails."
+    end
   end
 
   def get_audiences
@@ -47,8 +51,12 @@ class NewslettersController < ApplicationController
   end
 
   def send_user_email
-    @newsletter = current_user.newsletters.build(recipient_id: params[:recipient_id], template: "Plain")
     @user = User.find(params[:recipient_id])
+    if current_user.is_manager? || @user.is_manager?
+      @newsletter = current_user.newsletters.build(recipient_id: @user.id, template: "Plain")
+    else
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
   end
 
   def edit
@@ -125,6 +133,9 @@ class NewslettersController < ApplicationController
   #show application to editor
   #form for creating a new user already filled out
   def show
+    if !current_user.is_manager? && !(current_user.id.eql? @newsletter.user.id)
+      redirect_to "newsletters/manage/#{current_user.id}", notice: "You do not have access to this page."
+    end
     if @newsletter.action_button.present?
       @button = @newsletter.action_button.split(",")
       @button_text = @button[0]

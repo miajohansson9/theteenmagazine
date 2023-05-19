@@ -98,7 +98,7 @@ Rails.application.routes.draw do
   get "most-viewed" => "pages#most_viewed"
   get "newsletters/:id/featured-posts" => "newsletters#featured"
   get "newsletters/users/:recipient_id" => "newsletters#send_user_email", :as => :send_user_email
-  get "newsletters/managers/:manager_id" => "newsletters#manager_newsletters"
+  get "newsletters/manage/:manager_id" => "newsletters#manage_newsletters"
   get "reviews:post_id" => "pages#reviews"
   get "/apply" => "applies#new"
   get "/applications/editor", to: "applies#editor"
@@ -111,6 +111,7 @@ Rails.application.routes.draw do
   get "/partners/:id/edit", to: "users#edit"
   get "/partners", to: "users#partners"
   get "/editors", to: "users#editors"
+  get "/managing-editors", to: "users#managing_editors"
   get "/interviewers", to: "users#interviewers"
   get "/partners/:id/share", to: "users#share"
   get "/writers/:id/extensions", to: "users#extensions"

@@ -387,6 +387,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def managing_editors
+    set_meta_tags title: "Managing Editors | The Teen Magazine"
+    @pagy, @users =
+      pagy(
+        User.managing_editor.order("created_at desc"),
+        page: params[:page],
+        items: 25,
+      )
+  end
+
   def editors
     set_meta_tags title: "Editors | The Teen Magazine"
     if params[:search].present?

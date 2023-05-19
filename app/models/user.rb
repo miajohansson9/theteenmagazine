@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
   scope :writer, -> { where(partner: [nil, false]) }
 
-  scope :managing_editor, -> { joins(:categories).where.not(categories: { id: nil }) }
+  scope :managing_editor, -> { joins(:categories).where.not(categories: { id: nil }).distinct }
 
   extend FriendlyId
   friendly_id :set_full_name, use: :slugged
