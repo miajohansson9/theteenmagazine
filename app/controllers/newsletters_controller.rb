@@ -2,8 +2,9 @@ include NewslettersHelper
 
 class NewslettersController < ApplicationController
   before_action :authenticate_user!
-  before_action :is_admin?
-  before_action :find_newsletter, except: %i[index new create send_user_email]
+  before_action :is_admin?, only: %i[index]
+  before_action :is_manager?
+  before_action :find_newsletter, except: %i[index new create send_user_email manager_newsletters]
 
   def index
     @pagy, @newsletters =
@@ -14,7 +15,34 @@ class NewslettersController < ApplicationController
       )
   end
 
+  def manager_newsletters
+    @user = User.find(params[:manager_id])
+    @pagy, @newsletters =
+      pagy(
+        Newsletter.where(user_id: @user.id).order("created_at desc"),
+        page: params[:page],
+        items: 20,
+      )
+  end
+
+  def get_audiences
+    @audiences = []
+    if current_user.admin?
+      @audiences = ["All Writers", "All Readers", "Only Editors", "Only Interviewers"]
+    elsif current_user.categories.include? Category.find("interviews").id
+      @audiences = ["Only Interviewers", "Only Editors"]
+    else
+      @audiences = ["Only Editors"]
+    end
+    if current_user.is_manager?
+      current_user.categories.where.not(slug: "interviews").each do |category|
+        @audiences.push("Writers in #{category.name.capitalize}")
+      end
+    end
+  end
+
   def new
+    get_audiences
     @newsletter = current_user.newsletters.new
   end
 
@@ -24,6 +52,7 @@ class NewslettersController < ApplicationController
   end
 
   def edit
+    get_audiences
     @posts = Post.published.where(newsletter_id: nil)
     @newsletter_posts = @newsletter.posts || []
     @newsletters_to_send_before_cnt =
@@ -47,7 +76,7 @@ class NewslettersController < ApplicationController
           sent_at: Time.now,
           recipients: 1,
         })
-        @recipient.subscriber.update_column('last_email_sent_at', Time.now)
+        @recipient.subscriber.update_column("last_email_sent_at", Time.now)
         redirect_to @newsletter, notice: "Message sent to #{@recipient.full_name}"
       else
         redirect_to @newsletter
@@ -79,6 +108,14 @@ class NewslettersController < ApplicationController
   def is_admin?
     if (current_user &&
         (current_user.admin? || current_user.has_newsletter_permissions))
+      true
+    else
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
+  end
+
+  def is_manager?
+    if (current_user && current_user.is_manager?)
       true
     else
       redirect_to current_user, notice: "You do not have access to this page."

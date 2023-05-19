@@ -37,12 +37,14 @@ class CategoriesController < ApplicationController
                     image: @category.image,
                     domain: "https://www.theteenmagazine.com/",
                   }
-    @posts = Post.where(category_id: @category.id)
-    if current_user.present? && current_user.is_manager? && params[:popular_within].present?
+    @posts = Post.where(category_id: @category.id).published
+    if current_user.present? && current_user.is_manager? && (params[:high_priority].eql? "true")
+      @posts = @posts.high_priority
+    elsif current_user.present? && current_user.is_manager? && params[:popular_within].present?
       @weeks = Integer(params[:popular_within]) * 1.week
-      @posts = @posts.published.where(publish_at: (Time.now - @weeks)..Time.now).most_viewed
+      @posts = @posts.where(publish_at: (Time.now - @weeks)..Time.now).most_viewed
     else
-      @posts = @posts.published.by_published_date
+      @posts = @posts.by_published_date
     end
     @pagy, @category_posts =
       pagy(
@@ -83,11 +85,13 @@ class CategoriesController < ApplicationController
 
     # popular articles
     @views_cut_off = 2000
-    @popular_articles = Post.published.where(category_id: @category.id).where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
+    @popular_articles = @category.posts.where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
     @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
 
     # writers subscribed
     @subscribers_count = @category.subscribers.count
+
+    @high_priority_published_count = @category.posts.published.high_priority.nil? ? 0 : @category.posts.published.high_priority.count
   end
 
   def edit

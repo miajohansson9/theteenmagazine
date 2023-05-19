@@ -72,6 +72,21 @@
 						</div>
 					</div>
 				</div>
+				<div class="mt-4 d-flex flex-row flex-wrap justify-content-between">
+					<div class="chart-card d-inline-flex card" style="width: 49%;">
+						<div class="card-body category-dashboard-card dashboard-card">
+							<div class="stats_wrapper">
+								<h1 class="mb-0 d-block text-center value" id="value3"></h1>
+								<div class="description">
+									<span>High priority articles published</span>
+								</div>
+							</div>
+							<a class="text-align-center bottom-link" href="/categories/<%= @category.slug %>?high_priority=true">
+								<p class="mb-0 text-white bg-dark text-center">View High Priority Articles</p>
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="tab-pane fade" id="drafts-classic" role="tabpanel" aria-labelledby="drafts-tab-classic">
 				<div class="dashboard--articles--wrapper">
@@ -150,7 +165,7 @@
 			  <% end %>
 			  <div class="list-group-item">
 			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
-                <%= link_to "Send newsletters", newsletters_path, class: "link_nrml"  %>
+                <%= link_to "Send newsletters", "/newsletters/managers/#{@user.slug}", class: "link_nrml"  %>
 			  </div>
 			  <div class="list-group-item">
 			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
@@ -203,10 +218,14 @@
       animateValue('value2', 0, <%= @subscribers_count %>, 500);
       loaded[1] = true;
     }
+	if (($('#value3').isOnScreen()) && (!loaded[2])) {
+      animateValue('value3', 0, <%= @high_priority_published_count %>, 500);
+      loaded[2] = true;
+    }
   };
 
   $(document).ready(function(){
-    loaded = [false, false];
+    loaded = [false, false, false];
     $.fn.triggerAnalytics();
     $(window).on('scroll',function(){
         $.fn.triggerAnalytics();

@@ -98,6 +98,7 @@ Rails.application.routes.draw do
   get "most-viewed" => "pages#most_viewed"
   get "newsletters/:id/featured-posts" => "newsletters#featured"
   get "newsletters/users/:recipient_id" => "newsletters#send_user_email", :as => :send_user_email
+  get "newsletters/managers/:manager_id" => "newsletters#manager_newsletters"
   get "reviews:post_id" => "pages#reviews"
   get "/apply" => "applies#new"
   get "/applications/editor", to: "applies#editor"

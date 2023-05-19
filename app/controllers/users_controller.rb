@@ -75,11 +75,20 @@ class UsersController < ApplicationController
   end
 
   def get_editor_stats
-    @editor_posts_cnt = @user.posts.published.count
-    @editor_pitches_cnt = @user.pitches.count
-    @editor_reviews = Review.where(editor_id: @user.id)
-    @editor_reviews_cnt = @editor_reviews.count
-    @became_editor = " since #{@user.became_an_editor.in_time_zone&.strftime("%b, %Y")}"
+    @is_managing_editor = @user.categories.active.present?
+    if @is_managing_editor
+      @categories = []
+      @user.categories.active.each do |category|
+        @categories.push(category.name.capitalize)
+      end
+      @categories = @categories.join(", ")
+    else
+      @editor_posts_cnt = @user.posts.published.count
+      @editor_pitches_cnt = @user.pitches.count
+      @editor_reviews = Review.where(editor_id: @user.id)
+      @editor_reviews_cnt = @editor_reviews.count
+      @became_editor = " since #{@user.became_an_editor.in_time_zone&.strftime("%b, %Y")}"
+    end
     render partial: "users/partials/editor_stats"
   end
 

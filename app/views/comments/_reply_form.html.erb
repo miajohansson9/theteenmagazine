@@ -20,14 +20,18 @@
             <% else %>
               <%= reply.full_name %>
             <% end %>
-            <% if reply.user.try(:id).eql? reply.post.user.id %>
-              <span class="badge badge-default">Author</span>
-            <% elsif reply.user.try(:editor).present? %>
-              <span class="badge badge-default">Editor</span>
-            <% elsif reply.user.try(:marketer).present? %>
-              <span class="badge badge-default">Interviewer</span>
-            <% elsif reply.user.present? %>
-              <span class="badge badge-default">Writer</span>
+            <% if reply.user.present? %>
+              <% if reply.user.try(:id).eql? reply.post.user.id %>
+                <span class="badge badge-default">Author</span>
+              <% elsif reply.user.is_manager? %>
+                <span class="badge badge-default">Manager</span>
+              <% elsif reply.user.editor %>
+                <span class="badge badge-default">Editor</span>
+              <% elsif reply.user.try(:marketer).present? %>
+                <span class="badge badge-default">Interviewer</span>
+              <% elsif reply.user.present? %>
+                <span class="badge badge-default">Writer</span>
+              <% end %>
             <% end %>
           </h6>
           <span class="date_ago"><%= time_ago_in_words(reply.created_at) %> ago</span><br>

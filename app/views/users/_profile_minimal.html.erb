@@ -1,18 +1,24 @@
 <div class="flex--profile profile-minimal">
   <div class="position-relative" style="width: 120px; margin: 0 auto;">
     <% if user.profile.attached? %>
-      <%= image_tag(user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img") %><% if user.try(:editor) %>
-        <% if user.editor %>
-          <span class="badge badge-default editor_label" style="top: 5px;">Editor</span><% end %>
-      <% elsif user.marketer %>
+      <%= image_tag(user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img") %>
+      <% if user.is_manager? %>
+        <span class="badge badge-default editor_label" style="top: 5px;">Manager</span>
+      <% elsif user.try(:editor) %>
+        <span class="badge badge-default editor_label" style="top: 5px;">Editor</span>
+      <% elsif user.try(:marketer) %>
         <span class="badge badge-default marketer_label" style="top: 5px;">Interviewer</span>
       <% end %>
     <% else %>
       <%= image_tag("profile_image.jpg", :class => "profile_img") %>
-      <% if user.try(:editor) %>
-        <span class="badge badge-default editor_label" style="top: 5px;">Editor</span>
-      <% elsif user.try(:marketer) %>
-        <span class="badge badge-default marketer_label" style="top: 5px;">Interviewer</span>
+      <% if user.present? %>
+        <% if user.is_manager? %>
+          <span class="badge badge-default editor_label" style="top: 5px;">Manager</span>
+        <% elsif user.try(:editor) %>
+          <span class="badge badge-default editor_label" style="top: 5px;">Editor</span>
+        <% elsif user.try(:marketer) %>
+          <span class="badge badge-default marketer_label" style="top: 5px;">Interviewer</span>
+        <% end %>
       <% end %>
   <% end %>
 </div>

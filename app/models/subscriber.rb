@@ -1,6 +1,7 @@
 class Subscriber < ApplicationRecord
   belongs_to :user, optional: true
   has_and_belongs_to_many :categories, optional: true
+  validates :email, presence: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: "is not a valid email address" }, uniqueness: true
 
   scope :writer,
         -> {

@@ -10,13 +10,14 @@ class ApplicationMailer < ActionMailer::Base
     mail(
       to: @user.email,
       subject: @subject,
-      from: "Managing Editor <editors@theteenmagazine.com>",
+      from: "#{@from_user.full_name} <editors@theteenmagazine.com>",
       reply_to: @from_user.email,
       cc: @from_user.email,
     )
   end
 
   def custom_message_template(subscriber, newsletter)
+    @from_user = newsletter.user
     @subscriber = subscriber
     @newsletter = newsletter
     @subject = newsletter.subject.present? ? newsletter.subject : (newsletter.header.present? ? newsletter.header : "Message from The Teen Magazine")
@@ -25,10 +26,13 @@ class ApplicationMailer < ActionMailer::Base
       @button_text = @button[0]
       @button_link = (@button.length.eql? 2) ? @button[1].gsub(" ", "") : ""
     end
+    @from_field = (@from_user.id.eql? 1) ? "Mia from The Teen Magazine <mia@theteenmagazine.com>" : "Managing Editor <editors@theteenmagazine.com>"
+    @reply_to = (@from_user.id.eql? 1) ? "mia@theteenmagazine.com" : @from_user.email
     mail(
       to: @subscriber.email,
       subject: @subject,
-      from: "Mia from The Teen Magazine <mia@theteenmagazine.com>",
+      from: @from_field,
+      reply_to: @reply_to,
     )
   end
 

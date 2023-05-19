@@ -3,7 +3,13 @@
     <div class="inside--item">
       <%= image_tag image, class: "icon" %>
       <div>
-        <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
+        <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a>
+          <% if current_user.is_manager? && (post.pitch.priority.eql? "High") %>
+            <span class="badge badge-pill badge-danger">
+              High Priority
+            </span>
+          <% end %>
+        </h6>
         <p class="edited_dt">
           <%= "Last edited " + time_ago_in_words(post.updated_at) + " ago" %>
           <% if !(current_user.id.eql? post.user.id) %>

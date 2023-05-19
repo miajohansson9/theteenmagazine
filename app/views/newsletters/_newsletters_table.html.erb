@@ -1,0 +1,31 @@
+<div class="skinny_wrapper newsletters wrapper_padding mb-4 pb-4 mt-4">
+  <table class="table table-striped scrollmenu">
+    <thead>
+      <tr>
+        <th scope="col"><b>Created at</b></th>
+        <th scope="col"><b>Subject line</b></th>
+        <th scope="col"><b>Sent at</b></th>
+        <th scope="col"><b>Audience</b></th>
+        <th scope="col"><b>Template</b></th>
+        <th scope="col"><b>Recipients</b></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% newsletters.each do |newsletter| %>
+        <tr>
+          <td><%= date_to_words(newsletter.created_at) %></td>
+          <% @subject = newsletter.subject.present? ? newsletter.subject : (newsletter.header.present? ? newsletter.header : "Message from The Teen Magazine") %>
+          <td><%= link_to(@subject, newsletter) %></td>
+          <td><%= newsletter.sent_at.present? ? date_to_words(newsletter.sent_at) : "Not sent" %></td>
+          <td><%= newsletter.audience || "Readers" %></td>
+          <td><%= newsletter.template %></td>
+          <td><%= newsletter.sent_at.present? ? newsletter.recipients : 0 %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%== pagy_nav(pagy).html_safe %>
+  <div class="pb-4">
+    <div class="btn_cntnr"><%= link_to "New Newsletter", new_newsletter_path, class: "newpost--new--profile", style: "margin-right: 0px;" %></div>
+  </div>
+</div>

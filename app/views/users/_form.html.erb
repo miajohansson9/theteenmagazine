@@ -19,7 +19,7 @@
     <%= f.hidden_field :submitted_profile, value: true %>
   <% end %>
 
-  <% if current_user && current_user.is_manager? && @user.editor && !@user.admin %>
+  <% if current_user && current_user.is_manager? && @user.editor %>
     <%= f.label "Skip editor assignment", :class => "ml-2" %>
     <%= f.check_box :skip_assignment %>
   <% end %>
