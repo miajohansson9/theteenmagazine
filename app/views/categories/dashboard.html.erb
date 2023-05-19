@@ -40,7 +40,7 @@
 					<div class="chart-card d-inline-flex card" style="width: 49%;">
 						<div class="card-body">
 							<div class="mb-3" id="chartContainer2" style="height: 300px; width: 100%;"></div>
-							<a class="text-align-center bottom-link" href="/newsletters/manage/<%= @user.slug %>"><p class="mb-0 text-white bg-dark text-center">View Newsletters Sent</p></a>
+							<a class="text-align-center bottom-link" href="/newsletters/manage/<%= @user.try(:slug) %>"><p class="mb-0 text-white bg-dark text-center">View Newsletters Sent</p></a>
 						</div>
 					</div>
 				</div>
@@ -165,7 +165,7 @@
 			  <% end %>
 			  <div class="list-group-item">
 			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
-                <%= link_to "Send newsletters", "/newsletters/manage/#{@user.slug}", class: "link_nrml"  %>
+                <%= link_to "Send newsletters", "/newsletters/manage/#{@user.try(:slug)}", class: "link_nrml"  %>
 			  </div>
 			  <div class="list-group-item">
 			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>

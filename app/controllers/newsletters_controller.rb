@@ -19,7 +19,7 @@ class NewslettersController < ApplicationController
   def manage_newsletters
     set_meta_tags title: "Newsletters | The Teen Magazine"
     @user = User.find(params[:manager_id])
-    if current_user.id.eql? @user.id
+    if (current_user.id.eql? @user.id) || current_user.admin?
       @pagy, @newsletters =
         pagy(
           Newsletter.where(user_id: @user.id).order("created_at desc"),
