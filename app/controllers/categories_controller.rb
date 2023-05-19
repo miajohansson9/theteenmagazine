@@ -84,7 +84,7 @@ class CategoriesController < ApplicationController
     @category_drafts = @category.posts.order("updated_at desc")
 
     # popular articles
-    @views_cut_off = 2000
+    @views_cut_off = 1000
     @popular_articles = @category.posts.where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
     @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
 

@@ -233,7 +233,7 @@
   });
 </script>
 <script>
-window.onload = function () {
+$(document).ready(function(){
 	var chart1 = new CanvasJS.Chart("chartContainer", {
 		animationEnabled: true,
 		title:{
@@ -350,5 +350,5 @@ function toggleDataSeries(e){
 	chart1.render();
 }
 
-}
+})
 </script>
