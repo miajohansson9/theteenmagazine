@@ -3,16 +3,35 @@
     <div class="inside--item">
       <%= image_tag image, class: "icon" %>
       <div>
-        <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a></h6>
-        <p class="edited_dt"><%= "Last edited " + time_ago_in_words(post.updated_at) + " ago" %></p>
+        <h6 id="post-title"><a href="#"><%= link_to post.title, post%></a>
+          <% if current_user.is_manager? && post.pitch.present? && (post.pitch.priority.eql? "High") %>
+            <span class="badge badge-pill badge-danger">
+              High Priority
+            </span>
+          <% end %>
+        </h6>
+        <p class="edited_dt">
+          <%= "Last edited " + time_ago_in_words(post.updated_at) + " ago" %>
+          <% if !(current_user.id.eql? post.user.id) %>
+            by <%= link_to post.user.full_name, post.user %>
+          <% end %>
+        </p>
         <% if post.pitch.try(:claimed_id).present? && post.try(:deadline_at).present? && (post.reviews.last.status.eql? "In Progress") && !current_user.partner %>
           <% @class = post.deadline_at < Date.today + 4.days ? "text-danger" : "" %>
           <p class="<%= @class %>">
-            <% if post.deadline_at > Time.now %>
-              You have <%= distance_of_time_in_words(Time.now, post.deadline_at) %> left to submit this article for review
-              <% if @class.present? %> or <a href="/writers/<%= post.user.slug %>/extensions" class="alert-link">use an extension</a>.<% end %>
+            <% if (current_user.id.eql? post.user.id) %>
+              <% if post.deadline_at > Time.now %>
+                You have <%= distance_of_time_in_words(Time.now, post.deadline_at) %> left to submit this article for review
+                <% if @class.present? %> or <a href="/writers/<%= post.user.slug %>/extensions" class="alert-link">use an extension</a>.<% end %>
+              <% else %>
+                You have passed the deadline. This article's pitch will be automatically unclaimed.
+              <% end %>
             <% else %>
-              You have passed the deadline. This article's pitch will be automatically unclaimed.
+              <% if post.deadline_at > Time.now %>
+                <%= post.user.full_name %> has <%= distance_of_time_in_words(Time.now, post.deadline_at) %> left to submit this article for review.
+              <% else %>
+                <%= post.user.full_name %> has passed the deadline. This article's pitch will be automatically unclaimed.
+              <% end %>
             <% end %>
           </p>
         <% end %>

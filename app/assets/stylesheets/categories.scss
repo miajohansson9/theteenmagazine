@@ -15,6 +15,32 @@
   }
 }
 
+.bottom-link {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  width: 100%;
+}
+
+.category-dashboard-card {
+  &:hover {
+    opacity: 100% !important;
+  }
+  .value,
+  span {
+    color: black !important;
+  }
+  .description {
+    font-size: 22px;
+    font-weight: lighter;
+    text-align: center;
+  }
+  .stats_wrapper {
+    margin-bottom: 40px;
+  }
+}
+
 @media (max-width: 590px) {
   .chart-card {
     margin: 0 !important;

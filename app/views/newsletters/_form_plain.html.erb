@@ -1,47 +1,35 @@
 <%= form_for @newsletter do |f| %>
-  <p class="mb-0 mt-4">Subject</p>
-  <%= f.text_field :subject %>
-  <p class="mb-0 mt-0">Header (optional)</p>
-  <%= f.text_field :header %>
-  <p class="mb-0 mt-0">Message</p>
-  <%= f.text_area :message, class: "ckeditor" %>
-  <% if (params[:template].eql? 'editor_picks') || (@newsletter.template.eql? 'Weekly Picks') %>
-    <p class="mb-0 mt-4">Featured Posts: full link + space + editor's quote (optional)</p>
-    <%= f.text_area :featured_posts, placeholder: 'https://www.theteenmagazine.com/5-best-books-to-read-when-you-have-nothing-to-do "This is a quote by an editor. This article was so well done etc. etc." - Emily Johansson' %>
-    <p class="mb-0 mt-0">Subheader</p>
-    <%= f.text_field :subheader %>
-  <% else %>
-    <p class="mb-0">Action button text (use button text + comma + full url. See placeholder for example)</p>
-    <%= f.text_field :action_button, placeholder: 'Join Discord, https://discord.com/' %>
-  <% end %>
-<p>Audience: <%= f.select(:audience, @audiences) %></p>
-<p>Template: <%= f.select(:template, ['Announcement', 'Weekly Picks']) %></p>
-<div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
-  <div class="hide spinner-button spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-  <%= f.button "Save Progress", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
-</div>
+    <p class="mb-0 mt-4">Subject</p>
+    <%= f.text_field :subject, value: "Message from #{current_user.full_name}" %>
+    <p class="mb-0 mt-0">Message</p>
+    <%= f.text_area :message,
+        class: "ckeditor", 
+        value: "<p>Hi #{user.first_name},</p><p>Write your message here...</p><p>Best,<br>#{current_user.full_name}</p>"
+    %>
+    <%= f.hidden_field :recipient_id, value: user.id %>
+    <%= f.hidden_field :audience, value: user.full_name %>
+    <%= f.hidden_field :template, value: 'Plain' %>
+    <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
+    <div class="hide spinner-button spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <%= f.button "Send to #{user.first_name} now", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
 <% end %>
 <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
 <script type="text/javascript">
   $('document').ready(function(){
     var unsaved = false;
-
     var editor = CKEDITOR.instances.post_content.on( 'change', function( evt ) {
       unsaved = true;
     });
-
     $(":input").change(function(){ //triggers change in all input fields including text type
       unsaved = true;
     });
-
     function unloadPage(){
       if(unsaved){
         return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
       }
     }
-
     window.onbeforeunload = unloadPage;
   });
   CKEDITOR.addCss('img{width: 100% !important; height: auto !important;margin-left: auto !important;margin-right: auto !important;display: block;}');
@@ -55,6 +43,9 @@
   };
 </script>
 <style>
+#cke_1_contents {
+    min-height: 300px !important;
+   }
   #cke_1_top .cke_button_icon {
     background-image: url('<%= request.base_url %>/assets/ckeditor/skins/moono-lisa/icons_hidpi.png') !important;
     background-size: 16px !important;

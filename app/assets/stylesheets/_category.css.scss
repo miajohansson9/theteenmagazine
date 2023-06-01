@@ -7,15 +7,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    h1 {
+    .category_name_background {
       background-color: white;
+      text-align: center;
+    }
+    h1 {
       text-shadow: 1px 1px #191919;
-      padding: 20px;
       margin: 0;
       color: #4abeb6;
       font-family: "Playfair Display", serif;
       font-size: 40px;
       font-weight: bold;
+    }
+    .link_nrml {
+      color: black;
+      text-decoration: underline;
+      font-size: 18px;
+      &:hover {
+        text-decoration: underline !important;
+      }
     }
   }
   #main_navigation {

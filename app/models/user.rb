@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :invitations
   has_many :applies
   has_many :outreaches
-  has_many :subscribers
+  has_one :subscriber
   has_many :categories
 
   # Include default devise modules. Others available are:
@@ -28,8 +28,7 @@ class User < ActiveRecord::Base
 
   scope :writer, -> { where(partner: [nil, false]) }
 
-  # Validate the attached image is image/jpg, image/png, etc
-  # validates_attachment_content_type :profile, content_type: %r{\Aimage\/.*\Z}
+  scope :managing_editor, -> { joins(:categories).where.not(categories: { id: nil }).distinct }
 
   extend FriendlyId
   friendly_id :set_full_name, use: :slugged
@@ -46,6 +45,22 @@ class User < ActiveRecord::Base
       self.full_name = "#{self.first_name} #{self.last_name}"
     end
     self.full_name
+  end
+
+  def is_manager?
+    self.admin? || self.categories.present?
+  end
+
+  def is_manager_of_category(category_id)
+    self.admin? || self.is_manager? && (self.category_ids.include? Integer(category_id))
+  end
+
+  def can_edit_post(post)
+    self.id == post.user_id || (post.collaboration&.include? self.email) || self.is_manager_of_category(post.category_id)
+  end
+
+  def is_interviewer_manager?
+    self.categories.present? && self.categories.where(slug: "interviews").present?
   end
 
   def is_new?

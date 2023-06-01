@@ -1,1 +1,5 @@
-<span class="editor_status">Editor<%= @became_editor %> · <%= @editor_posts_cnt %> published articles · <%= @editor_reviews_cnt %> edited articles · <%= @editor_pitches_cnt %> pitched topics</span>
+<% if @is_managing_editor %>
+    <span class="editor_status">Managing Editor of <%= @categories %></span>
+<% else %>
+    <span class="editor_status">Editor<%= @became_editor %> · <%= @editor_posts_cnt %> published articles · <%= @editor_reviews_cnt %> edited articles · <%= @editor_pitches_cnt %> pitched topics</span>
+<% end %>

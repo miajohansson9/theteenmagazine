@@ -18,18 +18,20 @@
       <%= link_to "Interview with #{pitch.title}#{" (" << pitch.interview_kind << ")" if pitch.interview_kind.present?}", pitch, style: "color: black; text-decoration: none;" %>
     </h4>
     <p class="card-text"> Pitched on <%= pitch.created_at.strftime("%m-%d-%Y") %></p>
-    <% if pitch.following_level.present? && (!pitch.following_level.eql? 'less than 25k')%>
-      <% if pitch.platform_to_share.present? && !(pitch.platform_to_share.eql? "None selected") %>
-        <span class="badge badge-pill badge-success">Will share on social media</span>
-      <% end %>
+    <% if pitch.priority.eql? "High" %>
+      <span class="badge badge-pill badge-danger">
+        High Priority
+      </span>
+    <% end %>
+    <% if pitch.following_level.present? && !((pitch.following_level.eql? 'less than 100k') || (pitch.following_level.eql? 'less than 25k'))%>
       <span class="badge badge-pill badge-info"><%= pitch.following_level %> followers</span>
     <% end %>
     <% if pitch.influencer_social_media.present? %>
       <p class="card-text"><b>Social media: <%= pitch.influencer_social_media&.truncate_words(20) %> </b></p>
     <% end %>
-    <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
+    <p class="card-text"> <%= pitch&.description&.truncate_words(20) %></p>
     <div class="z-index-wrapper">
-      <%= link_to @button_text, pitch, :class => "btn btn-primary", :id => "btn_dark" %>
+      <%= link_to "Claim Interview", pitch, :class => "btn btn-primary", :id => "btn_dark" %>
     </div>
   </div>
 </div>

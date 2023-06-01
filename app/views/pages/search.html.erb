@@ -45,6 +45,7 @@
                   </div>
                   <p class="date_post_preview mb-0"><%= post.category.name %></p>
                   <%= render 'posts/partials/views_and_comments', post: post %>
+                  <%= render 'posts/partials/admin_stats', post: post, show_priority: true %>
                 </div>
               </div>
             <% end %>

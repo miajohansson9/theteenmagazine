@@ -2,7 +2,22 @@ class ApplicationMailer < ActionMailer::Base
   include ActionView::Helpers::DateHelper
   default from: "The Teen Magazine Editor Team <editors@theteenmagazine.com>"
 
+  def plain_message_template(user, newsletter)
+    @from_user = newsletter.user
+    @user = user
+    @newsletter = newsletter
+    @subject = newsletter.subject.present? ? newsletter.subject : "Message from The Teen Magazine"
+    mail(
+      to: @user.email,
+      subject: @subject,
+      from: "#{@from_user.full_name} <editors@theteenmagazine.com>",
+      reply_to: @from_user.email,
+      cc: @from_user.email,
+    )
+  end
+
   def custom_message_template(subscriber, newsletter)
+    @from_user = newsletter.user
     @subscriber = subscriber
     @newsletter = newsletter
     @subject = newsletter.subject.present? ? newsletter.subject : (newsletter.header.present? ? newsletter.header : "Message from The Teen Magazine")
@@ -11,10 +26,13 @@ class ApplicationMailer < ActionMailer::Base
       @button_text = @button[0]
       @button_link = (@button.length.eql? 2) ? @button[1].gsub(" ", "") : ""
     end
+    @from_field = (@from_user.id.eql? 1) ? "Mia from The Teen Magazine <mia@theteenmagazine.com>" : "Managing Editor <editors@theteenmagazine.com>"
+    @reply_to = (@from_user.id.eql? 1) ? "mia@theteenmagazine.com" : @from_user.email
     mail(
       to: @subscriber.email,
       subject: @subject,
-      from: "Mia from The Teen Magazine <mia@theteenmagazine.com>",
+      from: @from_field,
+      reply_to: @reply_to,
     )
   end
 
@@ -438,6 +456,7 @@ class ApplicationMailer < ActionMailer::Base
         superscirpt: true,
       )
     content.gsub!('src="/rails/active_storage/', 'src="https://www.theteenmagazine.com/rails/active_storage/')
+    content.gsub!("<p>", '<p style="font-size: 16px">')
     Redcarpet::Markdown.new(renderer).render(content).html_safe
   end
 

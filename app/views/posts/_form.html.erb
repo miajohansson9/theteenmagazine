@@ -16,7 +16,7 @@
       <% end %>
       <p class="mb-0">Title</p>
       <%= f.text_field :title %>
-      <% if current_user.admin %>
+      <% if current_user.is_manager? %>
         <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
       <% end %>
       <p class="mt-0">Write your article here and make sure you are saving often. Saving can also help fix formatting problems.</p>
@@ -100,7 +100,7 @@
     <% end %>
   </div>
 <% else %>
-  <h3 class="title m-4">This article has already been published and can only be edited by the author(s) and admins.</h3>
+  <h3 class="title m-4">This article has already been published and can only be edited by the author(s) and managing editor of this category.</h3>
 <% end %>
 <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
 <script type="text/javascript">

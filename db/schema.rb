@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_13_003358) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_18_150241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -117,6 +117,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_003358) do
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
+  create_table "categories_subscribers", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "subscriber_id"
+    t.datetime "opted_in_at", precision: nil
+    t.boolean "subscribed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_categories_subscribers_on_category_id"
+    t.index ["subscriber_id"], name: "index_categories_subscribers_on_subscriber_id"
+  end
+
   create_table "ckeditor_assets", id: :serial, force: :cascade do |t|
     t.string "data_file_name", null: false
     t.string "data_content_type"
@@ -221,6 +232,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_003358) do
     t.string "action_button"
     t.string "featured_posts"
     t.string "subheader"
+    t.integer "recipient_id"
     t.index ["created_at"], name: "index_newsletters_on_created_at"
   end
 
@@ -264,6 +276,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_003358) do
     t.string "admin_notes"
     t.boolean "agree_to_image_policy"
     t.string "thumbnail_credits"
+    t.string "priority"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
     t.index ["updated_at"], name: "index_pitches_on_updated_at"
   end

@@ -33,7 +33,7 @@
             <%= render_async_cache get_editor_stats_path(id: user) %>
           <% end %>
             <p class="description_user" style="margin-top: 5px;"><%= user.description %></p>
-            <% if current_user.admin? %>
+            <% if current_user.is_manager? %>
               <div>
                 <h6 class="mt-2" style="margin: 0; opacity: 50%;">
                   <% if user.last_sign_in_at.nil? %>

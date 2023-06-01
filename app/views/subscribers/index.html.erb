@@ -7,6 +7,7 @@
         <th scope="col">created_at</th> 
         <th scope="col">updated_at</th>
         <th scope="col">user</th>
+        <th scope="col">subscribed categories</th>
         <th scope="col">last active</th>
         <th scope="col">email</th>
         <th scope="col">first_name</th>
@@ -29,6 +30,9 @@
             <% if subscriber.user_id.present? %>
                 <%= link_to(subscriber.user_id, User.find_by(id: subscriber.user_id))  %>
             <% end %>
+          </td>
+          <td>
+            <%= subscriber.categories.count %>
           </td>
           <td>
             <% if subscriber.user_id.present?%>

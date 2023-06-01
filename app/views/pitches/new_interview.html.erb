@@ -1,15 +1,8 @@
 <%= image_tag "reading_magazine_auto_x2.jpg", id: "banner_writing" %>
 <div class="apply_wrapper">
-  <h3>WANT TO BE FEATURED?</h3>
-  <p>We have done interviews in the past with 
-    <%= link_to "TikToker Ellie Zeiler", "https://www.theteenmagazine.com/get-to-know-ellie-zeiler", class: "link_grn" %>,
-    <%= link_to "TikToker Lola Clark", "https://www.theteenmagazine.com/lola-clark-the-girl-whose-smile-got-her-viral-on-tik-tok", class: "link_grn" %>,
-    <%= link_to "Music sensation Triple Charm", "https://www.theteenmagazine.com/music-sensation-triple-charm-on-their-latest-single-journey-to-fame-and-more", class: "link_grn" %>,
-    <%= link_to "Youtuber Jeenie Weenie", "https://www.theteenmagazine.com/jeenie-weenie-and-her-flight-to-success", class: "link_grn" %>,
-    <%= link_to "Fitness influencer Sami Clarke", "https://www.theteenmagazine.com/fitness-influencer-sami-clarke-talks-moving-to-los-angeles-and-what-being-healthy-means", class: "link_grn" %>, 
-    and <%= link_to "Social media star Ella Mendelsohn", "https://www.theteenmagazine.com/fashion-star-ella-mendelsohn-talks-style-inspiration-what-s-next-and-more", class: "link_grn" %>.
-   You can see all our past interviews <a target="_blank" class="link_grn" href="/categories/interviews">here</a>.</p>
-   <p>Fill out this form and one of our writers will be in contact with you if your interview is chosen.</p>
+  <h3>CREATE A NEW INTERVIEW PITCH</h3>
+  <p>Fill out this form to create an interview request for a high-priority client you've been in contact with and has agreed to an interview.</p>
+  <p>For all other interview requests, you can send them to the general interview request application <%= link_to "here", "/pitch-interview", target: "_blank", class: "link_grn" %>.</p>
   <%= form_for @pitch do |f| %>
     <% if @pitch.errors.any? %>
       <h6 class="mt-3 text-danger"><%= pluralize(@pitch.errors.count, "error")%> prevented this pitch from saving:</h6>
@@ -27,22 +20,29 @@
     <% end %>
     <div class="interview_pitch_flds">
       <%= f.text_field :title, placeholder: "Name of interviewee" %>
-      <p>What email can we send the questions to?</p>
+      <p>What email should the writer contact for the interview? Leave blank if you don't want automated emails to be sent to the interviewee. (This will be a confirmation email and reminder to share on social media when the article is published)</p>
       <%= f.text_field :contact_email, placeholder: "Contact email" %>
-      <p>List your main social media accounts:</p>
+      <p>List the main social media accounts:</p>
       <%= f.text_field :influencer_social_media, placeholder: "Instagram: @madelyncline, TikTok: @madelyn_cline" %>
-      <p>How many total followers do you have?
+      <p>How many total followers does this person have?
         <%= f.select(:following_level, ['less than 100k', 'between 100k and 500k', 'between 500k and 1 million', 'over 1 million'], {prompt: "None selected"}) %></p>
       <br>
-      <p>What description fits you/your client the best?
+      <% if current_user && current_user.is_manager? %>
+        <p>Priority (select <b>High</b> for big interviews)
+          <%= f.select(:priority, ["None", "High"], {prompt: "None"}, {:class => "d-inline"}) %>
+        </p>
+        <br>
+      <% end %>
+      <p>What description fits this person the best?
         <%= f.select(:interview_kind, ['Actor', 'Actress', 'Author', 'Artist', 'Activist', 'Content Creator', 'Entrepreneur', 'Influencer', 'Musician', 'Youtuber', 'Other'], {prompt: "None selected"}) %></p>
       <br>
       <p>
-        An interview is much more likely to be picked if you can share the article once published on The Teen Magazine. 
-        Please indicate the social media platform you can share the article link. (You will get to see the draft before it's published.)
+        If this person has indicated that they'll share the article on social media, please indicate which platform they've agreed to. 
+        If an option is selected, a reminder email to share on social media will be sent to the contact email above when the article is published.
       </p>
       <%= f.select(:platform_to_share, ['Instagram story w/ link (preferred)', 'Instagram post description', 'Youtube shoutout', 'Twitter tweet', 'Pinterest post', 'LinkedIn post'], {prompt: "None selected"}) %>
       <%= f.hidden_field :category_id, :value => @pitch.category_id %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
       <%= f.hidden_field :deadline, :value => 6 %>
       <br>
       <br>
@@ -51,7 +51,7 @@
         <div class="spinner-button spinner-border hide" style="margin-left: 38%;" role="status">
           <span class="sr-only"></span>
         </div>
-        <%= f.button "Send Request", class: "newpost--new--profile submit_modal", id: "submit-comment-modal-button", style: "margin-bottom: 0px;", value: "interview" %>
+        <%= f.button "Create Interview Pitch", class: "newpost--new--profile submit_modal", id: "submit-comment-modal-button", style: "margin-bottom: 0px;", value: "interview" %>
       </div>
     </div>
   <% end %>

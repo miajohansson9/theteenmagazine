@@ -39,6 +39,11 @@
   <% if @pitch.influencer_social_media %>
     <i><b>Social media accounts: <%= @pitch.influencer_social_media %></b></i><br>
   <% end %>
+  <% if @pitch.priority.eql? "High" %>
+    <span class="badge badge-pill badge-danger">
+      High Priority
+    </span>
+  <% end %>
   <% if @pitch.platform_to_share.present? && !(@pitch.platform_to_share.eql? "None selected") %>
     <span class="badge badge-pill badge-success">Will share on social media</span>
     <span class="badge badge-pill badge-info"><%= @pitch.platform_to_share&.chomp('(preferred)')%></span>
@@ -120,7 +125,7 @@
       <p class="pitch_usr">This pitch's <%= link_to("article", @article, class: "pitch_btn", target: "_blank") %> was published on <%= date_to_words(@article.publish_at) %>.</p>
     <% end %>
   <% end %>
-  <% if ((current_user.id.eql? @pitch.user&.id) || current_user.admin) && !@article&.is_published? %>
+  <% if ((current_user.id.eql? @pitch.user&.id) || current_user.is_manager?) && !@article&.is_published? %>
     <%= link_to "Edit", edit_pitch_path(@pitch), :class => "link_theme edit_btn_rel", style: "float: left; margin-top: -0.5rem;" %>
   <% end %>
 </div>

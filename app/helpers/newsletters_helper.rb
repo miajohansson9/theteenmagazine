@@ -1,5 +1,15 @@
 module NewslettersHelper
-  def send_editor_picks(newsletter, new_thread=true)
+  def is_blocked(newsletter)
+    # current user is sending newsletter
+    @admin_lists = ["All Writers", "All Readers"]
+    if current_user.present? && !current_user.admin? && (@admin_lists.include? @newsletter.audience)
+      # user cannot send newsletter to this audience!
+      return true
+    end
+    return false
+  end
+
+  def send_editor_picks(newsletter, new_thread = true)
     @newsletter = newsletter
     @posts = []
     @editor_quotes = []
@@ -16,56 +26,77 @@ module NewslettersHelper
       return
     end
     if new_thread
+      if is_blocked(@newsletter)
+        Sentry.capture_message("#{current_user.full_name} tried to send to audience #{@newsletter.audience}!")
+        return
+      else
         Thread.new do
-            send_editor_picks_to_audience(@newsletter)
+          send_editor_picks_to_audience(@newsletter)
         end
+      end
     else
-        send_editor_picks_to_audience(@newsletter)
+      # newsletter is sent through task
+      send_editor_picks_to_audience(@newsletter)
     end
   end
 
   def send_editor_picks_to_audience(newsletter)
     @newsletter = newsletter
     if @newsletter.audience.eql? "All Writers"
-        send_editor_picks_helper(@newsletter, Subscriber.writer)
+      send_editor_picks_helper(@newsletter, Subscriber.writer)
     elsif @newsletter.audience.eql? "Only Editors"
-        send_editor_picks_helper(@newsletter, Subscriber.editor)
+      send_editor_picks_helper(@newsletter, Subscriber.editor)
     elsif @newsletter.audience.eql? "Only Interviewers"
-        send_editor_picks_helper(@newsletter, Subscriber.interviewer)
+      send_editor_picks_helper(@newsletter, Subscriber.interviewer)
     elsif @newsletter.audience.eql? "All Readers"
-        send_editor_picks_helper(@newsletter, Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
-        if @newsletter.subject.include? "TTM TRENDING"
+      send_editor_picks_helper(@newsletter, Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
+      if @newsletter.subject.include? "TTM TRENDING"
         @posts.each do |post|
-            ApplicationMailer.featured_in_trending(post.user, post).deliver
+          ApplicationMailer.featured_in_trending(post.user, post).deliver
         end
-        elsif (@newsletter.subject.include? "EDITOR PICKS")
-            @posts.each do |post|
-                ApplicationMailer.featured_in_newsletter(post.user, post).deliver
-            end
+      elsif (@newsletter.subject.include? "EDITOR PICKS")
+        @posts.each do |post|
+          ApplicationMailer.featured_in_newsletter(post.user, post).deliver
         end
+      end
+    elsif @newsletter.audience.include? "Writers in"
+      # is one of the categories
+      @category_name = @newsletter.audience.split("Writers in ")[1]
+      @category = Category.find_by("lower(name) = ?", @category_name.downcase)
+      send_editor_picks_helper(@newsletter, @category.subscribers)
     end
   end
 
-  def send_announcement(newsletter, new_thread=true)
+  def send_announcement(newsletter, new_thread = true)
     @newsletter = newsletter
     if new_thread
+      if is_blocked(@newsletter)
+        Sentry.capture_message("#{current_user.full_name} tried to send to audience #{@newsletter.audience}!")
+        return
+      else
         Thread.new do
-            send_announcement_to_audience(@newsletter)
+          send_announcement_to_audience(@newsletter)
         end
+      end
     else
-        send_announcement_to_audience(@newsletter)
+      send_announcement_to_audience(@newsletter)
     end
   end
 
   def send_announcement_to_audience(newsletter)
     if @newsletter.audience.eql? "All Writers"
-        send_announcement_helper(@newsletter, Subscriber.writer)
+      send_announcement_helper(@newsletter, Subscriber.writer)
     elsif @newsletter.audience.eql? "Only Editors"
-        send_announcement_helper(@newsletter, Subscriber.editor)
+      send_announcement_helper(@newsletter, Subscriber.editor)
     elsif @newsletter.audience.eql? "Only Interviewers"
-        send_announcement_helper(@newsletter, Subscriber.interviewer)
+      send_announcement_helper(@newsletter, Subscriber.interviewer)
     elsif @newsletter.audience.eql? "All Readers"
-        send_announcement_helper(@newsletter, Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
+      send_announcement_helper(@newsletter, Subscriber.where(subscribed_to_reader_newsletter: [true, nil]))
+    elsif @newsletter.audience.include? "Writers in"
+      # is one of the categories
+      @category_name = @newsletter.audience.split("Writers in ")[1]
+      @category = Category.find_by("lower(name) = ?", @category_name.downcase)
+      send_announcement_helper(@newsletter, @category.subscribers)
     end
   end
 

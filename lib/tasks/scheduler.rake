@@ -20,12 +20,12 @@ task run_nightly_tasks: :environment do
   # update trending ranks
   Category.active.each do |category|
     Post.published.where(category_id: category.id).trending.limit(100).each_with_index do |post, index|
-        begin
-            post.update_column(:rank, index + 1)
-            puts "updated post #{post.slug} with rank #{index + 1} in category #{category.name}"
-        rescue
-            puts "failed to update post #{post.slug} with rank #{index + 1} in category #{category.name}"
-        end
+      begin
+        post.update_column(:rank, index + 1)
+        puts "updated post #{post.slug} with rank #{index + 1} in category #{category.name}"
+      rescue
+        puts "failed to update post #{post.slug} with rank #{index + 1} in category #{category.name}"
+      end
     end
   end
 
@@ -68,8 +68,8 @@ task run_nightly_tasks: :environment do
         # check if missed editor deadline for two months ago
         # ie. today is May 1st; I want to check if missed deadline in April too
         if (editor.missed_editor_deadline.try(:year) === (Time.now - 20.days).year) &&
-          (editor.missed_editor_deadline.try(:month) === (Time.now - 20.days).month) && 
-          !(editor.skip_assignment)
+           (editor.missed_editor_deadline.try(:month) === (Time.now - 20.days).month) &&
+           !(editor.skip_assignment)
           ApplicationMailer.editor_warning_deadline_2(
             editor,
             @reviews_requirement,
@@ -125,25 +125,24 @@ task run_nightly_tasks: :environment do
           .where("updated_at > ?", Date.yesterday.beginning_of_month)
           .count
       @editor_comments_cnt =
-          editor
-            .comments
-            .where("created_at > ?", Date.yesterday.beginning_of_month)
-            .count
+        editor
+          .comments
+          .where("created_at > ?", Date.yesterday.beginning_of_month)
+          .count
       @missed_deadline =
         ((@editor_pitches_cnt < @pitches_requirement) ||
          (@editor_comments_cnt < @comments_requirement) ||
          (@editor_reviews_cnt < @reviews_requirement)) && (editor.created_at < (Time.now - 31.days))
-      if @missed_deadline
+      if @missed_deadline && !@editor.is_manager? && !editor.skip_assignment
         # check if missed editor deadline for two months ago
         # ie. today is May 1st; I want to check if missed deadline in March too
         if (editor.missed_editor_deadline.try(:year) === (Time.now - 32.days).year) &&
-           (editor.missed_editor_deadline.try(:month) === (Time.now - 32.days).month) && 
-           !(editor.admin || editor.skip_assignment)
+           (editor.missed_editor_deadline.try(:month) === (Time.now - 32.days).month)
           ApplicationMailer.removed_editor_from_team(editor).deliver
           editor.update_attribute("editor", false)
           editor.update_attribute("became_an_editor", nil)
           editor.update_attribute("completed_editor_onboarding", nil)
-        elsif !editor.skip_assignment
+        else
           ApplicationMailer.editor_missed_deadline_1(
             editor,
             @reviews_requirement,

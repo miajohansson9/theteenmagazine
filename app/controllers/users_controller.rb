@@ -45,19 +45,19 @@ class UsersController < ApplicationController
         if (current_user.id != @user.id && (!current_user.admin?) &&
             (!current_user.editor?))
           redirect_to(
-            '/login',
+            "/login",
             notice: "This writer does not have a public profile yet.",
           )
         end
       rescue StandardError
         redirect_to(
-          '/login',
+          "/login",
           notice: "This writer does not have a public profile yet.",
         )
       end
     end
     if current_user.present?
-      @pitches = Pitch.not_rejected.where.not(user_id: nil).all.order("created_at desc").limit(4)
+      @pitches = Pitch.not_rejected.where.not(category_id: Category.find("interviews").id).all.order("created_at desc").limit(4)
       @featured_writers =
         Post
           .where(publish_at: (Time.now - 7.days)..Time.now)
@@ -75,11 +75,20 @@ class UsersController < ApplicationController
   end
 
   def get_editor_stats
-    @editor_posts_cnt = @user.posts.published.count
-    @editor_pitches_cnt = @user.pitches.count
-    @editor_reviews = Review.where(editor_id: @user.id)
-    @editor_reviews_cnt = @editor_reviews.count
-    @became_editor = " since #{@user.became_an_editor.in_time_zone&.strftime("%b, %Y")}"
+    @is_managing_editor = @user.categories.active.present?
+    if @is_managing_editor
+      @categories = []
+      @user.categories.active.each do |category|
+        @categories.push(category.name.capitalize)
+      end
+      @categories = @categories.join(", ")
+    else
+      @editor_posts_cnt = @user.posts.published.count
+      @editor_pitches_cnt = @user.pitches.count
+      @editor_reviews = Review.where(editor_id: @user.id)
+      @editor_reviews_cnt = @editor_reviews.count
+      @became_editor = " since #{@user.became_an_editor.in_time_zone&.strftime("%b, %Y")}"
+    end
     render partial: "users/partials/editor_stats"
   end
 
@@ -275,7 +284,7 @@ class UsersController < ApplicationController
         .not_claimed
         .where(status: nil)
         .where("updated_at > ?", Time.now - 40.days)
-        .where.not(user_id: nil)
+        .where.not(category_id: Category.find("interviews").id)
         .order("updated_at desc")
         .paginate(page: params[:page], per_page: 9)
     @pitch =
@@ -313,7 +322,18 @@ class UsersController < ApplicationController
       reset_email
     elsif current_user && (current_user.admin? || current_user.editor?)
       set_meta_tags title: "Writers | The Teen Magazine"
-      show_users
+      if params[:email_list].present?
+        @category = Category.find(params[:email_list])
+        @pagy, @users =
+          pagy(
+            User.joins(subscriber: { categories: :subscribers })
+              .where(categories: { id: @category.id }),
+            page: params[:page],
+            items: 25,
+          )
+      else
+        show_users
+      end
     elsif current_user
       redirect_to current_user, notice: "You do not have access to this page."
     else
@@ -323,24 +343,17 @@ class UsersController < ApplicationController
   end
 
   def show_users
+    @users = User.where(partner: [nil, false])
     if params[:search].present?
       @query = params[:search][:query]
-      @pagy, @users =
-        pagy(
-          User
-            .where(partner: [nil, false])
-            .where("lower(full_name) LIKE ?", "%#{@query.downcase}%")
-            .or(User.where(partner: [nil, false])
-              .where("lower(email) LIKE ?", "%#{@query.downcase}%"))
-            .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc")),
-          page: params[:page],
-          items: 25,
-        )
+      @users = @users.where("lower(full_name) LIKE ?", "%#{@query.downcase}%")
+        .or(@users.where("lower(email) LIKE ?", "%#{@query.downcase}%"))
+        .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc"))
+      @pagy, @users = pagy(@users, page: params[:page], items: 25)
     else
       @pagy, @users =
         pagy(
-          User
-            .where(partner: [nil, false])
+          @users.where(partner: [nil, false])
             .order(Arel.sql("last_sign_in_at IS NULL, last_sign_in_at desc")),
           page: params[:page],
           items: 25,
@@ -372,6 +385,16 @@ class UsersController < ApplicationController
           items: 25,
         )
     end
+  end
+
+  def managing_editors
+    set_meta_tags title: "Managing Editors | The Teen Magazine"
+    @pagy, @users =
+      pagy(
+        User.managing_editor.order("created_at desc"),
+        page: params[:page],
+        items: 25,
+      )
   end
 
   def editors
@@ -433,15 +456,15 @@ class UsersController < ApplicationController
   def reset_email
     begin
       user = User
-          .where('lower(email) = ?', params[:user][:email].strip.downcase)
-          .first
+        .where("lower(email) = ?", params[:user][:email].strip.downcase)
+        .first
       if user.present?
         user.send_reset_password_instructions
         redirect_to "/reset-password",
-                  notice: "A reset password email was sent to #{params[:user][:email]}."
+                    notice: "A reset password email was sent to #{params[:user][:email]}."
       else
         redirect_to "/reset-password",
-                  notice: "Oops! We didn't find a writer with the email #{params[:user][:email]}."
+                    notice: "Oops! We didn't find a writer with the email #{params[:user][:email]}."
       end
     rescue StandardError
       redirect_to "/reset-password",
@@ -639,8 +662,8 @@ class UsersController < ApplicationController
   end
 
   def is_marketer?
-    unless current_user.is_marketer?
-      redirect_to current_user, notice: "You do not have access to this page."
+    unless current_user && current_user.is_marketer?
+      redirect_to "/login", notice: "You do not have access to this page."
     end
   end
 
@@ -657,9 +680,9 @@ class UsersController < ApplicationController
       maybe_subscriber = Subscriber.where(user_id: user.id).or(Subscriber.where("lower(email) = ?", user.email.downcase)).first
       if !maybe_subscriber.present?
         subscriber = Subscriber.new(
-          email: user.email, 
-          first_name: user.first_name, 
-          last_name: user.last_name, 
+          email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
           user_id: user.id,
           token: @token,
           source: "Became a writer",
@@ -671,8 +694,8 @@ class UsersController < ApplicationController
       else
         maybe_subscriber.update_columns({
           email: user.email,
-          first_name: user.first_name, 
-          last_name: user.last_name, 
+          first_name: user.first_name,
+          last_name: user.last_name,
           user_id: user.id,
         })
       end

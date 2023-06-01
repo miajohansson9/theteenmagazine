@@ -24,6 +24,13 @@
         <p><%= @unseen_pitches_cnt %> new</p>
       <% end %>
     </a>
+    <a href="/community" class="dropdown-item">Community
+      <% if @unseen_shared_drafts_cnt > 0 %>
+        <span class="sec counter counter-sm"></span>
+        <p><%= @unseen_shared_drafts_cnt %> new</p>
+      <% end %>
+    </a>
+    <a href="/managing-editors" class="dropdown-item">Managing Editors</a>
     <% if current_user.is_marketer? %>
       <a href="/interviews" class="dropdown-item">Interview Requests
         <% if @unseen_interviews_cnt > 0 %>
@@ -32,12 +39,6 @@
         <% end %>
       </a>
     <% end %>
-    <a href="/community" class="dropdown-item">Community
-      <% if @unseen_shared_drafts_cnt > 0 %>
-        <span class="sec counter counter-sm"></span>
-        <p><%= @unseen_shared_drafts_cnt %> new</p>
-      <% end %>
-    </a>
   <% end %>
   <% if current_user.has_newsletter_permissions %>
     <a href="/newsletters" class="dropdown-item">Newsletters</a>

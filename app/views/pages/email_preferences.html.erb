@@ -17,6 +17,16 @@
         <p>
           <%= f.check_box :writer, :value => @subscribed_to_writer_updates, :checked => @subscribed_to_writer_updates, class: "text_field" %> Writer notifications (specific about your account)
         </p>
+        <hr/>
+        <p>Select which categories you want to get updates about:</p>
+        <div class="mb-4">
+        <%= f.collection_check_boxes :category_ids, Category.active.all, :id, :name do |b| %>
+          <p class="d-inline mr-3">
+            <%= b.check_box(checked: @subscriber.categories.where(name: b.text).present?, value: @subscriber.categories.where(name: b.text).present?) %>
+            <%= b.text.capitalize %>
+          </p>
+        <% end %>
+        </div>
       <% end %>
       <%= f.submit "Save changes", class: "submit_btn" %>
     <% end %>

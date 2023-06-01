@@ -2,11 +2,17 @@
   <%= render "newsletters/previews/announcement", subscriber: Subscriber.find_by(user_id: 1) %>
 <% elsif @newsletter.template.eql? "Weekly Picks" %>
   <%= render "newsletters/previews/weekly_picks", subscriber: Subscriber.find_by(user_id: 1) %>
-<% end %>
-<div class="skinny_wrapper">
-  <div class="d-flex justify-content-end">
-    <p class="mr-4"><%= link_to "Edit email", edit_newsletter_path(@newsletter), class: "link_nrml_underline" %></p>
-    <p class="mr-4"><%= link_to "Send a test email", {:controller => "newsletters", :action => "send_test_newsletter", :user_id => current_user.id, :id => @newsletter.id}, :data => {:confirm => "Sending a test email to #{current_user.email}"}, class: "link_nrml_underline" %></p>
-    <p><%= link_to "Send to #{@newsletter.audience} now", {:controller => "newsletters", :action => "send_to_audience", :user_id => current_user.id, :id => @newsletter.id}, :data => {:confirm => "Sending newsletter to #{@newsletter.audience}"}, class: "link_nrml_underline" %></p>
+<% elsif @newsletter.template.eql? "Plain" %>
+  <div class="skinny_wrapper">
+    <%= markdown @newsletter.message %>
   </div>
-</div>
+<% end %>
+<% if !(@newsletter.template.eql? "Plain") %>
+  <div class="skinny_wrapper">
+    <div class="d-flex justify-content-end">
+      <p class="mr-4"><%= link_to "Edit email", edit_newsletter_path(@newsletter), class: "link_nrml_underline" %></p>
+      <p class="mr-4"><%= link_to "Send a test email", {:controller => "newsletters", :action => "send_test_newsletter", :user_id => current_user.id, :id => @newsletter.id}, :data => {:confirm => "Sending a test email to #{current_user.email}"}, class: "link_nrml_underline" %></p>
+      <p><%= link_to "Send to #{@newsletter.audience} now", {:controller => "newsletters", :action => "send_to_audience", :user_id => current_user.id, :id => @newsletter.id}, :data => {:confirm => "Sending newsletter to #{@newsletter.audience}"}, class: "link_nrml_underline" %></p>
+    </div>
+  </div>
+<% end %>

@@ -1,8 +1,10 @@
+include PitchesHelper
+
 class PitchesController < ApplicationController
   before_action :find_pitch, only: %i[show update edit destroy]
   before_action :can_edit?, only: [:edit]
   before_action :is_partner?, only: %i[index new show]
-  before_action :is_marketer?, only: [:interviews]
+  before_action :is_marketer?, only: [:interviews, :new_interview]
   before_action :authenticate_user!, except: [:pitch_interview, :create]
   load_and_authorize_resource except: [:pitch_interview, :create]
 
@@ -11,18 +13,7 @@ class PitchesController < ApplicationController
     set_meta_tags title: "Interview Requests"
     @notifications = @notifications - @unseen_interviews_cnt
     @unseen_interviews_cnt = 0
-    @pagy, @pitches =
-      pagy(
-        Pitch
-          .is_approved
-          .not_claimed
-          .where(category_id: Category.find("interviews").id, status: nil)
-          .order("updated_at desc"),
-        page: params[:page],
-        items: 20,
-      )
-    @message = "All interviews have been claimed. Check back in a few days!"
-    @button_text = "Claim Interview"
+    all_interviews
     Thread.new { current_user.update_column("last_saw_interviews", Time.now) }
   end
 
@@ -35,51 +26,15 @@ class PitchesController < ApplicationController
       set_meta_tags title: @title
       @categories = Category.active.where.not(slug: "interviews")
       if params[:pitch].nil?
-        @pitch = Pitch.new
-        @pagy, @pitches =
-          pagy(
-            Pitch
-              .is_approved
-              .not_claimed
-              .where(status: nil)
-              .where("updated_at > ?", Time.now - 90.days)
-              .where.not(category_id: Category.find("interviews").id)
-              .order("updated_at desc"),
-            page: params[:page],
-            items: 20,
-          )
+        all_pitches
       else
-        @category_id = if (params[:pitch][:category_id].blank?)
-            @categories.map { |category| category.id }
-          else
-            params[:pitch][:category_id]
-          end
-        @pitch = Pitch.new(category_id: params[:pitch][:category_id])
-        @pagy, @pitches =
-          pagy(
-            Pitch
-              .is_approved
-              .not_claimed
-              .where(category_id: @category_id, status: nil)
-              .order("updated_at desc"),
-            page: params[:page],
-            items: 20,
-          )
+        filtered_pitches
       end
       @message = "There are no unclaimed pitches. Check back in a few days!"
       @button_text = "Claim Pitch"
       Thread.new { current_user.update_column("last_saw_pitches", Time.now) }
     elsif (params[:user_id].eql? "#{current_user.id}") || current_user.admin
-      @title = "Your Claimed Pitches"
-      set_meta_tags title: @title
-      @button_text = "View Pitch"
-      @message = "You don't have any claimed pitches. :("
-      @pagy, @pitches =
-        pagy(
-          Pitch.where(claimed_id: params[:user_id]).order("updated_at desc"),
-          page: params[:page],
-          items: 20,
-        )
+      your_claimed_pitches
     else
       redirect_to pitches_path(user_id: current_user.id), notice: "You can only view your claimed pitches."
     end
@@ -97,15 +52,25 @@ class PitchesController < ApplicationController
     set_meta_tags title: "Pitch an Interview | The Teen Magazine"
   end
 
+  def new_interview
+    @pitch = Pitch.new(deadline: 6, category_id: Category.find("interviews").id, user_id: current_user.id)
+    set_meta_tags title: "Create an Interview Pitch | The Teen Magazine"
+  end
+
   def create
     @categories = Category.active
     if params[:button].eql? "interview"
-      @pitch = Pitch.new(pitch_params)
+      @pitch = current_user? ? current_user.pitches.build(pitch_params) : Pitch.new(pitch_params)
       if pitch_params[:thumbnail].present?
         @pitch.thumbnail.attach(pitch_params[:thumbnail])
       end
-      if @pitch.save && ApplicationMailer.confirm_submitted_interview(@pitch.contact_email, @pitch).deliver
-        set_meta_tags title: "Interview Submitted"
+      if @pitch.save
+        if @pitch.user_id.nil?
+          ApplicationMailer.confirm_submitted_interview(@pitch.contact_email, @pitch).deliver
+          set_meta_tags title: "Interview Submitted"
+        else
+          redirect_to "/interviews", notice: "The interview request was created successfully."
+        end
       else
         render "pitch_interview", notice: "Oh no! Your changes were not able to be saved!"
       end
@@ -329,8 +294,8 @@ class PitchesController < ApplicationController
   end
 
   def is_marketer?
-    unless current_user.is_marketer?
-      redirect_to current_user, notice: "You do not have access to this page."
+    unless current_user && current_user.is_marketer?
+      redirect_to "/login", notice: "You do not have access to this page."
     end
   end
 
@@ -395,7 +360,8 @@ class PitchesController < ApplicationController
         :following_level,
         :thumbnail_credits,
         :agree_to_image_policy,
-        :admin_notes
+        :admin_notes,
+        :priority
       )
   end
 

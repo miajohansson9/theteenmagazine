@@ -14,14 +14,18 @@
       <% else %>
         <%= comment.full_name %>
       <% end %>
-      <% if comment.user.try(:id).eql? comment.post.user.id %>
-        <span class="badge badge-default">Author</span>
-      <% elsif comment.user.try(:editor).present? %>
-        <span class="badge badge-default">Editor</span>
-      <% elsif comment.user.try(:marketer).present? %>
-        <span class="badge badge-default">Interviewer</span>
-      <% elsif comment.user.present? %>
-        <span class="badge badge-default">Writer</span>
+      <% if comment.user.present? %>
+        <% if comment.user.id.eql? comment.post.user.id %>
+          <span class="badge badge-default">Author</span>
+        <% elsif comment.user.is_manager? %>
+          <span class="badge badge-default">Manager</span>
+        <% elsif comment.user.try(:editor).present? %>
+          <span class="badge badge-default">Editor</span>
+        <% elsif comment.user.try(:marketer).present? %>
+          <span class="badge badge-default">Interviewer</span>
+        <% elsif comment.user.present? %>
+          <span class="badge badge-default">Writer</span>
+        <% end %>
       <% end %>
     </h6>
     <span class="date_ago"><%= time_ago_in_words(comment.created_at) %> ago</span><br>

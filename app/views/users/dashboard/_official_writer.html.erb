@@ -53,7 +53,7 @@
         </div>
         <%= link_to("Extensions page", "/writers/#{@user.slug}/extensions", class: "link_grn") %><br>
         <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn") %><br>
-        <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscribers.last&.email}&token=#{@user.subscribers.last&.token}", class: "link_grn") %><br>
+        <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscriber&.email}&token=#{@user.subscriber&.token}", class: "link_grn") %><br>
         <div class="links"
           <% if @show_onboarding_full %>
             data-step data-index="5" data-onboarding-content="New applications have become open to you. If you want to apply to our editor team, we suggest having at four or more published articles on The Teen Magazine before applying to have the best chance."

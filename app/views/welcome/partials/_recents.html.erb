@@ -17,7 +17,6 @@
           <%= image_tag(@profile, :class => "profile_img", :style => "max-width: 20px !important; min-width: 20px !important; height: 20px;") %>
           <%= link_to(post.user.full_name, post.user, class: 'date') %>
         </div>
-        <%= render 'posts/partials/views_and_comments', post: post %>
       </div>
       <p class="m-0"><%= date_to_words(post.publish_at) %></p>
     </div>

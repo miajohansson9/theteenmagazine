@@ -55,6 +55,10 @@ class Post < ApplicationRecord
             .where.not("publish_at < ?", Time.now)
             .where(reviews: { status: "Approved for Publishing", active: true })
         }
+  scope :high_priority,
+        -> {
+          joins(:pitch).where(pitch: { priority: "High" })
+        }
   scope :published,
         -> {
           includes(:reviews).where(reviews: { status: "Approved for Publishing", active: true }).where("publish_at < ?", Time.now)

@@ -21,5 +21,6 @@
       <%= render 'posts/partials/views_and_comments', post: post %>
     </div>
     <p class="m-0"><%= date_to_words(post.publish_at) %></p>
+    <%= render 'posts/partials/admin_stats', post: post, show_priority: false %>
   </div>
 <% end %>
