@@ -325,13 +325,22 @@ class UsersController < ApplicationController
       set_meta_tags title: "Writers | The Teen Magazine"
       if params[:email_list].present?
         @category = Category.find(params[:email_list])
-        @pagy, @users =
-          pagy(
-            User.joins(subscriber: { categories: :subscribers })
-              .where(categories: { id: @category.id }).distinct,
-            page: params[:page],
-            items: 25,
-          )
+        if @category.slug.eql? 'interviews'
+          @pagy, @users =
+            pagy(
+              User.where(marketer: true, do_not_send_emails: [nil, false]),
+              page: params[:page],
+              items: 25,
+            )
+        else
+          @pagy, @users =
+            pagy(
+              User.joins(subscriber: { categories: :subscribers })
+                .where(categories: { id: @category.id }).distinct,
+              page: params[:page],
+              items: 25,
+            )
+          end
       else
         show_users
       end
@@ -511,8 +520,6 @@ class UsersController < ApplicationController
     if user_params[:profile].present?
       @user.profile.attach(user_params[:profile])
     end
-    puts "LKSJasdfsdDFLKSJ"
-    puts user_params[:subscriber_attributes]
     if @user.update user_params
       if @user.first_name.present? && @user.last_name.present?
         @user.full_name = "#{@user.first_name} #{@user.last_name}"

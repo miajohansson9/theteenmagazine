@@ -90,7 +90,7 @@ class CategoriesController < ApplicationController
     @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
 
     # writers subscribed
-    @subscribers_count = @category.subscribers.count
+    @subscribers_count = (@category.slug.eql? 'interviews') ? Subscriber.interviewer.count : @category.subscribers.count
 
     @high_priority_published_count = @category.posts.published.high_priority.nil? ? 0 : @category.posts.published.high_priority.count
   end

@@ -516,8 +516,10 @@ class PostsController < ApplicationController
         begin
           @subscriber = @post.user.subscriber
           if @subscriber.present? && !(@subscriber.subscribed_to_writer_newsletter.eql? false)
-            @subscriber.category_ids = @subscriber.category_ids.push(@post.category_id.to_i).distinct
-            @subscriber.save
+            if !(@post.category.slug.eql? 'interviews')
+              @subscriber.category_ids = @subscriber.category_ids.push(@post.category_id.to_i).distinct
+              @subscriber.save
+            end
           end
         rescue StandardError => e
           Sentry.capture_message("Could not subscribe #{@subscriber&.email} to category: #{e}")
