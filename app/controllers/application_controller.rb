@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
   layout :set_layout
 
   def footer
-    @categories = Category.active
-    @categories = @categories.in_groups_of(@categories.length / 2)
+    @categories_footer = Category.active
+    @categories_footer = @categories_footer.in_groups_of(@categories_footer.length / 2)
   end
 
   protected

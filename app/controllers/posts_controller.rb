@@ -512,6 +512,16 @@ class PostsController < ApplicationController
         else
           ApplicationMailer.article_published(@post.user, @post).deliver
         end
+        # subscribe writer to category
+        begin
+          @subscriber = @post.user.subscriber
+          if @subscriber.present? && !(@subscriber.subscribed_to_writer_newsletter.eql? false)
+            @subscriber.category_ids = @subscriber.category_ids.push(@post.category_id.to_i).distinct
+            @subscriber.save
+          end
+        rescue StandardError => e
+          Sentry.capture_message("Could not subscribe #{@subscriber&.email} to category: #{e}")
+        end
         if @post.is_interview? && @post.pitch&.contact_email.present?
           ApplicationMailer.interview_published(@post).deliver
         end
