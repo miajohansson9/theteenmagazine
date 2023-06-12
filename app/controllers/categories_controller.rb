@@ -82,7 +82,7 @@ class CategoriesController < ApplicationController
     @articles_this_month = @articles_this_month.nil? ? 0 : @articles_this_month.count
 
     # get all drafts
-    @category_drafts = @category.posts.order("updated_at desc")
+    @category_drafts = @category.posts.where(updated_at: (Time.now - 6.months)..Time.now).order("updated_at desc")
 
     # popular articles
     @views_cut_off = 1000
