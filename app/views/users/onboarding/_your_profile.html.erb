@@ -34,8 +34,9 @@
     <div class="number_wrapper">
       <%= image_tag "1-num.png", class: "img_number" %><%= f.label "Upload a profile picture" %><br><br />
     </div>
-    <%= f.file_field :profile, :class => "add_margin_left" %><br/><br>
-
+    <%= f.file_field :profile, :class => "add_margin_left" %><br><br>
+    <i class="add_margin_left">You may opt-out of a profile picture if you do not upload an image.</i><br>
+    <br/>
     <div class="number_wrapper">
       <%= image_tag "2-num.png", class: "img_number" %><%= f.label "Description" %><br><br />
     </div>
@@ -78,10 +79,20 @@
         <%= f.text_field :facebook %>
       </div>
     </div>
-    <br><br><i>You may opt-out of a profile picture if you do not upload an image.</i><br>
     <% @full = @user.first_name + " " + @user.last_name %>
     <%= f.hidden_field :full_name, :value => @full %>
     <%= f.hidden_field :posts_count, :value => @user.posts.published.count %>
+    <%= f.fields_for :subscriber, @user.subscriber do |s| %>
+      <p>Select which categories you want to get updates about:</p>
+      <div class="mb-4">
+        <%= s.collection_check_boxes :category_ids, Category.active.all, :id, :name do |b| %>
+          <p class="d-inline mr-3">
+            <%= b.check_box(checked: true, value: "1") %>
+            <%= b.text.capitalize %>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
   </div>
   <%= f.submit "Preview Profile", :id => "onboarding_button" %>
   <% end %>

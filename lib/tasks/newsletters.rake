@@ -123,7 +123,7 @@ namespace :newsletters do
         @posts.each do |post|
             @featured_posts.push("https://www.theteenmagazine.com/#{post.slug}")
         end
-        @header = @category.nil? ? "What's trending!" : "#{@category.name.capitalize}: What's trending!"
+        @header = @category.nil? ? "What's trending!" : "#{@category.name.titleize}: What's trending!"
         @name_prep = @category.nil? ? "on <a href='https://www.theteenmagazine.com?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>The Teen Magazine</a>" : "in <a href='https://www.theteenmagazine.com/categories/#{@category.slug}?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>#{@category.name}</a>"
         newsletter = Newsletter.new(
             subject: "TTM TRENDING 🔥: #{@posts.first.title.truncate(60)} & more",
@@ -150,7 +150,7 @@ namespace :newsletters do
         @posts.each do |post|
             @featured_posts.push("https://www.theteenmagazine.com/#{post.slug}")
         end
-        @header = @category.nil? ? "What's new!" : "#{@category.name.capitalize}: What's new!"
+        @header = @category.nil? ? "What's new!" : "#{@category.name.titleize}: What's new!"
         @name_prep = @category.nil? ? "on <a href='https://www.theteenmagazine.com?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>The Teen Magazine</a>" : "in <a href='https://www.theteenmagazine.com/categories/#{@category.slug}?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks'>#{@category.name}</a>"
         newsletter = Newsletter.new(
             subject: "#{@posts.first.title.truncate(90)} & more",

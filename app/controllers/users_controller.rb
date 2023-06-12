@@ -79,7 +79,7 @@ class UsersController < ApplicationController
     if @is_managing_editor
       @categories = []
       @user.categories.active.each do |category|
-        @categories.push(category.name.capitalize)
+        @categories.push(category.name.titleize)
       end
       @categories = @categories.join(", ")
     else
@@ -277,6 +277,7 @@ class UsersController < ApplicationController
     set_meta_tags title: "Onboarding | The Teen Magazine",
                   onboarding: "Turn off ads"
     @user = current_user
+    @subscriber = current_user.subscriber
     @partial = params[:step] || "welcome"
     @pitches =
       Pitch
@@ -327,7 +328,7 @@ class UsersController < ApplicationController
         @pagy, @users =
           pagy(
             User.joins(subscriber: { categories: :subscribers })
-              .where(categories: { id: @category.id }),
+              .where(categories: { id: @category.id }).distinct,
             page: params[:page],
             items: 25,
           )
@@ -510,6 +511,8 @@ class UsersController < ApplicationController
     if user_params[:profile].present?
       @user.profile.attach(user_params[:profile])
     end
+    puts "LKSJasdfsdDFLKSJ"
+    puts user_params[:subscriber_attributes]
     if @user.update user_params
       if @user.first_name.present? && @user.last_name.present?
         @user.full_name = "#{@user.first_name} #{@user.last_name}"
@@ -761,6 +764,7 @@ class UsersController < ApplicationController
         :skip_assignment,
         :remove_from_reader_newsletter,
         :remove_from_writer_newsletter,
+        subscriber_attributes: [:id, {:category_ids => []}, :token, :email]
       )
   end
 

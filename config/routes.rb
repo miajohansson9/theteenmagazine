@@ -112,6 +112,7 @@ Rails.application.routes.draw do
   get "/partners", to: "users#partners"
   get "/editors", to: "users#editors"
   get "/managing-editors", to: "users#managing_editors"
+  get "/editors/:id/edit", to: "users#edit"
   get "/interviewers", to: "users#interviewers"
   get "/partners/:id/share", to: "users#share"
   get "/writers/:id/extensions", to: "users#extensions"

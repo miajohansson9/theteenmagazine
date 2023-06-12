@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :notifications, if: :current_user?
+  before_action :footer
 
   after_action :store_user_location!,
                if: :storable_location?,
@@ -16,6 +17,11 @@ class ApplicationController < ActionController::Base
   # before the location can be stored.
 
   layout :set_layout
+
+  def footer
+    @categories = Category.active
+    @categories = @categories.in_groups_of(@categories.length / 2)
+  end
 
   protected
 

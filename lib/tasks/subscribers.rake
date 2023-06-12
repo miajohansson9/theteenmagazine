@@ -1,6 +1,23 @@
 require 'csv'
 
 namespace :subscribers do
+    task subscribe_writers_to_categories: :environment do
+        Subscriber.writer.each do |subscriber|
+            begin
+                @user = subscriber.user
+                @categories = subscriber.category_ids
+                @user.posts.each do |post|
+                    @categories.push(post.category_id.to_i)
+                end
+                @categories = @categories.uniq
+                subscriber.category_ids = @categories
+                subscriber.save
+            rescue => e
+                puts "Error subscribing #{subscriber.email}: #{e}"
+            end
+        end
+    end
+
     task migrate_users: :environment do
         subscribers = []
         User.writer.all.each do |user|

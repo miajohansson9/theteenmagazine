@@ -11,7 +11,10 @@ class AppliesController < ApplicationController
       @pagy, @applies =
         pagy(
           Apply
-            .where(rejected_writer_at: nil, rejected_editor_at: nil)
+            ## no user and not rejected
+            .joins(:user).where(user_id: nil, rejected_writer_at: nil, rejected_editor_at: nil)
+            ## user is not editor and application is of type editor and has not been rejected
+            .or(Apply.joins(:user).where(user: {editor: [nil, false]}).where(kind: "Editor", rejected_writer_at: nil, rejected_editor_at: nil))
             .order('updated_at desc'),
           page: params[:page],
           items: 20

@@ -4,7 +4,7 @@
     <div class="dropdown-divider"></div>
   <% end %>
   <% current_user.categories.each do |category| %>
-    <a href="/categories/<%= category.slug %>/dashboard" class="dropdown-item"><%= category.name.capitalize.truncate(20) %> Dashboard</a>
+    <a href="/categories/<%= category.slug %>/dashboard" class="dropdown-item"><%= category.name.titleize.truncate(20) %> Dashboard</a>
   <% end %>
   <% if current_user.editor? %>
     <a href="/editors/<%= current_user.slug %>" class="dropdown-item">Editor Dashboard

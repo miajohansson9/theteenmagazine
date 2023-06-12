@@ -20,7 +20,7 @@
             <% if @post.rank.present? && @post.rank <= 100 %>
               <div class="chip">
                 #<%= @post.rank %> TRENDING IN 
-                <%= link_to "#{@post.category.name.upcase}", @post.category %> 🔥
+                <%= link_to "#{@post.category.name.titleize}", @post.category %> 🔥
               </div>
             <% end %>
             <% if @thumbanil_credits && @thumbanil_credits.length > 0 %>

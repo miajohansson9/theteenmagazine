@@ -15,7 +15,7 @@
             </li>
             <li class="nav-item tab-custom">
               <a class="tab-custom" id="activity-tab-classic" data-bs-toggle="tab" href="#follow-classic" role="tab"
-                aria-controls="follow-classic" aria-selected="false">Activity in <%= @category.name.capitalize %></a>
+                aria-controls="follow-classic" aria-selected="false">Activity in <%= @category.name.titleize %></a>
             </li>
           </ul>
         </div>
@@ -63,7 +63,7 @@
 							<div class="stats_wrapper">
 								<h1 class="mb-0 d-block text-center value" id="value2"></h1>
 								<div class="description">
-									<span>Writers subscribed to <%= @category.name.capitalize %>'s email list</span>
+									<span>Writers subscribed to <%= @category.name.titleize %>'s email list</span>
 								</div>
 							</div>
 							<a class="text-align-center bottom-link" href="/writers?email_list=<%= @category.slug %>">
@@ -237,7 +237,7 @@ $(document).ready(function(){
 	var chart1 = new CanvasJS.Chart("chartContainer", {
 		animationEnabled: true,
 		title:{
-			text: "Daily Article Stats for <%= @category.name.capitalize %>".replace('amp;','')
+			text: "Daily Article Stats for <%= @category.name.titleize %>".replace('amp;','')
 		},
 		axisX: {
 			valueFormatString: "MMM DD"
@@ -254,7 +254,7 @@ $(document).ready(function(){
 			shared: true
 		},
 		data: [{
-			name: "Published in <%= @category.name.capitalize %>".replace('amp;',''),
+			name: "Published in <%= @category.name.titleize %>".replace('amp;',''),
 			type: "spline",
 			showInLegend: true,
 			dataPoints: [
@@ -275,7 +275,7 @@ $(document).ready(function(){
 			]
 		},
 		{
-			name: "Drafts Started in <%= @category.name.capitalize %>".replace('amp;',''),
+			name: "Drafts Started in <%= @category.name.titleize %>".replace('amp;',''),
 			type: "spline",
 			showInLegend: true,
 			dataPoints: [
@@ -302,7 +302,7 @@ var chart2 = new CanvasJS.Chart("chartContainer1", {
 	animationEnabled: true,
 	theme: "light1", // "light1", "light2", "dark1", "dark2"
 	title:{
-		text: "Published in <%= @category.name.capitalize %>".replace("amp;", "")
+		text: "Published in <%= @category.name.titleize %>".replace("amp;", "")
 	},
 	axisY: {
 		title: "# Published articles"

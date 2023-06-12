@@ -42,7 +42,7 @@ class NewslettersController < ApplicationController
     end
     if current_user.is_manager?
       current_user.categories.where.not(slug: "interviews").each do |category|
-        @audiences.push("Writers in #{category.name.capitalize}")
+        @audiences.push("Writers in #{category.name.titleize}")
       end
     end
   end
