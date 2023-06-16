@@ -483,7 +483,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if current_user.admin? || (current_user.id.eql? @user.id)
+    if current_user.admin? || (current_user.id.eql? @user.id) || current_user.is_manager?
       set_meta_tags title: "Edit Profile | The Teen Magazine"
     else
       redirect_to edit_user_path(current_user), notice: "You can only edit your own profile"

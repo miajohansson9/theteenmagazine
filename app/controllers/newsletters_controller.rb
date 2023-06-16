@@ -35,7 +35,7 @@ class NewslettersController < ApplicationController
     @audiences = []
     if current_user.admin?
       @audiences = ["All Writers", "All Readers", "Only Editors", "Only Interviewers"]
-    elsif current_user.categories.include? Category.find("interviews").id
+    elsif current_user.is_manager_of_category('interviews')
       @audiences = ["Only Interviewers", "Only Editors"]
     else
       @audiences = ["Only Editors"]

@@ -43,7 +43,7 @@
           <h6 class="font-weight-bold text-uppercase">Categories</h6>
           <ul class="list-unstyled">
               <% @categories_footer[0].each do |category| %>
-                <li><a href="/categories/#{category.slug}"><%= category.name&.titleize %></a></li>
+                <li><a href="/categories/<%=category.slug%>"><%= category.name&.titleize %></a></li>
               <% end %>
           </ul>
         </div>
@@ -53,7 +53,7 @@
           <h6 class="font-weight-bold text-uppercase">Categories</h6>
           <ul class="list-unstyled">
             <% @categories_footer[1].each do |category| %>
-              <li><a href="/categories/#{category.slug}"><%= category.name&.titleize %></a></li>
+              <li><a href="/categories/<%=category.slug%>"><%= category.name&.titleize %></a></li>
             <% end %>
           </ul>
         </div>

@@ -61,10 +61,6 @@ class User < ActiveRecord::Base
     self.id == post.user_id || (post.collaboration&.include? self.email) || self.is_manager_of_category(post.category_id)
   end
 
-  def is_interviewer_manager?
-    self.categories.present? && self.categories.where(slug: "interviews").present?
-  end
-
   def is_new?
     @user_posts_approved =
       Post

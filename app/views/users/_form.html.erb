@@ -86,7 +86,7 @@
       <%= f.check_box :admin %><br />
     <% end %>
     <br>
-    <% if current_user && current_user.admin? && current_user.is_interviewer_manager? %>
+    <% if current_user && (current_user.admin? || current_user.is_manager_of_category('interviews')) %>
       <%= f.label "Interviewer" %>
       <%= f.check_box :marketer %><br />
     <% end %>
