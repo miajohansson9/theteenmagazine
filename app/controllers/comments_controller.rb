@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :find_comment, only: %i[destroy update edit]
-
+  invisible_captcha only: [:create, :update], honeypot: :subtitle
+  
   def destroy
     @post = @comment.post
     if @comment.destroy
@@ -26,15 +27,27 @@ class CommentsController < ApplicationController
     return false
   end
 
+  def filled_out_honeypot
+    value = params['subtitle']
+    if value.present?
+      Sentry.capture_message("Filled out honeypot captcha: #{value}")
+      return true
+    end
+    return false
+  end
+
   def create
+    puts "SDLJKFLSKDJF"
     if Obscenity.profane?(comment_params[:full_name]) ||
        Obscenity.profane?(comment_params[:email]) ||
        Obscenity.profane?(comment_params[:text]) ||
+       filled_out_honeypot ||
        (comment_params[:full_name].present? && 
         comment_params[:full_name].length > 50) ||
        (comment_params[:text].include? "http") ||
        (comment_params[:text].include? "href") ||
        (comment_params[:text].include? "/>") ||
+       (comment_params[:full_name]&.include? "/") ||
        (comment_params[:full_name]&.include? "http") ||
        (comment_params[:full_name]&.include? "href") ||
        language_is_not_english

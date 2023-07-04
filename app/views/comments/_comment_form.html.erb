@@ -6,7 +6,8 @@
     <%= image_tag("profile_image.jpg", :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
   <% end %>
   <% @placeholder = (post.comments.where(comment_id: nil, public: post.is_published?).count.eql? 0) ? "Start the conversation" : "Share your thoughts on this article" %>
-  <%= form_for(comment, remote: true, :html => {:id => "submit-comment", :honeypot => true }) do |f| %>
+  <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
+    <%= f.invisible_captcha :subtitle %>
     <% if !current_user.present? %>
       <%= f.text_field :full_name, :value => cookies[:full_name], :placeholder => "Your name", class: 'mt-0 full_name_0', style: 'margin-bottom: 10px', onkeyup: "isDisabled('0')" %>
       <%= f.text_field :email, :value => cookies[:email], :placeholder => "Email", class: 'mt-0', style: 'margin-bottom: 10px' %>

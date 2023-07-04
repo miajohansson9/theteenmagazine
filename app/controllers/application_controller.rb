@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     @categories_footer = Category.active
     @categories_footer = @categories_footer.in_groups_of(@categories_footer.length / 2)
   end
-
+  
   protected
 
   def set_layout

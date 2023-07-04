@@ -50,7 +50,8 @@
     <% else %>
       <%= image_tag("profile_image.jpg", :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
     <% end %>
-    <%= form_for(comment, remote: true, :html => {:id => "submit-comment", :honeypot => true }) do |f| %>
+    <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
+      <%= f.invisible_captcha :subtitle %>
       <% if !current_user.present? %>
         <%= f.text_field :full_name, :value => cookies[:full_name], :placeholder => "Your name", onkeyup: "isDisabled('#{parent.id}')", class: "mt-0 full_name_#{parent.id}", style: 'margin-bottom: 10px' %>
         <%= f.text_field :email, :value => cookies[:email], :placeholder => "Email", class: 'mt-0', style: 'margin-bottom: 10px' %>
