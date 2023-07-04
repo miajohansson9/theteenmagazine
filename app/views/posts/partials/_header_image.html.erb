@@ -1,10 +1,10 @@
 <% if post.thumbnail.attached? %>
     <%= image_set_tag url_for(post.thumbnail.variant(resize_to_fill: [800, 560], format: 'webp')), { 
-        url_for(post.thumbnail.variant(resize_to_fill: [550], format: 'webp'))  => '550w', 
-        url_for(post.thumbnail.variant(resize_to_fill: [630], format: 'webp')) => '630w', 
-        url_for(post.thumbnail.variant(resize_to_fill: [440], format: 'webp')) => '440w', 
-        url_for(post.thumbnail.variant(resize_to_fill: [738], format: 'webp')) => '738w', 
-        url_for(post.thumbnail.variant(resize_to_fill: [100], format: 'webp')) => '100w', 
+        url_for(post.thumbnail.variant(resize_to_fill: [550, 385], format: 'webp'))  => '550w', 
+        url_for(post.thumbnail.variant(resize_to_fill: [630, 441], format: 'webp')) => '630w', 
+        url_for(post.thumbnail.variant(resize_to_fill: [440, 308], format: 'webp')) => '440w', 
+        url_for(post.thumbnail.variant(resize_to_fill: [738, 517], format: 'webp')) => '738w', 
+        url_for(post.thumbnail.variant(resize_to_fill: [100, 70], format: 'webp')) => '100w', 
         url_for(post.thumbnail.variant(resize_to_fill: [1200, 845], format: 'webp')) => '1200w' 
     }, sizes: '100vw, 800px', alt: 'logo', id: 'logo', class: img_class, alt: "#{post.title}" %>
 <% end %>
