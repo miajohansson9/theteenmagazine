@@ -15,6 +15,11 @@ Rails.application.routes.draw do
   end
 
   resources :users, path: "writers", except: [:new]
+  resources :users, only: [:index] do
+    post :impersonate, on: :member
+    post :stop_impersonating, on: :collection
+  end
+  
   resources :users, path: "partners", only: [:new]
   resources :contacts, only: %i[new create]
   resources :applies

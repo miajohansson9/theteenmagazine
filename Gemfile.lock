@@ -1573,6 +1573,8 @@ GEM
       terrapin (~> 0.6.0)
     pg (1.4.5)
     popper_js (2.11.6)
+    pretender (0.5.0)
+      actionpack (>= 6.1)
     prettier (3.2.2)
       syntax_tree (>= 2.7.1)
       syntax_tree-haml (>= 1.1.0)
@@ -1721,6 +1723,7 @@ DEPENDENCIES
   pagy
   paperclip (>= 5.2.0)
   pg
+  pretender
   prettier
   puma (>= 3.12.2)
   rails (~> 7.0, >= 7.0.1)

@@ -87,7 +87,7 @@ class UsersController < ApplicationController
       @editor_pitches_cnt = @user.pitches.count
       @editor_reviews = Review.where(editor_id: @user.id)
       @editor_reviews_cnt = @editor_reviews.count
-      @became_editor = " since #{@user.became_an_editor.in_time_zone&.strftime("%b, %Y")}"
+      @became_editor = " since #{@user.became_an_editor&.in_time_zone&.strftime("%b, %Y")}"
     end
     render partial: "users/partials/editor_stats"
   end
@@ -714,6 +714,17 @@ class UsersController < ApplicationController
 
   def update_last_sign_in_at
     Thread.new { current_user.update_column("last_sign_in_at", Time.now) }
+  end
+
+  def impersonate
+    user = User.find(params[:id])
+    impersonate_user(user)
+    redirect_to user_path, notice: "You are now impersonating #{user.full_name}."
+  end
+
+  def stop_impersonating
+    stop_impersonating_user
+    redirect_to current_user, notice: "You've stopped impersonating."
   end
 
   private

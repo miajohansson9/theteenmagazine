@@ -115,6 +115,12 @@
                   </div>
                 </div>
               </header>
+              <% if current_user != true_user %>
+                <div class="alert alert-warning text-center" style="margin-bottom: 0px">
+                  You (<%= true_user.full_name %>) are signed in as <%= current_user.full_name %>
+                  <%= link_to "Back to admin", stop_impersonating_users_path, method: :post %>
+                </div>
+              <% end %>
               <button class="hide" id="click-event-trigger" type="button" name="button"></button>
               <%= yield %>
               <%= content_for :render_async %>

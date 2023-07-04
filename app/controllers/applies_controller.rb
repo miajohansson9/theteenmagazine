@@ -13,9 +13,9 @@ class AppliesController < ApplicationController
           Apply
             ## no user and not rejected
             .left_outer_joins(:user)
-            .where(user_id: nil, rejected_writer_at: nil, rejected_editor_at: nil)
+            .where(rejected_writer_at: nil, rejected_editor_at: nil)
             ## user is not editor and application is of type editor and has not been rejected
-            .or(Apply.left_outer_joins(:user).where(users: { editor: [nil, false] }).where(kind: "Editor", rejected_writer_at: nil, rejected_editor_at: nil))
+            .or(Apply.left_joins(:user).where(users: { editor: [nil, false] }).where(kind: "Editor", rejected_writer_at: nil, rejected_editor_at: nil))
             .order('applies.updated_at desc'),
           page: params[:page],
           items: 20

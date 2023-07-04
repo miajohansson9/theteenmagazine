@@ -58,11 +58,18 @@
           <% end %>
         >
           <div>
-            <%= link_to("Interviewer Application", "https://forms.gle/owee6FsULPaT7W7x5", class: "link_grn") %><br>
-            <%= link_to("Editor Application", "/applications/editor", class: "link_grn") %><br>
+            <% if !current_user.marketer? %>
+              <%= link_to("Interviewer Application", "https://forms.gle/owee6FsULPaT7W7x5", class: "link_grn") %><br>
+            <% end %>
+            <% if !current_user.editor? %>
+              <%= link_to("Editor Application", "/applications/editor", class: "link_grn") %><br>
+            <% end %>
           </div>
-          <%= link_to("Extensions page", "/writers/#{@user.slug}/extensions", class: "link_grn") %><br>
           <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn") %><br>
+          <%= link_to("Extensions page", "/writers/#{@user.slug}/extensions", class: "link_grn") %><br>
+          <% if current_user.admin? && current_user == true_user %>
+            <%= link_to("Sign in as #{@user.full_name}", impersonate_user_path(@user), method: :post, class: "link_grn") %><br>
+          <% end %>
         </div>
         <br>
       </div>
