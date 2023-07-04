@@ -54,6 +54,7 @@ gem 'linguo'
 gem "sentry-ruby"
 gem "sentry-rails"
 gem "pretender"
+gem 'honeypot-captcha'
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
