@@ -60,7 +60,6 @@ Rails.application.routes.draw do
   get :get_editor_stats, controller: :users
   get :get_past_invites, controller: :users
   get :get_published_articles, controller: :users
-  get :send_interviewer_invite_email, controller: :users
 
   get :get_editor_activity, controller: :reviews
   get :enable_notify_of_new_review, controller: :reviews

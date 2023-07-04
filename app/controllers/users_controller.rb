@@ -457,12 +457,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def send_interviewer_invite_email
-    @user = User.find(params[:user_id])
-    ApplicationMailer.manual_invite_interviewer(@user).deliver
-    redirect_to request.referrer, notice: "Invite sent to " << @user.email
-  end
-
   def reset_email
     begin
       user = User
