@@ -2,7 +2,7 @@ include CategoriesHelper
 
 class CategoriesController < ApplicationController
   before_action :find_category, except: %i[index]
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!, except: %i[index show team]
 
   def index
     redirect_to root_path
