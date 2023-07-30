@@ -12,7 +12,24 @@ class CategoriesController < ApplicationController
     @category = Category.new if (user_signed_in? && current_user.admin?)
   end
 
+  def team
+    @color = @category.color.nil? ? "#4abeb6" : @category.color
+    @users = User.left_joins(:posts)
+      .where(posts: { category_id: @category.id })
+      .where.not(posts: { publish_at: nil })
+      .group(:id)
+      .order('COUNT(posts.id) DESC')
+    @pagy, @team =
+          pagy(
+            @users,
+            page: params[:page],
+            items: 16,
+          )
+  end
+
   def show
+    @color = @category.color.nil? ? "#4abeb6" : @category.color
+    @managing_editor = User.find_by(id: @category.user_id)
     set_meta_tags title: @category.name,
                   image: @category.image,
                   description: @category.description,
@@ -52,6 +69,11 @@ class CategoriesController < ApplicationController
         page: params[:page],
         items: 15,
       )
+    @team = User.left_joins(:posts)
+      .where(posts: { category_id: @category.id })
+      .where.not(posts: { publish_at: nil })
+      .distinct
+    puts @team.count
   end
 
   def dashboard
@@ -153,7 +175,7 @@ class CategoriesController < ApplicationController
   def category_params
     params
       .require(:category)
-      .permit(:name, :image, :created_at, :description, :slug, :archive, :user_id, :managing_editor)
+      .permit(:name, :image, :created_at, :description, :slug, :archive, :user_id, :managing_editor, :color)
   end
 
   def find_category

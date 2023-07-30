@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_18_150241) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_30_023054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_150241) do
     t.string "description"
     t.boolean "archive"
     t.integer "user_id"
+    t.string "color"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
@@ -320,6 +321,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_150241) do
     t.boolean "agree_to_image_policy"
     t.float "trending_score", default: 0.0
     t.integer "rank"
+    t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
     t.index ["promoting_until"], name: "index_posts_on_promoting_until"
@@ -327,6 +329,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_150241) do
     t.index ["slug"], name: "index_posts_on_slug", unique: true
     t.index ["trending_score"], name: "index_posts_on_trending_score"
     t.index ["updated_at"], name: "index_posts_on_updated_at"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "projects", id: :serial, force: :cascade do |t|

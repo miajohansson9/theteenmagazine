@@ -1,0 +1,34 @@
+<style>
+  .category_image {
+    background-color: <%= @color %>;
+  }
+  .category_image h1 {
+    color: <%= @color %> !important;
+  }
+  #theme-link {
+    color: <%= @color %> !important;
+  }
+</style>
+
+<div class="category">
+  <div class="category_image">
+    <div class="category_name_background p-4">
+      <h1><%= @category.name.titleize %></h1>
+      <p class="m-0">Contributed to by <%= @users.length %> student writers</p>
+      <a id="theme-link" href="/categories/<%= @category.slug %>">Go back to Category</a>
+    </div>
+  </div>
+  <div class="wrapper_home">
+    <h1 id="page_title" style="border-bottom: none; margin-top: 0px; padding-bottom: 20px;">Managing Editor</h1>
+    <div class="d-flex">
+        <%= render :partial => 'users/profile', locals: {user: User.first} %>
+    </div>
+    <h1 id="page_title" style="border-bottom: none; margin-top: 0px; padding-bottom: 20px;">Contributors</h1>
+    <div class="d-flex flex-row flex-wrap w-100 mt-4">
+        <% @team.each do |user| %>
+        <%= render :partial => 'users/profile_minimal', locals: {user: user} %>
+        <% end %>
+    </div>
+  </div>
+  <%== pagy_nav(@pagy).html_safe %>
+</div>

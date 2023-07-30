@@ -73,6 +73,7 @@ Rails.application.routes.draw do
 
   get "/community" => "posts#index"
   get "/categories/:id/dashboard" => "categories#dashboard"
+  get "/categories/:id/team" => "categories#team"
   get "/pitch-interview" => "pitches#pitch_interview"
   get "/interviews" => "pitches#interviews"
   get "/interviews/new" => "pitches#new_interview"

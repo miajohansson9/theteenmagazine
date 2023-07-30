@@ -1,10 +1,21 @@
+<style>
+  .category_image {
+    background-color: <%= @color %>;
+  }
+  .category_image h1 {
+    color: <%= @color %> !important;
+  }
+  #theme-link {
+    color: <%= @color %> !important;
+  }
+</style>
+
 <div class="category">
-  <div class="category_image" style="background-image: url(<%= url_for(@category.image.variant(resize_to_fill: [1200, 845], format: 'webp')) %>)">
+  <div class="category_image">
     <div class="category_name_background p-4">
-      <h1><%= @category.name %></h1>
-      <% if current_user && (current_user.admin? || (current_user.categories.where(slug: @category.slug).present?)) %>
-        <%= link_to "Category dashboard (admin only)", "/categories/#{@category.slug}/dashboard", class: "link_nrml" %>
-      <% end %>
+      <h1><%= @category.name.titleize %></h1>
+      <p class="m-0">Contributed to by <%= @team.count %> student writers</p>
+      <a id="theme-link" href="/categories/<%= @category.slug %>/team">Meet the Team</a>
     </div>
   </div>
   <% if current_user && current_user.is_manager? && params[:popular_within].present? %>
@@ -21,46 +32,8 @@
   <% end %>
   <div class="category--show">
     <div class="other--articles">
-      <div class="flex">
-        <div class="container">
-          <% @category_posts.each_with_index do |post, index| %>
-            <div class="thumbnail d-flex">
-              <div class="child container--image">
-              <%=link_to(post) do %>
-                <div class="w-100 position-relative">
-                  <% if post.rank.present? && post.rank <= 1 %>
-                      <span class="badge badge-pink" style="position: absolute; z-index: 10000; top: 5px; left: 5px;">trending in <%= post.category.name %> 🔥</span>
-                  <% end %>
-                  <%= render 'posts/partials/header_image', post: post, img_class: "image_thumbnail" %>
-                </div>
-              <% end %>                
-              </div>
-              <div class="child category-show recent">
-                <h3 class="mb-3 pl-3 pr-3" style="line-height: 0.8"><%= link_to post.title, post %></h3>
-                <div class="d-flex justify-content-center">
-                  <div class="d-table-cell align-middle">
-                    <div class="author d-inline">
-                      <% @profile = post.user.profile.attached? ? post.user.profile.variant(resize_to_fill: [100,100]) : "profile_image.jpg" %>
-                      <%= image_tag(@profile, :class => "profile_img", :style => "max-width: 20px !important; min-width: 20px !important; height: 20px;") %>
-                      <%= link_to("#{post.user.full_name}, ", post.user, class: 'date') %>
-                    </div>
-                    <span><%= date_to_words(post.publish_at) %></span>
-                  </div>
-                </div>
-                <p class="date_post_preview mb-0">
-                  <%= post.category.name %>
-                </p>
-                <%= render 'posts/partials/views_and_comments', post: post %>
-                <%= render 'posts/partials/admin_stats', post: post, show_priority: true %>
-              </div>
-            </div>
-            <% if (index + 1) % 4 == 0 %>
-              <div class="content_hint"></div>
-            <% end %>
-          <% end %>
-        </div>
-        <a class="apply" href="/apply" target="blank">
-        </a>
+      <div id="promoted-posts" class="ctgry_section">
+        <%= render 'posts/partials/promoted/promoted_page', posts: @category_posts %>
       </div>
       <% if @category.slug.eql? 'interviews' %>
         <p class="text-center">Want to get featured on The Teen Magazine? Pitch your story <%= link_to 'here', '/pitch-interview', class: "link_grn" %>.</p>
