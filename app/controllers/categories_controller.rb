@@ -13,6 +13,7 @@ class CategoriesController < ApplicationController
   end
 
   def team
+    @managing_editor = User.find_by(id: @category.user_id)
     @color = @category.color.nil? ? "#4abeb6" : @category.color
     @users = User.left_joins(:posts)
       .where(posts: { category_id: @category.id })
