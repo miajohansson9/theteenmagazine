@@ -9,9 +9,6 @@
       </div>
     <% end %> 
     <h1 class="mb-1"><%= link_to post.title, post %></h1>
-    <% if post.promoting_until && post.promoting_until > Time.now %>
-      <span class="badge bg-primary">Promoted</span>
-    <% end %>
     <div class="d-flex flex-wrap overflow-hidden align-items-center justify-content-between">
       <div class="author d-table-cell align-middle">
         <% @profile = post.user.profile.attached? ? post.user.profile.variant(resize_to_fill: [100,100]) : "profile_image.jpg" %>

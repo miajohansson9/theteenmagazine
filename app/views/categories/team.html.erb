@@ -23,15 +23,17 @@
     <div style="max-width: 800px; margin: 0 auto;" class="d-flex">
         <%= render :partial => 'users/profile', locals: {user: @managing_editor} %>
     </div>
-    <h1 id="page_title" style="border-bottom: none; margin-top: 0px; padding-bottom: 20px;">Contributors</h1>
-    <div class="d-flex flex-row flex-wrap w-100 mt-4">
+    <h1 id="page_title" style="border-bottom: none; margin-top: 0px; padding-bottom: 20px; padding-top: 20px;">Contributors</h1>
+    <ul class="d-flex flex-wrap justify-content-center w-100 mt-4" style="list-style: none;">
         <% @team.each do |user| %>
-            <div class="p-4">
-                <%= render :partial => 'users/profile_minimal', locals: {user: user} %>
-            </div>
+            <li stye="flex-grow: 1; flex-shrink: 0; flex-basis: 25%;">
+                <div style="padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
+                    <%= render :partial => 'users/profile_minimal', locals: {user: user} %>
+                </div>
+            </li>
         <% end %>
-    </div>
+    </ul>
+  <p class="text-center">Want to write for The Teen Magazine? Apply <%= link_to "here", new_apply_path %>.</p>
+    <%== pagy_nav(@pagy).html_safe %>
   </div>
-    <p class="text-center">Want to write for The Teen Magazine? Apply <%= link_to "here", new_apply_path %>.</p>
-  <%== pagy_nav(@pagy).html_safe %>
 </div>
