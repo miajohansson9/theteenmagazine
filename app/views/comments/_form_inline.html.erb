@@ -36,7 +36,6 @@
           </span>
         </span>
       <% end %>
-      <%= f.invisible_captcha :subtitle %>
       <%= f.text_area :text, id: "comment_field", class: "comment_val_0 comment_field_0", onkeyup: "isDisabled('0')" %>
       <% @reply_text = comment.comments.present? ? "Reply (#{comment.comments.count})" : "Reply" %>
       <% if comment.comment_id.nil? %>

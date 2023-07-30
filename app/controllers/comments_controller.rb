@@ -37,7 +37,6 @@ class CommentsController < ApplicationController
   end
 
   def create
-    puts "SDLJKFLSKDJF"
     if Obscenity.profane?(comment_params[:full_name]) ||
        Obscenity.profane?(comment_params[:email]) ||
        Obscenity.profane?(comment_params[:text]) ||

@@ -19,7 +19,6 @@
           <%= image_tag("profile_image.jpg", :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
         <% end %>
         <%= form_for(@comment, id: "submit-comment-modal") do |f| %>
-          <%= f.invisible_captcha :subtitle %>
           <% if !current_user.present? %>
             <%= f.text_field :full_name, :value => cookies[:full_name], :placeholder => "Your name", class: 'mt-0 full_name_modal', onkeyup: "isDisabled('modal')", style: 'margin-bottom: 10px' %>
             <%= f.text_field :email, :value => cookies[:email], :placeholder => "Email", class: 'mt-0', style: 'margin-bottom: 10px' %>
