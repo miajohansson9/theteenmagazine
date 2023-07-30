@@ -27,7 +27,7 @@
     <ul class="d-flex flex-wrap justify-content-center w-100 mt-4" style="list-style: none;">
         <% @team.each do |user| %>
             <li stye="flex-grow: 1; flex-shrink: 0; flex-basis: 25%;">
-                <div style="padding-left: 10px; padding-right: 10px; padding-bottom: 20px;">
+                <div style="padding-left: 10px; padding-right: 10px; padding-bottom: 40px;">
                     <%= render :partial => 'users/profile_minimal', locals: {user: user} %>
                 </div>
             </li>

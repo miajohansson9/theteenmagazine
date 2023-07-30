@@ -24,7 +24,7 @@ class CategoriesController < ApplicationController
           pagy(
             @users,
             page: params[:page],
-            items: 16,
+            items: 50,
           )
   end
 
