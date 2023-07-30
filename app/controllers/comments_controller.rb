@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   before_action :find_comment, only: %i[destroy update edit]
-  invisible_captcha only: [:create, :update], honeypot: :subtitle
   
   def destroy
     @post = @comment.post
