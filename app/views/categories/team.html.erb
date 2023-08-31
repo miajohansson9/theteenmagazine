@@ -19,10 +19,12 @@
     </div>
   </div>
   <div class="wrapper_home">
-    <h1 id="page_title" style="border-bottom: none; margin-top: 0px; padding-bottom: 20px;">Managing Editor</h1>
-    <div style="max-width: 800px; margin: 0 auto;" class="d-flex">
-        <%= render :partial => 'users/profile', locals: {user: @managing_editor} %>
-    </div>
+    <% if @managing_editor.present? %>
+      <h1 id="page_title" style="border-bottom: none; margin-top: 0px; padding-bottom: 20px;">Managing Editor</h1>
+      <div style="max-width: 800px; margin: 0 auto;" class="d-flex">
+          <%= render :partial => 'users/profile', locals: {user: @managing_editor} %>
+      </div>
+    <% end %>
     <h1 id="page_title" style="border-bottom: none; margin-top: 0px; padding-bottom: 20px; padding-top: 20px;">Contributors</h1>
     <ul class="d-flex flex-wrap justify-content-center w-100 mt-4" style="list-style: none;">
         <% @team.each do |user| %>

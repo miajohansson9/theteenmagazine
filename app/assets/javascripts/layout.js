@@ -2,6 +2,15 @@ $(document).ready(function () {
   setTimeout(function () {
     $(".notice").slideUp();
   }, 1500);
+
+  // hide images where image policy hasn't been agreed to
+  $('.image-policy-not-agreed-to').each(function() {
+    // Find and replace the src attribute content with an empty string
+    $(this).html(function(_, html) {
+        return html.replace(/<img[^>]*src="([^"]*)"[^>]*>/g, '<img alt src="">');
+    });
+  });
+
   (function (i, s, o, g, r, a, m) {
     i["GoogleAnalyticsObject"] = r;
     (i[r] =
