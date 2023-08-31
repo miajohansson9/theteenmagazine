@@ -1,4 +1,4 @@
-# Mediavine Ads.txt v20230705
+# Mediavine Ads.txt v20230822
 managerdomain=mediavine.com
 contact=sales@mediavine.com
 ownerdomain=theteenmagazine.com
@@ -12,7 +12,6 @@ indexexchange.com, 193478, DIRECT
 indexexchange.com, 189263, DIRECT
 google.com, pub-1601477034266482, DIRECT, f08c47fec0942fa0
 google.com, pub-1601477034266482, RESELLER, f08c47fec0942fa0
-mediavine.com, 483a19dfce43ccd75cf5dff9f4eabca3, DIRECT
 openx.com, 537154278, DIRECT, 6a698e2ec38604c6
 openx.com, 537144493, DIRECT, 6a698e2ec38604c6
 contextweb.com, 561837, DIRECT, 89ff185a4c4e857c
@@ -59,4 +58,4 @@ appnexus.com, 10490, RESELLER, f5ab79cb980f11d1
 sharethrough.com, 47b99924, DIRECT, d53b998a7bd4ecd2
 nativo.com, 5705, DIRECT, 59521ca7cc5e9fee
 criteo.com, B-058831, DIRECT, 9fac4a4a87c2a44f
-
+kargo.com, 8797, DIRECT
