@@ -96,7 +96,7 @@
         <div id="content">
           <div class="flex_wrapper_content">
             <div class="post_wrapper">
-              <div id="selectable_content" class="post_content <%= @post.agree_to_image_policy ? '' : 'image-policy-not-agreed-to' %>">
+              <div id="selectable_content" class="post_content <%= (@post.agree_to_image_policy.present? && @post.agree_to_image_policy.present?.eql?) true ? '' : 'image-policy-not-agreed-to' %>">
                 <%= markdown @post.content %>
               </div>
               <% if current_user && current_user.can_edit_post(@post) %>
