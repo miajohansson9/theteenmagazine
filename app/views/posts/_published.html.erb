@@ -154,11 +154,11 @@
   });
 </script>
 <noscript>
-    <style>
-        .image-policy-not-agreed-to img {
-            display: none;
-        }
-    </style>
+  <style>
+      .image-policy-not-agreed-to img {
+          display: none;
+      }
+  </style>
 </noscript>
 <% if !(@post.comments_turned_off.eql? true) %>
   <%= javascript_include_tag "plugins/index_bundle" %>
