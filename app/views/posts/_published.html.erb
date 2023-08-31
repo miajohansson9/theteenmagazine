@@ -93,7 +93,7 @@
             </div>
           </div>
         </header>
-        <div id="content">
+        <div id="content" class="javascript-disabled">
           <div class="flex_wrapper_content">
             <div class="post_wrapper">
               <div id="selectable_content"
@@ -131,7 +131,7 @@
 </div>
 <script>
   $(document).ready(function() {
-     if (<%= @post.show_disclosure %>) {
+    if (<%= @post.show_disclosure %>) {
        $('.content_wrapper a')
          .not("a[href*=theteenmagazine]")
          .attr('rel','nofollow');
@@ -153,13 +153,6 @@
      });
   });
 </script>
-<noscript>
-  <style>
-      .image-policy-not-agreed-to img {
-          display: none;
-      }
-  </style>
-</noscript>
 <% if !(@post.comments_turned_off.eql? true) %>
   <%= javascript_include_tag "plugins/index_bundle" %>
 <% end %>

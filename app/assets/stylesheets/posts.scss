@@ -2,3 +2,11 @@
   background-image: url("<%= request.base_url %>/assets/ckeditor/skins/moono-lisa/icons_hidpi.png") !important;
   background-size: 16px !important;
 }
+
+.javascript-disabled {
+  .image-policy-not-agreed-to {
+    img {
+      display: none !important;
+    }
+  }
+}

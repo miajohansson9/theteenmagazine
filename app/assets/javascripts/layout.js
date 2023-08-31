@@ -3,6 +3,7 @@ $(document).ready(function () {
     $(".notice").slideUp();
   }, 1500);
 
+  $("#content").removeClass('javascript-disabled');
   // hide images where image policy hasn't been agreed to
   $('.image-policy-not-agreed-to').each(function() {
     // Find and replace the src attribute content with an empty string
