@@ -82,7 +82,7 @@
       <% else %>
         <p>
           <i>
-            <%= @pitch.user.full_name %> agreed to the image policy on <%= format_date(@pitch.agree_to_image_policy_at) %>.
+            <%= @pitch.user.full_name %> agreed to the image policy<% if @pitch.agree_to_image_policy_at.present? %> on <%= format_date(@pitch.agree_to_image_policy_at) %><% end %>.
           </i>
         </p>
       <% end %>
