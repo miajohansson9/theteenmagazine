@@ -42,17 +42,32 @@
           <%= f.file_field :thumbnail %>
         </div>
       <% end %>
-      <p>Give credit for your thumbnail image (Required). To show correctly, use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. See placeholder for example.</p>
+      <p><u>Give credit for your thumbnail image (Required)</u>. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. 
+      <i>If you do not properly cite your thumbnail image, it will not show up in your published article.</i></p>
       <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0" %>
       <% if (@post.user_id.eql? current_user.id) %>
         <p>
-          Image Policy: <%= f.check_box :agree_to_image_policy %>
-            I have read and understand the image policy found <a target="_blank" style="text-decoration: underline;" href="/finding-images">here</a>. By checking this box, I confirm that the images found in my article (including the thumbnail) have the proper attributions and follow all the requirements explained in the <a target="_blank" style="text-decoration: underline;" href="/finding-image">Image Policy</a>. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
+          <div class="alert alert-warning" role="alert">
+            Due to an ongoing copyright issue, <b>our image policy has changed as of September 4th, 2023</b>. Please read the <a target="_blank" class="link_underline"  href="/finding-images">updated image policy</a> before checking the box below.
+          </div>
+          <i>
+            <%= f.check_box :agree_to_image_policy, class: "d-inline" %>
+              I have read and understand the image policy found <a target="_blank" class="link_nrml" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this pitch has the proper attributions and follows all the requirements explained in the Image Policy. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
+          </i>
+          <% if @post.agree_to_image_policy.nil? || !@post.agree_to_image_policy %>
+            <%= f.hidden_field :agree_to_image_policy_at, value: Time.now %>
+          <% end %>
         </p>
       <% elsif !@post.agree_to_image_policy %>
         <p>
           <i>
             <%= @post.user.full_name %> has not agreed to the image policy.
+          </i>
+        </p>
+      <% else %>
+        <p>
+          <i>
+            <%= @post.user.full_name %> agreed to the image policy<% if @post.agree_to_image_policy_at.present? %> on <%= format_date(@post.agree_to_image_policy_at) %><% end %>.
           </i>
         </p>
       <% end %>

@@ -55,6 +55,13 @@ h6 {
   margin-bottom: 0.5rem;
 }
 
+.link_underline {
+  text-decoration: underline !important;
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
 .link_grn {
   color: #4abeb6 !important;
   &:hover {

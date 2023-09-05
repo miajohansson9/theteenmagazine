@@ -360,6 +360,7 @@ class PitchesController < ApplicationController
         :following_level,
         :thumbnail_credits,
         :agree_to_image_policy,
+        :agree_to_image_policy_at,
         :admin_notes,
         :priority
       )

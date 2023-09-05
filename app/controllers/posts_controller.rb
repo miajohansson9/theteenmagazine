@@ -834,6 +834,7 @@ class PostsController < ApplicationController
         :shareable_token,
         :comments_turned_off,
         :agree_to_image_policy,
+        :agree_to_image_policy_at,
         :rank,
         feedback_list: [],
         reviews_attributes: %i[id post_id editor_id created_at status notes],

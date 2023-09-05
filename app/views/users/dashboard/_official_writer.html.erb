@@ -2,20 +2,10 @@
   <div class="dashboard_wrapper">
     <div id="waiting--for--approval">
       <div class="w-100">
-        <div class="tab-content p-0" id="myClassicTabContent">
-          <%= render 'users/dashboard/tabs/home' %>
-          <% if @user.admin? %>
-            <div class="tab-pane activity_wrapper fade" id="admin-invites-classic" role="tabpanel" aria-labelledby="admin-invites-tab-classic">
-              <%= render_async get_sent_invitations_admin_path, toggle: { selector: '#admin-invites-tab-classic', event: :click } do %>
-                <div class="d-flex justify-content-center">
-                  <div class="spinner-border mb-4" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
+      <div class="alert alert-warning mt-2" role="alert">
+        Due to an ongoing copyright issue, <b>our image policy has changed as of September 4th, 2023</b>. Please make sure your articles follow the  <a class="link_underline" href="/finding-images">updated image policy</a> by <b>October 31, 2023</b>. 
+      </div>
+        <%= render 'users/dashboard/tabs/home' %>
       </div>
       <div class="dashboard--writer--flex--two" style="width: 30rem;">
         <% if @featured_writers.include? @user %>
