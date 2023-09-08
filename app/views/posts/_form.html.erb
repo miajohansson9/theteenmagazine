@@ -20,15 +20,22 @@
         <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
       <% end %>
       <p class="mt-0">Write your article here and make sure you are saving often. Saving can also help fix formatting problems.</p>
-      <%= f.text_area :content, class: "ckeditor" %>
-            <% if @post.partner_id || current_user.admin %>
-        <p>Disclose partnership:
-          <%= f.check_box :show_disclosure %>
-          <i>
-            You must check this box if you have received any compensation for writing this article. Compensation can be monetary or in the form of a product.
-          </i>
-        </p>
-      <% end %>
+      <div id="editor"></div>
+        <script>
+            ClassicEditor
+                .create( document.querySelector( '#editor' ), {
+                    ckbox: {
+                        tokenUrl: 'https://100142.cke-cs.com/token/dev/to726l0e2ziEvM2HFco41aOAgK8XeKAlbMnt?limit=10',
+                    },
+                    toolbar: [
+                        'ckbox', 'imageUpload', '|', 'heading', '|', 'undo', 'redo', '|', 'bold', 'italic', '|',
+                        'blockQuote', 'indent', 'link', '|', 'bulletedList', 'numberedList'
+                    ],
+                } )
+                .catch( error => {
+                    console.error( error );
+                } );
+        </script>
       <% if @post.thumbnail.present? %>
         <p>Thumbnail Preview</p>
         <%= image_tag(@post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), :class => "image_max_400") %>
@@ -117,6 +124,15 @@
 <% else %>
   <h3 class="title m-4">This article has already been published and can only be edited by the author(s) and managing editor of this category.</h3>
 <% end %>
+<div id="ckbox"></div>
+<script>
+    // You must provide a valid token URL in order to use the application
+    // After registering to CKBox, the fastest way to try out CKBox is to use the development token endpoint:
+    // https://ckeditor.com/docs/ckbox/latest/guides/configuration/authentication.html#token-endpoint
+    CKBox.mount(document.getElementById('ckbox'), {
+        tokenUrl: 'https://100142.cke-cs.com/token/dev/to726l0e2ziEvM2HFco41aOAgK8XeKAlbMnt?limit=10'
+    });
+</script>
 <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
 <script type="text/javascript">
   $('document').ready(function(){

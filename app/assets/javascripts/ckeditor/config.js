@@ -21,6 +21,10 @@ CKEDITOR.editorConfig = function (config) {
     { name: "tools", groups: ["tools"] },
   ];
 
+  config.ckbox = {
+    tokenUrl: 'https://100142.cke-cs.com/token/dev/to726l0e2ziEvM2HFco41aOAgK8XeKAlbMnt?limit=10',
+  };
+
   config.removeButtons =
     "Save,NewPage,ExportPdf,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Find,SelectAll,Scayt,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Form,Subscript,Superscript,CopyFormatting,Outdent,Indent,CreateDiv,BidiLtr,BidiRtl,Language,Anchor,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Styles,Font,FontSize,TextColor,BGColor,ShowBlocks,About,Iframe,JustifyRight,JustifyBlock";
   config.disableNativeSpellChecker = false;
