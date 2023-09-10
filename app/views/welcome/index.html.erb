@@ -12,6 +12,7 @@
           <%= render "welcome/placeholders/category_row_placeholder" %>
         <% end %>
         <h1 class="section--title"><a href="/categories/student-life">student life</a></h1>
+        <div class="content_hint"></div>
         <%= render_async_cache get_category_2_welcome_path, retry_count: 3 do %>
           <%= render "welcome/placeholders/category_row_placeholder" %>
         <% end %>
@@ -22,6 +23,7 @@
       </div>
       <div class="most_read contain_articles">
         <div class="ads_wrapper">
+          <div class="content_hint"></div>
           <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
           <!-- homepage-0 -->
           <!-- <ins class="adsbygoogle"
@@ -36,6 +38,7 @@
         </div>
         <h1 class="mt-4 section--title"><%= link_to "#trending", "/trending" %></h1>
         <%= render_async_cache get_trending_posts_path, retry_count: 3 %>
+        <div class="content_hint"></div>
       </div>
     </div>
     <h1 class="section--title"><a href="/categories/beauty-style">beauty & style</a></h1>
@@ -45,6 +48,7 @@
       </div>
       <div class="most_read contain_articles">
         <div class="ads_wrapper">
+          <div class="content_hint"></div>
           <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
           <!-- Homepage 1 -->
           <!-- <ins class="adsbygoogle"
@@ -60,7 +64,9 @@
         <br>
       </div>
     </div>
+    <div class="content_hint"></div>
     <h1 class="section--title"><a href="/search">recent articles</a></h1>
     <%= render_async_cache get_recent_posts_path, retry_count: 3 %>
+    <div class="content_hint"></div>
   </div>
 </div>
