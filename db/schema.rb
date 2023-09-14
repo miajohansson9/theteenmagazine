@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_05_012105) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_14_055418) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -323,6 +323,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_012105) do
     t.float "trending_score", default: 0.0
     t.integer "rank"
     t.datetime "agree_to_image_policy_at", precision: nil
+    t.string "thumbnail_url"
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"
@@ -436,6 +437,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_012105) do
     t.datetime "last_saw_interviews"
     t.boolean "remove_from_writer_newsletter"
     t.boolean "remove_from_reader_newsletter"
+    t.boolean "image_admin"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true

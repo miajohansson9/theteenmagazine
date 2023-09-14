@@ -124,6 +124,10 @@ class PostsController < ApplicationController
         claim_pitch
         redirect_to @post, notice: "You've claimed this pitch!"
       elsif @post.save
+        if post_params[:thumbnail_url].present?
+          image_blob = URI.open(post_params[:thumbnail_url])
+          @post.thumbnail.attach(io: image_blob, filename: "#{@post.slug}/thumbnail.jpg", content_type: 'image/jpeg')
+        end
         redirect_to @post, notice: "Changes were successfully saved!"
       else
         render "new", notice: "Oh no! Your post was not able to be saved!"
@@ -456,16 +460,11 @@ class PostsController < ApplicationController
     @prev_review = @post.reviews.last.clone
     @prev_status = @post.reviews.last.status.clone
     @prev_featured = @post.featured.clone
-    if post_params[:thumbnail].present?
-      @post.thumbnail.attach(post_params[:thumbnail])
+    if post_params[:thumbnail_url].present?
+      image_blob = URI.open(post_params[:thumbnail_url])
+      @post.thumbnail.attach(io: image_blob, filename: "#{@post.slug}/thumbnail.jpg", content_type: 'image/jpeg')
     end
     if @post.update post_params
-      if (@post.content.include? "instagram.com/p/") &&
-         !(@post.content.include? "instgrm.Embeds.process()")
-        @post.content <<
-          "<script async src='https://instagram.com/static/bundles/es6/EmbedSDK.js/47c7ec92d91e.js'></script>"
-        @post.content << "<script>instgrm.Embeds.process()</script>"
-      end
       if (@prev_featured == false || @prev_featured.nil?) &&
          (current_user.admin) && (post_params[:featured].eql? "1")
         ApplicationMailer.featured_article(@post.user, @post).deliver
@@ -764,6 +763,7 @@ class PostsController < ApplicationController
         :newsletter_id,
         :editor_can_make_changes,
         :thumbnail,
+        :thumbnail_url,
         :ranking,
         :content,
         :image,

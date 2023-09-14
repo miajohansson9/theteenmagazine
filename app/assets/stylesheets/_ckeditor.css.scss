@@ -40,3 +40,13 @@ iframe {
 .ckbox-navbar-item-container:last-child {
   display: none !important;
 }
+
+.btn-primary {
+  background-color: #4abeb6 !important;
+  height: fit-content;
+  padding: 10px 25px;
+  font-family: "Playfair Display";
+  line-height: 1.5;
+  text-transform: capitalize;
+  font-size: 100%;
+}

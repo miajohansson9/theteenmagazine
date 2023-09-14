@@ -100,3 +100,45 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
 }).catch((error) => {
   console.error(error);
 });
+
+function loadCKBoxScript() {
+  const thumbnailUrlField = document.querySelector("#thumbnail-field");
+  const thumbnailCreditsField = document.querySelector("#thumbnail-credits");
+  const showSelectedUrl = document.querySelector("#showSelectedUrl");
+
+  // Append the script element to the document to load CKBox
+  CKBox.mount(document.querySelector("#ckbox"), {
+    tokenUrl:
+      "https://100142.cke-cs.com/token/dev/to726l0e2ziEvM2HFco41aOAgK8XeKAlbMnt?limit=10",
+    dialog: {
+      width: 800,
+      height: 600,
+    },
+    assets: {
+      // Callback executed after choosing assets
+      onChoose: (assets) => {
+        assets.forEach(({ data }) => {
+          const imageUrl = data.url;
+          const imageCredits = data.metadata.description;
+          // Update the form field's value with the selected image URL
+          thumbnailUrlField.value = imageUrl;
+          thumbnailCreditsField.value = imageCredits;
+          showSelectedUrl.innerHTML =
+            "Image selected: <a target='_blank' class='link_grn' href='" +
+            imageUrl +
+            "'>" +
+            imageUrl +
+            "</a>";
+          console.log(data);
+        });
+      },
+    },
+    view: {
+      openLastView: true,
+    },
+  });
+}
+
+// Add a click event listener to the button
+var showDialogButton = document.getElementById("showDialogButton");
+showDialogButton.addEventListener("click", loadCKBoxScript);

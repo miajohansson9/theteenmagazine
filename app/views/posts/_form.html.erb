@@ -6,7 +6,7 @@
         <ul>
           <% @post.errors.full_messages.each do |msg| %>
             <li class="text-danger">
-              <h6><%= msg %></h6>xw
+              <h6><%= msg %></h6>
             </li>
           <% end %>
         </ul>
@@ -14,7 +14,7 @@
       <% if @post.pitch.try(:claimed_id).present? && @post.try(:deadline_at).present? %>
         <%= render "pitches/deadline_warning_msg", post: @post %>
       <% end %>
-      <%= f.text_field :title, placeholder: 'Your intriguing and attention-grabbing title' %>
+      <%= f.text_field :title, placeholder: "A Killer Title = Captivated Readers 📚👀" %>
       <% if current_user.is_manager? %>
         <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
       <% end %>
@@ -22,22 +22,24 @@
       <div id="container">
         <%= f.text_area :content, id: "editor" %>
       </div>
-      <% if @post.thumbnail.present? %>
-        <p>Thumbnail Preview</p>
-        <%= image_tag(@post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), :class => "image_max_400") %>
-        <div class="mt-4 mb-2 d-block">
-          <p class="d-inline">Upload different thumbnail image that meets the <a class="text-decoration-underline" target="_blank" href="/finding-images">image policy requirements</a>:</p>
-          <%= f.file_field :thumbnail %>
-        </div>
+      <p class="d-block mb-0">Category:<%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-0") %></p>
+      <% if @post.thumbnail.present? %><p>Thumbnail Preview</p><% end %>
+      <div class="d-flex flex-row flex-wrap align-items-end justify-content-between">
+        <% if @post.thumbnail.present? %>
+          <%= image_tag(@post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), class: 'mw-100') %>
+        <% end %>
+        <p id="showDialogButton" class="btn btn-primary mt-3 m-0 d-inline">New thumbnail</p>
+      </div>
+      <p id="showSelectedUrl"></p>
+      <%= f.hidden_field :thumbnail_url, id: "thumbnail-field", value: nil, class: "mb-0" %>
+      <div id="ckbox"></div>
+      <% if @post.thumbnail.present? && @post.thumbnail_credits.nil? %>
+        <p><u>Give credit for your thumbnail image (Required)</u>. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. 
+        <i>If you do not properly cite your thumbnail image, it will not show up in your published article.</i></p>
+        <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0",  id: "thumbnail-credits" %>
       <% else %>
-        <div class="mt-4 mb-2 d-block">
-          <p class="d-inline">Upload thumbnail image that meets the <a class="text-decoration-underline" target="_blank" href="/finding-images">image policy requirements</a>:</p>
-          <%= f.file_field :thumbnail %>
-        </div>
+        <%= f.hidden_field :thumbnail_credits, class: "mb-0",  id: "thumbnail-credits" %>
       <% end %>
-      <p><u>Give credit for your thumbnail image (Required)</u>. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. 
-      <i>If you do not properly cite your thumbnail image, it will not show up in your published article.</i></p>
-      <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0" %>
       <% if (@post.user_id.eql? current_user.id) %>
         <p>
           <div class="alert alert-warning" role="alert">
@@ -64,13 +66,6 @@
           </i>
         </p>
       <% end %>
-      <p class="d-block">Category:
-      <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-3") %></p>
-      <% if @post.is_published? %>
-        <p>Turn off commenting:
-          <%= f.check_box :comments_turned_off %>
-        </p>
-      <% end %>
       <%# <p class="mt-0">If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</p>
       <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
       <%= f.fields_for :reviews, @review do |rv| %>
@@ -84,18 +79,21 @@
             <p class="d-inline">Article Status:</p>
             <%= rv.select :status, options_for_select(@statuses || ["In Progress"], @review.try(:status)) %>
             <%= rv.hidden_field :editor_id, value: @review.try(:editor_id) %>
-                  <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
-        <p>
-          Editor permission:
-          <%= f.check_box :editor_can_make_changes %>
-            I give permission for an editor to make changes to my article when I submit. These changes may include small improvements to formatting, grammar/punctuation, and/or title optimization.
-        </p>
-      <% end %>
-            <% if current_user.admin && @post.is_published? %>
-              <div style="float:right; text-align: right;">
-                <p class="mt-0">Featured on homepage: <%= f.check_box :featured %></p>
-              </div>
+            <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
+              <p>
+                Editor permission:
+                <%= f.check_box :editor_can_make_changes %>
+                  I give permission for an editor to make changes to my article when I submit. These changes may include small improvements to formatting, grammar/punctuation, and/or title optimization.
+              </p>
             <% end %>
+            <div style="float:right; text-align: right;">
+            <% if current_user.admin && @post.is_published? %>
+              <p class="mt-0">Featured on homepage: <%= f.check_box :featured %></p>
+            <% end %>
+            <% if @post.is_published? %>
+              <p>Turn off commenting: <%= f.check_box :comments_turned_off %></p>
+            <% end %>
+                          </div>
           <% end %>
         <% end %>
       <% end %>
@@ -151,35 +149,10 @@
       }
       return reply;
     });
-
-    var editor = CKEDITOR.instances.post_content.on( 'change', function( evt ) {
-      unsaved = true;
-    });
-
-    $(":input").change(function(){ //triggers change in all input fields including text type
-      unsaved = true;
-    });
-
-    function unloadPage(){
-      if(unsaved){
-        return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
-      }
-    }
-
-    window.onbeforeunload = unloadPage;
   });
   window.WEBSPELLCHECKER_CONFIG = {
     autoSearch: true,
     serviceId: "<%= @service_id %>"
   };
-</script>
-<script>
-CKBox.mount(document.querySelector('#ckbox'), {
-    tokenUrl: 'https://your.token.url',
-    dialog: {
-        width: 800,
-        height: 600
-    },
-});
 </script>
 <%= javascript_include_tag 'ckeditor' %>
