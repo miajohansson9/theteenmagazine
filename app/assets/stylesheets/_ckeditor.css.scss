@@ -1,0 +1,42 @@
+#container figure,
+#container .image-inline {
+  display: block !important;
+  margin: 20px auto;
+  max-width: 70% !important;
+  picture {
+    max-width: 100% !important;
+    width: 100%;
+    img {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}
+
+#content figure,
+#content picture {
+  margin: 0;
+}
+
+iframe {
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+.ck-content {
+  min-height: 600px;
+  max-height: calc(100vh - 100px);
+}
+
+.ckbox-button-group,
+.ckbox-topbar-actions {
+  display: none !important;
+}
+
+.ckbox-topbar__side-content {
+  margin-left: auto !important;
+}
+
+.ckbox-navbar-item-container:last-child {
+  display: none !important;
+}

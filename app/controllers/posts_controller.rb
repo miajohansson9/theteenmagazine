@@ -117,11 +117,6 @@ class PostsController < ApplicationController
       end
     else
       fix_formatting
-      if (@post.content.include? "instagram.com/p/") &&
-         !(@post.content.include? "instgrm.Embeds.process()")
-        @post.content =
-          @post.content << "<script>instgrm.Embeds.process()</script>"
-      end
       if @post.save && @post.is_published?
         redirect_to @post,
                     notice: "Congrats! Your post was successfully published on The Teen Magazine!"
@@ -708,33 +703,11 @@ class PostsController < ApplicationController
   end
 
   def fix_formatting
-    loop do
-      if @post.content[/style="line-height(.*?)"/m, 0].present?
-        @post.content.gsub!(@post.content[/style="line-height(.*?)"/m, 0], "")
-      else
-        break
-      end
-    end
-    loop do
-      if @post.content[/style="margin(.*?)"/m, 0].present?
-        @post.content.gsub!(@post.content[/style="margin(.*?)"/m, 0], "")
-      else
-        break
-      end
-    end
-    loop do
-      if @post.content[/<b (.*?)>/m, 0].present?
-        @post.content.gsub!(@post.content[/<b (.*?)>/m, 0], "")
-      else
-        break
-      end
-    end
-    loop do
-      if @post.content[/<span(.*?)>/m, 0].present?
-        @post.content.gsub!(@post.content[/<span(.*?)>/m, 0], "")
-      else
-        break
-      end
+    # Define a regular expression to match underscores within the 'raw-html-embed' div
+    pattern = /<div class="raw-html-embed">(.*?)<\/div>/m
+    # Use gsub to replace underscores within the 'raw-html-embed' div
+    @post.content.gsub!(pattern) do |match|
+      match.gsub(/(?<!\\)_/, '\\_') # Escape underscores only if they're not already escaped
     end
     @post.content.gsub!('dir="ltr"', "")
     @post.content.gsub!("h1", "h2")
@@ -748,23 +721,9 @@ class PostsController < ApplicationController
     @post.content.gsub!("<br>", "")
     @post.content.gsub!("<pre>", "<p>")
     @post.content.gsub!("</pre>", "</p>")
-    @post.content.gsub!("<div", "<p")
-    @post.content.gsub!("</div>", "</p>")
     @post.content.gsub!("<address", "<p")
     @post.content.gsub!("</address>", "</p>")
     @post.content.gsub!("<hr />", "")
-    @post.content.gsub!(
-      "<p><iframe",
-      "<p class='responsive-iframe-container'><iframe class='responsive-iframe'"
-    )
-    @post.content.gsub!(
-      "s3.amazonaws.com/media.theteenmagazine.com",
-      "media.theteenmagazine.com"
-    )
-    @post.content.gsub!(
-      "s3.amazonaws.com/theteenmagazine",
-      "media.theteenmagazine.com"
-    )
     if !(@post.turn_off_caps)
       @post.title =
         @post

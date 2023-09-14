@@ -6,7 +6,7 @@
         <ul>
           <% @post.errors.full_messages.each do |msg| %>
             <li class="text-danger">
-              <h6><%= msg %></h6>
+              <h6><%= msg %></h6>xw
             </li>
           <% end %>
         </ul>
@@ -14,28 +14,14 @@
       <% if @post.pitch.try(:claimed_id).present? && @post.try(:deadline_at).present? %>
         <%= render "pitches/deadline_warning_msg", post: @post %>
       <% end %>
-      <p class="mb-0">Title</p>
-      <%= f.text_field :title %>
+      <%= f.text_field :title, placeholder: 'Your intriguing and attention-grabbing title' %>
       <% if current_user.is_manager? %>
         <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
       <% end %>
       <p class="mt-0">Write your article here and make sure you are saving often. Saving can also help fix formatting problems.</p>
-      <div id="editor"></div>
-        <script>
-            ClassicEditor
-                .create( document.querySelector( '#editor' ), {
-                    ckbox: {
-                        tokenUrl: 'https://100142.cke-cs.com/token/dev/to726l0e2ziEvM2HFco41aOAgK8XeKAlbMnt?limit=10',
-                    },
-                    toolbar: [
-                        'ckbox', 'imageUpload', '|', 'heading', '|', 'undo', 'redo', '|', 'bold', 'italic', '|',
-                        'blockQuote', 'indent', 'link', '|', 'bulletedList', 'numberedList'
-                    ],
-                } )
-                .catch( error => {
-                    console.error( error );
-                } );
-        </script>
+      <div id="container">
+        <%= f.text_area :content, id: "editor" %>
+      </div>
       <% if @post.thumbnail.present? %>
         <p>Thumbnail Preview</p>
         <%= image_tag(@post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), :class => "image_max_400") %>
@@ -124,15 +110,6 @@
 <% else %>
   <h3 class="title m-4">This article has already been published and can only be edited by the author(s) and managing editor of this category.</h3>
 <% end %>
-<div id="ckbox"></div>
-<script>
-    // You must provide a valid token URL in order to use the application
-    // After registering to CKBox, the fastest way to try out CKBox is to use the development token endpoint:
-    // https://ckeditor.com/docs/ckbox/latest/guides/configuration/authentication.html#token-endpoint
-    CKBox.mount(document.getElementById('ckbox'), {
-        tokenUrl: 'https://100142.cke-cs.com/token/dev/to726l0e2ziEvM2HFco41aOAgK8XeKAlbMnt?limit=10'
-    });
-</script>
 <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
 <script type="text/javascript">
   $('document').ready(function(){
@@ -191,19 +168,18 @@
 
     window.onbeforeunload = unloadPage;
   });
-  CKEDITOR.addCss('img{width: 55% !important; height: auto !important;margin-left: auto !important;margin-right: auto !important;display: block;}');
-  CKEDITOR.addCss('iframe, .instagram-media{margin: 1em auto !important;}');
-  CKEDITOR.addCss('h1,h2,h3,p{font-size: 1.3em;}a{color: #4ABEB6 !important;}');
-  CKEDITOR.addCss('h1 {font-size: 1.7rem; text-transform: capitalize;} h2 {font-size: 1.5rem; text-transform: capitalize;} h3 {font-size: 1.3rem; text-transform: capitalize;} h4 {font-size: 1.1rem;} h5 {font-size: 0.9rem;} h1, h2, h3, h4, h5, h6, span {margin: 10px 0;}');
-  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #4ABEB6;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
   window.WEBSPELLCHECKER_CONFIG = {
     autoSearch: true,
     serviceId: "<%= @service_id %>"
   };
 </script>
-<style>
-  #cke_1_top .cke_button_icon {
-    background-image: url('<%= request.base_url %>/assets/ckeditor/skins/moono-lisa/icons_hidpi.png') !important;
-    background-size: 16px !important;
-  }
-</style>
+<script>
+CKBox.mount(document.querySelector('#ckbox'), {
+    tokenUrl: 'https://your.token.url',
+    dialog: {
+        width: 800,
+        height: 600
+    },
+});
+</script>
+<%= javascript_include_tag 'ckeditor' %>
