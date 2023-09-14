@@ -101,10 +101,16 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
   console.error(error);
 });
 
+function preventFormSubmission(event) {
+  event.preventDefault();
+}
+
 function loadCKBoxScript() {
   const thumbnailUrlField = document.querySelector("#thumbnail-field");
   const thumbnailCreditsField = document.querySelector("#thumbnail-credits");
   const showSelectedUrl = document.querySelector("#showSelectedUrl");
+
+  const form = document.querySelector("#edit_post");
 
   // Append the script element to the document to load CKBox
   CKBox.mount(document.querySelector("#ckbox"), {
@@ -113,6 +119,9 @@ function loadCKBoxScript() {
     dialog: {
       width: 800,
       height: 600,
+      onClose: () => {
+        form.removeEventListener("submit", preventFormSubmission);
+      },
     },
     assets: {
       // Callback executed after choosing assets
@@ -129,12 +138,14 @@ function loadCKBoxScript() {
             "'>" +
             imageUrl +
             "</a>";
-          console.log(data);
         });
       },
     },
     view: {
       openLastView: true,
+      onChange: (_) => {
+        form.addEventListener("submit", preventFormSubmission);
+      },
     },
   });
 }
