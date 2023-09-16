@@ -99,6 +99,7 @@ Rails.application.routes.draw do
   get "subscribe" => "pages#subscribe"
   get "email-preferences" => "pages#email_preferences"
   post "email-preferences", to: "pages#email_preferences"
+  get "manage-images" => "pages#manage_images"
   get "trending" => "pages#trending"
   get "most-viewed" => "pages#most_viewed"
   get "newsletters/:id/featured-posts" => "newsletters#featured"

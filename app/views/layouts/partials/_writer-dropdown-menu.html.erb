@@ -6,6 +6,23 @@
   <% current_user.categories.each do |category| %>
     <a href="/categories/<%= category.slug %>/dashboard" class="dropdown-item"><%= category.name.titleize.truncate(20) %> Dashboard</a>
   <% end %>
+  <% if current_user.admin? || current.image_admin? %>
+    <a href="/manage-images" class="dropdown-item">Manage Images</a>
+  <% end %>
+  <% if current_user.admin? || current_user.has_newsletter_permissions %>
+    <a href="/newsletters" class="dropdown-item">Newsletters</a>
+  <% end %>
+  <% if current_user.admin? || current_user.has_newsletter_permissions %>
+    <a href="/subscribers" class="dropdown-item">Subscribers</a>
+  <% end %>
+  <% if current_user.admin? %>
+    <a href="/applies" class="dropdown-item">Writer Applications
+      <% if @unseen_applications_cnt > 0 %>
+        <span class="sec counter counter-sm"></span>
+        <p><%= @unseen_applications_cnt %> new</p>
+      <% end %>
+    </a>
+  <% end %>
   <% if current_user.editor? %>
     <a href="/editors/<%= current_user.slug %>" class="dropdown-item">Editor Dashboard
       <% if @unseen_editor_dashboard_cnt > 0 %>
@@ -39,17 +56,6 @@
         <% end %>
       </a>
     <% end %>
-  <% end %>
-  <% if current_user.has_newsletter_permissions %>
-    <a href="/newsletters" class="dropdown-item">Newsletters</a>
-  <% end %>
-  <% if current_user.admin? %>
-    <a href="/applies" class="dropdown-item">Writer Applications
-      <% if @unseen_applications_cnt > 0 %>
-        <span class="sec counter counter-sm"></span>
-        <p><%= @unseen_applications_cnt %> new</p>
-      <% end %>
-    </a>
   <% end %>
   <div class="dropdown-divider"></div>
   <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>

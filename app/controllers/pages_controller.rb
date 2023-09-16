@@ -18,6 +18,7 @@ class PagesController < ApplicationController
                   search
                 ]
   before_action :is_admin?, only: :most_viewed
+  before_action :is_image_admin?, only: :manage_images
 
   def team
     set_meta_tags title: "About us",
@@ -34,6 +35,10 @@ class PagesController < ApplicationController
 
   def criteria
     set_meta_tags title: "Criteria & FAQ | The Teen Magazine"
+  end
+
+  def manage_images
+    set_meta_tags title: "Manage Images | The Teen Magazine"
   end
 
   def topics
@@ -303,6 +308,14 @@ class PagesController < ApplicationController
 
   def is_admin?
     if (current_user && (current_user.admin? || current_user.editor?))
+      true
+    else
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
+  end
+
+  def is_image_admin?
+    if (current_user && (current_user.admin? || current_user.image_admin?))
       true
     else
       redirect_to current_user, notice: "You do not have access to this page."

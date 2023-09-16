@@ -2,7 +2,7 @@
 #container .image-inline {
   display: block !important;
   margin: 20px auto;
-  max-width: 70% !important;
+  max-width: 60% !important;
   picture {
     max-width: 100% !important;
     width: 100%;
@@ -25,7 +25,17 @@ iframe {
 
 .ck-content {
   min-height: 600px;
-  max-height: calc(100vh - 100px);
+  max-height: calc(100vh);
+
+  figcaption {
+    display: block !important;
+    width: 100% !important;
+    text-align: center;
+    pointer-events: none;
+  }
+  a {
+    color: #4abeb6;
+  }
 }
 
 .ckbox-button-group,

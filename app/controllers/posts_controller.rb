@@ -702,6 +702,22 @@ class PostsController < ApplicationController
   end
 
   def fix_formatting
+    @post.content.gsub!(%r{<picture>.*?<img (.*?)alt="(.*?)(?:, (.*?))?".*?</picture>}m) do
+      img_attributes = $1
+      alt_text = $2.strip
+      link_url = $3
+      if alt_text.empty?
+        match  # Keep the original content if alt text is empty
+      elsif link_url.empty?
+        img_tag_without_alt = "<img #{img_attributes}>"
+        alt_text_as_caption = "<figcaption style='text-align: center'>Photo by: #{alt_text}</figcaption>"
+        "<picture>#{img_tag_without_alt}</picture>#{alt_text_as_caption}"
+      else
+        img_tag_without_alt = "<img #{img_attributes}>"
+        alt_text_as_link = "<figcaption style='text-align: center'>Photo by: <a href='#{link_url}'>#{alt_text}</a></figcaption>"
+        "<picture>#{img_tag_without_alt}</picture>#{alt_text_as_link}"
+      end
+    end
     # Define a regular expression to match underscores within the 'raw-html-embed' div
     pattern = /<div class="raw-html-embed">(.*?)<\/div>/m
     # Use gsub to replace underscores within the 'raw-html-embed' div
