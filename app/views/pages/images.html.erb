@@ -12,11 +12,10 @@
     <p class="m-0">Articles published from May, 2023 to August 2023, that have accepted the <b>old image policy</b>, have until <b>October 31, 2023</b> to comply with the <b>new image policy</b> to avoid their images being hidden or deleted.</p>
   </div>
   <h3><b>Image Usage Policy</b></h3>
-  <p>As a writer for our platform, you are responsible for ensuring that any images used in your content comply with applicable copyright laws and are used in accordance with our policies. Failure to follow this policy will result in your immediate removal from The Teen Magazine's platform.
-  </p>
+  <p>As a writer for our platform, you are responsible for ensuring that any images used in your content comply with applicable copyright laws and are used in accordance with our policies. Failure to follow this policy will result in your immediate removal from The Teen Magazine's platform.</p>
   <ul>
     <li>
-      <b class="text-decoration-underline">Image Attribution on every image</b>: When using images in your content and thumbnail, you must <b>always</b> provide proper attribution, giving credit to the original creator or source of the image as required by the relevant licensing terms. 
+      <b class="text-decoration-underline">Image Attribution on every image</b>: When using images in your content and thumbnail, you must <b>always</b> provide proper attribution, giving credit to the original creator or source of the image as required by the relevant licensing terms. This is handled automatically for you when you upload images from The Teen Magazine's asset library.
       <span style="background-color: #FCD04D">Use a link back to the original image (if possible) and include the name of the copyright owner (see example)</span>.
     </li>
     
@@ -30,24 +29,23 @@
       <li>If you received explicit permission to use the image by the copyright owner, then you can cite below the image, <b>"Courtesy of [copyright owner's name]"</b>.</p>
     </ol>
     <li>
-      <b class="text-decoration-underline">Royalty-Free Images</b>: You may use royalty-free images that are licensed for free use or under a Creative Commons (CC) license, provided that you comply with the terms of the license and properly attribute the images. These are the current list of websites that The Teen Magazine has okayed for you to use images from. <span style="background-color: #FCD04D">If you want to use a royalty image from a different website, 
-      please email mia@theteenmagazine.com first to have it added to the list.</span>
+      <b class="text-decoration-underline">Royalty-Free Images</b>: You may use royalty-free images that are licensed for free use or under a Creative Commons (CC) license, provided that you comply with the terms of the license and properly attribute the images. These are the current list of websites that The Teen Magazine has okayed for you to use images from.</span>
       <ol>
         <li><a target="_blank" href="https://unsplash.com/">https://www.pexels.com/</a></li>
         <li><a target="_blank" href="https://unsplash.com/">https://pixabay.com/</a></li>
         <li><a target="_blank" href="https://unsplash.com/">https://unsplash.com/</a></li>
         <li><a target="_blank" href="https://commons.wikimedia.org/wiki/Category:Images">https://commons.wikimedia.org/wiki/Category:Images</a></li>
-        <li><a target="_blank" href="https://www.dgepress.com/">https://www.dgepress.com/</a></li>
-        <li><a target="_blank" href="https://www.canva.com/">https://www.canva.com/</a>. You can create your own designs on Canva <i>only with the assets already found on Canva</i>. If you can't find the original source of the asset, you can cite under your image: Created on Canva. 
-        This is so that our editors and Mia know where your design came from.</li>
-        <li><i>
-          If you are an entertainment writer over the age of <b>18</b></i> <u>only</u>, you may apply for a press license through Hulu. Read their terms of use before applying for an account: <a target="_blank" href="https://press.hulu.com/terms/">https://press.hulu.com/terms/</a>.
-        </li>
       </ol>
-      <div class="alert alert-warning" role="alert">
-        The <i>only</i> exception for finding images from some other source other than the list above applies to <b>media kits intedended for press only</b>. Businesses or artists often have this publically accessible on their site. 
-        If they do not, you must email them for explicit permission to use their image, and cite the image with "Courtesy of [copyright owner's name or business]"
+      <div class="alert alert-warning mt-2" role="alert">
+        If an image is not from this list, you must receive explicit permission to use that image in your article from the business or person who owns the copyright. 
       </div>
+    </li>
+    <li>
+      <b class="text-decoration-underline">The Teen Magazine's asset library</b>: The Teen Magazine now has an image library with images from every category. 
+      You can choose any image from the asset library for your articles and crediting the image will be done for you automatically. This is always the easiest way to meet the image requirements.
+      If there is an image you want added to the asset library for an article, you can fill out the form 
+      <%= link_to 'here', send_user_email_path(:recipient_id => 1, :request_image => true), class: "link_grn", target: "_blank" %> to have it included. The Teen Magazine reserves the right to deny uploading 
+      any image to The Teen Magazine's server for any reason.
     </li>
     <li>
       <b class="text-decoration-underline">Prohibited Images</b>: If the image you found is not from the list above, it is <b>prohibited</b> to use. 
@@ -55,7 +53,7 @@
     </li>
     <li>
       <b class="text-decoration-underline">Consequences for not adhering to this policy</b>: <span style="background-color: #FCD04D">If you wrongly accept this policy from the date hereof without adhering to the rules in this image policy, your writer account will be suspended and your article will be unpublished.
-      If you accepted the old image policy before it was updated, you are still responsible for updating your articles, however you have until <b>10/31/23</b> to comply with the new policy.</span> After that, images in your articles may be deleted by editors, and in some cases, your article(s) will be unpublished. 
+      If you accepted the old image policy before it was updated, you are still responsible for updating your articles, you have until <b>10/31/23</b> to comply with the new policy.</span> After that, images in your articles may be deleted by editors, and in some cases, your article(s) will be unpublished. 
   </ul>
   <p>
       By using images in your content, you acknowledge and agree to comply with this Image Usage Policy. Failure to follow this policy may result in removal of your content from our platform and may make you liable for any legal consequences arising from copyright infringement or other violations. It is your responsibility to ensure that you have proper rights and permissions for any images used in your content, and to promptly remove any images that are found to be in violation of this policy or applicable copyright laws.
@@ -71,7 +69,7 @@
     <li><a href="https://twitter.com/">https://twitter.com/</a></li>
   </ul>
   <p>
-    This is an ongoing issue however and The Teen Magazine reserves the right to change this policy depending on what the higher courts say. Read more about the issue here:
+    Embedding images is an ongoing legal issue however, and The Teen Magazine reserves the right to change this policy depending on what the higher courts say. Read more about the issue here:
     <ul>
       <li><a target="_blank" href="https://www.sportico.com/law/analysis/2023/embedded-instagram-posts-not-infringement-1234731168/">https://www.sportico.com/law/analysis/2023/embedded-instagram-posts-not-infringement-1234731168/</a></li>
     </ul>
@@ -79,7 +77,7 @@
   <p>
     If you have any questions about the image policy or following the image guidelines, you can post in the <b>Discord chat</b> <a href="https://discord.com/channels/1081601449550688286/1081601450737676474">here</a>.
   </p>
-  <i>Last updated September 4th, 2023</i>
+  <i>Last updated September 20th, 2023</i>
   <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
     <circle cx="26" cy="26" r="25" fill="none"/>
     <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
