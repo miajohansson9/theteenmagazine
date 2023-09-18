@@ -19,23 +19,23 @@ To start using CKBox on your website, embed the following `script` element in th
 Quick implementation example:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>
-	</head>
-	<body>
-		<div id="ckbox"></div>
-		<script>
-			// You must provide a valid token URL in order to use the application
-			// After registering to CKBox, the fastest way to try out CKBox is to use the development token endpoint:
-			// https://ckeditor.com/docs/ckbox/latest/guides/configuration/authentication.html#token-endpoint
-			CKBox.mount(document.getElementById("ckbox"), {
-				tokenUrl: "https://your.token.url",
-			});
-		</script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>
+  </head>
+  <body>
+    <div id="ckbox"></div>
+    <script>
+      // You must provide a valid token URL in order to use the application
+      // After registering to CKBox, the fastest way to try out CKBox is to use the development token endpoint:
+      // https://ckeditor.com/docs/ckbox/latest/guides/configuration/authentication.html#token-endpoint
+      CKBox.mount(document.getElementById("ckbox"), {
+        tokenUrl: "https://your.token.url",
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -44,44 +44,44 @@ Quick implementation example:
 The code snippet below presents the simplest scenario for integration of CKEditor 5 with CKBox. To read more about the integration, please refer to the [CKEditor 5 integration guide](https://ckeditor.com/docs/ckbox/latest/guides/configuration/ckeditor-integration.html).
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
-		<script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>
-	</head>
-	<body>
-		<div id="editor"></div>
-		<script>
-			ClassicEditor.create(document.querySelector("#editor"), {
-				ckbox: {
-					tokenUrl: "https://your.token.url",
-				},
-				toolbar: [
-					"ckbox",
-					"imageUpload",
-					"|",
-					"heading",
-					"|",
-					"undo",
-					"redo",
-					"|",
-					"bold",
-					"italic",
-					"|",
-					"blockQuote",
-					"indent",
-					"link",
-					"|",
-					"bulletedList",
-					"numberedList",
-				],
-			}).catch((error) => {
-				console.error(error);
-			});
-		</script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>
+  </head>
+  <body>
+    <div id="editor"></div>
+    <script>
+      ClassicEditor.create(document.querySelector("#editor"), {
+        ckbox: {
+          tokenUrl: "https://your.token.url",
+        },
+        toolbar: [
+          "ckbox",
+          "imageUpload",
+          "|",
+          "heading",
+          "|",
+          "undo",
+          "redo",
+          "|",
+          "bold",
+          "italic",
+          "|",
+          "blockQuote",
+          "indent",
+          "link",
+          "|",
+          "bulletedList",
+          "numberedList",
+        ],
+      }).catch((error) => {
+        console.error(error);
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -91,9 +91,9 @@ For more advanced integration scenarios, please refer to the [CKBox documentatio
 
 [CKBox documentation](https://ckeditor.com/docs/ckbox/latest/guides/index.html) includes information about:
 
--   Enabling CKBox in your application.
--   Integrating CKBox with CKEditor 5.
--   Configuring and customizing CKBox.
+- Enabling CKBox in your application.
+- Integrating CKBox with CKEditor 5.
+- Configuring and customizing CKBox.
 
 You will find ready to use code snippets and live examples there.
 

@@ -38,6 +38,7 @@ class PagesController < ApplicationController
   end
 
   def manage_images
+    @load_only_ck_box = true
     set_meta_tags title: "Manage Images | The Teen Magazine"
   end
 

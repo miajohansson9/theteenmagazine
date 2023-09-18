@@ -6,7 +6,7 @@
   <% current_user.categories.each do |category| %>
     <a href="/categories/<%= category.slug %>/dashboard" class="dropdown-item"><%= category.name.titleize.truncate(20) %> Dashboard</a>
   <% end %>
-  <% if current_user.admin? || current.image_admin? %>
+  <% if current_user.admin? || current_user.image_admin? %>
     <a href="/manage-images" class="dropdown-item">Manage Images</a>
   <% end %>
   <% if current_user.admin? || current_user.has_newsletter_permissions %>

@@ -56,6 +56,7 @@ gem "sentry-rails"
 gem "pretender"
 gem 'invisible_captcha'
 gem 'open-uri'
+gem 'jwt'
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 

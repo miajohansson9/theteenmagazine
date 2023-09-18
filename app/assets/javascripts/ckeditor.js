@@ -1,7 +1,8 @@
+var unsaved = false;
+
 CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
   ckbox: {
-    tokenUrl:
-      "https://100142.cke-cs.com/token/dev/to726l0e2ziEvM2HFco41aOAgK8XeKAlbMnt?limit=10",
+    tokenUrl: location.protocol + "//" + location.host + "/token/generate",
   },
   heading: {
     options: [
@@ -72,9 +73,28 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
   },
   htmlEmbed: {
     showPreviews: true,
+    sanitizeHtml(inputHtml) {
+      var output = inputHtml;
+      var urlPattern = /(twitter\.com|instagram\.com|tiktok\.com|youtube\.com)/;
+      var matches = output.match(urlPattern);
+      if (!matches) {
+        // embeddd html is not supported
+        output =
+          "<span style='color: red'>The entered source is not allowed on The Teen Magazine. Embed html from instagram, twitter, youtube, and tiktok instead.</span>";
+      }
+      return {
+        html: output,
+        hasChanged: !matches,
+      };
+    },
   },
   removePlugins: [
     "ImageToolbar",
+    "ImageInsert",
+    "AutoImage",
+    "MediaEmbed",
+    "SimpleUploadAdapter",
+    "Base64UploadAdapter",
     "ImageResize",
     "CKFinder",
     "EasyImage",
@@ -97,9 +117,31 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
     "TableOfContents",
     "PasteFromOfficeEnhanced",
   ],
-}).catch((error) => {
-  console.error(error);
+})
+  .then(function (createdEditor) {
+    editor = createdEditor;
+    editor.model.document.on("change:data", function () {
+      unsaved = true;
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+$(":input").change(function () {
+  unsaved = true;
 });
+$("#ck-form").on("submit", function () {
+  unsaved = false;
+});
+
+function unloadPage() {
+  if (unsaved) {
+    return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+  }
+}
+
+window.onbeforeunload = unloadPage;
 
 function preventFormSubmission(event) {
   event.preventDefault();
@@ -110,12 +152,11 @@ function loadCKBoxScript() {
   const thumbnailCreditsField = document.querySelector("#thumbnail-credits");
   const showSelectedUrl = document.querySelector("#showSelectedUrl");
 
-  const form = document.querySelector("#edit_post");
+  const form = document.querySelector("#ck-form");
 
   // Append the script element to the document to load CKBox
   CKBox.mount(document.querySelector("#ckbox"), {
-    tokenUrl:
-      "https://100142.cke-cs.com/token/dev/to726l0e2ziEvM2HFco41aOAgK8XeKAlbMnt?limit=10",
+    tokenUrl: location.protocol + "//" + location.host + "/token/generate",
     dialog: {
       width: 800,
       height: 600,
@@ -144,7 +185,9 @@ function loadCKBoxScript() {
     view: {
       openLastView: true,
       onChange: (_) => {
-        form.addEventListener("submit", preventFormSubmission);
+        if (!!form) {
+          form.addEventListener("submit", preventFormSubmission);
+        }
       },
     },
   });
@@ -152,4 +195,6 @@ function loadCKBoxScript() {
 
 // Add a click event listener to the button
 var showDialogButton = document.getElementById("showDialogButton");
-showDialogButton.addEventListener("click", loadCKBoxScript);
+if (!!showDialogButton) {
+  showDialogButton.addEventListener("click", loadCKBoxScript);
+}

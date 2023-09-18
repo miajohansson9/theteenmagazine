@@ -13,14 +13,32 @@
   }
 }
 
+.not-editable {
+  pointer-events: none !important;
+}
+
 #content figure,
 #content picture {
   margin: 0;
 }
 
-iframe {
-  display: block !important;
-  margin: 0 auto !important;
+.ck .ck-voice-label {
+  display: none;
+}
+
+.pitch_flds,
+.newsletter_form_wrapper {
+  .ck-content {
+    min-height: 300px;
+  }
+}
+
+.ck-content,
+#content {
+  iframe {
+    display: block !important;
+    margin: 0 auto !important;
+  }
 }
 
 .ck-content {

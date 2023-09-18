@@ -145,6 +145,10 @@ Rails.application.routes.draw do
   get "/community", to: "posts#index"
   post "/community", to: "posts#index"
 
+  # Token endpoint
+  get 'token/generate', to: 'token#generate'
+  post 'token/generate', to: 'token#generate'
+
   resources :posts, only: %i[new create index] do
     member { patch :update_newsletter }
   end

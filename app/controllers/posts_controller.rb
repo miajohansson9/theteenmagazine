@@ -80,7 +80,6 @@ class PostsController < ApplicationController
 
   def new
     @categories = Category.active
-    @service_id = ENV["WEBSPELLCHECKER_ID"]
     @post = current_user.posts.build
     @review = @post.reviews.build(status: "In Progress", active: true)
     set_meta_tags title: "Edit Article", editing: "Turn off ads"
@@ -385,7 +384,6 @@ class PostsController < ApplicationController
         (current_user.can_edit_post(@post)) ||
         (@post.reviews.last.editor_id.eql? current_user.id)
     @categories = Category.active.or(Category.where(id: @post.category_id))
-    @service_id = ENV["WEBSPELLCHECKER_ID"]
 
     #create new review if no current review or last review was rejected
     @requested_changes =
@@ -721,8 +719,14 @@ class PostsController < ApplicationController
     # Define a regular expression to match underscores within the 'raw-html-embed' div
     pattern = /<div class="raw-html-embed">(.*?)<\/div>/m
     # Use gsub to replace underscores within the 'raw-html-embed' div
-    @post.content.gsub!(pattern) do |match|
-      match.gsub(/(?<!\\)_/, '\\_') # Escape underscores only if they're not already escaped
+    @post.content.gsub!(pattern) do |embedded_html|
+      @supported_pattern = /(twitter\.com|instagram\.com|tiktok\.com|youtube\.com)/
+      # Remove unsupported html
+      if (embedded_html.match? @supported_pattern)
+        embedded_html.gsub(/(?<!\\)_/, '\\_') # Escape underscores only if they're not already escaped
+      else
+        embedded_html = ''
+      end
     end
     @post.content.gsub!('dir="ltr"', "")
     @post.content.gsub!("h1", "h2")

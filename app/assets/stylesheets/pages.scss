@@ -76,7 +76,8 @@
   .ckbox,
   .ckbox-view-wrapper {
     width: 100%;
-    max-height: 80vh;
+    max-height: 100vh;
+    min-height: 80vh;
   }
 }
 
