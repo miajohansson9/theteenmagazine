@@ -736,6 +736,7 @@ class UsersController < ApplicationController
         :marketer,
         :full_name,
         :admin,
+        :image_admin,
         :first_name,
         :last_name,
         :category,

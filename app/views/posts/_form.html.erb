@@ -1,127 +1,144 @@
 <% if !defined?(@can_edit) || @can_edit || @post.created_at.nil? %>
-  <div id="edit_post">
-    <%= form_for @post do |f| %>
-      <% if @post.errors.any? %>
-        <h6 class="mt-3 text-danger"><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h6>
-        <ul>
-          <% @post.errors.full_messages.each do |msg| %>
-            <li class="text-danger">
-              <h6><%= msg %></h6>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-      <% if @post.pitch.try(:claimed_id).present? && @post.try(:deadline_at).present? %>
-        <%= render "pitches/deadline_warning_msg", post: @post %>
-      <% end %>
-      <p class="mb-0">Title</p>
-      <%= f.text_field :title %>
-      <% if current_user.is_manager? %>
-        <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
-      <% end %>
-      <p class="mt-0">Write your article here and make sure you are saving often. Saving can also help fix formatting problems.</p>
-      <%= f.text_area :content, class: "ckeditor" %>
-            <% if @post.partner_id || current_user.admin %>
-        <p>Disclose partnership:
-          <%= f.check_box :show_disclosure %>
-          <i>
-            You must check this box if you have received any compensation for writing this article. Compensation can be monetary or in the form of a product.
-          </i>
-        </p>
-      <% end %>
+  <%= form_for @post, html: {:id => "ck-form"} do |f| %>
+    <% if @post.errors.any? %>
+      <h6 class="mt-3 text-danger"><%= pluralize(@post.errors.count, "error")%> prevented this post from saving:</h6>
+      <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+          <li class="text-danger">
+            <h6><%= msg %></h6>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+    <% if @post.pitch.try(:claimed_id).present? && @post.try(:deadline_at).present? %>
+      <%= render "pitches/deadline_warning_msg", post: @post %>
+    <% end %>
+    <p class='mb-0 mt-4'>Title: </p>
+    <%= f.text_field :title, placeholder: "Creating Intrigue with Your Title 📚👀" %>
+    <% if current_user.is_manager? %>
+      <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
+    <% end %>
+    <p class="mt-0">Write your article in the text area below and <b>save often</b>. Saving can also help fix formatting problems.</p>
+    <% if @should_show_editor_form && @post.editor_can_make_changes %>
+      <p>
+        <i>
+          The writer has given permission for you to make changes to this article.
+          These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
+          Larger edits should be sent back for changes.
+        </i>
+      </p>
+    <% elsif @should_show_editor_form %>
+      <p>
+        <i style="background-color: #FCD04D;">
+          The writer has not given permission for you to make changes to this article.
+        </i>
+      </p>
+    <% end %>
+    <div id="container" class="<%= @should_show_editor_form && !@post.editor_can_make_changes ? 'not-editable' : '' %>">
+      <%= f.text_area :content, id: "editor" %>
+    </div>
+    <p class="d-block mt-0 mb-0">Category:<%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-0") %></p>
+    <% if @post.thumbnail.present? %><p>Thumbnail Preview</p><% end %>
+    <div class="d-flex flex-row flex-wrap align-items-end justify-content-between">
       <% if @post.thumbnail.present? %>
-        <p>Thumbnail Preview</p>
-        <%= image_tag(@post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), :class => "image_max_400") %>
-        <div class="mt-4 mb-2 d-block">
-          <p class="d-inline">Upload different thumbnail image that meets the <a class="text-decoration-underline" target="_blank" href="/finding-images">image policy requirements</a>:</p>
-          <%= f.file_field :thumbnail %>
-        </div>
-      <% else %>
-        <div class="mt-4 mb-2 d-block">
-          <p class="d-inline">Upload thumbnail image that meets the <a class="text-decoration-underline" target="_blank" href="/finding-images">image policy requirements</a>:</p>
-          <%= f.file_field :thumbnail %>
-        </div>
+        <%= image_tag(@post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), class: 'mw-100') %>
       <% end %>
+      <p id="showDialogButton" class="btn btn-primary mt-3 m-0 d-inline">New thumbnail</p>
+    </div>
+    <p id="showSelectedUrl"></p>
+    <%= f.hidden_field :thumbnail_url, id: "thumbnail-field", value: nil, class: "mb-0" %>
+    <div id="ckbox"></div>
+    <% if @post.thumbnail.present? && @post.thumbnail_credits.nil? %>
       <p><u>Give credit for your thumbnail image (Required)</u>. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. 
       <i>If you do not properly cite your thumbnail image, it will not show up in your published article.</i></p>
-      <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0" %>
-      <% if (@post.user_id.eql? current_user.id) %>
-        <p>
+      <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0",  id: "thumbnail-credits" %>
+    <% else %>
+      <%= f.hidden_field :thumbnail_credits, class: "mb-0",  id: "thumbnail-credits" %>
+    <% end %>
+    <p class="mt-0">
+      <i>
+        Do you have an image that meets <a href="/finding-images" class="link_grn">The Teen Magazine's image requirements</a> that you want to include in your article? 
+        Request that it be uploaded to The Teen Magazine's image asset library through the form 
+        <%= link_to 'here', send_user_email_path(:recipient_id => 1, :request_image => true, :post_id => @post.id), class: "link_grn", target: "_blank" %>.
+      </i>
+    </p>
+    <% if (@post.user_id.eql? current_user.id) %>
+      <% if (@post.created_at.present? && @post.created_at < Date.new(2023, 1, 16)) %>
+        <div>
           <div class="alert alert-warning" role="alert">
-            Due to an ongoing copyright issue, <b>our image policy has changed as of September 4th, 2023</b>. Please read the <a target="_blank" class="link_underline"  href="/finding-images">updated image policy</a> before checking the box below.
+            Due to an ongoing copyright issue, <b>our image policy has changed as of September 20th, 2023</b>. Please read the <a target="_blank" class="link_underline"  href="/finding-images">updated image policy</a> before checking the box below.
           </div>
-          <i>
+          <p><i>
             <%= f.check_box :agree_to_image_policy, class: "d-inline" %>
-              I have read and understand the image policy found <a target="_blank" class="link_nrml" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this pitch has the proper attributions and follows all the requirements explained in the Image Policy. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
-          </i>
+              I have read and understand the image policy found <a target="_blank" class="link_grn" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this post has the proper attributions and follows all the requirements explained in the Image Policy. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
+          </i></p>
           <% if @post.agree_to_image_policy.nil? || !@post.agree_to_image_policy %>
             <%= f.hidden_field :agree_to_image_policy_at, value: Time.now %>
           <% end %>
-        </p>
-      <% elsif !@post.agree_to_image_policy %>
-        <p>
-          <i>
-            <%= @post.user.full_name %> has not agreed to the image policy.
-          </i>
-        </p>
+        </div>
       <% else %>
-        <p>
-          <i>
-            <%= @post.user.full_name %> agreed to the image policy<% if @post.agree_to_image_policy_at.present? %> on <%= format_date(@post.agree_to_image_policy_at) %><% end %>.
-          </i>
-        </p>
-      <% end %>
-      <p class="d-block">Category:
-      <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-3") %></p>
-      <% if @post.is_published? %>
-        <p>Turn off commenting:
-          <%= f.check_box :comments_turned_off %>
-        </p>
-      <% end %>
-      <%# <p class="mt-0">If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</p>
-      <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
-      <%= f.fields_for :reviews, @review do |rv| %>
-        <% if @should_show_editor_form %>
-          <%= render "posts/editor_review_form", rv: rv, f: f, post: @post %>
-        <% else %>
-          <% if ((@reviews_rejected || []).count >= 5) && !(@post.is_published?) %>
-            <%= rv.hidden_field :status, :value => "In Progress" %>
-            <p class="mb-2 mt-0" style="font-style: italic;"><span class="highlight">You have reached the maximum amount of times you can submit this article for review.</span></p>
-          <% else %>
-            <p class="d-inline">Article Status:</p>
-            <%= rv.select :status, options_for_select(@statuses || ["In Progress"], @review.try(:status)) %>
-            <%= rv.hidden_field :editor_id, value: @review.try(:editor_id) %>
-                  <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
-        <p>
-          Editor permission:
-          <%= f.check_box :editor_can_make_changes %>
-            I give permission for an editor to make changes to my article when I submit. These changes may include small improvements to formatting, grammar/punctuation, and/or title optimization.
-        </p>
-      <% end %>
-            <% if current_user.admin && @post.is_published? %>
-              <div style="float:right; text-align: right;">
-                <p class="mt-0">Featured on homepage: <%= f.check_box :featured %></p>
-              </div>
-            <% end %>
-          <% end %>
+        <%= f.hidden_field :agree_to_image_policy, value: 1 %>
+        <% if @post.agree_to_image_policy.nil? || !@post.agree_to_image_policy %>
+          <%= f.hidden_field :agree_to_image_policy_at, value: Time.now %>
         <% end %>
       <% end %>
-      <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
-        <div class="hide spinner-button spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-        <%= f.button "Save Changes", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
-      </div>
+    <% elsif !@post.agree_to_image_policy %>
+      <p>
+        <i>
+          <%= @post.user.full_name %> has not agreed to the image policy.
+        </i>
+      </p>
+    <% else %>
+      <p>
+        <i>
+          <%= @post.user.full_name %> agreed to the image policy<% if @post.agree_to_image_policy_at.present? %> on <%= format_date(@post.agree_to_image_policy_at) %><% end %>.
+        </i>
+      </p>
     <% end %>
-  </div>
+    <%# <p class="mt-0">If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</p>
+    <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
+    <%= f.fields_for :reviews, @review do |rv| %>
+      <% if @should_show_editor_form %>
+        <%= render "posts/editor_review_form", rv: rv, f: f, post: @post %>
+      <% else %>
+        <% if ((@reviews_rejected || []).count >= 5) && !(@post.is_published?) %>
+          <%= rv.hidden_field :status, :value => "In Progress" %>
+          <p class="mb-2 mt-0" style="font-style: italic;"><span class="highlight">You have reached the maximum amount of times you can submit this article for review.</span></p>
+        <% else %>
+          <p class="d-inline">Article Status:</p>
+          <%= rv.select :status, options_for_select(@statuses || ["In Progress"], @review.try(:status)) %>
+          <%= rv.hidden_field :editor_id, value: @review.try(:editor_id) %>
+          <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
+            <p>
+              Editor permission:
+              <%= f.check_box :editor_can_make_changes %>
+                I give permission for an editor to make changes to my article when I submit. These changes may include small improvements to formatting, grammar/punctuation, and/or title optimization.
+            </p>
+          <% end %>
+          <div style="float:right; text-align: right;">
+            <% if current_user.admin && @post.is_published? %>
+              <p class="mt-0">Featured on homepage: <%= f.check_box :featured %></p>
+            <% end %>
+            <% if @post.is_published? %>
+              <p>Turn off commenting: <%= f.check_box :comments_turned_off %></p>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+    <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
+      <div class="hide spinner-button spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <%= f.button "Save Changes", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
+    </div>
+  <% end %>
 <% else %>
   <h3 class="title m-4">This article has already been published and can only be edited by the author(s) and managing editor of this category.</h3>
 <% end %>
-<script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
 <script type="text/javascript">
   $('document').ready(function(){
-    var unsaved = false;
-    $("#edit_post").on("submit", function(event){
+    $("#ck-form").on("submit", function(event){
       unsaved = false;
       var reply = true;
       var selected = document.getElementById('post_reviews_attributes_0_status').value;
@@ -158,36 +175,10 @@
       }
       return reply;
     });
-
-    var editor = CKEDITOR.instances.post_content.on( 'change', function( evt ) {
-      unsaved = true;
-    });
-
-    $(":input").change(function(){ //triggers change in all input fields including text type
-      unsaved = true;
-    });
-
-    function unloadPage(){
-      if(unsaved){
-        return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
-      }
-    }
-
-    window.onbeforeunload = unloadPage;
   });
-  CKEDITOR.addCss('img{width: 55% !important; height: auto !important;margin-left: auto !important;margin-right: auto !important;display: block;}');
-  CKEDITOR.addCss('iframe, .instagram-media{margin: 1em auto !important;}');
-  CKEDITOR.addCss('h1,h2,h3,p{font-size: 1.3em;}a{color: #4ABEB6 !important;}');
-  CKEDITOR.addCss('h1 {font-size: 1.7rem; text-transform: capitalize;} h2 {font-size: 1.5rem; text-transform: capitalize;} h3 {font-size: 1.3rem; text-transform: capitalize;} h4 {font-size: 1.1rem;} h5 {font-size: 0.9rem;} h1, h2, h3, h4, h5, h6, span {margin: 10px 0;}');
-  CKEDITOR.addCss('html {margin-left: auto;margin-right: auto;}#twitter-widget-0, #twitter-widget-1 {margin: 0 auto !important;}a {color: #4ABEB6;}a:hover {opacity: 0.5;}@media (max-width: 600px) {img {width: 100% !important;}}');
   window.WEBSPELLCHECKER_CONFIG = {
     autoSearch: true,
-    serviceId: "<%= @service_id %>"
+    serviceId: "<%= ENV["WEBSPELLCHECKER_ID"] %>"
   };
 </script>
-<style>
-  #cke_1_top .cke_button_icon {
-    background-image: url('<%= request.base_url %>/assets/ckeditor/skins/moono-lisa/icons_hidpi.png') !important;
-    background-size: 16px !important;
-  }
-</style>
+<%= javascript_include_tag 'ckeditor' %>

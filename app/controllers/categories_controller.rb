@@ -1,7 +1,7 @@
 include CategoriesHelper
 
 class CategoriesController < ApplicationController
-  before_action :find_category, except: %i[index]
+  before_action :find_category, except: %i[index new create]
   before_action :authenticate_user!, except: %i[index show team]
 
   def index

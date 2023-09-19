@@ -7,7 +7,7 @@
     <%= render "/pitches/form" %>
     <% if current_user.is_manager_of_category(@pitch.category_id) || (current_user.id.eql? @pitch.user.id) %>
       <div class="d-flex flex-direction-row">
-        <%= link_to "Delete", pitch_path(@pitch), method: :delete, data: {confirm: "Deleting this pitch will nofity the editor who pitched it. Are you sure you want to continue?"}, :class => "link_theme d-block mb-4", style: "width: 80px; margin-top: -3px !important;" %>
+        <%= link_to "Delete", pitch_path(@pitch), method: :delete, data: {confirm: "Deleting this pitch will nofity the editor who pitched it. Are you sure you want to continue?"}, :class => "link_theme d-block mb-4", style: "width: 80px; margin-top: 3px !important;" %>
         <%= form_for @pitch do |f| %>
           <%= f.hidden_field :archive, value: !(@pitch.archive.eql? true) %>
           <%= f.submit @archive_button, data: {confirm: @archive_msg}, :class => "link_theme", :style => "font-size: 0.9em;" %>

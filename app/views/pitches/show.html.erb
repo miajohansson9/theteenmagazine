@@ -51,10 +51,14 @@
   <% if @pitch.following_level.present? %>
     <span class="badge badge-pill badge-info"><%= @pitch.following_level %> followers</span>
   <% end %>
-  <%= markdown @pitch.description %>
   <% if @pitch.admin_notes.present? %>
     <p><i style="background-color: #FCD04D;">Admin Notes: <%= @pitch.admin_notes %></i></p>
   <% end %>
+  <div id="content">
+    <div class="post_content">
+      <%= markdown @pitch.description %>
+    </div>
+  </div>
   <% if @pitch.thumbnail.attached? %>
     <% if @thumbanil_credits && @thumbanil_credits.length > 0 %>
       <div class="chip">

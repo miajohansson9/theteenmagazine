@@ -54,7 +54,62 @@ class NewslettersController < ApplicationController
 
   def send_user_email
     @user = User.find(params[:recipient_id])
-    if current_user.is_manager? || @user.is_manager?
+    @message_template = "<p>Hi #{@user.first_name},</p><p>Write your message here...</p><p>Best,<br>#{current_user.full_name}</p>"
+    @subject = "Message from #{current_user.full_name}"
+    if params[:request_image]
+      @category = '[Category name]'
+      @link = '[Name]'
+      @title = '[Title]'
+      @type = 'Article'
+      if (params[:post_id].present?)
+        @post = Post.find(params[:post_id])
+        @category = Category.find(@post.category_id).name
+        @link = "<a href='https://theteenmagazine.com/#{@post.slug}'>#{@post.title}</a>"
+        @title = @post.title
+      elsif (params[:pitch_id].present?)
+        @pitch = Pitch.find(params[:pitch_id])
+        @category = Category.find(@pitch.category_id).name
+        @link = "<a href='https://theteenmagazine.com/pitches/#{@pitch.slug}'>#{@pitch.title}</a>"
+        @title = @pitch.title
+        @type = 'Pitch'
+      end
+      @message_template = "<p>Hi #{@user.first_name},</p>
+          <p>I am requesting an image to be uploaded to the The Teen Magazine's asset management library for my article.</p>
+          <p><strong>#{@type}:</strong> <br>#{@link}</p>
+          <p>
+              <strong>Category: </strong> <br>#{@category}
+          </p>
+          <p>
+              <strong>Image name: </strong><br>[Come up with a file name for the image]
+          </p>
+          <p>
+              <strong>Relevant tags for the image:</strong> <br>[Include at least 3]
+          </p>
+          <p>
+              <strong>Is the image from a website approved by </strong><a href='https://theteenmagazine.com/finding-images'><strong>The Teen Magazine's image policy</strong></a>?<strong>:</strong> <br>[Write YES/NO and the website name if applicable]
+          </p>
+          <p>
+              <strong>Image credit: </strong><br>[Follow the format 'Photo By: Karolina Grabowska from Pexels, <a href='https://www.pexels.com/photo/person-reading-a-book-on-the-beach-4996868/'>https://www.pexels.com/photo/person-reading-a-book-on-the-beach-4996868/</a>' or 'Photo By: Photographer's name' (if there is no website)]
+          </p>
+          <p>
+              <strong>If the image is NOT from an approved website, did you take the image yourself?:</strong> <br>[YES/NO or N/A if not applicable]
+          </p>
+          <p>
+              <strong>If the image is NOT from an approved website, do you have permission to use the image from the copyright owner?:</strong> <br>[YES/NO or N/A if not applicable]
+          </p>
+          <p>
+              <strong>If the image is NOT from an approved website, do other writers have permission to use the image in their articles? </strong> <br>[YES/NO or Not sure]
+          </p>
+          <p>
+              <strong>If the image is NOT available through a url, have you sent an attachment of the image to </strong><a href='mailto:editors@theteenmagazine.com'><strong>editors@theteenmagazine.com</strong></a><strong> with the subject: Image Attachment for #{@title}? </strong> <br>[YES/NO or N/A if not applicable]
+          </p>
+          <p>
+              Include any other information about the image here.
+          </p>
+          <p>Best,<br>#{current_user.full_name}</p>"
+      @subject = "Image Request for #{@title}"
+    end
+    if current_user.is_manager? || @user.is_manager? || @user.is_admin?
       @newsletter = current_user.newsletters.build(recipient_id: @user.id, template: "Plain")
     else
       redirect_to current_user, notice: "You do not have access to this page."
@@ -107,9 +162,6 @@ class NewslettersController < ApplicationController
   end
 
   def update
-    # if newsletter_params[:hero_image].present?
-    #   @newsletter.hero_image.attach(newsletter_params[:hero_image])
-    # end
     if @newsletter.update newsletter_params
       redirect_to @newsletter, notice: "Your changes were saved."
     else

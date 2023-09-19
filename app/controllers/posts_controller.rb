@@ -80,7 +80,6 @@ class PostsController < ApplicationController
 
   def new
     @categories = Category.active
-    @service_id = ENV["WEBSPELLCHECKER_ID"]
     @post = current_user.posts.build
     @review = @post.reviews.build(status: "In Progress", active: true)
     set_meta_tags title: "Edit Article", editing: "Turn off ads"
@@ -117,11 +116,6 @@ class PostsController < ApplicationController
       end
     else
       fix_formatting
-      if (@post.content.include? "instagram.com/p/") &&
-         !(@post.content.include? "instgrm.Embeds.process()")
-        @post.content =
-          @post.content << "<script>instgrm.Embeds.process()</script>"
-      end
       if @post.save && @post.is_published?
         redirect_to @post,
                     notice: "Congrats! Your post was successfully published on The Teen Magazine!"
@@ -129,6 +123,10 @@ class PostsController < ApplicationController
         claim_pitch
         redirect_to @post, notice: "You've claimed this pitch!"
       elsif @post.save
+        if post_params[:thumbnail_url].present?
+          image_blob = URI.open(post_params[:thumbnail_url])
+          @post.thumbnail.attach(io: image_blob, filename: "#{@post.slug}/thumbnail.jpg", content_type: 'image/jpeg')
+        end
         redirect_to @post, notice: "Changes were successfully saved!"
       else
         render "new", notice: "Oh no! Your post was not able to be saved!"
@@ -386,7 +384,6 @@ class PostsController < ApplicationController
         (current_user.can_edit_post(@post)) ||
         (@post.reviews.last.editor_id.eql? current_user.id)
     @categories = Category.active.or(Category.where(id: @post.category_id))
-    @service_id = ENV["WEBSPELLCHECKER_ID"]
 
     #create new review if no current review or last review was rejected
     @requested_changes =
@@ -461,16 +458,11 @@ class PostsController < ApplicationController
     @prev_review = @post.reviews.last.clone
     @prev_status = @post.reviews.last.status.clone
     @prev_featured = @post.featured.clone
-    if post_params[:thumbnail].present?
-      @post.thumbnail.attach(post_params[:thumbnail])
+    if post_params[:thumbnail_url].present?
+      image_blob = URI.open(post_params[:thumbnail_url])
+      @post.thumbnail.attach(io: image_blob, filename: "#{@post.slug}/thumbnail.jpg", content_type: 'image/jpeg')
     end
     if @post.update post_params
-      if (@post.content.include? "instagram.com/p/") &&
-         !(@post.content.include? "instgrm.Embeds.process()")
-        @post.content <<
-          "<script async src='https://instagram.com/static/bundles/es6/EmbedSDK.js/47c7ec92d91e.js'></script>"
-        @post.content << "<script>instgrm.Embeds.process()</script>"
-      end
       if (@prev_featured == false || @prev_featured.nil?) &&
          (current_user.admin) && (post_params[:featured].eql? "1")
         ApplicationMailer.featured_article(@post.user, @post).deliver
@@ -708,32 +700,32 @@ class PostsController < ApplicationController
   end
 
   def fix_formatting
-    loop do
-      if @post.content[/style="line-height(.*?)"/m, 0].present?
-        @post.content.gsub!(@post.content[/style="line-height(.*?)"/m, 0], "")
+    @post.content.gsub!(%r{<picture>.*?<img (.*?)alt="(.*?)(?:, (.*?))?".*?</picture>}m) do
+      img_attributes = $1
+      alt_text = $2.strip
+      link_url = $3
+      if alt_text.empty?
+        match  # Keep the original content if alt text is empty
+      elsif link_url.empty?
+        img_tag_without_alt = "<img #{img_attributes}>"
+        alt_text_as_caption = "<figcaption style='text-align: center'>Photo by: #{alt_text}</figcaption>"
+        "<picture>#{img_tag_without_alt}</picture>#{alt_text_as_caption}"
       else
-        break
+        img_tag_without_alt = "<img #{img_attributes}>"
+        alt_text_as_link = "<figcaption style='text-align: center'>Photo by: <a href='#{link_url}'>#{alt_text}</a></figcaption>"
+        "<picture>#{img_tag_without_alt}</picture>#{alt_text_as_link}"
       end
     end
-    loop do
-      if @post.content[/style="margin(.*?)"/m, 0].present?
-        @post.content.gsub!(@post.content[/style="margin(.*?)"/m, 0], "")
+    # Define a regular expression to match underscores within the 'raw-html-embed' div
+    pattern = /<div class="raw-html-embed">(.*?)<\/div>/m
+    # Use gsub to replace underscores within the 'raw-html-embed' div
+    @post.content.gsub!(pattern) do |embedded_html|
+      @supported_pattern = /(twitter\.com|instagram\.com|tiktok\.com|youtube-nocookie\.com|youtube\.com)/
+      # Remove unsupported html
+      if (embedded_html.match? @supported_pattern)
+        embedded_html.gsub(/(?<!\\)_/, '\\_') # Escape underscores only if they're not already escaped
       else
-        break
-      end
-    end
-    loop do
-      if @post.content[/<b (.*?)>/m, 0].present?
-        @post.content.gsub!(@post.content[/<b (.*?)>/m, 0], "")
-      else
-        break
-      end
-    end
-    loop do
-      if @post.content[/<span(.*?)>/m, 0].present?
-        @post.content.gsub!(@post.content[/<span(.*?)>/m, 0], "")
-      else
-        break
+        embedded_html = ''
       end
     end
     @post.content.gsub!('dir="ltr"', "")
@@ -748,23 +740,9 @@ class PostsController < ApplicationController
     @post.content.gsub!("<br>", "")
     @post.content.gsub!("<pre>", "<p>")
     @post.content.gsub!("</pre>", "</p>")
-    @post.content.gsub!("<div", "<p")
-    @post.content.gsub!("</div>", "</p>")
     @post.content.gsub!("<address", "<p")
     @post.content.gsub!("</address>", "</p>")
     @post.content.gsub!("<hr />", "")
-    @post.content.gsub!(
-      "<p><iframe",
-      "<p class='responsive-iframe-container'><iframe class='responsive-iframe'"
-    )
-    @post.content.gsub!(
-      "s3.amazonaws.com/media.theteenmagazine.com",
-      "media.theteenmagazine.com"
-    )
-    @post.content.gsub!(
-      "s3.amazonaws.com/theteenmagazine",
-      "media.theteenmagazine.com"
-    )
     if !(@post.turn_off_caps)
       @post.title =
         @post
@@ -805,6 +783,7 @@ class PostsController < ApplicationController
         :newsletter_id,
         :editor_can_make_changes,
         :thumbnail,
+        :thumbnail_url,
         :ranking,
         :content,
         :image,

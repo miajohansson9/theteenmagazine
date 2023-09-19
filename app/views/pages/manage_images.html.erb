@@ -1,0 +1,11 @@
+<div id='manage-images'>
+  <div id='ckbox'></div>
+</div>
+<script>
+  CKBox.mount(document.querySelector("#ckbox"), {
+    tokenUrl: location.protocol + "//" + location.host + "/token/generate",
+    view: {
+      openLastView: true,
+    },
+  });
+</script>

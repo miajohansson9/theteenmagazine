@@ -1,0 +1,80 @@
+#container figure,
+#container .image-inline {
+  display: block !important;
+  margin: 20px auto;
+  max-width: 60% !important;
+  picture {
+    max-width: 100% !important;
+    width: 100%;
+    img {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}
+
+.not-editable {
+  pointer-events: none !important;
+}
+
+#content figure,
+#content picture {
+  margin: 0;
+}
+
+.ck .ck-voice-label {
+  display: none;
+}
+
+.pitch_flds,
+.newsletter_form_wrapper {
+  .ck-content {
+    min-height: 300px;
+  }
+}
+
+.ck-content,
+#content {
+  iframe {
+    display: block !important;
+    margin: 0 auto !important;
+  }
+}
+
+.ck-content {
+  min-height: 600px;
+  max-height: calc(100vh);
+
+  figcaption {
+    display: block !important;
+    width: 100% !important;
+    text-align: center;
+    pointer-events: none;
+  }
+  a {
+    color: #4abeb6;
+  }
+}
+
+.ckbox-button-group,
+.ckbox-topbar-actions {
+  display: none !important;
+}
+
+.ckbox-topbar__side-content {
+  margin-left: auto !important;
+}
+
+.ckbox-navbar-item-container:last-child {
+  display: none !important;
+}
+
+.btn-primary {
+  background-color: #4abeb6 !important;
+  height: fit-content;
+  padding: 10px 25px;
+  font-family: "Playfair Display";
+  line-height: 1.5;
+  text-transform: capitalize;
+  font-size: 100%;
+}

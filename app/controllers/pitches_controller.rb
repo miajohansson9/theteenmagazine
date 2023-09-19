@@ -61,9 +61,6 @@ class PitchesController < ApplicationController
     @categories = Category.active
     if params[:button].eql? "interview"
       @pitch = current_user? ? current_user.pitches.build(pitch_params) : Pitch.new(pitch_params)
-      if pitch_params[:thumbnail].present?
-        @pitch.thumbnail.attach(pitch_params[:thumbnail])
-      end
       if @pitch.save
         if @pitch.user_id.nil?
           ApplicationMailer.confirm_submitted_interview(@pitch.contact_email, @pitch).deliver
@@ -80,6 +77,10 @@ class PitchesController < ApplicationController
         redirect_to new_pitch_path, notice: "You have not agreed to the image policy! It cannot be submitted"
         return
       end
+      if pitch_params[:thumbnail_url].present?
+        image_blob = URI.open(pitch_params[:thumbnail_url])
+        @pitch.thumbnail.attach(io: image_blob, filename: "#{@pitch.slug}/thumbnail.jpg")
+      end
       if @pitch.save && current_user.editor?
         fix_title
         redirect_to "/pitches", notice: "Your pitch was successfully added!"
@@ -95,8 +96,9 @@ class PitchesController < ApplicationController
   def update
     @categories = Category.active.or(Category.where(id: @pitch.category_id))
     @post = Post.find_by(user_id: @pitch.claimed_id, pitch_id: @pitch.id)
-    if pitch_params[:thumbnail].present?
-      @pitch.thumbnail.attach(pitch_params[:thumbnail])
+    if pitch_params[:thumbnail_url].present?
+      image_blob = URI.open(pitch_params[:thumbnail_url])
+      @pitch.thumbnail.attach(io: image_blob, filename: "#{@pitch.slug}/thumbnail.jpg", content_type: 'image/jpeg')
     end
     if @pitch.update pitch_params
       if (@pitch.status.eql? "Ready for Review") &&
@@ -341,6 +343,7 @@ class PitchesController < ApplicationController
         :description,
         :slug,
         :thumbnail,
+        :thumbnail_url,
         :requirements,
         :notes,
         :status,

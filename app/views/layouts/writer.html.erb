@@ -7,7 +7,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-9N2YD8CLJS');
     </script>
     <%= favicon_link_tag 'logo.png' %>
@@ -27,6 +26,15 @@
     </script>
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag 'writer' %>
+    <% if @load_only_ck_box %>
+      <script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>
+    <% elsif (params[:controller].eql? 'posts') || (params[:controller].eql? 'pitches') || (params[:controller].eql? 'newsletters') %>
+      <%= stylesheet_link_tag 'ckeditor' %>
+      <%= javascript_include_tag 'hidesocialmedia'%>
+      <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/super-build/ckeditor.js"></script>
+      <script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>
+      <script type="text/javascript" src="https://svc.webspellchecker.net/spellcheck31/wscbundle/wscbundle.js"></script>
+    <% end %>
     <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
   </head>
   <body>

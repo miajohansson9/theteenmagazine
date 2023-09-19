@@ -33,6 +33,9 @@
   <% end %>
 
   <% if current_user && current_user.admin? %>
+    <%= f.label "Image Admin", :class => "ml-2" %>
+    <%= f.check_box :image_admin %>
+    
     <%= f.label "Admin", :class => "ml-2" %>
     <%= f.check_box :admin %>
   <% end %>

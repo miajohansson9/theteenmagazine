@@ -1,4 +1,4 @@
 <div id="banner_writing" class="editor"></div>
-<div class="apply_wrapper pitch_form_wrapper">
-  <%= render "newsletters/form_plain", user: @user %>
+<div class="apply_wrapper newsletter_form_wrapper">
+  <%= render "newsletters/form_plain", user: @user, template: @message_template, subject: @subject %>
 </div>

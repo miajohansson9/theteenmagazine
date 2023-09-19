@@ -1,12 +1,42 @@
-#cke_1_top .cke_button_icon {
-  background-image: url("<%= request.base_url %>/assets/ckeditor/skins/moono-lisa/icons_hidpi.png") !important;
-  background-size: 16px !important;
-}
-
 .javascript-disabled {
   .image-policy-not-agreed-to {
     img {
       display: none !important;
+    }
+  }
+}
+
+.hidden-social-media-wrapper {
+  background: #f7f7f3;
+  border-color: rgb(229, 229, 229);
+  border-width: 1px;
+  border-style: solid;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  margin: 10px 0px;
+
+  .hidden-social-media-message {
+    text-transform: none;
+    font-feature-settings: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    line-break: auto;
+    line-height: 1.5em;
+    font-size: 12px;
+    font-weight: 400;
+    overflow-wrap: normal;
+    color: rgb(33, 33, 33);
+    text-align: center;
+
+    #message {
+      text-transform: none;
+      font-feature-settings: normal;
+      font-style: normal;
+      letter-spacing: normal;
+      line-break: auto;
+      line-height: 1.5em;
+      font-size: 14px !important;
+      text-align: center;
     }
   }
 }

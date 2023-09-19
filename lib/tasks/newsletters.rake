@@ -115,9 +115,9 @@ namespace :newsletters do
     def trending(category=nil)
         if category.present?
             @category = Category.find(category)
-            @posts = Post.published.trending.where(category_id: @category.id).limit(8)
+            @posts = Post.published.trending.where(category_id: @category.id).limit(7)
         else
-            @posts = Post.published.trending.limit(8)
+            @posts = Post.published.trending.limit(7)
         end
         @featured_posts = []
         @posts.each do |post|
@@ -142,9 +142,9 @@ namespace :newsletters do
     def recent(category=nil)
         if category.present?
             @category = Category.find(category)
-            @posts = Post.where('publish_at > ?', Time.now - 1.week).where(category_id: @category.id).trending.limit(8)
+            @posts = Post.where('publish_at > ?', Time.now - 1.week).where(category_id: @category.id).trending.limit(7)
         else
-            @posts = Post.where('publish_at > ?', Time.now - 1.week).trending.limit(8)
+            @posts = Post.where('publish_at > ?', Time.now - 1.week).trending.limit(7)
         end
         @featured_posts = []
         @posts.each do |post|
