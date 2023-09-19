@@ -54,6 +54,11 @@
   <% if @pitch.admin_notes.present? %>
     <p><i style="background-color: #FCD04D;">Admin Notes: <%= @pitch.admin_notes %></i></p>
   <% end %>
+  <div id="content">
+    <div class="post_content">
+      <%= markdown @pitch.description %>
+    </div>
+  </div>
   <% if @pitch.thumbnail.attached? %>
     <% if @thumbanil_credits && @thumbanil_credits.length > 0 %>
       <div class="chip">
@@ -67,11 +72,6 @@
     <% end %>
     <%= render "posts/partials/header_image", post: @pitch, img_class: "card-img-top" %>
   <% end %>
-  <div id="content">
-    <div class="post_content">
-      <%= markdown @pitch.description %>
-    </div>
-  </div>
   <% if @pitch.requirements.present? %>
     <i>Notes:</i>
     <%= markdown @pitch.requirements %>
