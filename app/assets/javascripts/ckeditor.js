@@ -59,6 +59,7 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
     "selectAll",
     "findAndReplace",
     "removeFormat",
+    "sourceEditing",
   ],
   htmlSupport: {
     allow: [
