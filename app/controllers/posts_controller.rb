@@ -379,12 +379,26 @@ class PostsController < ApplicationController
       redirect_to @post, notice: "You can no longer work on this article."
       return
     end
+    pattern = %r{<blockquote class="instagram-media"[^>]*>.*?</blockquote>\s*<script async src="//www.instagram.com/embed.js"></script>}m
+    matches = @post.content.scan(pattern)
+    matches.each do |match|
+      @post.content.sub!(match, '<div class="raw-html-embed">' + match + '</div>')
+    end
+    pattern = %r{<blockquote cite="[^>]*>.*?</blockquote>\s*<script async src="https://www.tiktok.com/embed.js"></script>}m
+    matches = @post.content.scan(pattern)
+    matches.each do |match|
+      @post.content.sub!(match, '<div class="raw-html-embed">' + match + '</div>')
+    end
+    pattern = %r{<p\s+class="responsive-iframe-container".*?>(.*?)<\/p>}
+    matches = @post.content.scan(pattern)
+    matches.each do |match|
+      @post.content.sub!(match, '<div class="raw-html-embed">' + match + '</div>')
+    end
     @can_edit =
       !(@post.reviews.last.try(:status).eql? "Approved for Publishing") ||
         (current_user.can_edit_post(@post)) ||
         (@post.reviews.last.editor_id.eql? current_user.id)
     @categories = Category.active.or(Category.where(id: @post.category_id))
-
     #create new review if no current review or last review was rejected
     @requested_changes =
       @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
