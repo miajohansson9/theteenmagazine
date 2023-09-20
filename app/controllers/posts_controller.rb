@@ -374,27 +374,31 @@ class PostsController < ApplicationController
     render action: :success if @post.save
   end
 
+  # Helper function to wrap and add a custom class
+  def wrap_and_add_class(match)
+    element = match[0]
+    if @wrapped_elements[element].nil?
+      @wrapped_elements[element] = true
+      return "<div class='raw-html-embed'>#{element}</div>"
+    else
+      return element
+    end
+  end
+
   def edit
     if @post.is_locked?
       redirect_to @post, notice: "You can no longer work on this article."
       return
     end
-    pattern = %r{<blockquote class="instagram-media"[^>]*>.*?</blockquote>\s*<script async src="//www.instagram.com/embed.js"></script>}m
-    matches = @post.content.scan(pattern)
-    matches.each do |match|
-      @post.content.sub!(match, '<div class="raw-html-embed">' + match + '</div>')
-    end
-    pattern = %r{<blockquote cite="[^>]*>.*?</blockquote>\s*<script async src="https://www.tiktok.com/embed.js"></script>}m
-    matches = @post.content.scan(pattern)
-    matches.each do |match|
-      @post.content.sub!(match, '<div class="raw-html-embed">' + match + '</div>')
-    end
-    pattern = %r{<p\s+class="responsive-iframe-container".*?>(.*?)<\/p>}
-    matches = @post.content.scan(pattern)
-    matches.each do |match|
-      @post.content.sub!(match, '<div class="raw-html-embed">' + match + '</div>')
+    @post.content.gsub!('class="twitter-tweet"', '')
+    @wrapped_elements = {}
+    pattern = /<blockquote[^>]*\sclass\s*=\s*["'][^"']*["'][^>]*>[\s\S]*?<\/blockquote>|<iframe[^>]*>[\s\S]*?<\/iframe>/m
+    @post.content = @post.content.gsub(pattern) do |match|
+      wrap_and_add_class([match])
     end
     @post.content.gsub!('instgrm.Embeds.process()', '')
+    pattern = /<script\b[^>]*>.*?<\/script>/im
+    @post.content.gsub!(pattern, '')
     @can_edit =
       !(@post.reviews.last.try(:status).eql? "Approved for Publishing") ||
         (current_user.can_edit_post(@post)) ||

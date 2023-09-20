@@ -92,7 +92,6 @@ $(document).ready(function () {
       '<div class="hidden-social-media-wrapper"><div class="hidden-social-media-message"><h4 class="title">Youtube content</h4><p id="message">To honor your privacy, this content can only be viewed on the site it <a href="' +
       youtubeSrc +
       '" target="_blank" rel="nofollow noreferrer" class="link_grn">originates</a> from.</p></div></div>';
-
     // Replace the YouTube iframe with the YouTube div
     youtubeIframe.parentNode.replaceChild(socialMsgDiv, youtubeIframe);
   }
