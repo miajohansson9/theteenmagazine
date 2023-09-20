@@ -96,6 +96,31 @@ $(document).ready(function () {
     youtubeIframe.parentNode.replaceChild(socialMsgDiv, youtubeIframe);
   }
 
+  var spotifyIframe = document.querySelector(
+    'iframe[src*="spotify.com/embed"]'
+  );
+
+  if (spotifyIframe) {
+    var spotifySrc = spotifyIframe.getAttribute("src");
+
+    // Remove the parameters from the Instagram link
+    var indexOfQuestionMark = spotifySrc.indexOf("?");
+    var spotifySrc =
+      indexOfQuestionMark !== -1
+        ? spotifySrc.substring(0, indexOfQuestionMark)
+        : spotifySrc;
+
+    // Create the new div element with YouTube content
+    var socialMsgDiv = document.createElement("div");
+    socialMsgDiv.innerHTML =
+      '<div class="hidden-social-media-wrapper"><div class="hidden-social-media-message"><h4 class="title">Spotify content</h4><p id="message">To honor your privacy, this content can only be viewed on the site it <a href="' +
+      spotifySrc +
+      '" target="_blank" rel="nofollow noreferrer" class="link_grn">originates</a> from.</p></div></div>';
+
+    // Replace the YouTube iframe with the YouTube div
+    spotifyIframe.parentNode.replaceChild(socialMsgDiv, spotifyIframe);
+  }
+
   // Select the element with the id "content"
   var contentElement = document.getElementById("content");
 

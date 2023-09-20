@@ -739,7 +739,7 @@ class PostsController < ApplicationController
     pattern = /<div class="raw-html-embed">(.*?)<\/div>/m
     # Use gsub to replace underscores within the 'raw-html-embed' div
     @post.content.gsub!(pattern) do |embedded_html|
-      @supported_pattern = /(twitter\.com|instagram\.com|tiktok\.com|youtube-nocookie\.com|youtube\.com)/
+      @supported_pattern = /(twitter\.com|instagram\.com|tiktok\.com|spotify\.com|youtube-nocookie\.com|youtube\.com)/
       # Remove unsupported html
       if (embedded_html.match? @supported_pattern)
         embedded_html.gsub(/(?<!\\)_/, '\\_') # Escape underscores only if they're not already escaped
