@@ -394,6 +394,7 @@ class PostsController < ApplicationController
     matches.each do |match|
       @post.content.sub!(match, '<div class="raw-html-embed">' + match + '</div>')
     end
+    @post.content.gsub!('instgrm.Embeds.process()', '')
     @can_edit =
       !(@post.reviews.last.try(:status).eql? "Approved for Publishing") ||
         (current_user.can_edit_post(@post)) ||
