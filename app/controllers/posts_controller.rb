@@ -374,31 +374,12 @@ class PostsController < ApplicationController
     render action: :success if @post.save
   end
 
-  # Helper function to wrap and add a custom class
-  def wrap_and_add_class(match)
-    element = match[0]
-    if @wrapped_elements[element].nil?
-      @wrapped_elements[element] = true
-      return "<div class='raw-html-embed'>#{element}</div>"
-    else
-      return element
-    end
-  end
-
   def edit
     if @post.is_locked?
       redirect_to @post, notice: "You can no longer work on this article."
       return
     end
-    @post.content.gsub!('class="twitter-tweet"', '')
-    @wrapped_elements = {}
-    pattern = /<blockquote[^>]*\sclass\s*=\s*["'][^"']*["'][^>]*>[\s\S]*?<\/blockquote>|<iframe[^>]*>[\s\S]*?<\/iframe>/m
-    @post.content = @post.content.gsub(pattern) do |match|
-      wrap_and_add_class([match])
-    end
-    @post.content.gsub!('instgrm.Embeds.process()', '')
-    pattern = /<script\b[^>]*>.*?<\/script>/im
-    @post.content.gsub!(pattern, '')
+    fix_embedded_html
     @can_edit =
       !(@post.reviews.last.try(:status).eql? "Approved for Publishing") ||
         (current_user.can_edit_post(@post)) ||
@@ -469,6 +450,28 @@ class PostsController < ApplicationController
         end
       redirect_to "/newsletters/#{@newsletter_id}/featured-posts",
                   notice: @message
+    end
+  end
+
+  def fix_embedded_html
+    @post.content.gsub!('class="twitter-tweet"', '')
+    @wrapped_elements = {}
+    pattern = /<blockquote[^>]*\sclass\s*=\s*["'][^"']*["'][^>]*>[\s\S]*?<\/blockquote>|<iframe[^>]*>[\s\S]*?<\/iframe>/m
+    @post.content = @post.content.gsub(pattern) do |match|
+      wrap_and_add_class([match])
+    end
+    @post.content.gsub!('instgrm.Embeds.process()', '')
+    @post.content.gsub!(/<script\b[^>]*>.*?<\/script>/im, '')
+  end
+
+  # Helper function to wrap and add a custom class
+  def wrap_and_add_class(match)
+    element = match[0]
+    if @wrapped_elements[element].nil? && !element.include?("raw-html-embed")
+      @wrapped_elements[element] = true
+      return "<div class='raw-html-embed'>#{element}</div>"
+    else
+      return element
     end
   end
 
@@ -735,6 +738,10 @@ class PostsController < ApplicationController
         "<picture>#{img_tag_without_alt}</picture>#{alt_text_as_link}"
       end
     end
+    @post.content.gsub!('<div class="raw-html-embed"><div class="raw-html-embed"><blockquote', '<div class="raw-html-embed"><blockquote')
+    @post.content.gsub!('blockquote></div></div>', 'blockquote></div>')
+    @post.content.gsub!('<div class="raw-html-embed"><div class="raw-html-embed"><iframe', '<div class="raw-html-embed"><iframe')
+    @post.content.gsub!('iframe></div></div>', 'iframe></div>')
     # Define a regular expression to match underscores within the 'raw-html-embed' div
     pattern = /<div class="raw-html-embed">(.*?)<\/div>/m
     # Use gsub to replace underscores within the 'raw-html-embed' div

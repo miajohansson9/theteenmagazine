@@ -14,18 +14,17 @@ $(document).ready(function () {
         ? instagramPermalink.substring(0, indexOfQuestionMark)
         : instagramPermalink;
 
-    var handleText = instagramBlockquote.querySelector("p")?.textContent;
+    var maybeHandles = instagramBlockquote.querySelectorAll("a");
+    var handle = "";
 
-    if (handleText) {
-      var match = /@[\w\d_]+/.exec(handleText); // Extract the handle
+    maybeHandles.forEach(function (a) {
+      var match = /@[\w\d_]+/.exec(a?.textContent); // Extract the handle
       if (match) {
-        var handle = "<h3>" + match[0] + "</h3>"; // Use the extracted handle
+        handle = "<h3>" + match[0] + "</h3>"; // Use the extracted handle
       } else {
-        var handle = ""; // No valid handle found
+        handle = ""; // No valid handle found
       }
-    } else {
-      var handle = ""; // No text content found
-    }
+    });
 
     // Create the new div element with Instagram content
     var socialMsgDiv = document.createElement("div");
