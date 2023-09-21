@@ -18,9 +18,9 @@ $(document).ready(function () {
     var handle = "";
 
     maybeHandles.forEach(function (a) {
-      var match = /@[\w\d_]+/.exec(a?.textContent); // Extract the handle
+      var match = /\((@[^)]*)\)/.exec(a?.textContent); // Extract the handle
       if (match) {
-        handle = "<h3>" + match[0] + "</h3>"; // Use the extracted handle
+        handle = "<h3>" + match[1] + "</h3>"; // Use the extracted handle
       } else {
         handle = ""; // No valid handle found
       }
@@ -44,12 +44,11 @@ $(document).ready(function () {
   var tiktokBlockquotes = document.querySelectorAll(".tiktok-embed");
 
   tiktokBlockquotes.forEach(function (tiktokBlockquote) {
-    console.log(tiktokBlockquote);
     // Extract the TikTok link from the cite attribute
     var tiktokLink = tiktokBlockquote.getAttribute("cite");
 
-    var match = /@([\w\d_]+)/.exec(tiktokLink);
-    var handle = match ? "@" + match[1] : null;
+    var match = /(?<=@)[^/]+(?=\/)/.exec(tiktokLink);
+    var handle = match ? "@" + match[0] : null;
 
     if (handle) {
       handle = "<h3>" + handle + "</h3>";

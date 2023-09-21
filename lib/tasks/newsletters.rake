@@ -73,7 +73,7 @@ namespace :newsletters do
         @writers = [[]]
         User.writer.where(last_sign_in_at: (Time.now - 1.month)..Time.now).each do |user|
             @user_comments = @comments.where(user_id: user.id)
-            if !@user_comments.nil? && @user_comments.count >= 4
+            if !@user_comments.nil? && @user_comments.count >= 3
                 if @commenters[@user_comments.count - 3].nil?
                     @writers[@user_comments.count - 3] = [user.first_name]
                     @commenters[@user_comments.count - 3] = ["<address style='text-align: center;'><a href='https://www.theteenmagazine.com/writers/" + user.slug + "'>" + user.full_name + "</a>, " + "#{@user_comments.count}" + " comments</address>"]
