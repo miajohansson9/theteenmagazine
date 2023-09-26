@@ -1,12 +1,10 @@
 $(document).ready(function () {
   var instagramBlockquotes = document.querySelectorAll(".instagram-media");
-
   instagramBlockquotes.forEach(function (instagramBlockquote) {
     // Extract the Instagram link from the data-instgrm-permalink attribute
     var instagramPermalink = instagramBlockquote.getAttribute(
       "data-instgrm-permalink"
     );
-
     // Remove the parameters from the Instagram link
     var indexOfQuestionMark = instagramPermalink.indexOf("?");
     var instagramLink =

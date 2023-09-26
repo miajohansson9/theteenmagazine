@@ -6,7 +6,7 @@
         url_for(post.thumbnail.variant(resize_to_fill: [738, 517], format: 'webp')) => '738w', 
         url_for(post.thumbnail.variant(resize_to_fill: [100, 70], format: 'webp')) => '100w', 
         url_for(post.thumbnail.variant(resize_to_fill: [1200, 845], format: 'webp')) => '1200w' 
-    }, sizes: '100vw, 800px', id: 'logo', class: img_class, alt: "#{post.title}" %>
+    }, sizes: '100vw, 800px', id: 'logo', loading: 'lazy', class: img_class, alt: "#{post.title}" %>
 <% else %>
-    <%= image_tag url_for("thumbnail.png"), class: img_class, alt: "#{post.title}" %>
+    <%= image_tag url_for("thumbnail.png"), loading: 'lazy', class: img_class, alt: "#{post.title}" %>
 <% end %>
