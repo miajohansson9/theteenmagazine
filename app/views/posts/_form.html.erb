@@ -14,7 +14,7 @@
       <%= render "pitches/deadline_warning_msg", post: @post %>
     <% end %>
     <p class='mb-0 mt-4'>Title: </p>
-    <%= f.text_field :title, placeholder: "Creating Intrigue with Your Title 📚👀" %>
+    <%= f.text_field :title, placeholder: "How can you spark curiosity with your title? 👀🖊️" %>
     <% if current_user.is_manager? %>
       <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
     <% end %>
