@@ -73,10 +73,10 @@
       <%= link_to 'here', send_user_email_path(:recipient_id => 1, :request_image => true, :pitch_id => @pitch.id), class: "link_grn", target: "_blank" %>.
     </i></p>
     <% if (@pitch.user_id.eql? current_user.id)  %>
-      <% if (@pitch.created_at.present? && @pitch.created_at < Date.new(2023, 9, 30)) %>
+      <% if (@pitch.created_at.present? && @pitch.created_at < Date.new(2023, 10, 4)) %>
         <div>
           <div class="alert alert-warning" role="alert">
-            Due to an ongoing copyright issue, <b>our image policy has changed as of September 20th, 2023</b>. Please read the <a target="_blank" class="link_underline"  href="/finding-images">updated image policy</a> before checking the box below.
+            Due to an ongoing copyright issue, <b>our image policy has changed as of October 4th, 2023</b>. Please read the <a target="_blank" class="link_underline"  href="/finding-images">updated image policy</a> before checking the box below.
           </div>
           <p><i>
             <%= f.check_box :agree_to_image_policy, class: "d-inline" %>
