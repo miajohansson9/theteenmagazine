@@ -3,4 +3,4 @@
 <% else %>
   <%= render "posts/draft" %>
 <% end %>
-<%= render_async_cache get_promoted_posts_path(post_id: @post.id), retry_count: 3 %>
+<%= render_async get_promoted_posts_path(post_id: @post.id), retry_count: 3 %>

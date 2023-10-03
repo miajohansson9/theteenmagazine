@@ -125,7 +125,7 @@
               </div>
               <% if !@post.comments_turned_off %>
                 <div id="comments" class="share_article_feedback pb-0 pr-0 pl-0">
-                  <%= render_async_cache get_comments_published_path(post_id: @post.id, user_id: @user.id), retry_count: 3 %>
+                  <%= render_async get_comments_published_path(post_id: @post.id, user_id: @user.id), retry_count: 3 %>
                 </div>
               <% end %>
             </div>

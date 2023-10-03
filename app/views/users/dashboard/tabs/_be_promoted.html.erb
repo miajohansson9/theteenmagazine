@@ -9,7 +9,7 @@
   <div class="progress mt-3 pl-0 mb-4">
     <div class="progress-bar progress-bar-badges pl-0" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
   </div>
-  <%= render_async_cache get_published_articles_path(id: @user.id), container_id: 'published-articles', container_class: "p-0", toggle: { selector: '#be-promoted-tab-classic', event: :click } do %><
+  <%= render_async get_published_articles_path(id: @user.id), container_id: 'published-articles', container_class: "p-0", toggle: { selector: '#be-promoted-tab-classic', event: :click } do %><
     <div class="d-flex justify-content-center">
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>

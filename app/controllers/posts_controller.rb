@@ -727,8 +727,8 @@ class PostsController < ApplicationController
       alt_text = $2.strip
       link_url = $3
       if alt_text.empty?
-        match  # Keep the original content if alt text is empty
-      elsif link_url.empty?
+        "<img #{img_attributes}>"
+      elsif link_url.nil? || link_url.empty?
         img_tag_without_alt = "<img #{img_attributes}>"
         alt_text_as_caption = "<figcaption style='text-align: center'>Photo by: #{alt_text}</figcaption>"
         "<picture>#{img_tag_without_alt}</picture>#{alt_text_as_caption}"

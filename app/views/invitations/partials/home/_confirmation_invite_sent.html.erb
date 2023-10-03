@@ -80,7 +80,7 @@
     $('#form-invite').html("<%= j(render partial: 'users/dashboard/tabs/earn_points', locals: {invitation: Invitation.new}) %>");
     var container = document.getElementById('past-invites-render-container');
     var event = new Event('refresh');
-    // Dispatch 'refresh' on the render_async_cache container
+    // Dispatch 'refresh' on the render container
     container.dispatchEvent(event)
   }
   $(document).ready(function() {

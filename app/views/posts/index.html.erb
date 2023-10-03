@@ -107,7 +107,7 @@
       <%== pagy_nav(@pagy).html_safe %>
     </div>
     <div class="tab-pane fade" id="conversations-classic" role="tabpanel" aria-labelledby="conversations-tab-classic">
-      <%= render_async_cache get_conversations_following_path, toggle: { selector: '#conversations-tab-classic', event: :click } do %>
+      <%= render_async get_conversations_following_path, toggle: { selector: '#conversations-tab-classic', event: :click } do %>
         <div class="d-flex justify-content-center">
           <div class="spinner-border mb-4" role="status">
             <span class="sr-only">Loading...</span>
@@ -116,7 +116,7 @@
       <% end %>
     </div>
     <div class="tab-pane fade" id="all-comments-classic" role="tabpanel" aria-labelledby="all-comments-tab-classic">
-      <%= render_async_cache get_all_comments_path, toggle: { selector: '#all-comments-tab-classic', event: :click } do %>
+      <%= render_async get_all_comments_path, toggle: { selector: '#all-comments-tab-classic', event: :click } do %>
         <div class="d-flex justify-content-center">
           <div class="spinner-border mb-4" role="status">
             <span class="sr-only">Loading...</span>

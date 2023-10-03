@@ -8,17 +8,17 @@
     <h1 class="section--title"><a href="/categories/interviews">interviews</a></h1>
     <div class="flex--welcome">
       <div class="flex-1">
-        <%= render_async_cache get_category_1_welcome_path, retry_count: 3 do %>
-          <%= render "welcome/placeholders/category_row_placeholder" %>
+        <%= render_async get_category_1_welcome_path, retry_count: 3 do %>
+          <%= render_async "welcome/placeholders/category_row_placeholder" %>
         <% end %>
         <h1 class="section--title"><a href="/categories/student-life">student life</a></h1>
         <div class="content_hint"></div>
-        <%= render_async_cache get_category_2_welcome_path, retry_count: 3 do %>
-          <%= render "welcome/placeholders/category_row_placeholder" %>
+        <%= render_async get_category_2_welcome_path, retry_count: 3 do %>
+          <%= render_async "welcome/placeholders/category_row_placeholder" %>
         <% end %>
         <h1 class="section--title"><a href="/categories/opinion">opinion</a></h1>
-        <%= render_async_cache get_category_3_welcome_path, retry_count: 3 do %>
-          <%= render "welcome/placeholders/category_row_placeholder" %>
+        <%= render_async get_category_3_welcome_path, retry_count: 3 do %>
+          <%= render_async "welcome/placeholders/category_row_placeholder" %>
         <% end %>
       </div>
       <div class="most_read contain_articles">
@@ -37,14 +37,14 @@
             </script> -->
         </div>
         <h1 class="mt-4 section--title"><%= link_to "#trending", "/trending" %></h1>
-        <%= render_async_cache get_trending_posts_path, retry_count: 3 %>
+        <%= render_async get_trending_posts_path, retry_count: 3 %>
         <div class="content_hint"></div>
       </div>
     </div>
     <h1 class="section--title"><a href="/categories/beauty-style">beauty & style</a></h1>
     <div class="flex--welcome">
       <div class="flex-1">
-        <%= render_async_cache get_category_4_welcome_path %>
+        <%= render_async get_category_4_welcome_path %>
       </div>
       <div class="most_read contain_articles">
         <div class="ads_wrapper">
@@ -66,7 +66,7 @@
     </div>
     <div class="content_hint"></div>
     <h1 class="section--title"><a href="/search">recent articles</a></h1>
-    <%= render_async_cache get_recent_posts_path, retry_count: 3 %>
+    <%= render_async get_recent_posts_path, retry_count: 3 %>
     <div class="content_hint"></div>
   </div>
 </div>
