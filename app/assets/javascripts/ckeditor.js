@@ -59,7 +59,6 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
     "selectAll",
     "findAndReplace",
     "removeFormat",
-    "sourceEditing",
   ],
   htmlSupport: {
     allow: [
@@ -93,6 +92,7 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
     },
   },
   removePlugins: [
+    "SourceEditing",
     "ImageToolbar",
     "ImageInsert",
     "AutoImage",
