@@ -2,11 +2,11 @@ $(document).ready(function () {
   var instagramBlockquotes = document.querySelectorAll(".instagram-media");
   instagramBlockquotes.forEach(function (instagramBlockquote) {
     // Extract the Instagram link from the data-instgrm-permalink attribute
-    var instagramPermalink = instagramBlockquote.getAttribute(
-      "data-instgrm-permalink"
-    );
+    var instagramPermalink =
+      instagramBlockquote.getAttribute("data-instgrm-permalink") ??
+      instagramBlockquote.getAttribute("src");
     // Remove the parameters from the Instagram link
-    var indexOfQuestionMark = instagramPermalink.indexOf("?");
+    var indexOfQuestionMark = instagramPermalink?.indexOf("?");
     var instagramLink =
       indexOfQuestionMark !== -1
         ? instagramPermalink.substring(0, indexOfQuestionMark)
@@ -76,7 +76,7 @@ $(document).ready(function () {
     youtubeSrc = youtubeSrc.replace("youtube.com", "youtube-nocookie.com");
 
     // Remove the parameters from the Instagram link
-    var indexOfQuestionMark = youtubeSrc.indexOf("?");
+    var indexOfQuestionMark = youtubeSrc?.indexOf("?");
     var youtubeSrc =
       indexOfQuestionMark !== -1
         ? youtubeSrc.substring(0, indexOfQuestionMark)
