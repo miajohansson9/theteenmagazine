@@ -39,6 +39,8 @@ $(document).ready(function () {
     );
   });
 
+  $(".instagram-media-registered").remove();
+
   var tiktokBlockquotes = document.querySelectorAll(".tiktok-embed");
 
   tiktokBlockquotes.forEach(function (tiktokBlockquote) {
