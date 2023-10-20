@@ -50,45 +50,47 @@ task run_nightly_tasks: :environment do
           .try(:value) || "0"
       )
     User.editor.each do |editor|
-      @editor_pitches_cnt =
-        editor
-          .pitches
-          .where("created_at > ?", Date.today.beginning_of_month)
-          .count
-      @editor_reviews_cnt =
-        Review
-          .where(editor_id: editor.id)
-          .where("updated_at > ?", Date.today.beginning_of_month)
-          .count
-      @editor_comments_cnt = editor.comments.where("created_at > ?", Date.today.beginning_of_month).count
-      @is_not_on_track =
-        (@editor_pitches_cnt + @editor_reviews_cnt + @editor_comments_cnt <
-         (@reviews_requirement + @pitches_requirement + @comments_requirement) / 2) && (editor.created_at < (Time.now - 30.days))
-      if @is_not_on_track
-        # check if missed editor deadline for two months ago
-        # ie. today is May 1st; I want to check if missed deadline in April too
-        if (editor.missed_editor_deadline.try(:year) === (Time.now - 20.days).year) &&
-           (editor.missed_editor_deadline.try(:month) === (Time.now - 20.days).month) &&
-           !(editor.skip_assignment)
-          ApplicationMailer.editor_warning_deadline_2(
-            editor,
-            @reviews_requirement,
-            @pitches_requirement,
-            @comments_requirement,
-            @editor_pitches_cnt,
-            @editor_reviews_cnt,
-            @editor_comments_cnt
-          ).deliver
-        else
-          ApplicationMailer.editor_warning_deadline_1(
-            editor,
-            @reviews_requirement,
-            @pitches_requirement,
-            @comments_requirement,
-            @editor_pitches_cnt,
-            @editor_reviews_cnt,
-            @editor_comments_cnt
-          ).deliver
+      if !(editor.is_manager?)
+        @editor_pitches_cnt =
+          editor
+            .pitches
+            .where("created_at > ?", Date.today.beginning_of_month)
+            .count
+        @editor_reviews_cnt =
+          Review
+            .where(editor_id: editor.id)
+            .where("updated_at > ?", Date.today.beginning_of_month)
+            .count
+        @editor_comments_cnt = editor.comments.where("created_at > ?", Date.today.beginning_of_month).count
+        @is_not_on_track =
+          (@editor_pitches_cnt + @editor_reviews_cnt + @editor_comments_cnt <
+          (@reviews_requirement + @pitches_requirement + @comments_requirement) / 2) && (editor.created_at < (Time.now - 30.days))
+        if @is_not_on_track
+          # check if missed editor deadline for two months ago
+          # ie. today is May 1st; I want to check if missed deadline in April too
+          if (editor.missed_editor_deadline.try(:year) === (Time.now - 20.days).year) &&
+            (editor.missed_editor_deadline.try(:month) === (Time.now - 20.days).month) &&
+            !(editor.skip_assignment)
+            ApplicationMailer.editor_warning_deadline_2(
+              editor,
+              @reviews_requirement,
+              @pitches_requirement,
+              @comments_requirement,
+              @editor_pitches_cnt,
+              @editor_reviews_cnt,
+              @editor_comments_cnt
+            ).deliver
+          else
+            ApplicationMailer.editor_warning_deadline_1(
+              editor,
+              @reviews_requirement,
+              @pitches_requirement,
+              @comments_requirement,
+              @editor_pitches_cnt,
+              @editor_reviews_cnt,
+              @editor_comments_cnt
+            ).deliver
+          end
         end
       end
     end

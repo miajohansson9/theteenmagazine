@@ -1,8 +1,8 @@
 class TokenController < ApplicationController
   require 'jwt'
   def generate
-    environment_id = ENV['CKBOX_ENVIRONMENT_ID']
-    key = ENV['CKBOX_KEY']
+    environment_id = ENV['CKBOX_ENVIRONMENT_TEMP']
+    key = ENV['CKBOX_KEY_TEMP']
 
     role = 'reader';
     if current_user.admin? || current_user.image_admin?

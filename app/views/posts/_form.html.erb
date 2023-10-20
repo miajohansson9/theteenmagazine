@@ -41,12 +41,22 @@
     <% if @post.thumbnail.present? %><p>Thumbnail Preview</p><% end %>
     <div class="d-flex flex-row flex-wrap align-items-end justify-content-between">
       <% if @post.thumbnail.present? %>
-        <%= image_tag(@post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), class: 'mw-100', loading: 'lazy') %>
+        <%= image_tag(@post.thumbnail.variant(resize_to_fill: [540,340], format: 'webp'), class: 'mw-100 pb-3', loading: 'lazy') %>
       <% end %>
-      <p id="showDialogButton" class="btn btn-primary mt-3 m-0 d-inline">New thumbnail</p>
+      <%
+=begin%>
+ <p id="showDialogButton" class="btn btn-primary mt-3 m-0 d-inline">New thumbnail</p> 
+<%
+=end%>
     </div>
-    <p id="showSelectedUrl"></p>
-    <%= f.hidden_field :thumbnail_url, id: "thumbnail-field", value: nil, class: "mb-0" %>
+    <%= f.file_field :thumbnail %>
+    <p>(REQUIRED) Give credit for your thumbnail image. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. For a full list of approved websites, please refer to the <a target="_blank" href="/finding-images">image requirements</a>.</p>
+    <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0",  id: "thumbnail-credits" %>
+    <p><i>If you do not properly cite your thumbnail image, the thumbnail will not show up in your published article.</i></p>
+    <%
+=begin%>
+ <p id="showSelectedUrl"></p>
+ <%= f.hidden_field :thumbnail_url, id: "thumbnail-field", value: nil, class: "mb-0" %>
     <div id="ckbox"></div>
     <% if @post.thumbnail.present? && @post.thumbnail_credits.nil? %>
       <p><u>Give credit for your thumbnail image (Required)</u>. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. 
@@ -54,7 +64,7 @@
       <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0",  id: "thumbnail-credits" %>
     <% else %>
       <%= f.hidden_field :thumbnail_credits, class: "mb-0",  id: "thumbnail-credits" %>
-    <% end %>
+    <% end %> 
     <p class="mt-0">
       <i>
         Do you have an image that meets <a href="/finding-images" class="link_grn">The Teen Magazine's image requirements</a> that you want to include in your article? 
@@ -62,15 +72,17 @@
         <%= link_to 'here', send_user_email_path(:recipient_id => 1, :request_image => true, :post_id => @post.id), class: "link_grn", target: "_blank" %>.
       </i>
     </p>
-    <% if (@post.user_id.eql? current_user.id) %>
+<%
+=end%>
+    <% if true || (@post.user_id.eql? current_user.id) %>
       <% if (@post.created_at.present? && @post.created_at < Date.new(2023, 10, 4)) %>
         <div>
           <div class="alert alert-warning" role="alert">
-            Due to an ongoing copyright issue, <b>our image policy has changed as of October 4th, 2023</b>. Please read the <a target="_blank" class="link_underline"  href="/finding-images">updated image policy</a> before checking the box below.
+            Due to an ongoing copyright issue, <b>our image policy has changed as of October 19th, 2023</b>. Please read the <a target="_blank" class="link_underline"  href="/finding-images">updated image policy</a> before checking the box below.
           </div>
           <p><i>
             <%= f.check_box :agree_to_image_policy, class: "d-inline" %>
-              I have read and understand the image policy found <a target="_blank" class="link_grn" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this post has the proper attributions and follows all the requirements explained in the Image Policy. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
+              I have read and understand the image policy found <a target="_blank" class="link_grn" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this post <b>has the proper attributions</b> and follows all the requirements explained in the <a target="_blank" class="link_grn" href="/finding-images">Image Policy</a>. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
           </i></p>
           <% if @post.agree_to_image_policy.nil? || !@post.agree_to_image_policy %>
             <%= f.hidden_field :agree_to_image_policy_at, value: Time.now %>

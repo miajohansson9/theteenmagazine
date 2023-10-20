@@ -738,10 +738,10 @@ class PostsController < ApplicationController
         "<picture>#{img_tag_without_alt}</picture>#{alt_text_as_link}"
       end
     end
-    @post.content.gsub!('<div class="raw-html-embed"><div class="raw-html-embed"><blockquote', '<div class="raw-html-embed"><blockquote')
-    @post.content.gsub!('blockquote></div></div>', 'blockquote></div>')
-    @post.content.gsub!('<div class="raw-html-embed"><div class="raw-html-embed"><iframe', '<div class="raw-html-embed"><iframe')
-    @post.content.gsub!('iframe></div></div>', 'iframe></div>')
+    @post.content.gsub!(/<div class="raw-html-embed">\s*<div class="raw-html-embed">\s*<blockquote/, '<div class="raw-html-embed"><blockquote')
+    @post.content.gsub!(/blockquote>\s*<\/div>\s*<\/div>/, 'blockquote></div>')
+    @post.content.gsub!(/<div class="raw-html-embed">\s*<div class="raw-html-embed">\s*<iframe/, '<div class="raw-html-embed"><iframe')
+    @post.content.gsub!(/iframe>\s*<\/div>\s*<\/div>/, 'iframe></div>')
     # Define a regular expression to match underscores within the 'raw-html-embed' div
     pattern = /<div class="raw-html-embed">(.*?)<\/div>/m
     # Use gsub to replace underscores within the 'raw-html-embed' div

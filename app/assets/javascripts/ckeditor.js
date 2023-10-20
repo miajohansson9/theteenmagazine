@@ -51,7 +51,7 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
     "alignment",
     "|",
     "blockQuote",
-    "ckbox",
+    "uploadImage",
     "htmlEmbed",
     "undo",
     "redo",
@@ -97,7 +97,6 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
     "ImageInsert",
     "AutoImage",
     "MediaEmbed",
-    "SimpleUploadAdapter",
     "Base64UploadAdapter",
     "ImageResize",
     "CKFinder",
@@ -188,7 +187,7 @@ function loadCKBoxScript() {
     },
     view: {
       openLastView: true,
-      onChange: (_) => {
+      onChange: (change) => {
         if (!!form) {
           form.addEventListener("submit", preventFormSubmission);
         }

@@ -15,7 +15,12 @@
   <p>As a writer for our platform, you are responsible for ensuring that any images used in your content comply with applicable copyright laws and are used in accordance with our policies. Failure to follow this policy will result in your immediate removal from The Teen Magazine's platform.</p>
   <ul>
     <li>
-      <b class="text-decoration-underline">Image Attribution on every image</b>: When using images in your content and thumbnail, you must <b>always</b> provide proper attribution, giving credit to the original creator or source of the image as required by the relevant licensing terms. This is handled automatically for you when you upload images from The Teen Magazine's asset library.
+      <b class="text-decoration-underline">Image Attribution on every image</b>: When using images in your content and thumbnail, you must <b>always</b> provide proper attribution, giving credit to the original creator or source of the image as required by the relevant licensing terms. 
+      <%
+=begin%>
+ This is handled automatically for you when you upload images from The Teen Magazine's asset library. 
+<%
+=end%>
       <span style="background-color: #FCD04D">Use a link back to the original image (if possible) and include the name of the copyright owner (see example)</span>.
     </li>
     
@@ -40,13 +45,17 @@
         If an image is not from this list, you must receive explicit permission to use that image in your article from the business or person who owns the copyright. 
       </div>
     </li>
-    <li>
+    <%
+=begin%>
+ <li>
       <b class="text-decoration-underline">The Teen Magazine's asset library</b>: The Teen Magazine now has an image library with images from every category. 
       You can choose any image from the asset library for your articles and crediting the image will be done for you automatically. This is always the easiest way to meet the image requirements.
       If there is an image you want added to the asset library for an article, you can fill out the form 
       <%= link_to 'here', send_user_email_path(:recipient_id => 1, :request_image => true), class: "link_grn", target: "_blank" %> to have it included. The Teen Magazine reserves the right to deny uploading 
       any image to The Teen Magazine's server for any reason.
-    </li>
+    </li> 
+<%
+=end%>
     <li>
       <b class="text-decoration-underline">Prohibited Images</b>: If the image you found is not from the list above, it is <b>prohibited</b> to use. 
             <h3>***Pinterest is NOT an ok site to get images from! If you have images on your articles that you have cited from Pinterest, you must remove them.***</h3>
@@ -78,7 +87,7 @@
   <p>
     If you have any questions about the image policy or following the image guidelines, you can post in the <b>Discord chat</b> <a href="https://discord.com/channels/1081601449550688286/1081601450737676474">here</a>.
   </p>
-  <i>Last updated October 4th, 2023</i>
+  <i>Last updated October 19th, 2023</i>
   <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
     <circle cx="26" cy="26" r="25" fill="none"/>
     <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
