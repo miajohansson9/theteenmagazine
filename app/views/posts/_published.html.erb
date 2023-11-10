@@ -138,7 +138,7 @@
 </div>
 <script>
   $(document).ready(function() {
-    if (<%= @post.show_disclosure %>) {
+    if (<%= @post.show_disclosure %> || false) {
      $('.content_wrapper a')
          .not("a[href*=theteenmagazine]")
          .attr('rel','nofollow');

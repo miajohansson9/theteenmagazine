@@ -54,7 +54,6 @@ gem 'linguo'
 gem "sentry-ruby"
 gem "sentry-rails"
 gem "pretender"
-gem 'invisible_captcha'
 gem 'open-uri'
 gem 'jwt'
 

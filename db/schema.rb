@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_17_184631) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_10_204426) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -325,6 +325,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_17_184631) do
     t.integer "rank"
     t.datetime "agree_to_image_policy_at", precision: nil
     t.string "thumbnail_url"
+    t.integer "profanity_score"
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"

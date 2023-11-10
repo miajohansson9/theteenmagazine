@@ -38,6 +38,14 @@
       <%= f.text_area :content, value: @post.content, id: "editor" %>
     </div>
     <p class="d-block mt-0 mb-0">Category:<%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-0") %></p>
+    <% if @post.partner_id || current_user.admin %>
+      <p>Disclose partnership:
+        <%= f.check_box :show_disclosure %>
+        <i>
+          You must check this box if you have received any compensation for writing this article. Compensation can be monetary or in the form of a product.
+        </i>
+      </p>
+    <% end %>
     <% if @post.thumbnail.present? %><p>Thumbnail Preview</p><% end %>
     <div class="d-flex flex-row flex-wrap align-items-end justify-content-between">
       <% if @post.thumbnail.present? %>

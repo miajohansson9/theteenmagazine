@@ -7,7 +7,7 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   has_one_attached :thumbnail
-
+  
   validates :title, presence: true
   validates :content, presence: true
   validates :thumbnail, content_type: [:png, :jpg, :jpeg, :gif, :webp, :heic],
@@ -58,10 +58,6 @@ class Post < ApplicationRecord
         -> {
           joins(:pitch).where(pitch: { priority: "High" })
         }
-  scope :published,
-        -> {
-          includes(:reviews).where(reviews: { status: "Approved for Publishing", active: true }).where("publish_at < ?", Time.now)
-        }
   scope :has_been_submitted,
         -> {
           joins(:reviews).where(
@@ -75,27 +71,39 @@ class Post < ApplicationRecord
             },
           )
         }
-
   scope :trending,
         -> {
           order("trending_score desc")
         }
-
   scope :most_viewed,
         -> {
           order(
             "post_impressions desc"
           )
         }
-
   scope :by_published_date, -> { order(publish_at: :desc) }
-
   scope :by_updated,
         -> {
           order("posts.updated_at DESC")
         }
+  scope :published, -> { includes(:reviews).where(reviews: { status: "Approved for Publishing", active: true }).published }
+
+  def self.published
+    profanity_score_limit = ENV['PROFANITY_SCORE'].to_i
+    where(
+      "profanity_score IS NULL OR profanity_score <= ?", 
+      profanity_score_limit
+    )
+    .where("publish_at < ?", Time.now)
+  end
 
   def is_published?
+    if !profanity_score.nil?
+      if profanity_score > ENV['PROFANITY_SCORE'].to_i
+        @published = false
+        return
+      end
+    end
     @published = publish_at.present? ? (publish_at < Time.now) : false
   end
 
