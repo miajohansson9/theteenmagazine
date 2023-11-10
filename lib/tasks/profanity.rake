@@ -1,7 +1,7 @@
 
 namespace :profanity do
     task :check_for_bad_words_in_posts, [:update_profanity_score] => :environment do |t, args|
-        bad_words = YAML.load_file(Rails.root.join('config', 'blacklist.yml'))
+        bad_words = YAML.load_file(Rails.root.join('config', 'small_blacklist.yml'))
         Post.where('publish_at is NOT NULL OR publish_at < ?', Time.now).find_each do |post|
             content = post.content.to_s.downcase
             bad_words_pattern = Regexp.union(bad_words.map { |word| /\b#{Regexp.escape(word)}\b/i })
