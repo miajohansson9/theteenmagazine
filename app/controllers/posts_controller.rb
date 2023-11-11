@@ -754,6 +754,13 @@ class PostsController < ApplicationController
         embedded_html = ''
       end
     end
+    bad_words = YAML.load_file(Rails.root.join('config', 'small_blacklist.yml'))
+    bad_words_pattern = Regexp.union(bad_words.map { |word| /\b#{Regexp.escape(word)}\b/i })
+    found_bad_words = @post.content.scan(bad_words_pattern)
+    # check in content
+    if found_bad_words.any?
+      @post.content.gsub!(bad_words_pattern, '[censored]')
+    end
     @post.content.gsub!('dir="ltr"', "")
     @post.content.gsub!("h1", "h2")
     @post.content.gsub!("&nbsp;", " ")
