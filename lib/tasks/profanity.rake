@@ -1,6 +1,6 @@
 
 namespace :profanity do
-    task :check_for_bad_words_in_posts, [:update_profanity_score] => :environment do |t, args|
+    task :check_for_bad_words_in_posts, [:replace] => :environment do |t, args|
         bad_words = YAML.load_file(Rails.root.join('config', 'small_blacklist.yml'))
         Post.where('publish_at is NOT NULL OR publish_at < ?', Time.now).find_each do |post|
             content = post.content.to_s.downcase
@@ -8,10 +8,18 @@ namespace :profanity do
             found_bad_words = content.scan(bad_words_pattern)
             if found_bad_words.any?
                 puts "Post #{post.id} contains bad words: #{found_bad_words.join(', ')}"
-                if (args[:update_profanity_score])
-                    post.profanity_score = found_bad_words.size
+                # if (args[:update_profanity_score] == 'true')
+                #     post.profanity_score = found_bad_words.size
+                #     post.save
+                #     puts "updating profanity score to: #{post.profanity_score}"
+                # end
+                if (args[:replace] == 'true')
+                    bad_words_pattern = Regexp.union(bad_words.map { |word| /\b#{Regexp.escape(word)}\b/i })
+                    # Replace bad words with a placeholder (e.g., '[censored]')
+                    censored_content = content.gsub(bad_words_pattern, '[censored]')
+                    puts 'Censored content'
+                    post.content = censored_content
                     post.save
-                    puts "updating profanity score to: #{post.profanity_score}"
                 end
             end
         end
