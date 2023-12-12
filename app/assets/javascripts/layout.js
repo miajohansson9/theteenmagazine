@@ -5,6 +5,10 @@ $(document).ready(function () {
     $(".notice").slideUp();
   }, 1500);
 
+  $("#content img").each(function () {
+    // Add the loading="lazy" attribute to each image
+    $(this).attr("loading", "lazy");
+  });
   $("#content").removeClass("javascript-disabled");
   // hide images where image policy hasn't been agreed to
   $(".image-policy-not-agreed-to").each(function () {

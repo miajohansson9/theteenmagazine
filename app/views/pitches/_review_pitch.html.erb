@@ -1,6 +1,10 @@
 <h3 class="pitch_ttl mt-2">Review <i><%= @pitch.title %></i></h3>
 <p class="pitch_usr">Pitched by <%= link_to(@pitch.user.try(:full_name), @pitch.user, class: "pitch_btn") %> under <%= link_to(@pitch.category.name, @pitch.category, class: "pitch_btn") %></p>
-<%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540, 380]), class: "image_fit_scrn") %>
+<% if @pitch.thumbnail.present? %>
+    <%= image_tag(@pitch.thumbnail.variant(resize_to_fill: [540, 380]), class: "image_fit_scrn") %>
+<% else %>
+    <%= image_tag url_for("thumbnail.png"), style: 'width: 100%', loading: 'lazy' %>
+<% end %>
 <%= markdown @pitch.description %>
 
 <%= form_for @pitch do |f| %>
