@@ -658,7 +658,7 @@ class UsersController < ApplicationController
   end
 
   def is_admin?
-    if (current_user && current_user.admin?)
+    if (current_user && current_user.is_manager?)
       true
     else
       redirect_to current_user, notice: "You do not have access to this page."
