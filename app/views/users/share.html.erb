@@ -19,7 +19,7 @@
               <% @posts.each do |draft| %>
                 <div class="card" style="width: 32%;">
                   <a href="<%= post_path(draft)%>">
-                    <% if draft.thumbnail.exists? %>
+                    <% if draft.thumbnail.attached? %>
                       <%= image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340], format: 'webp'), :class => "card-img-top") %>
                     <% else %>
                       <%= image_tag("thumbnail.png", :class => "card-img-top") %>
@@ -37,7 +37,7 @@
                     <%= form_for draft do |f| %>
                       <%= f.hidden_field :partner_id, value: @user.id %>
                       <%= f.hidden_field :sharing, value: false %>
-                      <div class="btn_cntnr mb-0 pb-0">
+                      <div class="btn_cntnr mb-0 pb-0 me-4">
                         <%= f.submit "Add #{@user.full_name}",
                              data: {confirm: "This draft will become viewable by #{@user.full_name}. Do you want to continue?"},
                              class: "newpost--new--profile" %>

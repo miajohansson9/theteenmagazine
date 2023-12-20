@@ -25,8 +25,9 @@
     <%= stylesheet_link_tag params[:controller] %>
     <%= stylesheet_link_tag 'application'  %>
     <%= javascript_include_tag 'application'%>
-    <%= javascript_include_tag 'layout' %>
+    <%= javascript_include_tag 'layout', cache: false %>
     <% if params[:controller].eql? 'posts' %>
+        <%= javascript_include_tag 'hidesocialmedia', cache: false %>
     <% end %>
     <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
   </head>

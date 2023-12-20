@@ -132,46 +132,46 @@ $(document).ready(function () {
     });
   }
 
-  // Define the URL pattern to match
-  var urlPattern =
-    /(twitter\.com|instagram\.com|tiktok\.com|youtube-nocookie\.com|youtube\.com)/;
+  // // Define the URL pattern to match
+  // var urlPattern =
+  //   /(twitter\.com|instagram\.com|tiktok\.com|youtube-nocookie\.com|youtube\.com)/;
 
-  // Get all iframes and blockquotes on the page
-  var mediaElements = document.querySelectorAll("iframe, blockquote");
+  // // Get all iframes and blockquotes on the page
+  // var mediaElements = document.querySelectorAll("iframe, blockquote");
 
-  // Loop through each media element
-  mediaElements.forEach(function (element) {
-    if (element.tagName === "IFRAME") {
-      // If it's an iframe, extract the src attribute
-      var src = element.getAttribute("src");
+  // // Loop through each media element
+  // mediaElements.forEach(function (element) {
+  //   if (element.tagName === "IFRAME") {
+  //     // If it's an iframe, extract the src attribute
+  //     var src = element.getAttribute("src");
 
-      // Check if the src matches the URL pattern
-      if (!urlPattern.test(src)) {
-        // If it doesn't match, replace the iframe with a message and link
-        var socialMsgDiv = document.createElement("div");
-        socialMsgDiv.className = "hidden-social-media-wrapper";
-        socialMsgDiv.innerHTML =
-          '<div class="hidden-social-media-message"><h4 class="title">Social Media content</h4><p id="message">To honor your privacy, this content can only be viewed on the site it <a href="' +
-          src +
-          '" target="_blank" rel="nofollow noreferrer" class="link_grn">originates</a> from.</p></div>';
+  //     // Check if the src matches the URL pattern
+  //     if (!urlPattern.test(src)) {
+  //       // If it doesn't match, replace the iframe with a message and link
+  //       var socialMsgDiv = document.createElement("div");
+  //       socialMsgDiv.className = "hidden-social-media-wrapper";
+  //       socialMsgDiv.innerHTML =
+  //         '<div class="hidden-social-media-message"><h4 class="title">Social Media content</h4><p id="message">To honor your privacy, this content can only be viewed on the site it <a href="' +
+  //         src +
+  //         '" target="_blank" rel="nofollow noreferrer" class="link_grn">originates</a> from.</p></div>';
 
-        element.parentNode.replaceChild(socialMsgDiv, element);
-      }
-    } else if (element.tagName === "BLOCKQUOTE") {
-      // If it's a blockquote, check if it has a cite attribute
-      var cite = element.getAttribute("cite");
+  //       element.parentNode.replaceChild(socialMsgDiv, element);
+  //     }
+  //   } else if (element.tagName === "BLOCKQUOTE") {
+  //     // If it's a blockquote, check if it has a cite attribute
+  //     var cite = element.getAttribute("cite");
 
-      if (cite && !urlPattern.test(cite)) {
-        // If it has a cite attribute and doesn't match the pattern, replace it
-        var socialMsgDiv = document.createElement("div");
-        socialMsgDiv.className = "hidden-social-media-wrapper";
-        socialMsgDiv.innerHTML =
-          '<div class="hidden-social-media-message"><h4 class="title">Social Media content</h4><p id="message">To honor your privacy, this content can only be viewed on the site it <a href="' +
-          cite +
-          '" target="_blank" rel="nofollow noreferrer" class="link_grn">originates</a> from.</p></div>';
+  //     if (cite && !urlPattern.test(cite)) {
+  //       // If it has a cite attribute and doesn't match the pattern, replace it
+  //       var socialMsgDiv = document.createElement("div");
+  //       socialMsgDiv.className = "hidden-social-media-wrapper";
+  //       socialMsgDiv.innerHTML =
+  //         '<div class="hidden-social-media-message"><h4 class="title">Social Media content</h4><p id="message">To honor your privacy, this content can only be viewed on the site it <a href="' +
+  //         cite +
+  //         '" target="_blank" rel="nofollow noreferrer" class="link_grn">originates</a> from.</p></div>';
 
-        element.parentNode.replaceChild(socialMsgDiv, element);
-      }
-    }
-  });
+  //       element.parentNode.replaceChild(socialMsgDiv, element);
+  //     }
+  //   }
+  // });
 });
