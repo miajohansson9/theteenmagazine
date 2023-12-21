@@ -96,13 +96,6 @@
         <div id="content" class="javascript-disabled">
           <div class="flex_wrapper_content">
             <div class="post_wrapper">
-              <% if (current_user && (current_user.admin? || (current_user.id.eql? @post.user_id))) && (@post.agree_to_image_policy.nil? || !@post.agree_to_image_policy) %>
-                <div class="alert alert-warning mt-2" role="alert">
-                  <p class="m-0">
-                    The images in this article have been hidden until you've agreed to and cited your images in accordance with our <a class="link_underline" target="_blank" href="/finding-images">image policy here</a> (updated as of October 19th, 2023).
-                  </p>
-                </div>
-              <% end %>
               <div id="selectable_content"
                    class="post_content <%= (@post.agree_to_image_policy.nil? || !@post.agree_to_image_policy) ? 'image-policy-not-agreed-to' : '' %>">
                 <%= markdown @post.content %>

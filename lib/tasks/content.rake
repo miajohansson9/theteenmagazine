@@ -1,4 +1,21 @@
 namespace :content do
+  task :delete_old_images, [:should_delete] => :environment do |t, args|
+    Post.published.where.not(agree_to_image_policy: true).each do |post|
+      begin
+        if args[:should_delete].eql? 'true'
+          post.content = post.content.gsub(/<img[^>]*>/, '')
+          post.save(:validate => false)
+          puts "Deleted all the images in https://www.theteenmagazine.com/#{post.slug}"
+        else
+          img_src_links = post.content.scan(/<img[^>]*src\s*=\s*['"]([^'"]*)['"][^>]*>/).flatten
+          puts img_src_links
+        end
+      rescue
+        puts "Rescued from Error. Failed to delete images in post https://www.theteenmagazine.com/#{post.slug}"
+      end
+    end
+  end
+
   task :optimize_all_recent_posts => :environment do |t, args|
     Post.published.where(publish_at: (Time.now - 1.day)..Time.now).each do |post|
       begin
