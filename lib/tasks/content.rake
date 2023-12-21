@@ -1,6 +1,6 @@
 namespace :content do
   task :delete_old_images, [:should_delete] => :environment do |t, args|
-    Post.published.where.not(agree_to_image_policy: true).each do |post|
+    Post.published.where(agree_to_image_policy: [false, nil]).each do |post|
       begin
         if args[:should_delete].eql? 'true'
           post.content = post.content.gsub(/<img[^>]*>/, '')
