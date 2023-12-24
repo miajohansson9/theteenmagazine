@@ -29,7 +29,11 @@
       <% @my_shared_drafts.each do |draft| %>
         <div class="card" style="width: 32%;">
           <a href="<%= post_path(draft)%>">
-            <%= image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340]), :class => "card-img-top") %>
+            <% if draft.thumbnail.attached? %>
+              <%= image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340]), :class => "card-img-top") %>
+            <% else %>
+              <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+            <% end %>
           </a>
           <div class="card-body">
             <p class="card-text">Sharing has been turned on for your draft <%= link_to(draft.title, draft) %>.</p>
