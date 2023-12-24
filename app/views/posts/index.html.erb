@@ -4,7 +4,7 @@
       <% if @user.profile.attached? %>
         <%= image_tag(@user.profile.variant(resize_to_fill: [100,100]), :class => "profile_img") %>
       <% else %>
-        <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+        <%= image_tag("thumbnail.png", :class => "card-img-top") %>
       <% end %>
       <% if @user.editor %>
         <span class="badge badge-default editor_label" style="top: 5px;">Editor</span>
@@ -32,7 +32,7 @@
             <% if draft.thumbnail.attached? %>
               <%= image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340]), :class => "card-img-top") %>
             <% else %>
-              <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+              <%= image_tag("thumbnail.png", :class => "card-img-top") %>
             <% end %>
           </a>
           <div class="card-body">
