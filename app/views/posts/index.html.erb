@@ -89,7 +89,11 @@
             <% @color = @featured ? "#FA8075" : "#91A0BA" %>
             <a href="<%= post_path(draft)%>">
               <div class="card" style="width: 32%; <% if @unseen_shared_drafts.to_a.include? draft %>background-color: #E6F6FF;<% end %>">
-                <%= image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340]), :class => "card-img-top") %>
+                <% if draft.thumbnail.attached? %>
+                  <%= image_tag(draft.thumbnail.variant(resize_to_fill: [540, 340]), :class => "card-img-top") %>
+                <% else %>
+                  <%= image_tag("profile_image.jpg", :class => "profile_img") %>
+                <% end %>
                 <div class="card-body">
                   <p class="card-text"><%= link_to(draft.user.try(:full_name), draft.user) %> is asking for peer feedback on <%= link_to draft.title, draft %></p>
                   <% if @featured %>
