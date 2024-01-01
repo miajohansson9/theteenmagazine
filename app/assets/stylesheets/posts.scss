@@ -21,6 +21,7 @@
 
 .copy-text .btn:before {
   content: "Copied!";
+  text-transform: none;
   min-width: fit-content;
   white-space: nowrap;
   position: absolute;
@@ -51,7 +52,6 @@
   display: flex;
   flex-wrap: wrap;
   .copy-text {
-    text-transform: none;
     position: relative;
     .link,
     .link:active {
