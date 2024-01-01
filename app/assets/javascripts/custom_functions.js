@@ -8,16 +8,20 @@ function toggleNav() {
   }
 }
 
-function copyUrlToClipboard() {
-  let copyText = document.querySelector(".copy-text");
+function copyUrlToClipboard(copyId) {
+  let copyText = document.querySelectorAll(".copy-text");
   navigator.clipboard.writeText(window.location.href).then(
     () => {
       console.log("Copied to clipboard");
       /* Resolved - text copied to clipboard successfully */
-      copyText.classList.add("active");
+      for (var i = 0; i < copyText.length; ++i) {
+        copyText[i].classList.add("active");
+      }
       window.getSelection().removeAllRanges();
       setTimeout(function () {
-        copyText.classList.remove("active");
+        for (var i = 0; i < copyText.length; ++i) {
+          copyText[i].classList.remove("active");
+        }
       }, 2500);
     },
     () => {
