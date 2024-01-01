@@ -21,7 +21,7 @@
 
 .copy-text .btn:before {
   content: "Copied!";
-  text-transform: none;
+  text-transform: none !important;
   min-width: fit-content;
   white-space: nowrap;
   position: absolute;
@@ -78,8 +78,8 @@
   }
   .btn {
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
+    height: 35px;
+    width: 35px;
     padding: 0px;
     display: flex;
     align-items: center;

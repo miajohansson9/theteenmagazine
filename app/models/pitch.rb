@@ -12,7 +12,8 @@ class Pitch < ApplicationRecord
   validates :description, presence: true
   validates :category_id, presence: true
   validates :deadline, presence: true, if: :is_editor?
-
+  validates :thumbnail, content_type: [:png, :jpg, :jpeg, :gif, :webp, :heic]
+  
   scope :is_submitted, -> { where(status: "Ready for Review") }
 
   scope :is_rejected, -> { where(status: "Rejected") }
