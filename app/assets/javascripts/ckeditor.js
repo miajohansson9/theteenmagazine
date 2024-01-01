@@ -44,6 +44,7 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
     "heading",
     "|",
     "bold",
+    "italic",
     "underline",
     "link",
     "bulletedList",

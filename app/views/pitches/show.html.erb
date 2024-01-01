@@ -76,9 +76,6 @@
     <i>Notes:</i>
     <%= markdown @pitch.requirements %>
   <% end %>
-  <% if @pitch.is_interview? %>
-    <%= render "interview_explanation", home: false %>
-  <% end %>
   <% if @pitch.deadline.present? %>
     <p class="pitch_usr mt-3"><b>This pitch has a <%= @pitch.deadline %> week deadline. Read more about deadlines <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</b></p>
   <% end %>
