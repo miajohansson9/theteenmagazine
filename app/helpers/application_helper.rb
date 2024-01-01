@@ -19,6 +19,10 @@ module ApplicationHelper
     return "" if date.nil?
     return date.in_time_zone&.strftime("%b %d")
   end
+  
+  def format_share_url(post)
+    return "https://www.theteenmagazine.com/#{post.slug}"
+  end
 
   def date_to_words(date)
     return "" if date.nil?

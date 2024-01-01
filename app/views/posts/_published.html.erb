@@ -48,13 +48,14 @@
               </div>
             <% end %>
             <h1 class="title_article_show"><%= @post.title %></h1>
-          </div>
-          <div class="d-flex flex-wrap align-items-center justify-content-between pb-2">
             <%= link_to @post.category do %>
               <h3 class="m-0 mr-1 text-nowrap" id="category_title">
                 <%= @post.category.name %>
               </h3>
             <% end %>
+          </div>
+          <div class="d-flex flex-wrap align-items-center justify-content-between pb-2">
+            <%= render 'sharing/share_inline', post: @post %>
             <div>
               <p class="text-nowrap m-0">
                 <svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" class="mr-1 mb-1 svg-inline--fa fa-clock fa-w-16" role="img" viewBox="0 0 512 512">
@@ -110,6 +111,10 @@
                   <% end %>
                 </div>
               <% end %>
+              <div class="social-container">
+                <p><b>Connect with what you just read? Share it in any the of ways below! 🤳💬</b></p>
+                <%= render 'sharing/share_inline', post: @post %>
+              </div>
               <div id= "background">
                 <%= render :partial => 'users/profile', locals: {user: @user} %>
                 <% @collabs.each do |collab| %>
@@ -136,21 +141,6 @@
          .not("a[href*=theteenmagazine]")
          .attr('rel','nofollow');
      }
-     $('.fb-share').click(function(e) {
-         e.preventDefault();
-         window.open($(this).attr('href'), 'fbShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-         return false;
-     });
-     $('.js-share-twitter-link').click(function(e) {
-         e.preventDefault();
-         var href = $(this).attr('href');
-         window.open(href, "Twitter", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-     });
-     $('.js-share-pinterest-link').click(function(e) {
-         e.preventDefault();
-         var href = $(this).attr('href');
-         window.open(href, "Pinterest", 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-     });
   });
 </script>
 <% if !(@post.comments_turned_off.eql? true) %>

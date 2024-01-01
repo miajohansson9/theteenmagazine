@@ -712,7 +712,7 @@ class PostsController < ApplicationController
                   },
                   twitter: {
                     card: "summary_large_image",
-                    site: "@theteenmagazin_",
+                    site: "@ttm_magazine",
                     title: @post.title,
                     description: @post.meta_description,
                     creator: @post.user.full_name,

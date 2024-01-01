@@ -25,7 +25,7 @@ class Users::SessionsController < Devise::SessionsController
                   },
                   twitter: {
                     card: 'summary_large_image',
-                    site: '@theteenmagazin_',
+                    site: '@ttm_magazine',
                     title: 'The Teen Magazine',
                     description:
                       'The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.',

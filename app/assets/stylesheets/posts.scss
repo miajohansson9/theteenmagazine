@@ -6,6 +6,90 @@
   }
 }
 
+.social-container {
+  padding: 10px 20px;
+  background: #e4ecff;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+
+  .custom-sharing-widget {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.copy-text .btn:before {
+  content: "Copied!";
+  min-width: fit-content;
+  white-space: nowrap;
+  position: absolute;
+  top: -33px;
+  background: black;
+  color: white;
+  padding: 4px 6px;
+  border-radius: 20px;
+  font-size: 15px;
+  display: none;
+}
+.copy-text .btn:after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  background: black;
+  transform: rotate(45deg);
+  display: none;
+}
+.copy-text.active .btn:before,
+.copy-text.active .btn:after {
+  display: block;
+}
+
+.custom-sharing-widget {
+  display: flex;
+  flex-wrap: wrap;
+  .copy-text {
+    position: relative;
+    .link,
+    .link:active {
+      background-color: #4abeb6 !important;
+    }
+  }
+  .btn.facebook {
+    background-color: #1877f2 !important;
+  }
+  .btn.twitter {
+    background-color: black !important;
+  }
+  .btn.whatsapp {
+    background-color: #075e54 !important;
+  }
+  .btn.email {
+    background-color: #3e65cf !important;
+  }
+  .btn.linkedin {
+    background-color: #0077b5 !important;
+  }
+  .btn.pinterest {
+    background-color: #e60023 !important;
+  }
+  .btn {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      color: white;
+      fill: white;
+    }
+  }
+}
+
 .hidden-social-media-wrapper {
   background: #f7f7f3;
   border-color: rgb(229, 229, 229);
@@ -38,5 +122,11 @@
       font-size: 14px !important;
       text-align: center;
     }
+  }
+}
+
+@media (min-width: 440px) {
+  .mobile-phone {
+    display: none !important;
   }
 }

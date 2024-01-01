@@ -91,7 +91,7 @@ class PagesController < ApplicationController
                   },
                   twitter: {
                     card: "summary_large_image",
-                    site: "@theteenmagazin_",
+                    site: "@ttm_magazine",
                     title: "The Teen Magazine",
                     description: "See what's trending on The Teen Magazine",
                     image: @trending.first.thumbnail.variant(resize_to_fill: [540, 340]),
@@ -216,7 +216,7 @@ class PagesController < ApplicationController
                   },
                   twitter: {
                     card: "summary_large_image",
-                    site: "@theteenmagazin_",
+                    site: "@ttm_magazine",
                     title: "The Teen Magazine",
                     description: "Subscribe to download our September Issue.",
                     image: "https://s3.amazonaws.com/media.theteenmagazine.com/September+2021.png",

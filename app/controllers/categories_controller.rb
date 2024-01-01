@@ -49,7 +49,7 @@ class CategoriesController < ApplicationController
                   },
                   twitter: {
                     card: "summary_large_image",
-                    site: "@theteenmagazin_",
+                    site: "@ttm_magazine",
                     title: "The Teen Magazine",
                     description: @category.description,
                     image: @category.image,

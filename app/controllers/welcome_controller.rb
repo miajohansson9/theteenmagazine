@@ -103,7 +103,7 @@ class WelcomeController < ApplicationController
                   },
                   twitter: {
                     card: "summary_large_image",
-                    site: "@theteenmagazin_",
+                    site: "@ttm_magazine",
                     title: "The Teen Magazine",
                     description: "The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.",
                     image: "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path("ttm.png")}",

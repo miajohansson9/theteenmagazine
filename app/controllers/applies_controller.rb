@@ -54,7 +54,7 @@ class AppliesController < ApplicationController
                   },
                   twitter: {
                     card: 'summary_large_image',
-                    site: '@theteenmagazin_',
+                    site: '@ttm_magazine',
                     title: 'The Teen Magazine',
                     description:
                       'Our writer team is made up of hundreds of college and high school writers from around the world who are passionate about improving their writing skills and are excited to connect with other like-minded writers. Apply to our team!',

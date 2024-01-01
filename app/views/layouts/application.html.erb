@@ -15,6 +15,9 @@
     <%= favicon_link_tag 'logo.png' %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <% if @post.present? %>
+      <%= render 'layouts/partials/social_post_tags', post: @post %>
+    <% end %>
     <% if @post.present? && @post.thumbnail.attached? %>
       <link rel="preload" as="image" href="<%= url_for(@post.thumbnail.variant(resize_to_fill: [1200, 845], format: 'webp')) %>">
     <% elsif @posts_approved_0.present? && @posts_approved_0[0].thumbnail.attached? %>

@@ -754,7 +754,6 @@ hr {
   padding: 20px 10px;
   margin: 0 0px 20px 0px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   h4 {
     font-weight: bold;
     text-align: center;
@@ -1075,8 +1074,8 @@ body {
 }
 
 .post_info {
-  border-top: 1px dotted #333;
-  border-bottom: 1px dotted #333;
+  border-top: 2px solid #eceff1;
+  border-bottom: 2px solid #eceff1;
 }
 
 .post_info,
