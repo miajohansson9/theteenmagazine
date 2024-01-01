@@ -51,6 +51,7 @@
   display: flex;
   flex-wrap: wrap;
   .copy-text {
+    text-transform: none;
     position: relative;
     .link,
     .link:active {
