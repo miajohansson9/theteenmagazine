@@ -1,0 +1,28 @@
+<p><b>Submitted by <%= link_to @suggestor&.full_name, @suggestor %></b></p>
+<%= form_for @page, html: {:id => "ck-form"} do |f| %>
+  <% @page.errors.full_messages.each do |msg| %>
+    <li class="text-danger">
+      <h6><%= msg %></h6>
+    </li>
+  <% end %>
+  <p class="mb-0">Suggested Content:</p>
+  <div id="container">
+    <%= f.text_area :suggested_content, id: "editor" %>
+  </div>
+  <p class="mb-0">What changed:</p>
+  <%= markdown @page.what_changed %>
+  <hr>
+  <p>Accept or reject the changes.
+  <%= f.select(:decision, ["Accept version", "Reject version"], {prompt: "None"}, {:class => "d-inline"}) %>
+  </p>
+  <p><i>If you accept, whatever is in the suggested content text field will get saved.</i></p>
+  <%= f.submit "Save & Publish", class: "mt-3 newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
+</div>
+<% end %>
+<script type="text/javascript">
+  window.WEBSPELLCHECKER_CONFIG = {
+    autoSearch: true,
+    serviceId: "<%= @service_id %>"
+  };
+</script>
+<%= javascript_include_tag 'ckeditor_admin' %>

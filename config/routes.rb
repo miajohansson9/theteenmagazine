@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   resources :outreaches
   resources :newsletters
   resources :invitations
+  resources :pages
 
   #asynchronously fetched
   get :get_trending_posts, controller: :welcome
@@ -73,6 +74,7 @@ Rails.application.routes.draw do
 
   get "/community" => "posts#index"
   get "/categories/:id/dashboard" => "categories#dashboard"
+  get "/admin/dashboard" => "categories#admin_dashboard"
   get "/categories/:id/team" => "categories#team"
   get "/pitch-interview" => "pitches#pitch_interview"
   get "/interviews" => "pitches#interviews"

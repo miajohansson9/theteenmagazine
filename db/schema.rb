@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_10_204426) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_08_015410) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -247,6 +247,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_204426) do
     t.boolean "sent"
     t.text "sponsored_article_pitch"
     t.decimal "sponsored_article_cost"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.text "content"
+    t.text "suggested_content"
+    t.text "what_changed"
+    t.integer "suggestor_id"
+    t.boolean "all_managing_editors_can_suggest"
+    t.integer "category_id"
+    t.string "slug"
+    t.integer "user_id"
+    t.boolean "highlighted"
   end
 
   create_table "pitches", id: :serial, force: :cascade do |t|

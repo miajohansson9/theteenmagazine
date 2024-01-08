@@ -2,9 +2,6 @@
   <div class="dashboard_wrapper">
     <div id="waiting--for--approval">
       <div class="w-100">
-      <div class="alert alert-warning mt-2" role="alert">
-        Due to an ongoing copyright issue, <b>our image policy has changed as of October 19th, 2023</b>. Please make sure your articles follow the  <a class="link_underline" href="/finding-images">updated image policy</a> by <b>October 31, 2023</b>. 
-      </div>
         <%= render 'users/dashboard/tabs/home' %>
       </div>
       <div class="dashboard--writer--flex--two" style="width: 30rem;">
@@ -41,6 +38,8 @@
           <i class="mt-4 d-block">See more pitches <%= link_to("here", pitches_path, class: "link_inline link_grn") %></i>
           <br>
         </div>
+        <%= link_to "Edit Profile", edit_user_path(@user), class: "link_grn" %><br>
+        <%= link_to "Change Password", edit_user_registration_path, class: "link_grn" %><br>
         <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscriber&.email}&token=#{@user.subscriber&.token}", class: "link_grn") %><br>
         <div class="links"
           <% if @show_onboarding_full %>

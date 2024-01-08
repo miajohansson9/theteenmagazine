@@ -1,0 +1,14 @@
+<div id="banner_writing" class="editor"></div>
+<div class="apply_wrapper pitch_form_wrapper">
+  <% if (current_user.id.eql? @page.user_id) || current_user.is_manager_of_category(@page.category_id) %>
+      <% if @page.suggestor_id.present? %>
+        <h1 class="d-inline">Review Suggestions</h1>
+        <%= render "/pages/review_suggestions_form" %>
+      <% else %>
+        <h1 class="d-inline">Edit Page</h1>
+        <%= render "/pages/admin_form" %>
+      <% end %>
+  <% else %>
+      <%= render "/pages/suggest_form" %>
+  <% end %>
+</div>

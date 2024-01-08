@@ -1,5 +1,5 @@
 <% if params[:email_list].nil? %>
-  <h1 id="page_title" style="border-bottom: none; margin-top: 0px;">Submitted Profiles</h1>
+  <h1 id="page_title_padded" style="border-bottom: none; margin-top: 0px;">Submitted Profiles</h1>
   <div id="posts_wrapper" class="index_users">
     <div class="skinny_wrapper profiles--flex">
       <% @users_waiting.each do |user| %>
@@ -27,9 +27,9 @@
       <% end %>
     </div>
   </div>
-  <h1 id="page_title" style="margin-bottom: -20px; border-bottom: none;">Writers</h1>
+  <h1 id="page_title_padded" style="margin-bottom: -20px; border-bottom: none;">Writers</h1>
   <% else %>
-  <h1 id="page_title" style="margin-bottom: -20px; border-bottom: none;"><%= @category.name.titleize %> Subscribers</h1>
+  <h1 id="page_title_padded" style="margin-bottom: -20px; border-bottom: none;"><%= @category.name.titleize %> Subscribers</h1>
 <% end %>
 <div id="posts_wrapper" class="skinny_wrapper">
   <div class="flex_horizontal">

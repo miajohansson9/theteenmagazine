@@ -22,7 +22,7 @@
         <%= render :partial => 'profile', locals: {user: @user} %>
       </div>
       <div class="dashboard--articles--wrapper">
-        <h1 id="page_title" class="pb-3" style="border-bottom: none !important;">Welcome to The Teen Magazine!</h1>
+        <h1 id="page_title_padded" class="pb-3" style="border-bottom: none !important;">Welcome to The Teen Magazine!</h1>
         <div class="padding_right_wrapper" style="padding-right: 30px;">
           <div class="pb-1 mb-2" data-step data-index="6" data-onboarding-content="This will walk you through setting up the rest of your profile. Once completed, you will unlock your public writer page on The Teen Magazine.">
             <h6 class="pb-3">Your profile is <b><%= @percent_complete.round %>%</b> done. Please complete the remaining steps.</h6>
@@ -101,9 +101,12 @@
       </div>
       <div class="links mb-4">
         <div <% if @show_onboarding %> data-step data-index="5" data-onboarding-content="Recommend a friend to The Teen Magazine here."<% end %>>
-          <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn pl-3 pr-3 mt-2") %>
+          <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn") %>
         </div>
-        <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscriber&.email}&token=#{@user.subscriber&.token}", class: "link_grn pl-3 pr-3 mt-2") %><br>
+        <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscriber&.email}&token=#{@user.subscriber&.token}", class: "link_grn") %><br>
+        <% if current_user.admin? && current_user == true_user && @user.submitted_profile %>
+          <%= link_to("Sign in as #{@user.full_name}", impersonate_user_path(@user), method: :post, class: "link_grn") %><br>
+        <% end %>
       </div>
     </div>
   </div>

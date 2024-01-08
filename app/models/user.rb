@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :outreaches
   has_one :subscriber
   has_many :categories
+  has_many :pages
 
   accepts_nested_attributes_for :subscriber
 
@@ -29,6 +30,8 @@ class User < ActiveRecord::Base
   scope :active, -> { where(last_sign_in_at: (Time.now - 1.month)..Time.now) }
 
   scope :writer, -> { where(partner: [nil, false]) }
+
+  scope :partner, -> { where(partner: true) }
 
   scope :managing_editor, -> { joins(:categories).where.not(categories: { id: nil }).distinct }
 
@@ -54,6 +57,9 @@ class User < ActiveRecord::Base
   end
 
   def is_manager_of_category(category_id)
+    if category_id.nil?
+      return false
+    end
     self.admin? || self.is_manager? && (self.category_ids.include? Integer(category_id))
   end
 

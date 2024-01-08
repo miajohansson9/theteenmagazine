@@ -13,10 +13,6 @@
               <a class="tab-custom" id="drafts-tab-classic" data-bs-toggle="tab" href="#drafts-classic"
                 role="tab" aria-controls="drafts-classic" aria-selected="true">Current Drafts</a>
             </li>
-            <li class="nav-item tab-custom">
-              <a class="tab-custom" id="activity-tab-classic" data-bs-toggle="tab" href="#follow-classic" role="tab"
-                aria-controls="follow-classic" aria-selected="false">Activity in <%= @category.name.titleize %></a>
-            </li>
           </ul>
         </div>
         <!-- Classic tabs -->
@@ -34,7 +30,6 @@
 					<div class="mt-4 chart-card d-inline-flex card" style="width: 49%;">
 						<div class="card-body">
 							<div class="mb-3" id="chartContainer1" style="height: 300px; width: 100%;"></div>
-							<a class="text-align-center bottom-link" href="/categories/<%= @category.slug %>"><p class="mb-0 text-white bg-dark text-center">View Published Articles</p></a>
 						</div>
 					</div>
 					<div class="mt-4 chart-card d-inline-flex card" style="width: 49%;">
@@ -53,9 +48,6 @@
 									<span>Articles with more than <%= format_large_number(@views_cut_off) %> views<br>(last 3 months)</span>
 								</div>
 							</div>
-							<a class="text-align-center bottom-link" href="/categories/<%= @category.slug %>?popular_within=12">
-								<p class="mb-0 text-white bg-dark text-center">View Popular Articles</p>
-							</a>
 						</div>
 					</div>
 					<div class="mt-4 chart-card d-inline-flex card" style="width: 49%;">
@@ -63,11 +55,11 @@
 							<div class="stats_wrapper">
 								<h1 class="mb-0 d-block text-center value" id="value2"></h1>
 								<div class="description">
-									<span>Writers subscribed to <%= @category.name.titleize %>'s email list</span>
+									<span>Total subscribers</span>
 								</div>
 							</div>
-							<a class="text-align-center bottom-link" href="/writers?email_list=<%= @category.slug %>">
-								<p class="mb-0 text-white bg-dark text-center">View Writers on Email List</p>
+							<a class="text-align-center bottom-link" href="/subscribers">
+								<p class="mb-0 text-white bg-dark text-center">View Subscribers</p>
 							</a>
 						</div>
 					</div>
@@ -81,9 +73,6 @@
 									<span>High priority articles published</span>
 								</div>
 							</div>
-							<a class="text-align-center bottom-link" href="/categories/<%= @category.slug %>?high_priority=true">
-								<p class="mb-0 text-white bg-dark text-center">View High Priority Articles</p>
-							</a>
 						</div>
 					</div>
 				</div>
@@ -106,16 +95,6 @@
 					<%= render "/users/partials/dashboard_articles", articles: @category_drafts.draft, image: "saved.png" %>
 				</div>
             </div>
-		   <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="activity-tab-classic">
-            <h5 class="pitch_ttl">Editor Activity</h5>
-            <%= render_async get_editor_activity_path(category_id: @category.id), toggle: { selector: '#activity-tab-classic', event: :click } do %>
-              <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status">
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-            <% end %>
-          </div>
         </div>
         <br>
       </div>
@@ -148,46 +127,41 @@
 				<h3>There is no managing editor for this category</h3>
 			<% end %>
 			<div class="list-group-flush menu-links text-left mt-4 pt-2 mb-4" data-step data-index="5">
-			  <% if @category.slug.eql? 'interviews' %>
-			  	<div class="list-group-item">
-					<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
-					<%= link_to "Manage interview requests", '/interviews', class: "link_nrml" %>
-				</div>
-				<div class="list-group-item">
-					<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
-					<%= link_to "Create new interview request", '/interviews/new', class: "link_nrml" %>
-				</div>
-			  <% else %>
-				<div class="list-group-item">
-					<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
-					<%= link_to "Manage category pitches", pitches_path(pitch: {:category_id => @category.id}), class: "link_nrml" %>
-				</div>
-			  <% end %>
+              <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
+                <%= link_to "All writers (#{@active_writers} active)", "/writers", class: "link_nrml"  %>
+			  </div>
 			  <div class="list-group-item">
-			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
-                <%= link_to "Send newsletters", "/newsletters/manage/#{@user.try(:slug)}", class: "link_nrml"  %>
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
+                <%= link_to "All editors (#{@active_editors} active)", "/editors", class: "link_nrml"  %>
+			  </div>
+              <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
+                <%= link_to "All managing editors (#{@active_managing_editors} active)", "/managing-editors", class: "link_nrml"  %>
+			  </div>
+              <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
+                <%= link_to "All partners (#{@active_partners} active)", "/partners", class: "link_nrml"  %>
 			  </div>
 			  <div class="list-group-item">
 			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
                 <%= link_to "Writer resources", "/pages", class: "link_nrml"  %>
 			  </div>
-			  <div class="list-group-item">
-			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
-                <%= link_to "All writers", "/writers", class: "link_nrml link_light"  %>
+              <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
+                <%= link_to "Manage Images", "/manage-images", class: "link_nrml"  %>
 			  </div>
-			  <div class="list-group-item">
-			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
-                <%= link_to "All editors", "/editors", class: "link_nrml link_light"  %>
+              <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
+                <%= link_to "Newsletters", "/newsletters", class: "link_nrml"  %>
 			  </div>
-			  <% if @category.slug.eql? 'interviews' %>
-			  	<div class="list-group-item">
-					<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 88c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM0 248c0-4.4 3.6-8 8-8H440c4.4 0 8 3.6 8 8s-3.6 8-8 8H8c-4.4 0-8-3.6-8-8zM448 408c0 4.4-3.6 8-8 8H8c-4.4 0-8-3.6-8-8s3.6-8 8-8H440c4.4 0 8 3.6 8 8z"/></svg>
-					<%= link_to "All interviewers", "/interviewers", class: "link_nrml link_light"  %>
-				</div>
-			  <% end %>
-			  <div class="list-group-item">
-			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M460.3 39.6l12.1 12.1c15.6 15.6 15.6 40.9 0 56.6L440 140.7 371.3 72l32.4-32.4c15.6-15.6 40.9-15.6 56.6 0zM175.4 267.9L360 83.3 428.7 152 244.1 336.6c-5.3 5.3-12 9-19.3 10.7l-78.1 18 18-78.1c1.7-7.3 5.4-14 10.7-19.3zm217-239.6L164.1 256.6c-7.4 7.4-12.6 16.8-15 27l-20.9 90.6c-.6 2.7 .2 5.5 2.1 7.5s4.8 2.8 7.5 2.1l90.6-20.9c10.2-2.4 19.6-7.5 27-15L483.7 119.6c21.9-21.9 21.9-57.3 0-79.2L471.6 28.3c-21.9-21.9-57.3-21.9-79.2 0zM72 64C32.2 64 0 96.2 0 136V440c0 39.8 32.2 72 72 72H376c39.8 0 72-32.2 72-72V296c0-4.4-3.6-8-8-8s-8 3.6-8 8V440c0 30.9-25.1 56-56 56H72c-30.9 0-56-25.1-56-56V136c0-30.9 25.1-56 56-56H216c4.4 0 8-3.6 8-8s-3.6-8-8-8H72z"/></svg>
-                <%= link_to "Edit Category", edit_category_path(@category), class: "link_nrml link_light"  %>
+              <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
+                <%= link_to "Subscribers", "/subscribers", class: "link_nrml"  %>
+			  </div>
+              <div class="list-group-item">
+			  	<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 16a240 240 0 1 1 0 480 240 240 0 1 1 0-480zm0 496A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM357.7 197.7c3.1-3.1 3.1-8.2 0-11.3s-8.2-3.1-11.3 0L224 308.7l-58.3-58.3c-3.1-3.1-8.2-3.1-11.3 0s-3.1 8.2 0 11.3l64 64c3.1 3.1 8.2 3.1 11.3 0l128-128z"/></svg>
+                <%= link_to "Interview Requests", "/interviews", class: "link_nrml"  %>
 			  </div>
             </div>
           </div>
@@ -241,7 +215,7 @@ $(document).ready(function(){
 	var chart1 = new CanvasJS.Chart("chartContainer", {
 		animationEnabled: true,
 		title:{
-			text: "Daily Article Stats for <%= @category.name.titleize %>".replace('amp;','')
+			text: "Daily Article Stats"
 		},
 		axisX: {
 			valueFormatString: "MMM DD"
@@ -258,7 +232,7 @@ $(document).ready(function(){
 			shared: true
 		},
 		data: [{
-			name: "Published in <%= @category.name.titleize %>".replace('amp;',''),
+			name: "Published Articles",
 			type: "spline",
 			showInLegend: true,
 			dataPoints: [
@@ -279,7 +253,7 @@ $(document).ready(function(){
 			]
 		},
 		{
-			name: "Drafts Started in <%= @category.name.titleize %>".replace('amp;',''),
+			name: "Drafts Started",
 			type: "spline",
 			showInLegend: true,
 			dataPoints: [
@@ -306,7 +280,7 @@ var chart2 = new CanvasJS.Chart("chartContainer1", {
 	animationEnabled: true,
 	theme: "light1", // "light1", "light2", "dark1", "dark2"
 	title:{
-		text: "Published in <%= @category.name.titleize %>".replace("amp;", "")
+		text: "Published Articles"
 	},
 	axisY: {
 		title: "# Published articles"

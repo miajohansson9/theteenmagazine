@@ -1,7 +1,7 @@
 include CategoriesHelper
 
 class CategoriesController < ApplicationController
-  before_action :find_category, except: %i[index new create]
+  before_action :find_category, except: %i[index new create admin_dashboard]
   before_action :authenticate_user!, except: %i[index show team]
 
   def index
@@ -116,6 +116,51 @@ class CategoriesController < ApplicationController
     @subscribers_count = (@category.slug.eql? 'interviews') ? Subscriber.interviewer.count : @category.subscribers.count
 
     @high_priority_published_count = @category.posts.published.high_priority.nil? ? 0 : @category.posts.published.high_priority.count
+  end
+
+  def admin_dashboard
+    unless current_user? && (current_user.admin? || (current_user.categories.where(slug: @category.slug).present?))
+      redirect_to current_user, notice: "You do not have access to this page."
+    end
+    @user = current_user
+    @published_in_category = []
+    @drafts_in_category = []
+    # populate published posts
+    @bucket = Time.now - 13.days
+    # @published = populate_published(14)
+    @published_in_category = populate_published_in_all_categories(14)
+    @started_in_category = populate_started_in_all_categories(14)
+
+    # newsletter calculations
+    @newsletters_user = @user.present? ? @user : current_user
+    @newsletters_sent_last_month = @newsletters_user.newsletters.where(recipient_id: nil, sent_at: (Time.now - 60.days)..(Time.now - 30.days))
+    @newsletters_sent_last_month = @newsletters_sent_last_month.nil? ? 0 : @newsletters_sent_last_month.count
+    @newsletters_sent_this_month = @newsletters_user.newsletters.where(recipient_id: nil, sent_at: (Time.now - 30.days)..(Time.now))
+    @newsletters_sent_this_month = @newsletters_sent_this_month.nil? ? 0 : @newsletters_sent_this_month.count
+
+    # published articles calculations
+    @articles_last_month = Post.published.where(publish_at: (Time.now - 60.days)..(Time.now - 30.days))
+    @articles_last_month = @articles_last_month.nil? ? 0 : @articles_last_month.count
+    @articles_this_month = Post.published.where(publish_at: (Time.now - 30.days)..Time.now)
+    @articles_this_month = @articles_this_month.nil? ? 0 : @articles_this_month.count
+
+    # get all drafts
+    @category_drafts = Post.where(updated_at: (Time.now - 3.months)..Time.now).order("updated_at desc")
+
+    # popular articles
+    @views_cut_off = 1000
+    @popular_articles = Post.where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
+    @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
+
+    # writers subscribed
+    @subscribers_count = Subscriber.count
+    @high_priority_published_count = Post.published.high_priority.nil? ? 0 : Post.published.high_priority.count
+    
+    # active
+    @active_writers = User.writer.where(last_sign_in_at: (Time.now - 1.week)..Time.now).count
+    @active_editors = User.editor.where(last_sign_in_at: (Time.now - 1.week)..Time.now).count
+    @active_managing_editors = User.managing_editor.where(last_sign_in_at: (Time.now - 1.week)..Time.now).count
+    @active_partners = User.partner.where(last_sign_in_at: (Time.now - 1.week)..Time.now).count
   end
 
   def edit

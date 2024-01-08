@@ -1,0 +1,35 @@
+<%= form_for @page, html: {:id => "ck-form"} do |f| %>
+  <h5 class="mt-3"><b><%= @page.title %></b></h5>
+  <% @page.errors.full_messages.each do |msg| %>
+    <li class="text-danger">
+      <h6><%= msg %></h6>
+    </li>
+  <% end %>
+  <% if @page.suggestor_id.nil? %>
+    <p class="mb-0">Make your suggested edits here</p>
+    <div id="container">
+        <%= f.text_area :suggested_content, id: "editor" %>
+    </div>
+    <p class="mb-0">Explain what changed</p>
+    <div id="container">
+        <%= f.text_area :what_changed, style: 'min-height: 200px' %>
+    </div>
+    <%= f.hidden_field :suggestor_id, value: current_user.id %>
+    <%= f.submit "Submit suggestions", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
+  <% else %>
+    <div class="alert alert-warning text-center" style="margin-bottom: 0px">
+      There is already a suggested change in review. Please check back in a couple of days to submit your suggestions.
+    </div>
+        <div id="admin_links" style="border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;text-align: center;padding: 1em 0;margin: 1em 0;margin-top: 0;">
+        <%= link_to "Go to All Pages", pages_path, style: "text-decoration: none;color: #9a9da4;margin: 0 1em;font-weight: 700;font-size: .8em;text-transform: uppercase;font-family: inherit;" %>
+    </div>
+  <% end %>
+</div>
+<% end %>
+<script type="text/javascript">
+  window.WEBSPELLCHECKER_CONFIG = {
+    autoSearch: true,
+    serviceId: "<%= @service_id %>"
+  };
+</script>
+<%= javascript_include_tag 'ckeditor_admin' %>

@@ -17,8 +17,97 @@ class PagesController < ApplicationController
                   reset_confirmation
                   search
                 ]
-  before_action :is_admin?, only: :most_viewed
-  before_action :is_image_admin?, only: :manage_images
+  before_action :is_admin?, only: %i[most_viewed edit new update destroy]
+  before_action :find_page, only: %i[edit update destroy show]
+  before_action :is_image_admin?, only: [:manage_images, :destroy]
+
+  def new
+    @page = Page.new
+    @categories = Category.active
+    set_meta_tags title: "New Page"
+  end
+
+  def edit
+    @categories = Category.active
+    @user = User.find_by(id: @page.user_id)
+    @suggestor = User.find_by(id: @page.suggestor_id)
+    if !(current_user.admin? || (current_user.id.eql? @page.user_id) || (current_user.is_manager_of_category(@page.category_id)))
+      if !@page.all_managing_editors_can_suggest
+        redirect_to pages_path, notice: "This page is not accepting suggestions."
+      end
+    end
+    if !(current_user.id.eql? @page.user_id) && !current_user.is_manager_of_category(@page.category_id)
+      @page.suggested_content = @page.content
+    end
+  end
+
+  def show
+    @category = Category.find_by(id: @page.category_id)
+  end
+
+  def create
+    @page = current_user.pages.build(page_params)
+    if @page.save
+      redirect_to @page, notice: "The page was saved successfully."
+    else
+      render 'edit', notice: "Oh no, something went wrong."
+    end
+  end
+
+  def update
+    if @page.update page_params
+      if page_params[:suggested_content].nil? && page_params[:suggestor_id].nil?
+        redirect_to @page, notice: "The page was updated successfully."
+      elsif @page.suggestor_id.eql? current_user.id
+        redirect_to pages_path, notice: "Your edits were submitted for review."
+      else
+        respond_to_changes
+      end
+    else
+      render 'edit', notice: "Oh no, something went wrong."
+    end
+  end
+
+  def respond_to_changes
+    @decision = params[:page][:decision]
+    if @decision.eql? "Accept version"
+      @page.update_columns({
+        content: page_params[:suggested_content],
+        suggested_content: nil,
+        suggestor_id: nil,
+        what_changed: nil,
+      })
+      @page.save
+      redirect_to @page, notice: "Suggested changes accepted successfully."
+    elsif @decision.eql? "Reject version"
+      @page.update_columns({
+        suggested_content: nil,
+        suggestor_id: nil,
+        what_changed: nil,
+      })
+      redirect_to @page, notice: "Suggested changes were rejected."
+    else
+      render 'edit', notice: "Oh no, something went wrong."
+    end
+  end
+
+  def index
+    @current_user_pages = current_user.pages
+    if current_user.is_manager?
+      @category = Category.find_by(user_id: current_user.id)
+      if @category
+        @managing_editor_pages = Page.where(category_id: @category.id)
+        @current_user_pages = (@current_user_pages + @managing_editor_pages).uniq
+      end
+    end
+    @all_pages = Page.all.order("created_at desc")
+    @highlighted_pages = Page.all.where(highlighted: true)
+  end
+
+  def destroy
+    @page.destroy
+    redirect_to pages_path, notice: "The page was destroyed."
+  end
 
   def team
     set_meta_tags title: "About us",
@@ -308,7 +397,7 @@ class PagesController < ApplicationController
   end
 
   def is_admin?
-    if (current_user && (current_user.admin? || current_user.editor?))
+    if (current_user && (current_user.admin? || current_user.is_manager?))
       true
     else
       redirect_to current_user, notice: "You do not have access to this page."
@@ -321,5 +410,31 @@ class PagesController < ApplicationController
     else
       redirect_to current_user, notice: "You do not have access to this page."
     end
+  end
+
+  def find_page
+    begin
+      @page = Page.friendly.find params[:id]
+    rescue StandardError
+      redirect_to root_path
+    end
+  end
+
+  def page_params
+    params
+      .require(:page)
+      .permit(
+        :title, 
+        :content,
+        :user_id,
+        :suggested_content,
+        :what_changed,
+        :suggestor_id,
+        :created_at,
+        :updated_at,
+        :all_managing_editors_can_suggest,
+        :highlighted,
+        :category_id,
+      )
   end
 end

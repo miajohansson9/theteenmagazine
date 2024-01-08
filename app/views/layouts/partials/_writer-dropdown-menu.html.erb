@@ -6,22 +6,8 @@
   <% current_user.categories.each do |category| %>
     <a href="/categories/<%= category.slug %>/dashboard" class="dropdown-item"><%= category.name.titleize.truncate(20) %> Dashboard</a>
   <% end %>
-  <% if current_user.admin? || current_user.image_admin? %>
-    <a href="/manage-images" class="dropdown-item">Manage Images</a>
-  <% end %>
-  <% if current_user.admin? || current_user.has_newsletter_permissions %>
-    <a href="/newsletters" class="dropdown-item">Newsletters</a>
-  <% end %>
-  <% if current_user.admin? || current_user.has_newsletter_permissions %>
-    <a href="/subscribers" class="dropdown-item">Subscribers</a>
-  <% end %>
   <% if current_user.admin? %>
-    <a href="/applies" class="dropdown-item">Writer Applications
-      <% if @unseen_applications_cnt > 0 %>
-        <span class="sec counter counter-sm"></span>
-        <p><%= @unseen_applications_cnt %> new</p>
-      <% end %>
-    </a>
+    <a href="/admin/dashboard" class="dropdown-item">Admin Dashboard</a>
   <% end %>
   <% if current_user.editor? %>
     <a href="/editors/<%= current_user.slug %>" class="dropdown-item">Editor Dashboard
@@ -33,6 +19,16 @@
     <div class="dropdown-divider"></div>
   <% elsif (!current_user.partner? && (current_user.is_new?)) %>
     <a href="<%= pitches_path(user_id: current_user.id) %>" class="dropdown-item">My Pitches</a>
+  <% end %>
+  <% if current_user.admin? %>
+    <a href="/writers" class="dropdown-item">All Writers</a>
+    <a href="/applies" class="dropdown-item">Writer Applications
+      <% if @unseen_applications_cnt > 0 %>
+        <span class="sec counter counter-sm"></span>
+        <p><%= @unseen_applications_cnt %> new</p>
+      <% end %>
+    </a>
+    <div class="dropdown-divider"></div>
   <% end %>
   <% if !current_user.partner? %>
     <a href="/pitches" class="dropdown-item">Unclaimed Pitches
@@ -48,7 +44,7 @@
       <% end %>
     </a>
     <a href="/managing-editors" class="dropdown-item">Managing Editors</a>
-    <% if current_user.is_marketer? %>
+    <% if current_user.marketer %>
       <a href="/interviews" class="dropdown-item">Interview Requests
         <% if @unseen_interviews_cnt > 0 %>
           <span class="sec counter counter-sm"></span>
@@ -59,8 +55,10 @@
   <% end %>
   <div class="dropdown-divider"></div>
   <% @edit_path = current_user.partner ? "/partners/#{current_user.slug}/edit" : edit_user_path(current_user) %>
-  <%= link_to "Edit Profile", @edit_path, class: "dropdown-item" %>
-  <%= link_to "Change Password", edit_user_registration_path, class: "dropdown-item" %>
-  <div class="dropdown-divider"></div>
+  <% if !current_user.admin? %>
+    <%= link_to "Edit Profile", @edit_path, class: "dropdown-item" %>
+    <%= link_to "Change Password", edit_user_registration_path, class: "dropdown-item" %>
+    <div class="dropdown-divider"></div>
+  <% end %>
   <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
 </div>

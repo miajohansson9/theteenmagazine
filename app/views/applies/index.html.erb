@@ -1,5 +1,5 @@
 <div class="skinny_wrapper">
-  <h1 id="page_title">Writer/Editor Applications</h1>
+  <h1 id="page_title_padded">Writer/Editor Applications</h1>
   <% @applies.each do | application | %>
     <% @user = User.find_by(email: application.email.downcase) %>
         <div class="card mb-3 <% if @unseen_applications.include? application %> unread <% end %>">

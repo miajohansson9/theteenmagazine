@@ -1,0 +1,27 @@
+<%= form_for @page, html: {:id => "ck-form"} do |f| %>
+  <% @page.errors.full_messages.each do |msg| %>
+    <li class="text-danger">
+      <h6><%= msg %></h6>
+    </li>
+  <% end %>
+  <p class="mb-0 mt-4">Title</p>
+  <%= f.text_field :title %>
+  <p class="mb-0">Content</p>
+  <div id="container">
+    <%= f.text_area :content, id: "editor" %>
+  </div>
+  <% if current_user.admin? %>
+    <p><%= f.check_box :highlighted %> Highlight page</p>
+  <% end %>
+  <p><%= f.check_box :all_managing_editors_can_suggest %> All managing editors can suggest changes</p>
+  <p>(Optional) Belongs to Category: <%= f.collection_select(:category_id, @categories, :id, :name, { include_blank: true }, {prompt: "Select a Category"}) %></p>
+  <%= f.submit "Save & Publish", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>
+</div>
+<% end %>
+<script type="text/javascript">
+  window.WEBSPELLCHECKER_CONFIG = {
+    autoSearch: true,
+    serviceId: "<%= @service_id %>"
+  };
+</script>
+<%= javascript_include_tag 'ckeditor_admin' %>
