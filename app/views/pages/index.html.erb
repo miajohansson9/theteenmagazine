@@ -44,7 +44,7 @@
                 <% end %>
                 <% if (current_user.id.eql? page.user_id) || current_user.is_manager_of_category(page.category_id) %>
                     <%= link_to('[Edit]', edit_page_path(page), class: 'link_pink') %>
-                <% else %>
+                <% elsif page.all_managing_editors_can_suggest %>
                     <%= link_to('[Suggest Edit]', edit_page_path(page), class: 'link_pink') %>
                 <% end %>
             </p>
