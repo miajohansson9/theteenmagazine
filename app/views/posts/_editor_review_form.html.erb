@@ -28,8 +28,8 @@
 
     <% end %>
     <div class="pb-1">
-      <div class="alert alert-danger" role="alert">
-        Approving a pitch that does not meet all of the <a target="_blank" style="text-decoration: underline;" href="/finding-images">image policy</a> requirements and <a target="_blank" href="/choosing-a-topic"><u>content policy</u></a> requirements will result in your removal from the editor team. It is your responsibility to review it in depth and communicate in the Discord <b>#editor-chat</b> if there is anything that is unclear. Thank you!
+      <div class="alert alert-info" role="alert">
+        Approving a pitch that does not meet all of the <a target="_blank" style="text-decoration: underline;" href="/finding-images">image policy</a> requirements and <a target="_blank" href="/choosing-a-topic"><u>content policy</u></a> requirements can result in your removal from the editor team. It is your responsibility to review it in depth and communicate in the Discord <b>#editor-chat</b> if there is anything that is unclear. Thank you!
       </div>
       <p class="d-inline">Reject or Approve:</p>
       <%= rv.select :status, options_for_select(@statuses, @review.try(:status)), {}, {:onChange => "select_article_status();"} %>
