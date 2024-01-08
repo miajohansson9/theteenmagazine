@@ -19,6 +19,9 @@
         <% end %>
     </div>
   <% end %>
-  <p>Last updated <%= format_full_date(@page.updated_at) %></p>
+  <p>Last updated <%= format_full_date(@page.updated_at) %>
+    <% if current_user.is_manager? %>
+    | <span style="color: gray">Viewed <%= @page.impressions %> times (admin only)</span>
+    <% end %></p>
   <%= markdown @page.content %>
 </div>

@@ -42,6 +42,12 @@ class PagesController < ApplicationController
   end
 
   def show
+    # don't count refreshes
+    if !(session[:has_counted_page_view].eql? @page.id)
+      @page.update_attribute(:impressions, @page.impressions + 1)
+      # create session variable to not log again
+      session[:has_counted_page_view] = @page.id
+    end
     @category = Category.find_by(id: @page.category_id)
   end
 
@@ -432,6 +438,7 @@ class PagesController < ApplicationController
         :suggestor_id,
         :created_at,
         :updated_at,
+        :impressions,
         :all_managing_editors_can_suggest,
         :highlighted,
         :category_id,

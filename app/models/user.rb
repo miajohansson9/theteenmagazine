@@ -63,6 +63,13 @@ class User < ActiveRecord::Base
     self.admin? || self.is_manager? && (self.category_ids.include? Integer(category_id))
   end
 
+  def is_just_manager_of_category(category_id)
+    if category_id.nil?
+      return false
+    end
+    (self.admin? || self.is_manager?) && (self.category_ids.include? Integer(category_id))
+  end
+
   def can_edit_post(post)
     self.id == post.user_id || (post.collaboration&.include? self.email) || self.is_manager_of_category(post.category_id)
   end

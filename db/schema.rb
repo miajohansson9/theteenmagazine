@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_08_015410) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_08_051936) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -262,6 +262,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_08_015410) do
     t.string "slug"
     t.integer "user_id"
     t.boolean "highlighted"
+    t.integer "impressions", default: 0
   end
 
   create_table "pitches", id: :serial, force: :cascade do |t|
