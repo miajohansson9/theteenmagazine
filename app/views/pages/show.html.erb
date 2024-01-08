@@ -19,5 +19,6 @@
         <% end %>
     </div>
   <% end %>
+  <p>Last updated <%= format_full_date(@page.updated_at) %></p>
   <%= markdown @page.content %>
 </div>
