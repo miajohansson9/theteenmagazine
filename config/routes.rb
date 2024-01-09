@@ -72,6 +72,7 @@ Rails.application.routes.draw do
   get "welcome/index"
   root "welcome#index"
 
+  get '/ads.txt', to: redirect('https://ads.adthrive.com/sites/6581f45a00f9c812fa0bcb0c/ads.txt', status: 301)
   get "/community" => "posts#index"
   get "/categories/:id/dashboard" => "categories#dashboard"
   get "/admin/dashboard" => "categories#admin_dashboard"
