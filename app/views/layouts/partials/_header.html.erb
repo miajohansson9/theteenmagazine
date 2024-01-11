@@ -19,13 +19,9 @@
   <div class="border">
     <nav class="nav_article">
       <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
-      <a class="link" href="/categories/interviews">Interviews</a>
-      <a class="link" href="/categories/student-life">Student Life</a>
-      <a class="link" href="/categories/wellness">Wellness</a>
-      <a class="link" href="/categories/beauty-style">Beauty & Style</a>
-      <a class="link" href="/categories/pop-culture">Pop Culture</a>
-      <a class="link" href="/categories/lifestyle">Lifestyle</a>
-      <a class="link" href="/categories/opinion">Opinion</a>
+      <% @categories.each do |category| %>
+        <%= link_to category.name.split('&')[0], category, class: 'link' %>
+      <% end %>
       <a class="link" href="/categories/about-us">About Us</a>
       <a class="link" href="/apply">Apply</a>
       <%= link_to "Log in", get_profile_path, class: "link" %>

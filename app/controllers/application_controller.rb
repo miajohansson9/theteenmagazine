@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :notifications, if: :current_user?
-  before_action :footer
+  before_action :categories
 
   after_action :store_user_location!,
                if: :storable_location?,
@@ -19,11 +19,12 @@ class ApplicationController < ActionController::Base
 
   layout :set_layout
 
-  def footer
+  def categories
+    @categories = Category.active.order("rank asc").limit(9)
     @categories_footer = Category.active
     @categories_footer = @categories_footer.in_groups_of(@categories_footer.length / 2)
   end
-  
+
   protected
 
   def set_layout
