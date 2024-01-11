@@ -1,28 +1,39 @@
 <div class="skinny_wrapper wrapper_padding pitches_wrapper">
   <div class="flex_container_mobile_reverse_order">
-    <div>
-      <h1 class="pitch_ttl">Interview Requests</h1>
-      <p class="mb-0">These interviews are submitted externally by talent managers and creators. Only claim the interviews you are excited to write about and think should be featured on The Teen Magazine. Just 
-      because an interview request was submitted does <i>not</i> mean they should be featured.</p>
-    </div>
+    <div class="btn_cntnr" style="margin-bottom: 0px;"><%= link_to "Pitch an Interview", '/interviews/new', class: "newpost--new--profile" %></div>
+    <h1 class="pitch_ttl">Interview Hub</h1>
   </div>
   <br>
   <!-- Classic tabs -->
     <div class="classic-tabs mb-4">
       <ul class="nav" id="myClassicTab" role="tablist">
         <li class="nav-item tab-custom">
-          <a class="tab-custom <% if @tab.nil? || (@tab.eql? 'high') %>active show<% end %>" id="high-priority-tab-classic" data-bs-toggle="tab" href="#high-priority-classic"
-            role="tab" aria-controls="high-priority-classic" aria-selected="true">High Priority</a>
+          <a class="tab-custom <% if @tab.nil? || (@tab.eql? 'assigned') %>active show<% end %>" id="assigned-tab-classic" data-bs-toggle="tab" href="#assigned-classic"
+            role="tab" aria-controls="assigned-classic" aria-selected="true">Assigned to you (<%= @pitches_assigned.count %>)</a>
+        </li>
+        <li class="nav-item tab-custom">
+          <a class="tab-custom <% if (@tab.eql? 'high') %>active show<% end %>" id="high-priority-tab-classic" data-bs-toggle="tab" href="#high-priority-classic"
+            role="tab" aria-controls="high-priority-classic" aria-selected="true">High Priority (<%= @pitches_high_priority.count %>)</a>
         </li>
         <li class="nav-item tab-custom">
           <a class="tab-custom <% if (@tab.eql? 'all') %>active show<% end %>" id="all-tab-classic" data-bs-toggle="tab" href="#all-classic" role="tab"
-            aria-controls="all-classic" aria-selected="false">All Interviews</a>
+            aria-controls="all-classic" aria-selected="false">Open Interviews (<%= @pitches_all.count %>)</a>
         </li>
       </ul>
     </div>
-    <!-- High Priority pitches vs not -->
     <div class="tab-content p-0" id="myClassicTabContent">
-      <div class="tab-pane fade <% if @tab.nil? || (@tab.eql? 'high') %>active show<% end %>" id="high-priority-classic" role="tabpanel" aria-labelledby="high-prioritytab-classic">
+      <div class="tab-pane fade <% if (@tab.nil? || (@tab.eql? 'assigned')) %>active show<% end %>" id="assigned-classic" role="tabpanel" aria-labelledby="high-prioritytab-classic">
+        <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
+          <% @pitches_assigned.each do |pitch| %>
+            <%= render "pitch_interview_card", pitch: pitch %>
+          <% end %>
+          <% if !@pitches_assigned.present? %>
+            <p><i>There are no new interviews assigned to you to claim. Either pitch an interview or check in all interviews!</i></p>
+          <% end %>
+        </div>
+        <%== pagy_nav(@pagy_assigned, page_param: :page_assigned, params: {tab: 'assigned'}).html_safe %>
+      </div>
+      <div class="tab-pane fade <% if (@tab.eql? 'high') %>active show<% end %>" id="high-priority-classic" role="tabpanel" aria-labelledby="high-prioritytab-classic">
         <div class="flex-wrapper" style="margin: 0 auto 40px auto;">
           <% @pitches_high_priority.each do |pitch| %>
             <%= render "pitch_interview_card", pitch: pitch %>

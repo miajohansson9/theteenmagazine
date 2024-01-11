@@ -46,6 +46,11 @@
         </i>
       </p>
     <% end %>
+    <% if current_user.is_marketer? %>
+      <p>This article is an Interview:
+        <%= f.check_box :is_interview %>
+      </p>
+    <% end %>
     <% if @post.thumbnail.present? %><p>Thumbnail Preview</p><% end %>
     <div class="d-flex flex-row flex-wrap align-items-end justify-content-between">
       <% if @post.thumbnail.present? %>

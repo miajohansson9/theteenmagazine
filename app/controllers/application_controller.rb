@@ -38,13 +38,14 @@ class ApplicationController < ActionController::Base
 
   def notifications
     initiate_last_seen
+    @current_user_is_manager_of_interviews = current_user.is_just_manager_of_category(Category.find('interviews').id)
     @unseen_pitches =
       Pitch
         .is_approved
         .not_claimed
         .where(status: nil, priority: "High")
         .where.not(user_id: current_user.id)
-        .where.not(category_id: Category.find("interviews").id)
+        .where(is_interview: [false, @current_user_is_manager_of_interviews])
         .where("updated_at > ?", current_user.last_saw_pitches)
     @unseen_pitches_cnt = @unseen_pitches.size
 
@@ -62,7 +63,7 @@ class ApplicationController < ActionController::Base
         Pitch
           .is_approved
           .not_claimed
-          .where(status: nil, priority: "High", category_id: Category.find("interviews").id)
+          .where(status: nil, assign_to_user_id: [nil, current_user.id], is_interview: true)
           .where("updated_at > ?", current_user.last_saw_interviews)
       @unseen_interviews_cnt = @unseen_interviews.size
       @notifications = @notifications + @unseen_interviews_cnt

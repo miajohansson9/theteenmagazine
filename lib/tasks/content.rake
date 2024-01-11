@@ -1,4 +1,48 @@
 namespace :content do
+  task :migrate_interview_articles => :environment do |t, args|
+    Category.find('interviews').posts.each do |post|
+      post.update_column('is_interview', true)
+      puts "Updated post https://www.theteenmagazine.com/#{post.slug}"
+    end
+  end
+
+  task :migrate_interview_pitches => :environment do |t, args|
+    Category.find('interviews').pitches.each do |pitch|
+      pitch.update_column('is_interview', true)
+      puts "Updated pitch https://www.theteenmagazine.com/pitches/#{pitch.slug}"
+    end
+  end
+
+  task :calculate_category_scores => :environment do |t, args|
+    @categories = Category.active
+    @category_scores = Hash.new
+    puts ""
+    @categories.each do |category|
+      @pageviews = 0
+      @comments = 0
+      @posts = category.posts.published.where(publish_at: (Time.now - 1.week)..Time.now)
+      @articles = @posts.count
+      @posts.each do |post|
+        @comments = @comments + post.comments.published.count
+        @pageviews = @pageviews + post.post_impressions
+      end
+      @score = @comments * 2 + @pageviews + @articles * 3
+      @category_scores[category.id] = @score
+      puts "#{category.name}"
+      puts "[#{@score}] Articles: #{@articles}, Pageviews: #{@pageviews}, Comments: #{@comments}"
+      puts ""
+    end
+    # Sort the categories by their scores in descending order
+    sorted_categories = @category_scores.sort_by { |_id, score| -score }
+
+    # Print each category with its rank and score
+    sorted_categories.each_with_index do |(category_id, score), index|
+      category = Category.find(category_id)
+      puts "Rank #{index + 1}: Category #{category.name}"
+      category.update_column("rank", index + 1)
+    end
+  end
+
   task :delete_old_images, [:should_delete] => :environment do |t, args|
     Post.published.where(agree_to_image_policy: [false, nil]).each do |post|
       begin

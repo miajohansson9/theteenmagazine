@@ -848,6 +848,7 @@ class PostsController < ApplicationController
         :agree_to_image_policy,
         :agree_to_image_policy_at,
         :rank,
+        :is_interview,
         feedback_list: [],
         reviews_attributes: %i[id post_id editor_id created_at status notes],
         user_attributes: %i[extensions id],

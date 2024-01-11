@@ -108,7 +108,7 @@ class Post < ApplicationRecord
   end
 
   def is_interview?
-    self.category_id.to_i.eql? Category.find("interviews").id.to_i
+    self.is_interview.eql? true
   end
 
   def is_locked?

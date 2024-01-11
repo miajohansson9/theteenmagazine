@@ -91,7 +91,7 @@ namespace :testdata do
         user_id: nil,
         influencer_social_media: "ig: @notableperson#{i}",
         interview_kind: interview_kind[i % interview_kind.length],
-        category_id: Category.find("interviews").id,
+        is_interview: true,
         platform_to_share: platform_to_share[i % platform_to_share.length],
         description: "Description about Notable person #{i}",
         claimed_id: nil,

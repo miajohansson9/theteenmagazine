@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_08_051936) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_11_044419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -115,6 +115,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_08_051936) do
     t.boolean "archive"
     t.integer "user_id"
     t.string "color"
+    t.integer "rank"
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
@@ -296,6 +297,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_08_051936) do
     t.string "priority"
     t.datetime "agree_to_image_policy_at", precision: nil
     t.string "thumbnail_url"
+    t.boolean "is_interview", default: false
+    t.integer "assign_to_user_id"
     t.index ["slug"], name: "index_pitches_on_slug", unique: true
     t.index ["updated_at"], name: "index_pitches_on_updated_at"
   end
@@ -342,6 +345,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_08_051936) do
     t.datetime "agree_to_image_policy_at", precision: nil
     t.string "thumbnail_url"
     t.integer "profanity_score"
+    t.boolean "is_interview", default: false
     t.index ["category_id"], name: "index_posts_on_category_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["post_impressions"], name: "index_posts_on_post_impressions"

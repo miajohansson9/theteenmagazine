@@ -31,11 +31,11 @@ class Pitch < ApplicationRecord
   end
 
   def is_interview?
-    self.category_id.eql? Category.find("interviews").id
+    self.is_interview.eql? true
   end
 
   def is_interview_from_outside_source?
-    !self.user_id.present? && (self.category_id.eql? Category.find("interviews").id)
+    !self.user_id.present? && self.is_interview?
   end
 
   extend FriendlyId

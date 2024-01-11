@@ -57,7 +57,7 @@ class UsersController < ApplicationController
       end
     end
     if current_user.present?
-      @pitches = Pitch.not_rejected.where.not(category_id: Category.find("interviews").id).all.order("created_at desc").limit(4)
+      @pitches = Pitch.not_rejected.where(is_interview: false).all.order("created_at desc").limit(4)
       @featured_writers =
         Post
           .where(publish_at: (Time.now - 7.days)..Time.now)
@@ -285,7 +285,7 @@ class UsersController < ApplicationController
         .not_claimed
         .where(status: nil)
         .where("updated_at > ?", Time.now - 40.days)
-        .where.not(category_id: Category.find("interviews").id)
+        .where(is_interview: false)
         .order("updated_at desc")
         .paginate(page: params[:page], per_page: 9)
     @pitch =

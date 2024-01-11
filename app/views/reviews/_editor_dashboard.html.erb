@@ -57,7 +57,7 @@
                         <div>
                           <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
                           <% if !draft.pitch.blank? %>
-                            <p class="card-text"> <%= draft.pitch.description.truncate_words(20) %></p>
+                            <p class="card-text"> <%= markdown draft.pitch.description.truncate_words(20) %></p>
                           <% end %>
                           <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> on <%= draft.reviews.last.updated_at.in_time_zone.strftime("%A, %b %d %H %M %S") %> </p>
                           <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
@@ -96,7 +96,7 @@
                       <% end %>
                       <div>
                         <h4 class="card-title"><%= link_to pitch.title, pitch, class: "link_nrml" %></h4>
-                        <p class="card-text"> <%= pitch.description.truncate_words(20) %></p>
+                        <p class="card-text"> <%= markdown pitch.description.truncate_words(20) %></p>
                         <p class="card-text"> Submitted by <%= link_to pitch.user.try(:full_name), pitch.user, class: "link_nrml" %> on <%= pitch.updated_at.in_time_zone.strftime("%A, %b %d") %> </p>
                         <%= link_to "Review Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
                       </div>

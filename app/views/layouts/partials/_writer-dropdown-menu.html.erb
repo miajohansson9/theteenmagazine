@@ -18,7 +18,7 @@
     </a>
     <div class="dropdown-divider"></div>
   <% elsif (!current_user.partner? && (current_user.is_new?)) %>
-    <a href="<%= pitches_path(user_id: current_user.id) %>" class="dropdown-item">My Pitches</a>
+    <a href="<%= pitches_path(user_id: current_user.id) %>" class="dropdown-item">My Claimed Pitches</a>
   <% end %>
   <% if current_user.admin? %>
     <a href="/writers" class="dropdown-item">All Writers</a>
@@ -45,7 +45,7 @@
     </a>
     <a href="/managing-editors" class="dropdown-item">Managing Editors</a>
     <% if current_user.marketer %>
-      <a href="/interviews" class="dropdown-item">Interview Requests
+      <a href="/interviews" class="dropdown-item">Interview Hub
         <% if @unseen_interviews_cnt > 0 %>
           <span class="sec counter counter-sm"></span>
           <p><%= @unseen_interviews_cnt %> new</p>

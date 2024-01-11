@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
 
   scope :editor, -> { where(editor: true) }
 
+  scope :interviewer, -> { where(marketer: true) }
+
   scope :is_published,
         -> { includes(:posts).where.not(posts: { publish_at: nil }) }
 
@@ -61,6 +63,10 @@ class User < ActiveRecord::Base
       return false
     end
     self.admin? || self.is_manager? && (self.category_ids.include? Integer(category_id))
+  end
+
+  def is_interview_manager?
+    self.is_manager_of_category(Category.find('interviews').id)
   end
 
   def is_just_manager_of_category(category_id)

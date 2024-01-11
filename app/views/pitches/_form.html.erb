@@ -27,13 +27,13 @@
   <div class="mt-3">
     <% @prompt = current_user.editor? ? "Select a Deadline" : "Set a deadline (Optional)" %>
     <% if @pitch.is_interview? %>
-      <p>How many followers does you/your client have?
+      <p>How many followers does this person have?
         <%= f.select(:following_level, ['less than 100k', 'between 100k and 500k', 'between 500k and 1 million', 'over 1 million'], {prompt: "None selected"}) %></p>
-      <p>What description fits you/your client the best?
+      <p>What description fits this person the best?
         <%= f.select(:interview_kind, ['Actor', 'Actress', 'Author', 'Artist', 'Activist', 'Content Creator', 'Influencer', 'Musician', 'Youtuber', 'Other'], {prompt: "None selected"}) %>
       </p>
       <p>
-        Please indicate the social media platform you can share the article link. (You will get to see the draft before it's published.)
+        Please indicate the platform the interviewee has agreed to share the published article on social media (If applicable)
       </p>
       <%= f.select(:platform_to_share, ['Instagram story w/ link (preferred)', 'Instagram post description', 'Youtube shoutout', 'Twitter tweet', 'Pinterest post', 'LinkedIn post'], {prompt: "None selected"}) %>
       <p>Admin notes about this pitch</p>

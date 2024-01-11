@@ -29,9 +29,19 @@
     <% if pitch.influencer_social_media.present? %>
       <p class="card-text"><b>Social media: <%= pitch.influencer_social_media&.truncate_words(20) %> </b></p>
     <% end %>
-    <p class="card-text"> <%= pitch&.description&.truncate_words(20) %></p>
-    <div class="z-index-wrapper">
-      <%= link_to "Claim Interview", pitch, :class => "btn btn-primary", :id => "btn_dark" %>
-    </div>
+    <p class="card-text"> <%= markdown pitch&.description&.truncate_words(20) %></p>
+    <% if pitch.status.eql? "Ready for Review" %>
+      <div class="z-index-wrapper">
+        <%= link_to "Waiting for review", pitch, :class => "disabled", :id => "btn_dark" %>
+      </div>
+    <% elsif pitch.status.eql? "Rejected" %>
+      <div class="z-index-wrapper">
+        <%= link_to "View feedback", pitch, :id => "btn_dark" %>
+      </div>
+    <% else %>
+      <div class="z-index-wrapper">
+        <%= link_to "Claim Interview", pitch, :class => "btn btn-primary", :id => "btn_dark" %>
+      </div>
+    <% end %>
   </div>
 </div>

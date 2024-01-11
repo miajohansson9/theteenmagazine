@@ -16,24 +16,29 @@ module PitchesHelper
     @tab = params[:tab]
     @pitches = pitches
     @pagy_all, @pitches_all =
-      pagy(@pitches,
+      pagy(@pitches.is_approved.where(assign_to_user_id: nil),
            page_param: :page,
            params: ->(params) { params.merge!("tab" => "all") },
            items: 20)
     @pagy_high_priority, @pitches_high_priority =
-      pagy(@pitches.where(priority: "High"),
+      pagy(@pitches.where(priority: "High", assign_to_user_id: nil),
            page_param: :page_high_priority,
            params: ->(params) { params.merge!("tab" => "high") },
            items: 20)
+    @pagy_assigned, @pitches_assigned =
+      pagy(@pitches.where(assign_to_user_id: current_user.id),
+          page_param: :page_high_priority,
+          params: ->(params) { params.merge!("tab" => "high") },
+          items: 20)
   end
 
   def all_interviews
     @pagy, @pitches =
       pagy(
         Pitch
-          .is_approved
           .not_claimed
-          .where(category_id: Category.find("interviews").id, status: nil)
+          .where(is_interview: true)
+          .where("updated_at > ?", Time.now - 90.days)
           .order("updated_at desc"),
         page: params[:page],
         items: 20,
@@ -48,7 +53,7 @@ module PitchesHelper
       .not_claimed
       .where(status: nil)
       .where("updated_at > ?", Time.now - 90.days)
-      .where.not(category_id: Category.find("interviews").id)
+      .where(is_interview: false)
       .order("updated_at desc")
     pitches_helper(@pitches)
   end

@@ -1,16 +1,16 @@
 include PitchesHelper
 
 class PitchesController < ApplicationController
-  before_action :find_pitch, only: %i[show update edit destroy]
+  before_action :find_pitch, only: %i[show update edit destroy edit_interview]
   before_action :can_edit?, only: [:edit]
   before_action :is_partner?, only: %i[index new show]
   before_action :is_marketer?, only: [:interviews, :new_interview]
-  before_action :authenticate_user!, except: [:pitch_interview, :create]
-  load_and_authorize_resource except: [:pitch_interview, :create]
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
   #show all interview pitches
   def interviews
-    set_meta_tags title: "Interview Requests"
+    set_meta_tags title: "Interview Hub"
     @notifications = @notifications - @unseen_interviews_cnt
     @unseen_interviews_cnt = 0
     all_interviews
@@ -24,7 +24,7 @@ class PitchesController < ApplicationController
       @notifications = @notifications - @unseen_pitches_cnt
       @unseen_pitches_cnt = 0
       set_meta_tags title: @title
-      @categories = Category.active.where.not(slug: "interviews")
+      @categories = Category.active
       if params[:pitch].nil?
         all_pitches
       else
@@ -43,33 +43,34 @@ class PitchesController < ApplicationController
   #create a new pitch
   def new
     @pitch = current_user.pitches.build
-    @categories = Category.active.where.not(slug: "interviews")
+    @categories = Category.active
     set_meta_tags title: "New Pitch | The Teen Magazine"
   end
 
-  def pitch_interview
-    @pitch = Pitch.new(deadline: 6, category_id: Category.find("interviews").id)
-    set_meta_tags title: "Pitch an Interview | The Teen Magazine"
+  def new_interview
+    @pitch = current_user.pitches.build(is_interview: true)
+    @categories = Category.active
+    @interviewers = User.interviewer
+    set_meta_tags title: "Create an Interview Pitch | The Teen Magazine"
   end
 
-  def new_interview
-    @pitch = Pitch.new(deadline: 6, category_id: Category.find("interviews").id, user_id: current_user.id)
-    set_meta_tags title: "Create an Interview Pitch | The Teen Magazine"
+  def edit_interview
+    unless (current_user.is_interview_manager? || (current_user.id.eql? @pitch.user_id))
+      redirect_to @pitch, notice: "You cannot edit this pitch."
+    end
+    @categories = Category.active
+    @interviewers = User.interviewer
+    set_meta_tags title: "Edit Interview Pitch | The Teen Magazine"
   end
 
   def create
     @categories = Category.active
     if params[:button].eql? "interview"
-      @pitch = current_user? ? current_user.pitches.build(pitch_params) : Pitch.new(pitch_params)
+      @pitch = current_user.pitches.build(pitch_params)
       if @pitch.save
-        if @pitch.user_id.nil?
-          ApplicationMailer.confirm_submitted_interview(@pitch.contact_email, @pitch).deliver
-          set_meta_tags title: "Interview Submitted"
-        else
-          redirect_to "/interviews", notice: "The interview request was created successfully."
-        end
+        redirect_to "/interviews", notice: "Your interview pitch was submitted successfully."
       else
-        render "pitch_interview", notice: "Oh no! Your changes were not able to be saved!"
+        render "new", notice: "Oh no! Your changes were not able to be saved!"
       end
     else
       @pitch = current_user.pitches.build(pitch_params)
@@ -95,12 +96,16 @@ class PitchesController < ApplicationController
 
   def update
     @categories = Category.active.or(Category.where(id: @pitch.category_id))
+    @interviewers = User.interviewer
     @post = Post.find_by(user_id: @pitch.claimed_id, pitch_id: @pitch.id)
     if pitch_params[:thumbnail_url].present?
       image_blob = URI.open(pitch_params[:thumbnail_url])
       @pitch.thumbnail.attach(io: image_blob, filename: "#{@pitch.slug}/thumbnail.jpg", content_type: 'image/jpeg')
     end
     if @pitch.update pitch_params
+      puts "ksdjflskdjflskdf"
+      puts pitch_params[:assign_to_user_id]
+      puts pitch_params
       if (@pitch.status.eql? "Ready for Review") &&
          !(pitch_params[:status].eql? "Ready for Review")
         ApplicationMailer.pitch_has_been_reviewed(@pitch.user, @pitch).deliver
@@ -115,7 +120,11 @@ class PitchesController < ApplicationController
       fix_title
       redirect_to @pitch, notice: @message
     else
-      render "edit"
+      if @pitch.is_interview?
+        render "edit_interview"
+      else
+        render "edit"
+      end
     end
   end
 
@@ -239,6 +248,8 @@ class PitchesController < ApplicationController
     @post.content = "<i>" + @pitch.description + "</i>"
     @claimed_user =
       @pitch.claimed_id.present? ? User.find_by(id: @pitch.claimed_id) : nil
+    @assigned_user =
+      @pitch.assign_to_user_id.present? ? User.find_by(id: @pitch.assign_to_user_id) : nil
     @article =
       @claimed_user ? @claimed_user.posts.where(pitch_id: @pitch.id).last : nil
     if @pitch.thumbnail_credits.present?
@@ -246,16 +257,34 @@ class PitchesController < ApplicationController
         (@pitch.thumbnail_credits.include? ",") ? @pitch.thumbnail_credits.split(",") : [@pitch.thumbnail_credits.upcase]
     end
     if @pitch.status.eql? "Ready for Review"
-      @title = "Pitch Submitted"
-      @disabled = "disabled"
-      @tooltip = "This pitch has not been reviewed yet"
+      if @pitch.is_interview?
+        @title = "Interview Submitted"
+      else
+        @title = "Pitch Submitted"
+      end
+        @disabled = "disabled"
+        @tooltip = "This pitch has not been reviewed yet"
     elsif @pitch.status.eql? "Rejected"
       @title = "Pitch Rejected"
       @disabled = "disabled"
       @tooltip = "This pitch was rejected"
     elsif @claimed_user.nil?
-      if @pitch.user.nil? || @pitch.user.editor || (@pitch.user.id.eql? current_user.id)
-        @title = @pitch.is_interview? ? "Claim Interview" : "Claim Article Pitch"
+      if (@assigned_user.present?)
+        if (current_user.id.eql? @assigned_user.id)
+          @title = @pitch.is_interview? ? "Claim Interview" : "Claim Article Pitch"
+          @disabled = ""
+          @tooltip = ""
+        else
+          @title = "#{@assigned_user.full_name} assigned"
+          @disabled = "disabled"
+          @tooltip = "This pitch isn't yours"
+        end
+      elsif @pitch.is_interview? 
+        @title = "Claim Interview"
+        @disabled = ""
+        @tooltip = ""
+      elsif (@pitch.user.nil? || @pitch.user.editor || (@pitch.user.id.eql? current_user.id))
+        @title = "Claim Article Pitch"
         @disabled = ""
         @tooltip = ""
       else
@@ -275,6 +304,9 @@ class PitchesController < ApplicationController
   end
 
   def edit
+    if @pitch.is_interview?
+      redirect_to "/interviews/#{@pitch.slug}/edit"
+    end
     @categories = Category.active.or(Category.where(id: @pitch.category_id))
     @pitch_errors = params[:errors]
     @archive_button = @pitch.archive ? "Undo Archive" : "Archive"
@@ -357,6 +389,8 @@ class PitchesController < ApplicationController
         :editor_id,
         :archive,
         :contact_email,
+        :is_interview,
+        :assign_to_user_id,
         :influencer_social_media,
         :platform_to_share,
         :interview_kind,
@@ -392,6 +426,7 @@ class PitchesController < ApplicationController
         :waiting_for_approval,
         :approved,
         :sharing,
+        :is_interview,
         :collaboration,
         :after_approved,
         :created_at,

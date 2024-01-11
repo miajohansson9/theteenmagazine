@@ -55,6 +55,7 @@
                 <%= f.hidden_field :thumbnail_credits, value: @pitch.thumbnail_credits %>
               <% end %>
               <%= f.hidden_field :category_id, value: pitch.category_id %>
+              <%= f.hidden_field :is_interview, value: @pitch.is_interview %>
               <%= f.hidden_field :pitch_id, value: pitch.id %>
               <%= f.label "Cancel", class: "newpost--new--profile mr-2 pl-5 pr-5", id: "dismiss-modal", "data-bs-dismiss" => "modal" %>
               <div class="hide spinner-button spinner-border" role="status">

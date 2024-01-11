@@ -55,7 +55,11 @@ class CategoriesController < ApplicationController
                     image: @category.image,
                     domain: "https://www.theteenmagazine.com/",
                   }
-    @posts = Post.where(category_id: @category.id).published
+    if @category.slug.eql? 'interviews'
+      @posts = Post.where(is_interview: true).published
+    else
+      @posts = Post.where(category_id: @category.id).published
+    end
     if current_user.present? && current_user.is_manager? && (params[:high_priority].eql? "true")
       @posts = @posts.high_priority
     elsif current_user.present? && current_user.is_manager? && params[:popular_within].present?
@@ -99,17 +103,30 @@ class CategoriesController < ApplicationController
     @newsletters_sent_this_month = @newsletters_sent_this_month.nil? ? 0 : @newsletters_sent_this_month.count
 
     # published articles calculations
-    @articles_last_month = Post.published.where(category_id: @category.id, publish_at: (Time.now - 60.days)..(Time.now - 30.days))
+    if @category.slug.eql? 'interviews'
+      @articles_last_month = Post.published.where(is_interview: true, publish_at: (Time.now - 60.days)..(Time.now - 30.days))
+      @articles_this_month = Post.published.where(is_interview: true, publish_at: (Time.now - 30.days)..Time.now)
+    else
+      @articles_last_month = Post.published.where(category_id: @category.id, publish_at: (Time.now - 60.days)..(Time.now - 30.days))
+      @articles_this_month = Post.published.where(category_id: @category.id, publish_at: (Time.now - 30.days)..Time.now)
+    end
     @articles_last_month = @articles_last_month.nil? ? 0 : @articles_last_month.count
-    @articles_this_month = Post.published.where(category_id: @category.id, publish_at: (Time.now - 30.days)..Time.now)
     @articles_this_month = @articles_this_month.nil? ? 0 : @articles_this_month.count
 
     # get all drafts
-    @category_drafts = @category.posts.where(updated_at: (Time.now - 6.months)..Time.now).order("updated_at desc")
+    if @category.slug.eql? 'interviews'
+      @category_drafts = Post.where(is_interview: true, updated_at: (Time.now - 6.months)..Time.now).order("updated_at desc")
+    else
+      @category_drafts = @category.posts.where(updated_at: (Time.now - 6.months)..Time.now).order("updated_at desc")
+    end
 
     # popular articles
     @views_cut_off = 1000
-    @popular_articles = @category.posts.where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
+    if @category.slug.eql? 'interviews'
+      @popular_articles = Post.where(is_interview: true, publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
+    else
+      @popular_articles = @category.posts.where(publish_at: (Time.now - 3.months)..Time.now).where("post_impressions > ?", @views_cut_off)
+    end
     @popular_articles_count = @popular_articles.nil? ? 0 : @popular_articles.count
 
     # writers subscribed
@@ -221,7 +238,7 @@ class CategoriesController < ApplicationController
   def category_params
     params
       .require(:category)
-      .permit(:name, :image, :created_at, :description, :slug, :archive, :user_id, :managing_editor, :color)
+      .permit(:name, :image, :created_at, :rank, :description, :slug, :archive, :user_id, :managing_editor, :color)
   end
 
   def find_category

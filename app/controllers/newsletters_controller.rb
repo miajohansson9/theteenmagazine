@@ -41,7 +41,7 @@ class NewslettersController < ApplicationController
       @audiences = ["Only Editors"]
     end
     if current_user.is_manager?
-      current_user.categories.where.not(slug: "interviews").each do |category|
+      current_user.categories.each do |category|
         @audiences.push("Writers in #{category.name.titleize}")
       end
     end

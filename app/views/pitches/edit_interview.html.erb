@@ -1,0 +1,9 @@
+<div id="banner_writing" class="editor"></div>
+<div class="apply_wrapper pitch_form_wrapper">
+  <% if (current_user.is_interview_manager?) && (@pitch.status.eql? "Ready for Review") %>
+    <%= render "interview_review_form" %>
+  <% else %>
+    <h1>Edit Interview Pitch</h1>
+    <%= render 'interview_form' %>
+  <% end %>
+</div>

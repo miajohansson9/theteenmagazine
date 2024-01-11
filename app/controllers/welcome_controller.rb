@@ -22,7 +22,7 @@ class WelcomeController < ApplicationController
       Post
         .published
         .limit(3)
-        .where(category_id: Category.find("interviews").id)
+        .where(is_interview: true)
         .where.not(id: @post_approved_0_ids)
         .by_published_date
     render partial: "welcome/categories/category_1"
@@ -63,7 +63,6 @@ class WelcomeController < ApplicationController
 
   def get_recent_posts
     @category_ids = [
-      Category.find("interviews").id,
       Category.find("student-life").id,
       Category.find("opinion").id,
       Category.find("beauty-style").id,
