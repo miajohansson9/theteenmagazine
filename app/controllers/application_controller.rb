@@ -20,7 +20,8 @@ class ApplicationController < ActionController::Base
   layout :set_layout
 
   def categories
-    @categories = Category.active.order("rank asc").limit(9)
+    @categories_header_menu = Category.active.order("rank asc").limit(7)
+    @categories_side_menu = Category.active.order("rank asc")
     @categories_footer = Category.active
     @categories_footer = @categories_footer.in_groups_of(@categories_footer.length / 2)
   end

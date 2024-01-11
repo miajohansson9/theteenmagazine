@@ -474,6 +474,11 @@ body {
   transition: 0.2s ease all;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+
+  .site-menu-list {
+    max-height: calc(100vh - 120px);
+    overflow-y: scroll;
+  }
 }
 
 .show-nav {

@@ -19,7 +19,7 @@
   <div class="border">
     <nav class="nav_article">
       <%= link_to "The Teen Magazine", root_path, class: "nav-title"%>
-      <% @categories.each do |category| %>
+      <% @categories_header_menu.each do |category| %>
         <%= link_to category.name.split('&')[0], category, class: 'link' %>
       <% end %>
       <a class="link" href="/categories/about-us">About Us</a>

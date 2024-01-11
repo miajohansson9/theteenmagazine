@@ -16,7 +16,7 @@
         <%= render "welcome/categories/category_3" %>
       </div>
       <div class="most_read contain_articles">
-        <h1 class="mt-4 section--title"><%= link_to "#trending", "/trending" %></h1>
+        <h1 class="mt-4 section--title"><%= link_to "#Trending", "/trending" %></h1>
         <%= render_async get_trending_posts_path, retry_count: 3 %>
         <div class="content_hint"></div>
       </div>
