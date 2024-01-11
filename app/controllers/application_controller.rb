@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
 
     @notifications = @unseen_pitches_cnt + @unseen_shared_drafts_cnt
 
-    if current_user.is_marketer?
+    if current_user.marketer
       @unseen_interviews =
         Pitch
           .is_approved
