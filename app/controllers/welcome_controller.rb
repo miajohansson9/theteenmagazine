@@ -1,8 +1,10 @@
 class WelcomeController < ApplicationController
-  before_action :show
-  before_action :featured
+  def get_trending_posts
+    @trending = Post.published.trending.limit(9)
+    render partial: "welcome/partials/trending"
+  end
 
-  def featured
+  def index
     @featured = Post.where.not(publish_at: nil).find_by(featured: true)
     @posts_approved_0 =
       Post
@@ -15,58 +17,19 @@ class WelcomeController < ApplicationController
         0..4
       ]
     @post_approved_0_ids = @posts_approved_0.map(&:id)
-  end
 
-  def get_category_1_welcome
-    @posts_approved_1 =
-      Post
-        .published
-        .limit(3)
-        .where(is_interview: true)
-        .where.not(id: @post_approved_0_ids)
-        .by_published_date
-    render partial: "welcome/categories/category_1"
-  end
+    @categories = Category.active.order("rank asc").limit(5)
+    @category_1 = @categories[0]
+    @category_2 = @categories[1]
+    @category_3 = @categories[2]
+    @category_4 = @categories[3]
 
-  def get_category_2_welcome
-    @posts_approved_2 =
-      Post
-        .published
-        .limit(3)
-        .where(category_id: Category.find("student-life").id)
-        .where.not(id: @post_approved_0_ids)
-        .by_published_date
-    render partial: "welcome/categories/category_2"
-  end
-
-  def get_category_3_welcome
-    @posts_approved_3 =
-      Post
-        .published
-        .limit(3)
-        .where(category_id: Category.find("opinion").id)
-        .where.not(id: @post_approved_0_ids)
-        .by_published_date
-    render partial: "welcome/categories/category_3"
-  end
-
-  def get_category_4_welcome
-    @posts_approved_4 =
-      Post
-        .published
-        .limit(6)
-        .where(category_id: Category.find("beauty-style").id)
-        .where.not(id: @post_approved_0_ids)
-        .by_published_date
-    render partial: "welcome/categories/category_4"
-  end
-
-  def get_recent_posts
-    @category_ids = [
-      Category.find("student-life").id,
-      Category.find("opinion").id,
-      Category.find("beauty-style").id,
-    ]
+    @category_1_posts = @category_1.posts.published.by_published_date.limit(3)
+    @category_2_posts = @category_2.posts.published.by_published_date.limit(3)
+    @category_3_posts = @category_3.posts.published.by_published_date.limit(6)
+    @category_4_posts = @category_4.posts.published.by_published_date.limit(3)
+    
+    @category_ids = @categories.map(&:id)
     @posts_approved_last =
       Post
         .published
@@ -74,15 +37,7 @@ class WelcomeController < ApplicationController
         .where.not(category_id: @category_ids)
         .where.not(id: @post_approved_0_ids)
         .limit(9)
-    render partial: "welcome/partials/recents"
-  end
 
-  def get_trending_posts
-    @trending = Post.published.trending.limit(9)
-    render partial: "welcome/partials/trending"
-  end
-
-  def show
     set_meta_tags title: "The Teen Magazine",
                   image: "https://www.theteenmagazine.com#{ActionController::Base.helpers.image_path("ttm.png")}",
                   description: "The Teen Magazine is an online magazine covering all things wellness, student life, academics, lifestyle, relationships, beauty and more.",

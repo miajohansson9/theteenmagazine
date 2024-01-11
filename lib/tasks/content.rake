@@ -20,7 +20,7 @@ namespace :content do
     @categories.each do |category|
       @pageviews = 0
       @comments = 0
-      @posts = category.posts.published.where(publish_at: (Time.now - 1.week)..Time.now)
+      @posts = category.posts.published.where(publish_at: (Time.now - 1.month)..Time.now)
       @articles = @posts.count
       @posts.each do |post|
         @comments = @comments + post.comments.published.count

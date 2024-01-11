@@ -5,21 +5,15 @@
     </div>
   </div>
   <div class="wrapper_home">
-    <h1 class="section--title"><a href="/categories/interviews">interviews</a></h1>
+    <h1 class="section--title"><%= link_to @category_1.name, @category_1 %></h1>
     <div class="flex--welcome">
       <div class="flex-1">
-        <%= render_async get_category_1_welcome_path, retry_count: 3 do %>
-          <%= render_async "welcome/placeholders/category_row_placeholder" %>
-        <% end %>
-        <h1 class="section--title"><a href="/categories/student-life">student life</a></h1>
+        <%= render "welcome/categories/category_1" %>
+        <h1 class="section--title"><%= link_to @category_2.name, @category_2 %></h1>
         <div class="content_hint"></div>
-        <%= render_async get_category_2_welcome_path, retry_count: 3 do %>
-          <%= render_async "welcome/placeholders/category_row_placeholder" %>
-        <% end %>
-        <h1 class="section--title"><a href="/categories/opinion">opinion</a></h1>
-        <%= render_async get_category_3_welcome_path, retry_count: 3 do %>
-          <%= render_async "welcome/placeholders/category_row_placeholder" %>
-        <% end %>
+        <%= render "welcome/categories/category_2" %>
+        <h1 class="section--title"><%= link_to @category_3.name, @category_3 %></h1>
+        <%= render "welcome/categories/category_3" %>
       </div>
       <div class="most_read contain_articles">
         <h1 class="mt-4 section--title"><%= link_to "#trending", "/trending" %></h1>
@@ -27,10 +21,10 @@
         <div class="content_hint"></div>
       </div>
     </div>
-    <h1 class="section--title"><a href="/categories/beauty-style">beauty & style</a></h1>
+    <h1 class="section--title"><%= link_to @category_4.name, @category_4 %></h1>
     <div class="flex--welcome">
       <div class="flex-1">
-        <%= render_async get_category_4_welcome_path %>
+        <%= render "welcome/categories/category_4" %>
       </div>
       <div class="most_read contain_articles">
         <div class="ads_wrapper">
