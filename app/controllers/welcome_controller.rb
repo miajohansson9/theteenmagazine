@@ -24,10 +24,10 @@ class WelcomeController < ApplicationController
     @category_3 = @categories[2]
     @category_4 = @categories[3]
 
-    @category_1_posts = @category_1.posts.published.by_published_date.limit(3)
-    @category_2_posts = @category_2.posts.published.by_published_date.limit(3)
-    @category_3_posts = @category_3.posts.published.by_published_date.limit(6)
-    @category_4_posts = @category_4.posts.published.by_published_date.limit(3)
+    @category_1_posts = @category_1.posts.published.by_published_date.where.not(id: @post_approved_0_ids).limit(3)
+    @category_2_posts = @category_2.posts.published.by_published_date.where.not(id: @post_approved_0_ids).limit(3)
+    @category_3_posts = @category_3.posts.published.by_published_date.where.not(id: @post_approved_0_ids).limit(6)
+    @category_4_posts = @category_4.posts.published.by_published_date.where.not(id: @post_approved_0_ids).limit(3)
     
     @category_ids = @categories.map(&:id)
     @posts_approved_last =
