@@ -142,7 +142,7 @@ class PitchesController < ApplicationController
   end
 
   def destroy
-    if current_user.admin? && !(@pitch.user_id.eql? current_user.id)
+    if current_user.admin? && !(@pitch.user_id.eql? current_user.id) && !@pitch.is_interview
       ApplicationMailer.pitch_deleted(@pitch.user, @pitch).deliver
     end
     @pitch.posts.each { |p| p.update_column("pitch_id", nil) }

@@ -6,4 +6,7 @@
     <h1>Edit Interview Pitch</h1>
     <%= render 'interview_form' %>
   <% end %>
+  <div class="d-flex flex-direction-row justify-content-end">
+    <%= link_to "Delete", pitch_path(@pitch), method: :delete, data: {confirm: "Deleting this pitch cannot be undone. Are you sure you want to continue?"}, style: "margin-top: -35px;" %>
+  </div>
 </div>

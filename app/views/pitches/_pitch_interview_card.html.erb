@@ -5,7 +5,7 @@
       <%= image_tag(pitch.thumbnail.variant(resize_to_fill: [540,380], format: 'webp'), alt: pitch.title, :class => "card-img-top")%>
     <% end %>
   </a>
-  <% if pitch.user.present? && (current_user.admin? || current_user.editor?) %>
+  <% if current_user.is_interview_manager? %>
     <%= link_to("Edit", edit_pitch_path(pitch.id), :class => "edit_btn pitch_btn")%>
   <% end %>
   <div class="card-body">
