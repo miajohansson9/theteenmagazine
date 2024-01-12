@@ -75,7 +75,7 @@ class UsersController < ApplicationController
   end
 
   def get_editor_stats
-    @is_managing_editor = @user.categories.active.present?
+    @is_managing_editor = @user.categories.present?
     if @is_managing_editor
       @categories = []
       @user.categories.active.each do |category|
