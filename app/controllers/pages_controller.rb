@@ -23,12 +23,12 @@ class PagesController < ApplicationController
 
   def new
     @page = Page.new
-    @categories = Category.active
+    @categories = Category.active.to_a + [Category.find_by(slug: 'interviews')]
     set_meta_tags title: "New Page"
   end
 
   def edit
-    @categories = Category.active
+    @categories = Category.active.to_a + [Category.find_by(slug: 'interviews')]
     @user = User.find_by(id: @page.user_id)
     @suggestor = User.find_by(id: @page.suggestor_id)
     if !(current_user.admin? || (current_user.id.eql? @page.user_id) || (current_user.is_manager_of_category(@page.category_id)))

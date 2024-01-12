@@ -8,7 +8,7 @@
         <li>
             <p>
                 <u><%= link_to(page.title, page) %></u>
-                <% @category = Category.find_by(user_id: current_user.id) %>
+                <% @category = Category.find_by(id: page.category_id) %>
                 <% if @category %>
                     in <%= @category.name %>
                 <% end %>
@@ -38,7 +38,7 @@
                 <% if @user.present? %>
                     by <u><%= link_to(@user.full_name, user_path(@user)) %></u>
                 <% end %>
-                <% @category = Category.find_by(user_id: current_user.id) %>
+                <% @category = Category.find_by(id: page.category_id) %>
                 <% if @category %>
                     in <%= @category.name %>
                 <% end %>
@@ -61,6 +61,7 @@
                 <% if @user.present? %>
                     by <u><%= link_to(@user.full_name, user_path(@user)) %></u>
                 <% end %>
+                <% @category = Category.find_by(id: page.category_id) %>
                 <% if @category %>
                     in <%= @category.name %>
                 <% end %>

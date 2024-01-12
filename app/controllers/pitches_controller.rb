@@ -15,6 +15,7 @@ class PitchesController < ApplicationController
       @notifications = @notifications - @unseen_interviews_cnt
       @unseen_interviews_cnt = 0
     end
+    @interview_pages = Page.all.where(category_id: Category.find('interviews').id)
     all_interviews
     Thread.new { current_user.update_column("last_saw_interviews", Time.now) }
   end

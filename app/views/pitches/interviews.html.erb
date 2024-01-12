@@ -3,6 +3,22 @@
     <div class="btn_cntnr" style="margin-bottom: 0px;"><%= link_to "Pitch an Interview", '/interviews/new', class: "newpost--new--profile" %></div>
     <h1 class="pitch_ttl">Interview Hub</h1>
   </div>
+  <% @interview_pages.each do |page| %>
+    <ul>
+        <li>
+            <p>
+                <u><%= link_to(page.title, page) %></u>
+                <% @user= User.find_by(id: page.user_id) %>
+                <% if @user.present? %>
+                    by <u><%= link_to(@user.full_name, user_path(@user)) %></u>
+                <% end %>
+                <% if @category %>
+                    in <%= @category.name %>
+                <% end %>
+            </p>
+        </li>
+    </ul>
+  <% end %>
   <br>
   <!-- Classic tabs -->
     <div class="classic-tabs mb-4">
