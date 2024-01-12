@@ -5,6 +5,15 @@
   min-height: 200px;
 }
 
+#page-content {
+  figure {
+    margin: 0px auto;
+  }
+  img {
+    max-width: 100%;
+  }
+}
+
 .criteria {
   background-color: white;
   span {

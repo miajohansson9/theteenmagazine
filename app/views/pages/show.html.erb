@@ -23,5 +23,7 @@
     <% if current_user.admin? %>
     | <span style="color: gray">Viewed <%= @page.impressions %> times (admin only)</span>
     <% end %></p>
-  <%= markdown @page.content %>
+  <div id="page-content">
+    <%= markdown @page.content %>
+  </div>
 </div>
