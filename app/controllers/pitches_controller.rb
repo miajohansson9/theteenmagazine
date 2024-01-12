@@ -309,6 +309,10 @@ class PitchesController < ApplicationController
     if @pitch.is_interview?
       redirect_to "/interviews/#{@pitch.slug}/edit"
     end
+    if @pitch.thumbnail_credits.present?
+      @thumbanil_credits =
+        (@pitch.thumbnail_credits.include? ",") ? @pitch.thumbnail_credits.split(",") : [@pitch.thumbnail_credits.upcase]
+    end
     @categories = Category.active.or(Category.where(id: @pitch.category_id))
     @pitch_errors = params[:errors]
     @archive_button = @pitch.archive ? "Undo Archive" : "Archive"

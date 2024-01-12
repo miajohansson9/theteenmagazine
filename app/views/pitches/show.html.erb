@@ -74,6 +74,10 @@
           <%= @thumbanil_credits[0] %>
         <% end %>
       </div>
+    <% else %>
+      <div class="alert alert-danger">
+        No thumbnail credits are given
+      </div>
     <% end %>
     <%= render "posts/partials/header_image", post: @pitch, img_class: "card-img-top" %>
   <% end %>
