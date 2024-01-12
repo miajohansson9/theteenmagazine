@@ -78,7 +78,7 @@ class UsersController < ApplicationController
     @is_managing_editor = @user.categories.present?
     if @is_managing_editor
       @categories = []
-      @user.categories.active.each do |category|
+      @user.categories.each do |category|
         @categories.push(category.name.titleize)
       end
       @categories = @categories.join(", ")
