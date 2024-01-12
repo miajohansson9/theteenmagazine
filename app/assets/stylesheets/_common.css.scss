@@ -481,6 +481,19 @@ body {
   }
 }
 
+@media (max-width: 430px) {
+  .show-nav {
+    #site-menu {
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+      -webkit-transform: translate3d(100%, 0, 0);
+      transform: translate3d(100%, 0, 0);
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
 .show-nav {
   overflow: hidden;
   #site-menu {
@@ -489,12 +502,15 @@ body {
     -webkit-transform: translate3d(320px, 0, 0);
     transform: translate3d(320px, 0, 0);
     height: 100%;
+    max-height: 100%;
+    overflow-y: scroll;
+    z-index: 9000004;
   }
 }
 
 .show-nav #navigation_overlay {
   visibility: visible;
-  opacity: 0.75;
+  opacity: 0.9;
   height: 100%;
 }
 

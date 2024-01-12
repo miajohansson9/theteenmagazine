@@ -11,8 +11,10 @@ class PitchesController < ApplicationController
   #show all interview pitches
   def interviews
     set_meta_tags title: "Interview Hub"
-    @notifications = @notifications - @unseen_interviews_cnt
-    @unseen_interviews_cnt = 0
+    if !@unseen_interviews_cnt.nil?
+      @notifications = @notifications - @unseen_interviews_cnt
+      @unseen_interviews_cnt = 0
+    end
     all_interviews
     Thread.new { current_user.update_column("last_saw_interviews", Time.now) }
   end

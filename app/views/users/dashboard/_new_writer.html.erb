@@ -104,7 +104,7 @@
           <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn") %>
         </div>
         <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscriber&.email}&token=#{@user.subscriber&.token}", class: "link_grn") %><br>
-        <% if current_user.admin? && current_user == true_user && @user.submitted_profile %>
+        <% if current_user.admin? && current_user == true_user && !@user.submitted_profile.nil? %>
           <%= link_to("Sign in as #{@user.full_name}", impersonate_user_path(@user), method: :post, class: "link_grn") %><br>
         <% end %>
       </div>
