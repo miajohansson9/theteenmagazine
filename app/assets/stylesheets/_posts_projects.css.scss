@@ -461,16 +461,14 @@
 }
 
 @media (max-width: 800px) {
-  .skinny {
-    iframe {
-      width: 100% !important;
-    }
-    #post_title_show {
-      padding: 1px 20px;
-      margin-bottom: 10px;
-      h1 {
-        font-size: 35px !important;
-      }
+  iframe {
+    width: 100% !important;
+  }
+  #post_title_show {
+    padding: 1px 20px;
+    margin-bottom: 10px;
+    h1 {
+      font-size: 38px !important;
     }
   }
   #content,
@@ -500,12 +498,10 @@
 }
 
 @media (max-width: 448px) {
-  .skinny {
-    #post_title_show {
-      padding: 0px 15px;
-      .title_wrapper {
-        padding-top: 20px;
-      }
+  #post_title_show {
+    padding: 0px 15px;
+    .title_wrapper {
+      padding-top: 20px;
     }
   }
   #content {
