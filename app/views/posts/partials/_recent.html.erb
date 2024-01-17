@@ -1,9 +1,6 @@
 <% @recent.each do |post| %>
   <div class="ctgry_article position-relative" style="margin-bottom: 18px;">
     <%=link_to(post) do %>
-      <% if post.rank.present? && post.rank <= 1 %>
-        <span class="badge badge-pink" style="position: absolute; z-index: 10000; top: 5px; left: 5px;">Trending 🔥</span>
-      <% end %>
       <%= render 'posts/partials/header_image', post: post, img_class: "" %>
     <% end %>
     <div class="paragraph" style="margin-top: -3px">
