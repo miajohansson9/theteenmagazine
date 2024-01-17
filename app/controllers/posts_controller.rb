@@ -801,6 +801,7 @@ class PostsController < ApplicationController
       @post.title.gsub!(" From ", " from ")
       @post.title.gsub!(" Of ", " of ")
       @post.title.gsub!(" On ", " on ")
+      @post.title.gsub!(" As ", " as ")
       @post.title.gsub!(" To ", " to ")
       @post.title.gsub!(" With ", " with ")
       @post.title.gsub!(" In ", " in ")
