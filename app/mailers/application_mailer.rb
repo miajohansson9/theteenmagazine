@@ -2,6 +2,15 @@ class ApplicationMailer < ActionMailer::Base
   include ActionView::Helpers::DateHelper
   default from: "The Teen Magazine Editor Team <editors@theteenmagazine.com>"
 
+  def add_email_capture(template, email)
+    content = render_to_string(template: template)
+    content.gsub!(/(href=["'].*?theteenmagazine.*?["'])/) do |match|
+      url = match[/href=(["'])(.*?)\1/, 2]
+      "#{match.gsub(url, "#{url}?adt_ei=#{email}")}"
+    end
+    return content
+  end
+
   def plain_message_template(user, newsletter)
     @from_user = newsletter.user
     @user = user
@@ -28,12 +37,10 @@ class ApplicationMailer < ActionMailer::Base
     end
     @from_field = (@from_user.id.eql? 1) ? "Mia from The Teen Magazine <mia@theteenmagazine.com>" : "Managing Editor <editors@theteenmagazine.com>"
     @reply_to = (@from_user.id.eql? 1) ? "mia@theteenmagazine.com" : @from_user.email
-    mail(
-      to: @subscriber.email,
-      subject: @subject,
-      from: @from_field,
-      reply_to: @reply_to,
-    )
+    @email_body = add_email_capture('application_mailer/custom_message_template', @subscriber.email)
+    mail(to: @subscriber.email, subject: @subject, from: @from_field, reply_to: @reply_to)  do |format|
+      format.html { render html: @email_body.html_safe }
+    end
   end
 
   def editor_picks(subscriber, posts, editor_quotes, newsletter)
@@ -42,7 +49,10 @@ class ApplicationMailer < ActionMailer::Base
     @posts = posts
     @editor_quotes = editor_quotes
     @subject = newsletter.subject.present? ? newsletter.subject : "This Week's Editor Picks are Here!"
-    mail(to: @subscriber.email, subject: @subject)
+    @email_body = add_email_capture('application_mailer/editor_picks', @subscriber.email)
+    mail(to: @subscriber.email, subject: @subject)  do |format|
+      format.html { render html: @email_body.html_safe }
+    end
   end
 
   def welcome_email(user)
@@ -444,7 +454,11 @@ class ApplicationMailer < ActionMailer::Base
     %w(a e i o u).include?(params_word[0].downcase) ? "an" : "a"
   end
 
-  helper_method def markdown(content)
+  helper_method def generate_url(url, email)
+    return "https://theteenmagazine.com/#{url}?adt_ei=#{email}"
+  end
+
+  helper_method def markdown(content, email)
     renderer =
       Redcarpet::Render::HTML.new(
         hard_wrap: true,
@@ -457,6 +471,10 @@ class ApplicationMailer < ActionMailer::Base
       )
     content.gsub!('src="/rails/active_storage/', 'src="https://www.theteenmagazine.com/rails/active_storage/')
     content.gsub!("<p>", '<p style="font-size: 16px">')
+    content.gsub!(/(href=["'].*?theteenmagazine.*?["'])/) do |match|
+      url = match[/href=(["'])(.*?)\1/, 2]
+      "#{match.gsub(url, "#{url}?adt_ei=#{email}")}"
+    end
     Redcarpet::Markdown.new(renderer).render(content).html_safe
   end
 
