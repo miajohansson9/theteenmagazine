@@ -94,10 +94,6 @@
       <h6 class="header_ttl">Changes Requested</h6>
       <%= render "/users/partials/dashboard_articles", articles: @user_posts.rejected, image: "changes_requested.png" %>
     <% end %>
-    <% if @user_posts.scheduled_for_publishing.present? %>
-      <h6 class="header_ttl">Pending Publication</h6>
-      <%= render "/users/partials/dashboard_articles", articles: @user_posts.scheduled_for_publishing, image: "published.png" %>
-    <% end %>
     <% if @user_posts.in_review.present? %>
       <h6 class="header_ttl">Articles In Review</h6>
       <%= render "/users/partials/dashboard_articles", articles: @user_posts.in_review, image: "in_review.png" %>

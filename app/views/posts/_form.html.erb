@@ -19,21 +19,6 @@
       <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
     <% end %>
     <p class="mt-0">Write your article in the text area below and <b>save often</b>. Saving can also help fix formatting problems.</p>
-    <% if @should_show_editor_form && @post.editor_can_make_changes %>
-      <p>
-        <i>
-          The writer has given permission for you to make changes to this article.
-          These changes may include improving formatting, grammar/punctuation, thumbnail image, and/or title optimization.
-          Larger edits should be sent back for changes.
-        </i>
-      </p>
-    <% elsif @should_show_editor_form %>
-      <p>
-        <i style="background-color: #FCD04D;">
-          The writer has not given permission for you to make changes to this article.
-        </i>
-      </p>
-    <% end %>
     <div id="container" class="<%= @should_show_editor_form && !@post.editor_can_make_changes ? 'not-editable' : '' %>">
       <%= f.text_area :content, value: @post.content, id: "editor" %>
     </div>
@@ -123,10 +108,7 @@
     <%# <p class="mt-0">If you are writing an article with other writer(s), you may put their emails here to share the article with them. Separate multiple emails with commas.</p>
     <%= f.text_field :collaboration, placeholder: '(Optional) Email' %>
     <%= f.fields_for :reviews, @review do |rv| %>
-      <% if @should_show_editor_form %>
-        <%= render "posts/editor_review_form", rv: rv, f: f, post: @post %>
-      <% else %>
-        <% if ((@reviews_rejected || []).count >= 5) && !(@post.is_published?) %>
+      <% if ((@reviews_rejected || []).count >= 5) && !(@post.is_published?) %>
           <%= rv.hidden_field :status, :value => "In Progress" %>
           <p class="mb-2 mt-0" style="font-style: italic;"><span class="highlight">You have reached the maximum amount of times you can submit this article for review.</span></p>
         <% else %>
@@ -149,7 +131,6 @@
             <% end %>
           </div>
         <% end %>
-      <% end %>
     <% end %>
     <div class="btn_cntnr mb-0 pt-3 pb-3" style="float: none;">
       <div class="hide spinner-button spinner-border" role="status">

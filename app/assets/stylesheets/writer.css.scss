@@ -432,7 +432,7 @@ a {
     /* Shorthand – you could use ‘flex-direction: column’ and ‘flex-wrap: wrap’ instead */
     align-items: flex-start;
     .card-review {
-      padding: 20px;
+      padding: 4px 10px;
       p {
         margin: 5px 0;
       }
@@ -447,7 +447,7 @@ a {
         display: flex;
         position: relative;
         #review_img {
-          padding: 10px;
+          margin-right: 10px;
         }
       }
     }

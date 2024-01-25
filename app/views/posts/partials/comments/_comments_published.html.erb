@@ -1,0 +1,11 @@
+<h3>Comments</h3>
+<div class="comments">
+  <div class="comments-published pl-0">
+    <%= render :partial => 'comments/comment_form', locals: {post: post, comment: comment, user: user } %>
+    <ul class="list-group list-group-flush" id="list-group-comments">
+      <% comments.each do |comment| %>
+        <%= render :partial => 'comments/comment', locals: {comment: comment, post: post} %>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -93,6 +93,10 @@ class User < ActiveRecord::Base
     self.admin? || self.marketer?
   end
 
+  def is_reviewing_post(post_id)
+    Review.where(status: "In Review", post_id: post_id, editor_id: self.id).present?
+  end
+
   def should_generate_new_friendly_id?
     slug.blank? || self.full_name_changed?
   end

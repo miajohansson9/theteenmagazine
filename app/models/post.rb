@@ -18,42 +18,111 @@ class Post < ApplicationRecord
     pitch.nil?
   end
 
-  scope :draft,
-        -> {
-          joins(:reviews)
-            .where(reviews: { status: nil })
-            .or(
-              joins(:reviews).where(
-                reviews: {
-                  status: "In Progress",
-                  active: [nil, true],
-                },
-              )
+  scope :draft, -> {
+    joins(
+      <<-SQL
+        LEFT JOIN reviews ON posts.id = reviews.post_id
+        AND (
+          reviews.id IS NULL OR (
+            reviews.status = 'In Progress'
+            AND reviews.created_at = (
+              SELECT MAX(created_at) 
+              FROM reviews 
+              WHERE post_id = posts.id
             )
-        }
-  scope :submitted,
-        -> {
-          joins(:reviews).where(
-            reviews: {
-              status: "Ready for Review",
-              active: true,
-            },
           )
-        }
-  scope :rejected,
-        -> {
-          joins(:reviews).where(reviews: { status: "Rejected", active: true })
-        }
-  scope :in_review,
-        -> {
-          joins(:reviews).where(reviews: { status: "In Review", active: true })
-        }
-  scope :scheduled_for_publishing,
-        -> {
-          joins(:reviews)
-            .where.not("publish_at < ?", Time.now)
-            .where(reviews: { status: "Approved for Publishing", active: true })
-        }
+        )
+      SQL
+    )
+  }
+  scope :submitted, -> {
+    joins(
+      <<-SQL
+        INNER JOIN reviews ON posts.id = reviews.post_id
+        AND reviews.status = 'Ready for Review'
+        AND reviews.created_at = (
+          SELECT MAX(created_at) 
+          FROM reviews 
+          WHERE post_id = posts.id
+        )
+      SQL
+    )
+  }
+  scope :your_recommended, ->(user) {
+    joins(:reviews)
+      .where("reviews.status = 'Recommend for Publishing'")
+      .where("reviews.created_at = (
+        SELECT MAX(created_at) 
+        FROM reviews 
+        WHERE post_id = posts.id
+      )")
+      .where(reviews: { editor_id: user.id })
+  }
+  scope :other_recommended, ->(user) {
+    joins(:reviews)
+      .where("reviews.status = 'Recommend for Publishing'")
+      .where("reviews.created_at = (
+        SELECT MAX(created_at) 
+        FROM reviews 
+        WHERE post_id = posts.id
+      )")
+      .where.not(reviews: { editor_id: user.id })
+  }
+
+  scope :rejected, -> {
+    joins(
+      <<-SQL
+        INNER JOIN reviews ON posts.id = reviews.post_id
+        AND reviews.status = 'Rejected'
+        AND reviews.created_at = (
+          SELECT MAX(created_at) 
+          FROM reviews 
+          WHERE post_id = posts.id
+        )
+      SQL
+    )
+  }
+  scope :in_review, -> {
+    joins(
+      <<-SQL
+        INNER JOIN reviews ON posts.id = reviews.post_id
+        AND reviews.status = 'In Review' OR reviews.status = 'Recommend for Publishing'
+        AND reviews.created_at = (
+          SELECT MAX(created_at) 
+          FROM reviews 
+          WHERE post_id = posts.id
+        )
+      SQL
+    )
+  }
+  scope :in_review_first_time, -> {
+    joins(
+      <<-SQL
+        INNER JOIN reviews ON posts.id = reviews.post_id
+        AND reviews.status = 'In Review'
+        AND reviews.created_at = (
+          SELECT MAX(created_at) 
+          FROM reviews 
+          WHERE post_id = posts.id
+        )
+      SQL
+    )
+  }
+
+  scope :send_back_to_editor, -> {
+    joins(
+      <<-SQL
+        INNER JOIN reviews ON posts.id = reviews.post_id
+        AND reviews.status = 'Send Back to First Editor'
+        AND reviews.created_at = (
+          SELECT MAX(created_at) 
+          FROM reviews 
+          WHERE post_id = posts.id
+        )
+      SQL
+    )
+  }
+
   scope :high_priority,
         -> {
           joins(:pitch).where(pitch: { priority: "High" })
@@ -105,6 +174,26 @@ class Post < ApplicationRecord
       end
     end
     @published = publish_at.present? ? (publish_at < Time.now) : false
+  end
+
+  def is_submitted_for_review?
+    self.reviews.last.status.eql? "Ready for Review"
+  end
+
+  def is_in_review?
+    self.is_in_review_first_time? || self.is_in_review_second_time?
+  end
+
+  def is_in_review_first_time?
+    self.reviews.last.status.eql? "In Review"
+  end
+
+  def is_in_review_second_time?
+    self.reviews.last.status.eql? "Recommend for Publishing"
+  end
+
+  def is_rejected?
+    self.reviews.where(reviews: { status: "Rejected", active: true })
   end
 
   def is_interview?

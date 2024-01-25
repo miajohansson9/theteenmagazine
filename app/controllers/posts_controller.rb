@@ -210,11 +210,34 @@ class PostsController < ApplicationController
       @comment_parent_from_notifications =
         Comment.find(params[:comment_id]).comment_id
     end
-    render partial: "posts/partials/comments_published", locals: { user: @user, post: @post, comments: @comments, comment: @comment }
+    render partial: "posts/partials/comments/comments_published", locals: { user: @user, post: @post, comments: @comments, comment: @comment }
   end
 
   def draft
     @date = @post.created_at
+    @review = Review.new(editor_id: current_user.id, status: "In Review")
+    @should_show_editor_form =
+    (current_user.id == @post.reviews.last.editor_id) &&
+      (@post.reviews.last.try(:status).eql? "In Review")
+      @editor_options = 
+      if @post.is_submitted_for_review?
+        ["In Progress", "Ready for Review", "In Review"]
+      elsif @post.is_in_review_first_time?
+        ["In Progress", "Ready for Review", "In Review", "Rejected", "Recommend for Publishing"]
+      elsif @post.is_in_review_second_time?
+        ["In Progress", "Ready for Review", "Send Back to First Editor", "Recommend for Publishing", "Approved for Publishing"]
+      elsif @post.is_published?
+        ["In Review", "Approved for Publishing"]
+      end
+    @feedbacks_editor_frm = Feedback.active.order("created_at asc")
+    @comments = @post.comments.where(comment_id: nil).order("created_at desc")
+    @comment = current_user.comments.build(post_id: @post.id)
+    @statuses = 
+      if current_user.editor?
+        @editor_options
+      else
+        ["In Progress", "Ready for Review"]
+      end
     if (params[:shareable_token] == @post.shareable_token) ||
        (current_user &&
         (@post.sharing || @post.user_id == current_user.id ||
@@ -414,13 +437,18 @@ class PostsController < ApplicationController
       @post.reviews.where(status: ["Rejected", "Approved for Publishing"])
     @feedbacks = Feedback.all
     @feedbacks_editor_frm = Feedback.active.order("created_at asc")
-    @editor_options = if ((@post.reviews.last.status.eql? "In Review") ||
-                          (@post.reviews.last.status.eql? "Approved for Publishing"))
-        ["Ready for Review", "In Review", "Rejected", "Approved for Publishing"]
-      else
+    @editor_options = 
+      if @post.is_submitted_for_review?
         ["In Progress", "Ready for Review", "In Review"]
+      elsif @post.is_in_review_first_time?
+        ["In Progress", "Ready for Review", "In Review", "Rejected", "Recommend for Publishing"]
+      elsif @post.is_in_review_second_time?
+        ["In Progress", "Ready for Review", "Send Back to First Editor", "Recommend for Publishing", "Approved for Publishing"]
+      elsif @post.is_published?
+        ["In Review", "Approved for Publishing"]
       end
-    @statuses = if current_user.editor?
+    @statuses = 
+      if current_user.editor?
         @editor_options
       else
         ["In Progress", "Ready for Review"]

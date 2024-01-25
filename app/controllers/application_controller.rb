@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
     if current_user.editor?
       @unseen_posts =
         Review
-          .where(status: "Ready for Review", active: true)
+          .where(status: ["Ready for Review", "Recommend for Publishing"], active: true)
           .where("updated_at > ?", current_user.last_saw_editor_dashboard)
           .map { |r| Post.find_by(id: r.post_id) }
           .reject(&:blank?)

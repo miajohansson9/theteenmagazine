@@ -72,11 +72,11 @@ class ReviewsController < ApplicationController
       @editors_reviews =
         Post
           .all
-          .in_review
+          .in_review_first_time
           .where(reviews: { editor_id: @user.id })
           .order('updated_at desc')
       @submitted_for_review = Post.all.submitted.order('updated_at desc')
-      
+      @other_recommended_for_publishing = Post.all.other_recommended(@user).order('updated_at desc')
       @submitted_pitches = Pitch.is_submitted.where(is_interview: [false, @current_user_is_manager_of_interviews]).order('updated_at desc')
       if (params[:id].eql? current_user.slug)
         Thread.new do

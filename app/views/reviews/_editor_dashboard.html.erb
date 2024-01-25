@@ -2,6 +2,9 @@
   <div class="dashboard_wrapper">
     <div id="waiting--for--approval">
       <div class="dashboard--writer--flex--main pr-3">
+                    <div class="alert alert-warning" role="alert">
+                Please note: Publishing an article that does not meet all of the <a target="_blank" style="text-decoration: underline;" href="/finding-images"><u>image policy</u></a> requirements and <a target="_blank" href="/choosing-a-topic"><u>content policy</u></a> requirements can result in your removal from the editor team. It is your responsibility to review it in depth and communicate the the Discord <b>#editor-chat</b> if there is anything that is unclear. Thank you!
+              </div>
         <!-- Classic tabs -->
         <div class="classic-tabs">
           <ul class="nav mt-0" id="myClassicTab" role="tablist" style="padding-top: 15px;">
@@ -20,46 +23,73 @@
           <div class="tab-pane fade active show" id="profile-classic" role="tabpanel" aria-labelledby="home-tab-classic">
             <div data-step data-index="1" data-onboarding-content="Welcome to your editor dashboard! Articles you're reviewing will show up here.">
               <h5 class="pitch_ttl">Drafts You're Reviewing</h5>
-              <div class="alert alert-warning" role="alert">
-                Please note: Publishing an article that does not meet all of the <a target="_blank" style="text-decoration: underline;" href="/finding-images"><u>image policy</u></a> requirements and <a target="_blank" href="/choosing-a-topic"><u>content policy</u></a> requirements can result in your removal from the editor team. It is your responsibility to review it in depth and communicate the the Discord <b>#editor-chat</b> if there is anything that is unclear. Thank you!
-              </div>
-              <% @editors_reviews.each do |draft| %>
-                <div class="flex--postlist--item review_items pl-0">
-                  <div class="inside--item">
-                    <% if draft.thumbnail.attached? %>
-                      <%= link_to (image_tag draft.thumbnail.variant(resize_to_fill: [150,100], format: 'webp')), post_path(draft) %>
-                    <% end %>
-                    <div>
-                      <h4><%= link_to draft.title, post_path(draft), class: "link_nrml"%></h4>
-                      <p class="edited_dt"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.editor_claimed_review_at) unless draft.reviews.last.editor_claimed_review_at.blank? %></p>
-                      <p class="edited_dt"><%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
-                      <p class="edit_lnk"><%= link_to "Edit Article", edit_post_path(draft) %></p>
+              <div class="flex-wrapper">
+                <% @editors_reviews.each do |draft| %>
+                  <div class="card card-review" style="width: 100%;">
+                    <div class="card-bottom-flex p-2">
+                      <% if draft.user.profile.attached? %>
+                        <%= image_tag draft.user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "profile_img_medium", :id => "review_img" %>
+                      <% else %>
+                        <%= image_tag "profile_image.jpg", :class => "profile_img_medium", :id => "review_img" %>
+                      <% end %>
+                      <div>
+                        <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
+                        <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> on <%= draft.reviews.last.updated_at.in_time_zone.strftime("%A, %b %d ") %> </p>
+                        <p class="card-text m-0"><%= "You've been editing this article for " + time_ago_in_words(draft.reviews.last.editor_claimed_review_at) unless draft.reviews.last.editor_claimed_review_at.blank? %>
+                        | <%= "This article was submitted for review " + time_ago_in_words(draft.reviews.last.created_at) %> ago</p>
+                        <%= link_to "Review Article", post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
+                      </div>
                     </div>
                   </div>
-                </div>
-              <% end %>
+                <% end %>
+              </div>
               <% if @editors_reviews.count.eql? 0 %>
                 <i>You don't have any articles that you're editing right now.</i>
               <% end %>
             </div>
             <div data-step data-index="2" data-onboarding-content= "Articles waiting to be reviewed by an editor will show up here. You can start claiming and reviewing articles once you've finished reading &ldquo;Reviewing Articles.&rdquo;">
-              <h5 class="pitch_ttl">Articles Ready for Review</h5>
+              <h5 class="pitch_ttl">Articles Submitted for Second Review</h5>
+              <div class="flex-wrapper">
+                <% @other_recommended_for_publishing.each do |draft| %>
+                  <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
+                    <div class="card-bottom-flex p-2">
+                      <% if draft.user.profile.attached? %>
+                        <%= image_tag draft.user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "profile_img_medium", :id => "review_img" %>
+                      <% else %>
+                        <%= image_tag "profile_image.jpg", :class => "profile_img_medium", :id => "review_img" %>
+                      <% end %>
+                      <div>
+                        <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
+                        <p class="card-text">
+                        Written by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %>
+                        <% @editor = User.find_by(id: draft.reviews.last.editor_id) %>
+                        <% if @editor %>
+                          | <b>Recommended for publishing by <%= link_to @editor.try(:full_name), @editor, class: "link_nrml" %></b> <%= time_ago_in_words(draft.reviews.last.updated_at) %> ago
+                        <% end %>
+                        </p>
+                        <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <% if @other_recommended_for_publishing.count.eql? 0 %>
+                  <i>There are no articles submitted for a second review right now.</i>
+                <% end %>
+              </div>
+              <h5 class="pitch_ttl">Articles Submitted for Review</h5>
               <div class="flex-wrapper">
                 <% if @editor_reviews_cnt < @max_reviews %>
                   <% @submitted_for_review.each do |draft| %>
                     <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
                       <div class="card-bottom-flex p-2">
                         <% if draft.user.profile.attached? %>
-                          <%= image_tag draft.user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "profile_img", :id => "review_img" %>
+                          <%= image_tag draft.user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "profile_img_medium", :id => "review_img" %>
                         <% else %>
-                          <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
+                          <%= image_tag "profile_image.jpg", :class => "profile_img_medium", :id => "review_img" %>
                         <% end %>
                         <div>
                           <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
-                          <% if !draft.pitch.blank? %>
-                            <p class="card-text"> <%= markdown draft.pitch.description.truncate_words(20) %></p>
-                          <% end %>
-                          <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> on <%= draft.reviews.last.updated_at.in_time_zone.strftime("%A, %b %d %H %M %S") %> </p>
+                          <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> <%= time_ago_in_words(draft.reviews.last.updated_at) %> ago</p>
                           <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
                         </div>
                       </div>
@@ -90,14 +120,13 @@
                   <div class="card card-review <% if @unseen_submitted_pitches.include? pitch %> unread <% end %>" style="width: 100%;">
                     <div class="card-bottom-flex p-2">
                       <% if pitch.user.profile.attached? %>
-                        <%= image_tag pitch.user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img", :id => "review_img" %>
+                        <%= image_tag pitch.user.profile.variant(resize_to_fill: [100, 100], format: 'webp'), :class => "profile_img_medium", :id => "review_img" %>
                       <% else %>
-                        <%= image_tag "profile_image.jpg", :class => "profile_img", :id => "review_img" %>
+                        <%= image_tag "profile_image.jpg", :class => "profile_img_medium", :id => "review_img" %>
                       <% end %>
                       <div>
                         <h4 class="card-title"><%= link_to pitch.title, pitch, class: "link_nrml" %></h4>
-                        <p class="card-text"> <%= markdown pitch.description.truncate_words(20) %></p>
-                        <p class="card-text"> Submitted by <%= link_to pitch.user.try(:full_name), pitch.user, class: "link_nrml" %> on <%= pitch.updated_at.in_time_zone.strftime("%A, %b %d") %> </p>
+                        <p class="card-text"> Submitted by <%= link_to pitch.user.try(:full_name), pitch.user, class: "link_nrml" %> <%= time_ago_in_words(pitch.updated_at) %> ago</p>
                         <%= link_to "Review Pitch", edit_pitch_path(pitch), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
                       </div>
                     </div>
