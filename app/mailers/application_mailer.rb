@@ -153,8 +153,9 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
-  def editor_requested_re_review(editor, post)
+  def editor_requested_re_review(editor, notes, post)
     @editor = editor
+    @notes = notes
     @post = post
     @manager = post.category.manager_of_category
     mail(
@@ -406,9 +407,8 @@ class ApplicationMailer < ActionMailer::Base
   def editor_missed_review_deadline(user, post)
     @user = user
     @post = post
-    unless @user.do_not_send_emails
-      mail(to: user.email, subject: "Your review is overdue", cc: ["Editors <editors@theteenmagazine.com>"])
-    end
+    @manager = post.category.manager_of_category
+    mail(to: user.email, cc: @manager.email, subject: "Your review is overdue")
   end
 
   def partner_login_details(user, partner)

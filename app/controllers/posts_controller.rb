@@ -543,8 +543,10 @@ class PostsController < ApplicationController
         @bad_review = @post.reviews.where(status: "Recommend for Publishing").last
         @new_review = @post.reviews.build(status: "In Review", editor_id: @bad_review.editor_id, notes: @rev.notes)
         @new_review.save
-        @comment = current_user.comments.build(post_id: @post.id, is_review: "true", text: "Requested a Re-Review from #{User.find_by(id: @bad_review.editor_id)&.full_name }.")
+        @editor_needing_to_review = User.find_by(id: @bad_review.editor_id)
+        @comment = current_user.comments.build(post_id: @post.id, is_review: "true", text: "Requested a Re-Review from #{@editor_needing_to_review&.full_name }.")
         @comment.save
+        ApplicationMailer.editor_requested_re_review(@editor_needing_to_review, @rev.notes, @post).deliver
         redirect_to @post, notice: "This article was sent back for changes to #{ User.find(@bad_review.editor_id)&.full_name }"
         return
       elsif (@new_status.eql? "In Progress") && ((@new_status.eql? "Ready for Review") || (@prev_status.eql? "In Review"))
