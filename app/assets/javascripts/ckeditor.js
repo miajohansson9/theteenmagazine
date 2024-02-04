@@ -126,6 +126,7 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
     editor = createdEditor;
     editor.model.document.on("change:data", function () {
       unsaved = true;
+      $("#unsaved-changes").removeClass("hide");
     });
   })
   .catch((error) => {

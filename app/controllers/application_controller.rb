@@ -52,10 +52,7 @@ class ApplicationController < ActionController::Base
     @unseen_pitches_cnt = @unseen_pitches.size
 
     @unseen_shared_drafts =
-      Post
-        .where(sharing: true, publish_at: nil)
-        .draft
-        .where("posts.shared_at > ?", current_user.last_saw_community)
+      Post.community_visible.where("posts.shared_at > ?", current_user.last_saw_community)
     @unseen_shared_drafts_cnt = @unseen_shared_drafts.size
 
     @notifications = @unseen_pitches_cnt + @unseen_shared_drafts_cnt

@@ -1,6 +1,8 @@
 <% if @post.is_published? %>
   <%= render "posts/published" %>
+  <%= render_async get_promoted_posts_path(post_id: @post.id), retry_count: 3 %>
+<% elsif @post.is_in_review_by_editor(current_user&.id) %>
+  <%= render "posts/editor-review/editor_review" %>
 <% else %>
   <%= render "posts/draft" %>
 <% end %>
-<%= render_async get_promoted_posts_path(post_id: @post.id), retry_count: 3 %>

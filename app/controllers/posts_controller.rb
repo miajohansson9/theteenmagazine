@@ -11,7 +11,6 @@ class PostsController < ApplicationController
                   get_promoted_posts
                   get_comments_published
                 ]
-  before_action :load_author, only: [:show]
   before_action :create, only: [:unapprove]
   before_action :is_admin?, only: [:new]
   before_action :is_partner?, only: %i[index edit]
@@ -66,12 +65,11 @@ class PostsController < ApplicationController
       Post
         .where("collaboration like ?", "%#{current_user.email}%")
         .or(Post.where(user_id: current_user.id))
-        .where(sharing: true, publish_at: nil)
-        .draft
+        .community_visible
         .order("updated_at desc")
     @pagy, @shared_drafts =
       pagy(
-        Post.where(sharing: true).draft.order(:shared_at).reverse_order,
+        Post.community_visible.order(:shared_at).reverse_order,
         page: params[:page],
         items: 12,
       )
@@ -164,10 +162,11 @@ class PostsController < ApplicationController
   end
 
   def show
+    load_author
     cookies[:fetched_at] = Time.now
     if @post.is_published?
       published
-    elsif current_user.present? || (params[:shareable_token] == @post.shareable_token)
+    elsif current_user.present? || (@post.shareable_token.present? && params[:shareable_token] == @post.shareable_token)
       draft
     else
       redirect_to new_user_session_path, notice: "You must sign in to continue."
@@ -176,14 +175,6 @@ class PostsController < ApplicationController
   end
 
   def published
-    @collabs = []
-    if @post.collaboration.present?
-      @emails = @post.collaboration.delete(" ").split(",")
-      @emails.each do |email|
-        @writer = User.where(email: email).first
-        @collabs.push @writer if @writer.present?
-      end
-    end
     if !current_user.nil?
       @comment = current_user.comments.build(post_id: @post.id)
     else
@@ -213,45 +204,51 @@ class PostsController < ApplicationController
     render partial: "posts/partials/comments/comments_published", locals: { user: @user, post: @post, comments: @comments, comment: @comment }
   end
 
-  def draft
-    @date = @post.created_at
-    @review = Review.new(editor_id: current_user.id, status: "In Review")
-    @should_show_editor_form =
-    (current_user.id == @post.reviews.last.editor_id) &&
-      (@post.reviews.last.try(:status).eql? "In Review")
-      @editor_options = 
+  def get_statuses
+    if !@post.reviews.present?
+      return
+    end
+    @editor_options = 
       if @post.is_submitted_for_review?
         ["In Progress", "Ready for Review", "In Review"]
       elsif @post.is_in_review_first_time?
-        ["In Progress", "Ready for Review", "In Review", "Rejected", "Recommend for Publishing"]
+        ["Ready for Review", "In Review", "Rejected", "Recommend for Publishing"]
       elsif @post.is_in_review_second_time?
-        ["In Progress", "Ready for Review", "Send Back to First Editor", "Recommend for Publishing", "Approved for Publishing"]
+        ["In Review By Second Editor", "Request Re-Review", "Approved for Publishing"]
+      elsif @post.is_recommended?
+        if @post.can_user_claim_review(current_user&.id)
+          ["Recommend for Publishing", "In Review By Second Editor"]
+        else
+          []
+        end
       elsif @post.is_published?
         ["In Review", "Approved for Publishing"]
+      else
+        ["In Progress", "Ready for Review", "In Review"]
       end
+    @statuses = current_user.editor? ? @editor_options : ["In Progress", "Ready for Review"]
+    if !(@statuses.include? @post.most_recent_review.status) && !(@post.most_recent_review.status.eql? "Rejected")
+      @statuses << @post.most_recent_review.status
+    end
+  end
+
+  def draft
+    @date = @post.created_at
+    get_statuses
+    @review = @post.reviews.order('created_at').last
+    @editor = User.find_by(id: @review.editor_id)
+    @requested_review = @post.reviews.where(status: "Request Re-Review").last
+    @requested_review_user = User.find_by(id: @requested_review&.editor_id)
     @feedbacks_editor_frm = Feedback.active.order("created_at asc")
+    @requested_changes = (["In Progress", "Rejected"].include? @post.most_recent_review.status) ? @post.reviews.where(status: "Rejected").order('created_at').last.try(:feedback_givens) : nil
     @comments = @post.comments.where(comment_id: nil).order("created_at desc")
     @comment = current_user.comments.build(post_id: @post.id)
-    @statuses = 
-      if current_user.editor?
-        @editor_options
-      else
-        ["In Progress", "Ready for Review"]
-      end
     if (params[:shareable_token] == @post.shareable_token) ||
        (current_user &&
         (@post.sharing || @post.user_id == current_user.id ||
          @post.partner_id == current_user.id ||
          (@post.collaboration&.include? current_user.email) ||
          current_user.admin? || current_user.editor?))
-      @collabs = []
-      if @post.collaboration.present?
-        @emails = @post.collaboration.delete(" ").split(",")
-        @emails.each do |email|
-          @writer = User.where(email: email).first
-          @collabs.push @writer if @writer.present?
-        end
-      end
       if params[:partner].present?
         @post.partner_id = nil
         @post.sharing = false
@@ -403,64 +400,32 @@ class PostsController < ApplicationController
       return
     end
     fix_embedded_html
+    get_statuses
     @can_edit =
-      !(@post.reviews.last.try(:status).eql? "Approved for Publishing") ||
+      !(@post.most_recent_review.try(:status).eql? "Approved for Publishing") ||
         (current_user.can_edit_post(@post)) ||
-        (@post.reviews.last.editor_id.eql? current_user.id)
+        (@post.most_recent_review.editor_id.eql? current_user.id)
     @categories = Category.active.or(Category.where(id: @post.category_id))
-    #create new review if no current review or last review was rejected
-    @requested_changes =
-      @post.reviews.where(status: "Rejected").last.try(:feedback_givens)
-
     #create a new review if the last review is either nil or rejected
-    if (@post.reviews.last.nil?) ||
-       (@post.reviews.last.try(:status).eql? "Rejected")
-      @review =
-        @post.reviews.build(
-          active: true,
-          feedback_givens: @post.reviews.last.try(:feedback_givens),
-        )
-      #create a new review for an already published article that is updated by a different editor
-    elsif (@post.reviews.last.try(:status).eql? "Approved for Publishing") &&
-          !(@post.reviews.last.try(:editor_id).eql? current_user.id) &&
+    if (@post.most_recent_review.nil?) || (["Rejected", "Recommend for Publishing", "Request Re-Review"].include? @post.most_recent_review.try(:status))
+      if (current_user.editor?)
+        @review = @post.reviews.build(editor_id: current_user.id)
+      else
+        @review = @post.reviews.new(status: "In Progress")
+      end
+    #create a new review for an already published article that is updated by a different editor
+    elsif (@post.most_recent_review.try(:status).eql? "Approved for Publishing") &&
+          !(@post.most_recent_review.try(:editor_id).eql? current_user.id) &&
           (current_user.id != @post.user_id)
-      @review =
-        @post.reviews.build(
-          active: true,
-          status: "Approved for Publishing",
-          editor_id: current_user.id,
-        )
+      @review = @post.reviews.build(status: "Approved for Publishing", editor_id: current_user.id)
     else
-      @review = @post.reviews.last
+      @review = @post.most_recent_review
     end
-    @reviews =
-      @post.reviews.where(status: ["Rejected", "Approved for Publishing"])
+    @requested_changes = (["In Progress", "Rejected"].include? @post.most_recent_review.status) ? @post.reviews.where(status: "Rejected").order('created_at').last.try(:feedback_givens) : nil
+    @reviews = @post.reviews.where(status: ["Rejected", "Approved for Publishing", "Recommend for Publishing", "Request Re-Review"])
     @feedbacks = Feedback.all
     @feedbacks_editor_frm = Feedback.active.order("created_at asc")
-    @editor_options = 
-      if @post.is_submitted_for_review?
-        ["In Progress", "Ready for Review", "In Review"]
-      elsif @post.is_in_review_first_time?
-        ["In Progress", "Ready for Review", "In Review", "Rejected", "Recommend for Publishing"]
-      elsif @post.is_in_review_second_time?
-        ["In Progress", "Ready for Review", "Send Back to First Editor", "Recommend for Publishing", "Approved for Publishing"]
-      elsif @post.is_published?
-        ["In Review", "Approved for Publishing"]
-      end
-    @statuses = 
-      if current_user.editor?
-        @editor_options
-      else
-        ["In Progress", "Ready for Review"]
-      end
-    @should_show_editor_form =
-      (current_user.id == @post.reviews.last.editor_id) &&
-        (@post.reviews.last.try(:status).eql? "In Review")
     @reviews_rejected = @post.reviews.where(status: "Rejected")
-    if !(current_user.editor?) &&
-       !(@statuses.include? @post.reviews.last.status)
-      @statuses << @post.reviews.last.status
-    end
     set_meta_tags title: "Edit Article", editing: "Turn off ads"
   end
 
@@ -505,8 +470,8 @@ class PostsController < ApplicationController
 
   def update
     @categories = Category.all
-    @prev_review = @post.reviews.last.clone
-    @prev_status = @post.reviews.last.status.clone
+    @prev_review = @post.most_recent_review.clone
+    @prev_status = @post.most_recent_review.nil? ? '' : @post.most_recent_review.status.clone
     @prev_featured = @post.featured.clone
     if post_params[:thumbnail_url].present?
       image_blob = URI.open(post_params[:thumbnail_url])
@@ -522,8 +487,8 @@ class PostsController < ApplicationController
           pst.save
         end
       end
-      @new_status = @post.reviews.last.status.clone
-      @rev = @post.reviews.last
+      @new_status = @post.most_recent_review.status.clone
+      @rev = @post.most_recent_review
       @post.publish_at = nil if @new_status != "Approved for Publishing"
       if ((@new_status.eql? "In Review") ||
           ((@new_status.eql? "Rejected") && (@prev_status.eql? "In Review"))) && current_user.editor?
@@ -572,18 +537,19 @@ class PostsController < ApplicationController
         @post.promoting_until = nil
         @post.update_column("publish_at", Time.now)
       end
-      if @rev.present?
-        @post.reviews.each { |review| review.update_column("active", false) }
-        @rev.update_column("active", true)
-      end
       fix_formatting
       @post.save!
-      if (@new_status.eql? "In Progress") &&
-         ((@prev_status.eql? "Ready for Review") ||
-          (@prev_status.eql? "In Review"))
+      if (@prev_status != "Request Re-Review") && (@new_status.eql? "Request Re-Review")
+        @bad_review = @post.reviews.where(status: "Recommend for Publishing").last
+        @new_review = @post.reviews.build(status: "In Review", editor_id: @bad_review.editor_id, notes: @rev.notes)
+        @new_review.save
+        @comment = current_user.comments.build(post_id: @post.id, is_review: "true", text: "Requested a Re-Review from #{User.find_by(id: @bad_review.editor_id)&.full_name }.")
+        @comment.save
+        redirect_to @post, notice: "This article was sent back for changes to #{ User.find(@bad_review.editor_id)&.full_name }"
+        return
+      elsif (@new_status.eql? "In Progress") && ((@new_status.eql? "Ready for Review") || (@prev_status.eql? "In Review"))
         @notice = "Your article was withdrawn from review."
-      elsif ([nil, "In Progress", "Rejected"].include? @prev_status) &&
-            (@new_status.eql? "Ready for Review")
+      elsif ([nil, "In Progress", "Rejected"].include? @prev_status) && (@new_status.eql? "Ready for Review")
         if !@post.thumbnail.attached?
           # post does not have thumbnail! this can break the homepage
           redirect_to edit_post_path(@post), notice: "This post does not have a thumbnail image! It cannot be submitted for review."
@@ -601,11 +567,8 @@ class PostsController < ApplicationController
             @reviews = @post.reviews.where.not(editor_id: nil).order("created_at asc")
             @prev_editor = User.find(@reviews.last.editor_id)
             @notice = "Great job! #{@prev_editor.full_name} was assigned this review."
-            @rev.update_columns({
-              status: "In Review",
-              editor_id: @prev_editor.id,
-              editor_claimed_review_at: Time.now,
-            })
+            @new_review = @post.reviews.build(status: "In Review", editor_id: @prev_editor.id, editor_claimed_review_at: Time.now)
+            @new_review.save
             ApplicationMailer.article_moved_to_review(@post.user, @post, @prev_editor).deliver
             ApplicationMailer.editor_assigned_review(@prev_editor, @post).deliver
             Sentry.capture_message("re-assigned editor to review for post #{@post.slug} successfully")
@@ -619,56 +582,51 @@ class PostsController < ApplicationController
           deliver_submitted_article_emails
           @notice = "Great job! Your article was submitted for review."
         end
+      elsif @prev_status != @new_status
+        @notice = "This article moved to #{@new_status}"
       else
         @notice = "Your changes were saved."
       end
-      if @new_status.eql? "Rejected"
+      if @prev_status != @new_status && (@new_status.eql? "Rejected")
         if @post.deadline_at.present?
-          @new_deadline = if @post.reviews.last.updated_at > @post.deadline_at
-              @post.reviews.last.updated_at + 7.days
+          @new_deadline = if @post.most_recent_review.updated_at > @post.deadline_at
+              @post.most_recent_review.updated_at + 7.days
             else
               @post.deadline_at + 7.days
             end
           @post.update_column("deadline_at", @new_deadline)
         end
+        @comment = current_user.comments.build(post_id: @post.id, is_review: "true", text: "Marked this article as needing changes.")
+        @comment.save
         ApplicationMailer.article_has_requested_changes(@post.user, @post)
           .deliver
+      elsif @prev_status != @new_status && (@new_status.eql? "Recommend for Publishing")
+        @comment = current_user.comments.build(post_id: @post.id, is_review: "true", text: "Recommended this article for publishing.")
+        @comment.save
       end
-      if post_params[:promoting_until].present?
+      quick_edit = params[:quick_edit] == "true"
+      if quick_edit
+        redirect_to @post, notice: "Your edits were saved."
+      elsif post_params[:promoting_until].present?
         @post.user.update_column("points", @post.user.points - 200)
         @post.update_column("shared_at", Time.now)
         redirect_to "/community", notice: "Your draft is now being promoted!"
       elsif post_params[:deadline_at].present?
-        redirect_to "/writers/#{@post.user.slug}/extensions",
-                    notice: "Extension applied."
-      elsif (post_params[:partner_id].present? &&
-             post_params[:partner_id] != false)
+        redirect_to "/writers/#{@post.user.slug}/extensions", notice: "Extension applied."
+      elsif (post_params[:partner_id].present? && post_params[:partner_id] != false)
         @partner = User.find(post_params[:partner_id])
-        redirect_to @partner,
-                    notice: "This article was successfully shared with #{@partner.full_name}."
-      elsif (@new_status.eql? "In Review") && (current_user.editor?)
-        @notice = if (@prev_review.editor_id == current_user.id)
-            "Your changes were saved."
-          else
-            "Great job, You've claimed editing this article!"
-          end
-        editor_claimed_review if !(@prev_status.eql? "In Review")
-        redirect_to "/editors/#{current_user.slug}", notice: @notice
+        redirect_to @partner, notice: "This article was successfully shared with #{@partner.full_name}."
+      elsif (@prev_status != @new_status) && (@new_status.eql? "In Review" || (@new_status.eql? "In Review By Second Editor")) && (current_user.editor?)
+        Thread.new do
+          ApplicationMailer.article_moved_to_review(@post.user, @post, @editor).deliver
+        end
+        redirect_to @post, notice: "Great job, You've claimed editing this article!"
       else
         redirect_to @post, notice: @notice
       end
     else
       edit
       render "edit", notice: "Oh no! Your post was not able to be saved!"
-    end
-  end
-
-  def editor_claimed_review
-    @rev = @post.reviews.last
-    @editor = User.find(@rev.editor_id)
-    @rev.update_column("editor_claimed_review_at", Time.now)
-    Thread.new do
-      ApplicationMailer.article_moved_to_review(@post.user, @post, @editor).deliver
     end
   end
 
@@ -680,11 +638,7 @@ class PostsController < ApplicationController
           @editors_to_notify_of_new_review =
             User.where(editor: true, notify_of_new_review: true)
           @editors_to_notify_of_new_review.each do |editor|
-            @editor_reviews_cnt =
-              Review
-                .where(editor_id: editor.id)
-                .where("updated_at > ?", Date.today.beginning_of_month)
-                .count
+            @editor_reviews_cnt = editor.reviews_count
             @reviews_requirement =
               Integer(
                 Constant
@@ -921,5 +875,14 @@ class PostsController < ApplicationController
 
   def load_author
     @user = @post.user if @post.user != nil
+    @collabs = []
+    if @post.collaboration.present?
+      @emails = @post.collaboration.delete(" ").split(",")
+      @emails.each do |email|
+        @writer = User.where(email: email).first
+        @collabs.push @writer if @writer.present?
+      end
+    end
+    @authors = [@user] + @collabs
   end
 end

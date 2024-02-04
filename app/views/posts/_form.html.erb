@@ -19,10 +19,10 @@
       <p class="mt-0">Turn off title formatting on save (admin only) <%= f.check_box :turn_off_caps %></p>
     <% end %>
     <p class="mt-0">Write your article in the text area below and <b>save often</b>. Saving can also help fix formatting problems.</p>
-    <div id="container" class="<%= @should_show_editor_form && !@post.editor_can_make_changes ? 'not-editable' : '' %>">
+    <div id="container">
       <%= f.text_area :content, value: @post.content, id: "editor" %>
     </div>
-    <p class="d-block mt-0 mb-0">Category:<%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-0") %></p>
+    <%= f.collection_select(:category_id, @categories, :id, :name, {prompt: "Select a Category"}, :class => "mdb-select md-form mb-0") %>
     <% if @post.partner_id || current_user.is_manager? %>
       <p>Disclose partnership:
         <%= f.check_box :show_disclosure %>
@@ -75,9 +75,6 @@
     <% if true || (@post.user_id.eql? current_user.id) %>
       <% if (@post.created_at.present? && @post.created_at < Date.new(2023, 10, 4)) %>
         <div>
-          <div class="alert alert-warning" role="alert">
-            Due to an ongoing copyright issue, <b>our image policy has changed as of October 19th, 2023</b>. Please read the <a target="_blank" class="link_underline"  href="/finding-images">updated image policy</a> before checking the box below.
-          </div>
           <p><i>
             <%= f.check_box :agree_to_image_policy, class: "d-inline" %>
               I have read and understand the image policy found <a target="_blank" class="link_grn" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this post <b>has the proper attributions</b> and follows all the requirements explained in the <a target="_blank" class="link_grn" href="/finding-images">Image Policy</a>. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
@@ -118,7 +115,7 @@
           <% if (@post.user_id.eql? current_user.id) && !@post.is_published? %>
             <p>
               Editor permission:
-              <%= f.check_box :editor_can_make_changes %>
+              <%= f.check_box :editor_can_make_changes, checked: (@post.editor_can_make_changes.nil? ? true : @post.editor_can_make_changes) %>
                 I give permission for an editor to make changes to my article when I submit. These changes may include small improvements to formatting, grammar/punctuation, and/or title optimization.
             </p>
           <% end %>
@@ -158,16 +155,16 @@
           return false
         }
       } else if (selected == "Approved for Publishing") {
-        <% if !(@post.reviews.last.status.eql? "Approved for Publishing") && (@post.user_id != current_user.id) %>
+        <% if !(@post.most_recent_review.status.eql? "Approved for Publishing") && (@post.user_id != current_user.id) %>
           reply=confirm("This article will be published to the homepage. Are you sure you want to continue?");
         <% end %>
-      } else if (selected == "In Review") {
-        <% if !(@post.reviews.last.status.eql? "In Review") %>
+      } else if (selected == "In Review" || selected == "In Review By Second Editor") {
+        <% if !(@post.most_recent_review.status.eql? "In Review") && !(@post.most_recent_review.status.eql? "In Review By Second Editor") %>
           reply=confirm("You are claiming this article review. You have two days to either approve or request changes to this article.");
         <% end %>
       } else if (selected == "Ready for Review") {
-        <% if !(@post.reviews.last.status.eql? "Ready for Review") %>
-          <% if (@post.reviews.last.status.eql? "In Review") %>
+        <% if !(@post.most_recent_review.status.eql? "Ready for Review") %>
+          <% if (@post.most_recent_review.status.eql? "In Review") %>
             reply=confirm("You are moving this article out of review.");
           <% else %>
             <%= @count = 5 - @post.reviews.where(status: "Rejected").count %>
@@ -175,7 +172,7 @@
           <% end %>
         <% end %>
       } else if (selected == "In Progress") {
-        <% if (@post.reviews.last.status.eql? "Ready for Review") %>
+        <% if (@post.most_recent_review.status.eql? "Ready for Review") %>
           reply=confirm("You are unsubmitting this article for review.");
         <% end %>
       }

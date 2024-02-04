@@ -39,6 +39,9 @@ $(document).ready(function () {
   $("#submit-comment-modal-button").click(function () {
     $("#submit-comment-modal-button").addClass("disabled");
     $(".spinner-button").removeClass("hide");
+    setTimeout(() => {
+      $(".spinner-button").addClass("hide");
+    }, 200);
   });
   $('a[href^="https://"]')
     .not("a[href*=theteenmagazine]")

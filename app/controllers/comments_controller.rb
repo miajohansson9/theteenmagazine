@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
   end
 
   def get_all_comments
-    @comments = Comment.all.order(:created_at => :desc).limit(20)
+    @comments = Comment.order("CASE WHEN is_review = true THEN 0 ELSE 1 END, created_at DESC").limit(20)
     render partial: "comments/all_comments"
   end
 
@@ -76,7 +76,7 @@ class CommentsController < ApplicationController
         current_user.save
       end
       # don't send email if commented on own article
-      if !(current_user && current_user.id == @comment.post.user.id)
+      if !(current_user && current_user.id == @comment.post.user.id && !@comment.is_review)
         Thread.new do
           ApplicationMailer.comment_added(@comment.post.user, @comment.post).deliver
         end
@@ -160,12 +160,8 @@ class CommentsController < ApplicationController
   
   def redirect_to_no_profanity
    # profane comment submitted
-    if comment_params[:response_to].present?
-      redirect_to '/no_profanity.html'
-    else
-      respond_to do |format|
-        format.js { render js: "window.location='#{request.base_url + "/no_profanity.html"}'" }
-      end
+   respond_to do |format|
+    format.js { render js: "window.location='#{request.base_url + "/no_profanity.html"}'" }
     end
   end
 
@@ -181,6 +177,7 @@ class CommentsController < ApplicationController
         :id,
         :text,
         :user_id,
+        :is_review,
         :post_id,
         :comment_id,
         :response_to,

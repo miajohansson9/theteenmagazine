@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+
+  <body>
+    <p>Hi <%= @editor.first_name %>,</p>
+    <p>
+       Your review for <%= link_to @post.title, @post %> did not pass the second editor's review. The second editor has left comments as to why and has requested that you re-review the article. 
+       The review has been automatically assigned to you.
+    </p>
+    <p>The Teen Magazine</p>
+  </body>
+</html>

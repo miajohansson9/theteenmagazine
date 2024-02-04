@@ -64,19 +64,9 @@ class ReviewsController < ApplicationController
             .comments
             .where('created_at > ?', Date.today.beginning_of_month)
             .count
-      @editor_reviews_cnt =
-        Review
-          .where(editor_id: @user.id)
-          .where('updated_at > ?', Date.today.beginning_of_month)
-          .count
-      @editors_reviews =
-        Post
-          .all
-          .in_review_first_time
-          .where(reviews: { editor_id: @user.id })
-          .order('updated_at desc')
-      @submitted_for_review = Post.all.submitted.order('updated_at desc')
-      @other_recommended_for_publishing = Post.all.other_recommended(@user).order('updated_at desc')
+      @editor_reviews_cnt = @user.reviews_count
+      @editors_reviews = Post.is_reviewing(current_user.id).order('updated_at desc')
+      @submitted_for_review = Post.all.submitted_to_editors.order('updated_at desc')
       @submitted_pitches = Pitch.is_submitted.where(is_interview: [false, @current_user_is_manager_of_interviews]).order('updated_at desc')
       if (params[:id].eql? current_user.slug)
         Thread.new do
@@ -85,8 +75,7 @@ class ReviewsController < ApplicationController
       end
       set_meta_tags title: 'Edit | The Teen Magazine'
     else
-      redirect_to user_path(current_user),
-                  notice: 'You are not allowed access to the editor reviews.'
+      redirect_to user_path(current_user), notice: 'You are not allowed access to the editor reviews.'
     end
   end
 

@@ -22,7 +22,7 @@
         <div class="tab-content p-0" id="myClassicTabContent">
           <div class="tab-pane fade active show" id="profile-classic" role="tabpanel" aria-labelledby="home-tab-classic">
             <div data-step data-index="1" data-onboarding-content="Welcome to your editor dashboard! Articles you're reviewing will show up here.">
-              <h5 class="pitch_ttl">Drafts You're Reviewing</h5>
+              <h5 class="pitch_ttl">Drafts You're Reviewing (<%= @editors_reviews.count %>)</h5>
               <div class="flex-wrapper">
                 <% @editors_reviews.each do |draft| %>
                   <div class="card card-review" style="width: 100%;">
@@ -48,9 +48,9 @@
               <% end %>
             </div>
             <div data-step data-index="2" data-onboarding-content= "Articles waiting to be reviewed by an editor will show up here. You can start claiming and reviewing articles once you've finished reading &ldquo;Reviewing Articles.&rdquo;">
-              <h5 class="pitch_ttl">Articles Submitted for Second Review</h5>
+              <h5 class="pitch_ttl">Articles Submitted for Review</h5>
               <div class="flex-wrapper">
-                <% @other_recommended_for_publishing.each do |draft| %>
+                <% @submitted_for_review.each do |draft| %>
                   <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
                     <div class="card-bottom-flex p-2">
                       <% if draft.user.profile.attached? %>
@@ -60,56 +60,42 @@
                       <% end %>
                       <div>
                         <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
-                        <p class="card-text">
-                        Written by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %>
-                        <% @editor = User.find_by(id: draft.reviews.last.editor_id) %>
-                        <% if @editor %>
-                          | <b>Recommended for publishing by <%= link_to @editor.try(:full_name), @editor, class: "link_nrml" %></b> <%= time_ago_in_words(draft.reviews.last.updated_at) %> ago
+                        <% if draft.reviews.last.status.eql? "Ready for Review" %>
+                          <span class="badge badge-default">Submitted By Author</span>
+                        <% elsif draft.is_recommended? %>
+                          <span class="badge badge-default">Needs a Second Review</span>
                         <% end %>
-                        </p>
-                        <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
+                        <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> <%= time_ago_in_words(draft.reviews.last.updated_at) %> ago</p>
+                        <% @class = !(draft.can_user_claim_review(current_user.id)) ? 'disabled' : '' %>
+                        <% if @class.eql? "disabled" %>
+                          <span class="btn btn-primary btn-review disabled-tooltip" id="btn_dark" title="You cannot review the same article twice" data-toggle="tooltip">Claim Review</span>
+                        <% else %>
+                          <%= form_for draft do |f| %>
+                            <%= f.fields_for :reviews, draft.most_recent_review do |rv| %>
+                              <% @status = draft.is_recommended? ? 'In Review By Second Editor' : 'In Review' %>
+                              <%= rv.hidden_field :status, value: @status %>
+                              <%= rv.hidden_field :editor_claimed_review_at, value: Time.now %>
+                              <%= rv.hidden_field :editor_id, value: current_user.id %>
+                            <% end %>
+                            <%= f.submit "Claim Review", :class => "btn btn-primary btn-review", :id => "btn_dark", :data => {:confirm => "You are about to claim this review. Are you sure you want to continue?"} %>
+                          <% end %>
+                        <% end %>
                       </div>
                     </div>
                   </div>
                 <% end %>
-                <% if @other_recommended_for_publishing.count.eql? 0 %>
-                  <i>There are no articles submitted for a second review right now.</i>
-                <% end %>
-              </div>
-              <h5 class="pitch_ttl">Articles Submitted for Review</h5>
-              <div class="flex-wrapper">
-                <% if @editor_reviews_cnt < @max_reviews %>
-                  <% @submitted_for_review.each do |draft| %>
-                    <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
-                      <div class="card-bottom-flex p-2">
-                        <% if draft.user.profile.attached? %>
-                          <%= image_tag draft.user.profile.variant(resize_to_fill: [100,100], format: 'webp'), :class => "profile_img_medium", :id => "review_img" %>
-                        <% else %>
-                          <%= image_tag "profile_image.jpg", :class => "profile_img_medium", :id => "review_img" %>
-                        <% end %>
-                        <div>
-                          <h4 class="card-title mb-1"><%= link_to draft.title, draft, class: "link_nrml" %></h4>
-                          <p class="card-text"> Submitted by <%= link_to draft.user.try(:full_name), draft.user, class: "link_nrml" %> <%= time_ago_in_words(draft.reviews.last.updated_at) %> ago</p>
-                          <%= link_to "Claim Review", edit_post_path(draft), :class => "btn btn-primary btn-review", :id => "btn_dark" %>
-                        </div>
-                      </div>
-                    </div>
-                  <% end %>
-                  <% if @submitted_for_review.count.eql? 0 %>
-                    <i>There are no submitted articles right now.
-                      <% if @user.notify_of_new_review && (@editor_reviews_cnt < @reviews_requirement) %>
-                        You will be notified via email when a review becomes available. Turn off notifications
-                        <%= link_to "here", {:controller => "reviews", :action => "disable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "You are turning off notifications."} %>.
-                      <% elsif @editor_reviews_cnt < @reviews_requirement %>
-                        Be notified via email when a new review becomes available
-                        <%= link_to "here", {:controller => "reviews", :action => "enable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "Notifications will only be enabled for the month of #{Date.today.in_time_zone.strftime("%B")} and will be turned off once you've finished this month's reviews."} %>.
-                      <% else %>
-                        Check back in a few days!
-                      <% end %>
-                    </i>
-                  <% end %>
-                <% else %>
-                  <i>You have reached the maximum number of reviews this month. Check the <a href="/community">Community Page</a> to continue giving feedback to articles.</i>
+                <% if @submitted_for_review.count.eql? 0 %>
+                  <i>There are no submitted articles right now.
+                    <% if @user.notify_of_new_review && (@editor_reviews_cnt < @reviews_requirement) %>
+                      You will be notified via email when a review becomes available. Turn off notifications
+                      <%= link_to "here", {:controller => "reviews", :action => "disable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "You are turning off notifications."} %>.
+                    <% elsif @editor_reviews_cnt < @reviews_requirement %>
+                      Be notified via email when a new review becomes available
+                      <%= link_to "here", {:controller => "reviews", :action => "enable_notify_of_new_review", :user_id => @user.id}, :data => {:confirm => "Notifications will only be enabled for the month of #{Date.today.in_time_zone.strftime("%B")} and will be turned off once you've finished this month's reviews."} %>.
+                    <% else %>
+                      Check back in a few days!
+                    <% end %>
+                  </i>
                 <% end %>
               </div>
             </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_11_044419) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_03_161320) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -157,6 +157,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_11_044419) do
     t.string "cookie"
     t.boolean "public"
     t.boolean "is_thirteen"
+    t.boolean "is_review"
     t.index ["created_at"], name: "index_comments_on_created_at"
   end
 

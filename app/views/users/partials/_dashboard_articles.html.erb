@@ -16,7 +16,7 @@
             by <%= link_to post.user.full_name, post.user %>
           <% end %>
         </p>
-        <% if post.pitch.try(:claimed_id).present? && post.try(:deadline_at).present? && (post.reviews.last.status.eql? "In Progress") && !current_user.partner %>
+        <% if post.pitch.try(:claimed_id).present? && post.try(:deadline_at).present? && (post.most_recent_review.status.eql? "In Progress") && !current_user.partner %>
           <% @class = post.deadline_at < Date.today + 4.days ? "text-danger" : "" %>
           <p class="<%= @class %>">
             <% if (current_user.id.eql? post.user.id) %>
@@ -35,7 +35,7 @@
             <% end %>
           </p>
         <% end %>
-        <% if (post.reviews.last.try(:status).eql? "Approved for Publishing") %>
+        <% if (post.most_recent_review.try(:status).eql? "Approved for Publishing") %>
           <p><%= "Great job! This article will be published on " + post.publish_at.localtime.in_time_zone.strftime("%D at %I:%M %p") + "." %></p>
         <% end %>
       </div>

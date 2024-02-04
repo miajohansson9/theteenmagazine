@@ -63,7 +63,7 @@
                 if (!callbacks.push) callbacks = [callbacks];
                 actions = callbacks;
 
-                document.getElementById("selectable_content").onmouseup =
+                document.getElementById("editor").onmouseup =
                     _selectionEndText;
                 document.onmousedown = _processSelection;
             }
@@ -197,9 +197,10 @@
                 if (!callbacks.push) callbacks = [callbacks];
                 actions = callbacks;
 
-                document.getElementById("selectable_content").onmouseup =
+                document.getElementById("editor").onmouseup =
                     _selectionEndText;
-                document.onmousedown = _processSelection;
+
+                    document.onmousedown = _processSelection;
             }
 
             function _parseItems(items, actions) {
@@ -249,20 +250,22 @@
             }
 
             function _selectionEndText(e) {
-                var t = document.getSelection();
-                if (t.toString().length !== 0) {
-                    var popup = document.querySelector("popup");
-                    var rangeT = t.getRangeAt(0);
-                    var rectT = rangeT.getBoundingClientRect();
+              const t = document.getSelection();
+              if (t.toString().length !== 0) {
+                  const popup = document.querySelector("popup");
+          
+                  // Calculate the left position more accurately
+                  const leftPosition = e.x - popup.clientWidth / 2;
+          
+                  // Ensure the popup is not positioned outside the left boundary
+                  popup.style.left = `${Math.max(leftPosition, 0)}px`;
+          
+                  popup.style.top = `${e.y - 20}px`;
+                  popup.classList.add("popupVisible");
+              }
+          }          
 
-                    popup.style.top = rectT.y + "px";
-                    popup.style.left =
-                        rectT.x - popup.clientWidth / 2 + rectT.width / 2 + "px";
-                    popup.classList.add("popupVisible");
-                }
-            }
-
-            module.exports = selectionPopup;
+          module.exports = selectionPopup;
         },
         { "./popupCss": 4 },
     ],
