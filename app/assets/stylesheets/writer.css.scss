@@ -89,7 +89,7 @@ a {
 
 .badge-default {
   background-color: #2bbbad !important;
-  padding: 0.25em 0.4em !important;
+  padding: 0.25em !important;
 }
 
 .theimages,
@@ -383,13 +383,9 @@ a {
 }
 
 .review_frm {
-  background-color: #fffbda;
-  margin-bottom: 1.5em;
-  h6 {
-    font-family: "Univers-CnUlt", "Arial", "Sans-serif";
-  }
-  b {
-    color: #f0255e;
+  background-color: #fec;
+  p, li {
+    font-size: 20px;
   }
   hr {
     margin: 20px -20px;
@@ -407,8 +403,6 @@ a {
     margin: 10px 0;
   }
   .card-text {
-    font-size: 15px;
-    font-style: italic;
     color: #757575;
   }
 }
@@ -432,7 +426,7 @@ a {
     /* Shorthand – you could use ‘flex-direction: column’ and ‘flex-wrap: wrap’ instead */
     align-items: flex-start;
     .card-review {
-      padding: 20px;
+      padding: 4px 10px;
       p {
         margin: 5px 0;
       }
@@ -447,7 +441,7 @@ a {
         display: flex;
         position: relative;
         #review_img {
-          padding: 10px;
+          margin-right: 10px;
         }
       }
     }

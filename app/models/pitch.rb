@@ -12,8 +12,8 @@ class Pitch < ApplicationRecord
   validates :description, presence: true
   validates :category_id, presence: true
   validates :deadline, presence: true, if: :is_editor?
-  validates :thumbnail, content_type: [:png, :jpg, :jpeg, :gif, :webp, :heic]
-  validates :thumbnail_credits, presence: true
+  validates :thumbnail, content_type: [:png, :jpg, :jpeg, :gif, :webp, :heic], if: :is_not_interview?
+  validates :thumbnail_credits, presence: true, if: :is_not_interview?
 
   scope :is_submitted, -> { where(status: "Ready for Review") }
 
@@ -33,6 +33,10 @@ class Pitch < ApplicationRecord
 
   def is_interview?
     self.is_interview.eql? true
+  end
+
+  def is_not_interview?
+    !(self.is_interview.eql? true)
   end
 
   def is_interview_from_outside_source?

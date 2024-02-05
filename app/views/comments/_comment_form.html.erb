@@ -5,13 +5,20 @@
   <% else %>
     <%= image_tag("profile_image.jpg", :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
   <% end %>
-  <% @placeholder = (post.comments.where(comment_id: nil, public: post.is_published?).count.eql? 0) ? "Start the conversation" : "Share your thoughts on this article" %>
-  <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
+  <% @placeholder = if (post.user_id == current_user&.id)
+                      "Ask for feedback on your article"
+                  elsif (post.comments.where(comment_id: nil, public: post.is_published?).count == 0)
+                      "Start the conversation"
+                  else
+                      "Share your thoughts on this article"
+                  end %> 
+    <%= form_for(comment, remote: true, id: "submit-comment") do |f| %>
     <% if !current_user.present? %>
       <%= f.text_field :full_name, :value => cookies[:full_name], :placeholder => "Your name", class: 'mt-0 full_name_0', style: 'margin-bottom: 10px', onkeyup: "isDisabled('0')" %>
       <%= f.text_field :email, :value => cookies[:email], :placeholder => "Email", class: 'mt-0', style: 'margin-bottom: 10px' %>
       <%= f.hidden_field :cookie, :value => (cookies[:cookie] || SecureRandom.urlsafe_base64) %>
     <% end %>
+    <%= f.hidden_field :is_review, :value => post.is_in_review_by_editor(current_user&.id) %>
     <%= f.hidden_field :public, :value => post.is_published? %>
     <%= f.text_area :text, :placeholder => @placeholder, id: "comment_field", class: "comment_val_0 comment_field_0", onkeyup: "isDisabled('0')" %>
     <%= f.hidden_field :post_id, :post_id => post.id %>

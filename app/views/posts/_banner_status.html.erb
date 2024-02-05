@@ -1,7 +1,7 @@
   <% @message = (@most_recent_review.status.eql? "Ready for Review") ? "Submitted For Review" : @most_recent_review.status %>
   <% if @most_recent_review.status == "Ready for Review" %>
     <% @banner_color = "#61BD4F" %>
-  <% elsif @most_recent_review.status == "In Review" %>
+  <% elsif @most_recent_review.status == "In Review" || @most_recent_review.status == "Request Re-Review" || @most_recent_review.status == "Recommend for Publishing" || @most_recent_review.status == "In Review By Second Editor" %>
     <% @banner_color = "#FCD04D" %>
   <% elsif @most_recent_review.status == "Rejected" %>
     <% @banner_color = "#EB5946" %>
@@ -9,4 +9,9 @@
   <% else %>
     <% @banner_color = "#00A9FF" %>
   <% end %>
-  <p class="banner_stts" style="background-color: <%= @banner_color %>">This article's status changed to <b><%= @message %></b> on <%= @most_recent_review.created_at.in_time_zone.strftime("%A, %B %d") %></p>
+  <% @user = User.find_by(id: @most_recent_review.editor_id) %>
+  <p class="banner_stts" style="background-color: <%= @banner_color %>">This article's status changed to <b><%= @message %></b> on <%= @most_recent_review.created_at.in_time_zone.strftime("%A, %B %d") %>
+    <% if @user.present? %>
+      by <u><%= link_to(@user&.full_name, @user, class: "text-white") %></u>
+    <% end %>
+  </p>

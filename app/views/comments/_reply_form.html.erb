@@ -21,7 +21,9 @@
               <%= reply.full_name %>
             <% end %>
             <% if reply.user.present? %>
-              <% if reply.user.try(:id).eql? reply.post.user.id %>
+              <% if reply.is_review %>
+                <span class="badge badge-warning">Review</span>
+              <% elsif reply.user.try(:id).eql? reply.post.user.id %>
                 <span class="badge badge-default">Author</span>
               <% elsif reply.user.is_manager? %>
                 <span class="badge badge-default">Manager</span>
@@ -56,6 +58,7 @@
         <%= f.text_field :email, :value => cookies[:email], :placeholder => "Email", class: 'mt-0', style: 'margin-bottom: 10px' %>
         <%= f.hidden_field :cookie, :value => (cookies[:cookie] || SecureRandom.urlsafe_base64) %>
       <% end %>
+      <%= f.hidden_field :is_review, :value => post.is_in_review_by_editor(current_user&.id) %>
       <%= f.hidden_field :public, :value => post.is_published? %>
       <%= f.text_area :text, :placeholder => "Reply to #{parent.full_name || parent.user.full_name}", id: "comment_field_reply", class: "comment_val_#{parent.id} comment_field_#{parent.id}", onkeyup: "isDisabled('#{parent.id}')" %>
       <%= f.hidden_field :post_id, :value => post.id %>

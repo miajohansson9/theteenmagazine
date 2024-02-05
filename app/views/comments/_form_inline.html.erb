@@ -15,7 +15,9 @@
           <%= comment.full_name %>
         <% end %>
         <% if comment.user.present? %>
-          <% if comment.user.try(:id).eql? comment.post.user.id %>
+          <% if comment.is_review %>
+            <span class="badge badge-warning">Review</span>
+          <% elsif comment.user.try(:id).eql? comment.post.user.id %>
             <span class="badge badge-default">Author</span>
           <% elsif comment.user.is_manager? %>
             <span class="badge badge-default">Manager</span>

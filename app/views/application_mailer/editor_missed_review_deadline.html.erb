@@ -7,10 +7,12 @@
   <body>
     <p>Hi <%= @user.first_name %>,</p>
     <p>
-      This is an email notifying you did not complete <%= @post.title %>'s review in time.
-      It has been unclaimed and will not be counted toward your monthly required reviews.
-      Please only claim reviews in the future that you have time to complete within the two-day deadline.
-      Thank you.
+      This is an email notifying you did not complete <%= link_to(@post.title, @post) %>'s review in time.
+      It has been unclaimed and has been re-assigned to the managing editor of <%= @post.category.name %>.
+    </p>
+    <p>
+      Claiming reviews that you do not have time to complete within the <b>2 day</b> deadline leaves writers waiting to hear back about their articles. 
+      The managing editor of <%= @post.category.name %> has also been notified and can decide to remove you from the editor team if you continue to miss deadlines.
     </p>
     <p>The Teen Magazine</p>
   </body>

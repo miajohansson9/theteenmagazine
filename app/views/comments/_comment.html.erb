@@ -8,14 +8,16 @@
   <% @profile_img = comment.user.present? && comment.user.profile.attached? ? image_tag(comment.user.profile.variant(resize_to_fill: [50, 50]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
   <%= link_to(@profile_img, comment.user) %>
   <div class="li-content" style="width: 100%;">
-    <h6>
+    <h6 class="<% if comment.is_review %>editor-<%= comment.user_id %><% end %>">
       <% if comment.user_id.present? %>
         <%= link_to comment.user.try(:full_name), comment.user %>
       <% else %>
         <%= comment.full_name %>
       <% end %>
       <% if comment.user.present? %>
-        <% if comment.user.id.eql? comment.post.user.id %>
+        <% if comment.is_review %>
+          <span class="badge badge-warning">Review</span>
+        <% elsif comment.user.id.eql? comment.post.user.id %>
           <span class="badge badge-default">Author</span>
         <% elsif comment.user.is_manager? %>
           <span class="badge badge-default">Manager</span>

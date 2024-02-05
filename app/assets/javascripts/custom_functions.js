@@ -55,7 +55,7 @@ function select_article_status() {
   var selected = document.getElementById(
     "post_reviews_attributes_0_status"
   ).value;
-  if (selected == "Approved for Publishing") {
+  if (selected == "Approved for Publishing" || selected === "Recommend for Publishing") {
     $(".rejected-reason").addClass("hide");
     $(".accepted-descr").removeClass("hide");
   } else if (selected == "Rejected") {
@@ -65,6 +65,17 @@ function select_article_status() {
     $(".rejected-reason").addClass("hide");
     $(".accepted-descr").addClass("hide");
   }
+  if (selected === "In Review") {
+    $(".editor-review").addClass("hide")
+  } else {
+    $(".editor-review").removeClass("hide")
+  }
+  if (selected === "Request Re-Review") {
+    $(".re-request-review").removeClass("hide")
+  } else {
+    $(".re-request-review").addClass("hide")
+  }
+  re-request-review
 }
 
 function showPopup() {
@@ -134,7 +145,7 @@ function scrollToResponseText(text) {
       "This text was unable to be located and has either been altered or deleted."
     );
   } else {
-    $("#response_to_text_0").get(0).scrollIntoView();
+    $("#response_to_text_0").get(0).scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
 

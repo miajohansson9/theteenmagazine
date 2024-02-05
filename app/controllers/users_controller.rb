@@ -42,16 +42,15 @@ class UsersController < ApplicationController
     end
     if @user_posts_approved.length < 1
       begin
-        if (current_user.id != @user.id && (!current_user.admin?) &&
-            (!current_user.editor?))
+        if (current_user.id != @user.id && (!current_user.admin?) && (!current_user.editor?))
           redirect_to(
-            "/login",
+            user_path(current_user),
             notice: "This writer does not have a public profile yet.",
           )
         end
       rescue StandardError
         redirect_to(
-          "/login",
+          user_path(current_user),
           notice: "This writer does not have a public profile yet.",
         )
       end
@@ -85,7 +84,7 @@ class UsersController < ApplicationController
     else
       @editor_posts_cnt = @user.posts.published.count
       @editor_pitches_cnt = @user.pitches.count
-      @editor_reviews = Review.where(editor_id: @user.id)
+      @editor_reviews = Review.where(editor_id: @user.id).where.not(status: "Review - Unclaimed")
       @editor_reviews_cnt = @editor_reviews.count
       @became_editor = " since #{@user.became_an_editor&.in_time_zone&.strftime("%b, %Y")}"
     end
@@ -347,7 +346,7 @@ class UsersController < ApplicationController
     elsif current_user
       redirect_to current_user, notice: "You do not have access to this page."
     else
-      redirect_to "/login", notice: "You must sign in before continuing."
+      redirect_to '/login', notice: "You must sign in before continuing."
       store_location_for(:user, request.fullpath)
     end
   end
@@ -543,7 +542,7 @@ class UsersController < ApplicationController
       ApplicationMailer.accepted_editor_email(@user).deliver
       @user.editor = true
       @user.save
-    elsif params[:decision].eql? "Reject"
+    elsif params[:decision].eql? "Rejected"
       ApplicationMailer.rejected_editor_email(@user).deliver
       @app = Apply.where(rejected_editor_at: nil, user_id: @user.id)
       @app.each do |app|
@@ -667,7 +666,7 @@ class UsersController < ApplicationController
 
   def is_marketer?
     unless current_user && current_user.is_marketer?
-      redirect_to "/login", notice: "You do not have access to this page."
+      redirect_to user_path(current_user), notice: "You do not have access to this page."
     end
   end
 

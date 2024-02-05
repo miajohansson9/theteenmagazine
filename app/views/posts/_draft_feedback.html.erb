@@ -18,12 +18,13 @@
         <% else %>
           <%= image_tag("profile_image.jpg", :class => "profile_img_small", :style => "position: absolute; margin-top: 10px") %>
         <% end %>
-        <%= form_for(@comment, id: "submit-comment-modal") do |f| %>
+        <%= form_for(@comment, remote: true, id: "submit-comment-modal") do |f| %>
           <% if !current_user.present? %>
             <%= f.text_field :full_name, :value => cookies[:full_name], :placeholder => "Your name", class: 'mt-0 full_name_modal', onkeyup: "isDisabled('modal')", style: 'margin-bottom: 10px' %>
             <%= f.text_field :email, :value => cookies[:email], :placeholder => "Email", class: 'mt-0', style: 'margin-bottom: 10px' %>
             <%= f.hidden_field :cookie, :value => (cookies[:cookie] || SecureRandom.urlsafe_base64) %>
           <% end %>
+          <%= f.hidden_field :is_review, :value => @post.is_in_review_by_editor(current_user&.id) %>
           <%= f.hidden_field :public, :value => @post.is_published? %>
           <%= f.text_area :text, :placeholder => "Share your thoughts on this text", id: "comment_field", class: "comment_field_modal", onkeyup: "isDisabled('modal')" %>
           <% if !current_user.present? %>

@@ -60,6 +60,7 @@ task run_nightly_tasks: :environment do
           Review
             .where(editor_id: editor.id)
             .where("updated_at > ?", Date.today.beginning_of_month)
+            .where.not(status: "Review - Unclaimed")
             .count
         @editor_comments_cnt = editor.comments.where("created_at > ?", Date.today.beginning_of_month).count
         @is_not_on_track =
@@ -125,6 +126,7 @@ task run_nightly_tasks: :environment do
         Review
           .where(editor_id: editor.id)
           .where("updated_at > ?", Date.yesterday.beginning_of_month)
+          .where.not(status: "Review - Unclaimed")
           .count
       @editor_comments_cnt =
         editor
@@ -250,19 +252,16 @@ task run_nightly_tasks: :environment do
 
   # If an editor did not complete their review within 48 hours of claiming it, unclaim the review and send an email to the editor
   # Notify opted in editors of the new review
-  @overdue_reviews =
-    Review
-      .where.not(editor_id: nil)
-      .where(active: true, status: "In Review")
-      .where("editor_claimed_review_at < ?", Time.now - 48.hours)
-  @overdue_reviews.each do |review|
-    @editor = User.find_by(id: review.editor_id)
-    if @editor.present? && review.post.present?
-      ApplicationMailer.editor_missed_review_deadline(@editor, review.post).deliver
-      review.editor_id = nil
-      review.editor_claimed_review_at = nil
-      review.status = "Ready for Review"
-      review.save(:validate => false)
+  @post_overdue = Post.overdue_review
+  @post_overdue.each do |post|
+    @review = post.most_recent_review
+    @editor = User.find_by(id: @review.editor_id)
+    if @editor.present?
+      ApplicationMailer.editor_missed_review_deadline(@editor, post).deliver
+      @manager = post.category.manager_of_category
+      @new_review = post.reviews.build(editor_id: @manager.id, status: @review.status, editor_claimed_review_at: Time.now)
+      @new_review.save
+      @review.update_column(:status, "Review - Unclaimed")
     end
   end
 

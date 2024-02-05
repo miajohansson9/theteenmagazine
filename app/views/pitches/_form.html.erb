@@ -87,9 +87,6 @@
     <% if (@pitch.user_id.eql? current_user.id)  %>
       <% if true || (@pitch.created_at.present? && @pitch.created_at < Date.new(2023, 10, 4)) %>
         <div>
-          <div class="alert alert-warning" role="alert">
-            Due to an ongoing copyright issue, <b>our image policy has changed as of October 19th, 2023</b>. Please read the <a target="_blank" class="link_underline"  href="/finding-images">updated image policy</a> before checking the box below.
-          </div>
           <p><i>
             <%= f.check_box :agree_to_image_policy, class: "d-inline" %>
               I have read and understand the image policy found <a target="_blank" class="link_nrml" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this pitch <b>has the proper attributions</b> and follows all the requirements explained in the <a target="_blank" class="link_grn" href="/finding-images">Image Policy</a>. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.

@@ -1,6 +1,5 @@
-<% @most_recent_review = @post.reviews.where.not(status: "In Progress").last %>
-<% @review_banner_soft = @post.reviews.where.not(status: nil).last %>
-<% if !@most_recent_review.nil? && !(@review_banner_soft.status.eql? "In Progress") %>
+<% @most_recent_review = @post.most_recent_review %>
+<% if !@most_recent_review.nil? && !(@most_recent_review.try(:status).eql? "In Progress") %>
   <div class="banner_stts_relative"><%= render '/posts/banner_status' %></div>
 <% elsif @post.is_locked? %>
   <p class= "banner_stts">Locked</p>
@@ -10,9 +9,22 @@
   <div class="banner_stts_relative"><p class="banner_stts">In Progress</p></div>
 <% end %>
 <div class="skinny_wrapper wrapper_padding">
-  <p style="margin-bottom: 0;"><i>This article has been reviewed <%= @reviews.count %> time(s).
+  <div class="mt-3" style="margin-bottom: 0;">This article has been reviewed <%= @reviews.count %> time(s).
      View all past reviews <%= link_to("here", reviews_path(post: @post), target: "_blank", :class => "link_nrml underline") %>.
-  </i></p>
+  </div>
+  <% if @requested_changes.present? %>
+    <div class="card mb-3 m-0 mt-3 changes_requested">
+      <% @editor = User.find(@most_recent_review.editor_id) %>
+      <div class="card-header">Review given by <%= link_to(@editor.try(:full_name), @editor, :class => "link_nrml", :target => "_blank") %>: The below problems prevented this article from being published.</div>
+      <div class="card-body">
+        <% @requested_changes.each do |requested_change| %>
+          <% @feedback = Feedback.find(requested_change.feedback_id) %>
+          <h5 class="card-title">✎ <%= @feedback.try(:editor_descr) %></h5>
+          <p class="card-text"><small><%= markdown @feedback.try(:review_descr) %></small></p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
   <% if (@most_recent_review.try(:status).eql? "In Review") && (@most_recent_review.editor_claimed_review_at.present?) %>
     <div class="alert alert-info m-0 pb-1 pt-2" role="alert">
       <% @message = (@most_recent_review.editor_claimed_review_at + 2.days > Time.now) ? 
@@ -20,24 +32,6 @@
         : "and their review is overdue. It will be unclaimed and assigned to a different editor." %>
       <p><i>Your article is currently being reviewed by <%= link_to(User.find_by(id: @most_recent_review.editor_id)&.full_name, User.find_by(id: @most_recent_review.editor_id), target: "_blank") %> <%= @message %></i></p>
     </div>
-  <% elsif @most_recent_review.try(:status).eql? "Rejected" %>
-    <% if !@most_recent_review.notes.blank? %>
-     <p><i>Editor Notes: <%= @most_recent_review.notes %></i></p>
-    <% end %>
-    <% if @requested_changes.present? %>
-      <div class="card mb-3 changes_requested">
-        <% @editor = User.find(@most_recent_review.editor_id) %>
-        <div class="card-header">Review #<%= @reviews.count %> given by <%= link_to(@editor.try(:full_name), @editor, :class => "link_nrml", :target => "_blank") %>: The below problems prevented this article from being published.</div>
-        <div class="card-body">
-          <% @requested_changes.each do |requested_change| %>
-            <% @feedback = Feedback.find(requested_change.feedback_id) %>
-            <h5 class="card-title">✎ <%= @feedback.try(:editor_descr) %></h5>
-            <p class="card-text"><small><%= markdown @feedback.try(:review_descr) %></small></p>
-          <% end %>
-        </div>
-       </div>
-       <p class="mb-0"><i>Please make the above changes before submitting your article again. If you think there was a mistake, please email Mia at mia@theteenmagazine.com and explain the problem.</i></p>
-    <% end %>
   <% end %>
   <%= render 'form' %>
 </div>

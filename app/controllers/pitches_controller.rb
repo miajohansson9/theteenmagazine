@@ -336,7 +336,7 @@ class PitchesController < ApplicationController
 
   def is_marketer?
     unless current_user && current_user.is_marketer?
-      redirect_to "/login", notice: "You do not have access to this page."
+      redirect_to user_path(current_user), notice: "You do not have access to this page."
     end
   end
 

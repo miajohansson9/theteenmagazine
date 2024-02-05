@@ -153,6 +153,18 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
+  def editor_requested_re_review(editor, notes, post)
+    @editor = editor
+    @notes = notes
+    @post = post
+    @manager = post.category.manager_of_category
+    mail(
+      to: @editor.email,
+      cc: [@manager.email, 'mia@theteenmagazine.com'],
+      subject: "#{@editor.first_name}, your review did not pass the second editor review",
+    )
+  end
+
   def article_moved_to_review(user, post, editor)
     @user = user
     @post = post
@@ -367,7 +379,7 @@ class ApplicationMailer < ActionMailer::Base
   def removed_editor_from_team(user)
     @user = user
     @editor_pitches_cnt = @user.pitches.count
-    @editor_reviews = Review.where(editor_id: @user.id)
+    @editor_reviews = Review.where(editor_id: @user.id).where.not(status: "Review - Unclaimed")
     @editor_reviews_cnt = @editor_reviews.count
     @writers_helped_cnt =
       @editor_reviews.map { |r| r.post.try(:user_id) }.uniq.count
@@ -395,9 +407,8 @@ class ApplicationMailer < ActionMailer::Base
   def editor_missed_review_deadline(user, post)
     @user = user
     @post = post
-    unless @user.do_not_send_emails
-      mail(to: user.email, subject: "Your review is overdue", cc: ["Editors <editors@theteenmagazine.com>"])
-    end
+    @manager = post.category.manager_of_category
+    mail(to: user.email, cc: @manager.email, subject: "Your review is overdue")
   end
 
   def partner_login_details(user, partner)
