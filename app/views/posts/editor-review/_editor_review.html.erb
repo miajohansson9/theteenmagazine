@@ -116,16 +116,18 @@
                   </div>
                   <div class="mb-2"><b>Notes from <%= link_to(@requested_review_user&.full_name, @requested_review_user) %></b>: <%= @review.notes %></b></div>
                 <% end %>
-                <div id="selectable_content" class="mb-3">
-                  <% if @post.editor_can_make_changes %>
+                <% if @post.editor_can_make_changes %>
+                  <div id="selectable_content" class="mb-3">
                     <%= f.text_area :content, value: @post.content, id: "editor" %>
-                  <% else %>
-                    <div class="alert alert-warning" role="alert">
-                      The author has not allowed you to make changes to this article.
-                    </div>
+                  </div>
+                <% else %>
+                  <div class="alert alert-warning" role="alert">
+                    The author has not allowed you to make changes to this article.
+                  </div>
+                  <div id="selectable_content" class="post_content mb-3">
                     <%= markdown @post.content %>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
                 <%= f.fields_for :reviews, @review do |rv| %>
                   <%= render "posts/editor-review/editor_review_form", rv: rv, f: f, post: @post %>
                 <% end %>

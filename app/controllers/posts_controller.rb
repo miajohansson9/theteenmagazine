@@ -241,7 +241,7 @@ class PostsController < ApplicationController
     @requested_review_user = User.find_by(id: @requested_review&.editor_id)
     @feedbacks_editor_frm = Feedback.active.order("created_at asc")
     @requested_changes = (["In Progress", "Rejected"].include? @post.most_recent_review.status) ? @post.reviews.where(status: "Rejected").order('created_at').last.try(:feedback_givens) : nil
-    @comments = @post.comments.where(comment_id: nil).order("created_at desc")
+    @comments = @post.comments.order("created_at DESC")
     @comment = current_user.comments.build(post_id: @post.id)
     if (params[:shareable_token] == @post.shareable_token) ||
        (current_user &&

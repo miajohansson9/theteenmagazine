@@ -10,8 +10,13 @@ class CommentsController < ApplicationController
   end
 
   def get_all_comments
-    @comments = Comment.order("CASE WHEN is_review = true THEN 0 ELSE 1 END, created_at DESC").limit(20)
-    render partial: "comments/all_comments"
+    @comments = Comment.where(is_review: [nil, false]).order('created_at desc').limit(30)
+    render partial: "comments/all_comments", locals: { comments: @comments }
+  end
+
+  def get_all_review_comments
+    @review_comments = Comment.where(is_review: true).order('created_at desc').limit(30)
+    render partial: "comments/all_comments", locals: { comments: @review_comments }
   end
 
   def create

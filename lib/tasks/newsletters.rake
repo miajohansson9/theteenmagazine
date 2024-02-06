@@ -68,7 +68,7 @@ namespace :newsletters do
     def commenters(weeks=2)
         @weeks = weeks.present? ? weeks.to_i : 2
         @start_date = Date.today - (7 * @weeks)
-        @comments = Comment.where('created_at > ?', @start_date)
+        @comments = Comment.where('created_at > ?', @start_date).where(is_review: [nil, false])
         @commenters = [[]]
         @writers = [[]]
         User.writer.where(last_sign_in_at: (Time.now - 1.month)..Time.now).each do |user|

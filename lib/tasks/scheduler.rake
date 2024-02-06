@@ -62,7 +62,7 @@ task run_nightly_tasks: :environment do
             .where("updated_at > ?", Date.today.beginning_of_month)
             .where.not(status: "Review - Unclaimed")
             .count
-        @editor_comments_cnt = editor.comments.where("created_at > ?", Date.today.beginning_of_month).count
+        @editor_comments_cnt = editor.comments.where(is_review: [nil, false]).where("created_at > ?", Date.today.beginning_of_month).count
         @is_not_on_track =
           (@editor_pitches_cnt + @editor_reviews_cnt + @editor_comments_cnt <
           (@reviews_requirement + @pitches_requirement + @comments_requirement) / 2) && (editor.created_at < (Time.now - 30.days))

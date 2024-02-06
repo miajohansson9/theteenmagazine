@@ -1,5 +1,5 @@
 <div class="comments">
-  <% @comments.each do |comment| %>
+  <% comments.each do |comment| %>
     <li class="list-group-item comment" id="comment_<%=comment.id %>">
       <% @profile_img = comment.user.present? && comment.user.profile.attached? ? image_tag(comment.user.profile.variant(resize_to_fill: [50, 50]), :class => "profile_img_small") : image_tag("profile_image.jpg", :class => "profile_img_small") %>
       <div class="li-content" style="width: 100%;">
@@ -7,6 +7,9 @@
         <span>
           <% if comment.is_public? %>
             <span class="badge badge-pill badge-success">Public</span>
+          <% end %>
+          <% if comment.is_review? %>
+            <span class="badge badge-pill badge-warning">Review</span>
           <% end %>
           <% if comment.user_id.present? %>
             <%= link_to comment.user.try(:full_name), comment.user, class: "link_nrml" %>
@@ -18,9 +21,9 @@
             <% @full_name = (@parent.present? && @parent.user.present?) ? @parent.user.full_name : @parent.try(:full_name) %>
             replied to <%= @full_name || "Anonymous" %>'s comment
           <% else %>
-            commented on <%= link_to("#{comment.post.user.first_name}'s article", comment.post, class: "link_nrml") %>
+            commented
           <% end %>
-          <%= time_ago_in_words(comment.created_at) %> ago:
+          <%= date_to_words(comment.created_at) %>:
           <span class="date_ago"><%= comment.text.truncate_words(12) %></span>
         </span>
       </div>
