@@ -135,6 +135,9 @@ class CommentsController < ApplicationController
   end
 
   def check_for_profanity
+    if current_user.present?
+      return false
+    end
     # check language
     if language_is_not_english
       redirect_to_no_profanity
