@@ -45,7 +45,7 @@
       window.CKEDITOR_BASEPATH = '/assets/ckeditor/';
     </script>
     <%= javascript_include_tag 'application' %>
-    <%= javascript_include_tag 'layout', cache: false %>
+    <%= javascript_include_tag 'layout' %>
     <% if params[:controller].eql? 'posts' %>
         <%= javascript_include_tag 'hidesocialmedia', cache: false %>
     <% end %>
@@ -161,6 +161,5 @@
           <%= render "layouts/partials/footer" %>
         </div>
       </section>
-      <%= javascript_include_tag 'layout'%>
     </body>
   </html>
