@@ -187,12 +187,7 @@ class Post < ApplicationRecord
   scope :published, -> { includes(:reviews).where(reviews: { status: "Approved for Publishing", active: true }).published }
 
   def self.published
-    profanity_score_limit = ENV['PROFANITY_SCORE'].to_i
-    where(
-      "profanity_score IS NULL OR profanity_score <= ?", 
-      profanity_score_limit
-    )
-    .where("publish_at < ?", Time.now)
+    where("publish_at < ?", Time.now)
   end
 
   def is_published?
@@ -206,11 +201,11 @@ class Post < ApplicationRecord
   end
 
   def is_draft?
-    self.reviews.order("created_at").last.status.eql? "In Progress"
+    self.reviews.last.status.eql? "In Progress"
   end
 
   def is_submitted_for_review?
-    self.reviews.order("created_at").last.status.eql? "Ready for Review"
+    self.reviews.last.status.eql? "Ready for Review"
   end
 
   def is_in_review?
@@ -218,19 +213,19 @@ class Post < ApplicationRecord
   end
 
   def is_in_review_first_time?
-    self.reviews.order("created_at").last.status.eql? "In Review"
+    self.reviews.last.status.eql? "In Review"
   end
 
   def is_in_review_second_time?
-    (self.reviews.order("created_at").last.status.eql? "In Review By Second Editor")
+    (self.reviews.last.status.eql? "In Review By Second Editor")
   end
 
   def is_recommended?
-    self.reviews.order("created_at").last.status.eql? "Recommend for Publishing"
+    self.reviews.last.status.eql? "Recommend for Publishing"
   end
 
   def is_rejected?
-    self.reviews.where(reviews: { status: "Rejected", active: true })
+    self.reviews.last.status.eql? "Rejected"
   end
 
   def is_interview?
@@ -238,11 +233,11 @@ class Post < ApplicationRecord
   end
 
   def is_in_review_by_editor(user_id)
-    self.is_in_review? && (self.reviews.order("created_at").last.editor_id.eql? user_id)
+    self.is_in_review? && (self.reviews.last.editor_id.eql? user_id)
   end
 
   def is_being_reviewed?
-    self.is_in_review? || self.is_recommended? || (self.reviews.order("created_at").last.status.eql? "Request Re-Review")
+    self.is_in_review? || self.is_recommended? || (self.reviews.last.status.eql? "Request Re-Review")
   end
 
   def can_user_claim_review(user_id)
@@ -260,7 +255,7 @@ class Post < ApplicationRecord
   end
 
   def most_recent_review
-    self.reviews.order('created_at')&.last
+    self.reviews&.last
   end
 
   def can_reclaim_pitch?

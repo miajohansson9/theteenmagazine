@@ -79,7 +79,7 @@ class PostsController < ApplicationController
   def new
     @categories = Category.active
     @post = current_user.posts.build
-    @review = @post.reviews.build(status: "In Progress", active: true)
+    @review = @post.reviews.build(status: "In Progress")
     set_meta_tags title: "Edit Article", editing: "Turn off ads"
   end
 
@@ -92,7 +92,7 @@ class PostsController < ApplicationController
       if @prev_post_pitch.can_reclaim_pitch?
         @prev_post_pitch.reviews.destroy
         @rev =
-          @prev_post_pitch.reviews.build(status: "In Progress", active: true)
+          @prev_post_pitch.reviews.build(status: "In Progress")
         @rev.save
         @post.pitch.update_columns(
           { claimed_id: current_user.id, claimed_at: Time.now }
@@ -142,7 +142,7 @@ class PostsController < ApplicationController
         "deadline_at" => Time.now + (@post.pitch.deadline).weeks,
       )
     end
-    @rev = @post.reviews.build(status: "In Progress", active: true)
+    @rev = @post.reviews.build(status: "In Progress")
     @rev.save
     Thread.new do
       @post.thumbnail.attach(@post.pitch.thumbnail.blob)
