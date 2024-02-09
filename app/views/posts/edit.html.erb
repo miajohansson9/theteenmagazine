@@ -1,4 +1,3 @@
-<% @most_recent_review = @post.most_recent_review %>
 <% if !@most_recent_review.nil? && !(@most_recent_review.try(:status).eql? "In Progress") %>
   <div class="banner_stts_relative"><%= render '/posts/banner_status' %></div>
 <% elsif @post.is_locked? %>

@@ -160,7 +160,7 @@ class ApplicationMailer < ActionMailer::Base
     @manager = post.category.manager_of_category
     mail(
       to: @editor.email,
-      cc: [@manager.email, 'mia@theteenmagazine.com'],
+      cc: [@manager&.email, 'mia@theteenmagazine.com'],
       subject: "#{@editor.first_name}, your review did not pass the second editor review",
     )
   end

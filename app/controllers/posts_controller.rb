@@ -235,7 +235,9 @@ class PostsController < ApplicationController
   def draft
     @date = @post.created_at
     get_statuses
-    @review = @post.reviews.order('created_at').last
+    @review = @post.reviews.last
+    @reviews = @post.reviews.where(status: ["Rejected", "Approved for Publishing", "Recommend for Publishing", "Request Re-Review"])
+    @most_recent_review = @post.reviews.last
     @editor = User.find_by(id: @review.editor_id)
     @requested_review = @post.reviews.where(status: "Request Re-Review").last
     @requested_review_user = User.find_by(id: @requested_review&.editor_id)
@@ -406,10 +408,11 @@ class PostsController < ApplicationController
         (current_user.can_edit_post(@post)) ||
         (@post.most_recent_review.editor_id.eql? current_user.id)
     @categories = Category.active.or(Category.where(id: @post.category_id))
+    @most_recent_review = @post.reviews.last
     #create a new review if the last review is either nil or rejected
-    if (@post.most_recent_review.nil?) || (["Rejected", "Recommend for Publishing", "Request Re-Review"].include? @post.most_recent_review.try(:status))
+    if (@post.most_recent_review.nil?) || (["Rejected", "Recommend for Publishing", "Request Re-Review", "Approved for Publishing"].include? @post.most_recent_review.try(:status))
       if (current_user.editor?)
-        @review = @post.reviews.build(editor_id: current_user.id)
+        @review = @post.reviews.build(editor_id: current_user.id, status: @post.most_recent_review.status)
       else
         @review = @post.reviews.new(status: "In Progress")
       end
@@ -501,8 +504,7 @@ class PostsController < ApplicationController
           @critique.save
         end
       end
-      if (@new_status.eql? "Approved for Publishing") &&
-         !(@prev_status.eql? "Approved for Publishing")
+      if (@new_status.eql? "Approved for Publishing") && !(@prev_status.eql? "Approved for Publishing")
         if !@post.thumbnail.attached?
           # post does not have thumbnail! this will break the homepage
           redirect_to edit_post_path(@post), notice: "This post does not have a thumbnail image! It cannot be published"
@@ -535,7 +537,12 @@ class PostsController < ApplicationController
           ApplicationMailer.interview_published(@post).deliver
         end
         @post.promoting_until = nil
-        @post.update_column("publish_at", Time.now)
+        @review_published_before = @post.reviews.where(status: "Approved for Publishing").first
+        if @review_published_before.present?
+          @post.update_column("publish_at", @review_published_before.updated_at)
+        else
+          @post.update_column("publish_at", Time.now)
+        end
       end
       fix_formatting
       @post.save!
@@ -566,7 +573,7 @@ class PostsController < ApplicationController
         if @post.reviews.where.not(editor_id: nil).count > 0
           begin
             # has been reviewed before and should go to the previous reviewer
-            @reviews = @post.reviews.where.not(editor_id: nil).order("created_at asc")
+            @reviews = @post.reviews.where.not(editor_id: nil)
             @prev_editor = User.find(@reviews.last.editor_id)
             @notice = "Great job! #{@prev_editor.full_name} was assigned this review."
             @new_review = @post.reviews.build(status: "In Review", editor_id: @prev_editor.id, editor_claimed_review_at: Time.now)
@@ -618,11 +625,18 @@ class PostsController < ApplicationController
       elsif (post_params[:partner_id].present? && post_params[:partner_id] != false)
         @partner = User.find(post_params[:partner_id])
         redirect_to @partner, notice: "This article was successfully shared with #{@partner.full_name}."
-      elsif (@prev_status != @new_status) && (@new_status.eql? "In Review" || (@new_status.eql? "In Review By Second Editor")) && (current_user.editor?)
-        Thread.new do
-          ApplicationMailer.article_moved_to_review(@post.user, @post, @editor).deliver
+      elsif (@prev_status != @new_status) && current_user.editor? && !(["Rejected", "Approved for Publishing", "Request Re-Review"].include? @new_status)
+        if (["In Review", "In Review By Second Editor"].include? @new_status)
+          if @rev.editor_claimed_review_at.nil?
+            @rev.update_column('editor_claimed_review_at', Time.now)
+          end
+          Thread.new do
+            ApplicationMailer.article_moved_to_review(@post.user, @post, @editor).deliver
+          end
+          redirect_to @post, notice: "Great job, You've claimed editing this article!"
+        else
+          redirect_to "/editors/#{current_user.slug}", notice: @notice
         end
-        redirect_to @post, notice: "Great job, You've claimed editing this article!"
       else
         redirect_to @post, notice: @notice
       end
@@ -835,7 +849,7 @@ class PostsController < ApplicationController
         :rank,
         :is_interview,
         feedback_list: [],
-        reviews_attributes: %i[id post_id editor_id created_at status notes],
+        reviews_attributes: %i[id post_id editor_id created_at status notes editor_claimed_review_at],
         user_attributes: %i[extensions id],
       )
   end

@@ -9,7 +9,6 @@
   }
 </style>
 <div class="div">
-  <% @most_recent_review = @post.most_recent_review %>
   <% if !@most_recent_review.nil? && !(@most_recent_review.try(:status).eql? "In Progress") %>
     <%= render '/posts/banner_status' %>
   <% elsif @post.is_locked? %>
@@ -122,6 +121,9 @@
                   </div>
                 <% end %>
               <% end %>
+              <div class="mb-1 mt-3" style="margin-bottom: 0;">This article has been reviewed <%= @reviews.count %> time(s).
+                View all past reviews <%= link_to("here", reviews_path(post: @post), target: "_blank", :class => "link_nrml underline") %>.
+              </div>
               <div id="selectable_content"
                    class="post_content <%= (@post.agree_to_image_policy.nil? || !@post.agree_to_image_policy) ? 'image-policy-not-agreed-to' : '' %>">
                 <%= markdown @post.content %>

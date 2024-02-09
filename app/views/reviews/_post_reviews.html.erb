@@ -1,6 +1,6 @@
 <div class="skinny_wrapper wrapper_padding pitches_wrapper reviews_wrapper">
   <h3 class="pitch_ttl">Editor Feedback for <%= link_to(@post.title, @post) %></h3>
-  <% @post.reviews.where.not(status: ["In Progress", "Ready for Review"]).order('created_at desc').each_with_index do |review, index| %>
+  <% @editor_reviews.each_with_index do |review, index| %>
     <div class="card mb-3 review_frm">
       <div class="card-header">
         <% @editor = User.find_by(id: review.editor_id) %>

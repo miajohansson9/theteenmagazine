@@ -6,6 +6,7 @@ class ReviewsController < ApplicationController
   def index
     if params[:post].present?
       @post = Post.friendly.find(params[:post])
+      @editor_reviews = @post.reviews.where.not(status: ["In Progress", "Ready for Review"]).by_most_recent
       set_meta_tags title: "Editor Feedback for #{@post.title}"
     elsif (current_user.admin?) || (current_user.editor?)
       @user = User.find(params[:id])

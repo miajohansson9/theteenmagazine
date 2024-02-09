@@ -9,7 +9,6 @@
   }
 </style>
 <div class="div">
-  <% @most_recent_review = @post.most_recent_review %>
   <% if !@most_recent_review.nil? && !(@most_recent_review.try(:status).eql? "In Progress") %>
     <%= render '/posts/banner_status' %>
   <% elsif @post.is_locked? %>
@@ -105,7 +104,11 @@
             <div class="post_wrapper">
               <%= form_for @post, html: {:id => "ck-form", class: "mt-3"} do |f| %>
                 <%= hidden_field_tag :quick_edit, false, id: "format-js-field" %>
-                <div class="d-flex justify-content-end mb-1">
+                <div class="d-flex justify-content-between mb-1">
+                <div class="mb-1 mt-0" style="margin-bottom: 0;">
+                  This article has been reviewed <%= @reviews.count %> time(s).
+                  View all past reviews <%= link_to("here", reviews_path(post: @post), target: "_blank", :class => "link_nrml underline") %>.
+                </div>
                   <%= f.button id: "unsaved-changes", class: "hide" do %>
                     <span id="unsaved-changes-text">Save Edits</span>
                   <% end %>
@@ -124,7 +127,7 @@
                   <div class="alert alert-warning" role="alert">
                     The author has not allowed you to make changes to this article.
                   </div>
-                  <div id="selectable_content" class="post_content mb-3">
+                  <div id="selectable_content" class="post_content">
                     <%= markdown @post.content %>
                   </div>
                 <% end %>

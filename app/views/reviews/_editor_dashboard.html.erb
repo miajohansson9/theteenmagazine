@@ -48,7 +48,7 @@
               <% end %>
             </div>
             <div data-step data-index="2" data-onboarding-content= "Articles waiting to be reviewed by an editor will show up here. You can start claiming and reviewing articles once you've finished reading &ldquo;Reviewing Articles.&rdquo;">
-              <h5 class="pitch_ttl">Articles Submitted for Review</h5>
+              <h5 class="pitch_ttl">Articles Submitted for Review (<%= @submitted_for_review.count %>)</h5>
               <div class="flex-wrapper">
                 <% @submitted_for_review.each do |draft| %>
                   <div class="card card-review <% if @unseen_posts.include? draft %> unread <% end %>" style="width: 100%;">
@@ -100,7 +100,7 @@
               </div>
             </div>
             <div data-step data-index="3" data-onboarding-content='Newly pitched articles will show up here. You may accept/reject pitches as explained in "Reviewing Pitches."'>
-              <h5 class="pitch_ttl">New Pitched Articles</h5>
+              <h5 class="pitch_ttl">New Pitched Articles (<%= @submitted_pitches.count %>)</h5>
               <div class="flex-wrapper">
                 <% @submitted_pitches.each do |pitch| %>
                   <div class="card card-review <% if @unseen_submitted_pitches.include? pitch %> unread <% end %>" style="width: 100%;">

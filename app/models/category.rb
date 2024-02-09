@@ -18,6 +18,6 @@ class Category < ApplicationRecord
   end
 
   def manager_of_category
-    User.find_by(id: self.user_id)
+    User.find_by(id: self.user_id) || User.find(1)
   end
 end
