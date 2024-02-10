@@ -48,6 +48,7 @@ class NewslettersController < ApplicationController
   end
 
   def new
+    @ckeditor = true
     get_audiences
     @newsletter = current_user.newsletters.new
   end
@@ -120,6 +121,7 @@ class NewslettersController < ApplicationController
     if !current_user.admin? && !(current_user.id.eql? @newsletter.user.id)
       redirect_to "/newsletters/manage/#{current_user.id}", notice: "You do not have access to this page."
     end
+    @ckeditor = true
     get_audiences
     @posts = Post.published.where(newsletter_id: nil)
     @newsletter_posts = @newsletter.posts || []

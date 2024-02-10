@@ -22,12 +22,14 @@ class PagesController < ApplicationController
   before_action :is_image_admin?, only: [:manage_images, :destroy]
 
   def new
+    @ckeditor = true
     @page = Page.new
     @categories = Category.active.to_a + [Category.find_by(slug: 'interviews')]
     set_meta_tags title: "New Page"
   end
 
   def edit
+    @ckeditor = true
     @categories = Category.active.to_a + [Category.find_by(slug: 'interviews')]
     @user = User.find_by(id: @page.user_id)
     @suggestor = User.find_by(id: @page.suggestor_id)

@@ -45,6 +45,7 @@ class PitchesController < ApplicationController
 
   #create a new pitch
   def new
+    @ckeditor = true
     @pitch = current_user.pitches.build
     @categories = Category.active
     set_meta_tags title: "New Pitch | The Teen Magazine"
@@ -61,6 +62,7 @@ class PitchesController < ApplicationController
     unless (current_user.is_interview_manager? || (current_user.id.eql? @pitch.user_id))
       redirect_to @pitch, notice: "You cannot edit this pitch."
     end
+    @ckeditor = true
     @categories = Category.active
     @interviewers = User.interviewer
     set_meta_tags title: "Edit Interview Pitch | The Teen Magazine"
@@ -314,6 +316,7 @@ class PitchesController < ApplicationController
       @thumbanil_credits =
         (@pitch.thumbnail_credits.include? ",") ? @pitch.thumbnail_credits.split(",") : [@pitch.thumbnail_credits.upcase]
     end
+    @ckeditor = true
     @categories = Category.active.or(Category.where(id: @pitch.category_id))
     @pitch_errors = params[:errors]
     @archive_button = @pitch.archive ? "Undo Archive" : "Archive"

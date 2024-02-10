@@ -77,6 +77,7 @@ class PostsController < ApplicationController
   end
 
   def new
+    @ckeditor = true
     @categories = Category.active
     @post = current_user.posts.build
     @review = @post.reviews.build(status: "In Progress")
@@ -245,6 +246,9 @@ class PostsController < ApplicationController
     @requested_changes = (["In Progress", "Rejected"].include? @post.most_recent_review.status) ? @post.reviews.where(status: "Rejected").order('created_at').last.try(:feedback_givens) : nil
     @comments = @post.comments.order("created_at DESC")
     @comment = current_user.comments.build(post_id: @post.id)
+    if @post.is_in_review_by_editor(current_user.id)
+      @ckeditor = true
+    end
     if (params[:shareable_token] == @post.shareable_token) ||
        (current_user &&
         (@post.sharing || @post.user_id == current_user.id ||
@@ -401,6 +405,7 @@ class PostsController < ApplicationController
       redirect_to @post, notice: "You can no longer work on this article."
       return
     end
+    @ckeditor = true
     fix_embedded_html
     get_statuses
     @can_edit =
