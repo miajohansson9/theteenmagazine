@@ -13,7 +13,7 @@
   </div>
   <% if @requested_changes.present? %>
     <div class="card mb-3 m-0 mt-3 changes_requested">
-      <% @editor = User.find(@most_recent_review.editor_id) %>
+      <% @editor = User.find_by(id: @most_recent_review.editor_id) %>
       <div class="card-header">Review given by <%= link_to(@editor.try(:full_name), @editor, :class => "link_nrml", :target => "_blank") %>: The below problems prevented this article from being published.</div>
       <div class="card-body">
         <% @requested_changes.each do |requested_change| %>
