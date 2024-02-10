@@ -13,6 +13,10 @@
                 role="tab" aria-controls="profile-classic" aria-selected="true">Home</a>
             </li>
             <li class="nav-item tab-custom">
+              <a class="tab-custom" id="activity-user-tab-classic" data-bs-toggle="tab" href="#follow-classic" role="tab"
+                aria-controls="follow-classic" aria-selected="false">Your Activity</a>
+            </li>
+            <li class="nav-item tab-custom">
               <a class="tab-custom" id="activity-tab-classic" data-bs-toggle="tab" href="#follow-classic" role="tab"
                 aria-controls="follow-classic" aria-selected="false">All Activity</a>
             </li>
@@ -123,6 +127,16 @@
                 <% end %>
               </div>
             </div>
+          </div>
+          <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="activity-user-tab-classic">
+            <h5 class="pitch_ttl">Your Activity</h5>
+            <%= render_async get_editor_activity_path(user_id: @user.id), toggle: { selector: '#activity-user-tab-classic', event: :click } do %>
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            <% end %>
           </div>
           <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="activity-tab-classic">
             <h5 class="pitch_ttl">All Editor Activity</h5>
