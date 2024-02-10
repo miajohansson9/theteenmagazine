@@ -101,7 +101,7 @@
         <div id="content">
           <div class="flex_wrapper_content">
             <div class="post_wrapper">  
-              <% if (@post.user_id.eql? current_user&.id) || current_user&.editor %>
+              <% if current_user && (@post.user_id.eql? current_user&.id) || current_user&.editor %>
                 <% if @requested_changes.present? %>
                   <div class="card m-0 mt-3 changes_requested">
                     <% @editor = User.find_by(id: @most_recent_review.editor_id) %>
@@ -172,17 +172,20 @@
                 </p>
               <% end %>
             <% elsif @post.sharing %>
-              <p>This draft is currently viewable by other writers in the <a target="_blank" href="/community">community</a>.
+              <p>This draft is currently being shared with TTM's <a target="_blank" href="/community"><u>writer community</u></a>!
                 <% if (current_user.admin? || current_user.id == @post.user_id) %>
                   <%= link_to "Turn off peer sharing.", post_path(@post, sharing: false), class: "link_grn" %>
                 <% end %>
               </p>
             <% elsif (current_user.admin? || current_user.id == @post.user_id) %>
-              <p>This draft is not viewable by other writers.
-                <%= link_to "Get peer feedback.", post_path(@post, sharing: true), class: "link_grn" %>
+              <p>This draft is not viewable in TTM's <a target="_blank" href="/community"><u>writer community</u></a>.
+                <%= link_to "Turn on sharing", post_path(@post, sharing: true), class: "link_grn" %> to share your draft with other writers.
               </p>
             <% end %>
             <%= render :partial => 'posts/partials/comments/comments_draft', locals: {user: current_user, post: @post, comments: @comments, comment: @comment} %>
+            <% if (@comments.length.eql? 0) && @post.is_being_reviewed? %>
+              <span>Editor reviews will show up here.</span>
+            <% end %>
           <% end %>
         </div>
       <% else %>

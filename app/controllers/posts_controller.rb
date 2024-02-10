@@ -206,7 +206,7 @@ class PostsController < ApplicationController
   end
 
   def get_statuses
-    if !@post.reviews.present?
+    if !@post.reviews.present? || current_user.nil?
       return
     end
     @editor_options = 
@@ -244,9 +244,8 @@ class PostsController < ApplicationController
     @requested_review_user = User.find_by(id: @requested_review&.editor_id)
     @feedbacks_editor_frm = Feedback.active.order("created_at asc")
     @requested_changes = (["In Progress", "Rejected"].include? @post.most_recent_review.status) ? @post.reviews.where(status: "Rejected").order('created_at').last.try(:feedback_givens) : nil
-    @comments = @post.comments.order("created_at DESC")
-    @comment = current_user.comments.build(post_id: @post.id)
-    if @post.is_in_review_by_editor(current_user.id)
+    @comment = current_user? ? current_user.comments.build(post_id: @post.id) : Comment.new
+    if current_user && @post.is_in_review_by_editor(current_user.id)
       @ckeditor = true
     end
     if (params[:shareable_token] == @post.shareable_token) ||
@@ -630,7 +629,7 @@ class PostsController < ApplicationController
       elsif (post_params[:partner_id].present? && post_params[:partner_id] != false)
         @partner = User.find(post_params[:partner_id])
         redirect_to @partner, notice: "This article was successfully shared with #{@partner.full_name}."
-      elsif (@prev_status != @new_status) && current_user.editor? && !(["Rejected", "Approved for Publishing", "Request Re-Review"].include? @new_status)
+      elsif (@prev_status != @new_status) && current_user.editor? && !(["Rejected", "Approved for Publishing", "Request Re-Review", "In Progress"].include? @new_status)
         if (["In Review", "In Review By Second Editor"].include? @new_status)
           if @rev.editor_claimed_review_at.nil?
             @rev.update_column('editor_claimed_review_at', Time.now)
