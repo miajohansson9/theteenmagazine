@@ -82,7 +82,7 @@ class ReviewsController < ApplicationController
 
   def get_editor_activity
     @category_id = params[:category_id]
-    @user_id = params[:user_id]
+    @editor_id = params[:editor_id]
     @update_since = Activity.first.try(:action_at) || Time.now - 30.days
     @editor_reviewed_article =
       Review.where.not(editor_id: nil).where('updated_at > ?', @update_since)
@@ -172,8 +172,8 @@ class ReviewsController < ApplicationController
     end
     @per_page = 20
     @page = params[:page].nil? ? 2 : Integer(params[:page]) + 1
-    if @user_id.present?
-      @activities = Activity.where(user_id: @user_id)
+    if @editor_id.present?
+      @activities = Activity.where(user_id: @editor_id)
     elsif @category_id.present?
       @activities = Activity.where(category_id: @category_id)
     else

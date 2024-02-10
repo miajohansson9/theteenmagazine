@@ -13,8 +13,8 @@
                 role="tab" aria-controls="profile-classic" aria-selected="true">Home</a>
             </li>
             <li class="nav-item tab-custom">
-              <a class="tab-custom" id="activity-user-tab-classic" data-bs-toggle="tab" href="#follow-classic" role="tab"
-                aria-controls="follow-classic" aria-selected="false">Your Activity</a>
+              <a class="tab-custom" id="activity-user-tab-classic" data-bs-toggle="tab" href="#your-activity-classic" role="tab"
+                aria-controls="your-activity-classic" aria-selected="false">Your Activity</a>
             </li>
             <li class="nav-item tab-custom">
               <a class="tab-custom" id="activity-tab-classic" data-bs-toggle="tab" href="#follow-classic" role="tab"
@@ -128,9 +128,9 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="follow-classic" role="tabpanel" aria-labelledby="activity-user-tab-classic">
+          <div class="tab-pane fade" id="your-activity-classic" role="tabpanel" aria-labelledby="activity-user-tab-classic">
             <h5 class="pitch_ttl">Your Activity</h5>
-            <%= render_async get_editor_activity_path(user_id: @user.id), toggle: { selector: '#activity-user-tab-classic', event: :click } do %>
+            <%= render_async get_editor_activity_path(editor_id: @user.id), toggle: { selector: '#activity-user-tab-classic', event: :click } do %>
               <div class="d-flex justify-content-center">
                 <div class="spinner-border" role="status">
                   <span class="sr-only">Loading...</span>
