@@ -70,7 +70,7 @@
               </p>
             </div>
           </div>
-          <% @authors = [@user] + @collabs %>
+          <% @authors = [@post.user] + @collabs %>
           <div style="<% if @authors.length.eql? 1 %>height: 58px;<% else %>max-height: <%= 10 + @authors.length * 48 %>px<% end %>" class="post_info d-flex pt-2 flex-wrap overflow-hidden align-items-center justify-content-between">
             <div class="d-flex flex-wrap">
               <% @authors.each do |author| %>
