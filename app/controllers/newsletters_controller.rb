@@ -54,6 +54,7 @@ class NewslettersController < ApplicationController
   end
 
   def send_user_email
+    @ckeditor = true
     @user = User.find(params[:recipient_id])
     @message_template = "<p>Hi #{@user.first_name},</p><p>Write your message here...</p><p>Best,<br>#{current_user.full_name}</p>"
     @subject = "Message from #{current_user.full_name}"
