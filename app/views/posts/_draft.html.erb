@@ -105,12 +105,14 @@
                 <% if @requested_changes.present? %>
                   <div class="card m-0 mt-3 changes_requested">
                     <% @editor = User.find_by(id: @most_recent_review.editor_id) %>
-                    <div class="card-header">
-                      Review given by <%= link_to(@editor.try(:full_name), @editor, :class => "link_nrml", :target => "_blank") %>: The below problems prevented this article from being published.
-                      <%= link_to send_user_email_path(:recipient_id =>  @most_recent_review.editor_id), class: "link_nrml_underline", target: "_blank" do %>
-                        Contact Editor
-                      <% end %>
-                    </div>
+                    <% if @editor.present? %>
+                      <div class="card-header">
+                        Review given by <%= link_to(@editor.try(:full_name), @editor, :class => "link_nrml", :target => "_blank") %>: The below problems prevented this article from being published.
+                        <%= link_to send_user_email_path(:recipient_id =>  @most_recent_review.editor_id), class: "link_nrml_underline", target: "_blank" do %>
+                          Contact Editor
+                        <% end %>
+                      </div>
+                    <% end %>
                     <div class="card-body">
                       <% @requested_changes.each do |requested_change| %>
                         <% @feedback = Feedback.find(requested_change.feedback_id) %>

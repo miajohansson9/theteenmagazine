@@ -116,8 +116,8 @@
                 <% if @review.notes.present? %>
                   <div class="alert alert-danger" role="alert">
                     You previously reviewed this article but the second editor did not think it was ready to be published. Please re-review this article and message in the Discord if you need help. 
+                    <div class="mb-2"><b>Notes from <%= link_to(@requested_review_user&.full_name, @requested_review_user) %></b>: <%= @review.notes %></b></div>
                   </div>
-                  <div class="mb-2"><b>Notes from <%= link_to(@requested_review_user&.full_name, @requested_review_user) %></b>: <%= @review.notes %></b></div>
                 <% end %>
                 <% if @post.editor_can_make_changes %>
                   <div id="selectable_content" class="mb-3">

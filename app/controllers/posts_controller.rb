@@ -553,7 +553,7 @@ class PostsController < ApplicationController
       if (@prev_status != "Request Re-Review") && (@new_status.eql? "Request Re-Review")
         @bad_review = @post.reviews.where(status: "Recommend for Publishing").last
         if @bad_review.present?
-          @new_review = @post.reviews.build(status: "In Review", editor_id: @bad_review.editor_id, notes: @rev.notes)
+          @new_review = @post.reviews.build(status: "In Review", editor_claimed_review_at: Time.now, editor_id: @bad_review.editor_id, notes: @rev.notes)
           @new_review.save
           @editor_needing_to_review = User.find_by(id: @bad_review.editor_id)
           @comment = current_user.comments.build(post_id: @post.id, is_review: "true", text: "Requested a Re-Review from #{@editor_needing_to_review&.full_name }.")
@@ -638,10 +638,11 @@ class PostsController < ApplicationController
       elsif (@prev_status != @new_status) && current_user.editor? && !(["Rejected", "Approved for Publishing", "Request Re-Review", "In Progress"].include? @new_status)
         if (["In Review", "In Review By Second Editor"].include? @new_status)
           if @rev.editor_claimed_review_at.nil?
-            @rev.update_column('editor_claimed_review_at', Time.now)
+            @rev.update_column("editor_claimed_review_at", Time.now)
+            @rev.update_column("editor_id", current_user.id)
           end
           Thread.new do
-            ApplicationMailer.article_moved_to_review(@post.user, @post, @editor).deliver
+            ApplicationMailer.article_moved_to_review(@post.user, @post, current_user).deliver
           end
           redirect_to @post, notice: "Great job, You've claimed editing this article!"
         else
@@ -792,7 +793,6 @@ class PostsController < ApplicationController
           .map { |s| s.slice(0, 1).capitalize + s.slice(1..-1) }
           .join(" ")
       @post.title.gsub!(" A ", " a ")
-      @post.title.gsub!(" Is ", " is ")
       @post.title.gsub!(" The ", " the ")
       @post.title.gsub!(" For ", " for ")
       @post.title.gsub!(" An ", " an ")

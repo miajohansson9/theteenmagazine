@@ -353,7 +353,6 @@ class PitchesController < ApplicationController
         .map { |s| s.slice(0, 1).capitalize + s.slice(1..-1) }
         .join(" ")
     @pitch.title.gsub!(" A ", " a ")
-    @pitch.title.gsub!(" Is ", " is ")
     @pitch.title.gsub!(" The ", " the ")
     @pitch.title.gsub!(" For ", " for ")
     @pitch.title.gsub!(" An ", " an ")
