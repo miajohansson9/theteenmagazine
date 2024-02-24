@@ -95,5 +95,29 @@
       window.adthrive.disableAds(['/edit', '/onboarding', '/interviews', '/interviews/*', '/new', '/pitches/*', '/pitches', '/dashboard', '/partners/*', '/writers/*', '/pages/*', '/editors/*', '/apply', '/about-us']);
     });
   </script>
+
+  <% if current_user.present? %>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        window.adthrive = window.adthrive || {};
+        window.adthrive.cmd = window.adthrive.cmd || [];
+
+        window.adthrive.cmd.push(function () {
+          window.adthrive.identityApi({
+            source: 'api',
+            plainText: '<%= current_user.email %>'
+          }, ({ success, data }) => {
+            if (success) {
+              // Identity API success!
+              console.log(`success: ${data.message}`);
+            } else {
+              // Identity API error, check message
+              console.log(`error: ${data.message}`);
+            }
+          });
+        });
+      });
+    </script>
+  <% end %>
 </footer>
 <!-- Footer -->
