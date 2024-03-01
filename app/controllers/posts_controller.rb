@@ -69,7 +69,7 @@ class PostsController < ApplicationController
         .order("updated_at desc")
     @pagy, @shared_drafts =
       pagy(
-        Post.community_visible.order(:shared_at).reverse_order,
+        Post.community_visible.where("shared_at > ?", Time.now - 1.month).order("shared_at desc"),
         page: params[:page],
         items: 12,
       )
