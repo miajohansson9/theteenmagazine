@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- START email detection/removal script -->
+    <script>
+    !function(){"use strict";var e=window.location.search.substring(1).split("&");const t=e=>e.replace(/\s/g,""),o=e=>new Promise((t=>{if(!("msCrypto"in window)&&"https:"===location.protocol&&"crypto"in window&&"TextEncoder"in window){const o=(new TextEncoder).encode(e);crypto.subtle.digest("SHA-256",o).then((e=>{const o=Array.from(new Uint8Array(e)).map((e=>("00"+e.toString(16)).slice(-2))).join("");t(o)}))}else t("")}));for(var n=0;n<e.length;n++){var r="adt_ei",i=decodeURIComponent(e[n]);if(0===i.indexOf(r)){var a=i.split(r+"=")[1];if((e=>{const t=e.match(/((?=([a-zA-Z0-9._!#$%+^&*()[\]<>-]+))\2@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);return t?t[0]:""})(t(a.toLowerCase()))){o(a).then((t=>{t.length&&(localStorage.setItem(r,t),localStorage.setItem("adt_emsrc","url"),e.splice(n,1),history.replaceState(null,"","?"+e.join("&")))}));break}}}}();
+    </script>
+    <!-- END email detection/removal script -->
     <!-- Raptive Head Tag Manual -->
     <script data-no-optimize="1" data-cfasync="false">
     (function(w, d) {

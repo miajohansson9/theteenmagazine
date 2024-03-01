@@ -74,7 +74,7 @@
             </tr>
             <tr>
               <td style="text-align:center;">
-                <a href="https://www.theteenmagazine.com?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>" title="logo" target="_blank">
+                <a href="https://www.theteenmagazine.com" title="logo" target="_blank">
                   <img width="300" src="https://mcusercontent.com/5c2a24e15a906f29e2c6a9b72/images/89bcbe0f-d6de-4a58-a3c5-e76c427282bf.png" title="logo" alt="logo">
                 </a>
               </td>
@@ -172,11 +172,11 @@
                                                               </span>
                                                             <% elsif @newsletter.subject.include? "TRENDING" %>
                                                               <span style="font-size:20px">
-                                                                trending in <a href='https://theteenmagazine.com/categories/<%= post.category.slug %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>'><%= post.category.name %> 🔥
+                                                                trending in <a href='https://theteenmagazine.com/categories/<%= post.category.slug %>'><%= post.category.name %> 🔥
                                                               </span>
                                                             <% else %>
                                                               <span style="font-size:20px">
-                                                                This week in <a href='https://theteenmagazine.com/categories/<%= post.category.slug %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>'><%= post.category.name %></a> 💬
+                                                                This week in <a href='https://theteenmagazine.com/categories/<%= post.category.slug %>'><%= post.category.name %></a> 💬
                                                               </span>
                                                             <% end %>
                                                           </font>
@@ -193,7 +193,7 @@
                                           <tbody>
                                             <tr>
                                               <td align="center" valign="top">
-                                                <a href="https://theteenmagazine.com/<%= post.slug %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>" title="" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://theteenmagazine.com/<%= post.slug %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>">
+                                                <a href="https://theteenmagazine.com/<%= post.slug %>" title="" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://theteenmagazine.com/<%= post.slug %>">
                                                   <img alt="" src="<%= url_for(post.thumbnail.variant(resize_to_fill: [540, 340])) %>" width="264" style="max-width:719px;border:0;height:auto;outline:none;text-decoration:none;vertical-align:bottom" class="m_-3653343243659045546mcnImage CToWUd" data-bit="iit">
                                                 </a>
                                               </td>
@@ -205,7 +205,7 @@
                                             <tr>
                                               <td valign="top" style="line-height:200%;word-break:break-word;color:#202020;font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;text-align:left">
                                                 <header>
-                                                  <a href="https://theteenmagazine.com/<%= post.slug %>?utm_source=newsletter&utm_medium=email&utm_campaign=editor+picks+<%= @newsletter.id %>" style="color:#000000;font-weight:normal;text-decoration:none" target="_blank">
+                                                  <a href="https://theteenmagazine.com/<%= post.slug %>" style="color:#000000;font-weight:normal;text-decoration:none" target="_blank">
                                                     <font face="playfair display, georgia, times new roman, serif">
                                                       <span style="font-size:24px"><%= post.title %></span>
                                                     </font>
