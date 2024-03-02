@@ -37,10 +37,12 @@ class ApplicationMailer < ActionMailer::Base
     end
     @from_field = (@from_user.id.eql? 1) ? "Mia from The Teen Magazine <mia@theteenmagazine.com>" : "Managing Editor <editors@theteenmagazine.com>"
     @reply_to = (@from_user.id.eql? 1) ? "mia@theteenmagazine.com" : @from_user.email
-    @email_body = add_email_capture('application_mailer/custom_message_template', @subscriber.email)
-    mail(to: @subscriber.email, subject: @subject, from: @from_field, reply_to: @reply_to)  do |format|
-      format.html { render html: @email_body.html_safe }
-    end
+    mail(
+      to: @subscriber.email,
+      subject: @subject,
+      from: @from_field,
+      reply_to: @reply_to,
+    )
   end
 
   def editor_picks(subscriber, posts, editor_quotes, newsletter)
