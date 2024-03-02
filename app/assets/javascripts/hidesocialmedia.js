@@ -69,30 +69,16 @@ $(document).ready(function () {
   });
 
   // Select the YouTube iframe by its attributes or any other suitable selector
-  var youtubeIframe =
-    document.querySelector('iframe[src*="youtube.com/embed"]') ??
-    document.querySelector('iframe[src*="youtube-nocookie.com/embed"]');
+  var youtubeIframes = document.querySelectorAll('iframe[src*="youtube.com/embed"]');
 
-  if (youtubeIframe) {
+  youtubeIframes.forEach(function (youtubeIframe) {
+    // Replace "youtube.com" with "youtube-nocookie.com" in the iframe src attribute
     var youtubeSrc = youtubeIframe.getAttribute("src");
     youtubeSrc = youtubeSrc.replace("youtube.com", "youtube-nocookie.com");
 
-    // Remove the parameters from the Instagram link
-    var indexOfQuestionMark = youtubeSrc?.indexOf("?");
-    var youtubeSrc =
-      indexOfQuestionMark !== -1
-        ? youtubeSrc.substring(0, indexOfQuestionMark)
-        : youtubeSrc;
-
-    // Create the new div element with YouTube content
-    var socialMsgDiv = document.createElement("div");
-    socialMsgDiv.innerHTML =
-      '<div class="hidden-social-media-wrapper"><div class="hidden-social-media-message"><h4 class="title">Youtube content</h4><p id="message">To honor your privacy, this content can only be viewed on the site it <a href="' +
-      youtubeSrc +
-      '" target="_blank" rel="nofollow noreferrer" class="link_grn">originates</a> from.</p></div></div>';
-    // Replace the YouTube iframe with the YouTube div
-    youtubeIframe.parentNode.replaceChild(socialMsgDiv, youtubeIframe);
-  }
+    // Update the src attribute of the existing iframe
+    youtubeIframe.setAttribute("src", youtubeSrc);
+  });
 
   var spotifyIframe = document.querySelector(
     'iframe[src*="spotify.com/embed"]'
@@ -101,14 +87,14 @@ $(document).ready(function () {
   if (spotifyIframe) {
     var spotifySrc = spotifyIframe.getAttribute("src");
 
-    // Remove the parameters from the Instagram link
+    // Remove the parameters from the Spotify link
     var indexOfQuestionMark = spotifySrc.indexOf("?");
     var spotifySrc =
       indexOfQuestionMark !== -1
         ? spotifySrc.substring(0, indexOfQuestionMark)
         : spotifySrc;
 
-    // Create the new div element with YouTube content
+    // Create the new div element with Spotify content
     var socialMsgDiv = document.createElement("div");
     socialMsgDiv.innerHTML =
       '<div class="hidden-social-media-wrapper"><div class="hidden-social-media-message"><h4 class="title">Spotify content</h4><p id="message">To honor your privacy, this content can only be viewed on the site it <a href="' +

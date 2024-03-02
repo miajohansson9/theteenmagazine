@@ -6,6 +6,13 @@
   }
 }
 
+#content {
+  iframe {
+    display: block !important;
+    margin: 0 auto !important;
+  }
+}
+
 .social-container {
   padding: 10px 20px;
   background: #e4ecff;

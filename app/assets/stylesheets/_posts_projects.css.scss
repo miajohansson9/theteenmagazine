@@ -472,9 +472,10 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   iframe {
     width: 100% !important;
+    height: 270px;
   }
   #post_title_show {
     padding: 1px 20px;
