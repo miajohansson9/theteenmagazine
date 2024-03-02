@@ -37,10 +37,12 @@ class ApplicationMailer < ActionMailer::Base
     end
     @from_field = (@from_user.id.eql? 1) ? "Mia from The Teen Magazine <mia@theteenmagazine.com>" : "Managing Editor <editors@theteenmagazine.com>"
     @reply_to = (@from_user.id.eql? 1) ? "mia@theteenmagazine.com" : @from_user.email
-    @email_body = add_email_capture('application_mailer/custom_message_template', @subscriber.email)
-    mail(to: @subscriber.email, subject: @subject, from: @from_field, reply_to: @reply_to)  do |format|
-      format.html { render html: @email_body.html_safe }
-    end
+    mail(
+      to: @subscriber.email,
+      subject: @subject,
+      from: @from_field,
+      reply_to: @reply_to,
+    )
   end
 
   def editor_picks(subscriber, posts, editor_quotes, newsletter)
@@ -482,10 +484,6 @@ class ApplicationMailer < ActionMailer::Base
       )
     content.gsub!('src="/rails/active_storage/', 'src="https://www.theteenmagazine.com/rails/active_storage/')
     content.gsub!("<p>", '<p style="font-size: 16px">')
-    content.gsub!(/(href=["'](.*?theteenmagazine.*?)["'])/) do |match|
-      url = match[/href=(["'])(.*?)\1/, 2]
-      "#{match.gsub(url, "#{url}?adt_ei=#{email}")}"
-    end
     Redcarpet::Markdown.new(renderer).render(content).html_safe
   end
 
