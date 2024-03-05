@@ -15,6 +15,34 @@
           <iframe src="https://discord.com/widget?id=1081601449550688286&theme=dark" width="100%" height="200" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
         <div class="mt-3">
+          <h5 href="/pages">Writer Resources:</h5>
+        <% @highlighted_pages.each do |page| %>
+          <%= link_to page.title, page, class: "link_grn" %><br>
+        <% end %>
+        <br>
+          <h5>Other Useful Links:</h5>
+          <%= link_to("Extensions page", "/writers/#{@user.slug}/extensions", class: "link_grn") %><br>
+          <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscriber&.email}&token=#{@user.subscriber&.token}", class: "link_grn") %><br>
+          <%= link_to "Edit Profile", edit_user_path(@user), class: "link_grn" %><br>
+          <%= link_to "Change Password", edit_user_registration_path, class: "link_grn" %><br>
+          <div class="links"
+            <% if @show_onboarding_full %>
+              data-step data-index="5" data-onboarding-content="New applications have become open to you. If you want to apply to our editor team, we suggest having at four or more published articles on The Teen Magazine before applying to have the best chance."
+            <% end %>
+          >
+            <div>
+              <% if !current_user.marketer? %>
+                <%= link_to("Interviewer Application", "https://forms.gle/owee6FsULPaT7W7x5", class: "link_grn") %><br>
+              <% end %>
+              <% if !current_user.editor? %>
+                <%= link_to("Editor Application", "/applications/editor", class: "link_grn") %><br>
+              <% end %>
+            </div>
+            <% if current_user.admin? && current_user == true_user %>
+              <%= link_to("Sign in as #{@user.full_name}", impersonate_user_path(@user), method: :post, class: "link_grn") %><br>
+            <% end %>
+          </div>
+          <br>
           <div class="card whats-new-wrapper" style="border-radius: 10px; overflow: hidden;"
             <% if @show_onboarding_full %>
               data-step data-index="4" data-onboarding-content="See what other writers are pitching here."
@@ -38,34 +66,6 @@
           <i class="mt-4 d-block">See more pitches <%= link_to("here", pitches_path, class: "link_inline link_grn") %></i>
           <br>
         </div>
-        <h5 href="/pages">Writer Resources:</h5>
-        <% @highlighted_pages.each do |page| %>
-          <%= link_to page.title, page, class: "link_grn" %><br>
-        <% end %>
-        <br>
-        <h5>Other Useful Links:</h5>
-        <%= link_to("Extensions page", "/writers/#{@user.slug}/extensions", class: "link_grn") %><br>
-        <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscriber&.email}&token=#{@user.subscriber&.token}", class: "link_grn") %><br>
-        <%= link_to "Edit Profile", edit_user_path(@user), class: "link_grn" %><br>
-        <%= link_to "Change Password", edit_user_registration_path, class: "link_grn" %><br>
-        <div class="links"
-          <% if @show_onboarding_full %>
-            data-step data-index="5" data-onboarding-content="New applications have become open to you. If you want to apply to our editor team, we suggest having at four or more published articles on The Teen Magazine before applying to have the best chance."
-          <% end %>
-        >
-          <div>
-            <% if !current_user.marketer? %>
-              <%= link_to("Interviewer Application", "https://forms.gle/owee6FsULPaT7W7x5", class: "link_grn") %><br>
-            <% end %>
-            <% if !current_user.editor? %>
-              <%= link_to("Editor Application", "/applications/editor", class: "link_grn") %><br>
-            <% end %>
-          </div>
-          <% if current_user.admin? && current_user == true_user %>
-            <%= link_to("Sign in as #{@user.full_name}", impersonate_user_path(@user), method: :post, class: "link_grn") %><br>
-          <% end %>
-        </div>
-        <br>
       </div>
     </div>
   </div>
