@@ -38,9 +38,16 @@
           <i class="mt-4 d-block">See more pitches <%= link_to("here", pitches_path, class: "link_inline link_grn") %></i>
           <br>
         </div>
+        <h5 href="/pages">Writer Resources:</h5>
+        <% @highlighted_pages.each do |page| %>
+          <%= link_to page.title, page, class: "link_grn" %><br>
+        <% end %>
+        <br>
+        <h5>Other Useful Links:</h5>
+        <%= link_to("Extensions page", "/writers/#{@user.slug}/extensions", class: "link_grn") %><br>
+        <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscriber&.email}&token=#{@user.subscriber&.token}", class: "link_grn") %><br>
         <%= link_to "Edit Profile", edit_user_path(@user), class: "link_grn" %><br>
         <%= link_to "Change Password", edit_user_registration_path, class: "link_grn" %><br>
-        <%= link_to("Email preferences", "/email-preferences?email=#{@user.subscriber&.email}&token=#{@user.subscriber&.token}", class: "link_grn") %><br>
         <div class="links"
           <% if @show_onboarding_full %>
             data-step data-index="5" data-onboarding-content="New applications have become open to you. If you want to apply to our editor team, we suggest having at four or more published articles on The Teen Magazine before applying to have the best chance."
@@ -54,8 +61,6 @@
               <%= link_to("Editor Application", "/applications/editor", class: "link_grn") %><br>
             <% end %>
           </div>
-          <%= link_to("Invite a friend", "/writers/#{@user.slug}/invitations", class: "link_grn") %><br>
-          <%= link_to("Extensions page", "/writers/#{@user.slug}/extensions", class: "link_grn") %><br>
           <% if current_user.admin? && current_user == true_user %>
             <%= link_to("Sign in as #{@user.full_name}", impersonate_user_path(@user), method: :post, class: "link_grn") %><br>
           <% end %>

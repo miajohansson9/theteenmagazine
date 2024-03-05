@@ -28,7 +28,6 @@
         <p><%= @unseen_applications_cnt %> new</p>
       <% end %>
     </a>
-    <div class="dropdown-divider"></div>
   <% end %>
   <% if !current_user.partner? %>
     <a href="/pitches" class="dropdown-item">Unclaimed Pitches
@@ -37,6 +36,8 @@
         <p><%= @unseen_pitches_cnt %> new</p>
       <% end %>
     </a>
+    <div class="dropdown-divider"></div>
+    <a href="/pages" class="dropdown-item">Writer Resources</a>
     <a href="/community" class="dropdown-item">Community
       <% if @unseen_shared_drafts_cnt > 0 %>
         <span class="sec counter counter-sm"></span>

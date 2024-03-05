@@ -13,6 +13,7 @@
   <% if current_user.admin? %>
     <p><%= f.check_box :highlighted %> Highlight page</p>
   <% end %>
+  <p><%= f.check_box :editors_only %> For editors only</p>
   <p><%= f.check_box :all_managing_editors_can_suggest %> All managing editors can suggest changes</p>
   <p>(Optional) Belongs to Category: <%= f.collection_select(:category_id, @categories, :id, :name, { include_blank: true }, {prompt: "Select a Category"}) %></p>
   <%= f.submit "Save & Publish", class: "newpost--new--profile mr-0 pl-4 pr-4 submit_modal", id: "submit-comment-modal-button" %>

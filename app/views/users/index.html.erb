@@ -38,7 +38,7 @@
     <% end %>
   </div>
   <% if @query.present? %>
-    <h2>Searching for writer... <span style="background-color: #FCD04D"><%= @query %></span></h2>
+    <h2>Searching for writer... <span style="background-color: yellow"><%= @query %></span></h2>
   <% end %>
   <% @users.each do | user | %>
     <%= render :partial => 'profile', locals: {user: user}, cached: true %>

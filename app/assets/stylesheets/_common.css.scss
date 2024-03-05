@@ -10,6 +10,10 @@
   color: limegreen !important;
 }
 
+em {
+  font-style: normal !important;
+}
+
 .failure-text {
   color: red !important;
 }
@@ -247,7 +251,7 @@ body,
 }
 
 .highlight {
-  background-color: #fcd04d;
+  background-color: yellow;
 }
 
 .small-text-wrapper * {
@@ -545,6 +549,26 @@ body {
       width: 100%;
     }
   }
+}
+
+.pen-yellow {
+  background-color: yellow !important;
+  color: black !important;
+}
+
+.pen-pink {
+  background-color: #FF10F0  !important;
+  color: black !important;
+}
+
+.pen-green {
+  background-color: #39ff14 !important;
+  color: black !important;
+}
+
+.pen-blue {
+  background-color: #83EEFF !important;
+  color: black !important;
 }
 
 .show-nav {

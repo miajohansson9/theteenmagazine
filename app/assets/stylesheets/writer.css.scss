@@ -101,7 +101,7 @@ a {
     color: #4abeb6;
     font-weight: bold;
     &:hover {
-      background-color: #fcd04d;
+      background-color: yellow;
       opacity: 1;
     }
   }
@@ -383,7 +383,7 @@ a {
 }
 
 .review_frm {
-  background-color: #fec;
+  background-color: #e4ecff;
   p, li {
     font-size: 20px;
   }
@@ -775,7 +775,7 @@ a {
 
 .writing {
   .yellow {
-    background-color: #fcd04d;
+    background-color: yellow;
     color: black;
     padding: 5px;
   }

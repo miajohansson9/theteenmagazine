@@ -1,77 +1,56 @@
 <div id="banner_writing" class="editor"></div>
 <div class="apply_wrapper pitch_form_wrapper">
-  <h1 id="page_title_padded">Writer/Editor Resources</h1>
+  <h1 id="page_title_padded">Writer Resources</h1>
+  <% @highlighted_pages.each do |page| %>
+    <p> *
+        <u><%= link_to(page.title, page) %></u>
+        <% @user= User.find_by(id: page.user_id) %>
+        <% if @user.present? %>
+            by <%= link_to(@user.full_name, user_path(@user)) %>
+        <% end %>
+        <% @category = Category.find_by(id: page.category_id) %>
+        <% if @category %>
+            in <%= @category.name %>
+        <% end %>
+    </p>
+  <% end %>
+  <% @all_pages.each do |page| %>
+    <p>
+        <u><%= link_to(page.title, page) %></u>
+        <% @user= User.find_by(id: page.user_id) %>
+        <% if @user.present? %>
+            by <%= link_to(@user.full_name, user_path(@user)) %>
+        <% end %>
+        <% @category = Category.find_by(id: page.category_id) %>
+        <% if @category %>
+            in <%= @category.name %>
+        <% end %>
+    </p>
+  <% end %>
   <% if current_user.is_manager? %>
-    <h5>Your Pages:</h5>
-    <ul>
-    <% @current_user_pages.each do |page| %>
-        <li>
-            <p>
-                <u><%= link_to(page.title, page) %></u>
-                <% @category = Category.find_by(id: page.category_id) %>
-                <% if @category %>
-                    in <%= @category.name %>
-                <% end %>
-                <% if page.suggestor_id.present? %>
-                    <% @user = User.find_by(id: page.suggestor_id) %>
-                    <% if @user.present? %>
-                        <%= link_to("[Review suggestions from #{@user&.full_name}]", edit_page_path(page), class: 'link_pink') %>
-                    <% end %>
-                <% else %>
-                    <%= link_to('[Edit]', edit_page_path(page), class: 'link_pink') %>
-                <% end %>
-            </p>
-        </li>
-    <% end %>
-    </ul>
     <div id="admin_links" style="border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;text-align: center;padding: 1em 0;margin: 1em 0;margin-top: 0;">
         <%= link_to "New Page", new_page_path, style: "text-decoration: none;color: #9a9da4;margin: 0 1em;font-weight: 700;font-size: .8em;text-transform: uppercase;font-family: inherit;" %>
     </div>
   <% end %>
-  <h5>Highlighted:</h5>
-  <% @highlighted_pages.each do |page| %>
-    <ul>
-        <li>
-            <p>
-                <u><%= link_to(page.title, page) %></u>
-                <% @user= User.find_by(id: page.user_id) %>
-                <% if @user.present? %>
-                    by <u><%= link_to(@user.full_name, user_path(@user)) %></u>
-                <% end %>
-                <% @category = Category.find_by(id: page.category_id) %>
-                <% if @category %>
-                    in <%= @category.name %>
-                <% end %>
-                <% if (current_user.id.eql? page.user_id) || current_user.is_manager_of_category(page.category_id) %>
-                    <%= link_to('[Edit]', edit_page_path(page), class: 'link_pink') %>
-                <% elsif page.all_managing_editors_can_suggest %>
-                    <%= link_to('[Suggest Edit]', edit_page_path(page), class: 'link_pink') %>
-                <% end %>
-            </p>
-        </li>
-    </ul>
+  <% if current_user.editor? %>
+    <h1 id="page_title_padded">Editor Resources</h1>
+      <% @editor_pages.each do |page| %>
+     <p>
+        <u><%= link_to(page.title, page) %></u>
+        <% @user= User.find_by(id: page.user_id) %>
+        <% if @user.present? %>
+            by <%= link_to(@user.full_name, user_path(@user)) %>
+        <% end %>
+        <% @category = Category.find_by(id: page.category_id) %>
+        <% if @category %>
+            in <%= @category.name %>
+        <% end %>
+    </p>
   <% end %>
-  <h5>All Pages:</h5>
-  <% @all_pages.each do |page| %>
-    <ul>
-        <li>
-            <p>
-                <u><%= link_to(page.title, page) %></u>
-                <% @user= User.find_by(id: page.user_id) %>
-                <% if @user.present? %>
-                    by <u><%= link_to(@user.full_name, user_path(@user)) %></u>
-                <% end %>
-                <% @category = Category.find_by(id: page.category_id) %>
-                <% if @category %>
-                    in <%= @category.name %>
-                <% end %>
-                <% if (current_user.id.eql? page.user_id) || current_user.is_manager_of_category(page.category_id) %>
-                    <%= link_to('[Edit]', edit_page_path(page), class: 'link_pink') %>
-                <% elsif page.all_managing_editors_can_suggest %>
-                    <%= link_to('[Suggest Edit]', edit_page_path(page), class: 'link_pink') %>
-                <% end %>
-            </p>
-        </li>
-    </ul>
+  <% end %>
+  <% if current_user.is_manager? %>
+    <div id="admin_links" style="border-top: 1px solid #E9E9E9;border-bottom: 1px solid #E9E9E9;text-align: center;padding: 1em 0;margin: 1em 0;margin-top: 0;">
+        <%= link_to "New Page", new_page_path, style: "text-decoration: none;color: #9a9da4;margin: 0 1em;font-weight: 700;font-size: .8em;text-transform: uppercase;font-family: inherit;" %>
+    </div>
   <% end %>
 </div>

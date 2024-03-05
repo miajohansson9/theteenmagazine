@@ -44,11 +44,19 @@ class PagesController < ApplicationController
   end
 
   def show
+    set_meta_tags title: @page.title
     # don't count refreshes
     if !(session[:has_counted_page_view].eql? @page.id)
       @page.update_attribute(:impressions, @page.impressions + 1)
       # create session variable to not log again
       session[:has_counted_page_view] = @page.id
+    end
+    if (@page.slug.eql? "content-policy")
+      current_user.update(read_pitches: true)
+    elsif (@page.slug.eql? "image-policy")
+      current_user.update(read_images: true)
+    elsif (@page.slug.eql? "writing-an-article")
+      current_user.update(read_articles: true)
     end
     @category = Category.find_by(id: @page.category_id)
   end
@@ -108,8 +116,13 @@ class PagesController < ApplicationController
         @current_user_pages = (@current_user_pages + @managing_editor_pages).uniq
       end
     end
-    @all_pages = Page.all.order("created_at desc")
-    @highlighted_pages = Page.all.where(highlighted: true)
+    if !current_user.is_marketer?
+      @all_pages = Page.all.where(editors_only: [false, nil]).where.not(highlighted: true, category_id: Category.find("interviews").id).order("impressions desc")
+    else
+      @all_pages = Page.all.where(editors_only: [false, nil]).where.not(highlighted: true).order("impressions desc")
+    end
+    @editor_pages = Page.all.where(editors_only: true).where.not(highlighted: true).order("impressions desc")
+    @highlighted_pages = Page.all.where(highlighted: true).order("impressions desc")
   end
 
   def destroy
@@ -143,12 +156,10 @@ class PagesController < ApplicationController
     @pitch = Pitch.new
     @categories = Category.active
     set_meta_tags title: "Pitching an Article | The Teen Magazine"
-    current_user.update(read_pitches: true)
   end
 
   def writing
     set_meta_tags title: "Writing the Perfect Article | The Teen Magazine"
-    current_user.update(read_articles: true)
   end
 
   def reviews(post)
@@ -157,7 +168,6 @@ class PagesController < ApplicationController
 
   def images
     set_meta_tags title: "Image Policy | The Teen Magazine"
-    current_user.update(read_images: true)
   end
 
   def privacy; end
@@ -440,6 +450,7 @@ class PagesController < ApplicationController
         :suggestor_id,
         :created_at,
         :updated_at,
+        :editors_only,
         :impressions,
         :all_managing_editors_can_suggest,
         :highlighted,

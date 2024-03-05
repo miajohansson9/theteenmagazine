@@ -5,14 +5,14 @@
         <div class="container" id="sharing_with_partners">
           <h3>Use an Extension</h3>
           <b><i>You currently have <%= current_user.extensions %> extension credit(s) available.</i></b>
-          <p>*Note that an article must be <b>In Progress</b> to use an extension. Read more about extensions <a href="/writing-the-perfect-article#deadlines-and-extensions">here</a>.</p>
+          <p>*Note that an article must be <b>In Progress</b> to use an extension. Read more about extensions <a href="/pages/writing-an-article#deadlines-and-extensions">here</a>.</p>
           <div class="flex_horizontal">
             <%= form_for(:search, method: :get, :html => {:class => 'form-inline d-flex justify-content-left md-form form-sm active-theme-2 mt-2'}) do |f| %>
               <%= f.text_field :query, class: "form-control form-control-sm mr-3", style: "flex: 1;", placeholder: "Searching in your article drafts" %>
             <% end %>
           </div>
           <% if @query.present? %>
-            <h2>Search for draft... <span style="background-color: #FCD04D"><%= @query %></span></h2>
+            <h2>Search for draft... <span style="background-color: yellow"><%= @query %></span></h2>
             <br>
           <% end %>
           <% if @posts.present? %>

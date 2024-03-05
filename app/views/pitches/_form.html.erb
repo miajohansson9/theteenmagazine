@@ -13,11 +13,11 @@
   <% if current_user.editor? && @pitch.title.nil? %>
     <p>You are signed in with an Editor account. This pitch will show up in <a target="_blank" href="/pitches">Unclaimed Pitches</a> for any writer to claim.</p>
   <% else %>
-    <p>Don't know what to write about? Visit <a target="_blank" href="/choosing-a-topic#topic-requirements">Topic Requirements</a> for some inspiration.</p>
+    <p>Don't know what to write about? Visit <a target="_blank" href="/pages/content-policy#topic-requirements">Topic Requirements</a> for some inspiration.</p>
   <% end %>
-  <p>Write a <a target="_blank" class="link_grn" href="/choosing-a-topic#title-requirements">Shareable and/or Searchable</a> title here:</p>
+  <p>Write a <a target="_blank" class="link_grn" href="/pages/content-policy#title-requirements">Shareable and/or Searchable</a> title here:</p>
   <%= f.text_field :title, placeholder: "Write a title that will make your readers want to learn more! 👀🖊️" %>
-  <p>Explain your idea and why the article topic fits <a target="_blank" class="link_grn" href="/choosing-a-topic#topic-requirements">The Teen Magazine's audience</a>:</p>
+  <p>Explain your idea and why the article topic fits <a target="_blank" class="link_grn" href="/pages/content-policy#topic-requirements">The Teen Magazine's audience</a>:</p>
   <div id="container">
     <%= f.text_area :description, id: "editor", placeholder: "Your idea..." %>
   </div>
@@ -42,7 +42,7 @@
     <% else %>
       <%= f.select(:deadline, options_for_select(["2 weeks", "4 weeks"], [2, 4]), {prompt: @prompt}, {:class => "d-inline"}) %>
     <% end %>
-    <a data-toggle="tooltip" title="Read about deadlines" class="ml-1 link_grn" target="_blank" href="/writing-the-perfect-article#deadlines-and-extensions"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a>
+    <a data-toggle="tooltip" title="Read about deadlines" class="ml-1 link_grn" target="_blank" href="/pages/writing-an-article#deadlines-and-extensions"><svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fad" data-icon="info-circle" class="mb-1 svg-inline--fa fa-info-circle fa-w-16" role="img" viewBox="0 0 512 512"><g class="fa-group"><path class="fa-secondary" fill="currentColor" d="M256 8C119 8 8 119.08 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110a42 42 0 1 1-42 42 42 42 0 0 1 42-42zm56 254a12 12 0 0 1-12 12h-88a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h12v-64h-12a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h64a12 12 0 0 1 12 12v100h12a12 12 0 0 1 12 12z" opacity="0.4"></path><path class="fa-primary" fill="currentColor" d="M256 202a42 42 0 1 0-42-42 42 42 0 0 0 42 42zm44 134h-12V236a12 12 0 0 0-12-12h-64a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h12v64h-12a12 12 0 0 0-12 12v24a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12v-24a12 12 0 0 0-12-12z"></path></g></svg></a>
   </div>
   <% if current_user && current_user.is_manager? %>
     <p>Priority (select <b>High</b> for SEO pitches and high-priority topics)
@@ -62,7 +62,7 @@
 =end%>
     </div>
     <%= f.file_field :thumbnail %>
-    <p>(REQUIRED) Give credit for your thumbnail image. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. For a full list of approved websites, please refer to the <a target="_blank" href="/finding-images">image requirements</a>.</p>
+    <p>(REQUIRED) Give credit for your thumbnail image. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. For a full list of approved websites, please refer to the <a target="_blank" href="/pages/image-policy">image requirements</a>.</p>
     <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0",  id: "thumbnail-credits" %>
     <p><i>If you do not properly cite your thumbnail image, the thumbnail will not show up in your pitch.</i></p>
     <%
@@ -78,7 +78,7 @@
       <%= f.hidden_field :thumbnail_credits, class: "mb-0",  id: "thumbnail-credits" %>
     <% end %>
     <p class="mt-0"><i>
-      Do you have an image that meets <a href="/finding-images" class="link_grn">The Teen Magazine's image requirements</a> that you want to include in this pitch? 
+      Do you have an image that meets <a href="/pages/image-policy" class="link_grn">The Teen Magazine's image requirements</a> that you want to include in this pitch? 
       Request that it be uploaded to The Teen Magazine's image asset library through the form 
       <%= link_to 'here', send_user_email_path(:recipient_id => 1, :request_image => true, :pitch_id => @pitch.id), class: "link_grn", target: "_blank" %>.
     </i></p> 
@@ -87,10 +87,10 @@
     <% if (@pitch.user_id.eql? current_user.id)  %>
       <% if true || (@pitch.created_at.present? && @pitch.created_at < Date.new(2023, 10, 4)) %>
         <div>
-          <p><i>
+          <p>
             <%= f.check_box :agree_to_image_policy, class: "d-inline" %>
-              I have read and understand the image policy found <a target="_blank" class="link_nrml" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this pitch <b>has the proper attributions</b> and follows all the requirements explained in the <a target="_blank" class="link_grn" href="/finding-images">Image Policy</a>. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
-          </i></p>
+              I have read and understand the image policy found <a target="_blank" class="link_grn" href="/pages/image-policy">here</a>. By checking this box, I confirm that the thumbnail image on this pitch <b>has the proper attributions</b> and follows all the requirements explained in the <a target="_blank" class="link_grn" href="/pages/image-policy">Image Policy</a>. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
+          </p>
           <% if @pitch.agree_to_image_policy.nil? || !@pitch.agree_to_image_policy %>
             <%= f.hidden_field :agree_to_image_policy_at, value: Time.now %>
           <% end %>
@@ -103,7 +103,7 @@
       <% end %>
     <% elsif !@pitch.agree_to_image_policy %>
       <p>
-        <i style="background-color: #FCD04D;">
+        <i style="background-color: yellow;">
           <%= @pitch.user.full_name %> has not agreed to the image policy.
         </i>
       </p>

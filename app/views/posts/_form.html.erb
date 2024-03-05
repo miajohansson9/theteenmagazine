@@ -48,7 +48,7 @@
 =end%>
     </div>
     <%= f.file_field :thumbnail %>
-    <p>(REQUIRED) Give credit for your thumbnail image. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. For a full list of approved websites, please refer to the <a target="_blank" href="/finding-images">image requirements</a>.</p>
+    <p>(REQUIRED) Give credit for your thumbnail image. Use the formatting: photographer's last name (if given) + "from" + company's name + comma + full url to the site. For a full list of approved websites, please refer to the <a target="_blank" href="/pages/image-policy">image requirements</a>.</p>
     <%= f.text_field :thumbnail_credits, placeholder: 'Langevin from Pexels, https://www.pexels.com/photo/woman-in-a-baseball-cap-sitting-by-a-painting-with-paints-10752105/', class: "mb-0",  id: "thumbnail-credits" %>
     <p><i>If you do not properly cite your thumbnail image, the thumbnail will not show up in your published article.</i></p>
     <%
@@ -65,7 +65,7 @@
     <% end %> 
     <p class="mt-0">
       <i>
-        Do you have an image that meets <a href="/finding-images" class="link_grn">The Teen Magazine's image requirements</a> that you want to include in your article? 
+        Do you have an image that meets <a href="/pages/image-policy" class="link_grn">The Teen Magazine's image requirements</a> that you want to include in your article? 
         Request that it be uploaded to The Teen Magazine's image asset library through the form 
         <%= link_to 'here', send_user_email_path(:recipient_id => 1, :request_image => true, :post_id => @post.id), class: "link_grn", target: "_blank" %>.
       </i>
@@ -77,7 +77,7 @@
         <div>
           <p><i>
             <%= f.check_box :agree_to_image_policy, class: "d-inline" %>
-              I have read and understand the image policy found <a target="_blank" class="link_grn" href="/finding-images">here</a>. By checking this box, I confirm that the thumbnail image on this post <b>has the proper attributions</b> and follows all the requirements explained in the <a target="_blank" class="link_grn" href="/finding-images">Image Policy</a>. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
+              I have read and understand the image policy found <a target="_blank" class="link_grn" href="/pages/image-policy">here</a>. By checking this box, I confirm that the thumbnail image on this post <b>has the proper attributions</b> and follows all the requirements explained in the <a target="_blank" class="link_grn" href="/pages/image-policy">Image Policy</a>. I understand that uploading any photo without the rights to use it means that I can be held personally liable for any claims of copyright infringement.
           </i></p>
           <% if @post.agree_to_image_policy.nil? || !@post.agree_to_image_policy %>
             <%= f.hidden_field :agree_to_image_policy_at, value: Time.now %>

@@ -39,13 +39,46 @@ CKEDITOR.ClassicEditor.create(document.querySelector("#editor"), {
       },
     ],
   },
-  placeholder: "",
+  highlight: {
+    options: [
+        {
+            model: 'yellowMarker',
+            class: 'pen-yellow',
+            title: 'Yellow marker',
+            color: 'yellow',
+            type: 'marker'
+        },
+        {
+          model: 'greenMarker',
+          class: 'pen-green',
+          title: 'Green marker',
+          color: '#39ff14',
+          type: 'marker'
+        },
+        {
+          model: 'bluePen',
+          class: 'pen-blue',
+          title: 'Blue marker',
+          color: '#83EEFF',
+          type: 'pen'
+        },
+        {
+            model: 'pinkPen',
+            class: 'pen-pink',
+            title: 'Pink marker',
+            color: '#fe019a',
+            type: 'pen'
+        }
+      ]
+  },
+  placeholder: "Start writing here...",
   toolbar: [
     "heading",
     "|",
     "bold",
     "italic",
     "underline",
+    "highlight",
     "link",
     "bulletedList",
     "numberedList",

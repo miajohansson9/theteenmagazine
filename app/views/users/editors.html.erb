@@ -8,7 +8,7 @@
     <% end %>
   </div>
   <% if @query.present? %>
-    <h2>Searching for editor... <span style="background-color: #FCD04D"><%= @query %></span></h2>
+    <h2>Searching for editor... <span style="background-color: yellow"><%= @query %></span></h2>
   <% end %>
   <% @editors.each do | user | %>
     <% if user != nil %>

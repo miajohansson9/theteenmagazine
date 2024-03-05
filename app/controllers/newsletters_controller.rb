@@ -88,7 +88,7 @@ class NewslettersController < ApplicationController
               <strong>Relevant tags for the image:</strong> <br>[Include at least 3]
           </p>
           <p>
-              <strong>Is the image from a website approved by </strong><a href='https://theteenmagazine.com/finding-images'><strong>The Teen Magazine's image policy</strong></a>?<strong>:</strong> <br>[Write YES/NO and the website name if applicable]
+              <strong>Is the image from a website approved by </strong><a href='https://theteenmagazine.com/pages/image-policy'><strong>The Teen Magazine's image policy</strong></a>?<strong>:</strong> <br>[Write YES/NO and the website name if applicable]
           </p>
           <p>
               <strong>Image credit: </strong><br>[Follow the format 'Photo By: Karolina Grabowska from Pexels, <a href='https://www.pexels.com/photo/person-reading-a-book-on-the-beach-4996868/'>https://www.pexels.com/photo/person-reading-a-book-on-the-beach-4996868/</a>' or 'Photo By: Photographer's name' (if there is no website)]

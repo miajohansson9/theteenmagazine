@@ -56,6 +56,7 @@ class UsersController < ApplicationController
       end
     end
     if current_user.present?
+      @highlighted_pages = Page.all.where(highlighted: true).order("impressions desc")
       @pitches = Pitch.not_rejected.where(is_interview: false).all.order("created_at desc").limit(4)
       @featured_writers =
         Post
