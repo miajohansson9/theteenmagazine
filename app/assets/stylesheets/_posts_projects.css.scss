@@ -241,9 +241,6 @@
 
 .post_apply {
   padding: 15px 0px;
-  .ads_wrapper {
-    margin-bottom: 20px;
-  }
 }
 
 .share_article_feedback {
@@ -473,10 +470,6 @@
 }
 
 @media (max-width: 600px) {
-  iframe {
-    width: 100% !important;
-    height: 270px;
-  }
   #post_title_show {
     padding: 1px 20px;
     margin-bottom: 10px;
